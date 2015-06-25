@@ -1,7 +1,8 @@
-# Code-corps-ember
+# Code Corps Ember
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+[![Code Climate](https://codeclimate.com/github/code-corps/code-corps-ember/badges/gpa.svg)](https://codeclimate.com/github/code-corps/code-corps-ember)
+
+This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Rails JSON API.
 
 ## Prerequisites
 
