@@ -1,5 +1,13 @@
 export default function() {
 
+  this.post('/oauth/token', function() {
+    return {
+      access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
+      user_id: 1,
+      token_type: "bearer",
+      expires_in: 7200
+    };
+  });
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

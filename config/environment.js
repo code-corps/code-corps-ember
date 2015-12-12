@@ -29,6 +29,10 @@ module.exports = function(environment) {
     ENV.API_BASE_URL = 'http://api.lvh.me:3000';
     ENV.OAUTH_CLIENT_ID = '549256d8a4ac06c537cefce8399b2e0220b717014c5a442af97d7629de57ca1f';
     ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:3000/oauth/token/';
+
+    ENV['ember-cli-mirage'] = {
+      enabled: false
+    }
   }
 
   if (environment === 'test') {
