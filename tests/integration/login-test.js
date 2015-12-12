@@ -32,3 +32,14 @@ test("Logging in", function(assert) {
     assert.equal(find('a').text(), "Logout", "Page contains logout link");
   });
 });
+
+test("Login failure", function(assert) {
+  assert.expect(1);
+  visit('/login');
+  fillIn("#identification", "josh@coderly.com");
+  fillIn("#password", "wrongpassword");
+  click('button');
+  andThen(function() {
+    assert.equal(find('p').text(), "The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.", "Page contains login error");
+  });
+});

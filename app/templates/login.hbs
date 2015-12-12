@@ -4,7 +4,10 @@
   <label for="password">Password</label>
   {{input id='password' placeholder='Enter Password' type='password' value=password}}
   <button type="submit">Login</button>
-  {{#if errorMessage}}
-    <p>{{errorMessage}}</p>
+
+  {{#if errors}}
+    {{#each errors.errors as |error|}}
+      <p>{{error.detail}}</p>
+    {{/each}}
   {{/if}}
 </form>

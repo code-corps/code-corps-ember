@@ -1,90 +1,28 @@
+import Mirage from 'ember-cli-mirage';
+
 export default function() {
 
-  this.post('/oauth/token', function() {
-    return {
-      access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
-      user_id: 1,
-      token_type: "bearer",
-      expires_in: 7200
-    };
-  });
-  // These comments are here to help you get started. Feel free to delete them.
+  this.post('/oauth/token', function(db, request) {
+    var expected = "grant_type=password&username=josh%40coderly.com&password=password";
 
-  /*
-    Config (with defaults).
-
-    Note: these only affect routes defined *after* them!
-  */
-  // this.urlPrefix = '';    // make this `http://localhost:8080`, for example, if your API is on a different server
-  // this.namespace = '';    // make this `api`, for example, if your API is namespaced
-  // this.timing = 400;      // delay for each request, automatically set to 0 during testing
-
-  /*
-    Route shorthand cheatsheet
-  */
-  /*
-    GET shorthands
-
-    // Collections
-    this.get('/contacts');
-    this.get('/contacts', 'users');
-    this.get('/contacts', ['contacts', 'addresses']);
-
-    // Single objects
-    this.get('/contacts/:id');
-    this.get('/contacts/:id', 'user');
-    this.get('/contacts/:id', ['contact', 'addresses']);
-  */
-
-  /*
-    POST shorthands
-
-    this.post('/contacts');
-    this.post('/contacts', 'user'); // specify the type of resource to be created
-  */
-
-  /*
-    PUT shorthands
-
-    this.put('/contacts/:id');
-    this.put('/contacts/:id', 'user'); // specify the type of resource to be updated
-  */
-
-  /*
-    DELETE shorthands
-
-    this.del('/contacts/:id');
-    this.del('/contacts/:id', 'user'); // specify the type of resource to be deleted
-
-    // Single object + related resources. Make sure parent resource is first.
-    this.del('/contacts/:id', ['contact', 'addresses']);
-  */
-
-  /*
-    Function fallback. Manipulate data in the db via
-
-      - db.{collection}
-      - db.{collection}.find(id)
-      - db.{collection}.where(query)
-      - db.{collection}.update(target, attrs)
-      - db.{collection}.remove(target)
-
-    // Example: return a single object with related models
-    this.get('/contacts/:id', function(db, request) {
-      var contactId = +request.params.id;
-
+    if(request.requestBody === expected) {
       return {
-        contact: db.contacts.find(contactId),
-        addresses: db.addresses.where({contact_id: contactId})
+        access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
+        user_id: 1,
+        token_type: "bearer",
+        expires_in: 7200
       };
-    });
-
-  */
+    } else {
+      return new Mirage.Response(400, {}, {
+        errors: [
+          {
+            id: "INVALID_GRANT",
+            title: "Invalid grant",
+            detail: "The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.",
+            status: 401
+          }
+        ]
+      });
+    }
+  });
 }
-
-/*
-You can optionally export a config that is only loaded during tests
-export function testConfig() {
-
-}
-*/
