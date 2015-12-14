@@ -1,14 +1,15 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
-var App;
+
+let application;
 
 module('Integration: Login', {
   beforeEach: function() {
-    App = startApp();
+    application = startApp();
   },
   afterEach: function() {
-    Ember.run(App, App.destroy);
+    Ember.run(application, application.destroy);
   }
 });
 
