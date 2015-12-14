@@ -9,7 +9,7 @@ module('Integration: Login', {
     application = startApp();
   },
   afterEach: function() {
-    Ember.run(application, application.destroy);
+    Ember.run(application, 'destroy');
   }
 });
 
