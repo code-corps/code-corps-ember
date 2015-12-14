@@ -47,12 +47,12 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'staging') {
     ENV.redis.url = process.env.STAGING_REDIS_URL;
-    ENV.s3.bucket: process.env.STAGING_S3_BUCKET;
+    ENV.s3.bucket = process.env.STAGING_S3_BUCKET;
   }
 
   if (deployTarget === 'production') {
     ENV.redis.url = process.env.PRODUCTION_REDIS_URL;
-    ENV.s3.bucket: process.env.PRODUCTION_S3_BUCKET;
+    ENV.s3.bucket = process.env.PRODUCTION_S3_BUCKET;
   }
 
   // Note: if you need to build some configuration asynchronously,ou can return
