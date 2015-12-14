@@ -16,10 +16,10 @@ module.exports = function(defaults) {
       fingerprintOptions.prepend = 'http://localhost:4200/';
     break;
     case 'staging':
-      fingerprintOptions.prepend = 'TODO';
+      fingerprintOptions.prepend = 'https://d3onq9263d8on4.cloudfront.net/';
     break;
     case 'production':
-      fingerprintOptions.prepend = 'https://d34ffs4dj251fe.cloudfront.net/';
+      fingerprintOptions.prepend = 'https://d3pgew4wbk2vb1.cloudfront.net/';
     break;
   }
 

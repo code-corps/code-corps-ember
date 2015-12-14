@@ -35,6 +35,11 @@ module.exports = function(environment) {
     }
   }
 
+  if (environment === 'staging') {
+    ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
+    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/oauth/token/';
+  }
+
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';

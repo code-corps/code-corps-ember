@@ -37,20 +37,20 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'staging' || deployTarget === 'production') {
-    ENV.build.environment = 'production';
     ENV.s3 = {
-      prefix: 'code-corps-ember',
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     }
   }
 
   if (deployTarget === 'staging') {
+    ENV.build.environment = 'staging';
     ENV.redis.url = process.env.STAGING_REDIS_URL;
     ENV.s3.bucket = process.env.STAGING_S3_BUCKET;
   }
 
   if (deployTarget === 'production') {
+    ENV.build.environment = 'production';
     ENV.redis.url = process.env.PRODUCTION_REDIS_URL;
     ENV.s3.bucket = process.env.PRODUCTION_S3_BUCKET;
   }
