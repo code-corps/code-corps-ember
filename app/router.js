@@ -10,7 +10,6 @@ Router.map(function() {
   this.route('member', { path: '/:memberSlug' }, function() {
     this.route('project', { path: '/:projectSlug' });
   });
-  this.route('user');
 });
 
 export default Router;
