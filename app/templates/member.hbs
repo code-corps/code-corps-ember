@@ -1,0 +1,8 @@
+<p>Name: {{model.model.name}}</p>
+<p>Username: {{model.model.username}}</p>
+{{#if isOrganization}}
+  {{organization-details organization=model.model}}
+{{/if}}
+{{#if isUser}}
+  {{user-details user=model.model}}
+{{/if}}
