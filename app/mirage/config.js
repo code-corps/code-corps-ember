@@ -25,4 +25,24 @@ export default function() {
       });
     }
   });
+
+  this.get('/users/:id', function(db, request) {
+    let id = request.params.id;
+
+    return {
+      data: {
+        type: 'users',
+        id: id,
+        attributes: db.users.find(id)
+      }
+    };
+  });
+
+  this.get('/users', function(db) {
+    return {
+      data: db.users.map(attrs => (
+        {type: 'users', id: attrs.id, attributes: attrs }
+      ))
+    };
+  });
 }
