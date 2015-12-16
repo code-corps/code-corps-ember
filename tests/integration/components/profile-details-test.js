@@ -29,3 +29,17 @@ test('it renders all user details', function(assert) {
   assert.equal(this.$('[name=website]').text(), "example.com");
   assert.equal(this.$('[name=biography]').text(), "A test user");
 });
+
+test('it can toggle between view and edit mode at will', function(assert) {
+  this.render(hbs`{{profile-details}}`);
+
+  assert.equal(this.$('.edit').length, 0);
+
+  this.$('.start-edit').click();
+
+  assert.equal(this.$('.edit').length, 1);
+
+  this.$('.cancel-edit').click();
+
+  assert.equal(this.$('.edit').length, 0);
+});

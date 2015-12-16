@@ -1,9 +1,12 @@
 {{#if isEditing}}
   <strong>Edit mode not implemented yet</strong>
+  <div><button class="cancel-edit" {{action 'cancel'}}>Cancel</button></div>
 {{else}}
   <strong> View mode not implemented yet</strong>
   <div>Username: <span name="username">{{user.username}}</span></div>
   <div>Twitter: <span name="twitter">{{user.twitter}}</span></div>
   <div>Website: <span name="website">{{user.website}}</span></div>
   <div>Biography: <span name="biography">{{user.biography}}</span></div>
+
+  <div><button class="start-edit" {{action 'edit'}}>Edit</button></div>
 {{/if}}

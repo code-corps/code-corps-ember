@@ -29,6 +29,5 @@
   "white": false,
   "eqnull": true,
   "esnext": true,
-  "unused": true,
-  "server": true
+  "unused": true
 }
