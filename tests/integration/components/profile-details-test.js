@@ -16,10 +16,10 @@ test('it renders', function(assert) {
 });
 
 var user = {
-  username: "testuser",
-  twitter: "@testuser",
-  website: "example.com",
-  biography: "A test user",
+  username: 'testuser',
+  twitter: '@testuser',
+  website: 'example.com',
+  biography: 'A test user',
 };
 
 test('it renders all user details', function(assert) {
@@ -30,16 +30,19 @@ test('it renders all user details', function(assert) {
 
   this.render(hbs`{{profile-details user=user}}`);
 
-  assert.equal(this.$('[name=username]').text(), "testuser");
-  assert.equal(this.$('[name=twitter]').text(), "@testuser");
-  assert.equal(this.$('[name=website]').text(), "example.com");
-  assert.equal(this.$('[name=biography]').text(), "A test user");
+  assert.equal(this.$('[name=username]').text(), 'testuser');
+  assert.equal(this.$('[name=twitter]').text(), '@testuser');
+  assert.equal(this.$('[name=website]').text(), 'example.com');
+  assert.equal(this.$('[name=biography]').text(), 'A test user');
 });
 
 test('it can toggle between view and edit mode at will', function(assert) {
   assert.expect(3);
 
-  this.render(hbs`{{profile-details}}`);
+  user.rollback = Ember.RSVP.resolve;
+  this.set('user', user);
+
+  this.render(hbs`{{profile-details user=user}}`);
 
   assert.equal(this.$('.edit').length, 0);
 
@@ -59,21 +62,21 @@ test('it renders edit elements properly', function(assert) {
 
   this.render(hbs`{{profile-details user=user isEditing=true}}`);
 
-  assert.equal(this.$('input[name=username]').val(), "testuser");
-  assert.equal(this.$('input[name=twitter]').val(), "@testuser");
-  assert.equal(this.$('input[name=website]').val(), "example.com");
-  assert.equal(this.$('input[name=biography]').val(), "A test user");
+  assert.equal(this.$('input[name=username]').val(), 'testuser');
+  assert.equal(this.$('input[name=twitter]').val(), '@testuser');
+  assert.equal(this.$('input[name=website]').val(), 'example.com');
+  assert.equal(this.$('input[name=biography]').val(), 'A test user');
 
   assert.equal(this.$('.save').length, 1);
 });
 
-test('it calls save method on user when save is clicked', function(assert) {
+test('it calls save on user when save button is clicked', function(assert) {
   assert.expect(1);
-  var called = false;
 
+  var called = false;
   user.save = function() {
     called = true;
-    return new Ember.RSVP.resolve();
+    return Ember.RSVP.resolve();
   };
 
   this.set('user', user);
@@ -83,4 +86,23 @@ test('it calls save method on user when save is clicked', function(assert) {
   this.$('.save').click();
 
   assert.ok(called, 'Save method on user was called.');
+});
+
+
+test('it calls rollback on user when cancel button is clicked', function(assert) {
+  assert.expect(1);
+
+  var called = false;
+  user.rollback = function() {
+    called = true;
+    return Ember.RSVP.resolve();
+  };
+
+  this.set('user', user);
+
+  this.render(hbs`{{profile-details user=user isEditing=true}}`);
+
+  this.$('.cancel-edit').click();
+
+  assert.ok(called, 'Rollback method on user was called.');
 });

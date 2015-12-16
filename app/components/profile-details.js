@@ -10,7 +10,10 @@ export default Ember.Component.extend({
     },
 
     cancel() {
-      this.set('isEditing', false);
+      var component = this;
+      this.get('user').rollback().then(function() {
+        component.set('isEditing', false);
+      });
     },
 
     save() {
