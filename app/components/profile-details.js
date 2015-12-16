@@ -11,6 +11,13 @@ export default Ember.Component.extend({
 
     cancel() {
       this.set('isEditing', false);
-    }
+    },
+
+    save() {
+      var component = this;
+      this.get('user').save().then(function() {
+        component.set('isEditing', false);
+      });
+    },
   }
 });
