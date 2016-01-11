@@ -1,9 +1,17 @@
 <form>
- <label for="username">Username</label>
- {{input name="username" type="text"}}
- <label for="email">Email</label>
- {{input name="email" type="text"}}
- <label for="password">Password</label>
- {{input name="password" type="email"}}
- {{input name="signup" type="submit"}}
+  <div>
+    <label for="username">Username</label>
+    {{input name="username" type="text" placeholder='Username' value=user.username}}
+  </div>
+  <div>
+    <label for="email">Email</label>
+    {{input name="email" type="text" placeholder='Email' value=user.email}}
+  </div>
+  <div>
+    <label for="password">Password</label>
+    {{input name="password" type="password" placeholder='Password' value=user.password}}
+  </div>
+  <div>
+    <input name="signup" type="submit" value='Sign up' {{action 'signup'}} />
+  </div>
 </form>
