@@ -11,3 +11,15 @@ test('it renders', function(assert) {
   assert.equal(this.$('.login-form').length, 1);
 });
 
+test('it renders required ui elements', function(assert) {
+  this.render(hbs`{{login-form}}`);
+
+  let $component = this.$('.login-form');
+  assert.equal($component.find('form').length, 1, 'The form renders');
+
+  let $form = $component.find('form');
+  assert.equal($form.find('input#identification').length, 1, 'The identification field renders');
+  assert.equal($form.find('input#password').length, 1, 'The password field renders');
+
+  assert.equal($form.find('button#login').length, 1, 'The login button renders');
+});
