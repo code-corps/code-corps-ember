@@ -14,6 +14,24 @@ module('Integration: Signup', {
   }
 });
 
+test('Signup form is accessible from the main site', (assert) => {
+  assert.expect(2);
+
+  visit('/');
+
+  andThen(() => {
+    assert.equal(find('a.signup').length, 1, 'Link to sign-up route is visible');
+    click('a.signup');
+  });
+
+
+  andThen(() => {
+    assert.equal(currentPath(), 'signup');
+  });
+
+
+});
+
 test('Succesful signup is possible', (assert) => {
   assert.expect(3);
 
