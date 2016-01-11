@@ -1,6 +1,7 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import Mirage from 'ember-cli-mirage';
 
 let application;
 
@@ -13,7 +14,7 @@ module('Integration: Signup', {
   }
 });
 
-test("Succesful signup is possible", (assert) => {
+test('Succesful signup is possible', (assert) => {
   assert.expect(3);
 
   visit('/signup');
@@ -103,5 +104,92 @@ test('Succesful signup also logs user in', (assert) => {
       token_type: "bearer",
       expires_in: 7200
     };
+  });
+});
+
+test('Failed signup due to invalid data displays validation errors', (assert) => {
+  assert.expect(1);
+
+  visit('/signup');
+
+  andThen(() => {
+    click('[name=signup]');
+  });
+
+  let signUpDone = assert.async();
+
+  server.post('/users/', () => {
+    signUpDone();
+
+    return new Mirage.Response(422, {}, {
+      errors: [
+        {
+          id: "VALIDATION_ERROR",
+          source: { pointer:"data/attributes/email" },
+          detail:"is invalid",
+          status: 422
+        },
+        {
+          id:"VALIDATION_ERROR",
+          source: { pointer:"data/attributes/email" },
+          detail: "can't be blank",
+          status: 422
+        },
+        {
+          id: "VALIDATION_ERROR",
+          source: { pointer: "data/attributes/password" },
+          detail: "can't be blank",
+          status: 422
+        },
+        {
+          id: "VALIDATION_ERROR",
+          source: { pointer: "data/attributes/username" },
+          detail: "can't be blank",
+          status: 422
+        },
+        {
+          id: "VALIDATION_ERROR",
+          source: { pointer: "data/attributes/username" },
+          detail: "may only contain alphanumeric characters, underscores, or single hyphens, and cannot begin or end with a hyphen or underscore",
+          status: 422
+        }
+      ]
+    });
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 5);
+  });
+});
+
+test('Failed signup due to other issues displays error from the response', (assert) => {
+  assert.expect(2);
+
+  visit('/signup');
+
+  andThen(() => {
+    click('[name=signup]');
+  });
+
+  let signUpDone = assert.async();
+
+  server.post('/users/', () => {
+    signUpDone();
+
+    return new Mirage.Response(400, {}, {
+      errors: [
+        {
+          id: "UNKNOWN ERROR",
+          title: "An unknown error",
+          detail:"Something happened",
+          status: 400
+        }
+      ]
+    });
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 1);
+    assert.equal(find('.error').text(), 'Adapter operation failed');
   });
 });

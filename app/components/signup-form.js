@@ -27,6 +27,10 @@ export default Ember.Component.extend({
 
       this.get('user').save().then(() => {
         this.signIn(credentials);
+      }).catch((error) => {
+        if (error.errors.length === 1) {
+          this.set('error', error);
+        }
       });
     }
   }
