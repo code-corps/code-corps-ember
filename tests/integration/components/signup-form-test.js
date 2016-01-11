@@ -23,7 +23,9 @@ test('it renders required ui elements', function(assert) {
   assert.equal($component.find('form').length, 1, 'The form renders');
 
   let $form = $component.find('form');
-  assert.equal($form.find('[name=username]').length, 1, 'The username field renders');
-  assert.equal($form.find('[name=email]').length, 1, 'The email field renders');
-  assert.equal($form.find('[name=password]').length, 1, 'The password field renders');
+  assert.equal($form.find('input[name=username]').length, 1, 'The username field renders');
+  assert.equal($form.find('input[name=email]').length, 1, 'The email field renders');
+  assert.equal($form.find('input[name=password]').length, 1, 'The password field renders');
+
+  assert.equal($form.find('input[name=signup]').length, 1, 'The signup button renders');
 });
