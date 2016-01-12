@@ -1,9 +1,17 @@
-<form {{action 'authenticate' on='submit'}}>
-  <label for="identification">Login</label>
-  {{input id='identification' placeholder='Enter Login' value=identification}}
-  <label for="password">Password</label>
-  {{input id='password' placeholder='Enter Password' type='password' value=password}}
-  <button id='login' type="submit">Login</button>
+<form {{action "authenticate" on="submit"}}>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="identification">Email</label>
+    </div>
+    {{input id="identification" autofocus="autofocus" placeholder="name@email.com" value=identification}}
+  </div>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="password">Password</label>
+    </div>
+    {{input id="password" placeholder="Password" type="password" value=password}}
+  </div>
+  <button id="login" type="submit">Login</button>
 
   {{#if errors}}
     {{#each errors.errors as |error|}}
