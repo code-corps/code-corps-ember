@@ -1,8 +1,9 @@
 <div class="menu container">
   {{#if session.isAuthenticated}}
-    <a {{action 'invalidateSession'}}>Logout</a>
+    <a class="logout" {{action 'invalidateSession'}}>Logout</a>
   {{else}}
-    {{#link-to 'login'}}Login{{/link-to}}
+    {{#link-to 'login' class="login"}}Login{{/link-to}}
+    {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
   {{/if}}
 </div>
 <div class="main container">
