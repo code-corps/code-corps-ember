@@ -27,10 +27,13 @@ export default function() {
     }
   });
 
-  this.get('/:slug', function(db, request) {
+  // for getting members
+  this.get('/:memberSlug', function(db, request) {
     // sadly, we have to do all of this manually, due to mirage not supporting
     // JSON API or relationships in general at this moment
-    let members = db.members.filterBy('slug', request.params.slug);
+
+    // findBy is behaving extremely strangely, so we're using filterBy()[0]
+    let members = db.members.filterBy('slug', request.params.memberSlug);
     let member = members[0];
 
     let model = member.model;
@@ -39,6 +42,7 @@ export default function() {
       data: {
         id: member.id,
         type: 'members',
+        attributes: member
       }
     };
 
@@ -51,10 +55,12 @@ export default function() {
       let type = model.type === 'user' ? 'users' : 'organizations';
 
       // add a relationship object
-      responseJSON.data.relationships.model = { data: { id: model.id, type: type } };
+      responseJSON.data.relationships = {
+        model: { data: { id: model.id, type: type } }
+      };
 
-      // also need to convert model into an include-formatted json, so we can include it
-      let modelJson = {
+      // also need to include the model into the payload
+      responseJSON.included = [{
         type: type,
         id: model.id,
         data: {
@@ -62,17 +68,10 @@ export default function() {
           type: type,
           attributes: model
         }
-      };
-
-      responseJSON.included = [modelJson];
-
-      delete member.model;
+      }];
     }
 
-    responseJSON.data.attributes = member;
-
     return responseJSON;
-
   });
 
 }
