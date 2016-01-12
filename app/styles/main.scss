@@ -1,0 +1,7 @@
+html {
+  font-family: "Open Sans", sans-serif;
+}
+
+.container {
+  @include outer-container(980px);
+}
