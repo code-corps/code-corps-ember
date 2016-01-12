@@ -5,6 +5,8 @@ export default ApplicationAdapter.extend({
   urlForQueryRecord: function(query) {
     query = query || {};
 
+    // if there are slug and memberSlug properties in the query, we
+    // need to build the url as (prefix/)host/memberSlug/slug
     if (query.slug && query.memberSlug) {
       var url = [];
       var host = Ember.get(this, 'host');
@@ -24,6 +26,8 @@ export default ApplicationAdapter.extend({
     }
   },
 
+  // need to delete slug and memberSlug properties from the query.
+  // otherwise, they will get auto-added to the end of our url
   sortQueryParams: function(query) {
     query = query || {};
     if (query.slug && query.memberSlug) {

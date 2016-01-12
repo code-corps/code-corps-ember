@@ -5,6 +5,8 @@ export default ApplicationAdapter.extend({
   urlForQueryRecord: function(query) {
     query = query || {};
 
+    // if the query contains a slug property, then the URL for the member is
+    // formed as (prefix/)(host)/slug
     if (query.slug) {
       var url = [];
       var host = Ember.get(this, 'host');
@@ -23,6 +25,8 @@ export default ApplicationAdapter.extend({
     }
   },
 
+  // need to drop out the slug query parameter,
+  // otherwise it will get auto-added to the end of the url
   sortQueryParams: function(query) {
     query = query || {};
     if (query.slug) {
