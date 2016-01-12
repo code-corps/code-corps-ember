@@ -5,3 +5,7 @@ html {
 .container {
   @include outer-container(980px);
 }
+
+.error {
+  color: $error-text-color;
+}

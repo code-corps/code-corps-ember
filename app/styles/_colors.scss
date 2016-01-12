@@ -1,5 +1,6 @@
 // Colors
 $gray: #CCC;
+$red: red;
 
 // Defaults
 $primary-color: #CCC;
@@ -7,3 +8,6 @@ $primary-color: #CCC;
 // Borders
 $border-default: $gray;
 $border-focus: #51A7E8;
+
+// Errors
+$error-text-color: $red;
