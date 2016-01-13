@@ -45,3 +45,20 @@ test('it renders each post in the list if no filter is set', function(assert) {
   assert.equal(this.$('.post.task').length, 1, 'Total number of tasks is correct');
   assert.equal(this.$('.post.issue').length, 1, 'Total number of issues is correct');
 });
+
+test('it renders each post in the list if no filter is set', function(assert) {
+  let posts = generatePosts(1, 1, 1, 1);
+  this.set('posts', posts);
+
+  this.render(hbs`{{project-post-list posts=posts}}`);
+
+  this.$('.filter-ideas').click();
+  andThen(() => {
+    console.log('about to assert');
+    assert.equal(this.$('.post').length, 1, 'Total number of posts is correct');
+    assert.equal(this.$('.post.idea').length, 1, 'Total number of ideas is correct');
+    assert.equal(this.$('.post.progress').length, 0, 'Total number of progress posts is correct');
+    assert.equal(this.$('.post.task').length, 0, 'Total number of tasks is correct');
+    assert.equal(this.$('.post.issue').length, 0, 'Total number of issues is correct');
+  });
+});

@@ -1,4 +1,8 @@
-{{#each posts as |post|}}
+<button class="filter-ideas" {{action 'filterBy' 'idea'}}>Only show ideas</button>
+<button class="filter-progress-posts" {{action 'filterBy' 'progress'}}>Only show progress posts</button>
+<button class="filter-tasks" {{action 'filterBy' 'task'}}>Only show tasks</button>
+<button class="filter-issues" {{action 'filterBy' 'issue'}}>Only show Issues</button>
+{{#each filteredPosts as |post|}}
   <div class="post {{post.postType}}">
     {{post.title}}
   </div>
