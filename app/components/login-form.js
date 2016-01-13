@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  session: Ember.inject.service('session'),
+export default Ember.Component.extend({
+  classNames: ['login-form'],
+
+  session: Ember.inject.service(),
 
   actions: {
     authenticate() {

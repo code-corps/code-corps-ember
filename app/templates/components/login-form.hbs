@@ -1,0 +1,23 @@
+<form {{action "authenticate" on="submit"}}>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="identification">Email</label>
+    </div>
+    {{input id="identification" autofocus="autofocus" placeholder="name@email.com" value=identification}}
+  </div>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="password">Password</label>
+    </div>
+    {{input id="password" placeholder="Password" type="password" value=password}}
+  </div>
+  <div class="input-group">
+    <button id="login" type="submit">Login</button>
+  </div>
+
+  {{#if errors}}
+    {{#each errors.errors as |error|}}
+      <p class="error">{{error.detail}}</p>
+    {{/each}}
+  {{/if}}
+</form>
