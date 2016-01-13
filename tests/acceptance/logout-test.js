@@ -19,10 +19,10 @@ test("Logging out", function(assert) {
   authenticateSession(application);
   visit('/');
   andThen(function() {
-    assert.equal(find('a').text(), "Logout", "Page contains logout link");
+    assert.equal(find('a.logout').text(), "Logout", "Page contains logout link");
     click('a');
   });
   andThen(function() {
-    assert.equal(find('a').text(), "Login", "Page contains login link");
+    assert.equal(find('a.login').text(), "Login", "Page contains login link");
   });
 });

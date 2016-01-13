@@ -1,0 +1,14 @@
+#{$all-buttons} {
+  background: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 14px 10px;
+  font-size: 1em;
+}
+
+#{$all-buttons-hover} {
+  cursor: pointer;
+  background: darken($primary-color, 10%);
+  @include transition(background 0.2s ease-in);
+}

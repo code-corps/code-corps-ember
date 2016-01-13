@@ -38,7 +38,7 @@ test("it displays the profile-details component", (assert) => {
 });
 
 test("it allows editing of users profile", (assert) => {
-  assert.expect(1);
+  assert.expect(4);
 
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -58,14 +58,11 @@ test("it allows editing of users profile", (assert) => {
 
   server.patch('/users/' + user.id, (db, request) => {
     let params = JSON.parse(request.requestBody).data.attributes;
-    let expectedParams = {
-      username: 'edited',
-      twitter: '@edited',
-      website: 'edit.com',
-      biography: 'Lorem edit'
-    };
 
-    assert.deepEqual(params, expectedParams);
+    assert.equal(params.username, 'edited');
+    assert.equal(params.twitter, '@edited');
+    assert.equal(params.website, 'edit.com');
+    assert.equal(params.biography, 'Lorem edit');
     done();
 
     return {

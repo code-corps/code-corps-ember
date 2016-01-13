@@ -1,0 +1,35 @@
+<form>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="username">Username</label>
+    </div>
+    {{input name="username" type="text" placeholder='Username' value=user.username}}
+    {{#each user.errors.username as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="email">Email</label>
+    </div>
+    {{input name="email" type="text" placeholder='Email' value=user.email}}
+    {{#each user.errors.email as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <div class="input-label">
+      <label for="password">Password</label>
+    </div>
+    {{input name="password" type="password" placeholder='Password' value=user.password}}
+    {{#each user.errors.password as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <input name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
+  </div>
+  {{#if error}}
+    <div class="error">{{error.message}}</div>
+  {{/if}}
+</form>
