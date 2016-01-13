@@ -14,9 +14,10 @@ module('Integration: Project', {
 });
 
 test('It renders all the required ui elements', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
-  let project = server.create('project', { slug: 'test_project' });
+  let posts = server.createList('post', 5);
+  let project = server.create('project', { slug: 'test_project', posts: posts });
   let user = server.create('user', { username: 'test_user', projects: [project] });
   server.create('member', { slug: 'test_user', model: user });
 
@@ -25,5 +26,6 @@ test('It renders all the required ui elements', function(assert) {
   andThen(function() {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
     assert.equal(find('.project-post-list').length, 1, 'project-post-list component is rendered');
+    assert.equal(find('.project-post-list .post').length, 5, 'correct number of posts is rendered');
   });
 });

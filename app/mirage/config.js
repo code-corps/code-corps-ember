@@ -89,6 +89,23 @@ export default function() {
       }
     };
 
+    if (project.posts && project.posts.length > 0) {
+      responseJSON.data.relationships = {};
+      responseJSON.data.relationships.posts = {
+        data: project.posts.map(function(post) {
+          return { id: post.id, type: 'posts' };
+        })
+      };
+
+      responseJSON.included = project.posts.map(function(post) {
+        return {
+          id: post.id,
+          type: 'posts',
+          attributes: post
+        };
+      });
+    }
+
     return responseJSON;
   });
 }

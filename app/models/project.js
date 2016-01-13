@@ -5,4 +5,6 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   iconThumbUrl: DS.attr('string'),
   iconLargeUrl: DS.attr('string'),
+
+  posts: DS.hasMany('posts')
 });
