@@ -90,5 +90,4 @@ test('it renders posts based on which filter the user selects', function(assert)
   assert.equal(this.$('.post.progress').length, 0, 'Total number of progress posts is correct');
   assert.equal(this.$('.post.task').length, 0, 'Total number of tasks is correct');
   assert.equal(this.$('.post.issue').length, 1, 'Total number of issues is correct');
-
 });

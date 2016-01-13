@@ -7,6 +7,6 @@ export default Mirage.Factory.extend({
   icon_large_url: faker.image.imageUrl,
 
   slug() {
-    return this.title.toLowerCase();
+    return this.title().toLowerCase();
   }
 });

@@ -74,4 +74,21 @@ export default function() {
     return responseJSON;
   });
 
+  this.get('/:memberSlug/:projectSlug', (db, request) => {
+    let memberSlug = request.params.memberSlug;
+    let projectSlug = request.params.projectSlug;
+
+    let member = db.members.filterBy('slug', memberSlug)[0];
+    let project = member.model.projects.filterBy('slug', projectSlug)[0];
+
+    let responseJSON = {
+      data: {
+        id: project.id,
+        type: 'projects',
+        attributes: project
+      }
+    };
+
+    return responseJSON;
+  });
 }
