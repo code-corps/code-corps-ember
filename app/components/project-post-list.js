@@ -7,8 +7,6 @@ export default Ember.Component.extend({
     let posts = this.get('posts');
     let filter = this.get('type');
 
-    console.log('filtered');
-
     if (filter) {
       return posts.filterBy('postType', filter);
     } else {
@@ -19,7 +17,6 @@ export default Ember.Component.extend({
   actions: {
     filterBy(type) {
       this.set('filter', type);
-      console.log('filtering by ', type);
     }
   }
 });
