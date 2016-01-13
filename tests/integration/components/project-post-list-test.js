@@ -33,6 +33,12 @@ function generatePosts(ideaCount, progressCount, taskCount, issueCount) {
   return posts;
 }
 
+test('it renders a message if the post count is 0', function(assert) {
+  this.render(hbs`{{project-post-list}}`);
+
+  assert.equal(this.$('.no-posts').length, 1, 'The message is rendered');
+});
+
 test('it renders each post in the list if no filter is set', function(assert) {
   let posts = generatePosts(1, 1, 1, 1);
   this.set('posts', posts);
@@ -46,7 +52,7 @@ test('it renders each post in the list if no filter is set', function(assert) {
   assert.equal(this.$('.post.issue').length, 1, 'Total number of issues is correct');
 });
 
-test('it renders each post in the list if no filter is set', function(assert) {
+test('it renders posts based on which filter the user selects', function(assert) {
   let posts = generatePosts(1, 1, 1, 1);
   this.set('posts', posts);
 
