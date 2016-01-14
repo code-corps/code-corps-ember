@@ -1,7 +1,6 @@
 import DS from 'ember-data';
 import Model from 'code-corps-ember/models/model';
 
-
 export default Model.extend({
   username: DS.attr('string'),
   website: DS.attr('string'),
@@ -9,6 +8,4 @@ export default Model.extend({
   biography: DS.attr('string'),
   email: DS.attr('string'),
   password: DS.attr('string'),
-
-  type: 'user'
 });

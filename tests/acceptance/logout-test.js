@@ -5,7 +5,7 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 
 let application;
 
-module('Integration: Login', {
+module('Acceptance: Login', {
   beforeEach: function() {
     application = startApp();
   },

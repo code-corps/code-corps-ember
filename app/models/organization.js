@@ -5,5 +5,4 @@ var attr = DS.attr;
 
 export default Model.extend({
   name: attr(),
-  type: 'organization'
 });
