@@ -19,11 +19,12 @@ test('It renders all the required ui elements', function(assert) {
   let member = server.schema.member.create({ slug: 'test_user', modelType: 'user' });
   let user = member.createUser({ username: 'test_user' });
   member.save();
-  let project = user.createProject({ slug: 'test_project', ownerType: 'user' });
+  let project = user.createProject({ slug: 'test_project' });
   user.save();
   for (let i = 0; i < 5; i++) {
     project.createPost();
   }
+
   project.save();
 
   visit('/test_user/test_project');

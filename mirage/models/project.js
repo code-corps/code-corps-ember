@@ -16,9 +16,22 @@ let ProjectModel = Model.extend({
     } else if (type === 'organization') {
       this.createOrganization(attrs);
     }
+  },
 
+  newOwner(attrs, type) {
+    if (!type) {
+      throw new Error('Type is required');
+    }
+
+    if (type === 'user') {
+      this.newUser(attrs);
+    } else if (type === 'organization') {
+      this.newOrganization(attrs);
+    }
   }
 });
+
+// the following properties serve as an owner polymorphic relationship
 
 Object.defineProperty(ProjectModel.prototype, 'owner', {
   get () {
@@ -32,8 +45,10 @@ Object.defineProperty(ProjectModel.prototype, 'owner', {
   set (owner) {
     if (owner.modelName === 'user') {
       this.user = owner;
+      this.organization = undefined;
     } else if (owner.modelName === 'organization') {
       this.organization = owner;
+      this.user = undefined;
     }
   },
 });
@@ -46,14 +61,29 @@ Object.defineProperty(ProjectModel.prototype, 'ownerId', {
   },
 
   set (id) {
-    if (id && !schema) {
-      var i = 0;
+    if (id && !this._schema[this.ownerType].find(id)) {
       throw 'Couldn\'t find ' + this.ownerType + ' with id = ' + id;
     } else {
-      this.attrs[this.ownerType + 'Id'] = id;
+      if (this.ownerType === 'user') {
+        this.userId = id;
+        this.organizationId = undefined;
+      } else if (this.ownerType === 'organization') {
+        this.organizationId = id;
+        this.userId = undefined;
+      }
       return this;
     }
   },
+});
+
+Object.defineProperty(ProjectModel.prototype, 'ownerType', {
+  get () {
+    if (this.user) {
+      return 'user';
+    } else if (this.organization) {
+      return 'organization';
+    }
+  }
 });
 
 export default ProjectModel;
