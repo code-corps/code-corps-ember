@@ -8,5 +8,4 @@ export default Factory.extend({
   twitter: faker.internet.userName,
   username: faker.internet.userName,
   website: faker.internet.url,
-  type: 'user'
 });

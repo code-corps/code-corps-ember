@@ -11,10 +11,12 @@ let ProjectModel = Model.extend({
       throw new Error('Type is required');
     }
 
+    this.ownerType = type;
+
     if (type === 'user') {
-      this.createUser(attrs);
+      return this.createUser(attrs);
     } else if (type === 'organization') {
-      this.createOrganization(attrs);
+      return this.createOrganization(attrs);
     }
   },
 
@@ -23,10 +25,12 @@ let ProjectModel = Model.extend({
       throw new Error('Type is required');
     }
 
+    this.ownerType = type;
+
     if (type === 'user') {
-      this.newUser(attrs);
+      return this.newUser(attrs);
     } else if (type === 'organization') {
-      this.newOrganization(attrs);
+      return this.newOrganization(attrs);
     }
   }
 });
@@ -43,6 +47,8 @@ Object.defineProperty(ProjectModel.prototype, 'owner', {
   },
 
   set (owner) {
+    this.ownerType = owner.modelName;
+
     if (owner.modelName === 'user') {
       this.user = owner;
       this.organization = undefined;
@@ -58,31 +64,16 @@ Object.defineProperty(ProjectModel.prototype, 'ownerId', {
     if (this.ownerType) {
       return this.attrs[this.ownerType + 'Id'];
     }
-  },
-
-  set (id) {
-    if (id && !this._schema[this.ownerType].find(id)) {
-      throw 'Couldn\'t find ' + this.ownerType + ' with id = ' + id;
-    } else {
-      if (this.ownerType === 'user') {
-        this.userId = id;
-        this.organizationId = undefined;
-      } else if (this.ownerType === 'organization') {
-        this.organizationId = id;
-        this.userId = undefined;
-      }
-      return this;
-    }
-  },
+  }
 });
 
 Object.defineProperty(ProjectModel.prototype, 'ownerType', {
   get () {
-    if (this.user) {
-      return 'user';
-    } else if (this.organization) {
-      return 'organization';
-    }
+    return this.attrs.ownerType;
+  },
+
+  set (type) {
+    this.attrs.ownerType = type;
   }
 });
 

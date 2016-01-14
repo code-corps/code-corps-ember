@@ -6,6 +6,4 @@ export default Factory.extend({
   slug() {
     return this.name().toLowerCase();
   },
-
-  type: 'organization'
 });

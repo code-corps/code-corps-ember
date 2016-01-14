@@ -5,6 +5,8 @@ export default Ember.Route.extend({
     return this.store.queryRecord('project', {
       slug: params.projectSlug,
       memberSlug: params.memberSlug
+    }).then(function(model) {
+      return model;
     });
   }
 });
