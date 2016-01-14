@@ -2,9 +2,9 @@ import MirageModelWithPolymorphicBelongsToSerializer from './model-with-polymorp
 
 export default MirageModelWithPolymorphicBelongsToSerializer.extend({
   // we're faking a polymorphic relationship by including
-  // user and organization in the serialize method
-  include: ['organization', 'user'],
+  // user and organization in the serialize method,
+  include: ['organization', 'user', 'posts'],
   // we then rename whichever of those is present
-  // into 'model'
-  renameTo: 'model'
+  // into 'owner'
+  renameTo: 'owner'
 });

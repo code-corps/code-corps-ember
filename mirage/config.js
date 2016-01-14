@@ -38,9 +38,11 @@ export default function() {
     let projectSlug = request.params.projectSlug;
 
     let member = schema.member.where({ 'slug': memberSlug })[0];
-    let project = member.projects.where({ 'slug': projectSlug })[0];
 
-    return project;
+    // required to fake a polymorphic relationship with members and users/organizations
+    let model = member.modelType === 'user' ? member.user : member.organization;
+
+    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
 }

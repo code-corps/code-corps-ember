@@ -4,7 +4,7 @@ import startApp from '../helpers/start-app';
 
 let application;
 
-module('Integration: Project', {
+module('Acceptance: Project', {
   beforeEach: function() {
     application = startApp();
   },
@@ -16,10 +16,15 @@ module('Integration: Project', {
 test('It renders all the required ui elements', function(assert) {
   assert.expect(3);
 
-  let posts = server.createList('post', 5);
-  let project = server.create('project', { slug: 'test_project', posts: posts });
-  let user = server.create('user', { username: 'test_user', projects: [project] });
-  server.create('member', { slug: 'test_user', model: user });
+  let member = server.schema.member.create({ slug: 'test_user', modelType: 'user' });
+  let user = member.createUser({ username: 'test_user' });
+  member.save();
+  let project = user.createProject({ slug: 'test_project', ownerType: 'user' });
+  user.save();
+  for (let i = 0; i < 5; i++) {
+    project.createPost();
+  }
+  project.save();
 
   visit('/test_user/test_project');
 
