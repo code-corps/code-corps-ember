@@ -25,4 +25,24 @@ export default function() {
       });
     }
   });
+
+  // for getting members
+  this.get('/:memberSlug', function(schema, request) {
+    let member = schema.member.where({'slug': request.params.memberSlug })[0];
+    return member;
+  });
+
+  //for getting projects
+  this.get('/:memberSlug/:projectSlug', (schema, request) => {
+    let memberSlug = request.params.memberSlug;
+    let projectSlug = request.params.projectSlug;
+
+    let member = schema.member.where({ 'slug': memberSlug })[0];
+
+    // required to fake a polymorphic relationship with members and users/organizations
+    let model = member.modelType === 'user' ? member.user : member.organization;
+
+    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+  });
+
 }

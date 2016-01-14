@@ -16,6 +16,7 @@
     "lodash": "~3.7.0",
     "Faker": "~3.0.0",
     "ember-simple-auth": "0.8.0",
+    "es5-shim": "^4.0.5",
     "neat": "~1.7.2",
     "bourbon": "4.2.6"
   }

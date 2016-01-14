@@ -5,7 +5,7 @@ import Mirage from 'ember-cli-mirage';
 
 let application;
 
-module('Integration: Signup', {
+module('Acceptance: Signup', {
   beforeEach: function() {
     application = startApp();
   },
