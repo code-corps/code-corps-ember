@@ -4,7 +4,7 @@ import startApp from '../helpers/start-app';
 
 let application;
 
-module('Integration: Member', {
+module('Acceptance: Member', {
   beforeEach: function() {
     application = startApp();
   },

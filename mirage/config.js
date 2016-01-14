@@ -29,13 +29,6 @@ export default function() {
   // for getting members
   this.get('/:memberSlug', function(schema, request) {
     let member = schema.member.where({'slug': request.params.memberSlug })[0];
-
-    if (member.userId) {
-      member.model = member.user;
-    } else if (member.organizationId) {
-      member.model = member.organization;
-    }
-
     return member;
   });
 
