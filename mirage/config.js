@@ -26,23 +26,26 @@ export default function() {
     }
   });
 
-  this.get('/users/:id', function(db, request) {
-    let id = request.params.id;
+  this.get('/users/:id');
 
-    return {
-      data: {
-        type: 'users',
-        id: id,
-        attributes: db.users.find(id)
-      }
-    };
+  this.get('/users');
+
+  // for getting members
+  this.get('/:memberSlug', function(schema, request) {
+    let member = schema.member.where({'slug': request.params.memberSlug })[0];
+    return member;
   });
 
-  this.get('/users', function(db) {
-    return {
-      data: db.users.map(attrs => (
-        {type: 'users', id: attrs.id, attributes: attrs }
-      ))
-    };
+  //for getting projects
+  this.get('/:memberSlug/:projectSlug', (schema, request) => {
+    let memberSlug = request.params.memberSlug;
+    let projectSlug = request.params.projectSlug;
+
+    let member = schema.member.where({ 'slug': memberSlug })[0];
+
+    // required to fake a polymorphic relationship with members and users/organizations
+    let model = member.modelType === 'user' ? member.user : member.organization;
+
+    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 }

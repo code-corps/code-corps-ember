@@ -3,11 +3,9 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 
-/*globals server*/
-
 let application;
 
-module('Integration: Profile', {
+module('Acceptance: Profile', {
   beforeEach: function() {
     application = startApp();
   },

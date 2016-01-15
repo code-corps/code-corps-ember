@@ -9,6 +9,8 @@ Router.map(function() {
   this.route('login');
   this.route('signup');
   this.route('profile');
+  this.route('member', { path: '/:memberSlug' });
+  this.route('project', { path: '/:memberSlug/:projectSlug' });
 });
 
 export default Router;
