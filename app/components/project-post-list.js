@@ -44,7 +44,10 @@ export default Ember.Component.extend({
 
   actions: {
     filterBy(postType) {
-      this.set('postType', postType);
+      this.setProperties({
+        'postType': postType,
+        'pageNumber': 1
+      });
     },
 
     setPage(pageNumber) {

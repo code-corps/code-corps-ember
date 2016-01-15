@@ -45,7 +45,7 @@ export default function() {
   // for getting project posts
   this.get("/projects/:projectId/posts", (schema, request) => {
     let projectId = request.params.projectId;
-    let postType = request.queryParams.postType;
+    let postType = request.queryParams.post_type;
 
     const pageSize = 10;
     // this is sadly how mirage parses a nested query, so we need to access it
@@ -59,7 +59,7 @@ export default function() {
     let posts;
 
     if (postType) {
-      posts = project.posts.filter((p) =>  p.type === postType );
+      posts = project.posts.filter((p) =>  p.postType === postType );
     } else {
       posts = project.posts;
     }

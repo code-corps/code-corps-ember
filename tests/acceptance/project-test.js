@@ -121,3 +121,63 @@ test('Paging works', (assert) => {
     assert.equal(find('.post').length, 2, 'second page of 2 records is rendered');
   });
 });
+
+test('Paging and filtering combined works', (assert) => {
+  // server.create uses factories. server.schema.<obj>.create does not
+  let userId = server.create('user').id;
+  let memberId = server.create('member').id;
+  let projectId = server.create('project').id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  let member = server.schema.member.find(memberId);
+  let user = server.schema.user.find(userId);
+  member.model = user;
+  member.save();
+
+  let project = server.schema.project.find(projectId);
+  project.owner = user;
+  project.save();
+
+  // since there's no polymorphic relationship involved, it's easy to create posts
+  server.createList('post', 12, { postType: 'task', projectId: projectId });
+  server.createList('post', 12, { postType: 'issue', projectId: projectId });
+
+  visit(`${member.slug}/${project.slug}`);
+
+  andThen(() => {
+    assert.equal(find('.post').length, 10, 'first page of 10 posts is rendered');
+    click('.pager .page.2');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post').length, 10, 'second page of 10 posts is rendered');
+    click('.pager .page.3');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post').length, 4, 'third page of 4 posts is rendered');
+    click('.filter-tasks');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post.task').length, 10, 'first page of 10 tasks is rendered');
+    click('.pager .page.2');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post.task').length, 2, 'second page of 2 tasks is rendered');
+    assert.equal(find('.post').length, 2, 'there are no other posts rendered');
+    click('.filter-issues');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post.issue').length, 10, 'first page of 10 issues is rendered');
+    click('.pager .page.2');
+  });
+
+  andThen(() => {
+    assert.equal(find('.post.issue').length, 2, 'second page of 2 issues is rendered');
+    assert.equal(find('.post').length, 2, 'there are no other posts rendered');
+  });
+});
