@@ -39,12 +39,37 @@ export default function() {
 
     let member = schema.member.where({ 'slug': memberSlug })[0];
 
-    // required to fake a polymorphic relationship with members and users/organizations
-    let model = member.modelType === 'user' ? member.user : member.organization;
-
-    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return member.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
-  this.get("/posts", { coalesce: true });
+  // for getting project posts
+  this.get("/projects/:projectId/posts", (schema, request) => {
+    let projectId = request.params.projectId;
+    let postType = request.queryParams.postType;
 
+    const pageSize = 10;
+    // this is sadly how mirage parses a nested query, so we need to access it
+    // via string accessor
+    let pageNumber = request.queryParams['page[number]'];
+
+    // debug flag
+
+    let project = schema.project.find(projectId);
+
+    let posts;
+
+    if (postType) {
+      posts = project.posts.filter((p) =>  p.type === postType );
+    } else {
+      posts = project.posts;
+    }
+
+
+
+    return posts.filter((p, index) => {
+      let pageNumberNotSpecified = !pageNumber;
+      let indexIsOnSpecifiedPage = (index >= (pageNumber - 1) * pageSize) && (index < pageNumber * pageSize);
+      return pageNumberNotSpecified || indexIsOnSpecifiedPage;
+    });
+  });
 }
