@@ -6,7 +6,7 @@ export default DS.Model.extend({
   iconThumbUrl: DS.attr('string'),
   iconLargeUrl: DS.attr('string'),
 
-  posts: DS.hasMany('posts'),
+  posts: DS.hasMany('posts', { async: true }),
 
   owner: DS.belongsTo('model', { polymorphic: true }),
   ownerType: DS.attr('string')

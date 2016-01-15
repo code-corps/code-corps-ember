@@ -45,4 +45,6 @@ export default function() {
     return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
+  this.get("/posts", { coalesce: true });
+
 }
