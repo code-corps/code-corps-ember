@@ -109,3 +109,29 @@ test('If there is less than 5 pages of records in total, it only renders buttons
   assert.equal(this.$('.page-button.1').length, 1, 'Page 1 is rendered');
   assert.equal(this.$('.page-button.2').length, 1, 'Page 2 is rendered');
 });
+
+test('If we are currently on the first page, the previous page button does not render', function(assert) {
+  this.set('options', {
+    pageSize: 5,
+    totalRecords: 7,
+    currentPage: 1,
+    totalPages: 2
+  });
+
+  this.render(hbs`{{pager-control options=options}}`);
+
+  assert.equal(this.$('.previous-page').length, 0, 'The button does not render');
+});
+
+test('If we are currently on the last page, the next page button does not render', function(assert) {
+  this.set('options', {
+    pageSize: 5,
+    totalRecords: 7,
+    currentPage: 2,
+    totalPages: 2
+  });
+
+  this.render(hbs`{{pager-control options=options}}`);
+
+  assert.equal(this.$('.next-page').length, 0, 'The button does not render');
+});

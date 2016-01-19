@@ -31,6 +31,7 @@ export default Ember.Component.extend({
       let centerPage = this.get('centerPage');
       let range = Math.floor(pagesToShow / 2);
       let pagesToShowIsEven = pagesToShow % 2 === 0;
+
       return {
         lower: centerPage - range,
         upper: centerPage + (pagesToShowIsEven ? range - 1 : range)
@@ -47,6 +48,14 @@ export default Ember.Component.extend({
     }
 
     return pages;
+  }),
+
+  onFirstPage: Ember.computed('currentPage', function() {
+    return this.get('currentPage') === 1;
+  }),
+
+  onLastPage: Ember.computed('currentPage', 'totalPages', function() {
+    return this.get('currentPage') === this.get('totalPages');
   }),
 
   actions: {
