@@ -7,7 +7,6 @@ moduleForComponent('profile-details', 'Integration | Component | profile details
 });
 
 test('it renders', function(assert) {
-
   assert.expect(1);
 
   this.render(hbs`{{profile-details}}`);
@@ -23,13 +22,13 @@ var user = {
 };
 
 test('it renders form elements properly', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.set('user', user);
 
   this.render(hbs`{{profile-details user=user}}`);
 
-  assert.equal(this.$('[name=name]').val(), 'Test User');
+  assert.equal(this.$('input[name=name]').val(), 'Test User');
   assert.equal(this.$('input[name=twitter]').val(), '@testuser');
   assert.equal(this.$('input[name=website]').val(), 'example.com');
   assert.equal(this.$('input[name=biography]').val(), 'A test user');
