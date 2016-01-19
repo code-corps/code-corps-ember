@@ -112,9 +112,9 @@ test('Paging of posts works', (assert) => {
   visit(`${member.slug}/${project.slug}`);
 
   andThen(() => {
-    assert.equal(find('.pager').length, 1, 'pager is rendered');
+    assert.equal(find('.pager-control').length, 1, 'pager is rendered');
     assert.equal(find('.post-item').length, 10, 'first page of 10 records is rendered');
-    click('.pager .page.2');
+    click('.pager-control .page-button.2');
   });
 
   andThen(() => {
@@ -147,12 +147,12 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'first page of 10 posts is rendered');
-    click('.pager .page.2');
+    click('.pager-control .page-button.2');
   });
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'second page of 10 posts is rendered');
-    click('.pager .page.3');
+    click('.pager-control .page-button.3');
   });
 
   andThen(() => {
@@ -162,7 +162,7 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item.task').length, 10, 'first page of 10 tasks is rendered');
-    click('.pager .page.2');
+    click('.pager-control .page-button.2');
   });
 
   andThen(() => {
@@ -173,7 +173,7 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item.issue').length, 10, 'first page of 10 issues is rendered');
-    click('.pager .page.2');
+    click('.pager-control .page-button.2');
   });
 
   andThen(() => {

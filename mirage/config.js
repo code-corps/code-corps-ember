@@ -47,12 +47,8 @@ export default function() {
     let projectId = request.params.projectId;
     let postType = request.queryParams.post_type;
 
-    const pageSize = 10;
-    // this is sadly how mirage parses a nested query, so we need to access it
-    // via string accessor
     let pageNumber = request.queryParams['page[number]'];
-
-    // debug flag
+    let pageSize = request.queryParams['page[size]'] || 10;
 
     let project = schema.project.find(projectId);
 

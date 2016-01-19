@@ -12,7 +12,6 @@ export default Ember.Component.extend({
     });
   },
 
-
   filteredPosts: Ember.computed('project', 'pageNumber', 'postType', function() {
     let filterParams = {
       projectId: this.get('project.id'),
@@ -30,16 +29,16 @@ export default Ember.Component.extend({
     return this.get('store').query('post', filterParams);
   }),
 
-  pages: Ember.computed('pageNumber', function() {
-    let currentPage = this.get('pageNumber');
-
-    // creates an array of length 5, ranging
-    // from currentPage - 2 to currentPage + 2
-    let pages = new Ember.A();
-    for (let i = -2; i <= 2; i++) {
-      pages.push(i + currentPage);
-    }
-    return pages;
+  options: Ember.computed('filteredPosts', function() {
+    return this.get('filteredPosts').then(function(posts) {
+      let meta = posts.get('meta');
+      return {
+        currentPage: meta.current_page,
+        pageSize: meta.page_size,
+        totalPages: meta.total_pages,
+        totalRecords: meta.total_records
+      };
+    });
   }),
 
   actions: {
@@ -50,18 +49,8 @@ export default Ember.Component.extend({
       });
     },
 
-    setPage(pageNumber) {
+    pageChanged(pageNumber) {
       this.set('pageNumber', pageNumber);
-    },
-
-    nextPage() {
-      let currentPage = this.get('pageNumber');
-      this.set('pageNumber', currentPage + 1);
-    },
-
-    previousPage() {
-      let currentPage = this.get('pageNumber');
-      this.set('pageNumber', currentPage - 1);
     }
   }
 });
