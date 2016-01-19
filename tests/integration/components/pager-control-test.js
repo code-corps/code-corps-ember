@@ -106,4 +106,6 @@ test('If there is less than 5 pages of records in total, it only renders buttons
   this.render(hbs`{{pager-control options=options}}`);
 
   assert.equal(this.$('.page-button').length, 2, 'Only two pages total are rendered');
+  assert.equal(this.$('.page-button.1').length, 1, 'Page 1 is rendered');
+  assert.equal(this.$('.page-button.2').length, 1, 'Page 2 is rendered');
 });
