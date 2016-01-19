@@ -36,7 +36,7 @@ test("it displays the profile-details component", (assert) => {
 });
 
 test("it allows editing of users profile", (assert) => {
-  assert.expect(4);
+  assert.expect(3);
 
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -45,7 +45,6 @@ test("it allows editing of users profile", (assert) => {
 
   andThen(() => {
     click('.start-edit');
-    fillIn('input[name=username]', 'edited');
     fillIn('input[name=twitter]', '@edited');
     fillIn('input[name=website]', 'edit.com');
     fillIn('input[name=biography]', 'Lorem edit');
@@ -57,7 +56,6 @@ test("it allows editing of users profile", (assert) => {
   server.patch('/users/' + user.id, (db, request) => {
     let params = JSON.parse(request.requestBody).data.attributes;
 
-    assert.equal(params.username, 'edited');
     assert.equal(params.twitter, '@edited');
     assert.equal(params.website, 'edit.com');
     assert.equal(params.biography, 'Lorem edit');

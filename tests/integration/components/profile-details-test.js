@@ -56,13 +56,12 @@ test('it can toggle between view and edit mode at will', function(assert) {
 });
 
 test('it renders edit elements properly', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
 
   this.set('user', user);
 
   this.render(hbs`{{profile-details user=user isEditing=true}}`);
 
-  assert.equal(this.$('input[name=username]').val(), 'testuser');
   assert.equal(this.$('input[name=twitter]').val(), '@testuser');
   assert.equal(this.$('input[name=website]').val(), 'example.com');
   assert.equal(this.$('input[name=biography]').val(), 'A test user');
