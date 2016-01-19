@@ -53,7 +53,7 @@ test("it allows editing of users profile", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/users/' + user.id, (db, request) => {
+  server.patch('/users/me', (db, request) => {
     let params = JSON.parse(request.requestBody).data.attributes;
 
     assert.equal(params.twitter, '@edited');
