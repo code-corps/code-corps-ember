@@ -1,0 +1,7 @@
+.alert {
+  padding: 5px 0;
+  &.alert-success {
+    background: $success-background;
+    color: white;
+  }
+}

@@ -36,7 +36,7 @@ test("it displays the profile-details component", (assert) => {
 });
 
 test("it allows editing of users profile", (assert) => {
-  assert.expect(3);
+  assert.expect(5);
 
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -67,6 +67,11 @@ test("it allows editing of users profile", (assert) => {
         attributes: params
       }
     };
+  });
+
+  andThen(() => {
+    assert.equal(find('.alert-success').length, 1);
+    assert.equal(find('.alert-success p').text(), "Profile updated successfully");
   });
 });
 

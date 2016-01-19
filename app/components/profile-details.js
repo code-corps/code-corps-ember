@@ -9,7 +9,12 @@ export default Ember.Component.extend({
     },
 
     save() {
-      this.get('user').save();
+      const flashMessages = Ember.get(this, 'flashMessages');
+
+      this.get('user').save()
+      .then(function() {
+        flashMessages.success("Profile updated successfully");
+      });
     },
   }
 });
