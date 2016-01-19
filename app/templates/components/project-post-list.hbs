@@ -3,9 +3,7 @@
 <button class="filter-tasks" {{action 'filterBy' 'task'}}>Only show tasks</button>
 <button class="filter-issues" {{action 'filterBy' 'issue'}}>Only show Issues</button>
 {{#each filteredPosts as |post|}}
-  <div class="post {{post.postType}}">
-    {{post.title}}
-  </div>
+  {{post-item post=post}}
 {{else}}
   <div class="no-posts">There are currently no posts of any type created for this project</div>
 {{/each}}

@@ -32,11 +32,11 @@ test('It renders all the required ui elements', (assert) => {
   andThen(function() {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
     assert.equal(find('.project-post-list').length, 1, 'project-post-list component is rendered');
-    assert.equal(find('.project-post-list .post').length, 5, 'correct number of posts is rendered');
+    assert.equal(find('.project-post-list .post-item').length, 5, 'correct number of posts is rendered');
   });
 });
 
-test('Filtering works', (assert) => {
+test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
   // server.create uses factories. server.schema.<obj>.create does not
@@ -65,31 +65,31 @@ test('Filtering works', (assert) => {
   visit(`${member.slug}/${project.slug}`);
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post').length, 10, 'correct number of posts is rendered');
+    assert.equal(find('.project-post-list .post-item').length, 10, 'correct number of posts is rendered');
     click('.filter-ideas');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post.idea').length, 1, 'only ideas are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 1, 'only ideas are rendered');
     click('.filter-progress-posts');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post.progress').length, 2, 'only progress posts are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 2, 'only progress posts are rendered');
     click('.filter-tasks');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post.task').length, 3, 'only tasks are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 3, 'only tasks are rendered');
     click('.filter-issues');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post.issue').length, 4, 'only issues are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 4, 'only issues are rendered');
   });
 });
 
-test('Paging works', (assert) => {
+test('Paging of posts works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
   let userId = server.create('user').id;
   let memberId = server.create('member').id;
@@ -113,16 +113,16 @@ test('Paging works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.pager').length, 1, 'pager is rendered');
-    assert.equal(find('.post').length, 10, 'first page of 10 records is rendered');
+    assert.equal(find('.post-item').length, 10, 'first page of 10 records is rendered');
     click('.pager .page.2');
   });
 
   andThen(() => {
-    assert.equal(find('.post').length, 2, 'second page of 2 records is rendered');
+    assert.equal(find('.post-item').length, 2, 'second page of 2 records is rendered');
   });
 });
 
-test('Paging and filtering combined works', (assert) => {
+test('Paging and filtering of posts combined works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
   let userId = server.create('user').id;
   let memberId = server.create('member').id;
@@ -146,38 +146,38 @@ test('Paging and filtering combined works', (assert) => {
   visit(`${member.slug}/${project.slug}`);
 
   andThen(() => {
-    assert.equal(find('.post').length, 10, 'first page of 10 posts is rendered');
+    assert.equal(find('.post-item').length, 10, 'first page of 10 posts is rendered');
     click('.pager .page.2');
   });
 
   andThen(() => {
-    assert.equal(find('.post').length, 10, 'second page of 10 posts is rendered');
+    assert.equal(find('.post-item').length, 10, 'second page of 10 posts is rendered');
     click('.pager .page.3');
   });
 
   andThen(() => {
-    assert.equal(find('.post').length, 4, 'third page of 4 posts is rendered');
+    assert.equal(find('.post-item').length, 4, 'third page of 4 posts is rendered');
     click('.filter-tasks');
   });
 
   andThen(() => {
-    assert.equal(find('.post.task').length, 10, 'first page of 10 tasks is rendered');
+    assert.equal(find('.post-item.task').length, 10, 'first page of 10 tasks is rendered');
     click('.pager .page.2');
   });
 
   andThen(() => {
-    assert.equal(find('.post.task').length, 2, 'second page of 2 tasks is rendered');
-    assert.equal(find('.post').length, 2, 'there are no other posts rendered');
+    assert.equal(find('.post-item.task').length, 2, 'second page of 2 tasks is rendered');
+    assert.equal(find('.post-item').length, 2, 'there are no other posts rendered');
     click('.filter-issues');
   });
 
   andThen(() => {
-    assert.equal(find('.post.issue').length, 10, 'first page of 10 issues is rendered');
+    assert.equal(find('.post-item.issue').length, 10, 'first page of 10 issues is rendered');
     click('.pager .page.2');
   });
 
   andThen(() => {
-    assert.equal(find('.post.issue').length, 2, 'second page of 2 issues is rendered');
-    assert.equal(find('.post').length, 2, 'there are no other posts rendered');
+    assert.equal(find('.post-item.issue').length, 2, 'second page of 2 issues is rendered');
+    assert.equal(find('.post-item').length, 2, 'there are no other posts rendered');
   });
 });
