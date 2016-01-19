@@ -23,7 +23,7 @@ var user = {
 };
 
 test('it renders form elements properly', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
 
   this.set('user', user);
 
@@ -53,23 +53,4 @@ test('it calls save on user when save button is clicked', function(assert) {
   this.$('.save').click();
 
   assert.ok(called, 'Save method on user was called.');
-});
-
-
-test('it calls rollback on user when cancel button is clicked', function(assert) {
-  assert.expect(1);
-
-  var called = false;
-  user.rollback = function() {
-    called = true;
-    return Ember.RSVP.resolve();
-  };
-
-  this.set('user', user);
-
-  this.render(hbs`{{profile-details user=user}}`);
-
-  this.$('.cancel-edit').click();
-
-  assert.ok(called, 'Rollback method on user was called.');
 });
