@@ -1,26 +1,20 @@
-{{#if isEditing}}
-  <div>
-    <label for="twitter">Twitter</label>
-    {{input type="text" name="twitter" value=user.twitter}}
-  </div>
-  <div>
-    <label for="website">Website</label>
-    {{input type="text" name="website" value=user.website}}
-  </div>
-  <div>
-    <label for="biography">Biography</label>
-    {{input type="text" name="biography" value=user.biography}}
-  </div>
+<div class="input-group">
+  <label class="input-label" for="name">Name</label>
+  {{input type="text" name="name" value=user.name}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="twitter">Twitter</label>
+  {{input type="text" name="twitter" value=user.twitter}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="website">Website</label>
+  {{input type="text" name="website" value=user.website}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="biography">Biography</label>
+  {{input type="text" name="biography" value=user.biography}}
+</div>
 
-  <div>
-    <button class="cancel-edit" {{action 'cancel'}}>Cancel</button>
-    <button class="save" {{action 'save'}}>Save</button>
-  </div>
-{{else}}
-  <div>Username: <span name="username">{{user.username}}</span></div>
-  <div>Twitter: <span name="twitter">{{user.twitter}}</span></div>
-  <div>Website: <span name="website">{{user.website}}</span></div>
-  <div>Biography: <span name="biography">{{user.biography}}</span></div>
-
-  <div><button class="start-edit" {{action 'edit'}}>Edit</button></div>
-{{/if}}
+<div class="input-group">
+  <button class="save" {{action 'save'}}>Update Profile</button>
+</div>

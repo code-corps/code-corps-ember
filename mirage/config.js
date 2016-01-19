@@ -30,21 +30,21 @@ export default function() {
 
   this.get('/users');
 
-  // for getting members
-  this.get('/:memberSlug', function(schema, request) {
-    let member = schema.member.where({'slug': request.params.memberSlug })[0];
-    return member;
+  // for getting slugged routes
+  this.get('/:sluggedRouteSlug', function(schema, request) {
+    let sluggedRoute = schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+    return sluggedRoute;
   });
 
   //for getting projects
-  this.get('/:memberSlug/:projectSlug', (schema, request) => {
-    let memberSlug = request.params.memberSlug;
+  this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
 
-    let member = schema.member.where({ 'slug': memberSlug })[0];
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    // required to fake a polymorphic relationship with members and users/organizations
-    let model = member.modelType === 'user' ? member.user : member.organization;
+    // required to fake a polymorphic relationship with slugged routes and users/organizations
+    let model = sluggedRoute.modelType === 'user' ? sluggedRoute.user : sluggedRoute.organization;
 
     return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });

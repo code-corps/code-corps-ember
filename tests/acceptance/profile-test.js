@@ -17,7 +17,7 @@ module('Acceptance: Profile', {
 test("it requires authentication", (assert) => {
   assert.expect(1);
 
-  visit('profile');
+  visit('settings/profile');
   andThen(() => {
     assert.equal(currentRouteName(), 'login');
   });
@@ -29,7 +29,7 @@ test("it displays the profile-details component", (assert) => {
   var user = server.create('user');
 
   authenticateSession(application, { user_id: user.id });
-  visit('profile');
+  visit('settings/profile');
   andThen(() => {
     assert.equal(find('.profile-details').length, 1);
   });
@@ -41,10 +41,9 @@ test("it allows editing of users profile", (assert) => {
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  visit('profile');
+  visit('settings/profile');
 
   andThen(() => {
-    click('.start-edit');
     fillIn('input[name=twitter]', '@edited');
     fillIn('input[name=website]', 'edit.com');
     fillIn('input[name=biography]', 'Lorem edit');

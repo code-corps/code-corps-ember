@@ -16,9 +16,9 @@ module('Acceptance: Project', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
-  let member = server.schema.member.create({ slug: 'test_user' });
-  let user = member.createModel({ username: 'test_user' }, 'user');
-  member.save();
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user' });
+  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  sluggedRoute.save();
   let project = user.createProject({ slug: 'test_project' });
   user.save();
   for (let i = 0; i < 5; i++) {
@@ -39,9 +39,9 @@ test('It renders all the required ui elements', (assert) => {
 test('Filtering works', (assert) => {
   assert.expect(5);
 
-  let member = server.schema.member.create({ slug: 'test_user', modelType: 'user' });
-  let user = member.createModel({ username: 'test_user' }, 'user');
-  member.save();
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user', modelType: 'user' });
+  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  sluggedRoute.save();
   let project = user.createProject({ slug: 'test_project' });
   user.save();
 

@@ -1,0 +1,8 @@
+<p>Name: {{sluggedRoute.model.name}}</p>
+<p>Username: {{sluggedRoute.model.username}}</p>
+{{#if isOrganization}}
+  {{organization-details organization=sluggedRoute.model}}
+{{/if}}
+{{#if isUser}}
+  {{user-details user=sluggedRoute.model}}
+{{/if}}

@@ -1,8 +1,0 @@
-<p>Name: {{member.model.name}}</p>
-<p>Username: {{member.model.username}}</p>
-{{#if isOrganization}}
-  {{organization-details organization=member.model}}
-{{/if}}
-{{#if isUser}}
-  {{user-details user=member.model}}
-{{/if}}
