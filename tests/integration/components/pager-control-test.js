@@ -94,3 +94,16 @@ test('Individual page buttons set the current page to the one specified', functi
   assert.equal(this.$('.page-button.current').text().trim(), '5', 'Current page is now 5');
 
 });
+
+test('If there is less than 5 pages of records in total, it only renders buttons for those pages', function (assert) {
+  this.set('options', {
+    pageSize: 5,
+    totalRecords: 7,
+    currentPage: 1,
+    totalPages: 2
+  });
+
+  this.render(hbs`{{pager-control options=options}}`);
+
+  assert.equal(this.$('.page-button').length, 2, 'Only two pages total are rendered');
+});

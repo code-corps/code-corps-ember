@@ -18,18 +18,31 @@ export default Ember.Component.extend({
     return (currentPage >= minCenterPage) ? currentPage: minCenterPage;
   }),
 
-  pages: Ember.computed('centerPage', 'pagesToShow', function() {
-    let centerPage = this.get('centerPage');
+  bounds: Ember.computed('centerPage', 'pagesToShow', 'totalPages', function () {
     let pagesToShow = this.get('pagesToShow');
+    let totalPages = this.get('totalPages');
 
-    let range = Math.floor(pagesToShow / 2);
-    let pagesToShowIsEven = pagesToShow % 2 === 0;
+    if (totalPages < pagesToShow) {
+      return {
+        lower: 1,
+        upper: totalPages
+      };
+    } else {
+      let centerPage = this.get('centerPage');
+      let range = Math.floor(pagesToShow / 2);
+      let pagesToShowIsEven = pagesToShow % 2 === 0;
+      return {
+        lower: centerPage - range,
+        upper: centerPage + (pagesToShowIsEven ? range - 1 : range)
+      };
+    }
+  }),
 
-    let lowerBound = centerPage - range;
-    let upperBound = centerPage + (pagesToShowIsEven ? range - 1 : range);
+  pages: Ember.computed('bounds', function() {
+    let bounds = this.get('bounds');
 
     var pages = [];
-    for (let i = lowerBound; i <= upperBound; i++) {
+    for (let i = bounds.lower; i <= bounds.upper; i++) {
       pages.push(i);
     }
 
