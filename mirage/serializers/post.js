@@ -16,26 +16,10 @@ export default MirageApplicationSerializer.extend({
       response.included = this.included;
     }
 
-    response.meta = this._generateMeta(modelOrCollection, request);
+    if (modelOrCollection.meta) {
+      response.meta = modelOrCollection.meta;
+    }
 
     return response;
-  },
-
-  _generateMeta(modelOrCollection, request) {
-    if (modelOrCollection instanceof Model) {
-      return {};
-    } else {
-      let pageNumber = request.queryParams['page[number]'] || 1;
-      let pageSize = request.queryParams['page[size]'] || 10;
-      let totalRecords = modelOrCollection.length;
-      let totalPages = Math.ceil(totalRecords / pageSize);
-      return {
-        total_records: totalRecords,
-        total_pages: totalPages,
-        page_size: pageSize,
-        current_page: pageNumber
-      };
-    }
   }
-
 });

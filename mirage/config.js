@@ -61,11 +61,21 @@ export default function() {
     }
 
 
-
-    return posts.filter((p, index) => {
+    let postsPage = posts.filter((p, index) => {
       let pageNumberNotSpecified = !pageNumber;
       let indexIsOnSpecifiedPage = (index >= (pageNumber - 1) * pageSize) && (index < pageNumber * pageSize);
       return pageNumberNotSpecified || indexIsOnSpecifiedPage;
     });
+
+    // hacky, but the only way I could find to pass in a mocked meta object
+    // for our pagination tests
+    postsPage.meta = {
+      total_records: posts.length,
+      total_pages: Math.ceil(posts.length / pageSize),
+      page_size: pageSize,
+      current_page: pageNumber || 1
+    };
+
+    return postsPage;
   });
 }
