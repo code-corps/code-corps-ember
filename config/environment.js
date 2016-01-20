@@ -27,7 +27,11 @@ module.exports = function(environment) {
       showProgress: true,
 
       // service defaults
-      injectionFactories: [ 'route', 'controller', 'view', 'component' ],
+
+      // do not inject into factories automatically
+      // use Ember.inject.service() explicitly where needed instead
+      // since that's the new Ember convention
+      injectionFactories: [],
       preventDuplicates: true
     }
   };
@@ -45,7 +49,7 @@ module.exports = function(environment) {
 
     ENV['ember-cli-mirage'] = {
       enabled: false
-    }
+    };
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",

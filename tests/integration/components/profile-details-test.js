@@ -2,8 +2,16 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const flashServiceStub = Ember.Service.extend({
+  success() {}
+});
+
+
 moduleForComponent('profile-details', 'Integration | Component | profile details', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:flash-messages', flashServiceStub);
+  }
 });
 
 test('it renders', function(assert) {
