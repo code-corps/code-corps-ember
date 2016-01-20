@@ -16,7 +16,6 @@ export default ApplicationAdapter.extend({
 
       url = url.join('/');
       if (!host && url) { url = '/' + url; }
-      //debug flag
       return url;
     } else {
       this._super(...arguments);

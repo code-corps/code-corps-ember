@@ -3,7 +3,6 @@ import Model from 'ember-cli-mirage/orm/model';
 
 export default MirageApplicationSerializer.extend({
   serialize(modelOrCollection, request={}) {
-    //debug flag
     let response;
 
     if (modelOrCollection instanceof Model) {
