@@ -14,7 +14,14 @@ export default Ember.Component.extend({
   },
 
   reloadPosts() {
-    let filterParams = this.get('filterParams');
+    let filterParams = {};
+    filterParams.projectId = this.get('project.id');
+    filterParams.page = this.get('pageParams');
+
+    let postType = this.get('postType');
+    if (Ember.isPresent(postType)) {
+      filterParams.postType = postType;
+    }
 
     this.get('store').query('post', filterParams).then((posts) => {
       this.setProperties({
@@ -24,19 +31,8 @@ export default Ember.Component.extend({
     });
   },
 
-  filterParams: Ember.computed('project.id', 'pageNumber', 'postType', function() {
-    let filterParams = {
-      projectId: this.get('project.id'),
-      page: { number: this.get('pageNumber') }
-    };
-
-    let postType = this.get('postType');
-
-    if (Ember.isPresent(postType)) {
-      filterParams.postType = postType;
-    }
-
-    return filterParams;
+  pageParams: Ember.computed('pageNumber', function() {
+    return { number: this.get('pageNumber') };
   }),
 
   _normalizeMeta(meta) {

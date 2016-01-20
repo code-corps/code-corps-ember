@@ -2,7 +2,7 @@
   <button class="previous-page" {{action 'previousPage'}}>Previous</button>
 {{/unless}}
 {{#each pages as |page|}}
-  {{page-button tagName=button page=page currentPage=currentPage action='setPage'}}
+  {{page-button tagName='button' page=page currentPage=currentPage action='setPage'}}
 {{/each}}
 {{#unless onLastPage}}
   <button class="next-page" {{action 'nextPage'}}>Next</button>
