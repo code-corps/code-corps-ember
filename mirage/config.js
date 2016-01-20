@@ -33,6 +33,13 @@ export default function() {
   });
 
   //for getting projects
+  this.get('/:organizationSlug/projects', (schema, request) => {
+    let organizationSlug = request.params.organizationSlug;
+    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
+    return organization.projects;
+  });
+
+  //for getting single project
   this.get('/:memberSlug/:projectSlug', (schema, request) => {
     let memberSlug = request.params.memberSlug;
     let projectSlug = request.params.projectSlug;
