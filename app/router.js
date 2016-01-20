@@ -10,6 +10,7 @@ Router.map(function() {
   this.route('signup');
   this.route('member', { path: '/:memberSlug' });
   this.route('project', { path: '/:memberSlug/:projectSlug' });
+  this.route('projects', { path: '/:organizationSlug/projects'});
 });
 
 export default Router;
