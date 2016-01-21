@@ -69,7 +69,7 @@ test('A post can be successfully created', (assert) => {
   });
 });
 
-test('When post creation fails, validation errors are displayed', (assert) => {
+test('When post creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
 
   let user = server.schema.user.create({ username: 'test_user' });
@@ -125,5 +125,48 @@ test('When post creation fails, validation errors are displayed', (assert) => {
 
   andThen(() => {
     assert.equal(find('.error').length, 4);
+  });
+});
+
+test('When post creation fails due to non-validation issues, the error is displayed', (assert) => {
+  assert.expect(2);
+
+  let user = server.schema.user.create({ username: 'test_user' });
+
+  let member = server.schema.member.create({ slug: 'test_organization' });
+  let organization = member.createModel({ slug: 'test_organization' }, 'organization');
+  member.save();
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  authenticateSession(application, { user_id: user.id });
+
+  visit('/test_organization/test_project');
+
+  andThen(() => {
+    click('.new-post');
+  });
+
+  andThen(() => {
+    let postCreationDone = assert.async();
+    server.post('/posts', () => {
+      postCreationDone();
+      return new Mirage.Response(400, {}, {
+        errors: [
+          {
+            id: "UNKNOWN ERROR",
+            title: "An unknown error",
+            detail:"Something happened",
+            status: 400
+          }
+        ]
+      });
+    });
+    click('[name=submit]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 1);
+    assert.equal(find('.error').text(), 'Adapter operation failed');
   });
 });
