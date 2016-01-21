@@ -40,20 +40,26 @@ test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user', modelType: 'user' });
-  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  let organizationId = server.create('organization').id;
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
+  let projectId = server.create('project').id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  let organization = server.schema.organization.find(organizationId);
+  sluggedRoute.model = organization;
   sluggedRoute.save();
-  let project = user.createProject({ slug: 'test_project' });
-  user.save();
 
-  server.createList('post', 1, { postType: 'idea', projectId: project.id });
-  server.createList('post', 2, { postType: 'progress', projectId: project.id });
-  server.createList('post', 3, { postType: 'task', projectId: project.id });
-  server.createList('post', 4, { postType: 'issue', projectId: project.id });
-
+  let project = server.schema.project.find(projectId);
+  project.owner = organization;
   project.save();
 
-  visit(`${member.slug}/${project.slug}`);
+  server.createList('post', 1, { postType: 'idea', projectId: projectId });
+  server.createList('post', 2, { postType: 'progress', projectId: projectId });
+  server.createList('post', 3, { postType: 'task', projectId: projectId });
+  server.createList('post', 4, { postType: 'issue', projectId: projectId });
+
+  visit(`${sluggedRoute.slug}/${project.slug}`);
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 10, 'correct number of posts is rendered');
@@ -82,25 +88,25 @@ test('Post filtering by type works', (assert) => {
 
 test('Paging of posts works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
-  let userId = server.create('user').id;
-  let memberId = server.create('member').id;
+  let organizationId = server.create('organization').id;
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
+
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  let member = server.schema.member.find(memberId);
-  let user = server.schema.user.find(userId);
-  member.model = user;
-  member.save();
+  let organization = server.schema.organization.find(organizationId);
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = user;
+  project.owner = organization;
   project.save();
 
   // since there's no polymorphic relationship involved, it's easy to create posts
   server.createList('post', 12, { projectId: projectId });
 
-  visit(`${member.slug}/${project.slug}`);
+  visit(`${sluggedRoute.slug}/${project.slug}`);
 
   andThen(() => {
     assert.equal(find('.pager-control').length, 1, 'pager is rendered');
@@ -115,26 +121,26 @@ test('Paging of posts works', (assert) => {
 
 test('Paging and filtering of posts combined works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
-  let userId = server.create('user').id;
-  let memberId = server.create('member').id;
+  let organizationId = server.create('organization').id;
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
+
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  let member = server.schema.member.find(memberId);
-  let user = server.schema.user.find(userId);
-  member.model = user;
-  member.save();
+  let organization = server.schema.organization.find(organizationId);
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = user;
+  project.owner = organization;
   project.save();
 
   // since there's no polymorphic relationship involved, it's easy to create posts
   server.createList('post', 12, { postType: 'task', projectId: projectId });
   server.createList('post', 12, { postType: 'issue', projectId: projectId });
 
-  visit(`${member.slug}/${project.slug}`);
+  visit(`${sluggedRoute.slug}/${project.slug}`);
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'first page of 10 posts is rendered');
