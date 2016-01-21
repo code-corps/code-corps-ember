@@ -16,9 +16,9 @@ module('Acceptance: Project', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
-  let member = server.schema.member.create({ slug: 'test_user' });
-  let user = member.createModel({ username: 'test_user' }, 'user');
-  member.save();
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user' });
+  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  sluggedRoute.save();
   let project = user.createProject({ slug: 'test_project' });
   user.save();
   for (let i = 0; i < 5; i++) {
@@ -40,20 +40,11 @@ test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let userId = server.create('user').id;
-  let memberId = server.create('member').id;
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let member = server.schema.member.find(memberId);
-  let user = server.schema.user.find(userId);
-  member.model = user;
-  member.save();
-
-  let project = server.schema.project.find(projectId);
-  project.owner = user;
-  project.save();
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user', modelType: 'user' });
+  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  sluggedRoute.save();
+  let project = user.createProject({ slug: 'test_project' });
+  user.save();
 
   server.createList('post', 1, { postType: 'idea', projectId: project.id });
   server.createList('post', 2, { postType: 'progress', projectId: project.id });
