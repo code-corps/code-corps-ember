@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import Mirage from 'ember-cli-mirage';
 
 let application;
 
@@ -14,7 +15,7 @@ module('Acceptance: Post New', {
   }
 });
 
-test('Creating a new post works', function(assert) {
+test('A post can be successfully created', (assert) => {
   assert.expect(8);
 
   let user = server.schema.user.create({ username: 'test_user' });
@@ -65,5 +66,64 @@ test('Creating a new post works', function(assert) {
         relationships: relationships
       }
     };
+  });
+});
+
+test('When post creation fails, validation errors are displayed', (assert) => {
+  assert.expect(1);
+
+  let user = server.schema.user.create({ username: 'test_user' });
+
+  let member = server.schema.member.create({ slug: 'test_organization' });
+  let organization = member.createModel({ slug: 'test_organization' }, 'organization');
+  member.save();
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  authenticateSession(application, { user_id: user.id });
+
+  visit('/test_organization/test_project');
+
+  andThen(() => {
+    click('.new-post');
+  });
+
+  andThen(() => {
+    let postCreationDone = assert.async();
+    server.post('/posts', () => {
+      postCreationDone();
+      return new Mirage.Response(422, {}, {
+        errors: [
+          {
+            id: "VALIDATION_ERROR",
+            source: { pointer:"data/attributes/title" },
+            detail:"is invalid",
+            status: 422
+          },
+          {
+            id:"VALIDATION_ERROR",
+            source: { pointer:"data/attributes/markdown" },
+            detail: "can't be blank",
+            status: 422
+          },
+          {
+            id: "VALIDATION_ERROR",
+            source: { pointer: "data/attributes/post_type" },
+            detail: "is invalid",
+            status: 422
+          },
+          {
+            id: "VALIDATION_ERROR",
+            source: { pointer: "data/attributes/post_type" },
+            detail: "can only be one of the specified values",
+            status: 422
+          }
+      ]});
+    });
+    click('[name=submit]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 4);
   });
 });
