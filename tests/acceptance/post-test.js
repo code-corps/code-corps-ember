@@ -89,6 +89,39 @@ test('A post can be successfully created', (assert) => {
   });
 });
 
+test('When post creation succeeeds, the user is redirected to the post page for the new post', (assert) => {
+  assert.expect(2);
+
+  let user = server.schema.user.create({ username: 'test_user' });
+
+  let member = server.schema.member.create({ slug: 'test_organization' });
+  let organization = member.createModel({ slug: 'test_organization' }, 'organization');
+  member.save();
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  authenticateSession(application, { user_id: user.id });
+
+  visit('/test_organization/test_project');
+
+  andThen(() => {
+    click('.new-post');
+  });
+
+  andThen(() => {
+    fillIn('[name=title]', 'A post title');
+    fillIn('[name=markdown]', 'A post body');
+    fillIn('[name=type]', 'Task');
+    click('[name=submit]');
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.posts.post', 'Got redirected to the correct route');
+    assert.equal(server.schema.post.all().length, 1, 'A new post got created');
+  });
+
+});
+
 test('When post creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
 

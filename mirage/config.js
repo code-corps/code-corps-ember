@@ -28,6 +28,7 @@ export default function() {
 
   this.get('/users/:id');
   this.get('/posts/:id');
+  this.post('posts');
 
   // for getting members
   this.get('/:memberSlug', function(schema, request) {
