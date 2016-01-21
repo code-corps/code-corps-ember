@@ -6,20 +6,11 @@ moduleForComponent('project-post-new-form', 'Integration | Component | project p
 });
 
 test('it renders', function(assert) {
-  
+
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
 
   this.render(hbs`{{project-post-new-form}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:" + EOL +
-  this.render(hbs`
-    {{#project-post-new-form}}
-      template block text
-    {{/project-post-new-form}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.project-post-new-form').length, 1, 'The component\'s element renders');
 });

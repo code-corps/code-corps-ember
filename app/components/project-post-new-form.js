@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: ['project-post-new-form'],
+
   types: [
     {label: "Task",  slug: "task"},
     {label: "Issue", slug: "issue"},
@@ -14,15 +16,12 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     this.set('post', this.get('store').createRecord('post'));
-    debugger;
     this.get('post').set('project', this.get('project'));
   },
 
   actions: {
     submit() {
-      this.get('post').save().then(() => {
-        debugger;
-      }).catch((error) => {
+      this.get('post').save().then(Ember.K).catch((error) => {
         if (error.errors.length === 1) {
           this.set('error', error);
         }
