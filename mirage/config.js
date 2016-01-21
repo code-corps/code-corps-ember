@@ -26,7 +26,8 @@ export default function() {
     }
   });
 
-  this.get('users/:id');
+  this.get('/users/:id');
+  this.get('/posts/:id');
 
   // for getting members
   this.get('/:memberSlug', function(schema, request) {

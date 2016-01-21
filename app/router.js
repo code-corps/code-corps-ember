@@ -12,8 +12,8 @@ Router.map(function() {
   this.route('project', { path: '/:memberSlug/:projectSlug' }, function() {
     this.route('posts', function() {
       this.route('new');
+      this.route('post', { path: '/:post_id' });
     });
-    this.route('post', { path: '/post/:post_id' });
   });
 });
 

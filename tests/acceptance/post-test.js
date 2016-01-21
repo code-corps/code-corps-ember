@@ -6,13 +6,33 @@ import Mirage from 'ember-cli-mirage';
 
 let application;
 
-module('Acceptance: Post New', {
+module('Acceptance: Post', {
   beforeEach: function() {
     application = startApp();
   },
   afterEach: function() {
     Ember.run(application, 'destroy');
   }
+});
+
+test('Post details are displayed correctly', (assert) => {
+  assert.expect(3);
+
+  let member = server.schema.member.create({ slug: 'test_organization' });
+  let organization = member.createModel({ slug: 'test_organization' }, 'organization');
+  member.save();
+  let project = organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue" });
+
+  visit(`/test_organization/test_project/posts/${post.id}`);
+
+  andThen(() => {
+    assert.equal(find('.post-details .title').text().trim(), post.title);
+    assert.equal(find('.post-details .body').text().trim(), post.body);
+    assert.equal(find('.post-details .post-type').text().trim(), post.postType);
+  });
 });
 
 test('A post can be successfully created', (assert) => {
