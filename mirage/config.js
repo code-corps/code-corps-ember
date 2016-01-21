@@ -26,6 +26,8 @@ export default function() {
     }
   });
 
+  this.get('users/:id');
+
   // for getting members
   this.get('/:memberSlug', function(schema, request) {
     let member = schema.member.where({'slug': request.params.memberSlug })[0];

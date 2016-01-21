@@ -1,18 +1,19 @@
 <form>
-  {{view "select"
+  {{view "select" name="type"
        content=types
        optionValuePath="content.slug"
-       optionLabelPath="content.label"}}
+       optionLabelPath="content.label"
+       value=post.postType}}
   <div class="input-group">
     {{input name="title" type="text" placeholder="Title" value=post.title}}
-{{!--     {{#each user.errors.username as |error|}}
+    {{!--{{#each user.errors.username as |error|}}
       <p class="error">{{error.message}}</p>
-    {{/each}}
- --}}  </div>
+    {{/each}}--}}
+  </div>
   <div class="input-group">
     {{textarea name="markdown" placeholder="What's this post about?" value=post.markdown}}
   </div>
-  <input class="right" name="signup" type="submit" value="Submit" {{action 'submit'}} />
+  <input class="right" name="submit" type="submit" value="Create post" {{action 'submit'}} />
   {{#if error}}
     <div class="error">{{error.message}}</div>
   {{/if}}

@@ -7,5 +7,6 @@ export default DS.Model.extend({
   status: DS.attr('string'),
   postType: DS.attr('string'),
   likesCount: DS.attr('number'),
-  project: DS.belongsTo('project')
+  project: DS.belongsTo('project'),
+  user: DS.belongsTo('user')
 });

@@ -17,6 +17,13 @@ export default Ember.Component.extend({
     this._super(...arguments);
     this.set('post', this.get('store').createRecord('post'));
     this.get('post').set('project', this.get('project'));
+
+    let userId =  this.get('session.session.authenticated.user_id');
+    if (Ember.isPresent(userId)) {
+      this.get('store').find('user', userId).then((user) => {
+        this.get('post').set('user', user);
+      });
+    }
   },
 
   actions: {
