@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function(params) {
-    return this.store.queryRecord('member', {
-      slug: params.memberSlug
+    return this.store.queryRecord('slugged-route', {
+      slug: params.sluggedRouteSlug
     });
   }
 });

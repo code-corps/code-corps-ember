@@ -5,8 +5,8 @@ export default ApplicationAdapter.extend({
   urlForQueryRecord: function(query) {
     query = query || {};
 
-    // if the query contains a slug property, then the URL for the member is
-    // formed as (prefix/)(host)/slug
+    // if the query contains a slug property, then the URL for the slugged route
+    // is formed as (prefix/)(host)/slug
     if (query.slug) {
       var url = [];
       var host = Ember.get(this, 'host');
