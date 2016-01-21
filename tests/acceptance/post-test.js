@@ -58,7 +58,7 @@ test('A post can be successfully created', (assert) => {
     assert.equal(currentRouteName(), 'project.posts.new', 'Button takes us to the proper route');
     fillIn('[name=title]', 'A post title');
     fillIn('[name=markdown]', 'A post body');
-    fillIn('[name=type]', 'Task');
+    fillIn('[name=post-type]', 'Task');
     click('[name=submit]');
   });
 
@@ -111,7 +111,7 @@ test('When post creation succeeeds, the user is redirected to the post page for 
   andThen(() => {
     fillIn('[name=title]', 'A post title');
     fillIn('[name=markdown]', 'A post body');
-    fillIn('[name=type]', 'Task');
+    fillIn('[name=post-type]', 'Task');
     click('[name=submit]');
   });
 
