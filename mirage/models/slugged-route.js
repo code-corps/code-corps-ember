@@ -1,6 +1,6 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
-let MemberModel = Model.extend({
+let SluggedRouteModel = Model.extend({
   user: belongsTo(),
   organization: belongsTo(),
 
@@ -37,7 +37,7 @@ let MemberModel = Model.extend({
 
 // the following properties serve as an model polymorphic relationship
 
-Object.defineProperty(MemberModel.prototype, 'model', {
+Object.defineProperty(SluggedRouteModel.prototype, 'model', {
   get () {
     if (this.modelType === 'user') {
       return this.user;
@@ -59,7 +59,7 @@ Object.defineProperty(MemberModel.prototype, 'model', {
   },
 });
 
-Object.defineProperty(MemberModel.prototype, 'modelId', {
+Object.defineProperty(SluggedRouteModel.prototype, 'modelId', {
   get () {
     if (this.modelType) {
       return this.attrs[this.modelType + 'Id'];
@@ -67,7 +67,7 @@ Object.defineProperty(MemberModel.prototype, 'modelId', {
   }
 });
 
-Object.defineProperty(MemberModel.prototype, 'modelType', {
+Object.defineProperty(SluggedRouteModel.prototype, 'modelType', {
   get () {
     return this.attrs.modelType;
   },
@@ -77,4 +77,4 @@ Object.defineProperty(MemberModel.prototype, 'modelType', {
   }
 });
 
-export default MemberModel;
+export default SluggedRouteModel;

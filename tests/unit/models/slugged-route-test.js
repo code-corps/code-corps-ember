@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('member', 'Unit | Model | member', {
+moduleForModel('slugged-route', 'Unit | Model | slugged-route', {
   // Specify the other units that are required for this test.
   needs: ['model:model']
 });

@@ -16,6 +16,23 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    flashMessageDefaults: {
+      // flash message defaults
+      timeout: 2000,
+      extendedTimeout: 0,
+      priority: 200,
+      sticky: true,
+      showProgress: true,
+
+      // service defaults
+
+      // do not inject into factories automatically
+      // use Ember.inject.service() explicitly where needed instead
+      // since that's the new Ember convention
+      injectionFactories: [],
+      preventDuplicates: true
     }
   };
 
@@ -32,6 +49,22 @@ module.exports = function(environment) {
 
     ENV['ember-cli-mirage'] = {
       enabled: false
+    };
+
+    ENV.contentSecurityPolicy = {
+      'default-src': "'none'",
+      'script-src': ["'self'"],
+      // Allow fonts to be loaded from http://fonts.gstatic.com
+      'font-src': ["'self'", "https://fonts.gstatic.com"],
+      // Allow data (ajax/websocket) from api.lvh.me
+      'connect-src': ["'self'", "http://api.lvh.me:3000"],
+      // Allow images from the origin itself (i.e. current domain)
+      'img-src': "'self'",
+      // Allow inline styles and loaded CSS from http://fonts.googleapis.com
+      'style-src': ["'self'", "https://fonts.googleapis.com"],
+      // `media-src` will be omitted from policy
+      // Browser will fallback to default-src for media resources (which is to deny, see above).
+      'media-src': null
     }
   }
 
@@ -56,12 +89,16 @@ module.exports = function(environment) {
 
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'
-    }
+    };
+
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
   }
 
   if (environment === 'production') {
 
   }
-  
+
   return ENV;
 };
