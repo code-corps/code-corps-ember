@@ -43,8 +43,7 @@ export default function() {
 
     let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    // required to fake a polymorphic relationship with slugged routes and users/organizations
-    let model = sluggedRoute.modelType === 'user' ? sluggedRoute.user : sluggedRoute.organization;
+    let model = sluggedRoute.model;
 
     return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });

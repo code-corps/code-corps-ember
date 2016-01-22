@@ -16,18 +16,20 @@ module('Acceptance: Project', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user' });
-  let user = sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
   sluggedRoute.save();
-  let project = user.createProject({ slug: 'test_project' });
-  user.save();
+
+  let project = organization.createProject({ slug: 'test_project' });
+  organization.save();
   for (let i = 0; i < 5; i++) {
     project.createPost();
   }
 
   project.save();
 
-  visit('/test_user/test_project');
+  visit('/test_organization/test_project');
 
   andThen(function() {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
