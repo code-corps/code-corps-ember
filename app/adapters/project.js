@@ -5,14 +5,14 @@ export default ApplicationAdapter.extend({
   urlForQueryRecord: function(query) {
     query = query || {};
 
-    // if there are slug and memberSlug properties in the query, we
-    // need to build the url as (prefix/)host/memberSlug/slug
-    if (query.slug && query.memberSlug) {
+    // if there are slug and sluggedRouteSlug properties in the query, we
+    // need to build the url as (prefix/)host/sluggedRouteSlug/slug
+    if (query.slug && query.sluggedRouteSlug) {
       var url = [];
       var host = Ember.get(this, 'host');
       var prefix = this.urlPrefix();
 
-      url.push(encodeURIComponent(query.memberSlug));
+      url.push(encodeURIComponent(query.sluggedRouteSlug));
       url.push(encodeURIComponent(query.slug));
 
       if (prefix) { url.unshift(prefix); }
@@ -29,12 +29,12 @@ export default ApplicationAdapter.extend({
   urlForQuery: function(query) {
     query = query || {};
 
-    if (query.organizationSlug) {
+    if (query.sluggedRouteSlug) {
       var url = [];
       var host = Ember.get(this, 'host');
       var prefix = this.urlPrefix();
 
-      url.push(encodeURIComponent(query.organizationSlug));
+      url.push(encodeURIComponent(query.sluggedRouteSlug));
       url.push("projects");
 
       if (prefix) { url.unshift(prefix); }
@@ -49,15 +49,16 @@ export default ApplicationAdapter.extend({
   },
 
   // need to delete properties from the query which we do not want to see
-  // appened to the end of the url as parameters
+  // appended to the end of the url as parameters
   sortQueryParams: function(query) {
     query = query || {};
-    if (query.slug && query.memberSlug) {
+    if (query.slug) {
       delete query.slug;
-      delete query.memberSlug;
-      return query;
-    } else if(query.organizationSlug) {
-      delete query.organizationSlug;
+
+      if (query.sluggedRouteSlug)  {
+        delete query.sluggedRouteSlug;
+      }
+
       return query;
     } else {
       return this._super.apply(arguments);

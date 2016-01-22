@@ -16,9 +16,9 @@ module('Acceptance: Projects', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(2);
 
-  let member = server.schema.member.create({ slug: 'test_user' });
-  let organization = member.createModel({ slug: 'test_organization' }, 'organization');
-  member.save();
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createModel({ slug: 'test_organization' }, 'organization');
+  sluggedRoute.save();
   for (let i = 0; i < 5; i++) {
     organization.createProject({
       slug: `test_project_${i}`,

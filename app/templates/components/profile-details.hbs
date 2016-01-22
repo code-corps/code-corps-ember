@@ -1,0 +1,20 @@
+<div class="input-group">
+  <label class="input-label" for="name">Name</label>
+  {{input type="text" name="name" value=user.name}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="twitter">Twitter</label>
+  {{input type="text" name="twitter" value=user.twitter}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="website">Website</label>
+  {{input type="text" name="website" value=user.website}}
+</div>
+<div class="input-group">
+  <label class="input-label" for="biography">Biography</label>
+  {{input type="text" name="biography" value=user.biography}}
+</div>
+
+<div class="input-group">
+  <button class="save" {{action 'save'}}>Update Profile</button>
+</div>

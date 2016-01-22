@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model(params) {
     return this.store.query('project', {
-      organizationSlug: params.organizationSlug
+      sluggedRouteSlug: params.sluggedRouteSlug
     });
   },
 

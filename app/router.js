@@ -8,9 +8,10 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('login');
   this.route('signup');
-  this.route('member', { path: '/:memberSlug' });
-  this.route('project', { path: '/:memberSlug/:projectSlug' });
-  this.route('projects', { path: '/:organizationSlug/projects'});
+  this.route('profile', { path: '/settings/profile' });
+  this.route('slugged-route', { path: '/:sluggedRouteSlug' });
+  this.route('project', { path: '/:sluggedRouteSlug/:projectSlug' });
+  this.route('projects', { path: '/:sluggedRouteSlug/projects'});
 });
 
 export default Router;

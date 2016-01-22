@@ -26,10 +26,14 @@ export default function() {
     }
   });
 
-  // for getting members
-  this.get('/:memberSlug', function(schema, request) {
-    let member = schema.member.where({'slug': request.params.memberSlug })[0];
-    return member;
+  this.get('/users/:id');
+
+  this.get('/users');
+
+  // for getting slugged routes
+  this.get('/:sluggedRouteSlug', function(schema, request) {
+    let sluggedRoute = schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+    return sluggedRoute;
   });
 
   //for getting projects
@@ -39,14 +43,13 @@ export default function() {
     return organization.projects;
   });
 
-  //for getting single project
-  this.get('/:memberSlug/:projectSlug', (schema, request) => {
-    let memberSlug = request.params.memberSlug;
+  this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
 
-    let member = schema.member.where({ 'slug': memberSlug })[0];
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    return member.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
   // for getting project posts
