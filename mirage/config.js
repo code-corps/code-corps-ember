@@ -27,7 +27,6 @@ export default function() {
   });
 
   this.get('/users/:id');
-  this.get('/posts/:id');
   this.post('posts');
 
   this.get('/users');
@@ -49,5 +48,15 @@ export default function() {
     let model = sluggedRoute.modelType === 'user' ? sluggedRoute.user : sluggedRoute.organization;
 
     return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+  });
+
+  this.get('/:sluggedRouteSlug/:projectSlug/posts/:number', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
+    let projectSlug = request.params.projectSlug;
+    let number = parseInt(request.params.number);
+
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+    let project = sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return project.posts.filter((p) => { return p.number === number; })[0];
   });
 }

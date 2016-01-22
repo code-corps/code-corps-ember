@@ -2,7 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model(params) {
-    return this.store.findRecord('post', params.post_id);
+    let projectParams = this.paramsFor('project');
+
+    return this.store.queryRecord('post', {
+      sluggedRouteSlug: projectParams.sluggedRouteSlug,
+      projectSlug: projectParams.projectSlug,
+      number: params.number
+    });
   },
 
   setupController(controller, model) {

@@ -13,7 +13,7 @@ Router.map(function() {
   this.route('project', { path: '/:sluggedRouteSlug/:projectSlug' }, function() {
     this.route('posts', function() {
       this.route('new');
-      this.route('post', { path: '/:post_id' });
+      this.route('post', { path: '/:number' });
     });
   });
 });

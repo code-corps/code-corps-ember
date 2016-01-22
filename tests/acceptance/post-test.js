@@ -32,9 +32,9 @@ test('Post details are displayed correctly', (assert) => {
   project.owner = organization;
   project.save();
 
-  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue" });
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
 
-  visit(`/test_organization/test_project/posts/${post.id}`);
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
   andThen(() => {
     assert.equal(find('.post-details .title').text().trim(), post.title);
