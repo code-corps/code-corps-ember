@@ -2,7 +2,7 @@ import Mirage from 'ember-cli-mirage';
 
 export default function() {
 
-  this.post('/oauth/token', function(db, request) {
+  this.post('/oauth/token', (db, request) => {
     var expected = "grant_type=password&username=josh%40coderly.com&password=password";
 
     if(request.requestBody === expected) {
@@ -31,9 +31,8 @@ export default function() {
   this.get('/users');
 
   // for getting slugged routes
-  this.get('/:sluggedRouteSlug', function(schema, request) {
-    let sluggedRoute = schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
-    return sluggedRoute;
+  this.get('/:sluggedRouteSlug', (schema, request) => {
+    return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
   });
 
   //for getting projects
