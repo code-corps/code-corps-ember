@@ -51,7 +51,7 @@ test('Post filtering by type works', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   server.createList('post', 1, { postType: 'idea', projectId: projectId });
@@ -100,7 +100,7 @@ test('Paging of posts works', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   // since there's no polymorphic relationship involved, it's easy to create posts
@@ -133,7 +133,7 @@ test('Paging and filtering of posts combined works', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   // since there's no polymorphic relationship involved, it's easy to create posts
