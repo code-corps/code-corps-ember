@@ -22,3 +22,10 @@ test('it renders all the ui elements properly bound', function(assert) {
   assert.equal(this.$('.post-details .post-type').text().trim(), 'issue', 'Post type is correctly bound and rendered');
 });
 
+test('the post body is rendered as unescaped html', function (assert) {
+  this.set('post', { title: 'A post', body: 'A <strong>body</strong>', postType: 'issue' });
+
+  this.render(hbs`{{post-details post=post}}`);
+  assert.equal(this.$('.post-details .body strong').length, 1, 'A html element within the body element is rendered unescaped');
+});
+
