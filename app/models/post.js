@@ -8,5 +8,6 @@ export default DS.Model.extend({
   postType: DS.attr('string'),
   likesCount: DS.attr('number'),
   project: DS.belongsTo('project'),
-  user: DS.belongsTo('user')
+  user: DS.belongsTo('user'),
+  comments: DS.hasMany('comment')
 });

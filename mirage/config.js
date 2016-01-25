@@ -27,9 +27,10 @@ export default function() {
   });
 
   this.get('/users/:id');
-  this.post('posts');
-
   this.get('/users');
+
+  this.post('/posts');
+  this.post('/comments');
 
   // for getting slugged routes
   this.get('/:sluggedRouteSlug', function(schema, request) {
