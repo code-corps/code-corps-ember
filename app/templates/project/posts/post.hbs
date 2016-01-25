@@ -1,2 +1,5 @@
 {{post-details post=post}}
 {{create-comment-form comment=comment saveComment='saveComment'}}
+{{#if error}}
+  <div class="error">{{error.message}}</div>
+{{/if}}

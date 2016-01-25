@@ -33,7 +33,7 @@ export default Ember.Route.extend({
     saveComment(comment) {
       comment.save().catch((error) => {
         if (error.errors.length === 1) {
-          this.set('error', error);
+          this.controllerFor('project.posts.post').set('error', error);
         }
       });
     }

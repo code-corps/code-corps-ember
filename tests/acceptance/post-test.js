@@ -154,6 +154,55 @@ test('When comment creation fails due to validation, validation errors are displ
   });
 });
 
+test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
+  assert.expect(2);
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.owner = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  let user = server.schema.user.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    // mirage doesn't handle relationships correctly for some reason, so we need to test
+    // server request directly here.
+    let creationDone = assert.async();
+    server.post('/comments', () => {
+      creationDone();
+      return new Mirage.Response(400, {}, {
+        errors: [
+          {
+            id: "UNKNOWN ERROR",
+            title: "An unknown error",
+            detail:"Something happened",
+            status: 400
+          }
+        ]
+      });
+    });
+    click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 1);
+    assert.equal(find('.error').text(), 'Adapter operation failed');
+  });
+});
+
 test('A post can be successfully created', (assert) => {
   assert.expect(8);
 
