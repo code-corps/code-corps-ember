@@ -9,5 +9,6 @@ export default DS.Model.extend({
   likesCount: DS.attr('number'),
   project: DS.belongsTo('project'),
   user: DS.belongsTo('user'),
-  comments: DS.hasMany('comment')
+  comments: DS.hasMany('comment'),
+  number: DS.attr('number')
 });

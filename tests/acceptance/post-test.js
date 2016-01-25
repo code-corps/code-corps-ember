@@ -43,6 +43,34 @@ test('Post details are displayed correctly', (assert) => {
   });
 });
 
+test('Post comments are displayed correctly', (assert) => {
+  assert.expect(1);
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.owner = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  server.createList('comment', 4, { postId: post.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    assert.equal(find('.post-comment-list .comment-item').length, 4, 'The correct number of post comments is rendered');
+  });
+});
+
 test('A comment can be added to a post', (assert) => {
   assert.expect(4);
   // server.create uses factories. server.schema.<obj>.create does not
@@ -238,7 +266,7 @@ test('A post can be successfully created', (assert) => {
     click('[name=submit]');
   });
 
-  server.post('/posts', (db, request) => {
+  server.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
 
     let attributes = requestBody.data.attributes;
@@ -254,9 +282,16 @@ test('A post can be successfully created', (assert) => {
     assert.ok(relationships.project, 'A project relationship is contained within the request');
     assert.equal(relationships.project.data.id, project.id, 'The project relationship has the correct id');
 
+    // need to simulate auto-assigning of new post number to post
+    attributes.number = 1;
+    attributes.projectId = project.id;
+    attributes.userId = user.id;
+
+    let post = schema.post.create(attributes);
+
     return {
       data: {
-        id: 1,
+        id: post.id,
         type: "posts",
         attributes: attributes,
         relationships: relationships

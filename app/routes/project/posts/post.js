@@ -19,14 +19,16 @@ export default Ember.Route.extend({
     }).then((result) => {
       return Ember.RSVP.hash({
         post: result.post,
-        comment: this.store.createRecord('comment', { post: result.post, user: result.user })
+        comment: this.store.createRecord('comment', { post: result.post, user: result.user }),
+        comments: this.store.query('comment', { postId: result.post.id })
       });
     });
   },
 
   setupController(controller, models) {
     controller.set('post', models.post);
-    controller.set('comment', models.comment);
+    controller.set('newComment', models.comment);
+    controller.set('comments', models.comments);
   },
 
   actions: {

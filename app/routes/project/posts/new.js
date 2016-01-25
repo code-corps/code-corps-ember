@@ -20,7 +20,7 @@ export default Ember.Route.extend({
 
   actions: {
     viewPost(post) {
-      this.transitionTo('project.posts.post', post);
+      this.transitionTo('project.posts.post', post.get('number'));
     }
   }
 });

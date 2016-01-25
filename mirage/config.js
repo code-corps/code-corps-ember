@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import Ember from 'ember';
 
 export default function() {
 
@@ -29,8 +30,28 @@ export default function() {
   this.get('/users/:id');
   this.get('/users');
 
-  this.post('/posts');
+  this.post('/posts', (schema, request) => {
+    let body = JSON.parse(request.requestBody);
+    let attributes = body.data.attributes;
+    let relationships = body.data.relationships;
+    attributes.projectId = relationships.project.data.id;
+    attributes.userId = relationships.user.data.id;
+
+    // server sets post number automatically, so we simulate this behavior here
+    let postCount = schema.project.find(attributes.projectId).posts.length;
+
+    let post = schema.post.create(Ember.merge(attributes, { number: postCount + 1 }));
+
+    return { data: Ember.merge(body.data, { id: post.id }) };
+  });
+
   this.post('/comments');
+
+  this.get('/posts/:postId/comments', function(schema, request) {
+    let postId = request.params.postId;
+    let post = schema.post.find(postId);
+    return post.comments;
+  });
 
   // for getting slugged routes
   this.get('/:sluggedRouteSlug', function(schema, request) {
