@@ -72,7 +72,7 @@ test('Post comments are displayed correctly', (assert) => {
 });
 
 test('A comment can be added to a post', (assert) => {
-  assert.expect(4);
+  assert.expect(5);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
@@ -97,33 +97,16 @@ test('A comment can be added to a post', (assert) => {
   andThen(() => {
     assert.equal(find('.create-comment-form').length, 1, 'The component for comment creation is rendered');
     fillIn('[name=markdown]', 'Test markdown');
-
-    // mirage doesn't handle relationships correctly for some reason, so we need to test
-    // server request directly here.
-    let creationDone = assert.async();
-    server.post('/comments', (schema, request) => {
-      let params = JSON.parse(request.requestBody);
-
-      let attributes = params.data.attributes;
-      assert.equal(attributes.markdown, 'Test markdown', 'New comment has the correct markdown');
-
-      let relationships = params.data.relationships;
-      assert.equal(relationships.user.data.id, user.id, 'New comment was assigned the authenticated user id');
-      assert.equal(relationships.post.data.id, post.id, 'New comment was assigned the current posts\'s id');
-
-      creationDone();
-
-      return {
-        data: {
-          id: 1,
-          type: "comments",
-          attributes: attributes,
-          relationships: relationships
-        }
-      };
-    });
-
     click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.comment.all().length, 1, 'A new comment was created');
+    let comment = server.schema.comment.all()[0];
+
+    assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
+    assert.equal(comment.postId, post.id, 'Correct post was assigned');
+    assert.equal(comment.userId, user.id, 'Correct user was assigned');
   });
 });
 

@@ -47,7 +47,18 @@ export default function() {
     return { data: Ember.merge(body.data, { id: post.id }) };
   });
 
-  this.post('/comments');
+  this.post('/comments', (schema, request) => {
+    let body = JSON.parse(request.requestBody);
+    let attributes = body.data.attributes;
+    let relationships = body.data.relationships;
+
+    let comment = schema.comment.create(Ember.merge(attributes, {
+      postId: relationships.post.data.id,
+      userId: relationships.user.data.id
+    }));
+
+    return { data: Ember.merge(body.data, { id: comment.id }) };
+  });
 
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
