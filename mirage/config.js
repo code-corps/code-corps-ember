@@ -34,13 +34,15 @@ export default function() {
     let body = JSON.parse(request.requestBody);
     let attributes = body.data.attributes;
     let relationships = body.data.relationships;
-    attributes.projectId = relationships.project.data.id;
-    attributes.userId = relationships.user.data.id;
 
     // server sets post number automatically, so we simulate this behavior here
-    let postCount = schema.project.find(attributes.projectId).posts.length;
+    let postCount = schema.project.find(relationships.project.data.id).posts.length;
 
-    let post = schema.post.create(Ember.merge(attributes, { number: postCount + 1 }));
+    let post = schema.post.create(Ember.merge(attributes, {
+      projectId: relationships.project.data.id,
+      userId: relationships.user.data.id,
+      number: postCount + 1
+    }));
 
     return { data: Ember.merge(body.data, { id: post.id }) };
   });

@@ -232,7 +232,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
 });
 
 test('A post can be successfully created', (assert) => {
-  assert.expect(8);
+  assert.expect(7);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -266,37 +266,17 @@ test('A post can be successfully created', (assert) => {
     click('[name=submit]');
   });
 
-  server.post('/posts', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
+  andThen(() => {
+    assert.equal(server.schema.post.all().length, 1, 'A post has been created');
 
-    let attributes = requestBody.data.attributes;
+    let post = server.schema.post.all()[0];
 
-    assert.equal(attributes.title, 'A post title');
-    assert.equal(attributes.markdown, 'A post body');
-    assert.equal(attributes.post_type, 'task');
+    assert.equal(post.title, 'A post title');
+    assert.equal(post.markdown, 'A post body');
+    assert.equal(post.post_type, 'task');
 
-    let relationships = requestBody.data.relationships;
-
-    assert.ok(relationships.user, 'A user relationship is contained within the request');
-    assert.equal(relationships.user.data.id, user.id, 'The user relationship has the correct id');
-    assert.ok(relationships.project, 'A project relationship is contained within the request');
-    assert.equal(relationships.project.data.id, project.id, 'The project relationship has the correct id');
-
-    // need to simulate auto-assigning of new post number to post
-    attributes.number = 1;
-    attributes.projectId = project.id;
-    attributes.userId = user.id;
-
-    let post = schema.post.create(attributes);
-
-    return {
-      data: {
-        id: post.id,
-        type: "posts",
-        attributes: attributes,
-        relationships: relationships
-      }
-    };
+    assert.equal(post.userId, user.id, 'The correct user was assigned');
+    assert.equal(post.projectId, project.id, 'The correct project was assigned');
   });
 });
 
