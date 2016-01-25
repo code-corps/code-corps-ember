@@ -66,7 +66,6 @@ test('A comment can be added to a post', (assert) => {
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
-
   andThen(() => {
     assert.equal(find('.create-comment-form').length, 1, 'The component for comment creation is rendered');
     fillIn('[name=markdown]', 'Test markdown');
@@ -97,6 +96,61 @@ test('A comment can be added to a post', (assert) => {
     });
 
     click('[name=save]');
+  });
+});
+
+test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
+  assert.expect(1);
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.owner = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  let user = server.schema.user.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    // mirage doesn't handle relationships correctly for some reason, so we need to test
+    // server request directly here.
+    let creationDone = assert.async();
+    server.post('/comments', () => {
+      creationDone();
+      return new Mirage.Response(422, {}, {
+        errors: [
+          {
+            id: "VALIDATION_ERROR",
+            source: { pointer:"data/attributes/markdown" },
+            detail:"is invalid",
+            status: 422
+          },
+          {
+            id:"VALIDATION_ERROR",
+            source: { pointer:"data/attributes/markdown" },
+            detail: "can't be blank",
+            status: 422
+          }
+      ]});
+
+    });
+
+    click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.create-comment-form .error').length, 2, 'Validation errors are rendered');
   });
 });
 

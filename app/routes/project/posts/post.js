@@ -31,7 +31,11 @@ export default Ember.Route.extend({
 
   actions: {
     saveComment(comment) {
-      comment.save();
+      comment.save().catch((error) => {
+        if (error.errors.length === 1) {
+          this.set('error', error);
+        }
+      });
     }
   }
 });
