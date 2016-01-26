@@ -8,6 +8,5 @@ export default DS.Model.extend({
 
   posts: DS.hasMany('posts', { async: true }),
 
-  owner: DS.belongsTo('model', { polymorphic: true }),
-  ownerType: DS.attr('string')
+  organization: DS.belongsTo('organization'),
 });
