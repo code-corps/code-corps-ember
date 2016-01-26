@@ -21,7 +21,7 @@ test('Post details are displayed correctly', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
+  let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
@@ -29,7 +29,7 @@ test('Post details are displayed correctly', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
@@ -57,7 +57,7 @@ test('Post comments are displayed correctly', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
@@ -84,7 +84,7 @@ test('A comment can be added to a post', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
@@ -123,7 +123,7 @@ test('When comment creation fails due to validation, validation errors are displ
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
@@ -178,7 +178,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
@@ -230,7 +230,7 @@ test('A post can be successfully created', (assert) => {
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   authenticateSession(application, { user_id: user.id });
@@ -279,7 +279,7 @@ test('When post creation succeeeds, the user is redirected to the post page for 
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   authenticateSession(application, { user_id: user.id });
@@ -319,7 +319,7 @@ test('When post creation fails due to validation, validation errors are displaye
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   authenticateSession(application, { user_id: user.id });
@@ -386,7 +386,7 @@ test('When post creation fails due to non-validation issues, the error is displa
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
-  project.owner = organization;
+  project.organization = organization;
   project.save();
 
   authenticateSession(application, { user_id: user.id });
