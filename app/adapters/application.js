@@ -4,5 +4,5 @@ import ENV from 'code-corps-ember/config/environment';
 
 export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   authorizer: 'authorizer:oauth2',
-  host: ENV.API_BASE_URL
+  host: ENV.API_BASE_URL,
 });
