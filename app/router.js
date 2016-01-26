@@ -10,8 +10,14 @@ Router.map(function() {
   this.route('signup');
   this.route('profile', { path: '/settings/profile' });
   this.route('slugged-route', { path: '/:sluggedRouteSlug' });
-  this.route('project', { path: '/:sluggedRouteSlug/:projectSlug' });
   this.route('projects', { path: '/:sluggedRouteSlug/projects'});
+
+  this.route('project', { path: '/:sluggedRouteSlug/:projectSlug' }, function() {
+    this.route('posts', function() {
+      this.route('new');
+      this.route('post', { path: '/:number' });
+    });
+  });
 });
 
 export default Router;

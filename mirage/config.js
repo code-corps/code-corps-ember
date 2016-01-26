@@ -27,6 +27,7 @@ export default function() {
   });
 
   this.get('/users/:id');
+  this.post('posts');
 
   this.get('/users');
 
@@ -86,5 +87,33 @@ export default function() {
     };
 
     return postsPage;
+  });
+
+  // for getting slugged routes
+  this.get('/:sluggedRouteSlug', (schema, request) => {
+    return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+  });
+
+  //for getting projects
+  this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
+    let projectSlug = request.params.projectSlug;
+
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+
+    let model = sluggedRoute.model;
+
+    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+  });
+
+  // for getting a specific post
+  this.get('/:sluggedRouteSlug/:projectSlug/posts/:number', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
+    let projectSlug = request.params.projectSlug;
+    let number = parseInt(request.params.number);
+
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+    let project = sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return project.posts.filter((p) => { return p.number === number; })[0];
   });
 }
