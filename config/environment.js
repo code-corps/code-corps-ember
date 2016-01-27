@@ -52,6 +52,7 @@ module.exports = function(environment) {
     };
 
     ENV.contentSecurityPolicy = {
+      'img-src': "'self' data:",
       'default-src': "'none'",
       'script-src': ["'self'"],
       // Allow fonts to be loaded from http://fonts.gstatic.com
