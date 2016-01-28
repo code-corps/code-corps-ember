@@ -42,12 +42,13 @@ test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
   // server.create uses factories. server.schema.<obj>.create does not
+  let sluggedRouteId = server.create('sluggedRoute').id;
   let organizationId = server.create('organization').id;
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
+  // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
+  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
   let organization = server.schema.organization.find(organizationId);
   sluggedRoute.model = organization;
   sluggedRoute.save();
@@ -56,6 +57,7 @@ test('Post filtering by type works', (assert) => {
   project.organization = organization;
   project.save();
 
+  // we use server.createList so factories are used in creation
   server.createList('post', 1, { postType: 'idea', projectId: projectId });
   server.createList('post', 2, { postType: 'progress', projectId: projectId });
   server.createList('post', 3, { postType: 'task', projectId: projectId });
@@ -90,13 +92,15 @@ test('Post filtering by type works', (assert) => {
 
 test('Paging of posts works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
+
+  let sluggedRouteId = server.create('sluggedRoute').id;
   let organizationId = server.create('organization').id;
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
 
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
+  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
   let organization = server.schema.organization.find(organizationId);
   sluggedRoute.model = organization;
   sluggedRoute.save();
@@ -123,13 +127,14 @@ test('Paging of posts works', (assert) => {
 
 test('Paging and filtering of posts combined works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
-  let organizationId = server.create('organization').id;
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'project_slug', modelType: 'organization' });
 
+  let organizationId = server.create('organization').id;
+  let sluggedRouteId = server.create('sluggedRoute').id;
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
+  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
   let organization = server.schema.organization.find(organizationId);
   sluggedRoute.model = organization;
   sluggedRoute.save();

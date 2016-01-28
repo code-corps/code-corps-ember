@@ -31,6 +31,27 @@ export default function() {
 
   this.get('/users');
 
+  // for getting slugged routes
+  this.get('/:sluggedRouteSlug', (schema, request) => {
+    return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+  });
+
+  //for getting projects
+  this.get('/:organizationSlug/projects', (schema, request) => {
+    let organizationSlug = request.params.organizationSlug;
+    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
+    return organization.projects;
+  });
+
+  this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
+    let sluggedRouteSlug = request.params.sluggedRouteSlug;
+    let projectSlug = request.params.projectSlug;
+
+    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+
+    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+  });
+
   // for getting project posts
   this.get("/projects/:projectId/posts", (schema, request) => {
     let projectId = request.params.projectId;
