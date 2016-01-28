@@ -47,6 +47,12 @@ export default function() {
     return { data: Ember.merge(body.data, { id: post.id }) };
   });
 
+  this.get('/posts/:postId/comments', function(schema, request) {
+    let postId = request.params.postId;
+    let post = schema.post.find(postId);
+    return post.comments;
+  });
+
   this.post('/comments', (schema, request) => {
     let body = JSON.parse(request.requestBody);
     let attributes = body.data.attributes;
@@ -58,12 +64,6 @@ export default function() {
     }));
 
     return { data: Ember.merge(body.data, { id: comment.id }) };
-  });
-
-  this.get('/posts/:postId/comments', function(schema, request) {
-    let postId = request.params.postId;
-    let post = schema.post.find(postId);
-    return post.comments;
   });
 
   // for getting project posts
@@ -109,15 +109,20 @@ export default function() {
   });
 
   //for getting projects
+  this.get('/:organizationSlug/projects', (schema, request) => {
+    let organizationSlug = request.params.organizationSlug;
+    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
+    return organization.projects;
+  });
+
+  //for getting projects
   this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
     let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
 
     let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    let model = sluggedRoute.model;
-
-    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
   // for getting a specific post

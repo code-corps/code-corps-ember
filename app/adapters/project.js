@@ -26,13 +26,39 @@ export default ApplicationAdapter.extend({
     }
   },
 
-  // need to delete slug and sluggedRouteSlug properties from the query.
-  // otherwise, they will get auto-added to the end of our url
+  urlForQuery: function(query) {
+    query = query || {};
+
+    if (query.sluggedRouteSlug) {
+      var url = [];
+      var host = Ember.get(this, 'host');
+      var prefix = this.urlPrefix();
+
+      url.push(encodeURIComponent(query.sluggedRouteSlug));
+      url.push("projects");
+
+      if (prefix) { url.unshift(prefix); }
+
+      url = url.join('/');
+      if (!host && url) { url = '/' + url; }
+
+      return url;
+    } else {
+      return this._super.apply(arguments);
+    }
+  },
+
+  // need to delete properties from the query which we do not want to see
+  // appended to the end of the url as parameters
   sortQueryParams: function(query) {
     query = query || {};
-    if (query.slug && query.sluggedRouteSlug) {
+    if (query.slug) {
       delete query.slug;
-      delete query.sluggedRouteSlug;
+
+      if (query.sluggedRouteSlug)  {
+        delete query.sluggedRouteSlug;
+      }
+
       return query;
     } else {
       return this._super.apply(arguments);

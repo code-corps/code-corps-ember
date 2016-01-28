@@ -7,6 +7,5 @@ export default DS.Model.extend({
   iconLargeUrl: DS.attr('string'),
 
   posts: DS.hasMany('posts', { async: true }),
-
-  organization: DS.belongsTo('organization'),
+  organization: DS.belongsTo('organization')
 });
