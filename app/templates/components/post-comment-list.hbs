@@ -1,0 +1,5 @@
+{{#each comments as |comment|}}
+  {{comment-item comment=comment}}
+{{else}}
+  <div class="no-comments">There are no comments for this post yet. Be the first to comment!</div>
+{{/each}}

@@ -43,8 +43,179 @@ test('Post details are displayed correctly', (assert) => {
   });
 });
 
+test('Post comments are displayed correctly', (assert) => {
+  assert.expect(1);
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  server.createList('comment', 4, { postId: post.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    assert.equal(find('.post-comment-list .comment-item').length, 4, 'The correct number of post comments is rendered');
+  });
+});
+
+test('A comment can be added to a post', (assert) => {
+  assert.expect(5);
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  let user = server.schema.user.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    assert.equal(find('.create-comment-form').length, 1, 'The component for comment creation is rendered');
+    fillIn('[name=markdown]', 'Test markdown');
+    click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.comment.all().length, 1, 'A new comment was created');
+    let comment = server.schema.comment.all()[0];
+
+    assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
+    assert.equal(comment.postId, post.id, 'Correct post was assigned');
+    assert.equal(comment.userId, user.id, 'Correct user was assigned');
+  });
+});
+
+test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
+  assert.expect(1);
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  let user = server.schema.user.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    // mirage doesn't handle relationships correctly for some reason, so we need to test
+    // server request directly here.
+    let creationDone = assert.async();
+    server.post('/comments', () => {
+      creationDone();
+      return new Mirage.Response(422, {}, {
+        errors: [
+          {
+            id: "VALIDATION_ERROR",
+            source: { pointer:"data/attributes/markdown" },
+            detail:"is invalid",
+            status: 422
+          },
+          {
+            id:"VALIDATION_ERROR",
+            source: { pointer:"data/attributes/markdown" },
+            detail: "can't be blank",
+            status: 422
+          }
+      ]});
+
+    });
+
+    click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.create-comment-form .error').length, 2, 'Validation errors are rendered');
+  });
+});
+
+test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
+  assert.expect(2);
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  let user = server.schema.user.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    // mirage doesn't handle relationships correctly for some reason, so we need to test
+    // server request directly here.
+    let creationDone = assert.async();
+    server.post('/comments', () => {
+      creationDone();
+      return new Mirage.Response(400, {}, {
+        errors: [
+          {
+            id: "UNKNOWN ERROR",
+            title: "An unknown error",
+            detail:"Something happened",
+            status: 400
+          }
+        ]
+      });
+    });
+    click('[name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.error').length, 1);
+    assert.equal(find('.error').text(), 'Adapter operation failed');
+  });
+});
+
 test('A post can be successfully created', (assert) => {
-  assert.expect(8);
+  assert.expect(7);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -78,30 +249,17 @@ test('A post can be successfully created', (assert) => {
     click('[name=submit]');
   });
 
-  server.post('/posts', (db, request) => {
-    let requestBody = JSON.parse(request.requestBody);
+  andThen(() => {
+    assert.equal(server.schema.post.all().length, 1, 'A post has been created');
 
-    let attributes = requestBody.data.attributes;
+    let post = server.schema.post.all()[0];
 
-    assert.equal(attributes.title, 'A post title');
-    assert.equal(attributes.markdown, 'A post body');
-    assert.equal(attributes.post_type, 'task');
+    assert.equal(post.title, 'A post title');
+    assert.equal(post.markdown, 'A post body');
+    assert.equal(post.post_type, 'task');
 
-    let relationships = requestBody.data.relationships;
-
-    assert.ok(relationships.user, 'A user relationship is contained within the request');
-    assert.equal(relationships.user.data.id, user.id, 'The user relationship has the correct id');
-    assert.ok(relationships.project, 'A project relationship is contained within the request');
-    assert.equal(relationships.project.data.id, project.id, 'The project relationship has the correct id');
-
-    return {
-      data: {
-        id: 1,
-        type: "posts",
-        attributes: attributes,
-        relationships: relationships
-      }
-    };
+    assert.equal(post.userId, user.id, 'The correct user was assigned');
+    assert.equal(post.projectId, project.id, 'The correct project was assigned');
   });
 });
 
@@ -143,7 +301,6 @@ test('When post creation succeeeds, the user is redirected to the post page for 
     assert.equal(currentRouteName(), 'project.posts.post', 'Got redirected to the correct route');
     assert.equal(server.schema.post.all().length, 1, 'A new post got created');
   });
-
 });
 
 test('When post creation fails due to validation, validation errors are displayed', (assert) => {

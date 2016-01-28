@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import Ember from 'ember';
 
 export default function() {
 
@@ -27,29 +28,42 @@ export default function() {
   });
 
   this.get('/users/:id');
-  this.post('posts');
-
   this.get('/users');
 
-  // for getting slugged routes
-  this.get('/:sluggedRouteSlug', (schema, request) => {
-    return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+  this.post('/posts', (schema, request) => {
+    let body = JSON.parse(request.requestBody);
+    let attributes = body.data.attributes;
+    let relationships = body.data.relationships;
+
+    // server sets post number automatically, so we simulate this behavior here
+    let postCount = schema.project.find(relationships.project.data.id).posts.length;
+
+    let post = schema.post.create(Ember.merge(attributes, {
+      projectId: relationships.project.data.id,
+      userId: relationships.user.data.id,
+      number: postCount + 1
+    }));
+
+    return { data: Ember.merge(body.data, { id: post.id }) };
   });
 
-  //for getting projects
-  this.get('/:organizationSlug/projects', (schema, request) => {
-    let organizationSlug = request.params.organizationSlug;
-    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
-    return organization.projects;
+  this.get('/posts/:postId/comments', function(schema, request) {
+    let postId = request.params.postId;
+    let post = schema.post.find(postId);
+    return post.comments;
   });
 
-  this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
-    let sluggedRouteSlug = request.params.sluggedRouteSlug;
-    let projectSlug = request.params.projectSlug;
+  this.post('/comments', (schema, request) => {
+    let body = JSON.parse(request.requestBody);
+    let attributes = body.data.attributes;
+    let relationships = body.data.relationships;
 
-    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+    let comment = schema.comment.create(Ember.merge(attributes, {
+      postId: relationships.post.data.id,
+      userId: relationships.user.data.id
+    }));
 
-    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return { data: Ember.merge(body.data, { id: comment.id }) };
   });
 
   // for getting project posts
@@ -95,15 +109,20 @@ export default function() {
   });
 
   //for getting projects
+  this.get('/:organizationSlug/projects', (schema, request) => {
+    let organizationSlug = request.params.organizationSlug;
+    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
+    return organization.projects;
+  });
+
+  //for getting projects
   this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
     let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
 
     let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    let model = sluggedRoute.model;
-
-    return model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
   // for getting a specific post
