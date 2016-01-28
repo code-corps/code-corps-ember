@@ -43,6 +43,53 @@ test('Post details are displayed correctly', (assert) => {
   });
 });
 
+test('A post can be edited', (assert) => {
+  assert.expect(5);
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project').id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+  let postId = post.id;
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    click('.edit');
+  });
+
+  andThen(() => {
+    assert.equal(find('[name=title]').length, 1, 'The input field for post title is rendered');
+    assert.equal(find('[name=markdown]').length, 1, 'The input field for post markdown is rendered');
+
+    fillIn('[name=title]', 'Edited post title');
+    fillIn('[name=markdown]', 'Edited **post** body');
+    click('[name=submit]');
+  });
+
+  andThen(() => {
+    let editedPost = server.schema.post.find(postId);
+
+    assert.equal(find('.post-details .title').text().trim(), editedPost.title);
+    // this will be the old body, since our mock server doesn't actually do
+    // markdown transformation, but that's good enough, I think. markdown transformation
+    // can be and is already tested API-side
+    assert.equal(find('.post-details .body').text().trim(), editedPost.body);
+    assert.equal(find('.post-details .post-type').text().trim(), editedPost.postType);
+  });
+});
+
 test('Post comments are displayed correctly', (assert) => {
   assert.expect(1);
 

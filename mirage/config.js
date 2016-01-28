@@ -47,6 +47,9 @@ export default function() {
     return { data: Ember.merge(body.data, { id: post.id }) };
   });
 
+  this.patch('/posts/:id');
+
+
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
     let post = schema.post.find(postId);

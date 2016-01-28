@@ -19,8 +19,14 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    viewPost(post) {
-      this.transitionTo('project.posts.post', post.get('number'));
+    savePost(post) {
+      post.save().then((post) => {
+        this.transitionTo('project.posts.post', post.get('number'));
+      }).catch((error) => {
+        if (error.errors.length === 1) {
+          this.controllerFor('project.posts.new').set('error', error);
+        }
+      });
     }
   }
 });
