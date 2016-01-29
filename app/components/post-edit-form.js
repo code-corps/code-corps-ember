@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['project-post-new-form'],
+  tagName: 'form',
+
+  classNames: ['post-edit-form'],
 
   types: [
     {label: "Task",  slug: "task"},
@@ -12,13 +14,8 @@ export default Ember.Component.extend({
 
   actions: {
     submit() {
-      this.get('post').save().then((post) => {
-        this.sendAction('postSaved', post);
-      }).catch((error) => {
-        if (error.errors.length === 1) {
-          this.set('error', error);
-        }
-      });
+      let post = this.get('post');
+      this.sendAction('savePost', post);
     }
   }
 });

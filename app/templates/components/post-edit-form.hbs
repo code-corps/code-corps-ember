@@ -1,0 +1,25 @@
+<div class="input-group">
+  {{view "select" name="post-type"
+    content=types
+    optionValuePath="content.slug"
+    optionLabelPath="content.label"
+    value=post.postType}}
+  {{#each post.errors.postType as |error|}}
+    <p class="error">{{error.message}}</p>
+  {{/each}}
+</div>
+<div class="input-group">
+  {{input name="title" type="text" placeholder="Title" value=post.title}}
+  {{#each post.errors.title as |error|}}
+    <p class="error">{{error.message}}</p>
+  {{/each}}
+</div>
+<div class="input-group">
+  {{textarea name="markdown" placeholder="What's this post about?" value=post.markdown}}
+  {{#each post.errors.markdown as |error|}}
+    <p class="error">{{error.message}}</p>
+  {{/each}}
+</div>
+<div class="input-group">
+  <input class="right" name="submit" type="submit" value="Create post" {{action 'submit'}} />
+</div>
