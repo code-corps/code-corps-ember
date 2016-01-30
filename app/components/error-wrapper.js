@@ -2,7 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['error-wrapper'],
-  statuses: Ember.computed('model', function() {
+
+  // Map the HTTP status codes into an array or
+  // an empty array if there are no such status codes
+  httpStatusCodes: Ember.computed('model', function() {
     let model = this.get('model');
     if (model && model.hasOwnProperty('errors')) {
       let errors = model.errors;
@@ -13,7 +16,8 @@ export default Ember.Component.extend({
       return [];
     }
   }),
-  isNotFound: Ember.computed('statuses', function() {
-    return this.get('statuses').contains(404);
+
+  is404: Ember.computed('httpStatusCodes', function() {
+    return this.get('httpStatusCodes').contains(404);
   })
 });
