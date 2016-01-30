@@ -38,3 +38,24 @@ test("It renders organization details when the sluggedRoute model is an organiza
     assert.equal(find('.organization-details').length, 1, 'organization-details component is rendered');
   });
 });
+
+test("It renders a 404 error when no slugged route exists", function(assert) {
+  assert.expect(2);
+
+  server.get('/no_slug',
+    {
+      errors: [{
+        id: "RECORD_NOT_FOUND",
+        title: "Record not found",
+        detail: "Couldn't find SluggedRoute",
+        status: 404
+      }]
+    },
+    404);
+
+  visit('/no_slug');
+  andThen(function() {
+    assert.equal(find('.error-wrapper').length, 1, 'error-wrapper component is rendered');
+    assert.equal(find('.error-wrapper h1').text(), 'Error (404)', 'The 404 title is rendered');
+  });
+});

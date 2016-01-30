@@ -1,0 +1,8 @@
+.error-wrapper {
+  @include span-columns(8);
+  @include shift(2);
+  img {
+    width: 100%;
+    border-radius: 6px;
+  }
+}
