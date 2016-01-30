@@ -1,9 +1,9 @@
-<img src="{{sluggedRoute.model.photo_large_url}}"/>
-<p>Name: {{sluggedRoute.model.name}}</p>
-<p>Username: {{sluggedRoute.model.username}}</p>
+<img src="{{sluggedRoute.owner.photo_thumb_url}}"/>
+<p>Name: {{sluggedRoute.owner.name}}</p>
+<p>Username: {{sluggedRoute.owner.username}}</p>
 {{#if isOrganization}}
-  {{organization-details organization=sluggedRoute.model}}
+  {{organization-details organization=sluggedRoute.owner}}
 {{/if}}
 {{#if isUser}}
-  {{user-details user=sluggedRoute.model}}
+  {{user-details user=sluggedRoute.owner}}
 {{/if}}
