@@ -40,7 +40,7 @@ test("It renders organization details when the sluggedRoute model is an organiza
 });
 
 test("It renders a 404 error when no slugged route exists", function(assert) {
-  assert.expect(2);
+  assert.expect(5);
 
   server.get('/no_slug',
     {
@@ -56,6 +56,13 @@ test("It renders a 404 error when no slugged route exists", function(assert) {
   visit('/no_slug');
   andThen(function() {
     assert.equal(find('.error-wrapper').length, 1, 'error-wrapper component is rendered');
-    assert.equal(find('.error-wrapper h1').text(), 'Error (404)', 'The 404 title is rendered');
+    assert.equal(find('.error-wrapper h1').text(), '404 Error', 'The 404 title is rendered');
+    assert.equal($('html').attr('class'), 'warning', 'The class of the html element is correct');
+    click('.error-wrapper a');
+  });
+
+  andThen(function() {
+    assert.equal(find('.error-wrapper').length, 0, 'error-wrapper component is not rendered');
+    assert.equal($('html').attr('class'), '', 'The class of the html element is unset');
   });
 });

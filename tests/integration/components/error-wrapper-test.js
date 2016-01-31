@@ -10,14 +10,11 @@ test('it renders', function(assert) {
   assert.equal(this.$('.error-wrapper').length, 1, 'The component element is rendered');
 });
 
-test('it renders all required elements', function(assert) {
-  assert.expect(3);
+test('it renders all required elements for the 404 case', function(assert) {
+  assert.expect(5);
 
   var model = {
     errors: [{
-      id: "RECORD_NOT_FOUND",
-      title: "Record not found",
-      detail: "Couldn't find SluggedRoute",
       status: 404
     }]
   };
@@ -25,7 +22,28 @@ test('it renders all required elements', function(assert) {
   this.set('model', model);
   this.render(hbs`{{error-wrapper model=model}}`);
 
-  assert.equal(this.$('img')[0].src.split('/').pop(), 'bmo.gif', 'The BMO 404 gif renders');
-  assert.equal(this.$('h1').text().trim(), 'Error (404)', 'The title renders');
-  assert.equal(this.$('p').text().trim(), "We can't find the page you're looking for.", 'The body renders');
+  assert.equal(this.$('.not-found-img').length, 1, 'The 404 image renders');
+  assert.equal(this.$('h1').text().trim(), '404 Error', 'The title renders');
+  assert.equal(this.$('p:first').text().trim(), "We can't find the page you're looking for.", 'The body renders');
+  assert.equal(this.$('a.button').text().trim(), "Go Home", 'The button renders');
+  assert.equal($('html').attr('class'), "warning", 'The html element has the right class');
+});
+
+test('it renders all required elements for the general error case', function(assert) {
+  assert.expect(5);
+
+  var model = {
+    errors: [{
+      status: 500
+    }]
+  };
+
+  this.set('model', model);
+  this.render(hbs`{{error-wrapper model=model}}`);
+
+  assert.equal(this.$('.server-error-img').length, 1, 'The general error image renders');
+  assert.equal(this.$('h1').text().trim(), 'Server Error', 'The title renders');
+  assert.equal(this.$('p:first').text().trim(), "Something went wrong. Try again and if the problem persists, please report your problem and mention what caused it.", 'The body renders');
+  assert.equal(this.$('a.button').text().trim(), "Go Home", 'The button renders');
+  assert.equal($('html').attr('class'), "danger", 'The html element has the right class');
 });

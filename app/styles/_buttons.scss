@@ -1,13 +1,39 @@
-#{$all-buttons} {
+#{$all-buttons}, .button {
   background: $primary-color;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 14px 10px;
+  padding: 12px 14px;
   font-size: 1em;
+  text-decoration: none;
+  display: inline-block;
+
+  &.on-solid {
+    background: transparent;
+    border: 1px solid white;
+    &:hover {
+      background: white;
+    }
+  }
+
+  &.danger {
+    &.on-solid {
+      &:hover {
+        color: $danger-color;
+      }
+    }
+  }
+
+  &.warning {
+    &.on-solid {
+      &:hover {
+        color: $warning-color;
+      }
+    }
+  }
 }
 
-#{$all-buttons-hover} {
+#{$all-buttons-hover}, .button:hover {
   cursor: pointer;
   background: darken($primary-color, 10%);
   @include transition(background 0.2s ease-in);

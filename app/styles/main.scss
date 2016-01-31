@@ -1,9 +1,26 @@
 html {
   font-family: "Open Sans", sans-serif;
+  &.error {
+    background: $danger-color;
+  }
+  &.warning {
+    background: $warning-color;
+  }
 }
 
 body {
   margin: 0;
+  height: 100%;
+  min-height: 100%;
+  .ember-view:first-of-type {
+    height: 100%;
+    min-height: 100%;
+    position: relative
+  }
+}
+
+html, body {
+  height: 100%;
 }
 
 .container {
