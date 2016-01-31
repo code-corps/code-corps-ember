@@ -1,5 +1,6 @@
 html {
   font-family: "Open Sans", sans-serif;
+
   &.danger {
     background: $danger-color;
   }
@@ -10,11 +11,9 @@ html {
 
 body {
   margin: 0;
-  height: 100%;
-  min-height: 100%;
+
   .ember-view:first-of-type {
     height: 100%;
-    min-height: 100%;
     position: relative
   }
 }
