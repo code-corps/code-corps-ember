@@ -1,9 +1,9 @@
 <div class="input-group">
-  {{textarea name="markdown" placeholder="Add your comment here" value=comment.markdown}}
+  {{editor-with-preview input=comment.markdownPreview preview=comment.bodyPreview generatePreview=(action 'generatePreview')}}
   {{#each comment.errors.markdown as |error|}}
     <p class="error">{{error.message}}</p>
   {{/each}}
 </div>
 <div class="input-group">
-  <button name="save" {{action 'saveComment' comment}}>Post comment</button>
+  <button name="save" {{action 'saveComment'}}>Post comment</button>
 </div>

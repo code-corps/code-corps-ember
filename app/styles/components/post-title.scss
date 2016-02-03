@@ -1,0 +1,12 @@
+.post-title {
+  @include clearfix;
+
+  .title {
+    @include span-columns(9);
+    margin: 0;
+  }
+
+  .edit {
+    @include span-columns(3);
+  }
+}

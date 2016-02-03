@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('post-new-form', 'Integration | Component | post new form', {
   integration: true
@@ -18,7 +19,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
   let post = {
     title: 'A post',
-    markdown: 'A body',
+    markdownPreview: 'A body',
     postType: 'task'
   };
 
@@ -30,11 +31,10 @@ test('it renders proper ui elements, properly bound', function(assert) {
   assert.equal(this.$('[name=post-type]').val(), 'task', 'Post type is properly bound and rendered');
 });
 
-
 test('it triggers an action when the post is saved', function(assert) {
   assert.expect(2);
 
-  let post = { id: 1 };
+  let post = Ember.Object.create({ id: 1 });
 
   this.set('post', post);
   this.on('savePost', (post) => {

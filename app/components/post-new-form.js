@@ -15,7 +15,15 @@ export default Ember.Component.extend({
   actions: {
     submit() {
       let post = this.get('post');
+      post.set('preview', false);
       this.sendAction('savePost', post);
+    },
+
+    generatePreview(markdown) {
+      let post = this.get('post');
+      post.set('markdownPreview', markdown);
+      post.set('preview', true);
+      post.save();
     }
   }
 });

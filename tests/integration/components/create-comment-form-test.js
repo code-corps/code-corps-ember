@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('create-comment-form', 'Integration | Component | create comment form', {
   integration: true
@@ -25,7 +26,7 @@ test('it renders the proper elements', function(assert) {
 test('it calls action when user clicks submit', function(assert) {
   assert.expect(1);
 
-  this.set('comment', { markdown: 'Test markdown' });
+  this.set('comment', Ember.Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {
     assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
   });

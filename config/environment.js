@@ -33,6 +33,10 @@ module.exports = function(environment) {
       // since that's the new Ember convention
       injectionFactories: [],
       preventDuplicates: true
+    },
+
+    moment: {
+      allowEmpty: true // default: false
     }
   };
 
