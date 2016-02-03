@@ -1,7 +1,8 @@
-<button class="filter-ideas" {{action 'filterBy' 'idea'}}>Only show ideas</button>
-<button class="filter-progress-posts" {{action 'filterBy' 'progress'}}>Only show progress posts</button>
-<button class="filter-tasks" {{action 'filterBy' 'task'}}>Only show tasks</button>
-<button class="filter-issues" {{action 'filterBy' 'issue'}}>Only show Issues</button>
+<button class="filter-ideas" {{action 'filterBy' 'idea'}}>Ideas</button>
+<button class="filter-progress-posts" {{action 'filterBy' 'progress'}}>Progress</button>
+<button class="filter-tasks" {{action 'filterBy' 'task'}}>Tasks</button>
+<button class="filter-issues" {{action 'filterBy' 'issue'}}>Issues</button>
+{{#link-to 'project.posts.new' class="new-post"}}New Post{{/link-to}}
 {{#each filteredPosts as |post|}}
   {{post-item post=post}}
 {{else}}

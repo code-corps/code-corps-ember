@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'form',
 
-  classNames: ['post-edit-form'],
+  classNames: ['post-new-form'],
 
   types: [
     {label: "Task",  slug: "task"},

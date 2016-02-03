@@ -45,12 +45,3 @@ test('it renders basic project information', function(assert) {
   assert.equal(this.$('.description').text().trim(), 'A test project', 'Description is rendered');
   assert.equal(this.$('.icon').attr('src'), 'image-url.com', 'Image element is rendered');
 });
-
-test('it renders a list of posts', function(assert) {
-  let project = mockProject();
-  this.set('project', project);
-
-  this.render(hbs`{{project-details project=project}}`);
-
-  assert.equal(this.$('.project-post-list').length, 1, 'The post list subcomponent is rendered');
-});
