@@ -32,10 +32,24 @@ export default Ember.Route.extend({
 
   actions: {
     saveComment(comment) {
-      comment.save().catch((error) => {
+      let route = this;
+      comment.save().then(() => {
+        // TODO: Not sure if we want to reload all comments here, or just push the new one
+        // reloading for now
+        route.send('reloadComments', comment);
+      }).catch((error) => {
         if (error.errors.length === 1) {
           this.controllerFor('project.posts.post').set('error', error);
         }
+      });
+
+    },
+
+    reloadComments() {
+      let controller = this.controllerFor('project.posts.post');
+      let postId = controller.get('post.id');
+      return this.store.query('comment', { postId: postId }).then((comments) => {
+        controller.set('comments', comments);
       });
     }
   }

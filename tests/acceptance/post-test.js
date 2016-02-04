@@ -72,14 +72,13 @@ test('Post comments are displayed correctly', (assert) => {
 });
 
 test('A comment can be added to a post', (assert) => {
-  assert.expect(5);
+  assert.expect(6);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
   sluggedRoute.model = organization;
   sluggedRoute.save();
 
@@ -102,6 +101,7 @@ test('A comment can be added to a post', (assert) => {
 
   andThen(() => {
     assert.equal(server.schema.comment.all().length, 1, 'A new comment was created');
+    assert.equal($('.comment-item').length, 1, 'The comment is being rendered');
     let comment = server.schema.comment.all()[0];
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
@@ -215,7 +215,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
 });
 
 test('A post can be successfully created', (assert) => {
-  assert.expect(7);
+  assert.expect(8);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -257,6 +257,7 @@ test('A post can be successfully created', (assert) => {
     assert.equal(post.title, 'A post title');
     assert.equal(post.markdown, 'A post body');
     assert.equal(post.post_type, 'task');
+    assert.equal(post.state, 'published', 'Post is set to published when save button is clicked');
 
     assert.equal(post.userId, user.id, 'The correct user was assigned');
     assert.equal(post.projectId, project.id, 'The correct project was assigned');
