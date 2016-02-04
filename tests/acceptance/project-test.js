@@ -35,6 +35,35 @@ test('It renders navigation properly', (assert) => {
   });
 });
 
+test('Navigation works', (assert) => {
+  assert.expect(6);
+
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(function() {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+    click('.project-menu li:eq(0) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.index');
+    assert.ok(find('.project-menu li:eq(0) a.active').length === 1, 'About link is active');
+    click('.project-menu li:eq(1) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+  });
+});
+
 test('It renders all the required ui elements for post list', (assert) => {
   assert.expect(4);
 
