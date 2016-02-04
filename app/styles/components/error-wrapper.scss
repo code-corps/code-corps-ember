@@ -1,0 +1,40 @@
+.error-wrapper {
+  width: 100%;
+  color: white;
+
+  img {
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  p {
+    margin: 20px;
+  }
+}
+
+.error-wrapper-content {
+  max-width: 500px;
+}
+
+.center-pseudo {
+  display:inline-block;
+  text-align:center;
+
+  &::before{
+    content:'';
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+    width:0px;
+  }
+}
+
+.not-found-img {
+  margin: auto;
+  @include background-image-retina('https://d3pgew4wbk2vb1.cloudfront.net/images/404-error', 'png', 150px, 150px);
+}
+
+.server-error-img {
+  margin: auto;
+  @include background-image-retina('https://d3pgew4wbk2vb1.cloudfront.net/images/server-error', 'png', 150px, 150px);
+}

@@ -3,6 +3,7 @@
 
 @import "fonts";
 @import "colors";
+@import "retina";
 
 @import "buttons";
 @import "inputs";
@@ -11,5 +12,6 @@
 
 @import "main";
 
+@import "components/error-wrapper";
 @import "components/login-form";
 @import "components/signup-form";

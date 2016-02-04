@@ -1,0 +1,19 @@
+<div class="error-wrapper-content center-pseudo">
+  <div class="container">
+    {{#if is404}}
+      <div class="not-found-img"></div>
+      <h1>404 Error</h1>
+      <p>We can't find the page you're looking for.</p>
+      <p>
+        {{#link-to 'index' class="button on-solid warning"}}Go Home{{/link-to}}
+      </p>
+    {{else}}
+      <div class="server-error-img"></div>
+      <h1>Server Error</h1>
+      <p>Something went wrong. Try again and if the problem persists, please report your problem and mention what caused it.</p>
+      <p>
+        {{#link-to 'index' class="button on-solid danger"}}Go Home{{/link-to}}
+      </p>
+    {{/if}}
+  </div>
+</div>

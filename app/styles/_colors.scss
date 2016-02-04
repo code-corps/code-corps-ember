@@ -1,7 +1,8 @@
 // Colors
 $gray: #CCC;
-$red: red;
+$red: #c0392b;
 $green: #2ecc71;
+$dark-yellow: #f39c12;
 
 // Defaults
 $primary-color: #CCC;
@@ -12,6 +13,8 @@ $border-focus: #51A7E8;
 
 // Errors
 $error-text-color: $red;
+$danger-color: $red;
+$warning-color: $dark-yellow;
 
 // Success
 $success-background: $green;

@@ -1,0 +1,14 @@
+$retina: "only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)";
+
+@mixin background-image-retina($file, $type, $width, $height, $positionX: left, $positionY: top, $background-repeat: no-repeat) {
+  background-image: url($file + '.' + $type);
+  width: $width;
+  height: $height;
+  background-position: $positionX $positionY;
+  background-repeat: $background-repeat;
+
+  @media #{$retina} {
+    background-image: url($file + '@2x.' + $type);
+    background-size: $width $height;
+  }
+}
