@@ -21,6 +21,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 
   actions: {
     savePost(post) {
+      post.set('state', 'published');
       post.save().then((post) => {
         this.transitionTo('project.posts.post', post.get('number'));
       }).catch((error) => {
