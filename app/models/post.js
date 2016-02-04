@@ -4,7 +4,7 @@ export default DS.Model.extend({
   title: DS.attr('string'),
   body: DS.attr('string'),
   markdown: DS.attr('string'),
-  status: DS.attr('string'),
+  state: DS.attr('string'),
   postType: DS.attr('string'),
   likesCount: DS.attr('number'),
   project: DS.belongsTo('project'),
