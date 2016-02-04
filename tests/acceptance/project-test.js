@@ -13,8 +13,59 @@ module('Acceptance: Project', {
   }
 });
 
-test('It renders all the required ui elements', (assert) => {
-  assert.expect(3);
+test('It renders navigation properly', (assert) => {
+  assert.expect(2);
+
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(function() {
+
+    let hrefToAbout = find('.project-menu li:first a').attr('href');
+    assert.ok(hrefToAbout.indexOf(`/test_organization/test_project`) > -1, 'Link to about is properly rendered');
+    let hrefToPosts = find('.project-menu li:eq(1) a').attr('href');
+    assert.ok(hrefToPosts.indexOf(`/test_organization/test_project/posts`) > -1, 'Link to posts is properly rendered');
+  });
+});
+
+test('Navigation works', (assert) => {
+  assert.expect(6);
+
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(function() {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+    click('.project-menu li:eq(0) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.index');
+    assert.ok(find('.project-menu li:eq(0) a.active').length === 1, 'About link is active');
+    click('.project-menu li:eq(1) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+  });
+});
+
+test('It renders all the required ui elements for post list', (assert) => {
+  assert.expect(4);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
@@ -24,7 +75,7 @@ test('It renders all the required ui elements', (assert) => {
   let project = organization.createProject({ slug: 'test_project' });
   organization.save();
   for (let i = 0; i < 5; i++) {
-    project.createPost();
+    project.createPost({ number: i });
   }
 
   project.save();
@@ -35,6 +86,10 @@ test('It renders all the required ui elements', (assert) => {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
     assert.equal(find('.project-post-list').length, 1, 'project-post-list component is rendered');
     assert.equal(find('.project-post-list .post-item').length, 5, 'correct number of posts is rendered');
+
+    let href = find('.project-post-list .post-item:first a').attr('href');
+
+    assert.ok(href.indexOf(`/test_organization/test_project/posts/0`) > -1, 'Link to specific post is properly rendered');
   });
 });
 

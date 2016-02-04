@@ -32,7 +32,10 @@ export default Ember.Route.extend({
 
   actions: {
     saveComment(comment) {
-      comment.save().catch((error) => {
+      let route = this;
+      comment.save().then(() => {
+        route.refresh();
+      }).catch((error) => {
         if (error.errors.length === 1) {
           this.controllerFor('project.posts.post').set('error', error);
         }
