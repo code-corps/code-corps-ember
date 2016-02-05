@@ -52,12 +52,13 @@ module.exports = function(environment) {
     };
 
     ENV.contentSecurityPolicy = {
+      'img-src': "'self' data:",
       'default-src': "'none'",
       'script-src': ["'self'"],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "https://fonts.gstatic.com"],
       // Allow data (ajax/websocket) from api.lvh.me
-      'connect-src': ["'self'", "http://api.lvh.me:3000"],
+      'connect-src': ["'self'", "api.lvh.me:3000"],
       // Allow images from the origin itself (i.e. current domain)
       'img-src': "'self'",
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com

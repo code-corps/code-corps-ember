@@ -14,6 +14,12 @@
   <label class="input-label" for="biography">Biography</label>
   {{input type="text" name="biography" value=user.biography}}
 </div>
+<div class="input-group">
+  <label class="input-label">Picture</label>
+  {{image-drop image=user.base64_photo_data
+             placeholder="Profile Image"
+             helpText="Drop your image here, or click to select"}}
+</div>
 
 <div class="input-group">
   <button class="save" {{action 'save'}}>Update Profile</button>
