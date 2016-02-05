@@ -421,3 +421,41 @@ test('When post creation fails due to non-validation issues, the error is displa
     assert.equal(find('.error').text(), 'Adapter operation failed');
   });
 });
+
+test('Creating a post requires logging in', (assert) => {
+  assert.expect(2);
+
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(() => {
+    click('.new-post');
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'login', 'Got redirected to login');
+
+    server.schema.user.create({ id: 1, email: 'josh@coderly.com' });
+    fillIn('#identification', 'josh@coderly.com');
+    fillIn('#password', 'password');
+    click('#login');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/test_organization/test_project/posts/new');
+  });
+});

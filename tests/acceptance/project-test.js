@@ -120,22 +120,22 @@ test('Post filtering by type works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 10, 'correct number of posts is rendered');
-    click('.filter-ideas');
+    click('.filter.ideas');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 1, 'only ideas are rendered');
-    click('.filter-progress-posts');
+    click('.filter.progress');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 2, 'only progress posts are rendered');
-    click('.filter-tasks');
+    click('.filter.tasks');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 3, 'only tasks are rendered');
-    click('.filter-issues');
+    click('.filter.issues');
   });
 
   andThen(() => {
@@ -207,7 +207,7 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item').length, 4, 'third page of 4 posts is rendered');
-    click('.filter-tasks');
+    click('.filter.tasks');
   });
 
   andThen(() => {
@@ -218,7 +218,7 @@ test('Paging and filtering of posts combined works', (assert) => {
   andThen(() => {
     assert.equal(find('.post-item.task').length, 2, 'second page of 2 tasks is rendered');
     assert.equal(find('.post-item').length, 2, 'there are no other posts rendered');
-    click('.filter-issues');
+    click('.filter.issues');
   });
 
   andThen(() => {
