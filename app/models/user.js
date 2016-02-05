@@ -9,4 +9,5 @@ export default Model.extend({
   biography: DS.attr('string'),
   email: DS.attr('string'),
   password: DS.attr('string'),
+  createdAt: DS.attr('date'),
 });

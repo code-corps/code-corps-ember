@@ -19,13 +19,13 @@
     border-bottom: 5px solid transparent;
 
     &.active {
-      color: $dark-text;
-      border-bottom-color: $green;
+      color: $link-color;
+      border-bottom-color: $dark-blue;
     }
 
     &:hover {
-      color: $dark-text;
-      border-bottom-color: $green;
+      color: $link-color;
+      border-bottom-color: $dark-blue;
       transition: border-bottom-color ease 0.3s;
     }
   }

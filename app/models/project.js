@@ -8,5 +8,5 @@ export default DS.Model.extend({
   slug: DS.attr('string'),
 
   posts: DS.hasMany('posts', { async: true }),
-  organization: DS.belongsTo('organization')
+  organization: DS.belongsTo('organization', { async: true })
 });

@@ -16,6 +16,16 @@
     }
   }
 
+  &.success {
+    background: $success-color;
+    &.on-solid {
+      background: transparent;
+      &:hover {
+        color: $success-color;
+      }
+    }
+  }
+
   &.danger {
     &.on-solid {
       &:hover {
@@ -37,4 +47,8 @@
   cursor: pointer;
   background: darken($primary-color, 10%);
   @include transition(background 0.2s ease-in);
+
+  &.success {
+    background: darken($success-color, 10%);
+  }
 }
