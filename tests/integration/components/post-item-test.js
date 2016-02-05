@@ -11,7 +11,7 @@ test('it renders', function(assert) {
 });
 
 test('it renders all required elements', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   var post = {
     title: 'Clean the house',
@@ -22,7 +22,9 @@ test('it renders all required elements', function(assert) {
   this.render(hbs`{{post-item post=post}}`);
 
   assert.equal(this.$('.post-title').text().trim(), 'Clean the house', 'The title renders');
-  assert.equal(this.$('.post-type').text().trim(), 'task', 'The post type renders');
+  assert.equal(this.$('.post-description').length, 1, 'The description renders');
+  assert.equal(this.$('.post-expertise').length, 1, 'The expertise renders');
+  assert.equal(this.$('.post-icon').length, 1, 'The post icon renders');
 });
 
 
