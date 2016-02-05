@@ -15,7 +15,7 @@
     <a class="filter ideas" {{action 'filterBy' 'idea'}}>Ideas</a>
   </li>
   <li>
-    {{#link-to 'project.posts.new' tagName='button' class="new-post success"}}New Post{{/link-to}}
+    {{#link-to 'project.posts.new' project.organization.slug project.slug tagName='button' class="new-post success"}}New Post{{/link-to}}
   </li>
 </ul>
 <div class="posts">
