@@ -1,0 +1,95 @@
+.posts {
+  margin: 10px 0;
+}
+
+@mixin post-image-icon($type) {
+  .post-icon:before {
+    $file: "/assets/images/icons/" + $type + "-icon";
+    @include background-image-retina($file, "png", 24px, 24px);
+    // background-image: url("/assets/images/icons/" + $type + "-icon.png");
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@mixin post-expertise-icon($type) {
+  &:before {
+    $file: "/assets/images/icons/stars/" + $type;
+    @include background-image-retina($file, "png", 16px, 16px);
+    content: "";
+    margin: 0 5px -4px 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.post-item {
+  @include clearfix;
+  margin: 0;
+  padding: 15px;
+  border-top: 1px solid $border-light;
+
+  &:hover {
+    background-color: $background-gray;
+  }
+
+  &:first-child {
+    border-top: none;
+  }
+
+  .post-icon {
+    float: left;
+  }
+
+  .post-content {
+    padding-left: 35px;
+  }
+
+  a {
+    color: $dark-text;
+    font-weight: 700;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  &.task {
+    @include post-image-icon('task');
+  }
+
+  &.issue {
+    @include post-image-icon('bug');
+  }
+
+  &.progress {
+    @include post-image-icon('progress');
+  }
+
+  &.idea {
+    @include post-image-icon('idea');
+  }
+}
+
+.post-description {
+  font-size: 13px;
+  color: $light-text;
+}
+
+.post-expertise {
+  margin-top: 5px;
+  font-size: 11px;
+  color: $extra-light-text;
+  &.beginner {
+    @include post-expertise-icon('beginner');
+  }
+  &.intermediate {
+    @include post-expertise-icon('intermediate');
+  }
+  &.expert {
+    @include post-expertise-icon('expert');
+  }
+}

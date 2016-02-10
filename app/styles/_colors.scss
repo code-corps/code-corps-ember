@@ -1,18 +1,36 @@
 // Colors
 $gray: #CCC;
 $red: #c0392b;
-$green: #2ecc71;
+$green: #23871E;
 $dark-yellow: #f39c12;
+$dark-blue: #08A8FC;
 
 // Defaults
 $primary-color: #CCC;
 
+// Text
+$extra-light-text: #999;
+$light-text: #777;
+$dark-text: #333;
+
+// Links
+$link-color: $dark-blue;
+$hidden-link-color: $dark-text;
+$link-hover-color: darken($dark-blue, 5%);
+
 // Borders
 $border-default: $gray;
+$border-light: #EEE;
 $border-focus: #51A7E8;
+
+// Backgrounds
+$background-gray: #F3F3F3;
 
 // Errors
 $error-text-color: $red;
+
+// Color Types
+$success-color: $green;
 $danger-color: $red;
 $warning-color: $dark-yellow;
 

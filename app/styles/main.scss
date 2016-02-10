@@ -22,6 +22,17 @@ html, body {
   height: 100%;
 }
 
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: color ease 0.3s;
+
+  &:hover {
+    color: $link-hover-color;
+    cursor: pointer;
+  }
+}
+
 .container {
   @include outer-container(980px);
 }

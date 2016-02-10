@@ -1,2 +1,6 @@
-<div class="post-title">{{post.title}}</div>
-<div class="post-type">{{post.postType}}</div>
+<div class="post-icon"></div>
+<div class="post-content">
+  <div class="post-title">{{#link-to 'project.posts.post' post.number}}{{post.title}}{{/link-to}}</div>
+  <div class="post-description">#{{post.number}} by {{post.user.username}} {{moment-from-now post.createdAt}}</div>
+  <div class="post-expertise expert">Expert</div>
+</div>

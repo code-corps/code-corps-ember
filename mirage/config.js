@@ -30,6 +30,7 @@ export default function() {
   this.get('/users/:id');
   this.get('/users');
 
+  // POST /posts
   this.post('/posts', (schema, request) => {
     let body = JSON.parse(request.requestBody);
     let attributes = body.data.attributes;
@@ -49,13 +50,14 @@ export default function() {
 
   this.patch('/posts/:id');
 
-
+  // GET posts/:number/comments
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
     let post = schema.post.find(postId);
     return post.comments;
   });
 
+  // POST comments
   this.post('/comments', (schema, request) => {
     let body = JSON.parse(request.requestBody);
     let attributes = body.data.attributes;
@@ -69,7 +71,7 @@ export default function() {
     return { data: Ember.merge(body.data, { id: comment.id }) };
   });
 
-  // for getting project posts
+  // GET project/posts
   this.get("/projects/:projectId/posts", (schema, request) => {
     let projectId = request.params.projectId;
     let postType = request.queryParams.post_type;
@@ -106,19 +108,19 @@ export default function() {
     return postsPage;
   });
 
-  // for getting slugged routes
+  // GET /:slug
   this.get('/:sluggedRouteSlug', (schema, request) => {
     return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
   });
 
-  //for getting projects
+  // GET /:slug/projects
   this.get('/:organizationSlug/projects', (schema, request) => {
     let organizationSlug = request.params.organizationSlug;
     let organization = schema.organization.where({ 'slug': organizationSlug })[0];
     return organization.projects;
   });
 
-  //for getting projects
+  // GET /:slug/:project_slug
   this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
     let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
@@ -128,14 +130,12 @@ export default function() {
     return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
-  // for getting a specific post
-  this.get('/:sluggedRouteSlug/:projectSlug/posts/:number', (schema, request) => {
-    let sluggedRouteSlug = request.params.sluggedRouteSlug;
-    let projectSlug = request.params.projectSlug;
+  // GET post/:number
+  this.get('/projects/:projectId/posts/:number', (schema, request) => {
+    let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
 
-    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
-    let project = sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    let project = schema.project.find(projectId)
     return project.posts.filter((p) => { return p.number === number; })[0];
   });
 }

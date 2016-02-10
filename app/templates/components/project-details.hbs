@@ -1,7 +1,8 @@
-<img class="icon" src={{project.iconThumbUrl}} />
-<h1 class="title">{{project.title}}</h1>
-<p class="description">{{project.description}}</p>
-
-{{project-post-list project=project}}
-
-{{#link-to 'project.posts.new' tagName='button' class='new-post'}}New post{{/link-to}}
+<div class="icon-container">
+  {{#link-to 'project.index' project}}<img class="icon" src={{project.iconThumbUrl}} />{{/link-to}}
+</div>
+<div class="details-container">
+  <h1 class="title">{{#link-to 'project.index' project}}{{project.title}}{{/link-to}}</h1>
+  <p class="description">{{project.description}}</p>
+  <p class="organization">{{#link-to 'slugged-route' project.organization.slug}}{{project.organization.name}}{{/link-to}}</p>
+</div>

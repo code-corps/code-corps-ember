@@ -4,10 +4,9 @@ export default Ember.Route.extend({
   session: Ember.inject.service(),
 
   model(params) {
-    let projectParams = this.paramsFor('project');
+    let projectId = this.modelFor('project').id;
     let queryParams = {
-      sluggedRouteSlug: projectParams.sluggedRouteSlug,
-      projectSlug: projectParams.projectSlug,
+      projectId: projectId,
       number: params.number
     };
 
@@ -33,7 +32,10 @@ export default Ember.Route.extend({
 
   actions: {
     saveComment(comment) {
-      comment.save().catch((error) => {
+      let route = this;
+      comment.save().then(() => {
+        route.refresh();
+      }).catch((error) => {
         if (error.errors.length === 1) {
           this.controllerFor('project.posts.post').set('error', error);
         }

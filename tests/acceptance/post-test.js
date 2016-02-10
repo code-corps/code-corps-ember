@@ -43,53 +43,6 @@ test('Post details are displayed correctly', (assert) => {
   });
 });
 
-test('A post can be edited', (assert) => {
-  assert.expect(5);
-
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.project.find(projectId);
-  project.organization = organization;
-  project.save();
-
-  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
-  let postId = post.id;
-
-  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
-
-  andThen(() => {
-    click('.edit');
-  });
-
-  andThen(() => {
-    assert.equal(find('[name=title]').length, 1, 'The input field for post title is rendered');
-    assert.equal(find('[name=markdown]').length, 1, 'The input field for post markdown is rendered');
-
-    fillIn('[name=title]', 'Edited post title');
-    fillIn('[name=markdown]', 'Edited **post** body');
-    click('[name=submit]');
-  });
-
-  andThen(() => {
-    let editedPost = server.schema.post.find(postId);
-
-    assert.equal(find('.post-details .title').text().trim(), editedPost.title);
-    // this will be the old body, since our mock server doesn't actually do
-    // markdown transformation, but that's good enough, I think. markdown transformation
-    // can be and is already tested API-side
-    assert.equal(find('.post-details .body').text().trim(), editedPost.body);
-    assert.equal(find('.post-details .post-type').text().trim(), editedPost.postType);
-  });
-});
-
 test('Post comments are displayed correctly', (assert) => {
   assert.expect(1);
 
@@ -119,14 +72,13 @@ test('Post comments are displayed correctly', (assert) => {
 });
 
 test('A comment can be added to a post', (assert) => {
-  assert.expect(5);
+  assert.expect(6);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
   sluggedRoute.model = organization;
   sluggedRoute.save();
 
@@ -149,6 +101,7 @@ test('A comment can be added to a post', (assert) => {
 
   andThen(() => {
     assert.equal(server.schema.comment.all().length, 1, 'A new comment was created');
+    assert.equal($('.comment-item').length, 1, 'The comment is being rendered');
     let comment = server.schema.comment.all()[0];
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
@@ -262,7 +215,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
 });
 
 test('A post can be successfully created', (assert) => {
-  assert.expect(7);
+  assert.expect(8);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -282,7 +235,7 @@ test('A post can be successfully created', (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/test_organization/test_project');
+  visit('/test_organization/test_project/posts');
 
   andThen(() => {
     click('.new-post');
@@ -304,6 +257,7 @@ test('A post can be successfully created', (assert) => {
     assert.equal(post.title, 'A post title');
     assert.equal(post.markdown, 'A post body');
     assert.equal(post.post_type, 'task');
+    assert.equal(post.state, 'published', 'Post is set to published when save button is clicked');
 
     assert.equal(post.userId, user.id, 'The correct user was assigned');
     assert.equal(post.projectId, project.id, 'The correct project was assigned');
@@ -331,7 +285,7 @@ test('When post creation succeeeds, the user is redirected to the post page for 
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/test_organization/test_project');
+  visit('/test_organization/test_project/posts');
 
   andThen(() => {
     click('.new-post');
@@ -371,7 +325,7 @@ test('When post creation fails due to validation, validation errors are displaye
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/test_organization/test_project');
+  visit('/test_organization/test_project/posts');
 
   andThen(() => {
     click('.new-post');
@@ -438,7 +392,7 @@ test('When post creation fails due to non-validation issues, the error is displa
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/test_organization/test_project');
+  visit('/test_organization/test_project/posts');
 
   andThen(() => {
     click('.new-post');
@@ -465,5 +419,43 @@ test('When post creation fails due to non-validation issues, the error is displa
   andThen(() => {
     assert.equal(find('.error').length, 1);
     assert.equal(find('.error').text(), 'Adapter operation failed');
+  });
+});
+
+test('Creating a post requires logging in', (assert) => {
+  assert.expect(2);
+
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(() => {
+    click('.new-post');
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'login', 'Got redirected to login');
+
+    server.schema.user.create({ id: 1, email: 'josh@coderly.com' });
+    fillIn('#identification', 'josh@coderly.com');
+    fillIn('#password', 'password');
+    click('#login');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/test_organization/test_project/posts/new');
   });
 });

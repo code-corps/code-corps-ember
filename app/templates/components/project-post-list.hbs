@@ -1,11 +1,29 @@
-<button class="filter-ideas" {{action 'filterBy' 'idea'}}>Only show ideas</button>
-<button class="filter-progress-posts" {{action 'filterBy' 'progress'}}>Only show progress posts</button>
-<button class="filter-tasks" {{action 'filterBy' 'task'}}>Only show tasks</button>
-<button class="filter-issues" {{action 'filterBy' 'issue'}}>Only show Issues</button>
-{{#each filteredPosts as |post|}}
-  {{post-item post=post}}
-{{else}}
-  <div class="no-posts">There are currently no posts of any type created for this project</div>
-{{/each}}
+<ul class="post-filtering-menu">
+  <li>
+    Filter by:
+  </li>
+  <li>
+    <a class="filter tasks" {{action 'filterBy' 'task'}}>Tasks</a>
+  </li>
+  <li>
+    <a class="filter issues" {{action 'filterBy' 'issue'}}>Issues</a>
+  </li>
+  <li>
+    <a class="filter progress" {{action 'filterBy' 'progress'}}>Progress</a>
+  </li>
+  <li>
+    <a class="filter ideas" {{action 'filterBy' 'idea'}}>Ideas</a>
+  </li>
+  <li>
+    {{#link-to 'project.posts.new' tagName='button' class="new-post success"}}New Post{{/link-to}}
+  </li>
+</ul>
+<div class="posts">
+  {{#each filteredPosts as |post|}}
+    {{post-item post=post}}
+  {{else}}
+    <div class="no-posts">There are currently no posts of any type created for this project</div>
+  {{/each}}
+</div>
 
 {{pager-control options=options pageChanged='pageChanged'}}

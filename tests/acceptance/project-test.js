@@ -13,8 +13,59 @@ module('Acceptance: Project', {
   }
 });
 
-test('It renders all the required ui elements', (assert) => {
-  assert.expect(3);
+test('It renders navigation properly', (assert) => {
+  assert.expect(2);
+
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(function() {
+
+    let hrefToAbout = find('.project-menu li:first a').attr('href');
+    assert.ok(hrefToAbout.indexOf(`/test_organization/test_project`) > -1, 'Link to about is properly rendered');
+    let hrefToPosts = find('.project-menu li:eq(1) a').attr('href');
+    assert.ok(hrefToPosts.indexOf(`/test_organization/test_project/posts`) > -1, 'Link to posts is properly rendered');
+  });
+});
+
+test('Navigation works', (assert) => {
+  assert.expect(6);
+
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.model = organization;
+  sluggedRoute.save();
+
+  organization.createProject({ slug: 'test_project' });
+  organization.save();
+
+  visit('/test_organization/test_project/posts');
+
+  andThen(function() {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+    click('.project-menu li:eq(0) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.index');
+    assert.ok(find('.project-menu li:eq(0) a.active').length === 1, 'About link is active');
+    click('.project-menu li:eq(1) a');
+  });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.posts.index');
+    assert.ok(find('.project-menu li:eq(1) a.active').length === 1, 'Posts link is active');
+  });
+});
+
+test('It renders all the required ui elements for post list', (assert) => {
+  assert.expect(4);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
@@ -24,17 +75,21 @@ test('It renders all the required ui elements', (assert) => {
   let project = organization.createProject({ slug: 'test_project' });
   organization.save();
   for (let i = 0; i < 5; i++) {
-    project.createPost();
+    project.createPost({ number: i });
   }
 
   project.save();
 
-  visit('/test_organization/test_project');
+  visit('/test_organization/test_project/posts');
 
   andThen(function() {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
     assert.equal(find('.project-post-list').length, 1, 'project-post-list component is rendered');
     assert.equal(find('.project-post-list .post-item').length, 5, 'correct number of posts is rendered');
+
+    let href = find('.project-post-list .post-item:first a').attr('href');
+
+    assert.ok(href.indexOf(`/test_organization/test_project/posts/0`) > -1, 'Link to specific post is properly rendered');
   });
 });
 
@@ -42,14 +97,12 @@ test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let sluggedRouteId = server.create('sluggedRoute').id;
-  let organizationId = server.create('organization').id;
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
-  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
-  let organization = server.schema.organization.find(organizationId);
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
   sluggedRoute.model = organization;
   sluggedRoute.save();
 
@@ -63,26 +116,26 @@ test('Post filtering by type works', (assert) => {
   server.createList('post', 3, { postType: 'task', projectId: projectId });
   server.createList('post', 4, { postType: 'issue', projectId: projectId });
 
-  visit(`${sluggedRoute.slug}/${project.slug}`);
+  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 10, 'correct number of posts is rendered');
-    click('.filter-ideas');
+    click('.filter.ideas');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 1, 'only ideas are rendered');
-    click('.filter-progress-posts');
+    click('.filter.progress');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 2, 'only progress posts are rendered');
-    click('.filter-tasks');
+    click('.filter.tasks');
   });
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 3, 'only tasks are rendered');
-    click('.filter-issues');
+    click('.filter.issues');
   });
 
   andThen(() => {
@@ -92,16 +145,12 @@ test('Post filtering by type works', (assert) => {
 
 test('Paging of posts works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
-
-  let sluggedRouteId = server.create('sluggedRoute').id;
-  let organizationId = server.create('organization').id;
-
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
-  let organization = server.schema.organization.find(organizationId);
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
   sluggedRoute.model = organization;
   sluggedRoute.save();
 
@@ -112,7 +161,7 @@ test('Paging of posts works', (assert) => {
   // since there's no polymorphic relationship involved, it's easy to create posts
   server.createList('post', 12, { projectId: projectId });
 
-  visit(`${sluggedRoute.slug}/${project.slug}`);
+  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
 
   andThen(() => {
     assert.equal(find('.pager-control').length, 1, 'pager is rendered');
@@ -127,15 +176,12 @@ test('Paging of posts works', (assert) => {
 
 test('Paging and filtering of posts combined works', (assert) => {
   // server.create uses factories. server.schema.<obj>.create does not
-
-  let organizationId = server.create('organization').id;
-  let sluggedRouteId = server.create('sluggedRoute').id;
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoute.find(sluggedRouteId);
-  let organization = server.schema.organization.find(organizationId);
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
   sluggedRoute.model = organization;
   sluggedRoute.save();
 
@@ -147,7 +193,7 @@ test('Paging and filtering of posts combined works', (assert) => {
   server.createList('post', 12, { postType: 'task', projectId: projectId });
   server.createList('post', 12, { postType: 'issue', projectId: projectId });
 
-  visit(`${sluggedRoute.slug}/${project.slug}`);
+  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'first page of 10 posts is rendered');
@@ -161,7 +207,7 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item').length, 4, 'third page of 4 posts is rendered');
-    click('.filter-tasks');
+    click('.filter.tasks');
   });
 
   andThen(() => {
@@ -172,7 +218,7 @@ test('Paging and filtering of posts combined works', (assert) => {
   andThen(() => {
     assert.equal(find('.post-item.task').length, 2, 'second page of 2 tasks is rendered');
     assert.equal(find('.post-item').length, 2, 'there are no other posts rendered');
-    click('.filter-issues');
+    click('.filter.issues');
   });
 
   andThen(() => {

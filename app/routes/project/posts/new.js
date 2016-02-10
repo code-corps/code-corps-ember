@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
   session: Ember.inject.service(),
 
   model() {
@@ -20,6 +21,7 @@ export default Ember.Route.extend({
 
   actions: {
     savePost(post) {
+      post.set('state', 'published');
       post.save().then((post) => {
         this.transitionTo('project.posts.post', post.get('number'));
       }).catch((error) => {

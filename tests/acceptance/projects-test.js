@@ -14,7 +14,7 @@ module('Acceptance: Projects', {
 });
 
 test('It renders all the required ui elements', (assert) => {
-  assert.expect(2);
+  assert.expect(3);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = sluggedRoute.createModel({ slug: 'test_organization' }, 'organization');
@@ -32,5 +32,8 @@ test('It renders all the required ui elements', (assert) => {
   andThen(function() {
     assert.equal(find('.project-list').length, 1, 'project-list component is rendered');
     assert.equal(find('.project-list .project-item').length, 5, 'correct number of project-items is rendered');
+
+    let firstProjectHref = find('.project-list .project-item:eq(0) a').attr('href');
+    assert.ok(firstProjectHref.indexOf('/test_organization/test_project_0') > -1, 'The link to a project is properly rendered');
   });
 });

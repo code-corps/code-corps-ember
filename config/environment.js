@@ -58,8 +58,8 @@ module.exports = function(environment) {
       'font-src': ["'self'", "https://fonts.gstatic.com"],
       // Allow data (ajax/websocket) from api.lvh.me
       'connect-src': ["'self'", "http://api.lvh.me:3000"],
-      // Allow images from the origin itself (i.e. current domain)
-      'img-src': "'self'",
+      // Allow images from the origin itself (i.e. current domain), and data
+      'img-src': ["'self'", "data:"],
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com
       'style-src': ["'self'", "https://fonts.googleapis.com"],
       // `media-src` will be omitted from policy
