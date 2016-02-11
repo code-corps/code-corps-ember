@@ -245,7 +245,7 @@ test('A post can be successfully created', (assert) => {
     assert.equal(currentRouteName(), 'project.posts.new', 'Button takes us to the proper route');
     fillIn('[name=title]', 'A post title');
     fillIn('[name=markdown]', 'A post body');
-    fillIn('[name=post-type]', 'Task');
+    fillIn('[name=post-type]', 'task');
     click('[name=submit]');
   });
 
