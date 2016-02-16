@@ -1,0 +1,9 @@
+deployment:
+  production:
+    branch: master
+    commands:
+      - ember deploy production --activate
+  staging:
+    branch: develop
+    commands:
+      - ember deploy staging --activate
