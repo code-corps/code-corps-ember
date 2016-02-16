@@ -55,7 +55,8 @@ export default Ember.Component.extend({
   }),
 
   onLastPage: Ember.computed('currentPage', 'totalPages', function() {
-    return this.get('currentPage') === this.get('totalPages');
+    return this.get('currentPage') === this.get('totalPages') ||
+      this.get('totalPages') === 0;
   }),
 
   actions: {
