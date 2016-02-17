@@ -1,9 +1,10 @@
 <div class="input-group">
-  {{view "select" name="post-type"
-    content=types
-    optionValuePath="content.slug"
-    optionLabelPath="content.label"
-    value=post.postType}}
+  {{select-dropdown
+    name='post-type'
+    items=types
+    selectedItem=post.postType
+    optionValuePath='slug'
+    optionLabelPath='label'}}
   {{#each post.errors.postType as |error|}}
     <p class="error">{{error.message}}</p>
   {{/each}}
