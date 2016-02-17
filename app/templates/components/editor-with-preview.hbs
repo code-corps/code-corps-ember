@@ -1,0 +1,9 @@
+<ul class="tabs">
+  <li><a class="edit" {{action 'edit'}}>Edit</a></li>
+  <li><a class="preview" {{action 'preview'}}>Preview</a></li>
+</ul>
+{{#if editing}}
+  {{textarea name="markdown" value=input}}
+{{else}}
+  <div class="body">{{{preview}}}</div>
+{{/if}}

@@ -1,4 +1,19 @@
-<h1 class="title">{{post.title}}</h1>
-<span class="post-type">{{post.postType}}</span>
-<div class="body">{{{post.body}}}</div>
-{{!-- {{#link-to 'project.posts.edit' post class="edit"}}Edit{{/link-to}} --}}
+<div class="post-header">
+  <div class="post-icon"></div>
+  {{post-title title=post.title saveTitle='savePostTitle'}}
+</div>
+
+<div class="post-body">
+  {{#if isEditingBody}}
+    {{editor-with-preview input=post.markdownPreview preview=post.bodyPreview generatePreview='generatePreview'}}
+    <div class="controls">
+      <button {{action 'savePostBody'}} class="save">Save</button>
+      <button {{action 'cancelEditingPostBody'}} class="cancel">Cancel</button>
+    </div>
+  {{else}}
+    <div class="body">{{{post.body}}}</div>
+    {{#if session.isAuthenticated}}
+      <button class="edit" {{action 'editPostBody'}}>Edit</button>
+    {{/if}}
+  {{/if}}
+</div>

@@ -5,8 +5,17 @@ export default Ember.Component.extend({
   tagName: 'form',
 
   actions: {
-    saveComment(comment) {
+    saveComment() {
+      let comment = this.get('comment');
+      comment.set('preview', false);
       this.sendAction('saveComment', comment);
+    },
+
+    generatePreview(markdown) {
+      let comment = this.get('comment');
+      comment.set('markdownPreview', markdown);
+      comment.set('preview', true);
+      comment.save();
     }
   }
 });

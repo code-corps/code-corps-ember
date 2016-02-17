@@ -32,20 +32,37 @@ export default function() {
 
   // POST /posts
   this.post('/posts', (schema, request) => {
-    let body = JSON.parse(request.requestBody);
-    let attributes = body.data.attributes;
-    let relationships = body.data.relationships;
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let relationships = requestBody.data.relationships;
 
-    // server sets post number automatically, so we simulate this behavior here
-    let postCount = schema.project.find(relationships.project.data.id).posts.length;
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
 
-    let post = schema.post.create(Ember.merge(attributes, {
+    // the API sets post number as an auto-incrementing value, scoped to project,
+    // so we need to simulate that here
+    let number = schema.project.find(relationships.project.data.id).posts.length + 1;
+
+    let attrs = {
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+      number: number,
+      title: attributes.title,
+      postType: attributes.post_type
+    };
+
+    let rels = {
       projectId: relationships.project.data.id,
-      userId: relationships.user.data.id,
-      number: postCount + 1
-    }));
+      userId: relationships.user.data.id
+    };
 
-    return { data: Ember.merge(body.data, { id: post.id }) };
+    let post = schema.create('post', Ember.merge(attrs, rels));
+
+    return this.serializerOrRegistry.serialize(post);
   });
 
   this.patch('/posts/:id');
@@ -59,16 +76,30 @@ export default function() {
 
   // POST comments
   this.post('/comments', (schema, request) => {
-    let body = JSON.parse(request.requestBody);
-    let attributes = body.data.attributes;
-    let relationships = body.data.relationships;
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let relationships = requestBody.data.relationships;
 
-    let comment = schema.comment.create(Ember.merge(attributes, {
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+    };
+
+    let rels = {
       postId: relationships.post.data.id,
       userId: relationships.user.data.id
-    }));
+    };
 
-    return { data: Ember.merge(body.data, { id: comment.id }) };
+    let comment = schema.create('comment', Ember.merge(attrs, rels));
+
+    return this.serializerOrRegistry.serialize(comment);
   });
 
   // GET project/posts
@@ -135,7 +166,7 @@ export default function() {
     let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
 
-    let project = schema.project.find(projectId)
+    let project = schema.project.find(projectId);
     return project.posts.filter((p) => { return p.number === number; })[0];
   });
 }

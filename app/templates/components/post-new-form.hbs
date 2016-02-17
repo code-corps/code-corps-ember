@@ -16,7 +16,7 @@
   {{/each}}
 </div>
 <div class="input-group">
-  {{textarea name="markdown" placeholder="What's this post about?" value=post.markdown}}
+  {{editor-with-preview input=post.markdownPreview preview=post.bodyPreview generatePreview=(action 'generatePreview')}}
   {{#each post.errors.markdown as |error|}}
     <p class="error">{{error.message}}</p>
   {{/each}}
