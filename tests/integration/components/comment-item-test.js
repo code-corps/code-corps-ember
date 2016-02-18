@@ -52,8 +52,7 @@ test('it switches between editing and viewing mode', function(assert) {
     }
   });
 
-  this.container.register('service:session', mockSession);
-  this.container.injection('component', 'sessionService', 'service:session');
+  this.container.registry.register('service:session', mockSession);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);

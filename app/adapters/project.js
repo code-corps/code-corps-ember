@@ -52,16 +52,14 @@ export default ApplicationAdapter.extend({
   // appended to the end of the url as parameters
   sortQueryParams: function(query) {
     query = query || {};
+
     if (query.slug) {
       delete query.slug;
-
-      if (query.sluggedRouteSlug)  {
-        delete query.sluggedRouteSlug;
-      }
-
-      return query;
-    } else {
-      return this._super.apply(arguments);
     }
+    if (query.sluggedRouteSlug) {
+      delete query.sluggedRouteSlug;
+    }
+
+    return query;
   }
 });
