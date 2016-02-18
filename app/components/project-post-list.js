@@ -5,58 +5,59 @@ export default Ember.Component.extend({
 
   classNames: ['project-post-list'],
 
-  didInitAttrs() {
+  init() {
     this.setProperties({
       pageNumber: 1,
       postType: null
     });
-    this.send('reloadPosts');
+
+    this._super(...arguments);
   },
 
-  reloadPosts() {
-    let filterParams = {};
-    filterParams.projectId = this.get('project.id');
-    filterParams.page = this.get('pageParams');
-
-    let postType = this.get('postType');
-    if (Ember.isPresent(postType)) {
-      filterParams.postType = postType;
+  _normalizeMeta(meta) {
+    if (Ember.isPresent(meta)) {
+      return {
+        currentPage: meta.current_page,
+        pageSize: meta.page_size,
+        totalPages: meta.total_pages,
+        totalRecords: meta.total_records
+      };
     }
-
-    this.get('store').query('post', filterParams).then((posts) => {
-      this.setProperties({
-        filteredPosts: posts,
-        options: this._normalizeMeta(posts.get('meta'))
-      });
-    });
   },
+
+  meta: Ember.computed('posts', function() {
+    return this.get('posts.meta');
+  }),
+
+  options: Ember.computed('meta', function() {
+    return this._normalizeMeta(this.get('meta'));
+  }),
 
   pageParams: Ember.computed('pageNumber', function() {
     return { number: this.get('pageNumber') };
   }),
 
-  _normalizeMeta(meta) {
-    return {
-      currentPage: meta.current_page,
-      pageSize: meta.page_size,
-      totalPages: meta.total_pages,
-      totalRecords: meta.total_records
-    };
-  },
+  filters: Ember.computed('pageParams', 'postType', function() {
+    let filters = {};
+    filters.page = this.get('pageParams');
+
+    let postType = this.get('postType');
+    if (Ember.isPresent(postType)) {
+      filters.postType = postType;
+    }
+
+    return filters;
+  }),
 
   actions: {
     filterBy(postType) {
       this.setProperties({ postType: postType, pageNumber: 1 });
-      this.send('reloadPosts');
+      this.sendAction('filtersChanged', this.get('filters'));
     },
 
     pageChanged(pageNumber) {
       this.set('pageNumber', pageNumber);
-      this.send('reloadPosts');
-    },
-
-    reloadPosts() {
-      this.reloadPosts();
+      this.sendAction('filtersChanged', this.get('filters'));
     }
   }
 });

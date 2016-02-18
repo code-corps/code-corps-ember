@@ -29,11 +29,11 @@ export default ApplicationAdapter.extend({
   // otherwise it will get auto-added to the end of the url
   sortQueryParams: function(query) {
     query = query || {};
+
     if (query.slug) {
       delete query.slug;
-      return query;
-    } else {
-      return this._super.apply(arguments);
     }
+
+    return query;
   }
 });

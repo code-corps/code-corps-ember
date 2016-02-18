@@ -9,8 +9,7 @@ let mockSession = Ember.Service.extend({
 moduleForComponent('post-title', 'Integration | Component | post title', {
   integration: true,
   beforeEach() {
-    this.container.register('service:session', mockSession);
-    this.container.injection('component', 'sessionService', 'service:session');
+    this.container.registry.register('service:session', mockSession);
   }
 });
 

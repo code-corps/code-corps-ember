@@ -24,8 +24,7 @@ let mockPost = Ember.Object.create({
 moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
   beforeEach() {
-    this.container.register('service:session', mockSession);
-    this.container.injection('component', 'sessionService', 'service:session');
+    this.container.registry.register('service:session', mockSession);
   }
 });
 
