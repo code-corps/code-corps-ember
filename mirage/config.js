@@ -30,6 +30,17 @@ export default function() {
   this.get('/users/:id');
   this.get('/users');
 
+  this.get('/user', (schema) => {
+    // due to the nature of how we fetch the current user, all we can do here is
+    // return one of the users available in the schema, or create a new one
+    let users = schema.user.all();
+    if (users.length > 0) {
+      return users[0];
+    } else {
+      return schema.user.create();
+    }
+  });
+
   // POST /posts
   this.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);

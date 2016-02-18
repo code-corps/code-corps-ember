@@ -5,7 +5,7 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 
 let application;
 
-module('Acceptance: Login', {
+module('Acceptance: Logout', {
   beforeEach: function() {
     application = startApp();
   },
@@ -16,13 +16,14 @@ module('Acceptance: Login', {
 
 test("Logging out", function(assert) {
   assert.expect(2);
-  authenticateSession(application);
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
   visit('/');
   andThen(function() {
-    assert.equal(find('a.logout').text(), "Logout", "Page contains logout link");
+    assert.equal(find('a.logout').text(), "Log out", "Page contains logout link");
     click('a');
   });
   andThen(function() {
-    assert.equal(find('a.login').text(), "Login", "Page contains login link");
+    assert.equal(find('a.login').text(), "Sign in", "Page contains login link");
   });
 });

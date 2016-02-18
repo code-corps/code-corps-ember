@@ -55,13 +55,7 @@ test('Succesful signup is possible', (assert) => {
 
     signUpDone();
 
-    return {
-      data: {
-        id: 1,
-        type: "users",
-        attributes: params
-      }
-    };
+    return db.user.create(params);
   });
 
   let signInDone = assert.async();
@@ -97,13 +91,7 @@ test('Succesful signup also logs user in', (assert) => {
 
     signUpDone();
 
-    return {
-      data: {
-        id: 1,
-        type: "users",
-        attributes: params
-      }
-    };
+    return db.user.create(params);
   });
 
   let signInDone = assert.async();

@@ -20,7 +20,7 @@ test('Logging in', function(assert) {
   fillIn('#password', 'password');
   click('#login');
   andThen(function() {
-    assert.equal(find('a').text(), 'Logout', 'Page contains logout link');
+    assert.equal(find('a.logout').text().trim(), 'Log out', 'Page contains logout link');
   });
 });
 

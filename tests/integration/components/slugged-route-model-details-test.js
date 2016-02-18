@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 test('when the slugged route is an organization, it renders the organization component', function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = { modelType: 'organization' };
+  let sluggedRoute = { ownerType: 'Organization' };
 
   this.set('sluggedRoute', sluggedRoute);
   this.render(hbs`{{slugged-route-model-details sluggedRoute=sluggedRoute}}`);
@@ -25,7 +25,7 @@ test('when the slugged route is an organization, it renders the organization com
 test('when the slugged route is a user, it renders the user component', function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = { modelType: 'user' };
+  let sluggedRoute = { ownerType: 'User' };
 
   this.set('sluggedRoute', sluggedRoute);
   this.render(hbs`{{slugged-route-model-details sluggedRoute=sluggedRoute}}`);

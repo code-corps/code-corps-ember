@@ -3,6 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['slugged-route-model-details'],
 
-  isOrganization: Ember.computed.equal('sluggedRoute.modelType', 'organization'),
-  isUser: Ember.computed.equal('sluggedRoute.modelType', 'user')
+  belongsToOrganization: Ember.computed.equal('sluggedRoute.ownerType', 'Organization'),
+  belongsToUser: Ember.computed.equal('sluggedRoute.ownerType', 'User'),
 });

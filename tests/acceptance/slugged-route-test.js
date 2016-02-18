@@ -17,7 +17,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
   assert.expect(1);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user' });
-  sluggedRoute.createModel({ username: 'test_user' }, 'user');
+  sluggedRoute.createOwner({ username: 'test_user' }, 'User');
   sluggedRoute.save();
 
   visit('/test_user');
@@ -30,7 +30,7 @@ test("It renders organization details when the sluggedRoute model is an organiza
   assert.expect(1);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  sluggedRoute.createModel({ slug: 'test_organization' }, 'organization');
+  sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
   sluggedRoute.save();
 
   visit('/test_organization');
@@ -57,12 +57,12 @@ test("It renders a 404 error when no slugged route exists", function(assert) {
   andThen(function() {
     assert.equal(find('.error-wrapper').length, 1, 'error-wrapper component is rendered');
     assert.equal(find('.error-wrapper h1').text(), '404 Error', 'The 404 title is rendered');
-    assert.equal($('html').attr('class'), 'warning', 'The class of the html element is correct');
+    assert.ok($('html').hasClass('warning'), 'The class of the html element is correct');
     click('.error-wrapper a');
   });
 
   andThen(function() {
     assert.equal(find('.error-wrapper').length, 0, 'error-wrapper component is not rendered');
-    assert.equal($('html').attr('class'), '', 'The class of the html element is unset');
+    assert.notOk($('html').hasClass('warning'), 'The class of the html element is unset');
   });
 });

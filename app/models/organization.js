@@ -1,9 +1,9 @@
 import DS from 'ember-data';
-import Model from 'code-corps-ember/models/model';
+import Owner from 'code-corps-ember/models/owner';
 
 var attr = DS.attr;
 
-export default Model.extend({
+export default Owner.extend({
   name: attr(),
   slug: attr(),
 });
