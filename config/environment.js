@@ -18,6 +18,10 @@ module.exports = function(environment) {
       // when it is created
     },
 
+    typekit: {
+      kitId: 'jkb2eqa'
+    },
+
     flashMessageDefaults: {
       // flash message defaults
       timeout: 2000,

@@ -1,0 +1,128 @@
+.menu {
+  padding: 10px 0;
+
+  ul {
+    list-style-type: none;
+    @include clearfix;
+  }
+
+  a.active {
+    font-weight: 700;
+  }
+
+  ul.header-nav {
+    > li {
+      display: inline-block;
+      float: left;
+    }
+
+    > li > a, .user-menu-select {
+      font-weight: 700;
+      border-bottom: 5px solid transparent;
+
+      &.active {
+        color: $link-color;
+        border-bottom-color: $dark-blue;
+      }
+
+      &:hover {
+        color: $link-color;
+        border-bottom-color: $dark-blue;
+        transition: border-bottom-color ease 0.3s;
+      }
+    }
+  }
+}
+
+.main-nav, .auth-nav {
+  font-family: $body-font-family;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 30px;
+
+  li a {
+    display: block;
+    padding: 15px 10px;
+    color: $dark-text;
+  }
+}
+
+.user-menu {
+  height: 40px;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  &.menu-hidden {
+    .user-dropdown {
+      display: none;
+    }
+
+    .dropdown-arrow {
+      @include arrow-down;
+    }
+  }
+
+  &.menu-visible {
+    .user-dropdown {
+      display: block;
+    }
+
+    .dropdown-arrow {
+      @include arrow-up;
+    }
+  }
+
+  a:hover {
+    .dropdown-arrow {
+      border-top-color: $link-hover-color;
+      border-bottom-color: $link-hover-color;
+    }
+  }
+}
+
+.user-menu-select {
+  padding: 5px;
+  display: block;
+}
+
+.user-dropdown {
+  position: absolute;
+  z-index: 99999;
+  top: 60px;
+  right: 0;
+  width: 200px;
+  background: white;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
+  box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
+
+  li {
+    display: block;
+    font-size: 14px;
+    padding: 3px 0;
+  }
+}
+
+.dropdown-body {
+  padding: 10px 20px;
+}
+
+.dropdown-footer {
+  padding: 15px 20px;
+  background: $background-gray;
+  font-size: 13px;
+  color: $light-text;
+
+  p {
+    margin: 0;
+  }
+}

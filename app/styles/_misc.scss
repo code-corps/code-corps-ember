@@ -1,0 +1,40 @@
+@mixin arrow-down {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid $dark-text;
+  border-bottom: none;
+}
+
+@mixin arrow-up {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 6px solid $dark-text;
+  border-top: none;
+}
+
+.css-truncate-target {
+  display: inline-block;
+  max-width: 125px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.border-top {
+  border-top: 1px solid;
+}
+
+.border-gray-light {
+  border-color: $border-light;
+}

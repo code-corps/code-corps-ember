@@ -1,0 +1,11 @@
+.site-logo {
+  margin: 0;
+  line-height: 50px;
+}
+
+.logo {
+  $file: "/assets/images/icons/cc-logo";
+  @include background-image-retina($file, "png", 234px, 50px);
+  display: inline-block;
+  text-indent: -9999px;
+}

@@ -1,0 +1,20 @@
+{{#click-outside action=(action "hide") except-selector=".user-dropdown"}}
+  <a class="user-menu-select" {{action 'toggle'}}>
+    <img class="avatar" src={{model.photoThumbUrl}} alt={{model.atUsername}} width="40" height="40" />
+    <span class="dropdown-arrow"></span>
+  </a>
+{{/click-outside}}
+<div class="user-dropdown">
+  <div class="dropdown-body">
+    <ul>
+      <li>{{#link-to 'slugged-route' model.username class="slugged-route"}}Your profile{{/link-to}}</li>
+      <li>{{#link-to 'profile' class="profile"}}Settings{{/link-to}}</li>
+      <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
+    </ul>
+  </div>
+  <div class="dropdown-footer">
+    <p>
+      Signed in as <strong class="css-truncate-target">{{model.username}}</strong>
+    </p>
+  </div>
+</div>

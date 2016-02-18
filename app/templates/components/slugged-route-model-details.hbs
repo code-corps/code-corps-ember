@@ -1,8 +1,6 @@
-<p>Name: {{sluggedRoute.model.name}}</p>
-<p>Username: {{sluggedRoute.model.username}}</p>
-{{#if isOrganization}}
-  {{organization-details organization=sluggedRoute.model}}
+{{#if belongsToOrganization}}
+  {{organization-details organization=sluggedRoute.owner}}
 {{/if}}
-{{#if isUser}}
-  {{user-details user=sluggedRoute.model}}
+{{#if belongsToUser}}
+  {{user-details user=sluggedRoute.owner}}
 {{/if}}
