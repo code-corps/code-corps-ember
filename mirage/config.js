@@ -27,6 +27,8 @@ export default function() {
     }
   });
 
+  this.get('/organizations/:id');
+
   this.get('/users/:id');
   this.get('/users');
 
@@ -169,7 +171,7 @@ export default function() {
 
     let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
 
-    return sluggedRoute.model.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; })[0];
   });
 
   // GET post/:number

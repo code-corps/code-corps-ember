@@ -1,16 +1,2 @@
-{{#each user.organizations as |organization|}}
-  {{organization.name}}
-{{/each}}
-<img src={{user.photoLargeUrl}} />
-<h2>
-  <div class="name">{{user.name}}</div>
-  <div class="username">{{user.username}}</div>
-</h2>
-<ul class="details border-top border-gray-light">
-  <li class="twitter">
-    <a href={{user.twitterUrl}}>{{user.twitter}}</a>
-  </li>
-  <li class="website">
-    <a href={{user.website}}>{{user.website}}</a>
-  </li>
-</ul>
+{{user-sidebar user=user}}
+{{user-organizations-list user=user organizations=user.organizations}}

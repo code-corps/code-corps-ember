@@ -35,31 +35,31 @@ let SluggedRouteModel = Model.extend({
   }
 });
 
-// the following properties serve as an model polymorphic relationship
+// the following properties serve as an owner polymorphic relationship
 
-Object.defineProperty(SluggedRouteModel.prototype, 'model', {
+Object.defineProperty(SluggedRouteModel.prototype, 'owner', {
   get () {
-    if (this.ownerType === 'user') {
+    if (this.ownerType === 'User') {
       return this.user;
-    } else if (this.ownerType === 'organization') {
+    } else if (this.ownerType === 'Organization') {
       return this.organization;
     }
   },
 
-  set (model) {
-    this.ownerType = model.modelName;
+  set (owner) {
+    this.ownerType = owner.modelName.capitalize();
 
-    if (model.modelName === 'user') {
-      this.user = model;
+    if (owner.modelName === 'user') {
+      this.user = owner;
       this.organization = undefined;
-    } else if (model.modelName === 'organization') {
-      this.organization = model;
+    } else if (owner.modelName === 'organization') {
+      this.organization = owner;
       this.user = undefined;
     }
   },
 });
 
-Object.defineProperty(SluggedRouteModel.prototype, 'modelId', {
+Object.defineProperty(SluggedRouteModel.prototype, 'ownerId', {
   get () {
     if (this.ownerType) {
       return this.attrs[this.ownerType + 'Id'];

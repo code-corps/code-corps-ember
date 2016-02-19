@@ -6,5 +6,5 @@ export default MirageModelWithPolymorphicBelongsToSerializer.extend({
   include: ['organization', 'user'],
   // we then rename whichever of those is present
   // into 'model'
-  renameTo: 'model'
+  renameTo: 'owner'
 });

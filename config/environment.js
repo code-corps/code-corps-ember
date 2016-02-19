@@ -61,15 +61,15 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': ["'self'"],
+      'script-src': ["'self'", "https://use.typekit.net"],
       // Allow fonts to be loaded from http://fonts.gstatic.com
-      'font-src': ["'self'", "https://fonts.gstatic.com"],
+      'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
       // Allow data (ajax/websocket) from api.lvh.me
       'connect-src': ["'self'", "http://api.lvh.me:3000"],
       // Allow images from the origin itself (i.e. current domain), and data
-      'img-src': ["'self'", "data:"],
+      'img-src': ["'self'", "data:", "https://d3pgew4wbk2vb1.cloudfront.net", "https://dawxes9syhrgg.cloudfront.net"],
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com
-      'style-src': ["'self'", "https://fonts.googleapis.com"],
+      'style-src': ["'self'", "https://use.typekit.net"],
       // `media-src` will be omitted from policy
       // Browser will fallback to default-src for media resources (which is to deny, see above).
       'media-src': null

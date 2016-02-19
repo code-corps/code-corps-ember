@@ -1,0 +1,31 @@
+.user-organizations-list {
+  @include span-columns(9);
+}
+
+.user-organization-item {
+  @include span-columns(12);
+  margin: 5px 0;
+
+  h3 {
+    margin: 3px 0;
+  }
+
+  p {
+    margin: 3px 0;
+    color: $light-text;
+  }
+
+  img {
+    border-radius: 4px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .thumb {
+    float: left;
+  }
+
+  .content {
+    margin-left: 70px;
+  }
+}

@@ -19,12 +19,12 @@ test('Post editing requires logging in', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -58,12 +58,12 @@ test('A post body can be edited on it\'s own', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -154,12 +154,12 @@ test('A post title can be edited on it\'s own', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', modelType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
