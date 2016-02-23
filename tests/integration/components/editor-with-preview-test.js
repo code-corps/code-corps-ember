@@ -35,10 +35,20 @@ test('user can switch between editing and preview mode', function(assert) {
 
 test('It triggers a "generatePreview" action when preview button is clicked', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{editor-with-preview input='test' preview='Random text...' generatePreview='generatePreview'}}`);
+  this.render(hbs`{{editor-with-preview input='test' generatePreview='generatePreview'}}`);
 
   this.on('generatePreview', function(content) {
     assert.equal(content, 'test', 'The action was triggered with correct content');
   });
   this.$('.preview').click();
+});
+
+test('It yields to a preview block in preview mode', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{#editor-with-preview}}<div class="block"></div>{{/editor-with-preview}}`);
+
+  assert.equal(this.$('.block').length, 0, 'The yielded block is not rendered in edit mode');
+  this.$('.preview').click();
+  assert.equal(this.$('.block').length, 1, 'The yielded block is rendered in preview mode');
 });
