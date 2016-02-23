@@ -17,7 +17,17 @@ let mockPost = Ember.Object.create({
   postType: 'issue',
   user: {
     id: 1
-  }
+  },
+});
+
+let mockPostWithMentions = Ember.Object.create({
+  title: 'A post with mentions',
+  body: '<p>Mentioning @user1 and @user2</p>',
+  postUserMentions: [
+    { indices: [14, 19], user: { id: 1, username: 'user1' } },
+    { indices: [25, 30], user: { id: 2, username: 'user2' } }
+  ],
+  save: Ember.K
 });
 
 
@@ -64,4 +74,15 @@ test('user can switch between view and edit mode for post body', function(assert
 
   this.$('.post-body .cancel').click();
   assert.equal(this.$('.post-body .edit').length, 1, 'The edit button is rendered');
+});
+
+test('mentions are rendered on post body in read-only mode', function(assert) {
+  assert.expect(1);
+
+  this.set('post', mockPostWithMentions);
+
+  let expectedOutput = '<p>Mentioning <a href="/users/1">@user1</a> and <a href="/users/2">@user2</a></p>';
+
+  this.render(hbs`{{post-details post=post}}`);
+  assert.equal(this.$('.post-body .body').html(), expectedOutput, 'Mentions are rendered');
 });

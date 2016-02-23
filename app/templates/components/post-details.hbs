@@ -5,13 +5,13 @@
 
 <div class="post-body">
   {{#if isEditingBody}}
-    {{editor-with-preview input=post.markdownPreview preview=post.bodyPreview generatePreview='generatePreview'}}
+    {{editor-with-preview input=post.markdownPreview preview=postBodyPreviewWithMentions generatePreview='generatePreview'}}
     <div class="controls">
       <button {{action 'savePostBody'}} class="save">Save</button>
       <button {{action 'cancelEditingPostBody'}} class="cancel">Cancel</button>
     </div>
   {{else}}
-    <div class="body">{{{post.body}}}</div>
+    <div class="body">{{{postBodyWithMentions}}}</div>
     {{#if session.isAuthenticated}}
       <button class="edit" {{action 'editPostBody'}}>Edit</button>
     {{/if}}
