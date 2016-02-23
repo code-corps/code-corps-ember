@@ -30,13 +30,15 @@ export default MirageApplicationSerializer.extend({
   _renameRelationships(data) {
     // renames relationships.user or a relationships.organization
     // into relationships.model to simulate a polymorphic relationship
-    if (data.relationships.organization) {
-      data.relationships.model = data.relationships.organization;
-      delete data.relationships.organization;
-    } else if (data.relationships.user) {
-      data.relationships.model = data.relationships.user;
-      delete data.relationships.user;
-    }
+    let actualName = this.renameTo;
+    let possibleNames = this.include;
+
+    possibleNames.forEach((name) => {
+      if (data.relationships[name]) {
+        data.relationships[actualName] = data.relationships[name];
+        delete data.relationships[name];
+      }
+    });
 
     return data;
   }

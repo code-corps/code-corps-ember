@@ -22,6 +22,10 @@ html, body {
   height: 100%;
 }
 
+p {
+  font-size: 15px;
+}
+
 a {
   color: $link-color;
   text-decoration: none;
@@ -53,4 +57,16 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+.border-top {
+  border-top: 1px solid;
+}
+
+.border-gray-light {
+  border-color: $border-light;
+}
+
+.empty-state {
+  color: $light-text;
 }

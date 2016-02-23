@@ -18,7 +18,7 @@ test('It renders navigation properly', (assert) => {
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   organization.createProject({ slug: 'test_project' });
@@ -40,7 +40,7 @@ test('Navigation works', (assert) => {
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   organization.createProject({ slug: 'test_project' });
@@ -68,8 +68,7 @@ test('It renders all the required ui elements for post list', (assert) => {
   assert.expect(4);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  let organization = sluggedRoute.createOwner({slug: 'test_organization'}, 'Organization');
   sluggedRoute.save();
 
   let project = organization.createProject({ slug: 'test_project' });
@@ -103,7 +102,7 @@ test('Post filtering by type works', (assert) => {
   // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -151,7 +150,7 @@ test('Paging of posts works', (assert) => {
   // TODO: see if it's possible to override models so we can do this in server.create
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -182,7 +181,7 @@ test('Paging and filtering of posts combined works', (assert) => {
   // TODO: see if it's possible to override models so we can do this in server.create
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
   let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);

@@ -25,7 +25,7 @@ test('Post comments are displayed correctly', (assert) => {
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -51,7 +51,7 @@ test('A comment can be added to a post', (assert) => {
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -95,7 +95,7 @@ test('Comment preview works during creation', (assert) => {
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -144,7 +144,7 @@ test('When comment creation fails due to validation, validation errors are displ
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -199,7 +199,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -251,7 +251,7 @@ test('A comment can only be edited by the author', (assert) => {
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
@@ -288,7 +288,7 @@ test('Comment editing with preview works', (assert) => {
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.model = organization;
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
 
   let project = server.schema.project.find(projectId);
