@@ -34,3 +34,9 @@ test('it replaces all "@username" mention strings with links to the user profile
   assert.equal(parse(body, mentions), expectedOutput);
 
 });
+
+test('it returns the unmodified post string when there are no mentions', function(assert) {
+  let body = '<p>Not mentioning anyone</p>';
+
+  assert.equal(parse(body, undefined), body);
+});

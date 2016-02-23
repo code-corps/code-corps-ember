@@ -1,6 +1,15 @@
 import Ember from 'ember';
 
 function parse(body, mentions) {
+  if (Ember.isPresent(body) && Ember.isPresent(mentions)) {
+    return _parseMentions(body, mentions);
+  } else {
+    return body;
+  }
+}
+
+function _parseMentions(body, mentions) {
+
   let parsedBody = '';
   let currentPosition = 0;
 
@@ -18,6 +27,7 @@ function parse(body, mentions) {
 
   return parsedBody;
 }
+
 
 function _generateLink(mention) {
   let user = Ember.get(mention, 'user');
