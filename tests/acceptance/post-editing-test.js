@@ -51,7 +51,7 @@ test('Post editing requires logging in', (assert) => {
 });
 
 test('A post body can be edited on it\'s own', (assert) => {
-  assert.expect(7);
+  assert.expect(3);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -80,70 +80,17 @@ test('A post body can be edited on it\'s own', (assert) => {
 
   andThen(() => {
     fillIn('textarea[name=markdown]', 'Some type of markdown');
-
-    let previewDone = assert.async();
-
     click('.preview');
-
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes), ['markdown_preview', 'preview']);
-      assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
-      assert.equal(attributes.preview, true, 'Preview flag is correctly set to true');
-
-      previewDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            markdown_preview: 'Some type of markdown',
-            body_preview: '<p>Some type of markdown</p>'
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
   });
 
   andThen(() => {
     assert.equal(find('.body-preview').html(), '<p>Some type of markdown</p>', 'The preview renders');
-    let saveDone = assert.async();
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes),
-        ['markdown_preview']);
-      assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
-
-      saveDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            markdown: 'Some type of markdown',
-            body: '<p>Some type of markdown</p>',
-            markdown_preview: 'Some type of markdown',
-            body_preview: '<p>Some type of markdown</p>'
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
-
     click('.save');
   });
 
   andThen(() => {
     assert.equal(find('.post-body .edit').length, 1, 'Succesful save of body switches away from edit mode');
+    assert.equal(find('.post-body .body').html(), '<p>Some type of markdown</p>', 'The new post body is rendered');
   });
 });
 
@@ -174,35 +121,13 @@ test('A post title can be edited on it\'s own', (assert) => {
   andThen(() => {
     click('.post-title .edit');
     fillIn('.post-title input[name=title]', 'Edited title');
-
-    let saveDone = assert.async();
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes), ['title'], 'Only the title attribute is in the payload');
-      assert.equal(attributes.title, 'Edited title', 'New title was sent correctly');
-
-      saveDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            title: attributes.title
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
-
     click('.post-title .save');
   });
 
   andThen(() => {
     assert.equal(find('.post-title .edit').length, 1, 'Sucessful save of title switches away from edit mode');
+    assert.equal(find('.post-title .title').text().trim(), 'Edited title', 'The new title is rendered');
+    assert.equal(server.schema.post.find(post.id).title, 'Edited title', 'The title was updated in the database');
   });
 });
 
@@ -230,11 +155,7 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
     title: "Test title",
     body: "Test body",
     postType: "issue",
-    number: 1,
-    postUserMentions: [
-      { indices: [14, 19], user: { id: 1, username: 'user1' } },
-      { indices: [25, 30], user: { id: 2, username: 'user2' } }
-    ],
+    number: 1
   });
 
   let user1 = server.create('user', { username: 'user1' });
@@ -247,53 +168,8 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
   });
 
   andThen(() => {
-
     fillIn('.post-body textarea', 'Mentioning @user1 and @user2');
-
-    let previewDone = assert.async();
-
     click('.preview');
-
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      previewDone();
-      let requestBody = JSON.parse(request.requestBody);
-      let attributes = requestBody.data.attributes;
-      let bodyPreview = `<p>${attributes.markdown_preview}</p>`;
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: Ember.merge(attributes, { body_preview: bodyPreview }),
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } },
-            post_user_mentions: { data: [
-              { id: 1, type: 'post_user_mentions' },
-              { id: 2, type: 'post_user_mentions' }
-            ] }
-          },
-        },
-        included: [
-          {
-            id: 1,
-            attributes: { indices: [14, 19], username: user1.username },
-            relationships: {
-              post: { data: { id: post.id, type: 'posts' } },
-              user: { data: { id: user1.id, type: 'users' } }
-            },
-            type: 'post_user_mentions'
-          },
-          {
-            id: 2,
-            attributes: { indices: [25, 30], username: user2.username },
-            relationships: {
-              post: {data: {id: post.id, type: 'posts'}},
-              user: {data: {id: user2.id, type: 'users'}}
-            },
-            type: 'post_user_mentions'
-          },
-        ]
-      };
-    });
   });
 
   andThen(() => {

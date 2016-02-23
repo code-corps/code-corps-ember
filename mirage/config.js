@@ -1,6 +1,24 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
 
+function generatePostMentions(schema, post) {
+  let body = post.body;
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.user.where({ username: username })[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.postUserMention.create({
+        username: username, indices: [startIndex, endIndex],
+        userId: matchedUser.id, postId: post.id
+      });
+    }
+  });
+}
+
 export default function() {
 
   this.post('/oauth/token', (db, request) => {
@@ -77,10 +95,43 @@ export default function() {
 
     let post = schema.create('post', Ember.merge(attrs, rels));
 
-    return this.serializerOrRegistry.serialize(post);
+    generatePostMentions(schema, post);
+
+    return post;
   });
 
-  this.patch('/posts/:id');
+  this.patch('/posts/:id', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let postId = request.params.id;
+    let post = schema.post.find(postId);
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      id: postId,
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+      title: attributes.title,
+      postType: attributes.post_type
+    };
+
+    // for some reason, post.update(key, value) updates post properties, but
+    // doesn't touch the post.attrs object, which is what is used in response
+    // serialization
+    post.attrs = attrs;
+
+    post.postUserMentions.forEach((mention) => mention.destroy());
+    generatePostMentions(schema, post);
+
+    post.save();
+
+    return post;
+  });
 
   // GET posts/:number/comments
   this.get('/posts/:postId/comments', function(schema, request) {
