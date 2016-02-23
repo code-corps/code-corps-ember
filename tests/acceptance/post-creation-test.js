@@ -19,7 +19,6 @@ test('Creating a post requires logging in', (assert) => {
   assert.expect(2);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  // let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let organization = sluggedRoute.createOwner({slug: 'test_organization'}, 'Organization');
   let projectId = server.create('project', { slug: 'test_project' }).id;
