@@ -30,9 +30,8 @@ function _parseMentions(body, mentions) {
 
 
 function _generateLink(mention) {
-  let user = Ember.get(mention, 'user');
-  let userId = Ember.get(user, 'id');
-  let username = Ember.get(user, 'username');
+  let userId = Ember.get(mention, 'user.id');
+  let username = Ember.get(mention, 'username');
   return `<a href="/users/${userId}">@${username}</a>`;
 }
 

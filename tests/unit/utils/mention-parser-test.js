@@ -13,18 +13,14 @@ test('it replaces all "@username" mention strings with links to the user profile
 
     Ember.Object.create({
       indices: [14, 19],
-      user: {
-        id: 1,
-        username: 'user1'
-      }
+      username: 'user1',
+      user: { id: 1 }
     }),
 
     Ember.Object.create({
       indices: [25, 30],
-      user: {
-        id: 2,
-        username: 'user2'
-      }
+      username: 'user2',
+      user: { id: 2 }
     })
 
   ];

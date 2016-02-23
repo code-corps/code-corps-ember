@@ -44,9 +44,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save().then((post) => {
-        console.log(post);
-      });
+      post.save();
     },
 
     savePostBody() {

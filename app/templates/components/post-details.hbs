@@ -5,7 +5,13 @@
 
 <div class="post-body">
   {{#if isEditingBody}}
-    {{editor-with-preview input=post.markdownPreview preview=postBodyPreviewWithMentions generatePreview='generatePreview'}}
+    {{#editor-with-preview input=post.markdownPreview generatePreview='generatePreview'}}
+      {{#if post.isSaving}}
+        Loading preview...
+      {{else}}
+        <div class="body-preview">{{{postBodyPreviewWithMentions}}}</div>
+      {{/if}}
+    {{/editor-with-preview}}
     <div class="controls">
       <button {{action 'savePostBody'}} class="save">Save</button>
       <button {{action 'cancelEditingPostBody'}} class="cancel">Cancel</button>

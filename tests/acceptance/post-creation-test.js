@@ -105,7 +105,7 @@ test('A post can be successfully created', (assert) => {
 });
 
 test('Post preview works during creation', (assert) => {
-  assert.expect(3);
+  assert.expect(4);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -130,6 +130,8 @@ test('Post preview works during creation', (assert) => {
   andThen(() => {
     fillIn('textarea[name=markdown]', 'Some type of markdown');
 
+    let previewDone = assert.async();
+
     click('.preview');
     server.post(`/posts/`, (db, request) => {
       let params = JSON.parse(request.requestBody);
@@ -138,7 +140,7 @@ test('Post preview works during creation', (assert) => {
       assert.deepEqual(Object.keys(attributes), ['markdown_preview', 'preview']);
       assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
       assert.equal(attributes.preview, true, 'Preview flag is correctly set to true');
-
+      previewDone();
       return {
         data: {
           id: 1,
@@ -153,6 +155,10 @@ test('Post preview works during creation', (assert) => {
         }
       };
     });
+  });
+
+  andThen(() => {
+    assert.equal(find('.post-new-form .body-preview').html(), '<p>Some type of markdown</p>', 'The preview is rendered');
   });
 });
 

@@ -24,10 +24,12 @@ let mockPostWithMentions = Ember.Object.create({
   title: 'A post with mentions',
   body: '<p>Mentioning @user1 and @user2</p>',
   postUserMentions: [
-    { indices: [14, 19], user: { id: 1, username: 'user1' } },
-    { indices: [25, 30], user: { id: 2, username: 'user2' } }
+    { indices: [14, 19], username: 'user1', user: { id: 1 } },
+    { indices: [25, 30], username: 'user2', user: { id: 2 } }
   ],
-  save: Ember.K
+  save() {
+    this.set('bodyPreview', this.get('body'));
+  }
 });
 
 
@@ -85,4 +87,22 @@ test('mentions are rendered on post body in read-only mode', function(assert) {
 
   this.render(hbs`{{post-details post=post}}`);
   assert.equal(this.$('.post-body .body').html(), expectedOutput, 'Mentions are rendered');
+});
+
+test('It renders body as unescaped html', function(assert) {
+  assert.expect(1);
+  this.set('post', mockPostWithMentions);
+
+  this.render(hbs`{{post-details post=post}}`);
+  assert.equal(this.$('.body a').length, 2, 'The html is rendered properly');
+});
+
+test('It renders preview as unescaped html', function(assert) {
+  assert.expect(1);
+  this.set('post', mockPostWithMentions);
+
+  this.render(hbs`{{post-details post=post}}`);
+  this.$('.post-body .edit').click();
+  this.$('.preview').click();
+  assert.equal(this.$('.body-preview a').length, 2, 'The html is rendered properly');
 });

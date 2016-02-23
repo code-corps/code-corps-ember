@@ -17,7 +17,6 @@ export default Ember.Component.extend({
   actions: {
     preview() {
       this.set('mode', 'previewing');
-      this.set('preview', 'Loading preview...');
       let content = this.get('input');
       this.sendAction('generatePreview', content);
     },

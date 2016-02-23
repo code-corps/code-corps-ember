@@ -83,7 +83,7 @@ test('A comment can be added to a post', (assert) => {
 });
 
 test('Comment preview works during creation', (assert) => {
-  assert.expect(3);
+  assert.expect(4);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -109,6 +109,8 @@ test('Comment preview works during creation', (assert) => {
   andThen(() => {
     fillIn('.create-comment-form textarea[name=markdown]', 'Some type of markdown');
 
+    let previewDone = assert.async();
+
     click('.create-comment-form .preview');
     server.post(`/comments/`, (db, request) => {
       let params = JSON.parse(request.requestBody);
@@ -117,7 +119,7 @@ test('Comment preview works during creation', (assert) => {
       assert.deepEqual(Object.keys(attributes), ['markdown_preview', 'preview']);
       assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
       assert.equal(attributes.preview, true, 'Preview flag is correctly set to true');
-
+      previewDone();
       return {
         data: {
           id: 1,
@@ -132,6 +134,10 @@ test('Comment preview works during creation', (assert) => {
         }
       };
     });
+  });
+
+  andThen(() => {
+    assert.equal(find('.create-comment-form .body-preview').html(), '<p>Some type of markdown</p>', 'The preview is rendered');
   });
 });
 
@@ -276,7 +282,7 @@ test('A comment can only be edited by the author', (assert) => {
 });
 
 test('Comment editing with preview works', (assert) => {
-  assert.expect(6);
+  assert.expect(7);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -339,6 +345,8 @@ test('Comment editing with preview works', (assert) => {
   });
 
   andThen(() => {
+    assert.equal(find('.comment-item .body-preview').html(), '<p>Some type of markdown</p>', 'The preview is rendered');
+
     server.patch(`/comments/${comment.id}`, (db, request) => {
       let params = JSON.parse(request.requestBody);
       let attributes = params.data.attributes;
