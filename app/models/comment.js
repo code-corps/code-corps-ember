@@ -9,5 +9,7 @@ export default DS.Model.extend({
   preview: DS.attr('boolean'),
 
   post: DS.belongsTo('post', { async: true }),
-  user: DS.belongsTo('user', { async: true })
+  user: DS.belongsTo('user', { async: true }),
+
+  commentUserMentions: DS.hasMany('commentUserMention', { async: false })
 });

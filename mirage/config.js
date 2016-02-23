@@ -19,6 +19,24 @@ function generatePostMentions(schema, post) {
   });
 }
 
+function generateCommentMentions(schema, comment) {
+  let body = comment.body;
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.user.where({ username: username })[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.postUserMention.create({
+        username: username, indices: [startIndex, endIndex],
+        userId: matchedUser.id, commentId: comment.id
+      });
+    }
+  });
+}
+
 export default function() {
 
   this.post('/oauth/token', (db, request) => {
@@ -63,7 +81,6 @@ export default function() {
     }
   });
 
-  // POST /posts
   this.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -133,14 +150,6 @@ export default function() {
     return post;
   });
 
-  // GET posts/:number/comments
-  this.get('/posts/:postId/comments', function(schema, request) {
-    let postId = request.params.postId;
-    let post = schema.post.find(postId);
-    return post.comments;
-  });
-
-  // POST comments
   this.post('/comments', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -165,7 +174,47 @@ export default function() {
 
     let comment = schema.create('comment', Ember.merge(attrs, rels));
 
-    return this.serializerOrRegistry.serialize(comment);
+    generateCommentMentions(schema, comment);
+
+    return comment;
+  });
+
+  this.patch('/comments/:id', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let commentId = request.params.id;
+    let comment = schema.comment.find(commentId);
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      id: commentId,
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+    };
+
+    // for some reason, post.update(key, value) updates post properties, but
+    // doesn't touch the post.attrs object, which is what is used in response
+    // serialization
+    comment.attrs = attrs;
+
+    comment.commentUserMentions.forEach((mention) => mention.destroy());
+    generateCommentMentions(schema, comment);
+
+    comment.save();
+
+    return comment;
+  });
+
+  // GET posts/:number/comments
+  this.get('/posts/:postId/comments', function(schema, request) {
+    let postId = request.params.postId;
+    let post = schema.post.find(postId);
+    return post.comments;
   });
 
   // GET project/posts

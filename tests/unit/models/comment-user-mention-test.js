@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('comment', 'Unit | Model | comment', {
+moduleForModel('comment-user-mention', 'Unit | Model | comment user mention', {
   // Specify the other units that are required for this test.
-  needs: ['model:post', 'model:user', 'model:comment-user-mention']
+  needs: ['model:comment', 'model:user']
 });
 
 test('it exists', function(assert) {
