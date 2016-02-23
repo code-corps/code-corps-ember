@@ -145,7 +145,7 @@ test('Post preview during creation renders user mentions', (assert) => {
   authenticateSession(application, { user_id: user.id });
 
   let organization = server.create('organization');
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
   let project = server.create('project');
 
   sluggedRoute.owner = organization;
@@ -154,20 +154,20 @@ test('Post preview during creation renders user mentions', (assert) => {
   project.organization = organization;
   project.save();
 
-  let user1 = server.create('user', { username: 'user1' });
-  let user2 = server.create('user', { username: 'user2' });
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
 
   visit(`/${organization.slug}/${project.slug}/posts/new`);
 
-
   andThen(() => {
-    fillIn('textarea[name=markdown]', 'Mentioning @user1 and @user2');
+    fillIn('textarea[name=markdown]', markdown);
     click('.preview');
   });
 
   andThen(() => {
-    let expectedOutput = `<p>Mentioning <a href="/users/${user1.id}">@user1</a> and <a href="/users/${user2.id}">@user2</a></p>`;
-    assert.equal(find('.body-preview').html(), expectedOutput, 'The mentions render');
+    assert.equal(find('.body-preview').html(), expectedBody, 'The mentions render');
   });
 });
 

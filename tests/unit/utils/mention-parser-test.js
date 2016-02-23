@@ -25,7 +25,7 @@ test('it replaces all "@username" mention strings with links to the user profile
 
   ];
 
-  let expectedOutput = '<p>Mentioning <a href="/users/1">@user1</a> and <a href="/users/2">@user2</a></p>';
+  let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
 
   assert.equal(parse(body, mentions), expectedOutput);
 

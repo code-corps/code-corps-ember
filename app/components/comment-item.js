@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { parse } from 'code-corps-ember/utils/mention-parser';
 
 export default Ember.Component.extend({
   classNames: ['comment-item'],
@@ -16,7 +17,25 @@ export default Ember.Component.extend({
 
   canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsCommentAuthor'),
 
-  didInitAttrs() {
+  commentBodyWithMentions: Ember.computed('comment.body', function() {
+    let comment = this.get('comment');
+    if (Ember.isPresent(comment)) {
+      return parse(this.get('comment.body'), this.get('comment.commentUserMentions'));
+    } else {
+      return "";
+    }
+  }),
+
+  commentBodyPreviewWithMentions: Ember.computed('comment.bodyPreview', function() {
+    let comment = this.get('comment');
+    if (Ember.isPresent(comment)) {
+      return parse(this.get('comment.bodyPreview'), this.get('comment.commentUserMentions'));
+    } else {
+      return "";
+    }
+  }),
+
+  init() {
     this.set('isEditing', false);
     return this._super(...arguments);
   },

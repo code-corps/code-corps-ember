@@ -3,7 +3,7 @@
     {{#if comment.isSaving}}
       Loading preview...
     {{else}}
-      <div class="body-preview">{{{comment.bodyPreview}}}</div>
+      <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
     {{/if}}
   {{/editor-with-preview}}
   {{#each comment.errors.markdown as |error|}}

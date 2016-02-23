@@ -83,7 +83,7 @@ test('mentions are rendered on post body in read-only mode', function(assert) {
 
   this.set('post', mockPostWithMentions);
 
-  let expectedOutput = '<p>Mentioning <a href="/users/1">@user1</a> and <a href="/users/2">@user2</a></p>';
+  let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
 
   this.render(hbs`{{post-details post=post}}`);
   assert.equal(this.$('.post-body .body').html(), expectedOutput, 'Mentions are rendered');

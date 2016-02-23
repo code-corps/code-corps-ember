@@ -5,7 +5,7 @@ export default Factory.extend({
   email: faker.internet.email,
   photoLargeUrl: faker.image.avatar,
   photoThumbUrl: faker.image.avatar,
-  twitter: faker.internet.userName,
-  username: faker.internet.userName,
+  twitter: faker.internet.domainWord,
+  username: faker.internet.domainWord,
   website: faker.internet.url,
 });

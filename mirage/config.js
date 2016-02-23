@@ -29,7 +29,7 @@ function generateCommentMentions(schema, comment) {
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
-      schema.postUserMention.create({
+      schema.commentUserMention.create({
         username: username, indices: [startIndex, endIndex],
         userId: matchedUser.id, commentId: comment.id
       });

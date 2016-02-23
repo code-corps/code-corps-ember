@@ -119,6 +119,49 @@ test('Comment preview works during creation', (assert) => {
   });
 });
 
+test('Comment user mentions are being rendered during creation', (assert) => {
+  assert.expect(2);
+
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.create('organization');
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let project = server.create('project');
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  project.organization = organization;
+  project.save();
+
+  let post = server.schema.post.create({ projectId: project.id, number: 1 });
+
+  visit(`${sluggedRoute.slug}/${project.slug}/posts/${post.number}`);
+
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+
+  andThen(() => {
+    fillIn('.create-comment-form textarea[name=markdown]', markdown);
+    click('.create-comment-form .preview');
+  });
+
+  andThen(() => {
+    assert.equal(find('.create-comment-form .body-preview').html(), expectedBody, 'The preview is rendered with mentions');
+    click('.create-comment-form [name=save]');
+  });
+
+  andThen(() => {
+    assert.equal(find('.comment-item .body').html(), expectedBody, 'The body is rendered with mentions');
+  });
+});
+
 test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
   // server.create uses factories. server.schema.<obj>.create does not
@@ -306,5 +349,54 @@ test('Comment editing with preview works', (assert) => {
     assert.equal(comment.body, expectedBody);
     assert.equal(comment.markdown, markdown);
     assert.equal(find('.comment-item .body').html(), expectedBody, 'The comment body is rendered');
+  });
+});
+
+test('Comment user mentions are being rendered during editing', (assert) => {
+  assert.expect(2);
+
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let organization = server.create('organization');
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let project = server.create('project');
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+
+  server.createList('comment', 1, { postId: post.id, userId: user.id });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    click('.comment-item .edit');
+  });
+
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+
+  andThen(() => {
+    fillIn('.comment-item [name=markdown]', markdown);
+    click('.comment-item .preview');
+  });
+
+  andThen(() => {
+    assert.equal(find('.comment-item .body-preview').html(), expectedBody, 'The preview is rendered with mentions');
+    click('.comment-item .save');
+  });
+
+  andThen(() => {
+    assert.equal(find('.comment-item .body').html(), expectedBody, 'The comment body is rendered with mentions');
   });
 });

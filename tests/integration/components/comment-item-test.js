@@ -13,6 +13,35 @@ test('it renders', function(assert) {
   assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
 });
 
+let mockSession = Ember.Service.extend({
+  isAuthenticated: true,
+  session: {
+    authenticated: {
+      user_id: 1
+    }
+  }
+});
+
+let mockComment = Ember.Object.create({
+  body: 'A <strong>body</strong>',
+  user: { id: 1 },
+  save() {
+    return Ember.RSVP.resolve();
+  }
+});
+
+let mockCommentWithMentions = Ember.Object.create({
+  body: '<p>Mentioning @user1 and @user2</p>',
+  user: { id: 1 },
+  commentUserMentions: [
+    { indices: [14, 19], username: 'user1', user: { id: 1 } },
+    { indices: [25, 30], username: 'user2', user: { id: 2 } }
+  ],
+  save() {
+    this.set('bodyPreview', this.get('body'));
+    return Ember.RSVP.resolve();
+  }
+});
 
 test('it renders all required comment elements properly', function(assert) {
   assert.expect(3);
@@ -31,27 +60,6 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  let mockSession = Ember.Service.extend({
-    isAuthenticated: true,
-    session: {
-      authenticated: {
-        user_id: 1
-      }
-    }
-  });
-
-  let mockComment = Ember.Object.create({
-    title: 'A post',
-    body: 'A <strong>body</strong>',
-    postType: 'issue',
-    user: {
-      id: 1
-    },
-    save() {
-      return Ember.RSVP.resolve();
-    }
-  });
-
   this.container.registry.register('service:session', mockSession);
 
   this.set('comment', mockComment);
@@ -64,4 +72,15 @@ test('it switches between editing and viewing mode', function(assert) {
   this.$('.edit').click();
   this.$('.save').click();
   assert.equal(this.$('.comment-item.editing').length, 0, 'Component switched back the UI to view mode on save');
+});
+
+test('mentions are rendered on comment body in read-only mode', function(assert) {
+  assert.expect(1);
+
+  this.set('comment', mockCommentWithMentions);
+
+  let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
+
+  this.render(hbs`{{comment-item comment=comment}}`);
+  assert.equal(this.$('.comment-item .body').html(), expectedOutput, 'Mentions are rendered');
 });

@@ -134,16 +134,13 @@ test('A post title can be edited on it\'s own', (assert) => {
 test('Mentions are rendered during editing in preview mode', (assert) => {
   assert.expect(1);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
@@ -158,8 +155,10 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
     number: 1
   });
 
-  let user1 = server.create('user', { username: 'user1' });
-  let user2 = server.create('user', { username: 'user2' });
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
@@ -168,12 +167,11 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
   });
 
   andThen(() => {
-    fillIn('.post-body textarea', 'Mentioning @user1 and @user2');
+    fillIn('.post-body textarea', markdown);
     click('.preview');
   });
 
   andThen(() => {
-    let expectedOutput = `<p>Mentioning <a href="/users/${user1.id}">@user1</a> and <a href="/users/${user2.id}">@user2</a></p>`;
-    assert.equal(find('.body-preview').html(), expectedOutput, 'The mentions render');
+    assert.equal(find('.body-preview').html(), expectedBody, 'The mentions render');
   });
 });
