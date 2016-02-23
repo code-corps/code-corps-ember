@@ -138,6 +138,39 @@ test('Post preview works during creation', (assert) => {
   });
 });
 
+test('Post preview during creation renders user mentions', (assert) => {
+  assert.expect(1);
+
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
+
+  let organization = server.create('organization');
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: organization.slug, ownerType: 'organization' });
+  let project = server.create('project');
+
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  project.organization = organization;
+  project.save();
+
+  let user1 = server.create('user', { username: 'user1' });
+  let user2 = server.create('user', { username: 'user2' });
+
+  visit(`/${organization.slug}/${project.slug}/posts/new`);
+
+
+  andThen(() => {
+    fillIn('textarea[name=markdown]', 'Mentioning @user1 and @user2');
+    click('.preview');
+  });
+
+  andThen(() => {
+    let expectedOutput = `<p>Mentioning <a href="/users/${user1.id}">@user1</a> and <a href="/users/${user2.id}">@user2</a></p>`;
+    assert.equal(find('.body-preview').html(), expectedOutput, 'The mentions render');
+  });
+});
+
 test('When post creation succeeeds, the user is redirected to the post page for the new post', (assert) => {
   assert.expect(2);
 

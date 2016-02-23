@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { parse } from 'code-corps-ember/utils/mention-parser';
 
 export default Ember.Component.extend({
   tagName: 'form',
@@ -11,6 +12,15 @@ export default Ember.Component.extend({
     {label: "Progress", slug: "progress"},
     {label: "Idea", slug: "idea"}
   ],
+
+  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', function() {
+    let post = this.get('post');
+    if (Ember.isPresent(post)) {
+      return parse(this.get('post.bodyPreview'), this.get('post.postUserMentions'));
+    } else {
+      return "";
+    }
+  }),
 
   actions: {
     submit() {

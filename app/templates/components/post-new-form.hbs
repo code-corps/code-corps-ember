@@ -20,7 +20,7 @@
     {{#if post.isSaving}}
       Loading preview...
     {{else}}
-      <div class="body-preview">{{{post.bodyPreview}}}</div>
+      <div class="body-preview">{{{postBodyPreviewWithMentions}}}</div>
     {{/if}}
   {{/editor-with-preview}}
   {{#each post.errors.markdown as |error|}}
