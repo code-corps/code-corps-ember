@@ -1,0 +1,23 @@
+.project-item {
+  margin: 10px 0;
+
+  @include clearfix;
+
+  h4 {
+    margin: 9px 0;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 8px 0 3px 0;
+    font-size: 14px;
+  }
+
+  .icon-container, .details-container {
+    float: left;
+  }
+
+  .details-container {
+    padding-left: 10px;
+  }
+}

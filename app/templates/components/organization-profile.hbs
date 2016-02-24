@@ -1,0 +1,14 @@
+{{organization-details organization=organization}}
+{{project-list projects=organization.projects}}
+<div class="organization-members">
+  <h3>People</h3>
+  <ul>
+  {{#each organization.members as |user|}}
+    <li>
+      {{#link-to 'slugged-route' user.username}}
+        <img class="icon" src={{user.photoThumbUrl}} />
+      {{/link-to}}
+    </li>
+  {{/each}}
+  </ul>
+</div>

@@ -1,1 +1,15 @@
-<div class="title">{{#link-to 'project' project.organization.slug project.slug}}{{project.title}}{{/link-to}}</div>
+<div class="icon-container">
+  {{#link-to 'project' project.organization.slug project.slug}}
+    <img class="icon" src={{project.iconThumbUrl}} />
+  {{/link-to}}
+</div>
+<div class="details-container">
+  <h4>
+    {{#link-to 'project' project.organization.slug project.slug}}
+      {{project.title}}
+    {{/link-to}}
+  </h4>
+  <p>
+    {{project.description}}
+  </p>
+</div>

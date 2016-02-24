@@ -1,1 +1,7 @@
-Organization details
+<div class="icon-container">
+  {{#link-to 'slugged-route' organization.slug}}<img class="icon" src={{organization.iconThumbUrl}} />{{/link-to}}
+</div>
+<div class="details-container">
+  <h1 class="title">{{#link-to 'slugged-route' organization.slug}}{{organization.name}}{{/link-to}}</h1>
+  <p class="description">{{organization.description}}</p>
+</div>
