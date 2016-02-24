@@ -14,7 +14,7 @@ module('Acceptance: Profile', {
 });
 
 test("it displays the user-details component with user details", (assert) => {
-  assert.expect(5);
+  assert.expect(6);
 
   let sluggedRoute = server.schema.sluggedRoute.create({
     slug: 'test_user',
@@ -40,13 +40,14 @@ test("it displays the user-details component with user details", (assert) => {
   andThen(() => {
     assert.equal(find('.user-details').length, 1);
     assert.equal(find('.twitter').text().trim(), "@test_twitter", "The user's twitter renders");
+    assert.equal(find('.twitter a').attr('src'), "https://twitter.com/test_twitter", "The user's twitter URL renders");
     assert.equal(find('.website').text().trim(), "test.com", "The user's website renders");
     assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
     assert.equal(find('.user-organization-item:eq(0)').text().trim(), "Organization 1", "The organization names render");
   });
 });
 
-test("it displays the user-details component with user details", (assert) => {
+test("the user can navigate to an organization from the organization's list", (assert) => {
   assert.expect(2);
 
   let sluggedRoute = server.schema.sluggedRoute.create({

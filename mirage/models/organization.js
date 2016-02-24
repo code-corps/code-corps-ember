@@ -1,5 +1,6 @@
 import { Model, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
-  projects: hasMany()
+  projects: hasMany(),
+  members: hasMany("user"),
 });

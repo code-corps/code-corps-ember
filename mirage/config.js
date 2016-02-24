@@ -29,6 +29,8 @@ export default function() {
 
   this.get('/organizations/:id');
 
+  this.get('/projects/:id');
+
   this.get('/users/:id');
   this.get('/users');
 
