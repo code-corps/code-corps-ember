@@ -21,3 +21,7 @@
 textarea {
   min-height: 100px;
 }
+
+.form-container {
+  @include span-columns(8);
+}

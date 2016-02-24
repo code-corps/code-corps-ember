@@ -1,7 +1,5 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['organization-details'],
-
-  expanded: false
+  classNames: ['organization-menu', 'project-menu']
 });
