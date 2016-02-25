@@ -20,7 +20,7 @@
 </ul>
 <div class="posts">
   {{#each posts as |post|}}
-    {{post-item post=post}}
+    {{post-item post=post user=post.user}}
   {{else}}
     <div class="no-posts">There are currently no posts of any type created for this project</div>
   {{/each}}
