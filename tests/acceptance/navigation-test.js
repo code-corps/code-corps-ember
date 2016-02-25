@@ -77,7 +77,7 @@ test("Logged in, from user menu can visit profile settings", function(assert) {
     click('.user-dropdown .profile');
   });
   andThen(function() {
-    assert.equal(find('.profile-details').length, 1, "Page contains profile details form");
+    assert.equal(find('.user-settings-form').length, 1, "Page contains user settings form");
   });
 });
 

@@ -2,19 +2,16 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-
-
-
-moduleForComponent('profile-details', 'Integration | Component | profile details', {
+moduleForComponent('user-settings-form', 'Integration | Component | user settings form', {
   integration: true
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{profile-details}}`);
+  this.render(hbs`{{user-settings-form}}`);
 
-  assert.equal(this.$('.profile-details').length, 1);
+  assert.equal(this.$('.user-settings-form').length, 1);
 });
 
 let user = {
@@ -29,7 +26,7 @@ test('it renders form elements properly', function(assert) {
 
   this.set('user', user);
 
-  this.render(hbs`{{profile-details user=user}}`);
+  this.render(hbs`{{user-settings-form user=user}}`);
 
   assert.equal(this.$('input[name=name]').val(), 'Test User');
   assert.equal(this.$('input[name=twitter]').val(), '@testuser');
@@ -58,7 +55,7 @@ test('it calls save on user when save button is clicked', function(assert) {
   this.register('service:flash-messages', flashServiceStub);
 
 
-  this.render(hbs`{{profile-details user=user}}`);
+  this.render(hbs`{{user-settings-form user=user}}`);
 
   this.$('.save').click();
 });

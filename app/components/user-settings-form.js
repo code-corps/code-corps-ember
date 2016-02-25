@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['profile-details'],
+  classNames: ['user-settings-form'],
 
   flashMessages: Ember.inject.service(),
 
