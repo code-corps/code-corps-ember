@@ -21,12 +21,13 @@ test('it renders', function(assert) {
 });
 
 test('when not expanded', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.set('organization', organization);
 
   this.render(hbs`{{organization-header organization=organization}}`);
 
+  assert.notOk(this.$('.organization-header').hasClass('expanded'), "Does not have expanded class");
   assert.equal(this.$('img').attr('src'), 'icon_thumb.png', "Has a small image");
   assert.ok(this.$('img').hasClass('icon'), "Uses the small image class");
   assert.equal(this.$('h2').text().trim(), 'Test Organization', "Shows the name");
@@ -34,12 +35,13 @@ test('when not expanded', function(assert) {
 });
 
 test('when expanded', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   this.set('organization', organization);
 
   this.render(hbs`{{organization-header organization=organization expanded=true}}`);
 
+  assert.ok(this.$('.organization-header').hasClass('expanded'), "Has expanded class");
   assert.equal(this.$('img').attr('src'), 'icon_large.png', "Has a large image");
   assert.ok(this.$('img').hasClass('icon large'), "Uses the small image class");
   assert.equal(this.$('h2').text().trim(), 'Test Organization', "Shows the name");
