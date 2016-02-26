@@ -15,7 +15,7 @@ module('Acceptance: Organization', {
 });
 
 test("it displays the organization's details", (assert) => {
-  assert.expect(6);
+  assert.expect(7);
 
   let sluggedRoute = server.schema.sluggedRoute.create({
     slug: 'test_organization',
@@ -47,7 +47,7 @@ test("it displays the organization's details", (assert) => {
     assert.equal(find('h2').text().trim(), "Test Organization", "The organization title renders");
     assert.equal(find('.organization-header p').text().trim(), "Test organization description.", "The organization description renders");
     assert.equal(find('.project-list .project-item').length, 3, "The projects render");
-    // assert.equal(find('.organization-members li').length, 3, "The members render");
+    assert.equal(find('.organization-members li').length, 3, "The members render");
   });
 });
 
