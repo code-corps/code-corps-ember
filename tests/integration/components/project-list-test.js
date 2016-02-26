@@ -6,6 +6,8 @@ moduleForComponent('project-list', 'Integration | Component | project list', {
 });
 
 test('it renders', function(assert) {
+  assert.expect(1);
+
   this.render(hbs`{{project-list}}`);
 
   assert.equal(this.$('.project-list').length, 1, 'The component\'s element is rendered');
@@ -13,6 +15,8 @@ test('it renders', function(assert) {
 
 
 test('it renders an item for each project in the list', function(assert) {
+  assert.expect(1);
+
   let mockProjects = [];
   for (let i = 0; i < 3; i++) {
     mockProjects.push({ id: i, title: `Project ${i}`, slug: `project_${i}` });

@@ -8,5 +8,7 @@ export default Owner.extend({
   slug: attr(),
   description: attr(),
   iconThumbUrl: attr(),
-  iconLargeUrl: attr()
+  iconLargeUrl: attr(),
+  projects: DS.hasMany('project', { async: true }),
+  members: DS.hasMany('user', { async: true }),
 });

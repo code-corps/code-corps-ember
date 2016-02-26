@@ -1,0 +1,7 @@
+.organization-members {
+  @include span-columns(4);
+
+  li {
+    display: inline-block;
+  }
+}

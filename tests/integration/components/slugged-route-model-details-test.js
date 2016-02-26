@@ -18,7 +18,7 @@ test('when the slugged route is an organization, it renders the organization com
   this.set('sluggedRoute', sluggedRoute);
   this.render(hbs`{{slugged-route-model-details sluggedRoute=sluggedRoute}}`);
 
-  assert.equal(this.$('.organization-details').length, 1);
+  assert.equal(this.$('.organization-profile').length, 1);
 });
 
 

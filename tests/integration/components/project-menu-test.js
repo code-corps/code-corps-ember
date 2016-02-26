@@ -14,10 +14,12 @@ test('it renders', function(assert) {
 
 
 test('it renders all required menu elements properly', function(assert) {
-  assert.expect(2);
+  assert.expect(4);
 
   this.render(hbs`{{project-menu}}`);
 
+  assert.equal(this.$('.project-menu li').length, 3, 'All the links rendered');
   assert.equal(this.$('.project-menu li:eq(0)').text().trim(), 'About', 'The about link is rendered');
   assert.equal(this.$('.project-menu li:eq(1)').text().trim(), 'Posts', 'The posts link is rendered');
+  assert.equal(this.$('.project-menu li:eq(2)').text().trim(), 'Settings', 'The settings link is rendered');
 });

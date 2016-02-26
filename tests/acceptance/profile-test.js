@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 
@@ -13,8 +13,8 @@ module('Acceptance: Profile', {
   }
 });
 
-test("it displays the user-details component with user details", (assert) => {
-  assert.expect(5);
+test('it displays the user-details component with user details', (assert) => {
+  assert.expect(6);
 
   let sluggedRoute = server.schema.sluggedRoute.create({
     slug: 'test_user',
@@ -30,7 +30,7 @@ test("it displays the user-details component with user details", (assert) => {
   for(let i = 1; i <= 3; i++) {
     user.createOrganization({
       slug: `organization_${i}`,
-      name: `Organization ${i}`,
+      name: `Organization ${i}`
     });
   }
 
@@ -39,14 +39,17 @@ test("it displays the user-details component with user details", (assert) => {
   visit(user.username);
   andThen(() => {
     assert.equal(find('.user-details').length, 1);
-    assert.equal(find('.twitter').text().trim(), "@test_twitter", "The user's twitter renders");
-    assert.equal(find('.website').text().trim(), "test.com", "The user's website renders");
+    assert.equal(find('.twitter').text().trim(), '@test_twitter', "The user's twitter renders");
+    assert.equal(find('.twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
+    assert.equal(find('.website').text().trim(), 'test.com', "The user's website renders");
     assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
-    assert.equal(find('.user-organization-item:eq(0)').text().trim(), "Organization 1", "The organization names render");
+    let renderedNames = find('.user-organization-item').map((index, item) => find(item).text().trim()).toArray();
+    let expectedNames = ['Organization 1', 'Organization 2', 'Organization 3'];
+    assert.deepEqual(renderedNames, expectedNames, 'The organization names render');
   });
 });
 
-test("it displays the user-details component with user details", (assert) => {
+test('the user can navigate to an organization from the organizations list', (assert) => {
   assert.expect(2);
 
   let sluggedRoute = server.schema.sluggedRoute.create({
@@ -76,10 +79,10 @@ test("it displays the user-details component with user details", (assert) => {
 
   visit(user.username);
   andThen(() => {
-    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), "/organization_1", "The organization links render");
+    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), '/organization_1', 'The organization links render');
     click('.user-organization-item:eq(0) a');
   });
   andThen(() => {
-    assert.equal(find('.organization-details').length, 1, "You can visit the organization");
+    assert.equal(currentURL(), '/organization_1', 'You can visit the organization');
   });
 });

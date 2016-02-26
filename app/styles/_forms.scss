@@ -1,11 +1,6 @@
 .input-group {
   margin: 10px 0;
 
-  #{$all-buttons} {
-    width: 100%;
-    max-width: 100%;
-  }
-
   #{$all-text-inputs} {
     width: 100%;
     max-width: 100%;
@@ -16,8 +11,13 @@
   margin-bottom: 5px;
   font-size: 0.8em;
   font-weight: 700;
+  display: block;
 }
 
 textarea {
   min-height: 100px;
+}
+
+.form-container {
+  @include span-columns(8);
 }

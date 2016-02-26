@@ -1,0 +1,13 @@
+<div class="icon-container">
+  {{#if expanded}}
+    {{#link-to 'slugged-route' organization.slug}}<img class="icon large" src={{organization.iconLargeUrl}} />{{/link-to}}
+  {{else}}
+    {{#link-to 'slugged-route' organization.slug}}<img class="icon" src={{organization.iconThumbUrl}} />{{/link-to}}
+  {{/if}}
+</div>
+<div class="details-container">
+  <h2 class="title">{{#link-to 'slugged-route' organization.slug}}{{organization.name}}{{/link-to}}</h2>
+  {{#if expanded}}
+    <p class="description">{{organization.description}}</p>
+  {{/if}}
+</div>

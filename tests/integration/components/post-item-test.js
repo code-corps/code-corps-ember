@@ -11,7 +11,7 @@ test('it renders', function(assert) {
 });
 
 test('it renders all required elements', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   var post = {
     title: 'Clean the house',
@@ -23,7 +23,6 @@ test('it renders all required elements', function(assert) {
 
   assert.equal(this.$('.post-title').text().trim(), 'Clean the house', 'The title renders');
   assert.equal(this.$('.post-description').length, 1, 'The description renders');
-  assert.equal(this.$('.post-expertise').length, 1, 'The expertise renders');
   assert.equal(this.$('.post-icon').length, 1, 'The post icon renders');
 });
 

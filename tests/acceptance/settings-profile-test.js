@@ -23,7 +23,7 @@ test("it requires authentication", (assert) => {
   });
 });
 
-test("it displays the profile-details component", (assert) => {
+test("it displays the user-settings-form component", (assert) => {
   assert.expect(1);
 
   var user = server.create('user');
@@ -31,7 +31,7 @@ test("it displays the profile-details component", (assert) => {
   authenticateSession(application, { user_id: user.id });
   visit('settings/profile');
   andThen(() => {
-    assert.equal(find('.profile-details').length, 1);
+    assert.equal(find('.user-settings-form').length, 1);
   });
 });
 

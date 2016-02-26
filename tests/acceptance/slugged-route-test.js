@@ -26,7 +26,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
   });
 });
 
-test("It renders organization details when the sluggedRoute model is an organization", function(assert) {
+test("It renders organization profile when the sluggedRoute model is an organization", function(assert) {
   assert.expect(1);
 
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
@@ -35,7 +35,7 @@ test("It renders organization details when the sluggedRoute model is an organiza
 
   visit('/test_organization');
   andThen(function() {
-    assert.equal(find('.organization-details').length, 1, 'organization-details component is rendered');
+    assert.equal(find('.organization-profile').length, 1, 'organization-profile component is rendered');
   });
 });
 
