@@ -5,20 +5,51 @@ moduleForComponent('organization-settings-form', 'Integration | Component | orga
   integration: true
 });
 
+let organization = {
+  name: 'Test Organization',
+  description: 'A test organization',
+};
+
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });"
+  assert.expect(1);
 
   this.render(hbs`{{organization-settings-form}}`);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.organization-settings-form').length, 1);
+});
 
-  // Template block usage:"
-  this.render(hbs`
-    {{#organization-settings-form}}
-      template block text
-    {{/organization-settings-form}}
-  `);
+test('it renders form elements properly', function(assert) {
+  assert.expect(3);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  this.set('organization', organization);
+
+  this.render(hbs`{{organization-settings-form organization=organization}}`);
+
+  assert.equal(this.$('input[name=name]').val(), 'Test Organization');
+  assert.equal(this.$('input[name=description]').val(), 'A test organization');
+
+  assert.equal(this.$('.save').length, 1);
+});
+
+test('it calls save on organization when save button is clicked', function(assert) {
+  assert.expect(2);
+
+  organization.save = function() {
+    assert.ok(true, 'Save method was called on organization');
+    return Ember.RSVP.resolve();
+  };
+
+  this.set('organization', organization);
+
+  const flashServiceStub = Ember.Service.extend({
+    success() {
+      assert.ok(true, 'Flash message service was called');
+    }
+  });
+
+  this.register('service:flash-messages', flashServiceStub);
+
+  this.render(hbs`{{organization-settings-form organization=organization}}`);
+
+  this.$('.save').click();
 });

@@ -9,11 +9,9 @@ export default Ember.Component.extend({
     save() {
       const flashMessages = Ember.get(this, 'flashMessages');
 
-      this.get('organization').then((organization) => {
-        organization.save()
-          .then(function() {
-            flashMessages.success("Organization updated successfully");
-        });
+      this.get('organization').save()
+        .then(function() {
+          flashMessages.success("Organization updated successfully");
       });
     },
   }
