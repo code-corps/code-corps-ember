@@ -2,21 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['user-menu'],
-  classNameBindings: ['menuHidden:menu-hidden:menu-visible'],
+  classNameBindings: ['hidden:menu-hidden:menu-visible'],
 
-  session: Ember.inject.service(),
-
-  menuHidden: true,
+  hidden: true,
 
   actions: {
     toggle: function() {
-      this.toggleProperty('menuHidden');
+      this.toggleProperty('hidden');
     },
     hide: function() {
-      this.set('menuHidden', true);
-    },
-    invalidateSession: function() {
-      this.get('session').invalidate();
+      this.set('hidden', true);
     }
   }
 });
