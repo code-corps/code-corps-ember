@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['organization-details'],
+  classNames: ['organization-header'],
 
   expanded: false
 });
