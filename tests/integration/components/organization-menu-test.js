@@ -6,19 +6,19 @@ moduleForComponent('organization-menu', 'Integration | Component | organization 
 });
 
 test('it renders', function(assert) {
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });"
+  assert.expect(1);
+  this.render(hbs`{{organization-menu}}`);
+
+  assert.equal(this .$('.organization-menu').length, 1, 'Component\'s element is rendered');
+});
+
+
+test('it renders all required menu elements properly', function(assert) {
+  assert.expect(3);
 
   this.render(hbs`{{organization-menu}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:"
-  this.render(hbs`
-    {{#organization-menu}}
-      template block text
-    {{/organization-menu}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$('.organization-menu li').length, 2, 'All the links rendered');
+  assert.equal(this.$('.organization-menu li:eq(0)').text().trim(), 'Projects', 'The projects link is rendered');
+  assert.equal(this.$('.organization-menu li:eq(1)').text().trim(), 'Settings', 'The settings link is rendered');
 });
