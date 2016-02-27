@@ -1,9 +1,7 @@
 import Ember from 'ember';
-import { parse } from 'code-corps-ember/utils/mention-parser';
+import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetcher';
 
-export default Ember.Component.extend({
-  store : Ember.inject.service(),
-
+export default Ember.Component.extend(PostMentionFetcherMixin, {
   tagName: 'form',
   classNames: ['post-new-form'],
 
@@ -13,23 +11,6 @@ export default Ember.Component.extend({
     {label: "Progress", slug: "progress"},
     {label: "Idea", slug: "idea"}
   ],
-
-  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', 'postPreviewMentions', function() {
-    let post = this.get('post');
-    let postPreviewMentions = this.get('postPreviewMentions');
-    if (Ember.isPresent(post)) {
-      return parse(post.get('bodyPreview'), postPreviewMentions);
-    } else {
-      return '';
-    }
-  }),
-
-  reloadPreviewMentions() {
-    let postId = this.get('post.id');
-    this.get('store').query('postUserMention', { post_id: postId, status: 'preview' }).then((mentions) => {
-      this.set('postPreviewMentions', mentions);
-    });
-  },
 
   actions: {
     submit() {
@@ -42,7 +23,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save().then(() => this.reloadPreviewMentions());
+      post.save().then(() => this.send('fetch', 'preview'));
     }
   }
 });
