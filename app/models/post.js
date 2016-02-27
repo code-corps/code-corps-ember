@@ -20,5 +20,5 @@ export default DS.Model.extend({
   user: DS.belongsTo('user', { async: true }),
   comments: DS.hasMany('comment', { async: true }),
 
-  postUserMentions: DS.hasMany('post-user-mention', { asnyc: false })
+  postUserMentions: DS.hasMany('post-user-mention', { asnyc: true })
 });

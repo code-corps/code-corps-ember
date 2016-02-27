@@ -2,17 +2,27 @@ import Ember from 'ember';
 import { parse } from 'code-corps-ember/utils/mention-parser';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service(),
+
   classNames: ['create-comment-form'],
   tagName: 'form',
 
-  commentBodyPreviewWithMentions: Ember.computed('comment.bodyPreview', function() {
+  commentBodyPreviewWithMentions: Ember.computed('comment.bodyPreview', 'commentPreviewMentions', function() {
     let comment = this.get('comment');
+    let commentPreviewMentions = this.get('commentPreviewMentions');
     if (Ember.isPresent(comment)) {
-      return parse(this.get('comment.bodyPreview'), this.get('comment.commentUserMentions'));
+      return parse(comment.get('bodyPreview'), commentPreviewMentions);
     } else {
-      return "";
+      return '';
     }
   }),
+
+  reloadPreviewMentions() {
+    let commentId = this.get('comment.id');
+    this.get('store').query('commentUserMention', { comment_id: commentId, status: 'preview' }).then((mentions) => {
+      this.set('commentPreviewMentions', mentions);
+    });
+  },
 
   actions: {
     saveComment() {
@@ -25,7 +35,7 @@ export default Ember.Component.extend({
       let comment = this.get('comment');
       comment.set('markdownPreview', markdown);
       comment.set('preview', true);
-      comment.save();
+      comment.save().then(() => this.reloadPreviewMentions());
     }
   }
 });

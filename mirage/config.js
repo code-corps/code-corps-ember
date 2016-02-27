@@ -1,8 +1,8 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
 
-function generatePostMentions(schema, post) {
-  let body = post.body;
+function generatePostMentions(schema, post, mentionStatus) {
+  let body = post.body || '';
   let matches = body.match(/@\w+/g) || [];
 
   matches.forEach((match) => {
@@ -12,15 +12,15 @@ function generatePostMentions(schema, post) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.postUserMention.create({
-        username: username, indices: [startIndex, endIndex],
+        username: username, indices: [startIndex, endIndex], status: mentionStatus,
         userId: matchedUser.id, postId: post.id
       });
     }
   });
 }
 
-function generateCommentMentions(schema, comment) {
-  let body = comment.body;
+function generateCommentMentions(schema, comment, mentionStatus) {
+  let body = comment.body || '';
   let matches = body.match(/@\w+/g) || [];
 
   matches.forEach((match) => {
@@ -30,7 +30,7 @@ function generateCommentMentions(schema, comment) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.commentUserMention.create({
-        username: username, indices: [startIndex, endIndex],
+        username: username, indices: [startIndex, endIndex], status: mentionStatus,
         userId: matchedUser.id, commentId: comment.id
       });
     }
@@ -81,6 +81,26 @@ export default function() {
     }
   });
 
+  this.get('/post_user_mentions', (schema, request) => {
+    let postId = request.queryParams.post_id;
+    let post = schema.post.find(postId);
+    let status = request.queryParams.status;
+
+    generatePostMentions(schema, post, status);
+
+    return schema.postUserMention.where({ postId: postId, status: status });
+  });
+
+  this.get('/comment_user_mentions', (schema, request) => {
+    let commentId = request.queryParams.comment_id;
+    let comment = schema.comment.find(commentId);
+    let status = request.queryParams.status;
+
+    generateCommentMentions(schema, comment, status);
+
+    return schema.commentUserMention.where({ commentId: commentId, status: status });
+  });
+
   this.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -112,10 +132,9 @@ export default function() {
 
     let post = schema.create('post', Ember.merge(attrs, rels));
 
-    generatePostMentions(schema, post);
-
     return post;
   });
+
 
   this.patch('/posts/:id', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
@@ -143,8 +162,6 @@ export default function() {
     post.attrs = attrs;
 
     post.postUserMentions.forEach((mention) => mention.destroy());
-    generatePostMentions(schema, post);
-
     post.save();
 
     return post;
@@ -173,9 +190,6 @@ export default function() {
     };
 
     let comment = schema.create('comment', Ember.merge(attrs, rels));
-
-    generateCommentMentions(schema, comment);
-
     return comment;
   });
 
@@ -203,8 +217,6 @@ export default function() {
     comment.attrs = attrs;
 
     comment.commentUserMentions.forEach((mention) => mention.destroy());
-    generateCommentMentions(schema, comment);
-
     comment.save();
 
     return comment;

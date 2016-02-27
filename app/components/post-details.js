@@ -3,32 +3,50 @@ import { parse } from 'code-corps-ember/utils/mention-parser';
 
 export default Ember.Component.extend({
   session: Ember.inject.service(),
+  store: Ember.inject.service(),
 
   classNames: ['post-details'],
   classNameBindings: ['post.postType'],
 
-  postBodyWithMentions: Ember.computed('post.body', function() {
+  postBodyWithMentions: Ember.computed('post.body', 'postMentions', function() {
     let post = this.get('post');
+    let postMentions = this.get('postMentions');
     if (Ember.isPresent(post)) {
-      return parse(this.get('post.body'), this.get('post.postUserMentions'));
+      return parse(post.get('body'), postMentions);
     } else {
-      return "";
+      return '';
     }
   }),
 
-  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', function() {
+  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', 'postPreviewMentions', function() {
     let post = this.get('post');
+    let postPreviewMentions = this.get('postPreviewMentions');
     if (Ember.isPresent(post)) {
-      return parse(this.get('post.bodyPreview'), this.get('post.postUserMentions'));
+      return parse(post.get('bodyPreview'), postPreviewMentions);
     } else {
-      return "";
+      return '';
     }
   }),
 
   init() {
     this.set('isEditingBody', false);
     this.set('isEditingTitle', false);
+    this.reloadMentions();
     return this._super(...arguments);
+  },
+
+  reloadMentions() {
+    let postId = this.get('post.id');
+    this.get('store').query('postUserMention', { post_id: postId, status: 'published' }).then((mentions) => {
+      this.set('postMentions', mentions);
+    });
+  },
+
+  reloadPreviewMentions() {
+    let postId = this.get('post.id');
+    this.get('store').query('postUserMention', { post_id: postId, status: 'preview' }).then((mentions) => {
+      this.set('postPreviewMentions', mentions);
+    });
   },
 
   actions: {
@@ -44,7 +62,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save();
+      post.save().then(() => this.reloadPreviewMentions());
     },
 
     savePostBody() {
@@ -53,6 +71,7 @@ export default Ember.Component.extend({
       post.set('preview', false);
       post.save().then(() => {
         component.set('isEditingBody', false);
+        component.reloadMentions();
       });
     },
 

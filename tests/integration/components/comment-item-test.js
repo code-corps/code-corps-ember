@@ -2,15 +2,19 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-moduleForComponent('comment-item', 'Integration | Component | comment item', {
-  integration: true
+let mockStore = Ember.Service.extend({
+  query () {
+    return Ember.RSVP.resolve([]);
+  }
 });
 
-test('it renders', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{comment-item}}`);
-
-  assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
+let mockStoreReturningMentions = Ember.Service.extend({
+  query () {
+    return Ember.RSVP.resolve([
+      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+    ]);
+  }
 });
 
 let mockSession = Ember.Service.extend({
@@ -33,21 +37,31 @@ let mockComment = Ember.Object.create({
 let mockCommentWithMentions = Ember.Object.create({
   body: '<p>Mentioning @user1 and @user2</p>',
   user: { id: 1 },
-  commentUserMentions: [
-    { indices: [14, 19], username: 'user1', user: { id: 1 } },
-    { indices: [25, 30], username: 'user2', user: { id: 2 } }
-  ],
   save() {
     this.set('bodyPreview', this.get('body'));
     return Ember.RSVP.resolve();
   }
 });
 
+moduleForComponent('comment-item', 'Integration | Component | comment item', {
+  integration: true,
+  beforeEach() {
+    this.container.registry.register('service:store', mockStore);
+  }
+});
+
+test('it renders', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{comment-item}}`);
+
+  assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
+});
+
 test('it renders all required comment elements properly', function(assert) {
   assert.expect(3);
 
   let user = { id: 1, username: 'tester' };
-  let comment = { id: 1, body: 'A <b>comment</b>', user: user };
+  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user: user });
 
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -76,6 +90,8 @@ test('it switches between editing and viewing mode', function(assert) {
 
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
+
+  this.container.registry.register('service:store', mockStoreReturningMentions);
 
   this.set('comment', mockCommentWithMentions);
 

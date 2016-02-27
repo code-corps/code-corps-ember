@@ -2,8 +2,9 @@ import Ember from 'ember';
 import { parse } from 'code-corps-ember/utils/mention-parser';
 
 export default Ember.Component.extend({
-  tagName: 'form',
+  store : Ember.inject.service(),
 
+  tagName: 'form',
   classNames: ['post-new-form'],
 
   types: [
@@ -13,14 +14,22 @@ export default Ember.Component.extend({
     {label: "Idea", slug: "idea"}
   ],
 
-  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', function() {
+  postBodyPreviewWithMentions: Ember.computed('post.bodyPreview', 'postPreviewMentions', function() {
     let post = this.get('post');
+    let postPreviewMentions = this.get('postPreviewMentions');
     if (Ember.isPresent(post)) {
-      return parse(this.get('post.bodyPreview'), this.get('post.postUserMentions'));
+      return parse(post.get('bodyPreview'), postPreviewMentions);
     } else {
-      return "";
+      return '';
     }
   }),
+
+  reloadPreviewMentions() {
+    let postId = this.get('post.id');
+    this.get('store').query('postUserMention', { post_id: postId, status: 'preview' }).then((mentions) => {
+      this.set('postPreviewMentions', mentions);
+    });
+  },
 
   actions: {
     submit() {
@@ -33,7 +42,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save();
+      post.save().then(() => this.reloadPreviewMentions());
     }
   }
 });

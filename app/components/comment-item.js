@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   classNames: ['comment-item'],
   classNameBindings: ['isEditing:editing'],
 
+  store: Ember.inject.service(),
   session: Ember.inject.service(),
 
   currentUserId: Ember.computed.alias('session.session.authenticated.user_id'),
@@ -17,26 +18,43 @@ export default Ember.Component.extend({
 
   canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsCommentAuthor'),
 
-  commentBodyWithMentions: Ember.computed('comment.body', function() {
+  commentBodyWithMentions: Ember.computed('comment.body', 'commentMentions', function() {
     let comment = this.get('comment');
+    let commentMentions = this.get('commentMentions');
     if (Ember.isPresent(comment)) {
-      return parse(this.get('comment.body'), this.get('comment.commentUserMentions'));
+      return parse(comment.get('body'), commentMentions);
     } else {
-      return "";
+      return '';
     }
   }),
 
-  commentBodyPreviewWithMentions: Ember.computed('comment.bodyPreview', function() {
+  commentBodyPreviewWithMentions: Ember.computed('comment.bodyPreview', 'commentPreviewMentions', function() {
     let comment = this.get('comment');
+    let commentPreviewMentions = this.get('commentPreviewMentions');
     if (Ember.isPresent(comment)) {
-      return parse(this.get('comment.bodyPreview'), this.get('comment.commentUserMentions'));
+      return parse(comment.get('bodyPreview'), commentPreviewMentions);
     } else {
-      return "";
+      return '';
     }
   }),
+
+  reloadMentions() {
+    let commentId = this.get('comment.id');
+    this.get('store').query('commentUserMention', { comment_id: commentId, status: 'published' }).then((mentions) => {
+      this.set('commentMentions', mentions);
+    });
+  },
+
+  reloadPreviewMentions() {
+    let commentId = this.get('comment.id');
+    this.get('store').query('commentUserMention', { comment_id: commentId, status: 'preview' }).then((mentions) => {
+      this.set('commentPreviewMentions', mentions);
+    });
+  },
 
   init() {
     this.set('isEditing', false);
+    this.reloadMentions();
     return this._super(...arguments);
   },
 
@@ -55,6 +73,7 @@ export default Ember.Component.extend({
       comment.set('preview', false);
       comment.save().then(() => {
         component.set('isEditing', false);
+        component.reloadMentions();
       });
     },
 
@@ -62,7 +81,7 @@ export default Ember.Component.extend({
       let comment = this.get('comment');
       comment.set('markdownPreview', markdown);
       comment.set('preview', true);
-      comment.save();
+      comment.save().then(() => this.reloadPreviewMentions());
     }
   }
 });

@@ -11,24 +11,37 @@ let mockSession = Ember.Service.extend({
   }
 });
 
+let mockStore = Ember.Service.extend({
+  query () {
+    return Ember.RSVP.resolve([]);
+  }
+});
+
+let mockStoreReturningMentions = Ember.Service.extend({
+  query () {
+    return Ember.RSVP.resolve([
+      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+    ]);
+  }
+});
+
 let mockPost = Ember.Object.create({
   title: 'A post',
   body: 'A <strong>body</strong>',
   postType: 'issue',
-  user: {
-    id: 1
-  },
+  save() {
+    this.set('bodyPreview', this.get('body'));
+    return Ember.RSVP.resolve();
+  }
 });
 
 let mockPostWithMentions = Ember.Object.create({
   title: 'A post with mentions',
   body: '<p>Mentioning @user1 and @user2</p>',
-  postUserMentions: [
-    { indices: [14, 19], username: 'user1', user: { id: 1 } },
-    { indices: [25, 30], username: 'user2', user: { id: 2 } }
-  ],
   save() {
     this.set('bodyPreview', this.get('body'));
+    return Ember.RSVP.resolve();
   }
 });
 
@@ -37,6 +50,7 @@ moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
   beforeEach() {
     this.container.registry.register('service:session', mockSession);
+    this.container.registry.register('service:store', mockStore);
   }
 });
 
@@ -58,7 +72,7 @@ test('it renders all the ui elements properly bound', function(assert) {
 });
 
 test('the post body is rendered as unescaped html', function (assert) {
-  this.set('post', { title: 'A post', body: 'A <strong>body</strong>', postType: 'issue' });
+  this.set('post', mockPost);
 
   this.render(hbs`{{post-details post=post}}`);
   assert.equal(this.$('.post-details .body strong').length, 1, 'A html element within the body element is rendered unescaped');
@@ -81,6 +95,8 @@ test('user can switch between view and edit mode for post body', function(assert
 test('mentions are rendered on post body in read-only mode', function(assert) {
   assert.expect(1);
 
+  this.container.registry.register('service:store', mockStoreReturningMentions);
+
   this.set('post', mockPostWithMentions);
 
   let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
@@ -91,18 +107,19 @@ test('mentions are rendered on post body in read-only mode', function(assert) {
 
 test('It renders body as unescaped html', function(assert) {
   assert.expect(1);
-  this.set('post', mockPostWithMentions);
+
+  this.set('post', mockPost);
 
   this.render(hbs`{{post-details post=post}}`);
-  assert.equal(this.$('.body a').length, 2, 'The html is rendered properly');
+  assert.equal(this.$('.body strong').length, 1, 'The html is rendered properly');
 });
 
 test('It renders preview as unescaped html', function(assert) {
   assert.expect(1);
-  this.set('post', mockPostWithMentions);
+  this.set('post', mockPost);
 
   this.render(hbs`{{post-details post=post}}`);
   this.$('.post-body .edit').click();
   this.$('.preview').click();
-  assert.equal(this.$('.body-preview a').length, 2, 'The html is rendered properly');
+  assert.equal(this.$('.body-preview strong').length, 1, 'The html is rendered properly');
 });
