@@ -4,7 +4,7 @@
   padding-left: 60px;
 
   &:first-child {
-    margin-top: 10px;
+    margin: 20px 0;
   }
 
   .icon {
@@ -34,6 +34,27 @@
 }
 
 .comment-body {
+  h1 {
+    margin: 10px 0;
+  }
+
+  h2 {
+    margin: 5px 0;
+  }
+
+  h3 {
+    margin: 5px 0;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  ul {
+    margin: 10px 0 10px 20px;
+    list-style-type: initial;
+  }
+
   a.username {
     color: $dark-text;
     font-weight: 700;
