@@ -1,0 +1,44 @@
+.comment-item {
+  position: relative;
+  margin: 40px 0;
+  padding-left: 60px;
+
+  &:first-child {
+    margin-top: 10px;
+  }
+
+  .icon {
+    float: left;
+    margin-left: -60px;
+  }
+}
+
+.comment-content {
+  position: relative;
+}
+
+.comment-info {
+  font-size: 13px;
+  color: $light-text;
+
+  a {
+    color: $light-text;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .username {
+    font-weight: 700;
+  }
+}
+
+.comment-body {
+  a.username {
+    color: $dark-text;
+    font-weight: 700;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

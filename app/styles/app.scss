@@ -17,13 +17,18 @@
 @import "header";
 @import "settings";
 
+@import "post";
+
+@import "components/comment-item";
 @import "components/editor-with-preview";
 @import "components/error-wrapper";
 @import "components/login-form";
 @import "components/organization-header";
 @import "components/organization-members";
 @import "components/pager-control";
+@import "components/post-comment-list";
 @import "components/post-details";
+@import "components/post-header";
 @import "components/post-item";
 @import "components/post-title";
 @import "components/project-details";

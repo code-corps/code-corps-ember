@@ -1,17 +1,24 @@
-{{#if isEditing}}
-  {{#editor-with-preview input=comment.markdownPreview preview=comment.bodyPreview generatePreview='generatePreview'}}
-    {{#if comment.isSaving}}
-      Loading preview...
-    {{else}}
-      <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
-    {{/if}}
-  {{/editor-with-preview}}
-  <button {{action 'save'}} class="save">Save</button>
-  <button {{action 'cancel'}} class="cancel">Cancel</button>
-{{else}}
-  <div>Comment by <span class="username">{{comment.user.username}}</span></div>
-  {{#if canEdit}}
-    <button class="edit" {{action 'edit'}}>Edit</button>
+{{#link-to 'slugged-route' comment.user.username}}
+  <img class="icon" src={{comment.user.photoThumbUrl}} />
+{{/link-to}}
+<div class="comment-content">
+  {{#if isEditing}}
+    {{#editor-with-preview input=comment.markdownPreview preview=comment.bodyPreview generatePreview='generatePreview'}}
+      {{#if comment.isSaving}}
+        Loading preview...
+      {{else}}
+        <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
+      {{/if}}
+    {{/editor-with-preview}}
+    <button {{action 'save'}} class="save">Save</button>
+    <button {{action 'cancel'}} class="cancel">Cancel</button>
+  {{else}}
+    <div class="comment-info">
+      {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.createdAt}}
+      {{#if canEdit}}
+        <a class="edit" {{action 'edit'}}>Edit</a>
+      {{/if}}
+    </div>
+    <div class="comment-body">{{{commentBodyWithMentions}}}</div>
   {{/if}}
-  <div class="body">{{{commentBodyWithMentions}}}</div>
-{{/if}}
+</div>

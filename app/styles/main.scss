@@ -12,7 +12,7 @@ html {
 body {
   margin: 0;
 
-  .ember-view:first-of-type {
+  > .ember-view:first-of-type {
     height: 100%;
     position: relative
   }

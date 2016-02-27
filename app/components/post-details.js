@@ -6,7 +6,6 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
 
   classNames: ['post-details'],
-  classNameBindings: ['post.postType'],
 
   postBodyWithMentions: Ember.computed('post.body', 'postMentions', function() {
     let post = this.get('post');

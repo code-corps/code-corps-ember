@@ -5,6 +5,7 @@ export default DS.Model.extend({
   markdownPreview: DS.attr('string'),
   body: DS.attr('string'),
   bodyPreview: DS.attr('string'),
+  createdAt: DS.attr('date'),
 
   preview: DS.attr('boolean'),
 

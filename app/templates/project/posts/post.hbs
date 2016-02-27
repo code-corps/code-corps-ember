@@ -1,6 +1,11 @@
-{{post-details post=post}}
-{{post-comment-list comments=comments}}
-{{create-comment-form comment=newComment saveComment='saveComment'}}
-{{#if error}}
-  <div class="error">{{error.message}}</div>
-{{/if}}
+{{post-header post=post}}
+<div class="post-timeline">
+  {{post-details post=post}}
+  {{post-comment-list comments=comments}}
+  {{create-comment-form comment=newComment saveComment='saveComment'}}
+  {{#if error}}
+    <div class="error">{{error.message}}</div>
+  {{/if}}
+</div>
+<div class="post-sidebar">
+</div>
