@@ -2,7 +2,7 @@ import Ember from 'ember';
 import CommentMentionFetcherMixin from 'code-corps-ember/mixins/comment-mention-fetcher';
 
 export default Ember.Component.extend(CommentMentionFetcherMixin, {
-  classNames: ['comment-item'],
+  classNames: ['comment-item', 'timeline-comment-wrapper'],
   classNameBindings: ['isEditing:editing'],
 
   session: Ember.inject.service(),

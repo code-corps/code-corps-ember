@@ -8,7 +8,6 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
 
   init() {
     this.set('isEditingBody', false);
-    this.set('isEditingTitle', false);
     this.send('fetch', 'published');
     return this._super(...arguments);
   },
@@ -36,15 +35,6 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
       post.save().then(() => {
         component.set('isEditingBody', false);
         component.send('fetch', 'published');
-      });
-    },
-
-    savePostTitle(title) {
-      let component = this;
-      let post = this.get('post');
-      post.set('title', title);
-      post.save().then(() => {
-        component.set('isEditingTitle', false);
       });
     }
   }

@@ -66,8 +66,8 @@ test('it renders all required comment elements properly', function(assert) {
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);
 
-  assert.equal(this.$('.comment-item .body').html(), 'A <b>comment</b>', 'The comment\'s body is rendered');
-  assert.equal(this.$('.comment-item .body b').length, 1, 'The comment\'s body is rendered unescaped');
+  assert.equal(this.$('.comment-item .comment-body').html(), 'A <b>comment</b>', 'The comment\'s body is rendered');
+  assert.equal(this.$('.comment-item .comment-body b').length, 1, 'The comment\'s body is rendered unescaped');
   assert.equal(this.$('.comment-item .username').text().trim(), 'tester');
 });
 
@@ -95,8 +95,8 @@ test('mentions are rendered on comment body in read-only mode', function(assert)
 
   this.set('comment', mockCommentWithMentions);
 
-  let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
+  let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
 
   this.render(hbs`{{comment-item comment=comment}}`);
-  assert.equal(this.$('.comment-item .body').html(), expectedOutput, 'Mentions are rendered');
+  assert.equal(this.$('.comment-item .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });

@@ -145,7 +145,7 @@ test('Comment user mentions are being rendered during creation', (assert) => {
   let user1 = server.create('user');
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
-  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
 
   andThen(() => {
     fillIn('.create-comment-form textarea[name=markdown]', markdown);
@@ -158,7 +158,7 @@ test('Comment user mentions are being rendered during creation', (assert) => {
   });
 
   andThen(() => {
-    assert.equal(find('.comment-item .body').html(), expectedBody, 'The body is rendered with mentions');
+    assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The body is rendered with mentions');
   });
 });
 
@@ -348,7 +348,7 @@ test('Comment editing with preview works', (assert) => {
     let comment = server.schema.comment.all()[0];
     assert.equal(comment.body, expectedBody);
     assert.equal(comment.markdown, markdown);
-    assert.equal(find('.comment-item .body').html(), expectedBody, 'The comment body is rendered');
+    assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The comment body is rendered');
   });
 });
 
@@ -384,7 +384,7 @@ test('Comment user mentions are being rendered during editing', (assert) => {
   let user1 = server.create('user');
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
-  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
 
   andThen(() => {
     fillIn('.comment-item [name=markdown]', markdown);
@@ -397,6 +397,6 @@ test('Comment user mentions are being rendered during editing', (assert) => {
   });
 
   andThen(() => {
-    assert.equal(find('.comment-item .body').html(), expectedBody, 'The comment body is rendered with mentions');
+    assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The comment body is rendered with mentions');
   });
 });

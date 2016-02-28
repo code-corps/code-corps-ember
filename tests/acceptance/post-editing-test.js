@@ -50,7 +50,7 @@ test('Post editing requires logging in', (assert) => {
   });
 });
 
-test('A post body can be edited on it\'s own', (assert) => {
+test('A post body can be edited on its own', (assert) => {
   assert.expect(3);
 
   let user = server.schema.user.create({ username: 'test_user' });
@@ -90,12 +90,12 @@ test('A post body can be edited on it\'s own', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-body .edit').length, 1, 'Succesful save of body switches away from edit mode');
-    assert.equal(find('.post-body .body').html(), '<p>Some type of markdown</p>', 'The new post body is rendered');
+    assert.equal(find('.post-body .comment-body').html(), '<p>Some type of markdown</p>', 'The new post body is rendered');
   });
 });
 
-test('A post title can be edited on it\'s own', (assert) => {
-  assert.expect(3);
+test('A post title can be edited on its own', (assert) => {
+  assert.expect(4);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -120,6 +120,9 @@ test('A post title can be edited on it\'s own', (assert) => {
 
   andThen(() => {
     click('.post-title .edit');
+  });
+  andThen(() => {
+    assert.equal(find('.post-title input[name=title]').val(), 'Test title', 'The original title is correct');
     fillIn('.post-title input[name=title]', 'Edited title');
     click('.post-title .save');
   });
@@ -158,7 +161,7 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
   let user1 = server.create('user');
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
-  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 

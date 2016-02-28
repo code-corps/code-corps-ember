@@ -157,7 +157,7 @@ test('Post preview during creation renders user mentions', (assert) => {
   let user1 = server.create('user');
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
-  let expectedBody = `<p>Mentioning <a href="/${user1.username}">@${user1.username}</a> and <a href="/${user2.username}">@${user2.username}</a></p>`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
 
   visit(`/${organization.slug}/${project.slug}/posts/new`);
 

@@ -66,16 +66,14 @@ test('it renders all the ui elements properly bound', function(assert) {
 
   this.render(hbs`{{post-details post=post}}`);
 
-  assert.equal(this.$('.post-details .title').text().trim(), 'A post', 'Title is correctly bound and rendered');
-  assert.equal(this.$('.post-details .body').text().trim(), 'A body', 'Body is correctly bound and rendered');
-  assert.equal(this.$('.post-details.issue .post-icon').length, 1, 'Post type is correctly bound and rendered');
+  assert.equal(this.$('.post-details .comment-body').text().trim(), 'A body', 'Body is correctly bound and rendered');
 });
 
 test('the post body is rendered as unescaped html', function (assert) {
   this.set('post', mockPost);
 
   this.render(hbs`{{post-details post=post}}`);
-  assert.equal(this.$('.post-details .body strong').length, 1, 'A html element within the body element is rendered unescaped');
+  assert.equal(this.$('.post-details .comment-body strong').length, 1, 'A html element within the body element is rendered unescaped');
 });
 
 test('user can switch between view and edit mode for post body', function(assert) {
@@ -99,10 +97,10 @@ test('mentions are rendered on post body in read-only mode', function(assert) {
 
   this.set('post', mockPostWithMentions);
 
-  let expectedOutput = '<p>Mentioning <a href="/user1">@user1</a> and <a href="/user2">@user2</a></p>';
+  let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
 
   this.render(hbs`{{post-details post=post}}`);
-  assert.equal(this.$('.post-body .body').html(), expectedOutput, 'Mentions are rendered');
+  assert.equal(this.$('.post-body .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });
 
 test('It renders body as unescaped html', function(assert) {
@@ -111,7 +109,7 @@ test('It renders body as unescaped html', function(assert) {
   this.set('post', mockPost);
 
   this.render(hbs`{{post-details post=post}}`);
-  assert.equal(this.$('.body strong').length, 1, 'The html is rendered properly');
+  assert.equal(this.$('.comment-body strong').length, 1, 'The html is rendered properly');
 });
 
 test('It renders preview as unescaped html', function(assert) {

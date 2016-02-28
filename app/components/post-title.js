@@ -14,14 +14,19 @@ export default Ember.Component.extend({
 
   actions: {
     edit() {
-      this.set('newTitle', this.get('title'));
+      this.set('newTitle', this.get('post.title'));
       this.set('isEditing', true);
     },
 
     save() {
+      let component = this;
+      let post = this.get('post');
       let newTitle = this.get('newTitle');
-      this.sendAction('saveTitle', newTitle);
-      this.set('isEditing', false);
+
+      post.set('title', newTitle);
+      post.save().then(() => {
+        component.set('isEditing', false);
+      });
     },
 
     cancel() {
