@@ -24,13 +24,12 @@ test('it renders', function(assert) {
 });
 
 test('it renders all the ui elements properly bound', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   this.set('post', mockPost);
 
   this.render(hbs`{{post-header post=post}}`);
 
-  assert.equal(this.$('.post-details .title').text().trim(), 'A post', 'Title is correctly bound and rendered');
-  assert.equal(this.$('.post-details .body').text().trim(), 'A body', 'Body is correctly bound and rendered');
-  assert.equal(this.$('.post-details.issue .post-icon').length, 1, 'Post type is correctly bound and rendered');
+  assert.equal(this.$('.post-header .title').text().trim(), 'A post', 'Title is correctly bound and rendered');
+  assert.equal(this.$('.post-header.issue .post-icon').length, 1, 'Post type is correctly bound and rendered');
 });
