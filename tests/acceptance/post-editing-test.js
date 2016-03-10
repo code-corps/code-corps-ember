@@ -50,8 +50,8 @@ test('Post editing requires logging in', (assert) => {
   });
 });
 
-test('A post body can be edited on it\'s own', (assert) => {
-  assert.expect(6);
+test('A post body can be edited on its own', (assert) => {
+  assert.expect(3);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -80,74 +80,22 @@ test('A post body can be edited on it\'s own', (assert) => {
 
   andThen(() => {
     fillIn('textarea[name=markdown]', 'Some type of markdown');
-
-    let previewDone = assert.async();
-
     click('.preview');
-
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes), ['markdown_preview', 'preview']);
-      assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
-      assert.equal(attributes.preview, true, 'Preview flag is correctly set to true');
-
-      previewDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            markdown_preview: 'Some type of markdown',
-            body_preview: '<p>Some type of markdown</p>'
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
   });
 
   andThen(() => {
-    let saveDone = assert.async();
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes),
-        ['markdown_preview']);
-      assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
-
-      saveDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            markdown: 'Some type of markdown',
-            body: '<p>Some type of markdown</p>',
-            markdown_preview: 'Some type of markdown',
-            body_preview: '<p>Some type of markdown</p>'
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
-
+    assert.equal(find('.body-preview').html(), '<p>Some type of markdown</p>', 'The preview renders');
     click('.save');
   });
 
   andThen(() => {
     assert.equal(find('.post-body .edit').length, 1, 'Succesful save of body switches away from edit mode');
+    assert.equal(find('.post-body .comment-body').html(), '<p>Some type of markdown</p>', 'The new post body is rendered');
   });
 });
 
-test('A post title can be edited on it\'s own', (assert) => {
-  assert.expect(3);
+test('A post title can be edited on its own', (assert) => {
+  assert.expect(4);
 
   let user = server.schema.user.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
@@ -172,35 +120,61 @@ test('A post title can be edited on it\'s own', (assert) => {
 
   andThen(() => {
     click('.post-title .edit');
+  });
+  andThen(() => {
+    assert.equal(find('.post-title input[name=title]').val(), 'Test title', 'The original title is correct');
     fillIn('.post-title input[name=title]', 'Edited title');
-
-    let saveDone = assert.async();
-    server.patch(`/posts/${post.id}`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
-
-      assert.deepEqual(Object.keys(attributes), ['title'], 'Only the title attribute is in the payload');
-      assert.equal(attributes.title, 'Edited title', 'New title was sent correctly');
-
-      saveDone();
-      return {
-        data: {
-          id: post.id,
-          type: 'posts',
-          attributes: {
-            title: attributes.title
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
-
     click('.post-title .save');
   });
 
   andThen(() => {
     assert.equal(find('.post-title .edit').length, 1, 'Sucessful save of title switches away from edit mode');
+    assert.equal(find('.post-title .title').text().trim(), 'Edited title', 'The new title is rendered');
+    assert.equal(server.schema.post.find(post.id).title, 'Edited title', 'The title was updated in the database');
+  });
+});
+
+test('Mentions are rendered during editing in preview mode', (assert) => {
+  assert.expect(1);
+
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
+
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let projectId = server.create('project').id;
+
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  let project = server.schema.project.find(projectId);
+  project.organization = organization;
+  project.save();
+
+  let post = project.createPost({
+    title: "Test title",
+    body: "Test body",
+    postType: "issue",
+    number: 1
+  });
+
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    click('.post-body .edit');
+  });
+
+  andThen(() => {
+    fillIn('.post-body textarea', markdown);
+    click('.preview');
+  });
+
+  andThen(() => {
+    assert.equal(find('.body-preview').html(), expectedBody, 'The mentions render');
   });
 });

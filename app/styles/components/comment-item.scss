@@ -1,0 +1,65 @@
+.timeline-comment-wrapper {
+  position: relative;
+  margin: 40px 0;
+  padding-left: 60px;
+
+  &:first-child {
+    margin: 20px 0;
+  }
+
+  .icon {
+    float: left;
+    margin-left: -60px;
+  }
+}
+
+.comment-content {
+  position: relative;
+}
+
+.comment-info {
+  font-size: 13px;
+  color: $light-text;
+
+  a {
+    color: $light-text;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .username {
+    font-weight: 700;
+  }
+}
+
+.comment-body {
+  h1 {
+    margin: 10px 0;
+  }
+
+  h2 {
+    margin: 5px 0;
+  }
+
+  h3 {
+    margin: 5px 0;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  ul {
+    margin: 10px 0 10px 20px;
+    list-style-type: initial;
+  }
+
+  a.username {
+    color: $dark-text;
+    font-weight: 700;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

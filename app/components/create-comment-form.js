@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import CommentMentionFetcherMixin from 'code-corps-ember/mixins/comment-mention-fetcher';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(CommentMentionFetcherMixin, {
   classNames: ['create-comment-form'],
   tagName: 'form',
 
@@ -15,7 +16,7 @@ export default Ember.Component.extend({
       let comment = this.get('comment');
       comment.set('markdownPreview', markdown);
       comment.set('preview', true);
-      comment.save();
+      comment.save().then(() => this.send('fetch', 'preview'));
     }
   }
 });

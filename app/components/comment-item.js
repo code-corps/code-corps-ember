@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import CommentMentionFetcherMixin from 'code-corps-ember/mixins/comment-mention-fetcher';
 
-export default Ember.Component.extend({
-  classNames: ['comment-item'],
+export default Ember.Component.extend(CommentMentionFetcherMixin, {
+  classNames: ['comment-item', 'timeline-comment-wrapper'],
   classNameBindings: ['isEditing:editing'],
 
   session: Ember.inject.service(),
@@ -16,8 +17,9 @@ export default Ember.Component.extend({
 
   canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsCommentAuthor'),
 
-  didInitAttrs() {
+  init() {
     this.set('isEditing', false);
+    this.send('fetch', 'published');
     return this._super(...arguments);
   },
 
@@ -36,6 +38,7 @@ export default Ember.Component.extend({
       comment.set('preview', false);
       comment.save().then(() => {
         component.set('isEditing', false);
+        component.send('fetch', 'published');
       });
     },
 
@@ -43,7 +46,7 @@ export default Ember.Component.extend({
       let comment = this.get('comment');
       comment.set('markdownPreview', markdown);
       comment.set('preview', true);
-      comment.save();
+      comment.save().then(() => this.send('fetch', 'preview'));
     }
   }
 });

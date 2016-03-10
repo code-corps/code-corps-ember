@@ -1,14 +1,14 @@
 import Ember from 'ember';
+import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetcher';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(PostMentionFetcherMixin, {
+  classNames: ['post-details'],
+
   session: Ember.inject.service(),
 
-  classNames: ['post-details'],
-  classNameBindings: ['post.postType'],
-
-  didInitAttrs() {
+  init() {
     this.set('isEditingBody', false);
-    this.set('isEditingTitle', false);
+    this.send('fetch', 'published');
     return this._super(...arguments);
   },
 
@@ -25,7 +25,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save();
+      post.save().then(() => this.send('fetch', 'preview'));
     },
 
     savePostBody() {
@@ -34,15 +34,7 @@ export default Ember.Component.extend({
       post.set('preview', false);
       post.save().then(() => {
         component.set('isEditingBody', false);
-      });
-    },
-
-    savePostTitle(title) {
-      let component = this;
-      let post = this.get('post');
-      post.set('title', title);
-      post.save().then(() => {
-        component.set('isEditingTitle', false);
+        component.send('fetch', 'published');
       });
     }
   }

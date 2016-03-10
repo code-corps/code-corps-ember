@@ -1,6 +1,42 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
 
+function generatePostMentions(schema, post, mentionStatus) {
+  let body = post.body || '';
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.user.where({ username: username })[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.postUserMention.create({
+        username: username, indices: [startIndex, endIndex], status: mentionStatus,
+        userId: matchedUser.id, postId: post.id
+      });
+    }
+  });
+}
+
+function generateCommentMentions(schema, comment, mentionStatus) {
+  let body = comment.body || '';
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.user.where({ username: username })[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.commentUserMention.create({
+        username: username, indices: [startIndex, endIndex], status: mentionStatus,
+        userId: matchedUser.id, commentId: comment.id
+      });
+    }
+  });
+}
+
 export default function() {
 
   this.post('/oauth/token', (db, request) => {
@@ -45,7 +81,26 @@ export default function() {
     }
   });
 
-  // POST /posts
+  this.get('/post_user_mentions', (schema, request) => {
+    let postId = request.queryParams.post_id;
+    let post = schema.post.find(postId);
+    let status = request.queryParams.status;
+
+    generatePostMentions(schema, post, status);
+
+    return schema.postUserMention.where({ postId: postId, status: status });
+  });
+
+  this.get('/comment_user_mentions', (schema, request) => {
+    let commentId = request.queryParams.comment_id;
+    let comment = schema.comment.find(commentId);
+    let status = request.queryParams.status;
+
+    generateCommentMentions(schema, comment, status);
+
+    return schema.commentUserMention.where({ commentId: commentId, status: status });
+  });
+
   this.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -77,19 +132,41 @@ export default function() {
 
     let post = schema.create('post', Ember.merge(attrs, rels));
 
-    return this.serializerOrRegistry.serialize(post);
+    return post;
   });
 
-  this.patch('/posts/:id');
 
-  // GET posts/:number/comments
-  this.get('/posts/:postId/comments', function(schema, request) {
-    let postId = request.params.postId;
+  this.patch('/posts/:id', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let postId = request.params.id;
     let post = schema.post.find(postId);
-    return post.comments;
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      id: postId,
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+      title: attributes.title,
+      postType: attributes.post_type
+    };
+
+    // for some reason, post.update(key, value) updates post properties, but
+    // doesn't touch the post.attrs object, which is what is used in response
+    // serialization
+    post.attrs = attrs;
+
+    post.postUserMentions.forEach((mention) => mention.destroy());
+    post.save();
+
+    return post;
   });
 
-  // POST comments
   this.post('/comments', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -113,8 +190,43 @@ export default function() {
     };
 
     let comment = schema.create('comment', Ember.merge(attrs, rels));
+    return comment;
+  });
 
-    return this.serializerOrRegistry.serialize(comment);
+  this.patch('/comments/:id', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let commentId = request.params.id;
+    let comment = schema.comment.find(commentId);
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      id: commentId,
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+    };
+
+    // for some reason, post.update(key, value) updates post properties, but
+    // doesn't touch the post.attrs object, which is what is used in response
+    // serialization
+    comment.attrs = attrs;
+
+    comment.commentUserMentions.forEach((mention) => mention.destroy());
+    comment.save();
+
+    return comment;
+  });
+
+  // GET posts/:number/comments
+  this.get('/posts/:postId/comments', function(schema, request) {
+    let postId = request.params.postId;
+    let post = schema.post.find(postId);
+    return post.comments;
   });
 
   // GET project/posts

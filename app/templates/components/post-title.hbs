@@ -3,7 +3,7 @@
   <button class="save" {{action 'save'}}>Save</button>
   <button class="cancel" {{action 'cancel'}}>Cancel</button>
 {{else}}
-  <h2 class="title">{{title}}</h2>
+  <h2 class="title">{{post.title}}</h2>
   {{#if session.isAuthenticated}}
     <button class="edit" {{action 'edit'}}>Edit</button>
   {{/if}}

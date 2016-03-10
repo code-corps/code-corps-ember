@@ -33,21 +33,22 @@ test('user can switch between editing and preview mode', function(assert) {
   assert.equal(this.$('.editor-with-preview.editing').length, 1, 'The component switches to edit mode');
 });
 
-test('It triggers a "generatePreview" action when preview button is clicked and initiates loading', function(assert) {
-  assert.expect(2);
-  this.render(hbs`{{editor-with-preview input='test' preview='Random text...' generatePreview='generatePreview'}}`);
+test('It triggers a "generatePreview" action when preview button is clicked', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{editor-with-preview input='test' generatePreview='generatePreview'}}`);
 
   this.on('generatePreview', function(content) {
     assert.equal(content, 'test', 'The action was triggered with correct content');
   });
   this.$('.preview').click();
-  assert.equal(this.$('.editor-with-preview.previewing .body').text().trim(), 'Loading preview...', 'The loading indicator renders');
 });
 
-test('It renders preview as unescaped html', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{editor-with-preview preview=preview}}`);
+test('It yields to a preview block in preview mode', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{#editor-with-preview}}<div class="block"></div>{{/editor-with-preview}}`);
+
+  assert.equal(this.$('.block').length, 0, 'The yielded block is not rendered in edit mode');
   this.$('.preview').click();
-  this.set('preview', 'Random <b>text</b>...');
-  assert.equal(this.$('.editor-with-preview.previewing .body b').length, 1, 'The html is rendered properly');
+  assert.equal(this.$('.block').length, 1, 'The yielded block is rendered in preview mode');
 });

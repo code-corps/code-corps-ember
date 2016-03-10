@@ -1,8 +1,8 @@
 import Ember from 'ember';
+import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetcher';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(PostMentionFetcherMixin, {
   tagName: 'form',
-
   classNames: ['post-new-form'],
 
   types: [
@@ -23,7 +23,7 @@ export default Ember.Component.extend({
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
-      post.save();
+      post.save().then(() => this.send('fetch', 'preview'));
     }
   }
 });

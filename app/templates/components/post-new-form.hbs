@@ -16,7 +16,13 @@
   {{/each}}
 </div>
 <div class="input-group">
-  {{editor-with-preview input=post.markdownPreview preview=post.bodyPreview generatePreview=(action 'generatePreview')}}
+  {{#editor-with-preview input=post.markdownPreview generatePreview=(action 'generatePreview')}}
+    {{#if post.isSaving}}
+      Loading preview...
+    {{else}}
+      <div class="body-preview">{{{postBodyPreviewWithMentions}}}</div>
+    {{/if}}
+  {{/editor-with-preview}}
   {{#each post.errors.markdown as |error|}}
     <p class="error">{{error.message}}</p>
   {{/each}}

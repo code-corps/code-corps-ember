@@ -1,5 +1,11 @@
 <div class="input-group">
-  {{editor-with-preview input=comment.markdownPreview preview=comment.bodyPreview generatePreview=(action 'generatePreview')}}
+  {{#editor-with-preview input=comment.markdownPreview generatePreview=(action 'generatePreview')}}
+    {{#if comment.isSaving}}
+      Loading preview...
+    {{else}}
+      <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
+    {{/if}}
+  {{/editor-with-preview}}
   {{#each comment.errors.markdown as |error|}}
     <p class="error">{{error.message}}</p>
   {{/each}}

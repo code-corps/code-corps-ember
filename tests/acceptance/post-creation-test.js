@@ -19,7 +19,6 @@ test('Creating a post requires logging in', (assert) => {
   assert.expect(2);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  // let organization = server.schema.organization.create({ slug: 'test_organization' });
   let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
   let organization = sluggedRoute.createOwner({slug: 'test_organization'}, 'Organization');
   let projectId = server.create('project', { slug: 'test_project' }).id;
@@ -102,10 +101,12 @@ test('A post can be successfully created', (assert) => {
 
     assert.equal(currentRouteName(), 'project.posts.post', 'We got redirected to the post route');
   });
+
+  // TODO: Make sure we got redirected to the post route and post is properly rendered
 });
 
 test('Post preview works during creation', (assert) => {
-  assert.expect(3);
+  assert.expect(1);
 
   let user = server.schema.user.create({ username: 'test_user' });
 
@@ -129,30 +130,44 @@ test('Post preview works during creation', (assert) => {
 
   andThen(() => {
     fillIn('textarea[name=markdown]', 'Some type of markdown');
-
     click('.preview');
-    server.post(`/posts/`, (db, request) => {
-      let params = JSON.parse(request.requestBody);
-      let attributes = params.data.attributes;
+  });
 
-      assert.deepEqual(Object.keys(attributes), ['markdown_preview', 'preview']);
-      assert.equal(attributes.markdown_preview, 'Some type of markdown', 'Markdown preview was sent correctly');
-      assert.equal(attributes.preview, true, 'Preview flag is correctly set to true');
+  andThen(() => {
+    assert.equal(find('.post-new-form .body-preview').html(), '<p>Some type of markdown</p>', 'The preview is rendered');
+  });
+});
 
-      return {
-        data: {
-          id: 1,
-          type: 'posts',
-          attributes: {
-            markdown_preview: 'Some type of markdown',
-            body_preview: '<p>Some type of markdown</p>'
-          },
-          relationships: {
-            project: { data: { id: project.id, type: 'projects' } }
-          }
-        }
-      };
-    });
+test('Post preview during creation renders user mentions', (assert) => {
+  assert.expect(1);
+
+  let user = server.create('user');
+  authenticateSession(application, { user_id: user.id });
+
+  let organization = server.create('organization');
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let project = server.create('project');
+
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  project.organization = organization;
+  project.save();
+
+  let user1 = server.create('user');
+  let user2 = server.create('user');
+  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
+  let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
+
+  visit(`/${organization.slug}/${project.slug}/posts/new`);
+
+  andThen(() => {
+    fillIn('textarea[name=markdown]', markdown);
+    click('.preview');
+  });
+
+  andThen(() => {
+    assert.equal(find('.body-preview').html(), expectedBody, 'The mentions render');
   });
 });
 

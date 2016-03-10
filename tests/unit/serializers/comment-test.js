@@ -5,7 +5,8 @@ moduleForModel('comment', 'Unit | Serializer | comment', {
   needs: [
     'serializer:comment',
     'model:post',
-    'model:user'
+    'model:user',
+    'model:comment-user-mention'
   ]
 });
 

@@ -1,20 +1,10 @@
 import MirageApplicationSerializer from './application';
-import Model from 'ember-cli-mirage/orm/model';
 
 export default MirageApplicationSerializer.extend({
-  serialize(modelOrCollection, request={}) {
-    let response;
+  serialize(modelOrCollection) {
+    let response = MirageApplicationSerializer.prototype.serialize.call(this, ...arguments);
 
-    if (modelOrCollection instanceof Model) {
-      response = this._serializePrimaryModel(modelOrCollection, request);
-    } else {
-      response = this._serializePrimaryCollection(modelOrCollection, request);
-    }
-
-    if (this.included.length) {
-      response.included = this.included;
-    }
-
+    // this is how we simulate the paging meta object
     if (modelOrCollection.meta) {
       response.meta = modelOrCollection.meta;
     }

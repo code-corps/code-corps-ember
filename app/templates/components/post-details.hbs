@@ -1,19 +1,28 @@
-<div class="post-header">
-  <div class="post-icon"></div>
-  {{post-title title=post.title saveTitle='savePostTitle'}}
-</div>
-
-<div class="post-body">
-  {{#if isEditingBody}}
-    {{editor-with-preview input=post.markdownPreview preview=post.bodyPreview generatePreview='generatePreview'}}
-    <div class="controls">
-      <button {{action 'savePostBody'}} class="save">Save</button>
-      <button {{action 'cancelEditingPostBody'}} class="cancel">Cancel</button>
-    </div>
-  {{else}}
-    <div class="body">{{{post.body}}}</div>
-    {{#if session.isAuthenticated}}
-      <button class="edit" {{action 'editPostBody'}}>Edit</button>
+<div class="timeline-comment-wrapper post-body">
+  {{#link-to 'slugged-route' post.user.username}}
+    <img class="icon" src={{post.user.photoThumbUrl}} />
+  {{/link-to}}
+  <div class="comment-content">
+    {{#if isEditingBody}}
+      {{#editor-with-preview input=post.markdownPreview generatePreview='generatePreview'}}
+        {{#if post.isSaving}}
+          Loading preview...
+        {{else}}
+          <div class="body-preview">{{{postBodyPreviewWithMentions}}}</div>
+        {{/if}}
+      {{/editor-with-preview}}
+      <div class="controls">
+        <button {{action 'savePostBody'}} class="save">Save</button>
+        <button {{action 'cancelEditingPostBody'}} class="cancel">Cancel</button>
+      </div>
+    {{else}}
+      <div class="comment-info">
+        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.createdAt}}
+        {{#if session.isAuthenticated}}
+          <a class="edit" {{action 'editPostBody'}}>Edit</a>
+        {{/if}}
+      </div>
+      <div class="comment-body">{{{postBodyWithMentions}}}</div>
     {{/if}}
-  {{/if}}
+  </div>
 </div>

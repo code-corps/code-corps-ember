@@ -1,8 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+
+let mockStore = Ember.Service.extend({
+  query () {
+    return Ember.RSVP.resolve([]);
+  }
+});
 
 moduleForComponent('post-comment-list', 'Integration | Component | post comment list', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.container.registry.register('service:store', mockStore);
+  }
 });
 
 test('it renders', function(assert) {
@@ -15,9 +25,9 @@ test('It renders a list of comments if there are comments', function(assert) {
   assert.expect(1);
 
   let comments = [
-    { body: "Comment 1" },
-    { body: "Comment 2" },
-    { body: "Comment 3" }
+    Ember.Object.create({ body: "Comment 1" }),
+    Ember.Object.create({ body: "Comment 2" }),
+    Ember.Object.create({ body: "Comment 3" })
   ];
 
   this.set('comments', comments);
