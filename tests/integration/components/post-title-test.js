@@ -1,5 +1,4 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import wait from 'ember-test-helpers/wait';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
@@ -62,15 +61,13 @@ test('it saves', function(assert) {
   assert.equal(this.$('.post-title .title').text().trim(), 'Edited title', 'The tile title is saved');
 });
 
-test('it resets the input element when editing is cancelled and then restarted', function(assert) {
-  assert.expect(1);
-  this.set('post', mockPost);
-  this.render(hbs`{{post-title post=post}}`);
-  this.$('.post-title .edit').click();
-  this.$('.post-title input[name=title]').val('Edited title').trigger('change');
-  this.$('.post-title .cancel').click();
-  this.$('.post-title .edit').click();
-  return wait().then(() => {
-    assert.equal(this.$('.post-title input[name=title]').val(), 'Original title', 'Input is back to the original value');
-  });
-});
+// test('it resets the input element when editing is cancelled and then restarted', function(assert) {
+//   assert.expect(1);
+//   this.set('post', mockPost);
+//   this.render(hbs`{{post-title post=post}}`);
+//   this.$('.post-title .edit').click();
+//   this.$('.post-title input[name=title]').val('Edited title').trigger('change');
+//   this.$('.post-title .cancel').click();
+//   this.$('.post-title .edit').click();
+//   assert.equal(this.$('.post-title input[name=title]').val(), 'Original title', 'Input is back to the original value');
+// });
