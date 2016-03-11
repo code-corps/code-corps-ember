@@ -7,6 +7,7 @@ export default Owner.extend({
   name: attr(),
   slug: attr(),
   description: attr(),
+  base64IconData: attr(),
   iconThumbUrl: attr(),
   iconLargeUrl: attr(),
   projects: DS.hasMany('project', { async: true }),
