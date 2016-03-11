@@ -196,6 +196,6 @@ test('Failed signup due to other issues displays error from the response', (asse
 
   andThen(() => {
     assert.equal(find('.error').length, 1);
-    assert.equal(find('.error').text(), 'Adapter operation failed');
+    assert.equal(find('.error').text().trim(), 'An unknown error: Something happened', 'There is an error message');
   });
 });

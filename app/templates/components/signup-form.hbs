@@ -30,6 +30,6 @@
     <input name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
   </div>
   {{#if error}}
-    <div class="error">{{error.message}}</div>
+    {{error-formatter error=error}}
   {{/if}}
 </form>
