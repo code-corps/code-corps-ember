@@ -1,25 +1,22 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  queryParams: {
+    page: { refreshModel: true, scope: 'controller' },
+    postType: { as: 'type', refreshModel: true, scope: 'controller' }
+  },
+
   session: Ember.inject.service(),
 
-  model() {
+  model(params) {
     let project = this.modelFor('project');
-    return this.get('store').query('post', { projectId: project.get('id'), page: { number: 1 } });
+    let fullParams = Ember.merge(params, {
+      projectId: project.get('id')
+    });
+    return this.get('store').query('post', fullParams);
   },
 
   setupController(controller, model) {
     controller.set('posts', model);
-  },
-
-  actions: {
-    reloadPosts(filters) {
-      let project = this.modelFor('project');
-      filters.projectId = project.get('id');
-
-      this.get('store').query('post', filters).then((posts) => {
-        this.controllerFor('project.posts.index').set('posts', posts);
-      });
-    },
   }
 });

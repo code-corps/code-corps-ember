@@ -18,6 +18,14 @@ export default Ember.Component.extend({
     return (currentPage >= minCenterPage) ? currentPage: minCenterPage;
   }),
 
+  previousPage: Ember.computed('currentPage', function() {
+    return this.get('currentPage') - 1;
+  }),
+
+  nextPage: Ember.computed('currentPage', function() {
+    return this.get('currentPage') + 1;
+  }),
+
   bounds: Ember.computed('centerPage', 'pagesToShow', 'totalPages', function () {
     let pagesToShow = this.get('pagesToShow');
     let totalPages = this.get('totalPages');
@@ -57,24 +65,5 @@ export default Ember.Component.extend({
   onLastPage: Ember.computed('currentPage', 'totalPages', function() {
     return this.get('currentPage') === this.get('totalPages') ||
       this.get('totalPages') === 0;
-  }),
-
-  actions: {
-    previousPage() {
-      let currentPage = this.get('currentPage');
-      this.set('currentPage', currentPage - 1);
-      this.sendAction('pageChanged', currentPage - 1);
-    },
-
-    nextPage() {
-      let currentPage = this.get('currentPage');
-      this.set('currentPage', currentPage + 1);
-      this.sendAction('pageChanged', currentPage + 1);
-    },
-
-    setPage(page) {
-      this.set('currentPage', page);
-      this.sendAction('pageChanged', page);
-    }
-  }
+  })
 });

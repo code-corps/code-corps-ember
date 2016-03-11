@@ -1,9 +1,9 @@
 {{#unless onFirstPage}}
-  <button class="previous-page" {{action 'previousPage'}}>Previous</button>
+  {{link-to "Previous" 'project.posts.index' (query-params page=previousPage) class="previous-page button"}}
 {{/unless}}
 {{#each pages as |page|}}
-  {{page-button tagName='button' page=page currentPage=currentPage action='setPage'}}
+  {{link-to page 'project.posts.index' (query-params page=page) classNameBindings="page :page :button"}}
 {{/each}}
 {{#unless onLastPage}}
-  <button class="next-page" {{action 'nextPage'}}>Next</button>
+  {{link-to "Next" 'project.posts.index' (query-params page=nextPage) class="next-page button"}}
 {{/unless}}
