@@ -262,7 +262,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
 
   andThen(() => {
     assert.equal(find('.error').length, 1);
-    assert.equal(find('.error').text(), 'Adapter operation failed');
+    assert.equal(find('.error').text().trim(), 'An unknown error: Something happened', 'The  error is rendered');
   });
 });
 

@@ -38,7 +38,7 @@ test("Logged out, can sign in", function(assert) {
   });
 });
 
-test("Logged in, from user menu can visit profile", function(assert) {
+test('Logged in, from user menu can visit profile', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -49,20 +49,20 @@ test("Logged in, from user menu can visit profile", function(assert) {
   sluggedRoute.save();
 
   visit('/');
+
   andThen(function() {
     click('.user-menu-select');
   });
   andThen(function() {
-    var url = "/" + user.username;
-    assert.equal(find('.user-dropdown .slugged-route').attr('href'), url, "Menu links to the user's profile");
+    assert.equal(find('.user-dropdown .slugged-route').attr('href'), `/${user.username}`, 'Menu links to the profile settings');
     click('.user-dropdown .slugged-route');
   });
   andThen(function() {
-    assert.equal(find('.user-details').length, 1, "Page contains user details");
+    assert.equal(currentURL(), `/${user.username}`, 'Link took us to user slugged route');
   });
 });
 
-test("Logged in, from user menu can visit profile settings", function(assert) {
+test('Logged in, from user menu can visit profile settings', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -77,7 +77,7 @@ test("Logged in, from user menu can visit profile settings", function(assert) {
     click('.user-dropdown .profile');
   });
   andThen(function() {
-    assert.equal(find('.user-settings-form').length, 1, "Page contains user settings form");
+    assert.equal(currentURL(), '/settings/profile', 'Link took us to profile settings');
   });
 });
 

@@ -4,7 +4,7 @@
   {{post-comment-list comments=comments}}
   {{create-comment-form comment=newComment saveComment='saveComment'}}
   {{#if error}}
-    <div class="error">{{error.message}}</div>
+    {{error-formatter error=error}}
   {{/if}}
 </div>
 <div class="post-sidebar">
