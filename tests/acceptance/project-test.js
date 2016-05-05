@@ -4,6 +4,25 @@ import startApp from '../helpers/start-app';
 
 let application;
 
+function createProject(slug) {
+  slug = slug || 'test_organization';
+
+  // server.create uses factories. server.schema.<obj>.create does not
+  let project = server.create('project');
+
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
+  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let organization = server.schema.organization.create({ slug: 'test_organization' });
+  sluggedRoute.owner = organization;
+  sluggedRoute.save();
+
+  project.organization = organization;
+  project.save();
+
+  return project;
+}
+
 module('Acceptance: Project', {
   beforeEach: function() {
     application = startApp();
@@ -16,37 +35,25 @@ module('Acceptance: Project', {
 test('It renders navigation properly', (assert) => {
   assert.expect(2);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
-
-  organization.createProject({ slug: 'test_project' });
-  organization.save();
-
-  visit('/test_organization/test_project/posts');
+  let project = createProject();
+  let aboutURL = `/${project.organization.slug}/${project.slug}`;
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
 
   andThen(function() {
-
     let hrefToAbout = find('.project-menu li:first a').attr('href');
-    assert.ok(hrefToAbout.indexOf(`/test_organization/test_project`) > -1, 'Link to about is properly rendered');
+    assert.equal(hrefToAbout, aboutURL, 'Link to about is properly rendered');
     let hrefToPosts = find('.project-menu li:eq(1) a').attr('href');
-    assert.ok(hrefToPosts.indexOf(`/test_organization/test_project/posts`) > -1, 'Link to posts is properly rendered');
+    assert.equal(hrefToPosts, postsURL, 'Link to posts is properly rendered');
   });
 });
 
 test('Navigation works', (assert) => {
   assert.expect(6);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
-
-  organization.createProject({ slug: 'test_project' });
-  organization.save();
-
-  visit('/test_organization/test_project/posts');
+  let project = createProject();
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
 
   andThen(function() {
     assert.equal(currentRouteName(), 'project.posts.index');
@@ -67,55 +74,71 @@ test('Navigation works', (assert) => {
 test('It renders all the required ui elements for post list', (assert) => {
   assert.expect(4);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOwner({slug: 'test_organization'}, 'Organization');
-  sluggedRoute.save();
-
-  let project = organization.createProject({ slug: 'test_project' });
-  organization.save();
-  for (let i = 0; i < 5; i++) {
-    project.createPost({ number: i });
-  }
-
-  project.save();
-
-  visit('/test_organization/test_project/posts');
+  let project = createProject();
+  server.createList('post', 5, { projectId: project.id });
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
 
   andThen(function() {
     assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
     assert.equal(find('.project-post-list').length, 1, 'project-post-list component is rendered');
     assert.equal(find('.project-post-list .post-item').length, 5, 'correct number of posts is rendered');
 
-    let href = find('.project-post-list .post-item:first a').attr('href');
+    let hrefToFirstPost = find('.project-post-list .post-item:first a').attr('href');
+    let expectedHrefToFirstPost = `${postsURL}/0`;
 
-    assert.ok(href.indexOf(`/test_organization/test_project/posts/0`) > -1, 'Link to specific post is properly rendered');
+    assert.equal(hrefToFirstPost, expectedHrefToFirstPost, 'Link to specific post is properly rendered');
+  });
+});
+
+test('Post filtering links are correct', (assert) => {
+  assert.expect(10);
+
+  let project = createProject();
+
+  // we use server.createList so factories are used in creation
+  server.createList('post', 5, { postType: 'idea', projectId: project.id });
+  server.createList('post', 5, { postType: 'progress', projectId: project.id });
+  server.createList('post', 5, { postType: 'task', projectId: project.id });
+  server.createList('post', 5, { postType: 'issue', projectId: project.id });
+
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+
+  visit(postsURL);
+
+  andThen(() => {
+    assert.equal(find('.filter.all').attr('href'), `${postsURL}`, 'Link to all is correct on page 1');
+    assert.equal(find('.filter.ideas').attr('href'), `${postsURL}?type=idea`, 'Link to ideas is correct on page 1');
+    assert.equal(find('.filter.tasks').attr('href'), `${postsURL}?type=task`, 'Link to tasks is correct on page 1');
+    assert.equal(find('.filter.issues').attr('href'), `${postsURL}?type=issue`, 'Link to issues is correct on page 1');
+    assert.equal(find('.filter.progress').attr('href'), `${postsURL}?type=progress`, 'Link to progress posts is correct on page 1');
+
+    click('.page.2');
+  });
+
+  andThen(() => {
+    assert.equal(find('.filter.all').attr('href'), `${postsURL}`, 'Link to all posts resets page');
+    assert.equal(find('.filter.ideas').attr('href'), `${postsURL}?type=idea`, 'Link to ideas resets page');
+    assert.equal(find('.filter.tasks').attr('href'), `${postsURL}?type=task`, 'Link to tasks resets page');
+    assert.equal(find('.filter.issues').attr('href'), `${postsURL}?type=issue`, 'Link to issues resets page');
+    assert.equal(find('.filter.progress').attr('href'), `${postsURL}?type=progress`, 'Link to progress posts resets page');
   });
 });
 
 test('Post filtering by type works', (assert) => {
   assert.expect(5);
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.project.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProject();
 
   // we use server.createList so factories are used in creation
-  server.createList('post', 1, { postType: 'idea', projectId: projectId });
-  server.createList('post', 2, { postType: 'progress', projectId: projectId });
-  server.createList('post', 3, { postType: 'task', projectId: projectId });
-  server.createList('post', 4, { postType: 'issue', projectId: projectId });
+  server.createList('post', 1, { postType: 'idea', projectId: project.id });
+  server.createList('post', 2, { postType: 'progress', projectId: project.id });
+  server.createList('post', 3, { postType: 'task', projectId: project.id });
+  server.createList('post', 4, { postType: 'issue', projectId: project.id });
 
-  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
+  let postsURL = `${project.organization.slug}/${project.slug}/posts`;
+
+  visit(postsURL);
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 10, 'correct number of posts is rendered');
@@ -139,33 +162,59 @@ test('Post filtering by type works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 4, 'only issues are rendered');
+    click('.filter.all');
+  });
+});
+
+test('Post paging links are correct', (assert) =>  {
+  assert.expect(10);
+
+  let project = createProject();
+
+  // we use server.createList so factories are used in creation
+  server.createList('post', 20, { postType: 'idea', projectId: project.id });
+  server.createList('post', 20, { postType: 'progress', projectId: project.id });
+
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+
+  visit(`${postsURL}?page=2`);
+
+  andThen(() => {
+    assert.equal(find('.previous-page').attr('href'), `${postsURL}`, 'Previous page link links to page 1');
+    assert.equal(find('.next-page').attr('href'), `${postsURL}?page=3`, 'Link to next page links to page 3');
+    assert.equal(find('.page.1').attr('href'), `${postsURL}`, 'Link to page 1 is correct');
+    assert.equal(find('.page.2').attr('href'), `${postsURL}?page=2`, 'Link to page 2 is correct');
+    assert.equal(find('.page.3').attr('href'), `${postsURL}?page=3`, 'Link to page 3 is correct');
+    assert.equal(find('.page.4').attr('href'), `${postsURL}?page=4`, 'Link to page 4 is correct');
+    click('.filter.ideas');
+  });
+
+  andThen(() => {
+    assert.equal(find('.next-page').attr('href'), `${postsURL}?page=2&type=idea`, 'Next page link maintains type filter');
+    assert.equal(find('.page.1').attr('href'), `${postsURL}?type=idea`, 'Link to page 1 maintains type filter');
+    assert.equal(find('.page.2').attr('href'), `${postsURL}?page=2&type=idea`, 'Link to page 2 maintains type filter');
+    click('.page.2');
+  });
+
+  andThen(() => {
+    assert.equal(find('.previous-page').attr('href'), `${postsURL}?type=idea`, 'Previous page link maintains type filter');
   });
 });
 
 test('Paging of posts works', (assert) => {
-  // server.create uses factories. server.schema.<obj>.create does not
-  let projectId = server.create('project').id;
+  assert.expect(3);
 
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
+  let project = createProject();
 
-  let project = server.schema.project.find(projectId);
-  project.organization = organization;
-  project.save();
+  server.createList('post', 12, { projectId: project.id });
 
-  // since there's no polymorphic relationship involved, it's easy to create posts
-  server.createList('post', 12, { projectId: projectId });
-
-  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
 
   andThen(() => {
     assert.equal(find('.pager-control').length, 1, 'pager is rendered');
     assert.equal(find('.post-item').length, 10, 'first page of 10 records is rendered');
-    click('.pager-control .page-button.2');
+    click('.pager-control .page.2');
   });
 
   andThen(() => {
@@ -174,34 +223,24 @@ test('Paging of posts works', (assert) => {
 });
 
 test('Paging and filtering of posts combined works', (assert) => {
-  // server.create uses factories. server.schema.<obj>.create does not
-  let projectId = server.create('project').id;
+  assert.expect(9);
 
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
+  let project = createProject();
 
-  let project = server.schema.project.find(projectId);
-  project.organization = organization;
-  project.save();
+  server.createList('post', 12, { postType: 'task', projectId: project.id });
+  server.createList('post', 12, { postType: 'issue', projectId: project.id });
 
-  // since there's no polymorphic relationship involved, it's easy to create posts
-  server.createList('post', 12, { postType: 'task', projectId: projectId });
-  server.createList('post', 12, { postType: 'issue', projectId: projectId });
-
-  visit(`${sluggedRoute.slug}/${project.slug}/posts`);
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'first page of 10 posts is rendered');
-    click('.pager-control .page-button.2');
+    click('.pager-control .page.2');
   });
 
   andThen(() => {
     assert.equal(find('.post-item').length, 10, 'second page of 10 posts is rendered');
-    click('.pager-control .page-button.3');
+    click('.pager-control .page.3');
   });
 
   andThen(() => {
@@ -211,7 +250,7 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item.task').length, 10, 'first page of 10 tasks is rendered');
-    click('.pager-control .page-button.2');
+    click('.pager-control .page.2');
   });
 
   andThen(() => {
@@ -222,11 +261,55 @@ test('Paging and filtering of posts combined works', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-item.issue').length, 10, 'first page of 10 issues is rendered');
-    click('.pager-control .page-button.2');
+    click('.pager-control .page.2');
   });
 
   andThen(() => {
     assert.equal(find('.post-item.issue').length, 2, 'second page of 2 issues is rendered');
     assert.equal(find('.post-item').length, 2, 'there are no other posts rendered');
+  });
+});
+
+test('Paging and filtering uses query parameters', (assert) => {
+  assert.expect(6);
+
+  let project = createProject();
+
+  server.createList('post', 22, { postType: 'task', projectId: project.id });
+  server.createList('post', 12, { postType: 'issue', projectId: project.id });
+
+  let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
+  visit(postsURL);
+
+  visit(postsURL);
+
+  andThen(() => {
+    assert.equal(currentURL(), `${postsURL}`);
+    click('.pager-control .page.2');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${postsURL}?page=2`, 'Page query param should update');
+    click('.filter.tasks');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${postsURL}?type=task`, 'We switched type, so page param should reset as well');
+    click('.pager-control .page.3');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${postsURL}?page=3&type=task`, 'We switched page again, so it should update, while keeping type');
+    click('.filter.all');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${postsURL}`, 'We reset type to none, so it should be gone from the URL. Page should reset as well');
+  });
+
+  visit(`${postsURL}?page=3&type=task`);
+
+  andThen(() => {
+    assert.equal(find('.project-post-list .post-item').length, 2, 'Visiting URL via params directly, should fetch the correct posts');
   });
 });

@@ -3,19 +3,22 @@
     Filter by:
   </li>
   <li>
-    <a class="filter tasks" {{action 'filterBy' 'task'}}>Tasks</a>
+    {{link-to "All" "project.posts.index" (query-params postType=null page=1) class="filter all"}}
   </li>
   <li>
-    <a class="filter issues" {{action 'filterBy' 'issue'}}>Issues</a>
+    {{link-to "Tasks" "project.posts.index" (query-params postType='task' page=1) class="filter tasks"}}
   </li>
   <li>
-    <a class="filter progress" {{action 'filterBy' 'progress'}}>Progress</a>
+    {{link-to "Issues" "project.posts.index" (query-params postType='issue' page=1) class="filter issues"}}
   </li>
   <li>
-    <a class="filter ideas" {{action 'filterBy' 'idea'}}>Ideas</a>
+    {{link-to "Progress" "project.posts.index" (query-params postType='progress' page=1) class="filter progress"}}
   </li>
   <li>
-    {{#link-to 'project.posts.new' tagName='button' class="new-post success"}}New Post{{/link-to}}
+    {{link-to "Ideas" "project.posts.index" (query-params postType='idea' page=1) class="filter ideas"}}
+  </li>
+  <li>
+    {{link-to 'New Post' 'project.posts.new' tagName='button' class="new-post success"}}
   </li>
 </ul>
 <div class="posts">
@@ -26,4 +29,4 @@
   {{/each}}
 </div>
 
-{{pager-control options=options pageChanged='pageChanged'}}
+{{pager-control options=options}}
