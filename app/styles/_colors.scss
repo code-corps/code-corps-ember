@@ -3,7 +3,7 @@ $gray: #CCC;
 $red: #c0392b;
 $green: #23871E;
 $dark-yellow: #f39c12;
-$dark-blue: #08A8FC;
+$dark-blue: #5CA4FB;
 
 // Defaults
 $primary-color: #CCC;
@@ -30,6 +30,7 @@ $background-gray: #F3F3F3;
 $error-text-color: $red;
 
 // Color Types
+$default-color: $dark-blue;
 $success-color: $green;
 $danger-color: $red;
 $warning-color: $dark-yellow;
