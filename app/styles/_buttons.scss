@@ -8,11 +8,26 @@
   text-decoration: none;
   display: inline-block;
 
+  &.large {
+    font-size: 26px;
+    padding: 15px 40px;
+  }
+
   &.on-solid {
     background: transparent;
     border: 1px solid white;
     &:hover {
       background: white;
+    }
+  }
+
+  &.default {
+    background: $default-color;
+    &.on-solid {
+      background: transparent;
+      &:hover {
+        color: $default-color;
+      }
     }
   }
 
@@ -48,7 +63,13 @@
   background: darken($primary-color, 10%);
   @include transition(background 0.2s ease-in);
 
+  &.default {
+    background: darken($default-color, 10%);
+    color: white;
+  }
+
   &.success {
     background: darken($success-color, 10%);
+    color: white;
   }
 }
