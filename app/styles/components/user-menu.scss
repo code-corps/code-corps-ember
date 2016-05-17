@@ -7,17 +7,18 @@
   }
 
   a.active {
-    font-weight: 700;
+    font-weight: 600;
   }
 
   ul.header-nav {
     > li {
       display: inline-block;
       float: left;
+      font-size: 16px;
     }
 
     > li > a, .user-menu-select {
-      font-weight: 700;
+      font-weight: 600;
       border-bottom: 5px solid transparent;
 
       &.active {
