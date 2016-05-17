@@ -21,7 +21,7 @@ test("Logging out", function(assert) {
   visit('/');
   andThen(function() {
     assert.equal(find('a.logout').text(), "Log out", "Page contains logout link");
-    click('a');
+    click('a.logout');
   });
   andThen(function() {
     assert.equal(find('a.login').text(), "Sign in", "Page contains login link");
