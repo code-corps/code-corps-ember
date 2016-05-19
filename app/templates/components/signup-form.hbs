@@ -1,33 +1,25 @@
 <form>
+  <h2>Join Code Corps today.</h2>
   <div class="input-group">
-    <div class="input-label">
-      <label for="username">Username</label>
-    </div>
-    {{input name="username" type="text" placeholder='Username' value=user.username}}
+    {{input name="username" autocapitalize="off" type="text" placeholder='Username' value=user.username}}
     {{#each user.errors.username as |error|}}
-      <p class="error">{{error.message}}</p>
+      <p class="error">Your username {{error.message}}.</p>
     {{/each}}
   </div>
   <div class="input-group">
-    <div class="input-label">
-      <label for="email">Email</label>
-    </div>
-    {{input name="email" type="text" placeholder='Email' value=user.email}}
+    {{input name="email" autocapitalize="off" type="text" placeholder='Email' value=user.email}}
     {{#each user.errors.email as |error|}}
-      <p class="error">{{error.message}}</p>
+      <p class="error">Your email {{error.message}}.</p>
     {{/each}}
   </div>
   <div class="input-group">
-    <div class="input-label">
-      <label for="password">Password</label>
-    </div>
-    {{input name="password" type="password" placeholder='Password' value=user.password}}
+    {{input name="password" type="password" placeholder='Password' autocomplete="off" value=user.password}}
     {{#each user.errors.password as |error|}}
-      <p class="error">{{error.message}}</p>
+      <p class="error">Your password {{error.message}}.</p>
     {{/each}}
   </div>
   <div class="input-group">
-    <input name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
+    <input class="default" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
   </div>
   {{#if error}}
     {{error-formatter error=error}}
