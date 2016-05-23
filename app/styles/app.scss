@@ -5,12 +5,14 @@
 @import "colors";
 @import "retina";
 
+@import "misc";
+
+@import "icons";
 @import "buttons";
 @import "images";
 @import "inputs";
 @import "forms";
 @import "alerts";
-@import "misc";
 
 @import "main";
 
@@ -19,6 +21,10 @@
 
 @import "index";
 @import "post";
+
+@import "pace";
+
+@import "dropdown-menu";
 
 @import "components/comment-item";
 @import "components/drag-zone";

@@ -36,8 +36,8 @@
     background-color: $background-gray;
   }
 
-  &:first-child {
-    border-top: none;
+  &:last-child {
+    border-bottom: 1px solid $border-light;
   }
 
   .post-icon {
@@ -59,18 +59,42 @@
 
   &.task {
     @include post-image-icon('task');
+    &:hover {
+      background-color: #EDF9FF;
+    }
+    a:hover {
+      color: $task-color;
+    }
   }
 
   &.issue {
     @include post-image-icon('bug');
+    &:hover {
+      background-color: #FFE5E1;
+    }
+    a:hover {
+      color: $issue-color;
+    }
   }
 
   &.progress {
     @include post-image-icon('progress');
+    &:hover {
+      background-color: #EFFFEE;
+    }
+    a:hover {
+      color: $progress-color;
+    }
   }
 
   &.idea {
     @include post-image-icon('idea');
+    &:hover {
+      background-color: #FFF9DE;
+    }
+    a:hover {
+      color: $idea-color;
+    }
   }
 }
 

@@ -7,7 +7,7 @@ $dark-blue: #08A8FC;
 $light-green: #DFF0D8;
 
 // Defaults
-$primary-color: #CCC;
+$primary-color: $dark-blue;
 
 // Text
 $extra-light-text: #999;
@@ -18,6 +18,10 @@ $dark-text: #333;
 $link-color: $dark-blue;
 $hidden-link-color: $dark-text;
 $link-hover-color: darken($dark-blue, 5%);
+
+// Buttons
+$clear-hover: #E5E5E5;
+$clear-focus: #FCFCFC;
 
 // Borders
 $border-default: $gray;
@@ -38,3 +42,9 @@ $warning-color: $dark-yellow;
 
 // Success
 $success-background: $green;
+
+// Post types
+$idea-color: $dark-yellow;
+$issue-color: $red;
+$progress-color: $green;
+$task-color: $dark-blue;

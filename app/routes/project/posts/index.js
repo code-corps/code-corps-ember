@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   queryParams: {
     page: { refreshModel: true, scope: 'controller' },
-    postType: { as: 'type', refreshModel: true, scope: 'controller' }
+    postType: { refreshModel: true, scope: 'controller' }
   },
 
   session: Ember.inject.service(),

@@ -25,7 +25,7 @@ test('it renders', function(assert) {
   this.set('user', stubUser);
   this.render(hbs`{{user-dropdown user=user}}`);
 
-  assert.equal(this.$('.user-dropdown').length, 1, 'The component renders');
+  assert.equal(this.$('.dropdown-menu').length, 1, 'The component renders');
 });
 
 test('it triggers the hide action when clicked', function(assert) {
@@ -36,5 +36,5 @@ test('it triggers the hide action when clicked', function(assert) {
     assert.ok(true, 'It triggers the hide action when clicked');
   });
   this.render(hbs`{{user-dropdown user=user action='hide'}}`);
-  this.$('.user-dropdown').click();
+  this.$('.dropdown-menu').click();
 });

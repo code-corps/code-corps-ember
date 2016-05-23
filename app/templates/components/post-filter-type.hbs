@@ -1,0 +1,4 @@
+{{#click-outside action=(action "hide")}}
+  <button class="clear small {{if active "active"}}" {{action 'toggle'}}>Type</button>
+  {{post-filter-dropdown selectedTypes=selectedTypes hide="hide" filterByType="filterByType"}}
+{{/click-outside}}

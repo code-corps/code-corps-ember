@@ -1,0 +1,28 @@
+@mixin postTypeIconSprite( $spriteVals ) {
+  width: nth( $spriteVals, 1 );
+  height: nth( $spriteVals, 2 );
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+  @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $bgiSizeW $bgiSizeH;
+  }
+}
+$post-typesPath: '/assets/images/icons/post-types';
+$post-typesURL: $post-typesPath + '.png';
+$post-typesx2URL: $post-typesPath + '@2x.png';
+$bgiSizeW: 96px;
+$bgiSizeH: 58px;
+$tick-black: 12px 10px $post-typesURL -12px -48px $post-typesx2URL;
+$tick-white: 12px 10px $post-typesURL 0px -48px $post-typesx2URL;
+$idea-hover: 24px 24px $post-typesURL -72px -24px $post-typesx2URL;
+$task-hover: 24px 24px $post-typesURL 0px -24px $post-typesx2URL;
+$idea: 24px 24px $post-typesURL -72px 0px $post-typesx2URL;
+$progress-hover: 24px 24px $post-typesURL -48px -24px $post-typesx2URL;
+$issue-hover: 24px 24px $post-typesURL -24px -24px $post-typesx2URL;
+$progress: 24px 24px $post-typesURL -48px 0px $post-typesx2URL;
+$issue: 24px 24px $post-typesURL -24px 0px $post-typesx2URL;
+$task: 24px 24px $post-typesURL 0px 0px $post-typesx2URL;

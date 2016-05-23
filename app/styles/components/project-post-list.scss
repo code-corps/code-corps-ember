@@ -1,41 +1,68 @@
-.post-filtering-menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  li {
-    display: inline-block;
-    margin: 0 10px;
-    font-size: 13px;
-    color: $light-text;
+.posts-menu {
+  @include clearfix;
 
-    &:first-child {
-      margin-left: 15px;
+  margin: 10px 0;
+}
+
+$postTypeColors: (
+  "idea": $idea-color,
+  "issue": $issue-color,
+  "progress": $progress-color,
+  "task": $task-color,
+);
+
+$postTypeIcons: (
+  "idea": $idea,
+  "issue": $issue,
+  "progress": $progress,
+  "task": $task,
+);
+
+$postTypeIconHovers: (
+  "idea": $idea-hover,
+  "issue": $issue-hover,
+  "progress": $progress-hover,
+  "task": $task-hover,
+);
+
+@mixin postTypeFilter($type) {
+  $color: map-get($postTypeColors, $type);
+
+  color: $color;
+  transition: none;
+
+  &:before {
+    @include postTypeIconSprite(map-get($postTypeIcons, $type));
+  }
+
+  &.selected:after {
+    @include postTypeIconSprite($tick-white);
+  }
+
+  &:hover, &.selected {
+    background: $color;
+    color: white;
+    &:before {
+      @include postTypeIconSprite(map-get($postTypeIconHovers, $type));
     }
   }
 }
 
-@mixin filter-image($type) {
-  transition: background-image ease 0.3s;
-
-  $file-gray: "/assets/images/icons/" + $type + "-icon-gray";
-  $file-color: "/assets/images/icons/" + $type + "-icon";
-
-  &:before {
-    @include background-image-retina($file-color, "png", 24px, 24px);
-    @include background-image-retina($file-gray, "png", 24px, 24px);
-  }
-
-  &:hover {
-    &:before {
-      @include background-image-retina($file-color, "png", 24px, 24px);
-      background-image: url("/assets/images/icons/" + $type + "-icon.png");
+.posts-menu {
+  .dropdown-menu {
+    li {
+      padding: 1px 0;
     }
   }
 }
 
 .filter {
   color: $light-text;
+  display: block;
   font-size: 14px;
+  line-height: 22px;
+  padding: 4px 32px;
+  width: 160px;
 
   &:before {
     content: "";
@@ -45,31 +72,114 @@
     margin: 0 5px -6px 0;
   }
 
+  &:after {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 10px;
+    margin-top: 8px;
+    position: absolute;
+    left: 10px;
+  }
+
   &.tasks {
-    @include filter-image('task');
-    &:hover {
-      color: $link-color;
-    }
+    @include postTypeFilter("task");
   }
 
   &.issues {
-    @include filter-image('bug');
-    &:hover {
-      color: $red;
-    }
+    @include postTypeFilter("issue");
   }
 
   &.progress {
-    @include filter-image('progress');
-    &:hover {
-      color: $green;
-    }
+    @include postTypeFilter("progress");
   }
 
   &.ideas {
-    @include filter-image('idea');
+    @include postTypeFilter("idea");
+  }
+}
+
+@mixin tagLink($color, $hoverTextColor: white) {
+  a {
+    border-color: $color;
+    color: $color;
+
     &:hover {
-      color: $dark-yellow;
+      background: $color;
+      color: $hoverTextColor;
+    }
+  }
+}
+
+.posts-filters {
+  margin: 10px 0;
+
+  p {
+    color: $extra-light-text;
+    float: left;
+    font-size: 14px;
+    line-height: 27px;
+    margin: 0;
+  }
+
+  ul {
+    display: inline-block;
+    font-size: 0;
+    margin: 0;
+
+    &.groups {
+      > li {
+        margin-left: 10px;
+        ul li {
+          margin-right: 5px;
+          &:last-child {
+            margin-right: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  li {
+    display: inline-block;
+
+    &.all {
+      @include tagLink($extra-light-text);
+    }
+
+    &.task {
+      @include tagLink($dark-blue);
+    }
+
+    &.issue {
+      @include tagLink($red);
+    }
+
+    &.progress {
+      @include tagLink($green);
+    }
+
+    &.idea {
+      @include tagLink($dark-yellow, $dark-text);
+    }
+  }
+
+  a {
+    border: 1px solid $border-default;
+    border-radius: 4px;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0px 8px 2px 8px;
+
+    span {
+      font-size: 18px;
+      font-weight: 900;
+      margin-right: 2px;
+    }
+
+    &:hover {
+      color: white;
     }
   }
 }
