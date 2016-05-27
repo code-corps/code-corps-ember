@@ -20,5 +20,14 @@ export default Ember.Component.extend({
 
   options: Ember.computed('meta', function() {
     return this._normalizeMeta(this.get('meta'));
-  })
+  }),
+
+  actions: {
+    filterByType: function(type) {
+      this.sendAction('filterByType', type);
+    },
+    removeTypeFilter: function(type) {
+      this.sendAction('removeTypeFilter', type);
+    },
+  }
 });

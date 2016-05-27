@@ -1,31 +1,34 @@
 .horizontal-menu {
   @include clearfix;
+
+  border-bottom: 1px solid $border-default;
+  list-style-type: none;
   margin: 0 0 10px 0;
   padding: 0;
-  list-style-type: none;
   width: 100%;
-  border-bottom: 1px solid $border-default;
 
   li {
     float: left;
   }
 
   a {
+    border-bottom: 3px solid transparent;
+    color: $extra-light-text;
     display: block;
-    padding: 10px 14px;
+    font-weight: 500;
+    margin-bottom: -1px;
+    padding: 6px 14px;
     text-decoration: none;
-    color: $light-text;
-    font-weight: 700;
-    border-bottom: 5px solid transparent;
 
     &.active {
-      color: $link-color;
-      border-bottom-color: $dark-blue;
+      border-bottom-color: $primary-color;
+      color: $primary-color;
+      font-weight: 700;
     }
 
     &:hover {
-      color: $link-color;
-      border-bottom-color: $dark-blue;
+      border-bottom-color: $primary-color;
+      color: $primary-color;
       transition: border-bottom-color ease 0.3s;
     }
   }

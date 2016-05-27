@@ -1,0 +1,8 @@
+<div class="dropdown-header">
+  <p>Filter by type <a class="right close" {{action "hide"}}>&times;</a></p>
+</div>
+{{#each selectedTypes as |type|}}
+<li>
+  <a class="filter {{type.slug}} {{if type.selected "selected"}}" {{action "filterByType" type}}>{{type.name}}</a>
+</li>
+{{/each}}

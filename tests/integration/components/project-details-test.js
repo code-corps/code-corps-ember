@@ -35,13 +35,24 @@ test('it renders', function(assert) {
   assert.equal(this.$('.project-details').length, 1);
 });
 
-test('it renders basic project information', function(assert) {
+test('when expanded', function(assert) {
+  let project = mockProject();
+  this.set('project', project);
+
+  this.render(hbs`{{project-details project=project expanded=true}}`);
+
+  assert.equal(this.$('.title').text().trim(), 'CodeCorps', 'Title is rendered');
+  assert.equal(this.$('.description').text().trim(), 'A test project', 'Description is rendered');
+  assert.equal(this.$('.icon').attr('src'), 'image-url.com', 'Image element is rendered');
+});
+
+test('when not expanded', function(assert) {
   let project = mockProject();
   this.set('project', project);
 
   this.render(hbs`{{project-details project=project}}`);
 
   assert.equal(this.$('.title').text().trim(), 'CodeCorps', 'Title is rendered');
-  assert.equal(this.$('.description').text().trim(), 'A test project', 'Description is rendered');
+  assert.equal(this.$('.description').length, 0, 'Hides description');
   assert.equal(this.$('.icon').attr('src'), 'image-url.com', 'Image element is rendered');
 });

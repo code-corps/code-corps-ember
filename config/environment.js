@@ -41,6 +41,12 @@ module.exports = function(environment) {
 
     moment: {
       allowEmpty: true // default: false
+    },
+
+    pace: {
+      // addon-specific options to configure theme
+      theme: 'minimal',
+      color: 'blue',
     }
   };
 

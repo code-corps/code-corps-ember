@@ -19,7 +19,7 @@
 
     > li > a, .user-menu-select {
       font-weight: 600;
-      border-bottom: 5px solid transparent;
+      border-bottom: 3px solid transparent;
 
       &.active {
         color: $link-color;
@@ -50,8 +50,6 @@
 }
 
 .user-menu {
-  height: 40px;
-
   .avatar {
     width: 40px;
     height: 40px;
@@ -60,21 +58,17 @@
     vertical-align: middle;
   }
 
-  &.menu-hidden {
-    .user-dropdown {
-      display: none;
-    }
+  .dropdown-menu {
+    min-width: 220px;
+  }
 
+  &.menu-hidden {
     .dropdown-arrow {
       @include arrow-down;
     }
   }
 
   &.menu-visible {
-    .user-dropdown {
-      display: block;
-    }
-
     .dropdown-arrow {
       @include arrow-up;
     }
@@ -91,39 +85,4 @@
 .user-menu-select {
   padding: 5px;
   display: block;
-}
-
-.user-dropdown {
-  position: absolute;
-  z-index: 99999;
-  top: 60px;
-  right: 0;
-  width: 200px;
-  background: white;
-  border: 1px solid $gray;
-  border-radius: 4px;
-  -webkit-box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
-  box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
-
-  li {
-    display: block;
-    font-size: 14px;
-    padding: 3px 0;
-  }
-}
-
-.dropdown-body {
-  padding: 10px 20px;
-}
-
-.dropdown-footer {
-  padding: 15px 20px;
-  background: $background-gray;
-  font-size: 13px;
-  color: $light-text;
-
-  p {
-    margin: 0;
-  }
 }

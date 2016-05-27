@@ -1,12 +1,20 @@
 #{$all-buttons}, .button {
-  background: $primary-color;
   color: white;
-  border: none;
   border-radius: 4px;
   padding: 11px 14px;
-  font-size: 1em;
+  font-family: $body-font-family;
+  font-size: 16px;
   text-decoration: none;
   display: inline-block;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.small {
+    font-size: 14px;
+    padding: 6px 14px;
+  }
 
   &.large {
     font-size: 26px;
@@ -22,12 +30,24 @@
   }
 
   &.default {
-    background: $default-color;
+    background: $primary-color;
+    border: 1px solid $primary-color;
     &.on-solid {
       background: transparent;
       &:hover {
-        color: $default-color;
+        color: $primary-color;
       }
+    }
+  }
+
+  &.clear {
+    background: white;
+    border: 1px solid $border-default;
+    color: $dark-text;
+
+    &:focus {
+      background: $clear-focus;
+      border-color: darken($border-default, 2%);
     }
   }
 
@@ -68,8 +88,37 @@
     color: white;
   }
 
+  &.clear {
+    background: $clear-hover;
+  }
+
   &.success {
     background: darken($success-color, 10%);
     color: white;
   }
 }
+
+#{$all-buttons}, .button {
+  &.active, &:active {
+    &.clear {
+      background: $clear-hover;
+    }
+  }
+}
+
+.button-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  &.dropdown {
+    #{$all-buttons}, .button {
+      &::after {
+        @include arrow-down;
+        height: 8px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
