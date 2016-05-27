@@ -2,10 +2,12 @@
 <div class="post-timeline">
   {{post-details post=post}}
   {{post-comment-list comments=comments}}
+  <div>
   {{create-comment-form comment=newComment saveComment='saveComment'}}
   {{#if error}}
     {{error-formatter error=error}}
   {{/if}}
+  </div>
 </div>
 <div class="post-sidebar">
 </div>

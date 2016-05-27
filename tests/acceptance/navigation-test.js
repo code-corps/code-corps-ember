@@ -54,8 +54,8 @@ test('Logged in, from user menu can visit profile', function(assert) {
     click('.user-menu-select');
   });
   andThen(function() {
-    assert.equal(find('.user-dropdown .slugged-route').attr('href'), `/${user.username}`, 'Menu links to the profile settings');
-    click('.user-dropdown .slugged-route');
+    assert.equal(find('.user-menu.dropdown .slugged-route').attr('href'), `/${user.username}`, 'Menu links to the profile settings');
+    click('.user-menu.dropdown .slugged-route');
   });
   andThen(function() {
     assert.equal(currentURL(), `/${user.username}`, 'Link took us to user slugged route');
@@ -73,8 +73,8 @@ test('Logged in, from user menu can visit profile settings', function(assert) {
     click('.user-menu-select');
   });
   andThen(function() {
-    assert.equal(find('.user-dropdown .profile').attr('href'), "/settings/profile", "Menu links to the profile settings");
-    click('.user-dropdown .profile');
+    assert.equal(find('.user-menu.dropdown .profile').attr('href'), "/settings/profile", "Menu links to the profile settings");
+    click('.user-menu.dropdown .profile');
   });
   andThen(function() {
     assert.equal(currentURL(), '/settings/profile', 'Link took us to profile settings');
@@ -92,7 +92,7 @@ test("Logged in, from user menu can log out", function(assert) {
     click('.user-menu-select');
   });
   andThen(function() {
-    click('.user-dropdown .logout');
+    click('.user-menu.dropdown .logout');
   });
   andThen(function() {
     assert.equal(find('.auth-nav li:last').text().trim(), "Sign in", "Page contains sign in link");

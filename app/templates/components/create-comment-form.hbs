@@ -1,15 +1,18 @@
-<div class="input-group">
-  {{#editor-with-preview input=comment.markdownPreview generatePreview=(action 'generatePreview')}}
-    {{#if comment.isSaving}}
-      Loading preview...
-    {{else}}
-      <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
-    {{/if}}
-  {{/editor-with-preview}}
-  {{#each comment.errors.markdown as |error|}}
-    <p class="error">{{error.message}}</p>
-  {{/each}}
-</div>
-<div class="input-group">
-  <button name="save" {{action 'saveComment'}}>Post comment</button>
+{{#link-to 'slugged-route' comment.user.username}}
+  <img class="icon" src={{comment.user.photoThumbUrl}} />
+{{/link-to}}
+<div class="comment-content">
+  <div class="input-group">
+    {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving generatePreview=(action 'generatePreview')}}
+      {{#unless comment.isSaving}}
+        <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
+      {{/unless}}
+    {{/editor-with-preview}}
+    {{#each comment.errors.markdown as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <button class="default right" name="save" {{action 'saveComment'}}>Comment</button>
+  </div>
 </div>

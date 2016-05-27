@@ -1,9 +1,15 @@
-<ul class="tabs">
-  <li><a class="edit" {{action 'edit'}}>Edit</a></li>
-  <li><a class="preview" {{action 'preview'}}>Preview</a></li>
-</ul>
+<div class="editor-header">
+  <div class="button-group">
+    <button class="clear primary-active small edit {{if editing "active"}}" {{action 'edit'}}>Write</button>
+    <button class="clear primary-active small preview {{if previewing "active"}}" {{action 'preview'}}>Preview</button>
+  </div>
+  {{#if isLoading}}
+  <div class="spinner small"></div>
+  {{/if}}
+  {{code-theme-selector}}
+</div>
 {{#if editing}}
-  {{textarea name="markdown" value=input}}
+  {{textarea placeholder=placeholder autoresize=true max-height=350 name="markdown" value=input onBlur="blurTextarea" classNameBindings="textareaFocused:focused"}}
 {{else}}
   {{yield}}
 {{/if}}

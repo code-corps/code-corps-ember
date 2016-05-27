@@ -4,21 +4,19 @@ import Ember from 'ember';
 
 let mockSession = Ember.Service.extend({
   isAuthenticated: true,
-  session: {
-    authenticated: {
-      user_id: 1
-    }
+  currentUser: {
+    id: 1
   }
 });
 
 let mockStore = Ember.Service.extend({
-  query () {
+  query() {
     return Ember.RSVP.resolve([]);
   }
 });
 
 let mockStoreReturningMentions = Ember.Service.extend({
-  query () {
+  query() {
     return Ember.RSVP.resolve([
       Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
       Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
@@ -29,7 +27,9 @@ let mockStoreReturningMentions = Ember.Service.extend({
 let mockPost = Ember.Object.create({
   title: 'A post',
   body: 'A <strong>body</strong>',
+  containsCode: true,
   postType: 'issue',
+  user: { id: 1 },
   save() {
     this.set('bodyPreview', this.get('body'));
     return Ember.RSVP.resolve();
@@ -44,7 +44,6 @@ let mockPostWithMentions = Ember.Object.create({
     return Ember.RSVP.resolve();
   }
 });
-
 
 moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
@@ -67,6 +66,7 @@ test('it renders all the ui elements properly bound', function(assert) {
   this.render(hbs`{{post-details post=post}}`);
 
   assert.equal(this.$('.post-details .comment-body').text().trim(), 'A body', 'Body is correctly bound and rendered');
+  assert.equal(this.$('.post-details .code-theme-selector').length, 1);
 });
 
 test('the post body is rendered as unescaped html', function (assert) {

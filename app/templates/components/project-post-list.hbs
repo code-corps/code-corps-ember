@@ -1,26 +1,36 @@
-<ul class="post-filtering-menu">
-  <li>
-    Filter by:
-  </li>
-  <li>
-    {{link-to "All" "project.posts.index" (query-params postType=null page=1) class="filter all"}}
-  </li>
-  <li>
-    {{link-to "Tasks" "project.posts.index" (query-params postType='task' page=1) class="filter tasks"}}
-  </li>
-  <li>
-    {{link-to "Issues" "project.posts.index" (query-params postType='issue' page=1) class="filter issues"}}
-  </li>
-  <li>
-    {{link-to "Progress" "project.posts.index" (query-params postType='progress' page=1) class="filter progress"}}
-  </li>
-  <li>
-    {{link-to "Ideas" "project.posts.index" (query-params postType='idea' page=1) class="filter ideas"}}
-  </li>
-  <li>
-    {{link-to 'New Post' 'project.posts.new' tagName='button' class="new-post success"}}
-  </li>
-</ul>
+<div class="posts-menu">
+  <div class="left">
+    {{post-filter-type project=project selectedTypes=selectedTypes filterByType="filterByType"}}
+  </div>
+  <div class="right">
+    {{link-to 'New Post' 'project.posts.new' tagName='button' class="default small new-post"}}
+  </div>
+</div>
+<div class="posts-filters">
+{{#if isFiltered}}
+  <p>Clear filters:</p>
+  <ul class="groups">
+    <li>
+      <ul>
+        <li class="all">
+          {{#link-to "project.posts.index" (query-params postType=null page=1)}}<span>&times;</span> All{{/link-to}}
+        </li>
+      </ul>
+    </li>
+    <li>
+      <ul>
+      {{#each selectedTypes as |type|}}
+        {{#if type.selected}}
+          <li class="type {{type.param}}">
+            <a {{action 'removeTypeFilter' type}}><span>&times;</span> {{type.name}}</a>
+          </li>
+        {{/if}}
+      {{/each}}
+      </ul>
+    </li>
+  </ul>
+{{/if}}
+</div>
 <div class="posts">
   {{#each posts as |post|}}
     {{post-item post=post}}

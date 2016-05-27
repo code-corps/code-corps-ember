@@ -7,7 +7,7 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
 
   session: Ember.inject.service(),
 
-  currentUserId: Ember.computed.alias('session.session.authenticated.user_id'),
+  currentUserId: Ember.computed.alias('session.currentUser.id'),
   commentAuthorId: Ember.computed.alias('comment.user.id'),
   currentUserIsCommentAuthor: Ember.computed('currentUserId', 'commentAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);

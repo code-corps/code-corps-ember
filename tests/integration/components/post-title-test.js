@@ -9,6 +9,7 @@ let mockSession = Ember.Service.extend({
 let mockPost = Ember.Object.create({
   title: 'Original title',
   body: 'A <strong>body</strong>',
+  number: 12,
   postType: 'issue',
   save() {
     this.set('title', this.get('title'));
@@ -52,13 +53,13 @@ test('it saves', function(assert) {
   this.set('post', mockPost);
   this.render(hbs`{{post-title post=post}}`);
 
-  assert.equal(this.$('.post-title .title').text().trim(), 'Original title', 'The original title is right');
+  assert.equal(this.$('.post-title .title').text().trim(), 'Original title #12', 'The original title is right');
 
   this.$('.post-title .edit').click();
   this.$('.post-title input[name=title]').val('Edited title').trigger('change');
   this.$('.post-title .save').click();
 
-  assert.equal(this.$('.post-title .title').text().trim(), 'Edited title', 'The tile title is saved');
+  assert.equal(this.$('.post-title .title').text().trim(), 'Edited title #12', 'The tile title is saved');
 });
 
 // test('it resets the input element when editing is cancelled and then restarted', function(assert) {

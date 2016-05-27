@@ -5,6 +5,7 @@ import Ember from 'ember';
 let mockPost = Ember.Object.create({
   title: 'A post',
   body: 'A <strong>body</strong>',
+  number: 12,
   postType: 'issue',
   save() {
     this.set('bodyPreview', this.get('body'));
@@ -31,6 +32,6 @@ test('it renders all the ui elements properly bound', function(assert) {
 
   this.render(hbs`{{post-header post=post}}`);
 
-  assert.equal(this.$('.post-header .title').text().trim(), 'A post', 'Title is correctly bound and rendered');
+  assert.equal(this.$('.post-header .title').text().trim(), 'A post #12', 'Title is correctly bound and rendered');
   assert.equal(this.$('.post-header.issue .post-icon').length, 1, 'Post type is correctly bound and rendered');
 });

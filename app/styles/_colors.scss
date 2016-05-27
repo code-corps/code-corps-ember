@@ -7,7 +7,7 @@ $dark-blue: #08A8FC;
 $light-green: #DFF0D8;
 
 // Defaults
-$primary-color: #CCC;
+$primary-color: $dark-blue;
 
 // Text
 $extra-light-text: #999;
@@ -19,6 +19,10 @@ $link-color: $dark-blue;
 $hidden-link-color: $dark-text;
 $link-hover-color: darken($dark-blue, 5%);
 
+// Buttons
+$clear-hover: #E5E5E5;
+$clear-focus: #FCFCFC;
+
 // Borders
 $border-default: $gray;
 $border-light: #EEE;
@@ -26,6 +30,8 @@ $border-focus: #51A7E8;
 
 // Backgrounds
 $background-gray: #F3F3F3;
+$code-background: #FBFBFB;
+$code-background-dark: #222;
 
 // Errors
 $error-text-color: $red;
@@ -38,3 +44,50 @@ $warning-color: $dark-yellow;
 
 // Success
 $success-background: $green;
+
+// Post types
+$idea-color: $dark-yellow;
+$issue-color: $red;
+$progress-color: $green;
+$task-color: $dark-blue;
+
+$postTypeColors: (
+  "idea": $idea-color,
+  "issue": $issue-color,
+  "progress": $progress-color,
+  "task": $task-color,
+);
+
+$postTypeTextOnBackgroundColors: (
+  "idea": $dark-text,
+  "issue": white,
+  "progress": white,
+  "task": white,
+);
+
+$idea-background: #FFF9DE;
+$issue-background: #FFE5E1;
+$progress-background: #EFFFEE;
+$task-background: #EDF9FF;
+
+$postTypeBackgrounds: (
+  "idea": $idea-background,
+  "issue": $issue-background,
+  "progress": $progress-background,
+  "task": $task-background,
+);
+
+// Code
+$code-dark-blue: #6E9CBE;
+$code-dark-brown: #BC9458;
+$code-dark-dark-yellow: #FFC66D;
+$code-dark-green: #A5C261;
+$code-dark-light-yellow: #E8BF6A;
+$code-dark-light-purple: #D0D0FF;
+$code-dark-orange: #CC7833;
+$code-dark-red: #DA4939;
+$code-dark-white: #F8F8F2;
+
+$code-light-black: #222;
+$code-light-green: #229151;
+$code-light-orange: #B75F25;

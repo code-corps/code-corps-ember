@@ -1,32 +1,33 @@
-<div class="input-group">
-  {{select-dropdown
-    name='post-type'
-    items=types
-    selectedItem=post.postType
-    optionValuePath='slug'
-    optionLabelPath='label'}}
-  {{#each post.errors.postType as |error|}}
-    <p class="error">{{error.message}}</p>
-  {{/each}}
-</div>
-<div class="input-group">
-  {{input name="title" type="text" placeholder="Title" value=post.title}}
-  {{#each post.errors.title as |error|}}
-    <p class="error">{{error.message}}</p>
-  {{/each}}
-</div>
-<div class="input-group">
-  {{#editor-with-preview input=post.markdownPreview generatePreview=(action 'generatePreview')}}
-    {{#if post.isSaving}}
-      Loading preview...
-    {{else}}
-      <div class="body-preview">{{{postBodyPreviewWithMentions}}}</div>
-    {{/if}}
-  {{/editor-with-preview}}
-  {{#each post.errors.markdown as |error|}}
-    <p class="error">{{error.message}}</p>
-  {{/each}}
-</div>
-<div class="input-group">
-  <input class="right" name="submit" type="submit" value="Create post" {{action 'submit'}} />
+<img class="icon" src={{post.user.photoThumbUrl}} />
+<div class="post-new-form-body">
+  <div class="input-group post-type {{post.postType}}">
+    {{select-dropdown
+      name='post-type'
+      items=types
+      selectedItem=post.postType
+      optionValuePath='slug'
+      optionLabelPath='label'}}
+    {{#each post.errors.postType as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    {{input name="title" type="text" placeholder="Title" value=post.title}}
+    {{#each post.errors.title as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    {{#editor-with-preview input=post.markdownPreview isLoading=post.isSaving placeholder=placeholder generatePreview=(action 'generatePreview') as |previewHeight|}}
+      {{#unless post.isSaving}}
+        <div class="body-preview" style="{{previewHeight}}">{{{postBodyPreviewWithMentions}}}</div>
+      {{/unless}}
+    {{/editor-with-preview}}
+    {{#each post.errors.markdown as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <input class="button right {{post.postType}}" name="submit" type="submit" value="Submit new {{post.postType}}" {{action 'submit'}} />
+  </div>
 </div>

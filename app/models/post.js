@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   title: DS.attr('string'),
@@ -20,5 +21,14 @@ export default DS.Model.extend({
   user: DS.belongsTo('user', { async: true }),
   comments: DS.hasMany('comment', { async: true }),
 
-  postUserMentions: DS.hasMany('post-user-mention', { asnyc: true })
+  postUserMentions: DS.hasMany('post-user-mention', { asnyc: true }),
+
+  containsCode: Ember.computed('body', function() {
+    let body = this.get('body');
+    if(body) {
+      return body.indexOf('<code>') !== -1;
+    } else {
+      return false;
+    }
+  }),
 });

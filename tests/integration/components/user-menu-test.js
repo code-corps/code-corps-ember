@@ -53,6 +53,6 @@ test('clicking an open dropdown dismisses it', function(assert) {
 
   this.$('.user-menu-select').click();
   assert.equal(this.$('.user-menu.menu-visible').length, 1, 'The menu is now visible');
-  this.$('.user-dropdown').click();
+  this.$('.user-menu .dropdown-menu').click();
   assert.equal(this.$('.user-menu.menu-hidden').length, 1, 'The menu is now hidden');
 });

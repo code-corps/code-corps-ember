@@ -6,6 +6,16 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
 
   session: Ember.inject.service(),
 
+  currentUserId: Ember.computed.alias('session.currentUser.id'),
+  postAuthorId: Ember.computed.alias('post.user.id'),
+  currentUserIsPostAuthor: Ember.computed('currentUserId', 'postAuthorId', function() {
+    let userId = parseInt(this.get('currentUserId'), 10);
+    let authorId = parseInt(this.get('postAuthorId'), 10);
+    return userId === authorId;
+  }),
+
+  canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsPostAuthor'),
+
   init() {
     this.set('isEditingBody', false);
     this.send('fetch', 'published');

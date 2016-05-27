@@ -19,10 +19,8 @@ let mockStoreReturningMentions = Ember.Service.extend({
 
 let mockSession = Ember.Service.extend({
   isAuthenticated: true,
-  session: {
-    authenticated: {
-      user_id: 1
-    }
+  currentUser: {
+    id: 1
   }
 });
 
@@ -58,10 +56,10 @@ test('it renders', function(assert) {
 });
 
 test('it renders all required comment elements properly', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   let user = { id: 1, username: 'tester' };
-  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user: user });
+  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user: user, containsCode: true });
 
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -69,6 +67,7 @@ test('it renders all required comment elements properly', function(assert) {
   assert.equal(this.$('.comment-item .comment-body').html(), 'A <b>comment</b>', 'The comment\'s body is rendered');
   assert.equal(this.$('.comment-item .comment-body b').length, 1, 'The comment\'s body is rendered unescaped');
   assert.equal(this.$('.comment-item .username').text().trim(), 'tester');
+  assert.equal(this.$('.comment-item .code-theme-selector').length, 1);
 });
 
 test('it switches between editing and viewing mode', function(assert) {

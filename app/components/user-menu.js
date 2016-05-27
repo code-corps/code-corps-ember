@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['user-menu'],
+  classNames: ['user-menu', 'dropdown'],
   classNameBindings: ['hidden:menu-hidden:menu-visible'],
 
   hidden: true,

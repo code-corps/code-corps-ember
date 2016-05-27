@@ -1,15 +1,3 @@
-@mixin detail-icon($type) {
-  &:before {
-    $file: "/assets/images/icons/" + $type;
-    @include background-image-retina($file, "png", 16px, 16px);
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin: 0px 5px -2px 0;
-  }
-}
-
 .user-sidebar {
   @include span-columns(3);
   img {
@@ -38,11 +26,11 @@
     }
 
     .twitter {
-      @include detail-icon('twitter');
+      @include userSidebarIcon($twitter);
     }
 
     .website {
-      @include detail-icon('link');
+      @include userSidebarIcon($link);
     }
   }
 }
