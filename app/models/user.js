@@ -10,6 +10,7 @@ export default Owner.extend({
   biography: DS.attr('string'),
   email: DS.attr('string'),
   password: DS.attr('string'),
+  base64PhotoData: DS.attr('string'),
   photoThumbUrl: DS.attr('string'),
   photoLargeUrl: DS.attr('string'),
   createdAt: DS.attr('date'),

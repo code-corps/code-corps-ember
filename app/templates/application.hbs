@@ -1,36 +1,38 @@
-<div class="menu container">
-  <h1 class="site-logo left">
-    {{#link-to 'index' class='logo'}}Code Corps{{/link-to}}
-  </h1>
-  <ul class="header-nav main-nav left">
-    <li>{{#link-to 'projects-list'}}Projects{{/link-to}}</li>
-  </ul>
-  {{#if session.isAuthenticated}}
-    <ul class="header-nav right">
-      <li class="user-menu-tab">
-        {{user-menu model=session.currentUser}}
-      </li>
+{{#drag-zone}}
+  <div class="menu container">
+    <h1 class="site-logo left">
+      {{#link-to 'index' class='logo'}}Code Corps{{/link-to}}
+    </h1>
+    <ul class="header-nav main-nav left">
+      <li>{{#link-to 'projects-list'}}Projects{{/link-to}}</li>
     </ul>
-  {{else}}
-    <ul class="header-nav auth-nav right">
-      <li>
-        {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
-      </li>
-      <li>
-        {{#link-to 'login' class="login"}}Sign in{{/link-to}}
-      </li>
-    </ul>
-  {{/if}}
-</div>
-<div class="flash">
-{{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
-    <div class="container">
-      <p>{{flash.message}}</p>
-    </div>
-  {{/flash-message}}
-{{/each}}
-</div>
-<div class="main container">
-  {{outlet}}
-</div>
+    {{#if session.isAuthenticated}}
+      <ul class="header-nav right">
+        <li class="user-menu-tab">
+          {{user-menu model=session.currentUser}}
+        </li>
+      </ul>
+    {{else}}
+      <ul class="header-nav auth-nav right">
+        <li>
+          {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'login' class="login"}}Sign in{{/link-to}}
+        </li>
+      </ul>
+    {{/if}}
+  </div>
+  <div class="flash">
+  {{#each flashMessages.queue as |flash|}}
+    {{#flash-message flash=flash as |component flash|}}
+      <div class="container">
+        <p>{{flash.message}}</p>
+      </div>
+    {{/flash-message}}
+  {{/each}}
+  </div>
+  <div class="main container">
+    {{outlet}}
+  </div>
+{{/drag-zone}}

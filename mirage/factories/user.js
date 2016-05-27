@@ -8,4 +8,5 @@ export default Factory.extend({
   twitter: faker.internet.domainWord,
   username: faker.internet.domainWord,
   website: faker.internet.url,
+  base64PhotoData: null
 });

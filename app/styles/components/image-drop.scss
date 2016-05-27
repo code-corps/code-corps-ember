@@ -1,0 +1,63 @@
+.image-drop {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  background: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &.is-dragging {
+    outline: 2px dashed $border-default;
+    outline-offset: -2px;
+    background: transparent !important;
+
+    p {
+      display: block;
+    }
+  }
+
+  &.active {
+    outline-color: $green;
+    background: $light-green !important;
+
+    p {
+      color: $green;
+    }
+  }
+}
+
+.image-drop p {
+  color: #a9a9a9;
+  display: none;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.image-drop p.help-text {
+  font-size: 0.9em;
+}
+
+.image-drop .text {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+}
+
+.image-drop input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+}
