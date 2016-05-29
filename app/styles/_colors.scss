@@ -30,6 +30,8 @@ $border-focus: #51A7E8;
 
 // Backgrounds
 $background-gray: #F3F3F3;
+$code-background: #FBFBFB;
+$code-background-dark: #222;
 
 // Errors
 $error-text-color: $red;
@@ -48,3 +50,44 @@ $idea-color: $dark-yellow;
 $issue-color: $red;
 $progress-color: $green;
 $task-color: $dark-blue;
+
+$postTypeColors: (
+  "idea": $idea-color,
+  "issue": $issue-color,
+  "progress": $progress-color,
+  "task": $task-color,
+);
+
+$postTypeTextOnBackgroundColors: (
+  "idea": $dark-text,
+  "issue": white,
+  "progress": white,
+  "task": white,
+);
+
+$idea-background: #FFF9DE;
+$issue-background: #FFE5E1;
+$progress-background: #EFFFEE;
+$task-background: #EDF9FF;
+
+$postTypeBackgrounds: (
+  "idea": $idea-background,
+  "issue": $issue-background,
+  "progress": $progress-background,
+  "task": $task-background,
+);
+
+// Code
+$code-dark-blue: #6E9CBE;
+$code-dark-brown: #BC9458;
+$code-dark-dark-yellow: #FFC66D;
+$code-dark-green: #A5C261;
+$code-dark-light-yellow: #E8BF6A;
+$code-dark-light-purple: #D0D0FF;
+$code-dark-orange: #CC7833;
+$code-dark-red: #DA4939;
+$code-dark-white: #F8F8F2;
+
+$code-light-black: #222;
+$code-light-green: #229151;
+$code-light-orange: #B75F25;

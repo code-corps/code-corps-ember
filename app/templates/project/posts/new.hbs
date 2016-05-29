@@ -1,4 +1,8 @@
-{{post-new-form post=post savePost='savePost'}}
-{{#if error}}
-  {{error-formatter error=error}}
-{{/if}}
+<div class="post-new-main">
+  {{post-new-form post=post savePost='savePost'}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
+</div>
+<div class="post-new-sidebar">
+</div>

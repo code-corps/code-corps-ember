@@ -1,6 +1,21 @@
+@mixin postTypeButtonColors($type) {
+  $background: map-get($postTypeColors, $type);
+  $text: map-get($postTypeTextOnBackgroundColors, $type);
+
+  background-color: $background;
+  border-color: $background;
+  color: $text;
+  &:hover {
+    background-color: darken($background, 2%);
+    border-color: darken($background, 2%);
+  }
+}
+
 #{$all-buttons}, .button {
   color: white;
   border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
   padding: 11px 14px;
   font-family: $body-font-family;
   font-size: 16px;
@@ -23,7 +38,7 @@
 
   &.on-solid {
     background: transparent;
-    border: 1px solid white;
+    border-color: white;
     &:hover {
       background: white;
     }
@@ -31,7 +46,7 @@
 
   &.default {
     background: $primary-color;
-    border: 1px solid $primary-color;
+    border-color: $primary-color;
     &.on-solid {
       background: transparent;
       &:hover {
@@ -42,12 +57,20 @@
 
   &.clear {
     background: white;
-    border: 1px solid $border-default;
+    border-color: $border-default;
     color: $dark-text;
 
     &:focus {
       background: $clear-focus;
       border-color: darken($border-default, 2%);
+    }
+
+    &.primary-active {
+      &.active {
+        background: $primary-color;
+        border-color: $primary-color;
+        color: white;
+      }
     }
   }
 
@@ -75,6 +98,22 @@
         color: $warning-color;
       }
     }
+  }
+
+  &.task {
+    @include postTypeButtonColors('task');
+  }
+
+  &.issue {
+    @include postTypeButtonColors('issue');
+  }
+
+  &.idea {
+    @include postTypeButtonColors('idea');
+  }
+
+  &.progress {
+    @include postTypeButtonColors('progress');
   }
 }
 
@@ -107,9 +146,43 @@
 }
 
 .button-group {
+  @include clearfix;
+
   position: relative;
   display: inline-block;
+  font-size: 0;
   vertical-align: middle;
+
+  #{$all-buttons}, .button {
+    margin: 0 0 0 -1px;
+    position: relative;
+
+    &:first-child {
+      margin-left: 0px;
+
+      &:not(:last-child) {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+
+    &:last-child {
+      &:not(:first-child) {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+    }
+
+    &:not(:first-child) {
+      &:not(:last-child) {
+        border-radius: 0px;
+      }
+    }
+
+    &.active {
+      z-index: 3;
+    }
+  }
 
   &.dropdown {
     #{$all-buttons}, .button {

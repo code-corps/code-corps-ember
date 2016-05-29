@@ -36,11 +36,10 @@ test('It renders a list of comments if there are comments', function(assert) {
   assert.equal(this.$('.comment-item').length, 3, 'The correct number of comments is rendered');
 });
 
-test('it renders a message when there are no comments', function(assert) {
-  assert.expect(2);
+test('it renders nothing when there are no comments', function(assert) {
+  assert.expect(1);
   this.set('comments', []);
   this.render(hbs`{{post-comment-list comments=comments}}`);
   assert.equal(this.$('.comment-item').length, 0, 'No comments are rendered');
-  assert.equal(this.$('.no-comments').length, 1, 'The "no-comments" message is rendered');
 });
 

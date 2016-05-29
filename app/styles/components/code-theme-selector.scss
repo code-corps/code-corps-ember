@@ -1,0 +1,13 @@
+.code-theme-selector {
+  cursor: pointer;
+  height: 19px;
+  width: 24px;
+
+  &.dark {
+    @include sprite($dark-theme);
+  }
+
+  &.light {
+    @include sprite($light-theme);
+  }
+}

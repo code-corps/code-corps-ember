@@ -1,9 +1,27 @@
 .input-group {
-  margin: 0 0 24px 0;
+  @include clearfix;
+
+  margin: 0 0 10px 0;
 
   #{$all-text-inputs} {
     width: 100%;
     max-width: 100%;
+  }
+
+  > #{$all-buttons}, > .button {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    &.right {
+      margin-right: 0px;
+      margin-left: 5px;
+      &:last-child {
+        margin-left: 0px;
+      }
+    }
   }
 }
 
@@ -30,14 +48,47 @@ form {
   }
 }
 
-form {
-  #{$all-buttons}, .button {
-    font-size: 18px;
-    font-weight: 600;
-    width: 100%;
+.error {
+  margin: 5px;
+}
+
+.signup-form {
+  .input-group {
+    margin: 0 0 24px 0;
   }
 }
 
-.error {
-  margin: 5px;
+.post-type {
+  select {
+    border: none;
+    font-family: $body-font-family;
+    font-size: 16px;
+    height: 34px;
+    padding: 10px 16px;
+    width: 100px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .issue select {
+    background: $issue-color;
+    color: white;
+  }
+
+  .task select {
+    background: $task-color;
+    color: white;
+  }
+
+  .progress select {
+    background: $progress-color;
+    color: white;
+  }
+
+  .idea select {
+    background: $idea-color;
+    color: $dark-text;
+  }
 }

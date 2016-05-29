@@ -1,4 +1,4 @@
-@mixin postTypeIconSprite( $spriteVals ) {
+@mixin sprite( $spriteVals ) {
   width: nth( $spriteVals, 1 );
   height: nth( $spriteVals, 2 );
   background-repeat: no-repeat;
@@ -8,21 +8,76 @@
   @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
     $retinaUrl: nth($spriteVals,6);
     background-image: url($retinaUrl);
-    background-size: $bgiSizeW $bgiSizeH;
+    background-size: $sprite-bgiSizeW $spritebgiSizeH;
   }
 }
-$post-typesPath: '/assets/images/icons/post-types';
-$post-typesURL: $post-typesPath + '.png';
-$post-typesx2URL: $post-typesPath + '@2x.png';
-$bgiSizeW: 96px;
-$bgiSizeH: 58px;
-$tick-black: 12px 10px $post-typesURL -12px -48px $post-typesx2URL;
-$tick-white: 12px 10px $post-typesURL 0px -48px $post-typesx2URL;
-$idea-hover: 24px 24px $post-typesURL -72px -24px $post-typesx2URL;
-$task-hover: 24px 24px $post-typesURL 0px -24px $post-typesx2URL;
-$idea: 24px 24px $post-typesURL -72px 0px $post-typesx2URL;
-$progress-hover: 24px 24px $post-typesURL -48px -24px $post-typesx2URL;
-$issue-hover: 24px 24px $post-typesURL -24px -24px $post-typesx2URL;
-$progress: 24px 24px $post-typesURL -48px 0px $post-typesx2URL;
-$issue: 24px 24px $post-typesURL -24px 0px $post-typesx2URL;
-$task: 24px 24px $post-typesURL 0px 0px $post-typesx2URL;
+$spritePath: '/assets/images/icons/sprite';
+$spriteURL: $spritePath + '.png';
+$spritex2URL: $spritePath + '@2x.png';
+$sprite-bgiSizeW: 230px;
+$spritebgiSizeH: 127px;
+$logo: 230px 50px $spriteURL 0px 0px $spritex2URL;
+$location: 16px 16px $spriteURL 0px -50px $spritex2URL;
+$twitter: 16px 16px $spriteURL -16px -50px $spritex2URL;
+$link: 16px 16px $spriteURL -32px -50px $spritex2URL;
+$beginner: 16px 16px $spriteURL 0px -66px $spritex2URL;
+$intermediate: 16px 16px $spriteURL -16px -66px $spritex2URL;
+$expert: 16px 16px $spriteURL -32px -66px $spritex2URL;
+$idea-hover: 24px 24px $spriteURL -120px -74px $spritex2URL;
+$task-hover: 24px 24px $spriteURL -48px -74px $spritex2URL;
+$idea: 24px 24px $spriteURL -120px -50px $spritex2URL;
+$progress-hover: 24px 24px $spriteURL -96px -74px $spritex2URL;
+$issue-hover: 24px 24px $spriteURL -72px -74px $spritex2URL;
+$progress: 24px 24px $spriteURL -96px -50px $spritex2URL;
+$issue: 24px 24px $spriteURL -72px -50px $spritex2URL;
+$task: 24px 24px $spriteURL -48px -50px $spritex2URL;
+$light-theme: 24px 19px $spriteURL 0px -82px $spritex2URL;
+$dark-theme: 24px 19px $spriteURL -24px -82px $spritex2URL;
+$tick-white: 12px 10px $spriteURL 0px -101px $spritex2URL;
+$tick-black: 12px 10px $spriteURL -12px -101px $spritex2URL;
+$check-area: 18px 16px $spriteURL 0px -111px $spritex2URL;
+$check-area-white: 18px 16px $spriteURL -18px -111px $spritex2URL;
+$check-mark: 18px 16px $spriteURL -36px -111px $spritex2URL;
+
+$postTypeIcons: (
+  "idea": $idea,
+  "issue": $issue,
+  "progress": $progress,
+  "task": $task,
+);
+
+$postTypeIconHovers: (
+  "idea": $idea-hover,
+  "issue": $issue-hover,
+  "progress": $progress-hover,
+  "task": $task-hover,
+);
+
+@mixin postItemIcon($icon) {
+  .post-icon:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+  }
+}
+
+@mixin postExpertiseIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    margin: 0 5px -4px 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@mixin userSidebarIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+  }
+}

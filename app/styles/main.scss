@@ -76,3 +76,12 @@ ul {
   font-weight: 900;
   margin-right: 2px;
 }
+
+.spinner {
+  &.small {
+    $file: "/assets/images/icons/spinner-small";
+    @include background-image-retina($file, "gif", 24px, 24px);
+    height: 24px;
+    width: 24px;
+  }
+}

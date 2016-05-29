@@ -15,3 +15,19 @@ test('it exists', function(assert) {
   // let store = this.store();
   assert.ok(!!model);
 });
+
+test('it correctly identifies code in the body', function(assert) {
+  assert.expect(1);
+
+  let model = this.subject({ body: '<code>Hello, world!<code>' });
+
+  assert.equal(model.get('containsCode'), true);
+});
+
+test('it correctly identifies lack of code in the body', function(assert) {
+  assert.expect(1);
+
+  let model = this.subject({ body: '<pre>Hello, world!<pre>' });
+
+  assert.equal(model.get('containsCode'), false);
+});

@@ -9,9 +9,9 @@ export default ApplicationSerializer.extend({
     // for creating records, just regularly serialize the payload
     if (snapshot.record.get('isNew')) {
       if (snapshot.attr('preview')) {
-        if (this._attributeIsPreviewOnly(attribute)) {
+        // if (this._attributeIsPreviewOnly(attribute)) {
           this._super(snapshot, json, key, attribute);
-        }
+        // }
       } else {
         this._super(snapshot, json, key, attribute);
       }
@@ -22,9 +22,9 @@ export default ApplicationSerializer.extend({
       // 2. we're editing the title. In that case, we only push the title
       // 3. We're outright editing the post body - we only send markdownPreview
       if (snapshot.attr('preview') === true) {
-        if (this._attributeIsPreviewOnly(attribute)) {
+        // if (this._attributeIsPreviewOnly(attribute)) {
           this._super(snapshot, json, key, attribute);
-        }
+        // }
       } else if (snapshot.changedAttributes().title) {
         if (attribute.name === 'title') {
           this._super(snapshot, json, key, attribute);

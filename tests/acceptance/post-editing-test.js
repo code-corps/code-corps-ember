@@ -31,7 +31,10 @@ test('Post editing requires logging in', (assert) => {
   project.organization = organization;
   project.save();
 
+  let user = server.schema.user.create({ username: 'test_user' });
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+  post.user = user;
+  post.save();
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
@@ -39,7 +42,6 @@ test('Post editing requires logging in', (assert) => {
     assert.equal(find('.post-body .edit').length, 0, 'Body edit button is not rendered');
     assert.equal(find('.post-title .edit').length, 0, 'Title edit button is not rendered');
 
-    let user = server.schema.user.create({ username: 'test_user' });
     authenticateSession(application, { user_id: user.id });
     visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
   });
@@ -71,6 +73,8 @@ test('A post body can be edited on its own', (assert) => {
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+  post.user = user;
+  post.save();
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
@@ -115,12 +119,15 @@ test('A post title can be edited on its own', (assert) => {
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
+  post.user = user;
+  post.save();
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
 
   andThen(() => {
     click('.post-title .edit');
   });
+
   andThen(() => {
     assert.equal(find('.post-title input[name=title]').val(), 'Test title', 'The original title is correct');
     fillIn('.post-title input[name=title]', 'Edited title');
@@ -129,7 +136,7 @@ test('A post title can be edited on its own', (assert) => {
 
   andThen(() => {
     assert.equal(find('.post-title .edit').length, 1, 'Sucessful save of title switches away from edit mode');
-    assert.equal(find('.post-title .title').text().trim(), 'Edited title', 'The new title is rendered');
+    assert.equal(find('.post-title .title').text().trim(), 'Edited title #1', 'The new title is rendered');
     assert.equal(server.schema.post.find(post.id).title, 'Edited title', 'The title was updated in the database');
   });
 });
@@ -157,6 +164,8 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
     postType: "issue",
     number: 1
   });
+  post.user = user;
+  post.save();
 
   let user1 = server.create('user');
   let user2 = server.create('user');

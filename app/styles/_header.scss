@@ -4,8 +4,7 @@
 }
 
 .logo {
-  $file: "/assets/images/icons/cc-logo";
-  @include background-image-retina($file, "png", 234px, 50px);
+  @include sprite($logo);
   display: inline-block;
   text-indent: -9999px;
 }

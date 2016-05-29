@@ -4,27 +4,6 @@
   margin: 10px 0;
 }
 
-$postTypeColors: (
-  "idea": $idea-color,
-  "issue": $issue-color,
-  "progress": $progress-color,
-  "task": $task-color,
-);
-
-$postTypeIcons: (
-  "idea": $idea,
-  "issue": $issue,
-  "progress": $progress,
-  "task": $task,
-);
-
-$postTypeIconHovers: (
-  "idea": $idea-hover,
-  "issue": $issue-hover,
-  "progress": $progress-hover,
-  "task": $task-hover,
-);
-
 @mixin postTypeFilter($type) {
   $color: map-get($postTypeColors, $type);
 
@@ -32,18 +11,18 @@ $postTypeIconHovers: (
   transition: none;
 
   &:before {
-    @include postTypeIconSprite(map-get($postTypeIcons, $type));
+    @include sprite(map-get($postTypeIcons, $type));
   }
 
   &.selected:after {
-    @include postTypeIconSprite($tick-white);
+    @include sprite($tick-white);
   }
 
   &:hover, &.selected {
     background: $color;
     color: white;
     &:before {
-      @include postTypeIconSprite(map-get($postTypeIconHovers, $type));
+      @include sprite(map-get($postTypeIconHovers, $type));
     }
   }
 }

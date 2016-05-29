@@ -15,7 +15,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   setupController(controller, models) {
     let newPost = this.store.createRecord('post', {
       project: models.project,
-      user: models.user });
+      user: models.user,
+      postType: 'task',
+    });
     controller.set('post', newPost);
   },
 

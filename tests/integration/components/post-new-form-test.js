@@ -15,7 +15,7 @@ test('it renders', function(assert) {
 });
 
 test('it renders proper ui elements, properly bound', function(assert) {
-  assert.expect(3);
+  assert.expect(8);
 
   let post = {
     title: 'A post',
@@ -23,12 +23,20 @@ test('it renders proper ui elements, properly bound', function(assert) {
     postType: 'task'
   };
 
+  let placeholder = "Test placeholder";
+
   this.set('post', post);
-  this.render(hbs`{{post-new-form post=post}}`);
+  this.set('placeholder', placeholder);
+  this.render(hbs`{{post-new-form post=post placeholder=placeholder}}`);
 
   assert.equal(this.$('[name=title]').val(), 'A post', 'Title is properly bound and rendered');
   assert.equal(this.$('[name=markdown]').val(), 'A body', 'Markdown content is properly bound and rendered');
   assert.equal(this.$('[name=post-type]').val(), 'task', 'Post type is properly bound and rendered');
+  assert.equal(this.$('textarea').attr('placeholder'), placeholder);
+  assert.equal(this.$('.input-group.post-type').hasClass('task'), true);
+  assert.equal(this.$('input[name=submit]').hasClass('task'), true);
+  assert.equal(this.$('input[name=submit]').val(), 'Submit new task');
+  assert.equal(this.$('.editor-with-preview .spinner').length, 0);
 });
 
 test('it triggers an action when the post is saved', function(assert) {
@@ -45,4 +53,14 @@ test('it triggers an action when the post is saved', function(assert) {
   this.render(hbs`{{post-new-form post=post savePost='savePost'}}`);
 
   this.$('[type=submit]').click();
+});
+
+test('it has a loading indicator when previewing and post is saving', function(assert) {
+  assert.expect(1);
+
+  let post = Ember.Object.create({ isSaving: true });
+  this.set('post', post);
+  this.render(hbs`{{post-new-form post=post}}`);
+
+  assert.equal(this.$('.editor-with-preview .spinner').length, 1);
 });
