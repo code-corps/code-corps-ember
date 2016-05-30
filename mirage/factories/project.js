@@ -7,7 +7,9 @@ export default Factory.extend({
   iconThumbUrl: faker.image.imageUrl,
   iconLargeUrl: faker.image.imageUrl,
 
-  slug() {
-    return Ember.String.underscore(this.title().toLowerCase());
+  slug(i) {
+    if(this.title) {
+      return Ember.String.underscore(this.title.toLowerCase());
+    }
   }
 });

@@ -12,9 +12,13 @@ let SluggedRouteModel = Model.extend({
     this.ownerType = type;
 
     if (type === 'User') {
-      return this.createUser(attrs);
+      let user = this.createUser(attrs);
+      this.owner = user;
+      return user;
     } else if (type === 'Organization') {
-      return this.createOrganization(attrs);
+      let organization = this.createOrganization(attrs);
+      this.owner = organization;
+      return organization;
     }
 
   },
@@ -61,9 +65,11 @@ Object.defineProperty(SluggedRouteModel.prototype, 'owner', {
 
 Object.defineProperty(SluggedRouteModel.prototype, 'ownerId', {
   get () {
-    if (this.ownerType) {
-      return this.attrs[this.ownerType + 'Id'];
-    }
+    return this.attrs.ownerId;
+  },
+
+  set (id) {
+    this.attrs.ownerId = id;
   }
 });
 

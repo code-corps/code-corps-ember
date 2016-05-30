@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import fillInFileInput from '../helpers/fill-in-file-input';
+import removeDoubleQuotes from '../helpers/remove-double-quotes';
 
 let application;
 
@@ -115,6 +116,6 @@ test("it allows editing of users image", (assert) => {
     assert.equal(find('.alert-success').length, 1);
     assert.equal(find('.alert-success p').text(), "Profile updated successfully");
     let expectedStyle = `url(${droppedImageString})`;
-    assert.equal(find('.image-drop').css('background-image'), expectedStyle);
+    assert.equal(removeDoubleQuotes(find('.image-drop').css('background-image')), expectedStyle);
   });
 });

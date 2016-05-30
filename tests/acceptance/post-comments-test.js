@@ -19,8 +19,8 @@ test('Post comments are displayed correctly', (assert) => {
   assert.expect(1);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -28,7 +28,7 @@ test('Post comments are displayed correctly', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -46,21 +46,21 @@ test('Post comments are displayed correctly', (assert) => {
 test('A comment can be added to a post', (assert) => {
   assert.expect(6);
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
@@ -72,9 +72,9 @@ test('A comment can be added to a post', (assert) => {
   });
 
   andThen(() => {
-    assert.equal(server.schema.comment.all().length, 1, 'A new comment was created');
+    assert.equal(server.schema.comments.all().models.length, 1, 'A new comment was created');
     assert.equal($('.comment-item').length, 1, 'The comment is being rendered');
-    let comment = server.schema.comment.all()[0];
+    let comment = server.schema.comments.all().models[0];
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
     assert.equal(comment.postId, post.id, 'Correct post was assigned');
@@ -101,7 +101,7 @@ test('Comment preview works during creation', (assert) => {
   project.organization = organization;
   project.save();
 
-  let post = server.schema.post.create({ projectId: project.id, number: 1 });
+  let post = server.schema.posts.create({ projectId: project.id, number: 1 });
 
   visit(`${sluggedRoute.slug}/${project.slug}/posts/${post.number}`);
 
@@ -115,7 +115,7 @@ test('Comment preview works during creation', (assert) => {
 
   andThen(() => {
     assert.equal(find('.create-comment-form .body-preview').html(), expectedBody, 'The preview is rendered');
-    assert.equal(server.schema.comment.all()[0].bodyPreview, expectedBody, 'The comment preview was saved');
+    assert.equal(server.schema.comments.all().models[0].bodyPreview, expectedBody, 'The comment preview was saved');
   });
 });
 
@@ -138,7 +138,7 @@ test('Comment user mentions are being rendered during creation', (assert) => {
   project.organization = organization;
   project.save();
 
-  let post = server.schema.post.create({ projectId: project.id, number: 1 });
+  let post = server.schema.posts.create({ projectId: project.id, number: 1 });
 
   visit(`${sluggedRoute.slug}/${project.slug}/posts/${post.number}`);
 
@@ -165,8 +165,8 @@ test('Comment user mentions are being rendered during creation', (assert) => {
 test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -174,13 +174,13 @@ test('When comment creation fails due to validation, validation errors are displ
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
@@ -220,8 +220,8 @@ test('When comment creation fails due to validation, validation errors are displ
 test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
   assert.expect(2);
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -229,13 +229,13 @@ test('When comment creation fails due to non-validation issues, the error is dis
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
   visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
@@ -269,11 +269,11 @@ test('When comment creation fails due to non-validation issues, the error is dis
 test('A comment can only be edited by the author', (assert) => {
   assert.expect(2);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -281,7 +281,7 @@ test('A comment can only be edited by the author', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -345,7 +345,7 @@ test('Comment editing with preview works', (assert) => {
   });
 
   andThen(() => {
-    let comment = server.schema.comment.all()[0];
+    let comment = server.schema.comments.all().models[0];
     assert.equal(comment.body, expectedBody);
     assert.equal(comment.markdown, markdown);
     assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The comment body is rendered');

@@ -7,11 +7,11 @@ function generatePostMentions(schema, post, mentionStatus) {
 
   matches.forEach((match) => {
     let username = match.substr(1);
-    let matchedUser = schema.user.where({ username: username })[0];
+    let matchedUser = schema.users.where({ username: username }).models[0];
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
-      schema.postUserMention.create({
+      schema.postUserMentions.create({
         username: username, indices: [startIndex, endIndex], status: mentionStatus,
         userId: matchedUser.id, postId: post.id
       });
@@ -25,11 +25,11 @@ function generateCommentMentions(schema, comment, mentionStatus) {
 
   matches.forEach((match) => {
     let username = match.substr(1);
-    let matchedUser = schema.user.where({ username: username })[0];
+    let matchedUser = schema.users.where({ username: username }).models[0];
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
-      schema.commentUserMention.create({
+      schema.commentUserMentions.create({
         username: username, indices: [startIndex, endIndex], status: mentionStatus,
         userId: matchedUser.id, commentId: comment.id
       });
@@ -70,35 +70,36 @@ export default function() {
   this.get('/users/:id');
   this.get('/users');
 
+
   this.get('/user', (schema) => {
     // due to the nature of how we fetch the current user, all we can do here is
     // return one of the users available in the schema, or create a new one
-    let users = schema.user.all();
-    if (users.length > 0) {
-      return users[0];
+    let users = schema.users.all();
+    if (users.models.length > 0) {
+      return users.models[0];
     } else {
-      return schema.user.create();
+      return schema.create('user');
     }
   });
 
   this.get('/post_user_mentions', (schema, request) => {
     let postId = request.queryParams.post_id;
-    let post = schema.post.find(postId);
+    let post = schema.posts.find(postId);
     let status = request.queryParams.status;
 
     generatePostMentions(schema, post, status);
 
-    return schema.postUserMention.where({ postId: postId, status: status });
+    return schema.postUserMentions.where({ postId: postId, status: status });
   });
 
   this.get('/comment_user_mentions', (schema, request) => {
     let commentId = request.queryParams.comment_id;
-    let comment = schema.comment.find(commentId);
+    let comment = schema.comments.find(commentId);
     let status = request.queryParams.status;
 
     generateCommentMentions(schema, comment, status);
 
-    return schema.commentUserMention.where({ commentId: commentId, status: status });
+    return schema.commentUserMentions.where({ commentId: commentId, status: status });
   });
 
   this.post('/posts', (schema, request) => {
@@ -113,7 +114,7 @@ export default function() {
 
     // the API sets post number as an auto-incrementing value, scoped to project,
     // so we need to simulate that here
-    let number = schema.project.find(relationships.project.data.id).posts.length + 1;
+    let number = schema.projects.find(relationships.project.data.id).posts.models.length + 1;
 
     let attrs = {
       markdown: markdown,
@@ -140,7 +141,7 @@ export default function() {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
     let postId = request.params.id;
-    let post = schema.post.find(postId);
+    let post = schema.posts.find(postId);
     // the API takes takes markdown_preview and renders body_preview, then copies
     // both to markdown and body respectively
     let markdown = attributes.markdown_preview;
@@ -161,7 +162,7 @@ export default function() {
     // serialization
     post.attrs = attrs;
 
-    post.postUserMentions.forEach((mention) => mention.destroy());
+    post.postUserMentions.models.forEach((mention) => mention.destroy());
     post.save();
 
     return post;
@@ -197,7 +198,7 @@ export default function() {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
     let commentId = request.params.id;
-    let comment = schema.comment.find(commentId);
+    let comment = schema.comments.find(commentId);
     // the API takes takes markdown_preview and renders body_preview, then copies
     // both to markdown and body respectively
     let markdown = attributes.markdown_preview;
@@ -216,7 +217,7 @@ export default function() {
     // serialization
     comment.attrs = attrs;
 
-    comment.commentUserMentions.forEach((mention) => mention.destroy());
+    comment.commentUserMentions.models.forEach((mention) => mention.destroy());
     comment.save();
 
     return comment;
@@ -225,7 +226,7 @@ export default function() {
   // GET posts/:number/comments
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
-    let post = schema.post.find(postId);
+    let post = schema.posts.find(postId);
     return post.comments;
   });
 
@@ -237,7 +238,7 @@ export default function() {
     let pageNumber = request.queryParams['page[number]'];
     let pageSize = request.queryParams['page[size]'] || 10;
 
-    let project = schema.project.find(projectId);
+    let project = schema.projects.find(projectId);
 
     let posts;
 
@@ -267,14 +268,14 @@ export default function() {
   });
 
   // GET /:slug
-  this.get('/:sluggedRouteSlug', (schema, request) => {
-    return schema.sluggedRoute.where({'slug': request.params.sluggedRouteSlug })[0];
+  this.get('/:slug', (schema, request) => {
+    return schema.sluggedRoutes.where({'slug': request.params.slug }).models[0];
   });
 
   // GET /:slug/projects
-  this.get('/:organizationSlug/projects', (schema, request) => {
-    let organizationSlug = request.params.organizationSlug;
-    let organization = schema.organization.where({ 'slug': organizationSlug })[0];
+  this.get('/:slug/projects', (schema, request) => {
+    let slug = request.params.slug;
+    let organization = schema.organizations.where({ 'slug': slug }).models[0];
     return organization.projects;
   });
 
@@ -283,9 +284,9 @@ export default function() {
     let sluggedRouteSlug = request.params.sluggedRouteSlug;
     let projectSlug = request.params.projectSlug;
 
-    let sluggedRoute = schema.sluggedRoute.where({ 'slug': sluggedRouteSlug })[0];
+    let sluggedRoute = schema.sluggedRoutes.where({ 'slug': sluggedRouteSlug }).models[0];
 
-    return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; })[0];
+    return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
   });
 
   // GET post/:number
@@ -293,7 +294,7 @@ export default function() {
     let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
 
-    let project = schema.project.find(projectId);
-    return project.posts.filter((p) => { return p.number === number; })[0];
+    let project = schema.projects.find(projectId);
+    return project.posts.filter((p) => { return p.number === number; }).models[0];
   });
 }

@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillInFileInput from '../../helpers/fill-in-file-input';
+import removeDoubleQuotes from '../../helpers/remove-double-quotes';
 
 moduleForComponent('image-drop', 'Integration | Component | image drop', {
   integration: true
@@ -52,7 +53,7 @@ test('it renders the original image', function(assert) {
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${originalImageString})`;
-  assert.equal(style, expectedStyle);
+  assert.equal(removeDoubleQuotes(style), expectedStyle);
 });
 
 test('it renders the dropped image', function(assert) {
@@ -63,7 +64,7 @@ test('it renders the dropped image', function(assert) {
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${droppedImageString})`;
-  assert.equal(style, expectedStyle);
+  assert.equal(removeDoubleQuotes(style), expectedStyle);
 });
 
 test('it handles a dropped image file', function(assert) {
@@ -78,6 +79,6 @@ test('it handles a dropped image file', function(assert) {
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${droppedImageString})`;
-  assert.equal(style, expectedStyle);
+  assert.equal(removeDoubleQuotes(style), expectedStyle);
   assert.equal(this.$('.image-drop').hasClass('active'), false);
 });

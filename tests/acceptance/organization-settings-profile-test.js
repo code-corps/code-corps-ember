@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import fillInFileInput from '../helpers/fill-in-file-input';
+import removeDoubleQuotes from '../helpers/remove-double-quotes';
 
 let application;
 
@@ -18,7 +19,7 @@ module('Acceptance: Organization Settings – Profile', {
 test("it requires authentication", (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -40,7 +41,7 @@ test("it allows editing of organization profile", (assert) => {
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -90,7 +91,7 @@ test("it allows editing of organization's image", (assert) => {
   var user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -128,6 +129,6 @@ test("it allows editing of organization's image", (assert) => {
     assert.equal(find('.alert-success').length, 1);
     assert.equal(find('.alert-success p').text(), "Organization updated successfully");
     let expectedStyle = `url(${droppedImageString})`;
-    assert.equal(find('.image-drop').css('background-image'), expectedStyle);
+    assert.equal(removeDoubleQuotes(find('.image-drop').css('background-image')), expectedStyle);
   });
 });

@@ -5,4 +5,7 @@ export default JsonApiSerializer.extend({
   keyForAttribute(attr) {
     return Ember.String.underscore(attr);
   },
+  keyForRelationship: function(key) {
+    return Ember.String.underscore(key);
+  },
 });

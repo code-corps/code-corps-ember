@@ -16,7 +16,7 @@ module('Acceptance: Profile', {
 test('it displays the user-details component with user details', (assert) => {
   assert.expect(6);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_user',
   });
   let user = sluggedRoute.createOwner({
@@ -52,7 +52,7 @@ test('it displays the user-details component with user details', (assert) => {
 test('the user can navigate to an organization from the organizations list', (assert) => {
   assert.expect(2);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_user',
   });
   let user = sluggedRoute.createOwner({
@@ -66,7 +66,7 @@ test('the user can navigate to an organization from the organizations list', (as
       slug: `organization_${i}`,
       name: `Organization ${i}`,
     });
-    let organizationRoute = server.schema.sluggedRoute.create({
+    let organizationRoute = server.schema.sluggedRoutes.create({
       slug: organization.slug,
     });
     organizationRoute.createOwner({

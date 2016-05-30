@@ -17,7 +17,7 @@ module('Acceptance: Organization', {
 test("it displays the organization's details", (assert) => {
   assert.expect(7);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -33,7 +33,7 @@ test("it displays the organization's details", (assert) => {
       title: `Test project ${i}`
     });
 
-    organization.createUser({
+    organization.createMember({
       username: `username_${i}`
     });
   }
@@ -54,7 +54,7 @@ test("it displays the organization's details", (assert) => {
 test("when unauthenticated you can't navigate to settings", (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -76,7 +76,7 @@ test("when unauthenticated you can't navigate to settings", (assert) => {
 test('when authenticated you can navigate to settings', (assert) => {
   assert.expect(3);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -103,7 +103,7 @@ test('when authenticated you can navigate to settings', (assert) => {
 test('you can navigate to projects', (assert) => {
   assert.expect(2);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -136,7 +136,7 @@ test('you can navigate to projects', (assert) => {
 test('you can navigate to members', (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({
+  let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
   let organization = sluggedRoute.createOwner({
@@ -151,13 +151,13 @@ test('you can navigate to members', (assert) => {
     title: 'Test project 1'
   });
 
-  let user = organization.createUser({
+  let user = organization.createMember({
     username: 'username_1',
   });
 
   organization.save();
 
-  server.schema.sluggedRoute.create({
+  server.schema.sluggedRoutes.create({
     slug: 'username_1',
     userId: user.id
   });
