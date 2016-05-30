@@ -16,7 +16,7 @@ module('Acceptance: Projects', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let organization = sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
   sluggedRoute.save();
   for (let i = 0; i < 5; i++) {

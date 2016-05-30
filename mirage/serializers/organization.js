@@ -20,10 +20,10 @@ export default MirageApplicationSerializer.extend({
     let schema = model._schema;
     let members = [];
 
-    let users = schema.user.all();
+    let users = schema.users.all();
 
-    users.forEach((user) => {
-      user.organizations.forEach((organization) => {
+    users.models.forEach((user) => {
+      user.organizations.models.forEach((organization) => {
         if (organization.id === model.id) {
           members.push({ id: user.id, type: 'users' });
         }

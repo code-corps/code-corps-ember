@@ -25,6 +25,7 @@ export default Ember.Route.extend({
   },
 
   setupController(controller, models) {
+    this._super(controller, models);
     controller.set('post', models.post);
     controller.set('newComment', models.comment);
     controller.set('comments', models.comments);

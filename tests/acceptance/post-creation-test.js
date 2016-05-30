@@ -19,7 +19,7 @@ test('Creating a post requires logging in', (assert) => {
   assert.expect(2);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let organization = sluggedRoute.createOwner({slug: 'test_organization'}, 'Organization');
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
@@ -28,7 +28,7 @@ test('Creating a post requires logging in', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -41,7 +41,7 @@ test('Creating a post requires logging in', (assert) => {
   andThen(() => {
     assert.equal(currentRouteName(), 'login', 'Got redirected to login');
 
-    server.schema.user.create({ id: 1, email: 'josh@coderly.com' });
+    server.schema.users.create({ id: 1, email: 'josh@coderly.com' });
     fillIn('#identification', 'josh@coderly.com');
     fillIn('#password', 'password');
     click('#login');
@@ -55,11 +55,11 @@ test('Creating a post requires logging in', (assert) => {
 test('A post can be successfully created', (assert) => {
   assert.expect(8);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -67,7 +67,7 @@ test('A post can be successfully created', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -88,9 +88,9 @@ test('A post can be successfully created', (assert) => {
   });
 
   andThen(() => {
-    assert.equal(server.schema.post.all().length, 1, 'A post has been created');
+    assert.equal(server.schema.posts.all().models.length, 1, 'A post has been created');
 
-    let post = server.schema.post.all()[0];
+    let post = server.schema.posts.all().models[0];
 
     assert.equal(post.title, 'A post title');
     assert.equal(post.markdown, 'A post body');
@@ -108,11 +108,11 @@ test('A post can be successfully created', (assert) => {
 test('Post preview works during creation', (assert) => {
   assert.expect(1);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -120,7 +120,7 @@ test('Post preview works during creation', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -174,11 +174,11 @@ test('Post preview during creation renders user mentions', (assert) => {
 test('When post creation succeeeds, the user is redirected to the post page for the new post', (assert) => {
   assert.expect(2);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -186,7 +186,7 @@ test('When post creation succeeeds, the user is redirected to the post page for 
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -207,18 +207,18 @@ test('When post creation succeeeds, the user is redirected to the post page for 
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.posts.post', 'Got redirected to the correct route');
-    assert.equal(server.schema.post.all().length, 1, 'A new post got created');
+    assert.equal(server.schema.posts.all().models.length, 1, 'A new post got created');
   });
 });
 
 test('When post creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -226,7 +226,7 @@ test('When post creation fails due to validation, validation errors are displaye
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -281,11 +281,11 @@ test('When post creation fails due to validation, validation errors are displaye
 test('When post creation fails due to non-validation issues, the error is displayed', (assert) => {
   assert.expect(2);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
@@ -293,7 +293,7 @@ test('When post creation fails due to non-validation issues, the error is displa
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 

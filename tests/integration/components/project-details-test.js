@@ -22,7 +22,7 @@ function mockProject() {
     description: 'A test project',
     iconThumbUrl: 'image-url.com'
   };
-  server.schema.project.create(project);
+  server.schema.projects.create(project);
   return project;
 }
 

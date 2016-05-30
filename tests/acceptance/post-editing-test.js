@@ -18,8 +18,8 @@ test('Post editing requires logging in', (assert) => {
   assert.expect(4);
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
@@ -27,11 +27,11 @@ test('Post editing requires logging in', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   let post = project.createPost({ title: "Test title", body: "Test body", postType: "issue", number: 1 });
   post.user = user;
   post.save();
@@ -55,12 +55,12 @@ test('Post editing requires logging in', (assert) => {
 test('A post body can be edited on its own', (assert) => {
   assert.expect(3);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
@@ -68,7 +68,7 @@ test('A post body can be edited on its own', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -101,12 +101,12 @@ test('A post body can be edited on its own', (assert) => {
 test('A post title can be edited on its own', (assert) => {
   assert.expect(4);
 
-  let user = server.schema.user.create({ username: 'test_user' });
+  let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   // need to assign polymorphic properties explicitly
@@ -114,7 +114,7 @@ test('A post title can be edited on its own', (assert) => {
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 
@@ -137,7 +137,7 @@ test('A post title can be edited on its own', (assert) => {
   andThen(() => {
     assert.equal(find('.post-title .edit').length, 1, 'Sucessful save of title switches away from edit mode');
     assert.equal(find('.post-title .title').text().trim(), 'Edited title #1', 'The new title is rendered');
-    assert.equal(server.schema.post.find(post.id).title, 'Edited title', 'The title was updated in the database');
+    assert.equal(server.schema.posts.find(post.id).title, 'Edited title', 'The title was updated in the database');
   });
 });
 
@@ -147,14 +147,14 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  let organization = server.schema.organization.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization', ownerType: 'organization' });
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
   let projectId = server.create('project').id;
 
   sluggedRoute.owner = organization;
   sluggedRoute.save();
 
-  let project = server.schema.project.find(projectId);
+  let project = server.schema.projects.find(projectId);
   project.organization = organization;
   project.save();
 

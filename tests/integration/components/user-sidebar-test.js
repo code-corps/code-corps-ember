@@ -33,7 +33,7 @@ function mockUser() {
     // Mirage doesn't do a great job with that
     twitterUrl: 'https://twitter.com/joshsmith',
   };
-  server.schema.user.create(user);
+  server.schema.users.create(user);
   return user;
 }
 

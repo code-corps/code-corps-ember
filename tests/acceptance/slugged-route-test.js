@@ -16,7 +16,7 @@ module('Acceptance: Slugged Route', {
 test("It renders user details when the sluggedRoute model is a user", function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_user' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_user' });
   sluggedRoute.createOwner({ username: 'test_user' }, 'User');
   sluggedRoute.save();
 
@@ -29,7 +29,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
 test("It renders organization profile when the sluggedRoute model is an organization", function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoute.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
   sluggedRoute.save();
 

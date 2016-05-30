@@ -9,6 +9,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     // and the error to be outputed to console, even though we technically
     // "handled" it with our application_error route/template
     error(e) {
+      console.error(e);
       this.intermediateTransitionTo('application_error', e);
     }
   }

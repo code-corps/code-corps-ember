@@ -55,7 +55,7 @@ test('Succesful signup is possible', (assert) => {
 
     signUpDone();
 
-    return db.user.create(params);
+    return db.users.create(params);
   });
 
   let signInDone = assert.async();
@@ -91,7 +91,7 @@ test('Succesful signup also logs user in', (assert) => {
 
     signUpDone();
 
-    return db.user.create(params);
+    return db.users.create(params);
   });
 
   let signInDone = assert.async();
