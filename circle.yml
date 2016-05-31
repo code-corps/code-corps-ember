@@ -6,6 +6,7 @@ dependencies:
     - /home/ubuntu/nvm/versions/node/v4.4.5/bin
     - /home/ubuntu/nvm/versions/node/v4.4.5/lib/node_modules
   override:
+    - npm install -g bower
     - npm install
     - bower install
     - npm rebuild node-sass
