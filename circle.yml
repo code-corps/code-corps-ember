@@ -1,10 +1,10 @@
 machine:
   node:
-    version: 4.3.1
+    version: 4.4.5
 dependencies:
   cache_directories:
-    - /home/ubuntu/nvm/versions/node/v4.3.1/bin
-    - /home/ubuntu/nvm/versions/node/v4.3.1/lib/node_modules
+    - /home/ubuntu/nvm/versions/node/v4.4.5/bin
+    - /home/ubuntu/nvm/versions/node/v4.4.5/lib/node_modules
   override:
     - npm install
     - bower install
