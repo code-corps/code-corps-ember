@@ -1,0 +1,73 @@
+.project-grid-item-skills-list {
+  margin: 20px 0 0 0;
+
+  .expander {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    font-size: 10px;
+    margin: 8px 0px;
+
+    &::before, &::after {
+      content: "";
+      flex-grow: 1;
+      background: $border-light;
+      height: 1px;
+      font-size: 0px;
+      line-height: 0px;
+    }
+
+    &::before {
+      margin-right: 10px;
+    }
+
+    &::after {
+      margin-left: 10px;
+    }
+
+    a {
+      color: $extra-light-text;
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
+
+  .skills {
+    $font-size: 12px;
+    $line-height: 1.6;
+    $lines-to-show: 1;
+    $max-height: $font-size * $line-height * $lines-to-show;
+
+    @include clearfix;
+
+    &.overflow-hidden {
+      max-height: $max-height;
+    }
+
+    li {
+      float: left;
+      font-size: $font-size;
+      line-height: $max-height;
+      padding: 0 10px 0 0;
+
+      &:last-child {
+        padding: 0;
+      }
+
+      a {
+        color: $light-text;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.matched {
+        font-weight: 600;
+        a {
+          color: $link-color;
+        }
+      }
+    }
+  }
+}

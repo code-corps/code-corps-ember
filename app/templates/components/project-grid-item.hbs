@@ -1,0 +1,25 @@
+<div class="icon-container">
+  {{#link-to 'project' project.organization.slug project.slug}}
+    <img class="icon medium" src={{project.iconLargeUrl}} />
+  {{/link-to}}
+</div>
+<div class="details-container">
+  <h4>
+    {{#link-to 'project' project.organization.slug project.slug}}
+      {{project.title}}
+    {{/link-to}}
+  </h4>
+  <p class="organization">by {{project.organization.name}}</p>
+  {{project-categories-list categories=project.categories}}
+  <p class="description">
+    {{project.description}}
+  </p>
+  {{project-grid-item-skills-list skills=project.skills}}
+  <ul class="members">
+    {{#each project.organization.members as |user|}}
+      <li>
+        <img class="icon tiny circle" src={{user.photoThumbUrl}} />
+      </li>
+    {{/each}}
+  </ul>
+</div>

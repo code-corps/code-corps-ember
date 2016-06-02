@@ -1,0 +1,21 @@
+.category-item {
+  @include span-columns(4);
+  @include omega(3n);
+
+  text-align: center;
+
+  .category-icon {
+    margin: 10px auto;
+  }
+
+  p {
+    color: $light-text;
+    font-size: 14px;
+    margin: 10px 0;
+    padding: 0 20px;
+
+    &.selected {
+      color: $default-color;
+    }
+  }
+}

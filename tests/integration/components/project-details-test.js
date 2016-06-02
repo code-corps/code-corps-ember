@@ -9,25 +9,8 @@ moduleForComponent('project-details', 'Integration | Component | project details
   }
 });
 
-function mockProject() {
-  // the only way I could figure out to use mirage
-  // to create a project
-  // just doing `let project = server.schema.project.create(attrs)`
-  // gives us a proper project object, but then ember clashes with it somewhere,
-  // trying to redefine its properties
-  // TODO: figure out how to do it better
-  let project = {
-    id: 1,
-    title: 'CodeCorps',
-    description: 'A test project',
-    iconThumbUrl: 'image-url.com'
-  };
-  server.schema.projects.create(project);
-  return project;
-}
-
 test('it renders', function(assert) {
-  let project = mockProject();
+  let project = server.create('project');
   this.set('project', project);
 
   this.render(hbs`{{project-details project=project}}`);
@@ -36,23 +19,23 @@ test('it renders', function(assert) {
 });
 
 test('when expanded', function(assert) {
-  let project = mockProject();
+  let project = server.create('project');
   this.set('project', project);
 
   this.render(hbs`{{project-details project=project expanded=true}}`);
 
-  assert.equal(this.$('.title').text().trim(), 'CodeCorps', 'Title is rendered');
-  assert.equal(this.$('.description').text().trim(), 'A test project', 'Description is rendered');
-  assert.equal(this.$('.icon').attr('src'), 'image-url.com', 'Image element is rendered');
+  assert.equal(this.$('.title').text().trim(), project.title, 'Title is rendered');
+  assert.equal(this.$('.description').text().trim(), project.description, 'Description is rendered');
+  assert.equal(this.$('.icon').attr('src'), project.iconLargeUrl, 'Image element is rendered');
 });
 
 test('when not expanded', function(assert) {
-  let project = mockProject();
+  let project = server.create('project');
   this.set('project', project);
 
   this.render(hbs`{{project-details project=project}}`);
 
-  assert.equal(this.$('.title').text().trim(), 'CodeCorps', 'Title is rendered');
+  assert.equal(this.$('.title').text().trim(), project.title, 'Title is rendered');
   assert.equal(this.$('.description').length, 0, 'Hides description');
-  assert.equal(this.$('.icon').attr('src'), 'image-url.com', 'Image element is rendered');
+  assert.equal(this.$('.icon').attr('src'), project.iconLargeUrl, 'Image element is rendered');
 });
