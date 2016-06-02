@@ -28,6 +28,7 @@
 @import "post";
 @import "post-new";
 
+@import "components/category-item";
 @import "components/code-theme-selector";
 @import "components/comment-item";
 @import "components/create-comment-form";
@@ -46,6 +47,8 @@
 @import "components/post-new-form";
 @import "components/post-title";
 @import "components/project-details";
+@import "components/project-grid-item";
+@import "components/project-grid-item-skills-list";
 @import "components/project-item";
 @import "components/project-list";
 @import "components/project-menu";

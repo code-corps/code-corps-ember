@@ -16,6 +16,14 @@
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
+
+    <style>
+      #ember-testing-container {
+        /* Set position static to short-circuit Hubspot Tether's positioning */
+        /* https://github.com/HubSpot/tether/pull/98/ */
+        position: static !important;
+      }
+    </style>
   </head>
   <body>
     {{content-for "body"}}

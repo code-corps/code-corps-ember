@@ -15,6 +15,8 @@ Router.map(function() {
   this.route('projects-list', { path: '/projects'});
   this.route('projects', { path: '/:slugged_route_slug/projects'});
 
+  this.route('categories');
+
   this.route('organizations', function() {
     this.route('settings', { path: '/:slugged_route_slug/settings'}, function() {
       this.route('profile');

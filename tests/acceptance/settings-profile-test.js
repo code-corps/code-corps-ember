@@ -90,11 +90,6 @@ test("it allows editing of users image", (assert) => {
 
   visit('settings/profile');
 
-  andThen(() => {
-    fillInFileInput('.image-drop input', { name: fileName, content: droppedImageString });
-    click('.save');
-  });
-
   let done = assert.async();
 
   server.patch('/users/me', (db, request) => {
@@ -110,6 +105,11 @@ test("it allows editing of users image", (assert) => {
         attributes: params
       }
     };
+  });
+
+  andThen(() => {
+    fillInFileInput('.image-drop input', { name: fileName, content: droppedImageString });
+    click('.save');
   });
 
   andThen(() => {

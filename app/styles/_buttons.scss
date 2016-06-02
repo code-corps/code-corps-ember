@@ -2,12 +2,14 @@
   $background: map-get($postTypeColors, $type);
   $text: map-get($postTypeTextOnBackgroundColors, $type);
 
+  $darker-color: darken($background, 5%);
   background-color: $background;
   border-color: $background;
   color: $text;
   &:hover {
-    background-color: darken($background, 2%);
-    border-color: darken($background, 2%);
+    background-color: $darker-color;
+    background-image: linear-gradient($background,$darker-color);
+    border-color: $darker-color;
   }
 }
 
@@ -45,8 +47,8 @@
   }
 
   &.default {
-    background: $primary-color;
-    border-color: $primary-color;
+    background: $default-color;
+    border: 1px solid $default-color;
     &.on-solid {
       background: transparent;
       &:hover {
@@ -74,8 +76,16 @@
     }
   }
 
+  &.clear {
+    background: white;
+    border: 1px solid $border-default;
+    color: $dark-text;
+    font-weight: 300;
+  }
+
   &.success {
     background: $success-color;
+    border: 1px solid $success-color;
     &.on-solid {
       background: transparent;
       &:hover {
@@ -100,39 +110,65 @@
     }
   }
 
-  &.task {
-    @include postTypeButtonColors('task');
+  span {
+    &.check-area, &.check-mark {
+      display: inline-block;
+      height: 16px;
+      margin: -3px 10px 0 0;
+      vertical-align: middle;
+      width: 18px;
+    }
+
+    &.check-area {
+      @include sprite($check-area);
+    }
+
+    &.check-mark {
+      @include sprite($check-mark);
+    }
   }
 
-  &.issue {
-    @include postTypeButtonColors('issue');
+  &.default {
+    span {
+      &.check-area {
+        @include sprite($check-area-white);
+      }
+    }
   }
 
-  &.idea {
-    @include postTypeButtonColors('idea');
-  }
-
-  &.progress {
-    @include postTypeButtonColors('progress');
-  }
+  &.task { @include postTypeButtonColors('task'); }
+  &.issue { @include postTypeButtonColors('issue'); }
+  &.idea { @include postTypeButtonColors('idea'); }
+  &.progress { @include postTypeButtonColors('progress'); }
 }
 
 #{$all-buttons-hover}, .button:hover {
   cursor: pointer;
-  background: darken($primary-color, 10%);
+  $darker-color: darken($primary-color, 5%);
+  background: $darker-color;
+  background-image: linear-gradient($default-color,$darker-color);
+  border-color: $darker-color;
   @include transition(background 0.2s ease-in);
 
   &.default {
-    background: darken($default-color, 10%);
+    $darker-color: darken($default-color, 5%);
+    background: $darker-color;
+    background-image: linear-gradient($default-color,$darker-color);
+    border-color: $darker-color;
     color: white;
   }
 
   &.clear {
     background: $clear-hover;
+    background-image: linear-gradient(white,$clear-hover);
+    border-color: $border-default;
   }
 
   &.success {
-    background: darken($success-color, 10%);
+    $darker-color: darken($success-color, 5%);
+    background: $darker-color;
+    background-image: linear-gradient($success-color,$darker-color);
+    border-color: $darker-color;
     color: white;
   }
 }
@@ -140,7 +176,11 @@
 #{$all-buttons}, .button {
   &.active, &:active {
     &.clear {
-      background: $clear-hover;
+      background: $clear-active;
+    }
+
+    &.default {
+      background: $primary-active;
     }
   }
 }

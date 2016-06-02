@@ -1,0 +1,9 @@
+<div class="category-icon {{category.slug}} {{if selected "selected"}}"></div>
+
+{{#if selected}}
+  <button class="default" {{action (action removeCategory category)}}><span class="check-mark"></span>{{category.name}}</button>
+{{else}}
+  <button class="clear" {{action (action addCategory category)}}><span class="check-area"></span>{{category.name}}</button>
+{{/if}}
+
+<p class="{{if selected "selected"}}">{{category.description}}</p>

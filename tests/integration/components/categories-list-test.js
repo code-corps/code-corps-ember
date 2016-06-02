@@ -1,0 +1,42 @@
+import { moduleForComponent, test } from 'ember-qunit';
+import hbs from 'htmlbars-inline-precompile';
+
+moduleForComponent('categories-list', 'Integration | Component | categories list', {
+  integration: true
+});
+
+test('it renders the categories and sorts them by name', function(assert) {
+  assert.expect(6);
+
+  let categories = [
+    {
+      id: 2,
+      name: 'Society'
+    },
+    {
+      id: 1,
+      name: 'Zoology'
+    },
+    {
+      id: 3,
+      name: 'Alphabets'
+    },
+  ];
+
+  this.set('categories', categories);
+  this.set('addCategory', (clickedCategory) => {
+    assert.deepEqual(clickedCategory, categories[2]);
+  });
+  this.set('removeCategory', (clickedCategory) => {
+    assert.deepEqual(clickedCategory, categories[2]);
+  });
+  this.render(hbs`{{categories-list categories=categories addCategory=addCategory removeCategory=removeCategory}}`);
+
+  assert.equal(this.$('.category-item').length, 3);
+  assert.equal(this.$('.category-item:eq(0)').text().trim(), 'Alphabets');
+  assert.equal(this.$('.category-item:eq(1)').text().trim(), 'Society');
+  assert.equal(this.$('.category-item:eq(2)').text().trim(), 'Zoology');
+
+  this.$('.category-item:eq(0) button').click();
+  this.$('.category-item:eq(0) button').click();
+});

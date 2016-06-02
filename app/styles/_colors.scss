@@ -11,7 +11,7 @@ $primary-color: $dark-blue;
 
 // Text
 $extra-light-text: #999;
-$light-text: #777;
+$light-text: #666;
 $dark-text: #333;
 
 // Links
@@ -22,6 +22,8 @@ $link-hover-color: darken($dark-blue, 5%);
 // Buttons
 $clear-hover: #E5E5E5;
 $clear-focus: #FCFCFC;
+$clear-active: $clear-hover;
+$primary-active: darken($primary-color, 5%);
 
 // Borders
 $border-default: $gray;
@@ -37,7 +39,7 @@ $code-background-dark: #222;
 $error-text-color: $red;
 
 // Color Types
-$default-color: $dark-blue;
+$default-color: $primary-color;
 $success-color: $green;
 $danger-color: $red;
 $warning-color: $dark-yellow;

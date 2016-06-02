@@ -39,6 +39,7 @@ a {
 
 .container {
   @include outer-container(980px);
+  min-width: 980px;
 }
 
 .error {
@@ -69,6 +70,18 @@ ul {
 
 .empty-state {
   color: $light-text;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .close {
