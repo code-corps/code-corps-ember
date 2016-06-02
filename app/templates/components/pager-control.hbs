@@ -1,25 +1,27 @@
-<div class="pagination">
-  {{#unless onFirstPage}}
-    {{#scroll-top}}
-      {{link-to "Previous" 'project.posts.index' (query-params page=previousPage) class="previous-page clear"}}
-    {{/scroll-top}}
-  {{else}}
-    <div>
-      <div class="clear first disabled">Previous</div>
-    </div>
-  {{/unless}}
-  {{#each pages as |page|}}
-    {{#scroll-top}}
-      {{link-to page 'project.posts.index' (query-params page=page) classNameBindings="page :page :clear"}}
-    {{/scroll-top}}
-  {{/each}}
-  {{#unless onLastPage}}
-    {{#scroll-top}}
-      {{link-to "Next" 'project.posts.index' (query-params page=nextPage) class="next-page clear"}}
-    {{/scroll-top}}
-  {{else}}
-    <div>
-      <div class="clear last disabled">Next</div>
-    </div>
-  {{/unless}}
-</div>
+{{#if canShowPages}}
+  <div class="pagination">
+    {{#unless onFirstPage}}
+      {{#scroll-top}}
+        {{link-to "Previous" 'project.posts.index' (query-params page=previousPage) class="previous-page clear"}}
+      {{/scroll-top}}
+    {{else}}
+      <div>
+        <div class="clear first disabled">Previous</div>
+      </div>
+    {{/unless}}
+    {{#each pages as |page|}}
+      {{#scroll-top}}
+        {{link-to page 'project.posts.index' (query-params page=page) classNameBindings="page :page :clear"}}
+      {{/scroll-top}}
+    {{/each}}
+    {{#unless onLastPage}}
+      {{#scroll-top}}
+        {{link-to "Next" 'project.posts.index' (query-params page=nextPage) class="next-page clear"}}
+      {{/scroll-top}}
+    {{else}}
+      <div>
+        <div class="clear last disabled">Next</div>
+      </div>
+    {{/unless}}
+  </div>
+{{/if}}

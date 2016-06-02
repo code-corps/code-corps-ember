@@ -56,7 +56,20 @@ test('If we are currently on the first page, the previous page button does not r
   assert.equal(this.$('.previous-page').length, 0, 'The button does not render');
 });
 
-test('If we are currently on the first and only page, the next page button does not render', function(assert) {
+test('If we are currently on the only page with some records, nothing renders', function(assert) {
+  this.set('options', {
+    pageSize: 5,
+    totalRecords: 5,
+    currentPage: 1,
+    totalPages: 1
+  });
+
+  this.render(hbs`{{pager-control options=options}}`);
+
+  assert.equal(this.$('.pagination').length, 0, 'Nothing renders');
+});
+
+test('If we are currently on the only page with no records, nothing renders', function(assert) {
   this.set('options', {
     pageSize: 5,
     totalRecords: 0,
@@ -66,7 +79,7 @@ test('If we are currently on the first and only page, the next page button does 
 
   this.render(hbs`{{pager-control options=options}}`);
 
-  assert.equal(this.$('.next-page').length, 0, 'The button does not render');
+  assert.equal(this.$('.pagination').length, 0, 'Nothing renders');
 });
 
 test('If we are currently on the last page, the next page button does not render', function(assert) {
