@@ -5,6 +5,8 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
   classNames: ['create-comment-form'],
   tagName: 'form',
 
+  session: Ember.inject.service(),
+
   actions: {
     saveComment() {
       let comment = this.get('comment');
