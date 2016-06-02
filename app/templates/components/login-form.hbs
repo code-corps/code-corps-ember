@@ -1,7 +1,9 @@
 <form {{action "authenticate" on="submit"}}>
   <h2>Sign in</h2>
   <div class="input-group">
-    {{input id="identification" autofocus="autofocus" placeholder="Email" value=identification}}
+    {{#auto-focus}}
+      {{input id="identification" autofocus=true tabindex=0 placeholder="Email" value=identification}}
+    {{/auto-focus}}
   </div>
   <div class="input-group">
     {{input id="password" placeholder="Password" type="password" value=password}}

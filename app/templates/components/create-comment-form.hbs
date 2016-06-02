@@ -1,18 +1,26 @@
-{{#link-to 'slugged-route' comment.user.username}}
-  <img class="icon" src={{comment.user.photoThumbUrl}} />
-{{/link-to}}
-<div class="comment-content">
-  <div class="input-group">
-    {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving generatePreview=(action 'generatePreview')}}
-      {{#unless comment.isSaving}}
-        <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
-      {{/unless}}
-    {{/editor-with-preview}}
-    {{#each comment.errors.markdown as |error|}}
-      <p class="error">{{error.message}}</p>
-    {{/each}}
+{{#if session.isAuthenticated}}
+  {{#link-to 'slugged-route' comment.user.username}}
+    <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{/link-to}}
+  <div class="comment-content">
+    <div class="input-group">
+      {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving generatePreview=(action 'generatePreview')}}
+        {{#unless comment.isSaving}}
+          <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
+        {{/unless}}
+      {{/editor-with-preview}}
+      {{#each comment.errors.markdown as |error|}}
+        <p class="error">{{error.message}}</p>
+      {{/each}}
+    </div>
+    <div class="input-group">
+      <button class="default right" name="save" {{action 'saveComment'}}>Comment</button>
+    </div>
   </div>
-  <div class="input-group">
-    <button class="default right" name="save" {{action 'saveComment'}}>Comment</button>
+{{else}}
+  <div class="comment-content comment-signup">
+    <p>
+      {{#link-to 'signup' class='button default small'}}Sign up for free{{/link-to}} to comment on this conversation, or {{#link-to 'login'}}sign in{{/link-to}}.
+    </p>
   </div>
-</div>
+{{/if}}
