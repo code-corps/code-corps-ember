@@ -1,7 +1,9 @@
 <form>
   <h2>Join Code Corps today.</h2>
   <div class="input-group">
-    {{input name="username" autocapitalize="off" type="text" placeholder='Username' value=user.username}}
+    {{#auto-focus}}
+      {{input name="username" autocapitalize="off" autofocus=true tabindex=0 type="text" placeholder='Username' value=user.username}}
+    {{/auto-focus}}
     {{#each user.errors.username as |error|}}
       <p class="error">Your username {{error.message}}.</p>
     {{/each}}
