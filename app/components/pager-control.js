@@ -10,6 +10,9 @@ export default Ember.Component.extend({
   totalRecords: Ember.computed.alias('options.totalRecords'),
   pageSize: Ember.computed.alias('options.pageSize'),
 
+  hasOnePage: Ember.computed.equal('totalPages', 1),
+  canShowPages: Ember.computed.gt('totalPages', 1),
+
   centerPage: Ember.computed('currentPage', 'pagesToShow', function() {
     let currentPage = this.get('currentPage');
     let pagesToShow = this.get('pagesToShow');
@@ -62,8 +65,8 @@ export default Ember.Component.extend({
     return this.get('currentPage') === 1;
   }),
 
-  onLastPage: Ember.computed('currentPage', 'totalPages', function() {
+  onLastPage: Ember.computed('currentPage', 'totalPages', 'hasOnePage', function() {
     return this.get('currentPage') === this.get('totalPages') ||
-      this.get('totalPages') === 0;
+      this.get('hasOnePage');
   })
 });
