@@ -258,8 +258,8 @@ export default function() {
     // hacky, but the only way I could find to pass in a mocked meta object
     // for our pagination tests
     postsPage.meta = {
-      total_records: posts.length,
-      total_pages: Math.ceil(posts.length / pageSize),
+      total_records: posts.models.length,
+      total_pages: Math.ceil(posts.models.length / pageSize),
       page_size: pageSize,
       current_page: pageNumber || 1
     };
