@@ -162,6 +162,10 @@
     background: $clear-hover;
     background-image: linear-gradient(white,$clear-hover);
     border-color: $border-default;
+
+    &:disabled {
+      background: white;
+    }
   }
 
   &.success {
@@ -170,6 +174,10 @@
     background-image: linear-gradient($success-color,$darker-color);
     border-color: $darker-color;
     color: white;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 

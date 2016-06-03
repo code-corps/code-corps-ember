@@ -37,8 +37,13 @@ function generateCommentMentions(schema, comment, mentionStatus) {
   });
 }
 
-export default function() {
+const routes = [
+  'categories', 'comment_user_mentions', 'comments', 'organizations',
+  'post_user_mentions', 'posts', 'projects', 'project_categories',
+  'slugged_routes', 'user_categories', 'users',
+];
 
+export default function() {
   this.post('/oauth/token', (db, request) => {
     var expected = "grant_type=password&username=josh%40coderly.com&password=password";
 
@@ -63,13 +68,26 @@ export default function() {
     }
   });
 
+  this.get('/categories');
+
+  // TODO: Make this work when relationships work
+  this.post('/user_categories', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let relationships = requestBody.data.relationships;
+    let userId = relationships.user.data.id;
+    let categoryId = relationships.category.data.id;
+    let userCategory = schema.create('userCategory', { categoryId: categoryId, userId: userId });
+    return userCategory;
+  });
+
+  this.delete('/user_categories/:id');
+
   this.get('/organizations/:id');
 
   this.get('/projects/:id');
 
   this.get('/users/:id');
   this.get('/users');
-
 
   this.get('/user', (schema) => {
     // due to the nature of how we fetch the current user, all we can do here is
@@ -80,6 +98,38 @@ export default function() {
     } else {
       return schema.create('user');
     }
+  });
+
+  this.patch('/users/me', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let userId = requestBody.data.id;
+    let user = schema.users.find(userId);
+
+    // Mock out state machine
+    var state;
+    switch (attributes.state_transition) {
+      case 'select_categories':
+        state = 'selected_categories';
+        break;
+      case 'select_roles':
+        state = 'selected_roles';
+        break;
+      case 'select_skills':
+        state = 'selected_skills';
+        break;
+      default:
+        break;
+    }
+
+    let attrs = {
+      id: userId,
+      state: state,
+    };
+
+    user.attrs = attrs;
+    user.save();
+    return user;
   });
 
   this.get('/post_user_mentions', (schema, request) => {
@@ -269,6 +319,9 @@ export default function() {
 
   // GET /:slug
   this.get('/:slug', (schema, request) => {
+    if (routes.contains(request.params.slug)) {
+      console.error('API route being caught in /:slug in mirage/config.js', request.params.slug);
+    }
     return schema.sluggedRoutes.where({'slug': request.params.slug }).models[0];
   });
 
@@ -297,4 +350,6 @@ export default function() {
     let project = schema.projects.find(projectId);
     return project.posts.filter((p) => { return p.number === number; }).models[0];
   });
+
+  this.get('/projects');
 }

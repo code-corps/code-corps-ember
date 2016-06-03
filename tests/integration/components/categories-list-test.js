@@ -6,7 +6,7 @@ moduleForComponent('categories-list', 'Integration | Component | categories list
 });
 
 test('it renders the categories and sorts them by name', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   let categories = [
     {
@@ -32,6 +32,7 @@ test('it renders the categories and sorts them by name', function(assert) {
   });
   this.render(hbs`{{categories-list categories=categories addCategory=addCategory removeCategory=removeCategory}}`);
 
+  assert.equal(this.$('.categories-list').length, 1);
   assert.equal(this.$('.category-item').length, 3);
   assert.equal(this.$('.category-item:eq(0)').text().trim(), 'Alphabets');
   assert.equal(this.$('.category-item:eq(1)').text().trim(), 'Society');

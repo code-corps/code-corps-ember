@@ -1,7 +1,53 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 
+const { service } = Ember.inject;
+
 export default Ember.Route.extend(ApplicationRouteMixin, {
+  currentUser: service(),
+  onboarding: service(),
+
+  beforeModel() {
+    this._super(...arguments);
+    return this._loadCurrentUser().then((user) => {
+      this._attemptTransition(user);
+    });
+  },
+
+  sessionAuthenticated() {
+    this._super(...arguments);
+    this._loadCurrentUser().then((user) => {
+      this._attemptTransition(user);
+    }).catch(() => {
+      this.get('session').invalidate();
+    });
+  },
+
+  _attemptTransition(user) {
+    if (this.get('onboarding.isOnboarding')) {
+      this._transitionToOnboarding(user);
+    }
+  },
+
+  _transitionToOnboarding(user) {
+    this.transitionTo(this._transitionDestination(user));
+  },
+
+  _transitionDestination() {
+    return this.get('onboarding.currentRoute');
+  },
+
+  _loadCurrentUser() {
+    return this.get('currentUser').loadCurrentUser();
+  },
+
+  _abortAndFixHistory(transition) {
+    transition.abort();
+    if (window.history) {
+      window.history.forward();
+    }
+  },
+
   actions: {
     // see https://github.com/emberjs/ember.js/issues/12791
     // if we don't handle the error action at application level
@@ -11,6 +57,15 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     error(e) {
       console.error(e);
       this.intermediateTransitionTo('application_error', e);
-    }
+    },
+
+    willTransition(transition) {
+      let isOnboarding = this.get('onboarding.isOnboarding');
+      let expectedOnboardingRoute = this.get('onboarding.currentRoute');
+      let target = transition.targetName;
+      if (isOnboarding && target !== expectedOnboardingRoute) {
+        this._abortAndFixHistory(transition);
+      }
+    },
   }
 });

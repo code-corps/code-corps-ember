@@ -4,12 +4,13 @@ export default Ember.Component.extend({
   classNames: ['category-item'],
   classNameBindings: ['selected'],
 
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
   userCategories: Ember.inject.service(),
 
-  currentUser: Ember.computed.alias('session.currentUser'),
+  user: Ember.computed.alias('currentUser.user'),
+  usersCategories: Ember.computed.alias('user.categories'),
 
-  selected: Ember.computed('category', 'userCategories.usersUserCategories', function() {
+  selected: Ember.computed('category', 'usersCategories', function() {
     let category = this.get('category');
     let userCategories = this.get('userCategories');
     return userCategories.hasCategory(category);

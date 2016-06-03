@@ -4,7 +4,9 @@ export default Ember.Component.extend({
   classNames: ['user-menu', 'dropdown'],
   classNameBindings: ['hidden:menu-hidden:menu-visible'],
 
-  hidden: true,
+  didInitAttrs() {
+    this.hidden = true;
+  },
 
   actions: {
     toggle: function() {
