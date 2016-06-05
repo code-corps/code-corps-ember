@@ -1,21 +1,19 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
-  currentUser: Ember.computed.alias('session.currentUser'),
+  user: Ember.computed.alias('currentUser.user'),
 
-  usersCategories: Ember.computed.alias('currentUser.categories'),
+  usersCategories: Ember.computed.alias('user.categories'),
 
-  usersUserCategories: Ember.computed.alias('currentUser.userCategories'),
+  usersUserCategories: Ember.computed.alias('user.userCategories'),
 
-  categories: Ember.computed('usersCategories.isLoaded', 'usersUserCategories.isLoaded', 'currentUser', function() {
+  categories: Ember.computed('usersCategories.[]', 'usersUserCategories.[]', 'user', function() {
     return this.get('usersCategories');
   }),
 
-  updated: Ember.computed('usersCategories.isLoaded', 'usersUserCategories.isLoaded', 'currentUser', function() {
-    return true;
-  }),
+  isEmpty: Ember.computed.empty('categories'),
 
   hasCategory: function(category) {
     let categories = this.get('categories');
@@ -29,9 +27,9 @@ export default Ember.Service.extend({
     let userCategory = userCategories.find(function(item) {
       let itemUserId = item.belongsTo('user').id();
       let itemCategoryId = item.belongsTo('category').id();
-      let currentUserId = this.get('currentUser.id');
+      let userId = this.get('user.id');
       let categoryId = category.get('id');
-      return (itemUserId === currentUserId) && (itemCategoryId === categoryId);
+      return (itemUserId === userId) && (itemCategoryId === categoryId);
     }.bind(this));
     return userCategory;
   },

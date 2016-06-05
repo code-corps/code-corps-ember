@@ -1,56 +1,6 @@
-.menu {
-  padding: 10px 0;
-
-  ul {
-    list-style-type: none;
-    @include clearfix;
-  }
-
-  a.active {
-    font-weight: 600;
-  }
-
-  ul.header-nav {
-    > li {
-      display: inline-block;
-      float: left;
-      font-size: 16px;
-    }
-
-    > li > a, .user-menu-select {
-      font-weight: 600;
-      border-bottom: 3px solid transparent;
-
-      &.active {
-        color: $link-color;
-        border-bottom-color: $dark-blue;
-      }
-
-      &:hover {
-        color: $link-color;
-        border-bottom-color: $dark-blue;
-        transition: border-bottom-color ease 0.3s;
-      }
-    }
-  }
-}
-
-.main-nav, .auth-nav {
-  font-family: $body-font-family;
-  font-style: normal;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0 30px;
-
-  li a {
-    display: block;
-    padding: 15px 10px;
-    color: $dark-text;
-  }
-}
-
 .user-menu {
   .avatar {
+    background: $gray;
     width: 40px;
     height: 40px;
     border-radius: 20px;

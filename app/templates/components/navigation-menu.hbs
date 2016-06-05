@@ -1,0 +1,32 @@
+<h1 class="site-logo left">
+  {{#link-to 'index' class='logo'}}Code Corps{{/link-to}}
+</h1>
+{{#if navigationMenu.isDefault}}
+  <ul class="header-nav main-nav left">
+    <li>{{#link-to 'projects-list'}}Projects{{/link-to}}</li>
+  </ul>
+  {{#if session.isAuthenticated}}
+    <ul class="header-nav right">
+      <li class="user-menu-tab">
+        {{user-menu model=currentUser.user}}
+      </li>
+    </ul>
+  {{else}}
+    <ul class="header-nav auth-nav right">
+      <li>
+        {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
+      </li>
+      <li>
+        {{#link-to 'login' class="login"}}Sign in{{/link-to}}
+      </li>
+    </ul>
+  {{/if}}
+{{/if}}
+{{#if navigationMenu.isOnboarding}}
+  <div class="onboarding-steps right">
+    <p>Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</p>
+  </div>
+  <div class="onboarding-progress">
+    {{progress-bar percentage=onboarding.progressPercentage}}
+  </div>
+{{/if}}

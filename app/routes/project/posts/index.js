@@ -15,8 +15,4 @@ export default Ember.Route.extend({
     });
     return this.get('store').query('post', fullParams);
   },
-
-  setupController(controller, model) {
-    controller.set('posts', model);
-  }
 });

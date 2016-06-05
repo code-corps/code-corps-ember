@@ -11,11 +11,16 @@ Router.map(function() {
   this.route('settings', function() {
     this.route('profile');
   });
+
+  this.route('start', function() {
+    this.route('interests');
+    this.route('expertise');
+    this.route('skills');
+  });
+
   this.route('slugged-route', { path: '/:slugged_route_slug' });
   this.route('projects-list', { path: '/projects'});
   this.route('projects', { path: '/:slugged_route_slug/projects'});
-
-  this.route('categories');
 
   this.route('organizations', function() {
     this.route('settings', { path: '/:slugged_route_slug/settings'}, function() {

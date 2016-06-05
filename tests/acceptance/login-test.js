@@ -14,13 +14,18 @@ module('Acceptance: Login', {
 });
 
 test('Logging in', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
+
+  server.create('user', { id: 1 });
+
   visit('/login');
   fillIn('#identification', 'josh@coderly.com');
   fillIn('#password', 'password');
   click('#login');
+
   andThen(function() {
     assert.equal(find('a.logout').text().trim(), 'Log out', 'Page contains logout link');
+    assert.equal(currentURL(), '/projects');
   });
 });
 

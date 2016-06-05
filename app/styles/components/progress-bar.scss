@@ -1,0 +1,14 @@
+.progress-bar-container {
+  background: $clear-hover;
+  border-radius: 5px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  @include transition(width 0.5s ease-in);
+  background: $default-color;
+  float: left;
+  height: 100%;
+  width: 0px;
+}

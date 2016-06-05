@@ -15,6 +15,8 @@ export default Owner.extend({
   photoLargeUrl: attr(),
   createdAt: attr('date'),
   base64PhotoData: attr(),
+  state: attr(),
+  stateTransition: attr(),
 
   categories: hasMany('category', { async: true }),
   organizations: hasMany('organization', { async: true }),
@@ -25,5 +27,5 @@ export default Owner.extend({
   }),
   twitterUrl: Ember.computed('twitter', function() {
     return `https://twitter.com/${this.get('twitter')}`;
-  })
+  }),
 });

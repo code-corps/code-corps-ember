@@ -27,7 +27,9 @@
 @import "index";
 @import "post";
 @import "post-new";
+@import "start";
 
+@import "components/categories-list";
 @import "components/category-item";
 @import "components/code-theme-selector";
 @import "components/comment-item";
@@ -37,6 +39,7 @@
 @import "components/error-wrapper";
 @import "components/image-drop";
 @import "components/login-form";
+@import "components/navigation-menu";
 @import "components/organization-header";
 @import "components/organization-members";
 @import "components/pager-control";
@@ -46,6 +49,7 @@
 @import "components/post-item";
 @import "components/post-new-form";
 @import "components/post-title";
+@import "components/progress-bar";
 @import "components/project-details";
 @import "components/project-grid-item";
 @import "components/project-grid-item-skills-list";
