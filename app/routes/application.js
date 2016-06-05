@@ -5,6 +5,7 @@ const { service } = Ember.inject;
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
+  flashMessages: service(),
   onboarding: service(),
 
   beforeModel() {
@@ -57,6 +58,12 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     error(e) {
       console.error(e);
       this.intermediateTransitionTo('application_error', e);
+    },
+
+    didTransition: function() {
+      // Clear flash messages on every transition
+      this.get('flashMessages').clearMessages();
+      return true; // Bubble the event
     },
 
     willTransition(transition) {
