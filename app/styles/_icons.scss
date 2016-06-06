@@ -82,7 +82,7 @@ $postTypeIconHovers: (
   }
 }
 
-@mixin cssSprite( $spriteVals ) {
+@mixin interestIconSprite( $spriteVals ) {
   width: nth( $spriteVals, 1 );
   height: nth( $spriteVals, 2 );
   background-repeat: no-repeat;
@@ -101,124 +101,133 @@ $interestsURL: $interestsPath + '.png';
 $interestsx2URL: $interestsPath + '@2x.png';
 $bgiSizeW: 140px;
 $bgiSizeH: 280px;
-$economy: 35px 35px $interestsURL 0px 0px $interestsx2URL;
-$education: 35px 35px $interestsURL -35px 1px $interestsx2URL;
-$environment: 35px 35px $interestsURL -70px 0px $interestsx2URL;
-$government: 35px 35px $interestsURL -105px 0px $interestsx2URL;
-$health: 35px 35px $interestsURL 0px -35px $interestsx2URL;
-$justice: 35px 35px $interestsURL -35px -35px $interestsx2URL;
-$politics: 35px 35px $interestsURL -70px -35px $interestsx2URL;
-$public-safety: 35px 35px $interestsURL -105px -35px $interestsx2URL;
-$science: 35px 35px $interestsURL 0px -70px $interestsx2URL;
-$security: 35px 35px $interestsURL -35px -70px $interestsx2URL;
-$society: 35px 35px $interestsURL -70px -70px $interestsx2URL;
-$technology: 35px 35px $interestsURL -105px -70px $interestsx2URL;
-$transportation: 35px 35px $interestsURL 0px -105px $interestsx2URL;
-$economy-hover: 35px 35px $interestsURL 0px -140px $interestsx2URL;
-$education-hover: 35px 35px $interestsURL -35px -140px $interestsx2URL;
-$environment-hover: 35px 35px $interestsURL -70px -140px $interestsx2URL;
-$government-hover: 35px 35px $interestsURL -105px -140px $interestsx2URL;
-$health-hover: 35px 35px $interestsURL 0px -175px $interestsx2URL;
-$justice-hover: 35px 35px $interestsURL -35px -175px $interestsx2URL;
-$politics-hover: 35px 35px $interestsURL -70px -175px $interestsx2URL;
-$public-safety-hover: 35px 35px $interestsURL -105px -175px $interestsx2URL;
-$science-hover: 35px 35px $interestsURL 0px -210px $interestsx2URL;
-$society-hover: 35px 35px $interestsURL -70px -210px $interestsx2URL;
-$security-hover: 35px 35px $interestsURL -35px -210px $interestsx2URL;
-$technology-hover: 35px 35px $interestsURL -105px -210px $interestsx2URL;
-$transportation-hover: 35px 35px $interestsURL 0px -245px $interestsx2URL;
+$arts-hover: 35px 35px $interestsURL 0px -140px $interestsx2URL;
+$arts: 35px 35px $interestsURL 0px 0px $interestsx2URL;
+$economy: 35px 35px $interestsURL -35px 0px $interestsx2URL;
+$education: 35px 35px $interestsURL -70px 1px $interestsx2URL;
+$environment: 35px 35px $interestsURL -105px 0px $interestsx2URL;
+$government: 35px 35px $interestsURL 0px -35px $interestsx2URL;
+$health: 35px 35px $interestsURL -35px -35px $interestsx2URL;
+$justice: 35px 35px $interestsURL -70px -35px $interestsx2URL;
+$politics: 35px 35px $interestsURL -105px -35px $interestsx2URL;
+$public-safety: 35px 35px $interestsURL 0px -70px $interestsx2URL;
+$science: 35px 35px $interestsURL -35px -70px $interestsx2URL;
+$security: 35px 35px $interestsURL -70px -70px $interestsx2URL;
+$society: 35px 35px $interestsURL -105px -70px $interestsx2URL;
+$technology: 35px 35px $interestsURL 0px -105px $interestsx2URL;
+$transportation: 35px 35px $interestsURL -35px -105px $interestsx2URL;
+$economy-hover: 35px 35px $interestsURL -35px -140px $interestsx2URL;
+$education-hover: 35px 35px $interestsURL -70px -140px $interestsx2URL;
+$environment-hover: 35px 35px $interestsURL -105px -140px $interestsx2URL;
+$government-hover: 35px 35px $interestsURL 0px -175px $interestsx2URL;
+$health-hover: 35px 35px $interestsURL -35px -175px $interestsx2URL;
+$justice-hover: 35px 35px $interestsURL -70px -175px $interestsx2URL;
+$politics-hover: 35px 35px $interestsURL -105px -175px $interestsx2URL;
+$public-safety-hover: 35px 35px $interestsURL 0px -210px $interestsx2URL;
+$science-hover: 35px 35px $interestsURL -35px -210px $interestsx2URL;
+$society-hover: 35px 35px $interestsURL -105px -210px $interestsx2URL;
+$security-hover: 35px 35px $interestsURL -70px -210px $interestsx2URL;
+$technology-hover: 35px 35px $interestsURL 0px -245px $interestsx2URL;
+$transportation-hover: 35px 35px $interestsURL -35px -245px $interestsx2URL;
 
 .interest-icon {
   display: block;
 
-  &.economy {
-    @include cssSprite($economy);
+  &.arts {
+    @include interestIconSprite($arts);
     &:hover, &.selected {
-      @include cssSprite($economy-hover);
+      @include interestIconSprite($arts-hover);
+    }
+  }
+
+  &.economy {
+    @include interestIconSprite($economy);
+    &:hover, &.selected {
+      @include interestIconSprite($economy-hover);
     }
   }
 
   &.education {
-    @include cssSprite($education);
+    @include interestIconSprite($education);
     &:hover, &.selected {
-      @include cssSprite($education-hover);
+      @include interestIconSprite($education-hover);
     }
   }
 
   &.environment {
-    @include cssSprite($environment);
+    @include interestIconSprite($environment);
     &:hover, &.selected {
-      @include cssSprite($environment-hover);
+      @include interestIconSprite($environment-hover);
     }
   }
 
   &.government {
-    @include cssSprite($government);
+    @include interestIconSprite($government);
     &:hover, &.selected {
-      @include cssSprite($government-hover);
+      @include interestIconSprite($government-hover);
     }
   }
 
   &.health {
-    @include cssSprite($health);
+    @include interestIconSprite($health);
     &:hover, &.selected {
-      @include cssSprite($health-hover);
+      @include interestIconSprite($health-hover);
     }
   }
 
   &.justice {
-    @include cssSprite($justice);
+    @include interestIconSprite($justice);
     &:hover, &.selected {
-      @include cssSprite($justice-hover);
+      @include interestIconSprite($justice-hover);
     }
   }
 
   &.politics {
-    @include cssSprite($politics);
+    @include interestIconSprite($politics);
     &:hover, &.selected {
-      @include cssSprite($politics-hover);
+      @include interestIconSprite($politics-hover);
     }
   }
 
   &.public-safety {
-    @include cssSprite($public-safety);
+    @include interestIconSprite($public-safety);
     &:hover, &.selected {
-      @include cssSprite($public-safety-hover);
+      @include interestIconSprite($public-safety-hover);
     }
   }
 
   &.science {
-    @include cssSprite($science);
+    @include interestIconSprite($science);
     &:hover, &.selected {
-      @include cssSprite($science-hover);
+      @include interestIconSprite($science-hover);
     }
   }
 
   &.security {
-    @include cssSprite($security);
+    @include interestIconSprite($security);
     &:hover, &.selected {
-      @include cssSprite($security-hover);
+      @include interestIconSprite($security-hover);
     }
   }
 
   &.society {
-    @include cssSprite($society);
+    @include interestIconSprite($society);
     &:hover, &.selected {
-      @include cssSprite($society-hover);
+      @include interestIconSprite($society-hover);
     }
   }
 
   &.technology {
-    @include cssSprite($technology);
+    @include interestIconSprite($technology);
     &:hover, &.selected {
-      @include cssSprite($technology-hover);
+      @include interestIconSprite($technology-hover);
     }
   }
 
   &.transportation {
-    @include cssSprite($transportation);
+    @include interestIconSprite($transportation);
     &:hover, &.selected {
-      @include cssSprite($transportation-hover);
+      @include interestIconSprite($transportation-hover);
     }
   }
 }
@@ -241,35 +250,44 @@ $categoriesURL: $categoriesPath + '.png';
 $categoriesx2URL: $categoriesPath + '@2x.png';
 $bgiSizeW: 420px;
 $bgiSizeH: 420px;
-$economy-hover: 70px 70px $categoriesURL 0px -210px $categoriesx2URL;
-$education-hover: 70px 70px $categoriesURL -70px -210px $categoriesx2URL;
-$environment-hover: 70px 70px $categoriesURL -140px -210px $categoriesx2URL;
-$government-hover: 70px 70px $categoriesURL -210px -210px $categoriesx2URL;
-$health-hover: 70px 70px $categoriesURL -280px -210px $categoriesx2URL;
-$justice-hover: 70px 70px $categoriesURL -350px -210px $categoriesx2URL;
-$politics-hover: 70px 70px $categoriesURL 0px -280px $categoriesx2URL;
-$public-safety-hover: 70px 70px $categoriesURL -70px -280px $categoriesx2URL;
-$science-hover: 70px 70px $categoriesURL -140px -280px $categoriesx2URL;
-$security-hover: 70px 70px $categoriesURL -210px -280px $categoriesx2URL;
-$society-hover: 70px 70px $categoriesURL -280px -280px $categoriesx2URL;
-$technology-hover: 70px 70px $categoriesURL -350px -280px $categoriesx2URL;
-$transportation-hover: 70px 70px $categoriesURL 0px -350px $categoriesx2URL;
-$economy: 70px 70px $categoriesURL 0px 0px $categoriesx2URL;
-$education: 70px 70px $categoriesURL -70px 0px $categoriesx2URL;
-$environment: 70px 70px $categoriesURL -140px 0px $categoriesx2URL;
-$government: 70px 70px $categoriesURL -210px 0px $categoriesx2URL;
-$health: 70px 70px $categoriesURL -280px 0px $categoriesx2URL;
-$justice: 70px 70px $categoriesURL -350px 0px $categoriesx2URL;
-$politics: 70px 70px $categoriesURL 0px -70px $categoriesx2URL;
-$public-safety: 70px 70px $categoriesURL -70px -70px $categoriesx2URL;
-$science: 70px 70px $categoriesURL -140px -70px $categoriesx2URL;
-$security: 70px 70px $categoriesURL -210px -70px $categoriesx2URL;
-$society: 70px 70px $categoriesURL -280px -70px $categoriesx2URL;
-$technology: 70px 70px $categoriesURL -350px -70px $categoriesx2URL;
-$transportation: 70px 70px $categoriesURL 0px -140px $categoriesx2URL;
+$arts-hover: 70px 70px $categoriesURL 0px -210px $categoriesx2URL;
+$economy-hover: 70px 70px $categoriesURL -70px -210px $categoriesx2URL;
+$education-hover: 70px 70px $categoriesURL -140px -210px $categoriesx2URL;
+$environment-hover: 70px 70px $categoriesURL -210px -210px $categoriesx2URL;
+$government-hover: 70px 70px $categoriesURL -280px -210px $categoriesx2URL;
+$health-hover: 70px 70px $categoriesURL -350px -210px $categoriesx2URL;
+$justice-hover: 70px 70px $categoriesURL 0px -280px $categoriesx2URL;
+$politics-hover: 70px 70px $categoriesURL -70px -280px $categoriesx2URL;
+$public-safety-hover: 70px 70px $categoriesURL -140px -280px $categoriesx2URL;
+$science-hover: 70px 70px $categoriesURL -210px -280px $categoriesx2URL;
+$security-hover: 70px 70px $categoriesURL -280px -280px $categoriesx2URL;
+$society-hover: 70px 70px $categoriesURL -350px -280px $categoriesx2URL;
+$technology-hover: 70px 70px $categoriesURL 0px -350px $categoriesx2URL;
+$transportation-hover: 70px 70px $categoriesURL -70px -350px $categoriesx2URL;
+$arts: 70px 70px $categoriesURL 0px 0px $categoriesx2URL;
+$economy: 70px 70px $categoriesURL -70px 0px $categoriesx2URL;
+$education: 70px 70px $categoriesURL -140px 0px $categoriesx2URL;
+$environment: 70px 70px $categoriesURL -210px 0px $categoriesx2URL;
+$government: 70px 70px $categoriesURL -280px 0px $categoriesx2URL;
+$health: 70px 70px $categoriesURL -350px 0px $categoriesx2URL;
+$justice: 70px 70px $categoriesURL 0px -70px $categoriesx2URL;
+$politics: 70px 70px $categoriesURL -70px -70px $categoriesx2URL;
+$public-safety: 70px 70px $categoriesURL -140px -70px $categoriesx2URL;
+$science: 70px 70px $categoriesURL -210px -70px $categoriesx2URL;
+$security: 70px 70px $categoriesURL -280px -70px $categoriesx2URL;
+$society: 70px 70px $categoriesURL -350px -70px $categoriesx2URL;
+$technology: 70px 70px $categoriesURL 0px -140px $categoriesx2URL;
+$transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
 
 .category-icon {
   display: block;
+
+  &.arts {
+    @include categoryIconSprite($arts);
+    &.selected {
+      @include categoryIconSprite($arts-hover);
+    }
+  }
 
   &.economy {
     @include categoryIconSprite($economy);
