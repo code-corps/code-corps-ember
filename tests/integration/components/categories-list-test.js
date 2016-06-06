@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('categories-list', 'Integration | Component | categories list', {
   integration: true
@@ -26,9 +27,19 @@ test('it renders the categories and sorts them by name', function(assert) {
   this.set('categories', categories);
   this.set('addCategory', (clickedCategory) => {
     assert.deepEqual(clickedCategory, categories[2]);
+    return new Ember.RSVP.Promise((fulfill) => {
+      Ember.run.next(() => {
+        fulfill();
+      });
+    });
   });
   this.set('removeCategory', (clickedCategory) => {
     assert.deepEqual(clickedCategory, categories[2]);
+    return new Ember.RSVP.Promise((fulfill) => {
+      Ember.run.next(() => {
+        fulfill();
+      });
+    });
   });
   this.render(hbs`{{categories-list categories=categories addCategory=addCategory removeCategory=removeCategory}}`);
 

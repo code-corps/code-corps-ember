@@ -1,11 +1,41 @@
 .flash {
-  margin-bottom: 10px;
+  .container {
+    margin-bottom: 10px;
+
+    .alert {
+      padding: 5px 0;
+      &.alert-success {
+        background: $success-background;
+        color: white;
+      }
+    }
+  }
 }
 
-.alert {
-  padding: 5px 0;
-  &.alert-success {
-    background: $success-background;
+.fixed-flash {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  text-align: center;
+}
+
+.fixed-flash-inner {
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 20px;
+  margin-top: 15px;
+
+  @include fadeInDown(0.6s);
+
+  p {
+    margin: 5px 0;
+  }
+}
+
+.alert-danger {
+  .fixed-flash-inner {
+    background: $red;
     color: white;
   }
 }

@@ -132,6 +132,8 @@ $transportation-hover: 35px 35px $interestsURL -35px -245px $interestsx2URL;
 
 .interest-icon {
   display: block;
+  height: 35px;
+  width: 35px;
 
   &.arts {
     @include interestIconSprite($arts);
@@ -281,6 +283,8 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
 
 .category-icon {
   display: block;
+  height: 70px;
+  width: 70px;
 
   &.arts {
     @include categoryIconSprite($arts);

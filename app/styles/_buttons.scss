@@ -126,12 +126,36 @@
     &.check-mark {
       @include sprite($check-mark);
     }
+
+    &.button-spinner {
+      display: inline-block;
+      margin: -4px 8px -2px -2px;
+      vertical-align: middle;
+      height: 22px;
+      width: 22px;
+
+      @include fadeIn(0.6s);
+    }
+  }
+
+  &.clear {
+    span {
+      &.button-spinner {
+        $file: "/assets/images/icons/button-spinner-on-clear";
+        @include background-image-retina($file, "gif", 22px, 22px);
+      }
+    }
   }
 
   &.default {
     span {
       &.check-area {
         @include sprite($check-area-white);
+      }
+
+      &.button-spinner {
+        $file: "/assets/images/icons/button-spinner-on-default";
+        @include background-image-retina($file, "gif", 22px, 22px);
       }
     }
   }
@@ -182,13 +206,15 @@
 }
 
 #{$all-buttons}, .button {
-  &.active, &:active {
-    &.clear {
-      background: $clear-active;
-    }
+  &:not(.has-spinner) {
+    &.active, &:active {
+      &.clear {
+        background: $clear-active;
+      }
 
-    &.default {
-      background: $primary-active;
+      &.default {
+        background: $primary-active;
+      }
     }
   }
 }
