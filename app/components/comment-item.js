@@ -5,9 +5,9 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
   classNames: ['comment-item', 'timeline-comment-wrapper'],
   classNameBindings: ['isEditing:editing'],
 
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
-  currentUserId: Ember.computed.alias('session.currentUser.id'),
+  currentUserId: Ember.computed.alias('currentUser.user.id'),
   commentAuthorId: Ember.computed.alias('comment.user.id'),
   currentUserIsCommentAuthor: Ember.computed('currentUserId', 'commentAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
@@ -15,7 +15,7 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
     return userId === authorId;
   }),
 
-  canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsCommentAuthor'),
+  canEdit: Ember.computed.alias('currentUserIsCommentAuthor'),
 
   init() {
     this.set('isEditing', false);

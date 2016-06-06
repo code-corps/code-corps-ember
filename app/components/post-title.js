@@ -1,10 +1,20 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  session: Ember.inject.service(),
-
   classNames: ['post-title'],
   classNameBindings: ['isEditing:editing'],
+
+  currentUser: Ember.inject.service(),
+
+  currentUserId: Ember.computed.alias('currentUser.user.id'),
+  postAuthorId: Ember.computed.alias('post.user.id'),
+  currentUserIsPostAuthor: Ember.computed('currentUserId', 'postAuthorId', function() {
+    let userId = parseInt(this.get('currentUserId'), 10);
+    let authorId = parseInt(this.get('postAuthorId'), 10);
+    return userId === authorId;
+  }),
+
+  canEdit: Ember.computed.alias('currentUserIsPostAuthor'),
 
   didInitAttrs() {
     this.setProperties({

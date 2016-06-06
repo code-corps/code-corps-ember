@@ -2,11 +2,11 @@ import Ember from 'ember';
 import ApplicationAdapter from './application';
 
 export default ApplicationAdapter.extend({
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
   buildURL(modelName, id, snapshot, requestType) {
     if (requestType === 'updateRecord') {
-      if (id === this.get('session.session.authenticated.user_id')) {
+      if (id === this.get('currentUser.user.id')) {
         return this.urlForProfileEdit();
       }
     }

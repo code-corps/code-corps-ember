@@ -8,7 +8,7 @@
   {{#if session.isAuthenticated}}
     <ul class="header-nav right">
       <li class="user-menu-tab">
-        {{user-menu model=currentUser.user}}
+        {{user-menu user=currentUser.user}}
       </li>
     </ul>
   {{else}}

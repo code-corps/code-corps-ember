@@ -5,7 +5,7 @@
   </div>
   {{input type="text" value=newTitle name="title"}}
 {{else}}
-  {{#if session.isAuthenticated}}
+  {{#if canEdit}}
   <div class="title-actions">
     <button class="clear small right edit" {{action 'edit'}}>Edit Title</button>
   </div>

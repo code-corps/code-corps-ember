@@ -2,9 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockSession = Ember.Service.extend({
-  isAuthenticated: true,
-  currentUser: {
+let mockCurrentUser = Ember.Service.extend({
+  user: {
     id: 1
   }
 });
@@ -48,7 +47,7 @@ let mockPostWithMentions = Ember.Object.create({
 moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:session', mockSession);
+    this.container.registry.register('service:current-user', mockCurrentUser);
     this.container.registry.register('service:store', mockStore);
   }
 });

@@ -17,9 +17,8 @@ let mockStoreReturningMentions = Ember.Service.extend({
   }
 });
 
-let mockSession = Ember.Service.extend({
-  isAuthenticated: true,
-  currentUser: {
+let mockCurrentUser = Ember.Service.extend({
+  user: {
     id: 1
   }
 });
@@ -73,7 +72,7 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  this.container.registry.register('service:session', mockSession);
+  this.container.registry.register('service:current-user', mockCurrentUser);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);
