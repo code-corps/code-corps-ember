@@ -11,7 +11,7 @@ let mockStore = Ember.Service.extend({
 moduleForComponent('post-comment-list', 'Integration | Component | post comment list', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:store', mockStore);
+    this.register('service:store', mockStore);
   }
 });
 

@@ -24,7 +24,7 @@ test('it renders', function(assert) {
 test('it renders the proper elements', function(assert) {
   assert.expect(2);
 
-  this.container.registry.register('service:session', mockSession);
+  this.register('service:session', mockSession);
 
   this.set('comment', {});
 
@@ -36,7 +36,7 @@ test('it renders the proper elements', function(assert) {
 test('it calls action when user clicks submit', function(assert) {
   assert.expect(1);
 
-  this.container.registry.register('service:session', mockSession);
+  this.register('service:session', mockSession);
 
   this.set('comment', Ember.Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {

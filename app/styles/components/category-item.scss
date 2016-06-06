@@ -1,6 +1,6 @@
 .category-item {
-  @include omega(3n);
-  @include span-columns(4);
+  @include omega(4n);
+  @include span-columns(3);
 
   text-align: center;
 

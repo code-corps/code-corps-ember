@@ -4,10 +4,6 @@ import Ember from 'ember';
 
 moduleForComponent('navigation-menu', 'Integration | Component | navigation menu', {
   integration: true,
-  // this.container.registry.register('service:current-user', mockCurrentUserService);
-  // this.container.registry.register('service:navigation-menu', mockNavigationMenuService);
-  // this.container.registry.register('service:onboarding', mockOnboardingService);
-  // this.container.registry.register('service:session', mockSessionService);
 });
 
 test('it renders elements for the default menu when logged out', function(assert) {
@@ -24,7 +20,7 @@ test('it renders elements for the default menu when logged in', function(assert)
   let mockSessionService = Ember.Service.extend({
     isAuthenticated: true
   });
-  this.container.registry.register('service:session', mockSessionService);
+  this.register('service:session', mockSessionService);
 
   this.render(hbs`{{navigation-menu}}`);
 
@@ -39,13 +35,13 @@ test('it renders elements for the onboarding menu', function(assert) {
   let mockNavigationMenuService = Ember.Service.extend({
     isOnboarding: true
   });
-  this.container.registry.register('service:navigation-menu', mockNavigationMenuService);
+  this.register('service:navigation-menu', mockNavigationMenuService);
   let mockOnboardingService = Ember.Service.extend({
     currentStepNumber: 1,
     totalSteps: 3,
     progressPercentage: 100,
   });
-  this.container.registry.register('service:onboarding', mockOnboardingService);
+  this.register('service:onboarding', mockOnboardingService);
 
   this.render(hbs`{{navigation-menu}}`);
 

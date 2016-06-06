@@ -5,7 +5,7 @@ import Ember from 'ember';
 moduleForComponent('project-category-item', 'Integration | Component | project category item', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:user-categories', mockUserCategoriesService);
+    this.register('service:user-categories', mockUserCategoriesService);
   },
 });
 

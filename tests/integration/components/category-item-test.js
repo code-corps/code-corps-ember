@@ -6,7 +6,16 @@ import wait from 'ember-test-helpers/wait';
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:user-categories', mockUserCategoriesService);
+    mockUserCategory.set('categoryId', defaultCategoryId);
+    this.register('service:current-user', mockCurrentUserService);
+  }
+});
+
+let defaultCategoryId = 2;
+
+let mockCurrentUserService = Ember.Service.extend({
+  user: {
+    categories: []
   },
 });
 
@@ -14,11 +23,41 @@ let mockUserCategoriesService = Ember.Service.extend({
   hasCategory(category) {
     return category.id === mockUserCategory.get('categoryId');
   },
+  addCategory(category) {
+    return new Ember.RSVP.Promise((fulfill) => {
+      Ember.run.next(() => {
+        mockUserCategory.set('categoryId', category.get('id'));
+        this.container.lookup('service:current-user').set('user.categories', [category]);
+        fulfill();
+      });
+    });
+  },
+  removeCategory() {
+    return new Ember.RSVP.Promise((fulfill, reject) => {
+      Ember.run.next(() => {
+        mockUserCategory.set('categoryId', null);
+        this.container.lookup('service:current-user').set('user.categories', []);
+        reject();
+      });
+    });
+  },
+});
+
+let mockUserCategoriesServiceForErrors = Ember.Service.extend({
+  hasCategory(category) {
+    return category.id === mockUserCategory.get('categoryId');
+  },
+  addCategory() {
+    return Ember.RSVP.reject();
+  },
+  removeCategory() {
+    return Ember.RSVP.reject();
+  },
 });
 
 let mockUserCategory = Ember.Object.create({
   id: 1,
-  categoryId: 2,
+  categoryId: defaultCategoryId,
   userId: 1,
 });
 
@@ -37,18 +76,12 @@ let selectedCategory = Ember.Object.create({
 });
 
 test('it works for selecting unselected categories', function(assert) {
+  let done = assert.async();
   assert.expect(6);
 
+  this.register('service:user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
-  this.set('addCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, unselectedCategory);
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
-        fulfill();
-      });
-    });
-  });
-  this.render(hbs`{{category-item category=category addCategory=(action addCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   assert.ok(this.$('.category-icon').hasClass('technology'));
   assert.equal(this.$('.category-icon').hasClass('selected'), false);
@@ -57,41 +90,39 @@ test('it works for selecting unselected categories', function(assert) {
   assert.equal(this.$('button').text().trim(), 'Technology');
 
   this.$('button').click();
+
+  wait().then(() => {
+    assert.equal(this.$('.category-item').hasClass('selected'), true);
+    done();
+  });
 });
 
 test('it works for removing selected categories', function(assert) {
+  let done = assert.async();
   assert.expect(4);
 
+  this.register('service:user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
-  this.set('removeCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, selectedCategory);
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
-        fulfill();
-      });
-    });
-  });
-  this.render(hbs`{{category-item category=category removeCategory=(action removeCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   assert.equal(this.$('.category-icon').hasClass('selected'), true);
   assert.equal(this.$('p').hasClass('selected'), true);
   assert.equal(this.$('button').text().trim(), 'Society');
 
   this.$('button').click();
+
+  wait().then(() => {
+    assert.equal(this.$('.category-item').hasClass('selected'), false);
+    done();
+  });
 });
 
 test('it creates a flash message on an error when adding', function(assert) {
+  let done = assert.async();
   assert.expect(7);
 
+  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
-  this.set('addCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, unselectedCategory);
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
-        reject();
-      });
-    });
-  });
 
   let mockFlashMessages = Ember.Service.extend({
     clearMessages() {
@@ -105,25 +136,23 @@ test('it creates a flash message on an error when adding', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.container.registry.register('service:flash-messages', mockFlashMessages);
+  this.register('service:flash-messages', mockFlashMessages);
 
-  this.render(hbs`{{category-item category=category addCategory=(action addCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
+  wait().then(() => {
+    assert.notOk(this.$('span').hasClass('button-spinner'));
+    done();
+  });
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
+  let done = assert.async();
   assert.expect(7);
 
+  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
-  this.set('removeCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, selectedCategory);
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
-        reject();
-      });
-    });
-  });
 
   let mockFlashMessages = Ember.Service.extend({
     clearMessages() {
@@ -137,61 +166,51 @@ test('it creates a flash message on an error when removing', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.container.registry.register('service:flash-messages', mockFlashMessages);
+  this.register('service:flash-messages', mockFlashMessages);
 
-  this.render(hbs`{{category-item category=category removeCategory=(action removeCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
+  wait().then(() => {
+    assert.notOk(this.$('span').hasClass('button-spinner'));
+    done();
+  });
 });
 
 test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
+  assert.expect(3);
 
-  assert.expect(4);
-
+  this.register('service:user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
-  this.set('addCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, unselectedCategory);
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
-        fulfill();
-        assert.ok(this.$('span').hasClass('button-spinner'));
-        assert.notOk(this.$('span').hasClass('check-area'));
-        wait().then(() => {
-          assert.notOk(this.$('span').hasClass('button-spinner'));
-          done();
-        });
-      });
-    });
-  });
 
-  this.render(hbs`{{category-item category=category addCategory=(action addCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
+  assert.ok(this.$('span').hasClass('button-spinner'));
+  assert.notOk(this.$('span').hasClass('check-area'));
+
+  wait().then(() => {
+    assert.notOk(this.$('span').hasClass('button-spinner'));
+    done();
+  });
 });
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-
-  assert.expect(4);
+  this.register('service:user-categories', mockUserCategoriesService);
+  assert.expect(3);
 
   this.set('category', selectedCategory);
-  this.set('removeCategory', (clickedCategory) => {
-    assert.deepEqual(clickedCategory, selectedCategory);
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
-        fulfill();
-        assert.ok(this.$('span').hasClass('button-spinner'));
-        assert.notOk(this.$('span').hasClass('check-area'));
-        wait().then(() => {
-          assert.notOk(this.$('span').hasClass('button-spinner'));
-          done();
-        });
-      });
-    });
-  });
 
-  this.render(hbs`{{category-item category=category removeCategory=(action removeCategory)}}`);
+  this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
+  assert.ok(this.$('span').hasClass('button-spinner'));
+  assert.notOk(this.$('span').hasClass('check-area'));
+
+  wait().then(() => {
+    assert.notOk(this.$('span').hasClass('button-spinner'));
+    done();
+  });
 });
