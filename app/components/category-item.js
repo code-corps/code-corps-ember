@@ -22,7 +22,8 @@ export default Ember.Component.extend({
   actions: {
     addCategory(category) {
       this.set('isLoading', true);
-      this.addCategory(category).catch(() => {
+      let userCategories = this.get('userCategories');
+      return userCategories.addCategory(category).catch(() => {
         let message = `An error occurred trying to add ${category.get('name')}.`;
         this._flashError(message);
       }).finally(() => {
@@ -31,7 +32,8 @@ export default Ember.Component.extend({
     },
     removeCategory(category) {
       this.set('isLoading', true);
-      this.removeCategory(category).catch(() => {
+      let userCategories = this.get('userCategories');
+      return userCategories.removeCategory(category).catch(() => {
         let message = `An error occurred trying to remove ${category.get('name')}.`;
         this._flashError(message);
       }).finally(() => {
@@ -41,9 +43,9 @@ export default Ember.Component.extend({
   },
 
   _flashError(message) {
-    const flashMessages = this.get('flashMessages');
+    const flashMessages = Ember.get(this, 'flashMessages');
     flashMessages.clearMessages();
-    flashMessages.add({
+    return flashMessages.add({
       message: message,
       type: 'danger',
       fixed: true,

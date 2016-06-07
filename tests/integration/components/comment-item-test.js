@@ -43,7 +43,7 @@ let mockCommentWithMentions = Ember.Object.create({
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:store', mockStore);
+    this.register('service:store', mockStore);
   }
 });
 
@@ -72,7 +72,7 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  this.container.registry.register('service:current-user', mockCurrentUser);
+  this.register('service:current-user', mockCurrentUser);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -89,7 +89,7 @@ test('it switches between editing and viewing mode', function(assert) {
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
 
-  this.container.registry.register('service:store', mockStoreReturningMentions);
+  this.register('service:store', mockStoreReturningMentions);
 
   this.set('comment', mockCommentWithMentions);
 

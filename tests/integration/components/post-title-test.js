@@ -41,7 +41,7 @@ test('it renders', function(assert) {
 });
 
 test('it is not editable if not the right user', function(assert) {
-  this.container.registry.register('service:current-user', mockDifferentUser);
+  this.register('service:current-user', mockDifferentUser);
 
   assert.expect(1);
   this.render(hbs`{{post-title}}`);
@@ -52,7 +52,7 @@ test('it is not editable if not the right user', function(assert) {
 test('it switches between edit and view mode', function(assert) {
   assert.expect(8);
 
-  this.container.registry.register('service:current-user', mockCurrentUser);
+  this.register('service:current-user', mockCurrentUser);
 
   this.set('post', mockPost);
   this.render(hbs`{{post-title post=post}}`);
@@ -72,7 +72,7 @@ test('it switches between edit and view mode', function(assert) {
 test('it saves', function(assert) {
   assert.expect(2);
 
-  this.container.registry.register('service:current-user', mockCurrentUser);
+  this.register('service:current-user', mockCurrentUser);
 
   this.set('post', mockPost);
   this.render(hbs`{{post-title post=post}}`);

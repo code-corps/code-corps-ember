@@ -47,8 +47,8 @@ let mockPostWithMentions = Ember.Object.create({
 moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:current-user', mockCurrentUser);
-    this.container.registry.register('service:store', mockStore);
+    this.register('service:current-user', mockCurrentUser);
+    this.register('service:store', mockStore);
   }
 });
 
@@ -92,7 +92,7 @@ test('user can switch between view and edit mode for post body', function(assert
 test('mentions are rendered on post body in read-only mode', function(assert) {
   assert.expect(1);
 
-  this.container.registry.register('service:store', mockStoreReturningMentions);
+  this.register('service:store', mockStoreReturningMentions);
 
   this.set('post', mockPostWithMentions);
 
