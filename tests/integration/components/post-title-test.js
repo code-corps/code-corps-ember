@@ -2,8 +2,16 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockSession = Ember.Service.extend({
-  isAuthenticated: true
+let mockCurrentUser = Ember.Service.extend({
+  user: {
+    id: 1
+  }
+});
+
+let mockDifferentUser = Ember.Service.extend({
+  user: {
+    id: 2
+  }
 });
 
 let mockPost = Ember.Object.create({
@@ -11,6 +19,9 @@ let mockPost = Ember.Object.create({
   body: 'A <strong>body</strong>',
   number: 12,
   postType: 'issue',
+  user: {
+    id: 1,
+  },
   save() {
     this.set('title', this.get('title'));
     return Ember.RSVP.resolve();
@@ -20,7 +31,6 @@ let mockPost = Ember.Object.create({
 moduleForComponent('post-title', 'Integration | Component | post title', {
   integration: true,
   beforeEach() {
-    this.container.registry.register('service:session', mockSession);
   }
 });
 
@@ -30,8 +40,19 @@ test('it renders', function(assert) {
   assert.equal(this.$('.post-title').length, 1, 'The component\'s element is rendered');
 });
 
+test('it is not editable if not the right user', function(assert) {
+  this.container.registry.register('service:current-user', mockDifferentUser);
+
+  assert.expect(1);
+  this.render(hbs`{{post-title}}`);
+  assert.equal(this.$('.post-title .edit').length, 0);
+});
+
+
 test('it switches between edit and view mode', function(assert) {
   assert.expect(8);
+
+  this.container.registry.register('service:current-user', mockCurrentUser);
 
   this.set('post', mockPost);
   this.render(hbs`{{post-title post=post}}`);
@@ -50,6 +71,9 @@ test('it switches between edit and view mode', function(assert) {
 
 test('it saves', function(assert) {
   assert.expect(2);
+
+  this.container.registry.register('service:current-user', mockCurrentUser);
+
   this.set('post', mockPost);
   this.render(hbs`{{post-title post=post}}`);
 

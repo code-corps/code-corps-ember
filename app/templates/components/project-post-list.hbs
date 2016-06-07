@@ -6,6 +6,7 @@
     {{link-to 'New Post' 'project.posts.new' tagName='button' class="default small new-post"}}
   </div>
 </div>
+
 <div class="posts-filters">
 {{#if isFiltered}}
   <p>Clear filters:</p>
@@ -31,6 +32,7 @@
   </ul>
 {{/if}}
 </div>
+
 <div class="posts">
   {{#each posts as |post|}}
     {{post-item post=post}}

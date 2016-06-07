@@ -6,8 +6,6 @@ export default Ember.Route.extend({
     postType: { refreshModel: true, scope: 'controller' }
   },
 
-  session: Ember.inject.service(),
-
   model(params) {
     let project = this.modelFor('project');
     let fullParams = Ember.merge(params, {

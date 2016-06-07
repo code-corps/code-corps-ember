@@ -4,9 +4,9 @@ import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetche
 export default Ember.Component.extend(PostMentionFetcherMixin, {
   classNames: ['post-details'],
 
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
-  currentUserId: Ember.computed.alias('session.currentUser.id'),
+  currentUserId: Ember.computed.alias('currentUser.user.id'),
   postAuthorId: Ember.computed.alias('post.user.id'),
   currentUserIsPostAuthor: Ember.computed('currentUserId', 'postAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
@@ -14,7 +14,7 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
     return userId === authorId;
   }),
 
-  canEdit: Ember.computed.and('session.isAuthenticated', 'currentUserIsPostAuthor'),
+  canEdit: Ember.computed.alias('currentUserIsPostAuthor'),
 
   init() {
     this.set('isEditingBody', false);

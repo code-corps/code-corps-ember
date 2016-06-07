@@ -24,7 +24,7 @@ test('it renders properly', function(assert) {
   assert.expect(10);
 
   this.set('user', stubUser);
-  this.render(hbs`{{user-menu model=user}}`);
+  this.render(hbs`{{user-menu user=user}}`);
 
   assert.equal(this.$('.user-menu').length, 1, "The component's element renders.");
 
@@ -49,7 +49,7 @@ test('clicking an open dropdown dismisses it', function(assert) {
   assert.expect(2);
 
   this.set('user', stubUser);
-  this.render(hbs`{{user-menu model=user}}`);
+  this.render(hbs`{{user-menu user=user}}`);
 
   this.$('.user-menu-select').click();
   assert.equal(this.$('.user-menu.menu-visible').length, 1, 'The menu is now visible');

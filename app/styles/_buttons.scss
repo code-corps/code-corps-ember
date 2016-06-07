@@ -13,6 +13,17 @@
   }
 }
 
+
+@mixin primary-active {
+  &.primary-active {
+    &.active {
+      background: $primary-color;
+      border-color: $primary-color;
+      color: white;
+    }
+  }
+}
+
 #{$all-buttons}, .button {
   color: white;
   border-radius: 4px;
@@ -59,28 +70,16 @@
 
   &.clear {
     background: white;
-    border-color: $border-default;
+    border: 1px solid $border-default;
     color: $dark-text;
+    font-weight: 300;
 
     &:focus {
       background: $clear-focus;
       border-color: darken($border-default, 2%);
     }
 
-    &.primary-active {
-      &.active {
-        background: $primary-color;
-        border-color: $primary-color;
-        color: white;
-      }
-    }
-  }
-
-  &.clear {
-    background: white;
-    border: 1px solid $border-default;
-    color: $dark-text;
-    font-weight: 300;
+    @include primary-active;
   }
 
   &.success {
@@ -210,6 +209,7 @@
     &.active, &:active {
       &.clear {
         background: $clear-active;
+        @include primary-active;
       }
 
       &.default {

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  session: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
   model(params) {
     let projectId = this.modelFor('project').id;
@@ -10,7 +10,7 @@ export default Ember.Route.extend({
       number: params.number
     };
 
-    let userId = this.get('session.session.authenticated.user_id');
+    let userId = this.get('currentUser.user.id');
 
     return Ember.RSVP.hash({
       post: this.store.queryRecord('post', queryParams),
