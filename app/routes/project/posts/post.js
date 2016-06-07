@@ -41,6 +41,6 @@ export default Ember.Route.extend({
           this.controllerFor('project.posts.post').set('error', error);
         }
       });
-    }
-  }
+    },
+  },
 });

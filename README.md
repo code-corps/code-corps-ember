@@ -40,6 +40,10 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember build` (development)
 * `ember build --environment production` (production)
 
+### Style Guide
+
+You should refer to our [style guide](STYLEGUIDE.md) for writing Ember.js, HTML/Handlebars, and SCSS that makes it easier for everyone to work on Code Corps together.
+
 ### Deploying
 
 Specify what it takes to deploy your app.

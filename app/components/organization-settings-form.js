@@ -14,5 +14,5 @@ export default Ember.Component.extend({
           flashMessages.success("Organization updated successfully");
       });
     },
-  }
+  },
 });

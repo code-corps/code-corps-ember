@@ -17,5 +17,5 @@ export default Ember.Mixin.create({
         this.transitionToRoute(nextRoute);
       });
     },
-  }
+  },
 });

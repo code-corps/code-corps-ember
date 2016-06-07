@@ -1,10 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  attributeBindings: ['style'],
   classNames: ['editor-with-preview'],
   classNameBindings: ['mode'],
-  attributeBindings: ['style'],
-
   mode: null,
   previewedOnce: false,
   textareaFocused: false,
@@ -77,16 +76,16 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    preview() {
-      this.handlePreview();
+    blurTextarea() {
+      this.set('textareaFocused', false);
     },
 
     edit() {
       this.handleEdit();
     },
 
-    blurTextarea() {
-      this.set('textareaFocused', false);
+    preview() {
+      this.handlePreview();
     },
   }
 });

@@ -9,5 +9,5 @@ export default Ember.Service.extend({
 
   leaving() {
     this.set('isDragging', false);
-  }
+  },
 });

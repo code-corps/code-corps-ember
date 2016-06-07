@@ -18,5 +18,5 @@ export default Ember.Service.extend({
         resolve(null);
       }
     });
-  }
+  },
 });

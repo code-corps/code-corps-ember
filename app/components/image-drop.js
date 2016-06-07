@@ -1,11 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  active: false,
+  attributeBindings: ['style'],
   classNames: ['image-drop'],
   classNameBindings: ['isDraggingOnApp:is-dragging', 'active'],
-  attributeBindings: ['style'],
-
-  active: false,
   droppedImage: null,
   helpText: "Drop your image here.",
   originalImage: null,

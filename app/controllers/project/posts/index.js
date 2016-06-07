@@ -3,22 +3,6 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   page: 1,
   postType: null,
-
-  isFiltered: Ember.computed.notEmpty('postTypes'),
-
-  postTypes: Ember.computed('postType', function() {
-    var postTypes;
-    let array = this.get('postType');
-
-    if(array) {
-      postTypes = array.split(',');
-    } else {
-      postTypes = [];
-    }
-
-    return postTypes;
-  }),
-
   types: [
     Ember.Object.create({
       name: "Tasks",
@@ -45,6 +29,21 @@ export default Ember.Controller.extend({
       selected: false,
     }),
   ],
+
+  isFiltered: Ember.computed.notEmpty('postTypes'),
+
+  postTypes: Ember.computed('postType', function() {
+    var postTypes;
+    let array = this.get('postType');
+
+    if(array) {
+      postTypes = array.split(',');
+    } else {
+      postTypes = [];
+    }
+
+    return postTypes;
+  }),
 
   selectedTypes: Ember.computed('types', 'postTypes', function() {
     let types = this.get('types');

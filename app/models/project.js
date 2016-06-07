@@ -1,47 +1,16 @@
-import DS from 'ember-data';
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
-  description: DS.attr('string'),
-  base64IconData: DS.attr('string'),
-  iconThumbUrl: DS.attr('string'),
-  iconLargeUrl: DS.attr('string'),
-  slug: DS.attr('string'),
+export default Model.extend({
+  base64IconData: attr('string'),
+  description: attr('string'),
+  iconLargeUrl: attr('string'),
+  iconThumbUrl: attr('string'),
+  slug: attr('string'),
+  title: attr('string'),
 
-  categories: DS.hasMany('categories', { async: true }),
-  posts: DS.hasMany('posts', { async: true }),
-  organization: DS.belongsTo('organization', { async: true }),
-
-  // skills: [
-  //   {
-  //     name: 'Ruby'
-  //   },
-  //   {
-  //     name: 'Rails'
-  //   },
-  //   {
-  //     name: 'Adobe Photoshop'
-  //   },
-  //   {
-  //     name: 'HTML'
-  //   },
-  //   {
-  //     name: 'CSS'
-  //   },
-  //   {
-  //     name: 'Ember.js'
-  //   },
-  //   {
-  //     name: 'JavaScript'
-  //   },
-  //   {
-  //     name: 'PostgreSQL'
-  //   },
-  //   {
-  //     name: 'ActiveModel::Serializers'
-  //   },
-  //   {
-  //     name: 'JSON API'
-  //   },
-  // ]
+  categories: hasMany('categories', { async: true }),
+  organization: belongsTo('organization', { async: true }),
+  posts: hasMany('posts', { async: true }),
 });

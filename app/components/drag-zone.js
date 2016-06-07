@@ -5,11 +5,11 @@ export default Ember.Component.extend({
 
   dragState: Ember.inject.service(),
 
+  dragLeave() {
+    this.get('dragState').leaving();
+  },
+
   dragOver() {
     this.get('dragState').dragging();
   },
-
-  dragLeave() {
-    this.get('dragState').leaving();
-  }
 });

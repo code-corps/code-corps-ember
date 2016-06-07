@@ -18,5 +18,5 @@ export default DS.Transform.extend({
     } else {
       return [];
     }
-  }
+  },
 });

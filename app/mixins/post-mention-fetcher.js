@@ -4,21 +4,21 @@ import { parse } from 'code-corps-ember/utils/mention-parser';
 export default Ember.Mixin.create({
   store: Ember.inject.service(),
 
-  postBodyWithMentions: Ember.computed('postMentions', function() {
-    let post = this.get('post');
-    let postMentions = this.get('postMentions');
-    if (Ember.isPresent(post)) {
-      return parse(post.get('body'), postMentions);
-    } else {
-      return '';
-    }
-  }),
-
   postBodyPreviewWithMentions: Ember.computed('postPreviewMentions', function() {
     let post = this.get('post');
     let postPreviewMentions = this.get('postPreviewMentions');
     if (Ember.isPresent(post)) {
       return parse(post.get('bodyPreview'), postPreviewMentions);
+    } else {
+      return '';
+    }
+  }),
+
+  postBodyWithMentions: Ember.computed('postMentions', function() {
+    let post = this.get('post');
+    let postMentions = this.get('postMentions');
+    if (Ember.isPresent(post)) {
+      return parse(post.get('body'), postMentions);
     } else {
       return '';
     }
@@ -45,6 +45,6 @@ export default Ember.Mixin.create({
       } else if (fetchType === 'published') {
         this.reloadMentions();
       }
-    }
-  }
+    },
+  },
 });

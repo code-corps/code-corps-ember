@@ -26,6 +26,6 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
           this.controllerFor('project.posts.new').set('error', error);
         }
       });
-    }
-  }
+    },
+  },
 });
