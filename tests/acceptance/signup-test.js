@@ -24,12 +24,9 @@ test('Signup form is accessible from the main site', (assert) => {
     click('a.signup');
   });
 
-
   andThen(() => {
     assert.equal(currentPath(), 'signup');
   });
-
-
 });
 
 test('Succesful signup is possible', (assert) => {
