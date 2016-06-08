@@ -1,12 +1,26 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  biography: faker.lorem.paragraph,
-  email: faker.internet.email,
-  photoLargeUrl: faker.image.avatar,
-  photoThumbUrl: faker.image.avatar,
-  twitter: faker.internet.domainWord,
-  username: faker.internet.domainWord,
-  website: faker.internet.url,
+  biography() {
+    return faker.lorem.paragraph();
+  },
   base64PhotoData: null,
+  email() {
+    return faker.internet.email();
+  },
+  photoLargeUrl() {
+    return faker.image.avatar();
+  },
+  photoThumbUrl() {
+    return faker.image.avatar();
+  },
+  twitter() {
+    return faker.internet.domainWord();
+  },
+  username() {
+    return faker.internet.domainWord();
+  },
+  website() {
+    return faker.internet.url();
+  },
 });
