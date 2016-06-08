@@ -1,16 +1,29 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('organization-header', 'Integration | Component | organization header', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:credentials', mockCredentials);
+  }
 });
 
-let organization = {
+let user = Ember.Object.create({});
+let organization = Ember.Object.create({
   name: 'Test Organization',
   description: 'A test organization',
   iconThumbUrl: 'icon_thumb.png',
   iconLargeUrl: 'icon_large.png',
-};
+});
+
+let mockCredentials = Ember.Service.extend({
+  currentUserMembership: Ember.Object.create({
+    member: user,
+    organization: organization,
+    role: "admin"
+  })
+});
 
 test('it renders', function(assert) {
   assert.expect(1);
@@ -20,7 +33,7 @@ test('it renders', function(assert) {
   assert.equal(this.$('.organization-header').length, 1);
 });
 
-test('when not expanded', function(assert) {
+test('it renders properly when not expanded', function(assert) {
   assert.expect(5);
 
   this.set('organization', organization);
@@ -34,7 +47,7 @@ test('when not expanded', function(assert) {
   assert.equal(this.$('p').length, 0, "Hides the description");
 });
 
-test('when expanded', function(assert) {
+test('it renders properly when expanded', function(assert) {
   assert.expect(5);
 
   this.set('organization', organization);

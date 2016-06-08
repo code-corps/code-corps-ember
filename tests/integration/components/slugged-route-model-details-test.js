@@ -1,8 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('slugged-route-model-details', 'Integration | Component | slugged route model details', {
   integration: true,
+  beforeEach() {
+    this.register('service:credentials', Ember.Service);
+  },
 });
 
 test('it renders', function(assert) {

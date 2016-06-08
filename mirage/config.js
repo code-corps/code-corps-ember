@@ -82,6 +82,8 @@ export default function() {
 
   this.delete('/user_categories/:id');
 
+  this.get('/organization_memberships/:id');
+
   this.get('/organizations/:id');
 
   this.get('/projects/:id');

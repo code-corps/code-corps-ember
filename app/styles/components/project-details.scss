@@ -3,6 +3,14 @@
 
   @include clearfix;
 
+  .basic-details {
+    @include span-columns(8);
+  }
+
+  .more-details {
+    @include span-columns(4);
+  }
+
   h2 {
     margin: 7px 0;
     font-size: 26px;
@@ -20,16 +28,17 @@
     }
   }
 
-  .icon-container, .details-container {
+  .icon-container {
     float: left;
   }
 
   .details-container {
-    padding-left: 10px;
+    padding-left: 70px;
   }
 
   .organization {
     margin-top: 8px;
     font-size: 13px;
+    min-height: 25px;
   }
 }

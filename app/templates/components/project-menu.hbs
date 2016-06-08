@@ -1,9 +1,7 @@
-<li>
-  {{#link-to 'project.index' project}}About{{/link-to}}
-</li>
-<li>
-  {{#link-to 'project.posts' project}}Posts{{/link-to}}
-</li>
-<li>
-  {{#link-to 'project.settings.profile' project}}Settings{{/link-to}}
-</li>
+<li>{{#link-to 'project.index' project}}About{{/link-to}}</li>
+<li>{{#link-to 'project.posts' project}}Posts{{/link-to}}</li>
+{{#if session.isAuthenticated}}
+  {{#if (can "manage organization" project.organization membership=credentials.currentUserMembership)}}
+    <li>{{#link-to 'project.settings.profile' project}}Settings{{/link-to}}</li>
+  {{/if}}
+{{/if}}

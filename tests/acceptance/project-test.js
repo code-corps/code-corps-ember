@@ -1,6 +1,7 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 
 let application;
 
@@ -280,5 +281,50 @@ test('Paging and filtering uses query parameters', (assert) => {
 
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 2, 'Visiting URL via params directly, should fetch the correct posts');
+  });
+});
+
+test('A user can join the organization of the project', (assert) => {
+  assert.expect(7);
+
+  let project = createProject();
+  let projectURL = `/${project.organization.slug}/${project.slug}/`;
+  let user = server.create('user');
+
+  visit(projectURL);
+
+  andThen(() => {
+    assert.equal(find('button.join-project').length, 0, 'The link to join project is missing when logged out');
+    assert.equal(find('span.join-project').length, 1, 'The helper indicating user must login to join project is present when logged out');
+
+    authenticateSession(application, { user_id: user.id });
+    visit(projectURL);
+  });
+
+
+  andThen(() => {
+    assert.equal(find('button.join-project').length, 1, 'The link to join the project is present when logged in');
+    assert.equal(find('span.join-project').length, 0, 'The helper indicating user must login to join project is missing when logged in.');
+    click('button.join-project');
+  });
+
+  let done = assert.async();
+
+  server.post('/organization_memberships', (db, request) => {
+    let attributes = JSON.parse(request.requestBody).data.attributes;
+    let relationships = JSON.parse(request.requestBody).data.relationships;
+    assert.equal(attributes.role, 'pending');
+    assert.equal(relationships.member.data.id, user.id);
+    assert.equal(relationships.organization.data.id, project.organization.id);
+    done();
+
+    return {
+      data: {
+        id: 1,
+        type: "organization_memberships",
+        attributes: attributes,
+        relationships: relationships
+      }
+    };
   });
 });

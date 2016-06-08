@@ -21,6 +21,7 @@ export default Owner.extend({
 
   categories: hasMany('category', { async: true }),
   organizations: hasMany('organization', { async: true }),
+  organizationMemberships: hasMany('organization-membership', { async: true }),
   userCategories: hasMany('user-category', { async: true }),
 
   atUsername: Ember.computed('username', function() {

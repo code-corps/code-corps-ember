@@ -20,23 +20,24 @@ test("it displays the organization's details", (assert) => {
   let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
+
   let organization = sluggedRoute.createOwner({
     name: 'Test Organization',
     slug: 'test_organization',
     description: 'Test organization description.'
   }, 'Organization');
+
   sluggedRoute.save();
 
   for (let i = 1; i <= 3; i++) {
-    organization.createProject({
-      slug: `test_project_${i}`,
-      title: `Test project ${i}`
-    });
+    server.schema.projects.create({ organization: organization });
 
-    organization.createMember({
-      username: `username_${i}`
+    server.schema.organizationMemberships.create({
+      member: server.schema.users.create(),
+      organization: organization
     });
   }
+
   organization.save();
 
   visit(organization.slug);
@@ -51,34 +52,13 @@ test("it displays the organization's details", (assert) => {
   });
 });
 
-test("when unauthenticated you can't navigate to settings", (assert) => {
-  assert.expect(1);
-
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    name: 'Test Organization',
-    slug: 'test_organization',
-    description: 'Test organization description.'
-  }, 'Organization');
-  sluggedRoute.save();
-
-  visit(organization.slug);
-  andThen(() => {
-    click('.organization-menu li:eq(1) a');
-  });
-  andThen(() => {
-    assert.equal(find('a.login').text(), 'Sign in', 'Page contains login link');
-  });
-});
-
-test('when authenticated you can navigate to settings', (assert) => {
+test('an admin can navigate to settings', (assert) => {
   assert.expect(3);
 
   let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
+
   let organization = sluggedRoute.createOwner({
     name: 'Test Organization',
     slug: 'test_organization',
@@ -87,89 +67,65 @@ test('when authenticated you can navigate to settings', (assert) => {
   sluggedRoute.save();
 
   let user = server.create('user');
+
+  server.create('organization-membership', {
+    member: user,
+    organization: organization,
+    role: 'admin',
+  });
+
+  // we assume authenticate session here. specific behavior regarding authentication and
+  // showing/hiding of links is handled in the organization-menu component integration test
   authenticateSession(application, { user_id: user.id });
 
   visit(organization.slug);
+
   andThen(() => {
-    assert.ok(find('.organization-menu li:eq(0) a').hasClass('active'), 'The organization projects menu is active');
-    click('.organization-menu li:eq(1) a');
+    assert.ok(find('.organization-menu li a:contains("Projects")').hasClass('active'), 'The organization projects menu is active');
+    Ember.run.next(() => {
+      click('.organization-menu li a:contains("Settings")');
+    });
   });
+
   andThen(() => {
-    assert.ok(find('.organization-menu li:eq(1) a').hasClass('active'), 'The organization settings menu is active');
+    assert.ok(find('.organization-menu li a:contains("Settings")').hasClass('active'), 'The organization settings menu is active');
     assert.equal(find('.organization-settings-form').length, 1, 'The organization settings form renders');
   });
 });
 
-test('you can navigate to projects', (assert) => {
+test('anyone can navigate to projects', (assert) => {
   assert.expect(2);
 
   let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_organization',
   });
+
   let organization = sluggedRoute.createOwner({
     name: 'Test Organization',
     slug: 'test_organization',
     description: 'Test organization description.'
   }, 'Organization');
+
   sluggedRoute.save();
 
-  organization.createProject({
-    title: 'Project Title',
-    slug: 'project',
-  });
+  let project = server.create('project', {organization: organization});
 
   organization.save();
+
+  // no need to create membership. even non-members should be able to visit
+  // organization project list
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
   visit(organization.slug);
+
   andThen(() => {
-    assert.equal(find('.project-item:eq(0) h4').text().trim(), 'Project Title', 'The project in the list is correct');
+    assert.equal(find('.project-item:eq(0) h4').text().trim(), project.title, 'The project in the list is correct');
     click('.project-item:eq(0) a');
   });
+
   andThen(() => {
-    assert.equal(find('h2').text().trim(), 'Project Title', 'The project renders');
+    assert.equal(find('.project-details').length, 1, "The project's details render");
   });
 });
-
-test('you can navigate to members', (assert) => {
-  assert.expect(1);
-
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    name: 'Test Organization',
-    slug: 'test_organization',
-    description: 'Test organization description.'
-  }, 'Organization');
-  sluggedRoute.save();
-
-  organization.createProject({
-    slug: 'test_project_1',
-    title: 'Test project 1'
-  });
-
-  let user = organization.createMember({
-    username: 'username_1',
-  });
-
-  organization.save();
-
-  server.schema.sluggedRoutes.create({
-    slug: 'username_1',
-    userId: user.id
-  });
-
-  visit(organization.slug);
-
-  andThen(() => {
-    click('.organization-members li:eq(0) a');
-  });
-
-  andThen(() => {
-    assert.equal(currentURL(), '/username_1', 'Navigation works');
-  });
-});
-

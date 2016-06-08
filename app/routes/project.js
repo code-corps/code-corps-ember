@@ -8,6 +8,15 @@ export default Ember.Route.extend({
     });
   },
 
+  credentials: Ember.inject.service(),
+
+  afterModel: function(model) {
+    return model.get('organization').then((organization) => {
+      this.get('credentials').setOrganization(organization);
+      return this._super(...arguments);
+    });
+  },
+
   serialize: function(model) {
     if (model) {
       return {

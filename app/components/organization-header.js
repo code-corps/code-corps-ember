@@ -4,4 +4,6 @@ export default Ember.Component.extend({
   classNames: ['organization-header'],
   classNameBindings: ['expanded'],
   expanded: false,
+
+  credentials: Ember.inject.service(),
 });
