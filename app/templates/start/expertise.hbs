@@ -3,7 +3,33 @@
   <h3>We'll match you to projects that need your experience.</h3>
 </div>
 
+<div class="start-roles">
+  <div class="roles-column">
+    <div class="roles-column-header technology"></div>
+    <h3>Technology</h3>
+    {{#each (filter-by "isTechnology" true model) as |role|}}
+      {{role-item role=role}}
+    {{/each}}
+  </div>
+
+  <div class="roles-column">
+    <div class="roles-column-header creative"></div>
+    <h3>Creative</h3>
+    {{#each (filter-by "isCreative" true model) as |role|}}
+      {{role-item role=role}}
+    {{/each}}
+  </div>
+
+  <div class="roles-column">
+    <div class="roles-column-header support"></div>
+    <h3>Support</h3>
+    {{#each (filter-by "isSupport" true model) as |role|}}
+      {{role-item role=role}}
+    {{/each}}
+  </div>
+</div>
+
 <div class="start-actions">
   <p>Finished adding your experience?</p>
-  <button class="default" {{action 'continue'}}>Continue</button>
+  <button class="{{if userRoles.isEmpty "clear" "default"}}" disabled={{userRoles.isEmpty}} {{action 'continue'}}>Continue</button>
 </div>

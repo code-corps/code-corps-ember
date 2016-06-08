@@ -172,4 +172,3 @@ test('you can navigate to members', (assert) => {
     assert.equal(currentURL(), '/username_1', 'Navigation works');
   });
 });
-

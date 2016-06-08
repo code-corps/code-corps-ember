@@ -384,3 +384,25 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
     }
   }
 }
+
+@mixin rolesSprite($spriteVals) {
+  width: nth($spriteVals, 1);
+  height: nth($spriteVals, 2);
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth($spriteVals, 4) nth($spriteVals, 5);
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $sprite-bgiSizeW $spritebgiSizeH;
+  }
+}
+$roles-spritePath: 'assets/images/icons/roles-sprite';
+$roles-spriteURL: $roles-spritePath + '.png';
+$roles-spritex2URL: $roles-spritePath + '@2x.png';
+$bgiSizeW: 181px;
+$bgiSizeH: 210px;
+$technology: 181px 70px $roles-spriteURL 0px 0px $roles-spritex2URL;
+$creative: 181px 70px $roles-spriteURL 0px -70px $roles-spritex2URL;
+$support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;

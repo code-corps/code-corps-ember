@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('user', 'Unit | Model | user', {
+moduleForModel('user-role', 'Unit | Model | user role', {
   // Specify the other units that are required for this test.
-  needs: ['model:category', 'model:organization', 'model:user-category', 'model:user-role']
+  needs: ['model:role', 'model:user']
 });
 
 test('it exists', function(assert) {

@@ -8,7 +8,6 @@ export default Ember.Component.extend({
   actions: {
     save() {
       const flashMessages = Ember.get(this, 'flashMessages');
-
       this.get('organization').save()
         .then(function() {
           flashMessages.success("Organization updated successfully");
