@@ -2,6 +2,18 @@ import Ember from 'ember';
 import ApplicationAdapter from './application';
 
 export default ApplicationAdapter.extend({
+  // need to drop out the slug query parameter,
+  // otherwise it will get auto-added to the end of the url
+  sortQueryParams: function(query) {
+    query = query || {};
+
+    if (query.slug) {
+      delete query.slug;
+    }
+
+    return query;
+  },
+
   urlForQueryRecord: function(query) {
     query = query || {};
 
@@ -24,16 +36,4 @@ export default ApplicationAdapter.extend({
       return this._super.apply(arguments);
     }
   },
-
-  // need to drop out the slug query parameter,
-  // otherwise it will get auto-added to the end of the url
-  sortQueryParams: function(query) {
-    query = query || {};
-
-    if (query.slug) {
-      delete query.slug;
-    }
-
-    return query;
-  }
 });

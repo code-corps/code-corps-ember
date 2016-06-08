@@ -27,5 +27,5 @@ export default ApplicationAdapter.extend({
     if (!host && url) { url = '/' + url; }
 
     return url;
-  }
+  },
 });

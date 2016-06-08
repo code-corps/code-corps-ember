@@ -4,7 +4,6 @@ const { service } = Ember.inject;
 
 export default Ember.Service.extend({
   currentUser: service(),
-
   totalSteps: Ember.computed.alias('_steps.length'),
 
   _steps: [
@@ -37,21 +36,18 @@ export default Ember.Service.extend({
     return steps.find((step) => { return step.state === state; });
   }),
 
+  currentRoute: Ember.computed.alias('_currentStep.currentRoute'),
   currentStepNumber: Ember.computed.alias('_currentStep.number'),
   currentStepState: Ember.computed.alias('_currentStep.state'),
-
+  isOnboarding: Ember.computed.or('isSelectingCategories', 'isSelectingRoles', 'isSelectingSkills'),
   isSelectingCategories: Ember.computed.equal('currentStepState', 'signed_up'),
   isSelectingRoles: Ember.computed.equal('currentStepState', 'selected_categories'),
   isSelectingSkills: Ember.computed.equal('currentStepState', 'selected_roles'),
-
-  isOnboarding: Ember.computed.or('isSelectingCategories', 'isSelectingRoles', 'isSelectingSkills'),
+  nextRoute: Ember.computed.alias('_currentStep.nextRoute'),
+  nextStateTransition: Ember.computed.alias('_currentStep.nextStateTransition'),
+  routes: Ember.computed.mapBy('_steps', 'currentRoute'),
 
   progressPercentage: Ember.computed('currentStepNumber', 'totalSteps', function() {
     return (this.get('currentStepNumber') / this.get('totalSteps')) * 100;
   }),
-
-  currentRoute: Ember.computed.alias('_currentStep.currentRoute'),
-  nextRoute: Ember.computed.alias('_currentStep.nextRoute'),
-  nextStateTransition: Ember.computed.alias('_currentStep.nextStateTransition'),
-  routes: Ember.computed.mapBy('_steps', 'currentRoute'),
 });

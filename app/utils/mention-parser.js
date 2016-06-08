@@ -8,6 +8,11 @@ function parse(body, mentions) {
   }
 }
 
+function _generateLink(mention) {
+  let username = Ember.get(mention, 'username');
+  return `<a href="/${username}" class="username">@${username}</a>`;
+}
+
 function _parseMentions(body, mentions) {
 
   let parsedBody = '';
@@ -26,12 +31,6 @@ function _parseMentions(body, mentions) {
   parsedBody += body.slice(currentPosition, body.length);
 
   return parsedBody;
-}
-
-
-function _generateLink(mention) {
-  let username = Ember.get(mention, 'username');
-  return `<a href="/${username}" class="username">@${username}</a>`;
 }
 
 export { parse };

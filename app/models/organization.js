@@ -1,15 +1,15 @@
-import DS from 'ember-data';
 import Owner from 'code-corps-ember/models/owner';
-
-var attr = DS.attr;
+import attr from 'ember-data/attr';
+import { hasMany } from 'ember-data/relationships';
 
 export default Owner.extend({
+  base64IconData: attr(),
+  description: attr(),
+  iconLargeUrl: attr(),
+  iconThumbUrl: attr(),
   name: attr(),
   slug: attr(),
-  description: attr(),
-  base64IconData: attr(),
-  iconThumbUrl: attr(),
-  iconLargeUrl: attr(),
-  projects: DS.hasMany('project', { async: true }),
-  members: DS.hasMany('user', { async: true }),
+
+  members: hasMany('user', { async: true }),
+  projects: hasMany('project', { async: true }),
 });

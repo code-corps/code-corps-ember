@@ -10,5 +10,5 @@ export default Ember.Component.extend({
 
   click() {
     this.get('codeTheme').toggle();
-  }
+  },
 });

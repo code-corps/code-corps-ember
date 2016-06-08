@@ -9,11 +9,11 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    hide: function() {
+      this.set('hidden', true);
+    },
     toggle: function() {
       this.toggleProperty('hidden');
     },
-    hide: function() {
-      this.set('hidden', true);
-    }
   }
 });

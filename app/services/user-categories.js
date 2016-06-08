@@ -4,23 +4,24 @@ export default Ember.Service.extend({
   currentUser: Ember.inject.service(),
   store: Ember.inject.service(),
 
+  isEmpty: Ember.computed.empty('categories'),
   user: Ember.computed.alias('currentUser.user'),
-
   usersCategories: Ember.computed.alias('user.categories'),
-
   usersUserCategories: Ember.computed.alias('user.userCategories'),
 
   categories: Ember.computed('usersCategories.[]', 'usersUserCategories.[]', 'user', function() {
     return this.get('usersCategories');
   }),
 
-  isEmpty: Ember.computed.empty('categories'),
-
-  hasCategory: function(category) {
-    let categories = this.get('categories');
-    if(categories) {
-      return categories.contains(category);
-    }
+  addCategory(category) {
+    let user = this.get('user');
+    let userCategory = this.get('store').createRecord('user-category', {
+      user: user,
+      category: category
+    });
+    return userCategory.save().then(()=> {
+      this.get('user.categories').pushObject(category);
+    });
   },
 
   findUserCategory: function(category) {
@@ -35,15 +36,11 @@ export default Ember.Service.extend({
     return userCategory;
   },
 
-  addCategory(category) {
-    let user = this.get('user');
-    let userCategory = this.get('store').createRecord('user-category', {
-      user: user,
-      category: category
-    });
-    return userCategory.save().then(()=> {
-      this.get('user.categories').pushObject(category);
-    });
+  hasCategory: function(category) {
+    let categories = this.get('categories');
+    if(categories) {
+      return categories.contains(category);
+    }
   },
 
   removeCategory(category) {

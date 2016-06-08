@@ -2,17 +2,8 @@ import Ember from 'ember';
 import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetcher';
 
 export default Ember.Component.extend(PostMentionFetcherMixin, {
-  tagName: 'form',
   classNames: ['post-new-form'],
   classNameBindings: ['post.postType'],
-
-  types: [
-    {label: "Task",  slug: "task"},
-    {label: "Issue", slug: "issue"},
-    {label: "Progress", slug: "progress"},
-    {label: "Idea", slug: "idea"}
-  ],
-
   placeholders: [
     {
       type: "task",
@@ -31,6 +22,13 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
       text: "What's your idea?"
     },
   ],
+  tagName: 'form',
+  types: [
+    {label: "Task",  slug: "task"},
+    {label: "Issue", slug: "issue"},
+    {label: "Progress", slug: "progress"},
+    {label: "Idea", slug: "idea"}
+  ],
 
   placeholder: Ember.computed('post.postType', function() {
     let postType = this.get('post.postType');
@@ -43,17 +41,17 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
   }),
 
   actions: {
-    submit() {
-      let post = this.get('post');
-      post.set('preview', false);
-      this.sendAction('savePost', post);
-    },
-
     generatePreview(markdown) {
       let post = this.get('post');
       post.set('markdownPreview', markdown);
       post.set('preview', true);
       post.save().then(() => this.send('fetch', 'preview'));
-    }
-  }
+    },
+
+    submit() {
+      let post = this.get('post');
+      post.set('preview', false);
+      this.sendAction('savePost', post);
+    },
+  },
 });

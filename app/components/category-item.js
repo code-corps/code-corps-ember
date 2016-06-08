@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['category-item'],
   classNameBindings: ['selected'],
-
   isLoading: false,
 
   currentUser: Ember.inject.service(),
@@ -30,6 +29,7 @@ export default Ember.Component.extend({
         this.set('isLoading', false);
       });
     },
+
     removeCategory(category) {
       this.set('isLoading', true);
       let userCategories = this.get('userCategories');

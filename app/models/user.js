@@ -4,18 +4,19 @@ import { hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
 export default Owner.extend({
+  base64PhotoData: attr(),
+  biography: attr(),
+  createdAt: attr('date'),
+  email: attr(),
   name: attr(),
+  password: attr(),
+  photoLargeUrl: attr(),
+  photoThumbUrl: attr(),
+  state: attr(),
+  twitter: attr(),
   username: attr(),
   website: attr(),
-  twitter: attr(),
-  biography: attr(),
-  email: attr(),
-  password: attr(),
-  photoThumbUrl: attr(),
-  photoLargeUrl: attr(),
-  createdAt: attr('date'),
-  base64PhotoData: attr(),
-  state: attr(),
+
   stateTransition: attr(),
 
   categories: hasMany('category', { async: true }),
@@ -25,6 +26,7 @@ export default Owner.extend({
   atUsername: Ember.computed('username', function() {
     return `@${this.get('username')}`;
   }),
+
   twitterUrl: Ember.computed('twitter', function() {
     return `https://twitter.com/${this.get('twitter')}`;
   }),

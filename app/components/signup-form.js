@@ -3,8 +3,8 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['signup-form'],
 
-  store: Ember.inject.service(),
   session: Ember.inject.service(),
+  store: Ember.inject.service(),
 
   init() {
     this._super(...arguments);
@@ -32,6 +32,6 @@ export default Ember.Component.extend({
           this.set('error', error);
         }
       });
-    }
-  }
+    },
+  },
 });

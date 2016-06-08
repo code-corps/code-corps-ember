@@ -3,9 +3,10 @@ import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
+  description: attr('string'),
   name: attr('string'),
   slug: attr('string'),
-  description: attr('string'),
-  users: hasMany('user', { async: true }),
+
   userCategories: hasMany('user-category', { async: true }),
+  users: hasMany('user', { async: true }),
 });

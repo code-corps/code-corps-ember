@@ -7,14 +7,14 @@ export default Ember.Component.extend({
   active: false,
 
   actions: {
-    toggle: function() {
-      this.toggleProperty('active');
+    filterByType: function(type) {
+      this.sendAction('filterByType', type);
     },
     hide: function() {
       this.set('active', false);
     },
-    filterByType: function(type) {
-      this.sendAction('filterByType', type);
+    toggle: function() {
+      this.toggleProperty('active');
     },
-  }
+  },
 });
