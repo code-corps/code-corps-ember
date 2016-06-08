@@ -2,7 +2,6 @@ import Ember from 'ember';
 import ESASession from "ember-simple-auth/services/session";
 
 export default ESASession.extend({
-
   store: Ember.inject.service(),
 
   setCurrentUser: function() {
@@ -14,6 +13,5 @@ export default ESASession.extend({
         user.get('userCategories');
       });
     }
-  }.observes('isAuthenticated')
-
+  }.observes('isAuthenticated'),
 });

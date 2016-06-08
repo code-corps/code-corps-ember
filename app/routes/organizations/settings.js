@@ -8,5 +8,5 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     }).then(function(result) {
       return result.get('owner');
     });
-  }
+  },
 });

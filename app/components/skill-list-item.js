@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'li',
   classNameBindings: ['matched'],
+  tagName: 'li',
 
   didRender() {
     this._super(...arguments);
@@ -12,5 +12,5 @@ export default Ember.Component.extend({
     if (elementBottom > parentBottom) {
       this.sendAction();
     }
-  }
+  },
 });

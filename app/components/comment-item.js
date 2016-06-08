@@ -7,15 +7,14 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
 
   currentUser: Ember.inject.service(),
 
-  currentUserId: Ember.computed.alias('currentUser.user.id'),
+  canEdit: Ember.computed.alias('currentUserIsCommentAuthor'),
   commentAuthorId: Ember.computed.alias('comment.user.id'),
+  currentUserId: Ember.computed.alias('currentUser.user.id'),
   currentUserIsCommentAuthor: Ember.computed('currentUserId', 'commentAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
     let authorId = parseInt(this.get('commentAuthorId'), 10);
     return userId === authorId;
   }),
-
-  canEdit: Ember.computed.alias('currentUserIsCommentAuthor'),
 
   init() {
     this.set('isEditing', false);
@@ -24,12 +23,19 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
   },
 
   actions: {
+    cancel() {
+      this.set('isEditing', false);
+    },
+
     edit() {
       this.set('isEditing', true);
     },
 
-    cancel() {
-      this.set('isEditing', false);
+    generatePreview(markdown) {
+      let comment = this.get('comment');
+      comment.set('markdownPreview', markdown);
+      comment.set('preview', true);
+      comment.save().then(() => this.send('fetch', 'preview'));
     },
 
     save() {
@@ -41,12 +47,5 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
         component.send('fetch', 'published');
       });
     },
-
-    generatePreview(markdown) {
-      let comment = this.get('comment');
-      comment.set('markdownPreview', markdown);
-      comment.set('preview', true);
-      comment.save().then(() => this.send('fetch', 'preview'));
-    }
   }
 });

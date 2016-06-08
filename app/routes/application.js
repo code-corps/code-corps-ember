@@ -24,42 +24,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     });
   },
 
-  _attemptTransition(user) {
-    if (this.get('onboarding.isOnboarding')) {
-      this._transitionToOnboarding(user);
-    }
-  },
-
-  _transitionToOnboarding(user) {
-    this.transitionTo(this._transitionDestination(user));
-  },
-
-  _transitionDestination() {
-    return this.get('onboarding.currentRoute');
-  },
-
-  _loadCurrentUser() {
-    return this.get('currentUser').loadCurrentUser();
-  },
-
-  _abortAndFixHistory(transition) {
-    transition.abort();
-    if (window.history) {
-      window.history.forward();
-    }
-  },
-
   actions: {
-    // see https://github.com/emberjs/ember.js/issues/12791
-    // if we don't handle the error action at application level
-    // te error will continue to be thrown, causing tests to fail
-    // and the error to be outputed to console, even though we technically
-    // "handled" it with our application_error route/template
-    error(e) {
-      console.error(e);
-      this.intermediateTransitionTo('application_error', e);
-    },
-
     didTransition: function() {
       // Clear flash messages on every transition
       this.get('flashMessages').clearMessages();
@@ -74,5 +39,40 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         this._abortAndFixHistory(transition);
       }
     },
-  }
+
+    // see https://github.com/emberjs/ember.js/issues/12791
+    // if we don't handle the error action at application level
+    // te error will continue to be thrown, causing tests to fail
+    // and the error to be outputed to console, even though we technically
+    // "handled" it with our application_error route/template
+    error(e) {
+      console.error(e);
+      this.intermediateTransitionTo('application_error', e);
+    },
+  },
+
+  _abortAndFixHistory(transition) {
+    transition.abort();
+    if (window.history) {
+      window.history.forward();
+    }
+  },
+
+  _attemptTransition(user) {
+    if (this.get('onboarding.isOnboarding')) {
+      this._transitionToOnboarding(user);
+    }
+  },
+
+  _loadCurrentUser() {
+    return this.get('currentUser').loadCurrentUser();
+  },
+
+  _transitionToOnboarding(user) {
+    this.transitionTo(this._transitionDestination(user));
+  },
+
+  _transitionDestination() {
+    return this.get('onboarding.currentRoute');
+  },
 });

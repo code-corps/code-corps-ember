@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
   isLight: true,
+
   isDark: Ember.computed.not('isLight'),
 
   className: Ember.computed('isLight', 'isDark', function() {
@@ -14,5 +15,5 @@ export default Ember.Service.extend({
 
   toggle() {
     this.toggleProperty('isLight');
-  }
+  },
 });

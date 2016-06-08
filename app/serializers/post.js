@@ -1,10 +1,6 @@
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
-  _attributeIsPreviewOnly(attribute) {
-    return ['preview', 'markdownPreview'].indexOf(attribute.name) > -1;
-  },
-
   serializeAttribute: function(snapshot, json, key, attribute) {
     // for creating records, just regularly serialize the payload
     if (snapshot.record.get('isNew')) {
@@ -35,5 +31,9 @@ export default ApplicationSerializer.extend({
         }
       }
     }
-  }
+  },
+
+  _attributeIsPreviewOnly(attribute) {
+    return ['preview', 'markdownPreview'].indexOf(attribute.name) > -1;
+  },
 });

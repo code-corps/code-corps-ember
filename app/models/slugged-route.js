@@ -1,7 +1,10 @@
-import DS from 'ember-data';
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo } from 'ember-data/relationships';
 
-export default DS.Model.extend({
-  owner: DS.belongsTo('owner', { async: true, polymorphic: true }),
-  ownerType: DS.attr('string'),
-  slug: DS.attr('string'),
+export default Model.extend({
+  ownerType: attr('string'),
+  slug: attr('string'),
+
+  owner: belongsTo('owner', { async: true, polymorphic: true }),
 });

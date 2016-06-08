@@ -8,17 +8,17 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
   session: Ember.inject.service(),
 
   actions: {
-    saveComment() {
-      let comment = this.get('comment');
-      comment.set('preview', false);
-      this.sendAction('saveComment', comment);
-    },
-
     generatePreview(markdown) {
       let comment = this.get('comment');
       comment.set('markdownPreview', markdown);
       comment.set('preview', true);
       comment.save().then(() => this.send('fetch', 'preview'));
-    }
+    },
+
+    saveComment() {
+      let comment = this.get('comment');
+      comment.set('preview', false);
+      this.sendAction('saveComment', comment);
+    },
   }
 });

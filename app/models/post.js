@@ -1,27 +1,24 @@
-import DS from 'ember-data';
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-export default DS.Model.extend({
-  title: DS.attr('string'),
+export default Model.extend({
+  body: attr('string'),
+  bodyPreview: attr('string'),
+  createdAt: attr('date'),
+  likesCount: attr('number'),
+  markdown: attr('string'),
+  markdownPreview: attr('string'),
+  number: attr('number'),
+  postType: attr('string'),
+  preview: attr('boolean'),
+  title: attr('string'),
 
-  body: DS.attr('string'),
-  bodyPreview: DS.attr('string'),
-
-  markdown: DS.attr('string'),
-  markdownPreview: DS.attr('string'),
-
-  preview: DS.attr('boolean'),
-
-  postType: DS.attr('string'),
-  likesCount: DS.attr('number'),
-  number: DS.attr('number'),
-  createdAt: DS.attr('date'),
-
-  project: DS.belongsTo('project', { async: true }),
-  user: DS.belongsTo('user', { async: true }),
-  comments: DS.hasMany('comment', { async: true }),
-
-  postUserMentions: DS.hasMany('post-user-mention', { asnyc: true }),
+  comments: hasMany('comment', { async: true }),
+  postUserMentions: hasMany('post-user-mention', { asnyc: true }),
+  project: belongsTo('project', { async: true }),
+  user: belongsTo('user', { async: true }),
 
   containsCode: Ember.computed('body', function() {
     let body = this.get('body');

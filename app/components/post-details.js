@@ -6,15 +6,15 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
 
   currentUser: Ember.inject.service(),
 
+  canEdit: Ember.computed.alias('currentUserIsPostAuthor'),
   currentUserId: Ember.computed.alias('currentUser.user.id'),
   postAuthorId: Ember.computed.alias('post.user.id'),
+
   currentUserIsPostAuthor: Ember.computed('currentUserId', 'postAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
     let authorId = parseInt(this.get('postAuthorId'), 10);
     return userId === authorId;
   }),
-
-  canEdit: Ember.computed.alias('currentUserIsPostAuthor'),
 
   init() {
     this.set('isEditingBody', false);
@@ -23,12 +23,12 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
   },
 
   actions: {
-    editPostBody() {
-      this.set('isEditingBody', true);
-    },
-
     cancelEditingPostBody() {
       this.set('isEditingBody', false);
+    },
+
+    editPostBody() {
+      this.set('isEditingBody', true);
     },
 
     generatePreview(markdown) {
