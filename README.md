@@ -4,6 +4,13 @@
 
 This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Rails JSON API.
 
+Contributing
+------------
+
+We'd love to have you contribute to Code Corps directly!
+
+To do so, please read the guidelines in our [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
@@ -46,7 +53,7 @@ You should refer to our [style guide](STYLEGUIDE.md) for writing Ember.js, HTML/
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+The app uses Circle for continuous integration and deploys automatically to a staging server when merging into `develop` and to production when merging into `master`.
 
 ## Further Reading / Useful Links
 
