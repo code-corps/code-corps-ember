@@ -23,6 +23,7 @@ export default Owner.extend({
   organizationMemberships: hasMany('organization-membership', { async: true }),
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
+  userSkills: hasMany('user-skill', { async: true }),
 
   atUsername: Ember.computed('username', function() {
     return `@${this.get('username')}`;

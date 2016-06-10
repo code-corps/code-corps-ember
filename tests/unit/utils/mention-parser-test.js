@@ -4,7 +4,6 @@ import Ember from 'ember';
 
 module('Unit | Utility | mention parser');
 
-// Replace this with your real tests.
 test('it replaces all "@username" mention strings with links to the user profile', function(assert) {
   assert.expect(1);
 
@@ -28,7 +27,6 @@ test('it replaces all "@username" mention strings with links to the user profile
   let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
 
   assert.equal(parse(body, mentions), expectedOutput);
-
 });
 
 test('it returns the unmodified post string when there are no mentions', function(assert) {

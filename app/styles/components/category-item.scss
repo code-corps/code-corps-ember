@@ -1,6 +1,6 @@
 .category-item {
-  @include omega(4n);
-  @include span-columns(3);
+  @include omega(5n);
+  @include span-columns(2.4);
 
   text-align: center;
 
@@ -12,7 +12,6 @@
     color: $light-text;
     font-size: 14px;
     margin: 10px 0;
-    padding: 0 20px;
 
     &.selected {
       color: $default-color;
