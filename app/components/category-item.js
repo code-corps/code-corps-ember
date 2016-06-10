@@ -5,17 +5,15 @@ export default Ember.Component.extend({
   classNameBindings: ['selected'],
   isLoading: false,
 
-  currentUser: Ember.inject.service(),
   flashMessages: Ember.inject.service(),
   userCategories: Ember.inject.service(),
 
-  user: Ember.computed.alias('currentUser.user'),
-  usersCategories: Ember.computed.alias('user.categories'),
+  selected: Ember.computed.notEmpty('userCategory'),
 
-  selected: Ember.computed('category', 'usersCategories', function() {
+  userCategory: Ember.computed('category', 'userCategories.userCategories', function() {
     let category = this.get('category');
     let userCategories = this.get('userCategories');
-    return userCategories.hasCategory(category);
+    return userCategories.findUserCategory(category);
   }),
 
   actions: {

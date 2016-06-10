@@ -1,0 +1,32 @@
+.start-roles {
+  margin: 30px 0;
+}
+
+.roles-column {
+  @include span-columns(4);
+  text-align: center;
+
+  h3 {
+    color: $dark-text;
+    font-size: 24px;
+    font-weight: 300;
+    margin: 20px 0;
+  }
+}
+
+.roles-column-header {
+  display: inline-block;
+
+  &.creative {
+    @include rolesSprite($creative);
+    margin-left: 5px;
+  }
+
+  &.technology {
+    @include rolesSprite($technology);
+  }
+
+  &.support {
+    @include rolesSprite($support);
+  }
+}

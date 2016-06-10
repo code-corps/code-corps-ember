@@ -7,27 +7,22 @@ moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
     mockUserCategory.set('categoryId', defaultCategoryId);
-    this.register('service:current-user', mockCurrentUserService);
   }
 });
 
 let defaultCategoryId = 2;
 
-let mockCurrentUserService = Ember.Service.extend({
-  user: {
-    categories: []
-  },
-});
-
 let mockUserCategoriesService = Ember.Service.extend({
-  hasCategory(category) {
-    return category.id === mockUserCategory.get('categoryId');
+  findUserCategory(category) {
+    if (category.id === mockUserCategory.get('categoryId')) {
+      return mockUserCategory;
+    }
   },
   addCategory(category) {
     return new Ember.RSVP.Promise((fulfill) => {
       Ember.run.next(() => {
         mockUserCategory.set('categoryId', category.get('id'));
-        this.container.lookup('service:current-user').set('user.categories', [category]);
+        this.container.lookup('service:user-categories').set('userCategories', [mockUserCategory]);
         fulfill();
       });
     });
@@ -36,7 +31,7 @@ let mockUserCategoriesService = Ember.Service.extend({
     return new Ember.RSVP.Promise((fulfill, reject) => {
       Ember.run.next(() => {
         mockUserCategory.set('categoryId', null);
-        this.container.lookup('service:current-user').set('user.categories', []);
+        this.container.lookup('service:user-categories').set('userCategories', []);
         reject();
       });
     });
@@ -44,8 +39,10 @@ let mockUserCategoriesService = Ember.Service.extend({
 });
 
 let mockUserCategoriesServiceForErrors = Ember.Service.extend({
-  hasCategory(category) {
-    return category.id === mockUserCategory.get('categoryId');
+  findUserCategory(category) {
+    if (category.id === mockUserCategory.get('categoryId')) {
+      return mockUserCategory;
+    }
   },
   addCategory() {
     return Ember.RSVP.reject();

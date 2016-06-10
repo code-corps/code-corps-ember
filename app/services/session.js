@@ -9,8 +9,6 @@ export default ESASession.extend({
       let id = this.get('session.authenticated.user_id');
       this.get('store').findRecord('user', id).then((user) => {
         this.set('currentUser', user);
-        user.get('categories');
-        user.get('userCategories');
       });
     }
   }.observes('isAuthenticated'),

@@ -30,7 +30,6 @@ export default MirageApplicationSerializer.extend({
       });
     });
 
-
     return { data: members };
   }
 });
