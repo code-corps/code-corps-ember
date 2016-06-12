@@ -71,6 +71,7 @@ export default function() {
   this.get('/categories');
 
   this.get('/user_categories', { /* coalesce: true */ });
+  this.get('/user_categories/:id');
 
   // TODO: Make this work when relationships work
   this.post('/user_categories', (schema, request) => {
@@ -110,6 +111,14 @@ export default function() {
   //   let ids = request.queryParams["filter[id]"];
   //   return schema.users.find(ids.split(','));
   // });
+
+  this.get('/users/email_available', () => {
+    return { available: true, valid: true };
+  });
+
+  this.get('/users/username_available', () => {
+    return { available: true, valid: true };
+  });
 
   this.get('/user', (schema) => {
     // due to the nature of how we fetch the current user, all we can do here is

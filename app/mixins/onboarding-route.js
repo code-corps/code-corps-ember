@@ -12,7 +12,6 @@ export default Ember.Mixin.create({
     let routes = this.get('onboarding.routes');
     let target = transition.targetName;
     let user = this.get('currentUser.user');
-
     if (isOnboarding && target !== expectedOnboardingRoute) {
       this._abortAndFixHistory(transition);
     } else if (isOnboarding) {

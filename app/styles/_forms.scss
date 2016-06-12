@@ -2,10 +2,12 @@
   @include clearfix;
 
   margin: 0 0 10px 0;
+  position: relative;
 
   #{$all-text-inputs} {
-    width: 100%;
+    float: left;
     max-width: 100%;
+    width: 100%;
   }
 
   > #{$all-buttons}, > .button {
@@ -16,8 +18,8 @@
     }
 
     &.right {
-      margin-right: 0px;
       margin-left: 5px;
+      margin-right: 0px;
       &:last-child {
         margin-left: 0px;
       }
@@ -55,6 +57,64 @@ form {
 .signup-form {
   .input-group {
     margin: 0 0 24px 0;
+  }
+}
+
+.suggestions {
+  left: 394px;
+  position: absolute;
+  width: 250px;
+
+  p {
+    font-size: 13px;
+    margin: 4px 0;
+
+    &:before {
+      content: "";
+      display: block;
+      float: left;
+      height: 10px;
+      margin: 11px 10px;
+      width: 12px;
+    }
+
+    &.ok {
+      &:before { @include sprite($tick-blue); }
+    }
+
+    &.not-ok {
+      color: $red;
+
+      &:before { @include sprite($cross-red); }
+    }
+
+    &.simple {
+      ul {
+        padding-top: 7px;
+      }
+    }
+
+    ul {
+      padding-left: 36px;
+    }
+
+    li {
+      margin-bottom: 2px;
+      &.highlight {
+        color: $dark-blue;
+      }
+    }
+  }
+}
+
+.strength {
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  width: 50px;
+
+  .progress-bar-container {
+    height: 10px;
   }
 }
 

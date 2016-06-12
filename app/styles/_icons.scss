@@ -35,9 +35,25 @@ $light-theme: 24px 19px $spriteURL 0px -82px $spritex2URL;
 $dark-theme: 24px 19px $spriteURL -24px -82px $spritex2URL;
 $tick-white: 12px 10px $spriteURL 0px -101px $spritex2URL;
 $tick-black: 12px 10px $spriteURL -12px -101px $spritex2URL;
+$tick-blue: 12px 10px $spriteURL -24px -101px $spritex2URL;
+$cross-red: 16px 10px $spriteURL -36px -101px $spritex2URL;
+$enter-blue: 16px 10px $spriteURL -52px -101px $spritex2URL;
 $check-area: 18px 16px $spriteURL 0px -111px $spritex2URL;
 $check-area-white: 18px 16px $spriteURL -18px -111px $spritex2URL;
 $check-mark: 18px 16px $spriteURL -36px -111px $spritex2URL;
+$x-mark: 18px 16px $spriteURL -54px -111px $spritex2URL;
+
+@mixin cssSprite( $spriteVals ) {
+  width: nth( $spriteVals, 1 );
+  height: nth( $spriteVals, 2 );
+  background-repeat: no-repeat;
+  background-image: url( #{ nth( $spriteVals, 3 ) } );
+  background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+  @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+    background-image: url( #{ nth( $spriteVals, 6 ) } );
+    background-size: $bgiSizeW $bgiSizeH;
+  }
+}
 
 $postTypeIcons: (
   "idea": $idea,
