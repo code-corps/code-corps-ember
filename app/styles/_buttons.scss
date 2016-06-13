@@ -109,6 +109,10 @@
     }
   }
 
+  &.has-error {
+    @include shake;
+  }
+
   span {
     &.check-area, &.check-mark {
       display: inline-block;

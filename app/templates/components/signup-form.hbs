@@ -1,27 +1,11 @@
 <form>
   <h2>Join Code Corps today.</h2>
+
+  {{signup-username-input user=user usernameValidated="usernameValidated"}}
+  {{signup-email-input user=user emailValidated="emailValidated"}}
+  {{signup-password-input user=user}}
   <div class="input-group">
-    {{#auto-focus}}
-      {{input name="username" autocapitalize="off" autofocus=true tabindex=0 type="text" placeholder='Username' value=user.username}}
-    {{/auto-focus}}
-    {{#each user.errors.username as |error|}}
-      <p class="error">Your username {{error.message}}.</p>
-    {{/each}}
-  </div>
-  <div class="input-group">
-    {{input name="email" autocapitalize="off" type="text" placeholder='Email' value=user.email}}
-    {{#each user.errors.email as |error|}}
-      <p class="error">Your email {{error.message}}.</p>
-    {{/each}}
-  </div>
-  <div class="input-group">
-    {{input name="password" type="password" placeholder='Password' autocomplete="off" value=user.password}}
-    {{#each user.errors.password as |error|}}
-      <p class="error">Your password {{error.message}}.</p>
-    {{/each}}
-  </div>
-  <div class="input-group">
-    <input class="default" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
+    <input class="button default {{if hasError "has-error"}}" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
   </div>
   {{#if error}}
     {{error-formatter error=error}}

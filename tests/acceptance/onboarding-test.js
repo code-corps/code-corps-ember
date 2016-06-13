@@ -113,3 +113,17 @@ test('A user cannot navigate away from the onboarding', (assert) => {
     assert.equal(currentURL(), '/start/interests');
   });
 });
+
+test('A user cannot navigate to onboarding when signed out', (assert) => {
+  assert.expect(4);
+
+  // TODO: Make this work with currentURL(), doesn't work with it right now
+  function validateLoginRoute() {
+    assert.equal(currentPath(), 'login');
+  }
+
+  visit('/start').then(validateLoginRoute);
+  visit('/start/interests').then(validateLoginRoute);
+  visit('/start/skills').then(validateLoginRoute);
+  visit('/start/expertise').then(validateLoginRoute);
+});

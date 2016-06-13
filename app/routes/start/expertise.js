@@ -5,6 +5,7 @@ export default Ember.Route.extend(OnboardingRouteMixin, {
   currentUser: Ember.inject.service(),
 
   beforeModel() {
+    this._super(...arguments);
     let user = this.get('currentUser.user');
     return user.get('user-role');
   },
