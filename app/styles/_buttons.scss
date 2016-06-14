@@ -115,7 +115,7 @@
   }
 
   span {
-    &.check-area, &.check-mark {
+    &.check-area, &.check-mark, &.x-mark {
       display: inline-block;
       height: 16px;
       margin: -3px 10px 0 0;
@@ -129,6 +129,10 @@
 
     &.check-mark {
       @include sprite($check-mark);
+    }
+
+    &.x-mark {
+      @include sprite($x-mark);
     }
 
     &.button-spinner {
@@ -204,8 +208,14 @@
     color: white;
   }
 
+  &.can-delete {
+    @include transition(background 0s ease-in);
+    background: $red;
+    border: 1px solid $red;
+  }
+
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
   }
 }
 

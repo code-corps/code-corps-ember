@@ -1,24 +1,6 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
 
-function generatePostMentions(schema, post, mentionStatus) {
-  let body = post.body || '';
-  let matches = body.match(/@\w+/g) || [];
-
-  matches.forEach((match) => {
-    let username = match.substr(1);
-    let matchedUser = schema.users.where({ username: username }).models[0];
-    if (matchedUser) {
-      let startIndex = body.indexOf(match);
-      let endIndex = startIndex + match.length - 1;
-      schema.postUserMentions.create({
-        username: username, indices: [startIndex, endIndex], status: mentionStatus,
-        userId: matchedUser.id, postId: post.id
-      });
-    }
-  });
-}
-
 function generateCommentMentions(schema, comment, mentionStatus) {
   let body = comment.body || '';
   let matches = body.match(/@\w+/g) || [];
@@ -37,6 +19,25 @@ function generateCommentMentions(schema, comment, mentionStatus) {
   });
 }
 
+function generatePostMentions(schema, post, mentionStatus) {
+  let body = post.body || '';
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.users.where({ username: username }).models[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.postUserMentions.create({
+        username: username, indices: [startIndex, endIndex], status: mentionStatus,
+        userId: matchedUser.id, postId: post.id
+      });
+    }
+  });
+}
+
+// The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment_user_mentions', 'comments', 'organizations',
   'post_user_mentions', 'posts', 'projects', 'project_categories',
@@ -44,6 +45,97 @@ const routes = [
 ];
 
 export default function() {
+  /////////////
+  // Categories
+  /////////////
+
+  // GET /categories
+  this.get('/categories');
+
+
+  ////////////////////////
+  // Comment user mentions
+  ////////////////////////
+
+  // GET /comment_user_mentions
+  this.get('/comment_user_mentions', (schema, request) => {
+    let commentId = request.queryParams.comment_id;
+    let comment = schema.comments.find(commentId);
+    let status = request.queryParams.status;
+
+    generateCommentMentions(schema, comment, status);
+
+    return schema.commentUserMentions.where({ commentId: commentId, status: status });
+  });
+
+
+  ///////////
+  // Comments
+  ///////////
+
+  // POST /comments
+  this.post('/comments', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let relationships = requestBody.data.relationships;
+
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+    };
+
+    let rels = {
+      postId: relationships.post.data.id,
+      userId: relationships.user.data.id
+    };
+
+    let comment = schema.create('comment', Ember.merge(attrs, rels));
+    return comment;
+  });
+
+  // GET /comments/:id
+  this.patch('/comments/:id', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let commentId = request.params.id;
+    let comment = schema.comments.find(commentId);
+    // the API takes takes markdown_preview and renders body_preview, then copies
+    // both to markdown and body respectively
+    let markdown = attributes.markdown_preview;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = {
+      id: commentId,
+      markdown: markdown,
+      markdownPreview: markdown,
+      body: body,
+      bodyPreview: body,
+    };
+
+    // for some reason, post.update(key, value) updates post properties, but
+    // doesn't touch the post.attrs object, which is what is used in response
+    // serialization
+    comment.attrs = attrs;
+
+    comment.commentUserMentions.models.forEach((mention) => mention.destroy());
+    comment.save();
+
+    return comment;
+  });
+
+
+  ////////
+  // OAuth
+  ////////
+
+  // POST /oauth/token
   this.post('/oauth/token', (db, request) => {
     var expected = "grant_type=password&username=josh%40coderly.com&password=password";
 
@@ -68,102 +160,34 @@ export default function() {
     }
   });
 
-  this.get('/categories');
 
-  this.get('/user_categories', { /* coalesce: true */ });
-  this.get('/user_categories/:id');
+  ///////////////////////////
+  // Organization memberships
+  ///////////////////////////
 
-  // TODO: Make this work when relationships work
-  this.post('/user_categories', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let relationships = requestBody.data.relationships;
-    let userId = relationships.user.data.id;
-    let categoryId = relationships.category.data.id;
-    let userCategory = schema.create('userCategory', { categoryId: categoryId, userId: userId });
-    return userCategory;
-  });
-
-  this.delete('/user_categories/:id');
-
-  this.get('/organization_memberships/:id');
+  // POST /organization_memberships
   this.post('/organization_memberships');
 
-  // TODO: Make this work when relationships work
-  this.post('/user_roles', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let relationships = requestBody.data.relationships;
-    let userId = relationships.user.data.id;
-    let roleId = relationships.role.data.id;
-    let userRole = schema.create('userRole', { roleId: roleId, userId: userId });
-    return userRole;
-  });
+  // GET /organization_memberships/:id
+  this.get('/organization_memberships/:id');
 
-  this.delete('/user_roles/:id');
 
+  ////////////////
+  // Organizations
+  ////////////////
+
+  // GET /organizations
   this.get('/organizations', { /* coalesce: true */ });
+
+  // GET /organizations/:id
   this.get('/organizations/:id');
 
-  this.get('/projects/:id');
 
-  this.get('/roles');
+  /////////////////////
+  // Post user mentions
+  /////////////////////
 
-  this.get('/users/:id');
-  // this.get('/users', (schema, request) => {
-  //   let ids = request.queryParams["filter[id]"];
-  //   return schema.users.find(ids.split(','));
-  // });
-
-  this.get('/users/email_available', () => {
-    return { available: true, valid: true };
-  });
-
-  this.get('/users/username_available', () => {
-    return { available: true, valid: true };
-  });
-
-  this.get('/user', (schema) => {
-    // due to the nature of how we fetch the current user, all we can do here is
-    // return one of the users available in the schema, or create a new one
-    let users = schema.users.all();
-    if (users.models.length > 0) {
-      return users.models[0];
-    } else {
-      return schema.create('user');
-    }
-  });
-
-  this.patch('/users/me', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let userId = requestBody.data.id;
-    let user = schema.users.find(userId);
-
-    // Mock out state machine
-    var state;
-    switch (attributes.state_transition) {
-      case 'select_categories':
-        state = 'selected_categories';
-        break;
-      case 'select_roles':
-        state = 'selected_roles';
-        break;
-      case 'select_skills':
-        state = 'selected_skills';
-        break;
-      default:
-        break;
-    }
-
-    let attrs = {
-      id: userId,
-      state: state,
-    };
-
-    user.attrs = attrs;
-    user.save();
-    return user;
-  });
-
+  // GET /post_user_mentions
   this.get('/post_user_mentions', (schema, request) => {
     let postId = request.queryParams.post_id;
     let post = schema.posts.find(postId);
@@ -174,16 +198,12 @@ export default function() {
     return schema.postUserMentions.where({ postId: postId, status: status });
   });
 
-  this.get('/comment_user_mentions', (schema, request) => {
-    let commentId = request.queryParams.comment_id;
-    let comment = schema.comments.find(commentId);
-    let status = request.queryParams.status;
 
-    generateCommentMentions(schema, comment, status);
+  ////////
+  // Posts
+  ////////
 
-    return schema.commentUserMentions.where({ commentId: commentId, status: status });
-  });
-
+  // POST /posts
   this.post('/posts', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -218,7 +238,7 @@ export default function() {
     return post;
   });
 
-
+  // PATCH /posts/:id
   this.patch('/posts/:id', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
@@ -250,67 +270,20 @@ export default function() {
     return post;
   });
 
-  this.post('/comments', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
-
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
-    let body = `<p>${markdown}</p>`;
-
-    let attrs = {
-      markdown: markdown,
-      markdownPreview: markdown,
-      body: body,
-      bodyPreview: body,
-    };
-
-    let rels = {
-      postId: relationships.post.data.id,
-      userId: relationships.user.data.id
-    };
-
-    let comment = schema.create('comment', Ember.merge(attrs, rels));
-    return comment;
-  });
-
-  this.patch('/comments/:id', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let commentId = request.params.id;
-    let comment = schema.comments.find(commentId);
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
-    let body = `<p>${markdown}</p>`;
-
-    let attrs = {
-      id: commentId,
-      markdown: markdown,
-      markdownPreview: markdown,
-      body: body,
-      bodyPreview: body,
-    };
-
-    // for some reason, post.update(key, value) updates post properties, but
-    // doesn't touch the post.attrs object, which is what is used in response
-    // serialization
-    comment.attrs = attrs;
-
-    comment.commentUserMentions.models.forEach((mention) => mention.destroy());
-    comment.save();
-
-    return comment;
-  });
-
   // GET posts/:number/comments
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
     let post = schema.posts.find(postId);
     return post.comments;
   });
+
+
+  ///////////
+  // Projects
+  ///////////
+
+  // GET /projects/:id
+  this.get('/projects/:id');
 
   // GET project/posts
   this.get("/projects/:projectId/posts", (schema, request) => {
@@ -348,6 +321,11 @@ export default function() {
     return postsPage;
   });
 
+
+  ///////////////////////////
+  // Slugs and slugged routes
+  ///////////////////////////
+
   // GET /:slug
   this.get('/:slug', (schema, request) => {
     if (routes.contains(request.params.slug)) {
@@ -373,7 +351,15 @@ export default function() {
     return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
   });
 
-  // GET post/:number
+
+  ///////////
+  // Projects
+  ///////////
+
+  // GET /projects
+  this.get('/projects');
+
+  // GET /projects/:id/post/:number
   this.get('/projects/:projectId/posts/:number', (schema, request) => {
     let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
@@ -382,5 +368,128 @@ export default function() {
     return project.posts.filter((p) => { return p.number === number; }).models[0];
   });
 
-  this.get('/projects');
+
+  ////////
+  // Roles
+  ////////
+
+  // GET /roles
+  this.get('/roles');
+
+
+  /////////
+  // Skills
+  /////////
+
+  // GET /skills
+  this.get('/skills');
+
+
+  ////////
+  // Users
+  ////////
+
+  // GET /user
+  this.get('/user', (schema) => {
+    // due to the nature of how we fetch the current user, all we can do here is
+    // return one of the users available in the schema, or create a new one
+    let users = schema.users.all();
+    if (users.models.length > 0) {
+      return users.models[0];
+    } else {
+      return schema.create('user');
+    }
+  });
+
+  // GET /users/:id
+  this.get('/users/:id');
+  // this.get('/users', (schema, request) => {
+  //   let ids = request.queryParams["filter[id]"];
+  //   return schema.users.find(ids.split(','));
+  // });
+
+  // GET /users/email_available
+  this.get('/users/email_available', () => {
+    return { available: true, valid: true };
+  });
+
+  // PATCH /users/me
+  this.patch('/users/me', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let userId = requestBody.data.id;
+    let user = schema.users.find(userId);
+
+    // Mock out state machine
+    var state;
+    switch (attributes.state_transition) {
+      case 'select_categories':
+        state = 'selected_categories';
+        break;
+      case 'select_roles':
+        state = 'selected_roles';
+        break;
+      case 'select_skills':
+        state = 'selected_skills';
+        break;
+      default:
+        break;
+    }
+
+    let attrs = {
+      id: userId,
+      state: state,
+    };
+
+    user.attrs = attrs;
+    user.save();
+    return user;
+  });
+
+  // GET /users/username_available
+  this.get('/users/username_available', () => {
+    return { available: true, valid: true };
+  });
+
+
+  //////////////////
+  // User categories
+  //////////////////
+
+  // GET /user_categories
+  this.get('/user_categories', { /* coalesce: true */ });
+
+  // POST /user_categories
+  this.post('/user_categories');
+
+  // GET /user_categories/:id
+  this.get('/user_categories/:id');
+
+  // DELETE /user_categories/:id
+  this.delete('/user_categories/:id');
+
+
+  /////////////
+  // User roles
+  /////////////
+
+  // POST /user_roles
+  this.post('/user_roles');
+
+  // DELETE /user_roles
+  this.delete('/user_roles/:id');
+
+
+  //////////////
+  // User skills
+  //////////////
+
+  // GET /user_skills
+  this.get('/user_skills');
+
+  // POST /user_skills
+  this.post('/user_skills');
+
+  // DELETE /user_skills/:id
+  this.delete('/user_skills/:id');
 }

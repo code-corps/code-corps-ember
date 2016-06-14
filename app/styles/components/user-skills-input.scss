@@ -1,0 +1,65 @@
+.user-skills-input {
+  margin: 0 auto;
+  position: relative;
+  width: 400px;
+
+  input {
+    min-width: 400px;
+  }
+
+  .dropdown-menu {
+    min-width: 250px;
+  }
+}
+
+li.skill-dropdown-item {
+  font-weight: 500;
+  padding: 0;
+
+  &.has-skill {
+    &.selected {
+      background: $light-red-background;
+
+      a {
+        color: $danger-color;
+        font-style: italic;
+
+        &:after {
+          @include sprite($cross-red);
+        }
+      }
+    }
+
+    a {
+      color: $dark-blue;
+    }
+  }
+
+  &.selected {
+    background: $light-blue-background;
+
+    a {
+      &:after {
+        @include sprite($enter-blue);
+      }
+    }
+  }
+
+  a {
+    color: $dark-text;
+    display: block;
+    padding: 10px 10px;
+    transition-property: none;
+    width: 100%;
+
+    &:after {
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 10px;
+      margin-top: 5px;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}

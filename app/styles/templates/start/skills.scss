@@ -1,0 +1,35 @@
+.start-skills {
+  @include span-columns(12);
+}
+
+.user-skills-list {
+  @include span-columns(8);
+  @include shift(2);
+
+  margin-top: 30px;
+  margin-bottom: 10px;
+  min-height: 44px;
+  text-align: center;
+
+  > div {
+    display: inline-block;
+  }
+
+  button {
+    margin: 5px 0;
+  }
+
+  p {
+    color: $extra-light-text;
+    font-style: italic;
+    line-height: 44px;
+    margin: 5px 0;
+  }
+}
+
+.user-skills-input-container {
+  @include span-columns(12);
+
+  margin-top: 15px;
+  margin-bottom: 30px;
+}

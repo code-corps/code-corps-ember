@@ -1,0 +1,42 @@
+import Ember from 'ember';
+
+export default Ember.Service.extend({
+  currentUser: Ember.inject.service(),
+  store: Ember.inject.service(),
+
+  isEmpty: Ember.computed.empty('userSkills'),
+  user: Ember.computed.alias('currentUser.user'),
+
+  userSkills: Ember.computed('user.userSkills',
+    'user.userSkills.@each.skill',
+    'user.userSkills.@each.user',
+  function() {
+    return this.get('user.userSkills');
+  }),
+
+  addSkill(skill) {
+    let user = this.get('user');
+    let userSkill = this.get('store').createRecord('user-skill', {
+      user: user,
+      skill: skill
+    });
+    return userSkill.save();
+  },
+
+  findUserSkill: function(skill) {
+    let userSkills = this.get('userSkills');
+    let userSkill = userSkills.find(function(item) {
+      let itemUserId = item.belongsTo('user').id();
+      let itemSkillId = item.belongsTo('skill').id();
+      let userId = this.get('user.id');
+      let skillId = skill.get('id');
+      return (itemUserId === userId) && (itemSkillId === skillId);
+    }.bind(this));
+    return userSkill;
+  },
+
+  removeSkill(skill) {
+    let userSkill = this.findUserSkill(skill);
+    return userSkill.destroyRecord();
+  },
+});

@@ -32,6 +32,9 @@ test('A user can onboard as expected', (assert) => {
     ability: 'Donations',
     kind: 'support'
   });
+  server.create('skill', {
+    title: 'Ruby'
+  });
 
   authenticateSession(application, { user_id: user.id });
 
@@ -89,6 +92,32 @@ test('A user can onboard as expected', (assert) => {
 
   andThen(() => {
     assert.equal(currentURL(), '/start/skills');
+    fillIn('input', 'ru');
+  });
+
+  andThen(() => {
+    find('input').trigger('focus');
+    assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
+    find('.dropdown-menu li:eq(0)').click();
+  });
+
+  andThen(() => {
+    assert.equal(find('.user-skills-list button:eq(0)').text().trim(), 'Ruby');
+    find('.user-skills-list button:eq(0)').click();
+  });
+
+  andThen(() => {
+    assert.equal(find('.user-skills-list button').length, 0);
+    fillIn('input', 'r');
+  });
+
+  andThen(() => {
+    find('input').trigger('focus');
+    assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
+    find('.dropdown-menu li:eq(0)').click();
+  });
+
+  andThen(() => {
     click('.start-actions button');
   });
 

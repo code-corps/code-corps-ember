@@ -67,10 +67,13 @@ $postTypeTextOnBackgroundColors: (
   "task": white,
 );
 
+$light-red-background: #FFE5E1;
+$light-blue-background: #EDF9FF;
+
 $idea-background: #FFF9DE;
-$issue-background: #FFE5E1;
+$issue-background: $light-red-background;
 $progress-background: #EFFFEE;
-$task-background: #EDF9FF;
+$task-background: $light-blue-background;
 
 $postTypeBackgrounds: (
   "idea": $idea-background,
