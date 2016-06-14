@@ -18,10 +18,6 @@ module.exports = function(environment) {
       // when it is created
     },
 
-    typekit: {
-      kitId: 'jkb2eqa'
-    },
-
     flashMessageDefaults: {
       // flash message defaults
       timeout: 2000,
@@ -39,6 +35,23 @@ module.exports = function(environment) {
       preventDuplicates: true
     },
 
+    metricsAdapters: [
+      {
+        name: 'Segment',
+        environments: ['development', 'staging'],
+        config: {
+          key: 'AkZqGsSMgLz15lGhyatw2T0EXnAHfocr'
+        }
+      },
+      {
+        name: 'Segment',
+        environments: ['production'],
+        config: {
+          key: 'Nz7hL2eY2yHzuIwUbExfDanbJp2q0IO0'
+        }
+      },
+    ],
+
     moment: {
       allowEmpty: true // default: false
     },
@@ -51,6 +64,10 @@ module.exports = function(environment) {
 
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
+    },
+
+    typekit: {
+      kitId: 'jkb2eqa'
     },
   };
 

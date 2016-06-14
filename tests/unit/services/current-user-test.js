@@ -15,10 +15,15 @@ test('it returns null for loadCurrentUser when there is no user', function(asser
 });
 
 test('it sets the user when there is a user', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   let service = this.subject({
+    metrics: {
+      identify(user) {
+        assert.equal(user.distinctId, 1);
+      }
+    },
     store: {
-      findRecord: function() {
+      findRecord() {
         return Ember.RSVP.resolve(Ember.Object.create({ id: 1 }));
       }
     },
