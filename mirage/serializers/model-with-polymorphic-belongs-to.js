@@ -6,9 +6,9 @@ export default MirageApplicationSerializer.extend({
     let response;
 
     if (modelOrCollection instanceof Model) {
-      response = this._serializeModel(modelOrCollection, request);
+      response = this._serializePrimaryModel(modelOrCollection, request);
     } else {
-      response = this._serializeCollection(modelOrCollection, request);
+      response = this._serializePrimaryCollection(modelOrCollection, request);
     }
 
     if (this.included.length) {
