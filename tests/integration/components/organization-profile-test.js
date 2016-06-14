@@ -1,8 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('organization-profile', 'Integration | Component | organization profile', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:credentials', Ember.Service);
+  }
 });
 
 let members = [
@@ -29,6 +33,7 @@ test('it renders all its elements', function(assert) {
   assert.expect(9);
 
   this.set('organization', organization);
+
 
   this.render(hbs`{{organization-profile organization=organization}}`);
 

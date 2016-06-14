@@ -31,7 +31,8 @@
   border-width: 1px;
   padding: 11px 14px;
   font-family: $body-font-family;
-  font-size: 16px;
+  font-size: 1em;
+  font-weight: 700;
   text-decoration: none;
   display: inline-block;
 
@@ -280,5 +281,15 @@ p {
       padding-left: 8px;
       padding-right: 8px;
     }
+  }
+
+  &.clear {
+    &:disabled {
+      background: white;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }

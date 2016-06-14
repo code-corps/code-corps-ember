@@ -85,6 +85,9 @@ export default function() {
 
   this.delete('/user_categories/:id');
 
+  this.get('/organization_memberships/:id');
+  this.post('/organization_memberships');
+
   // TODO: Make this work when relationships work
   this.post('/user_roles', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
@@ -99,8 +102,6 @@ export default function() {
 
   this.get('/organizations', { /* coalesce: true */ });
   this.get('/organizations/:id');
-
-  // this.get('/organization_memberships', { coalesce: true });
 
   this.get('/projects/:id');
 

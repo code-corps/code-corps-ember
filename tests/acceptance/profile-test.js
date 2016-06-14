@@ -14,27 +14,27 @@ module('Acceptance: Profile', {
 });
 
 test('it displays the user-details component with user details', (assert) => {
-  assert.expect(6);
+  assert.expect(5);
 
   let sluggedRoute = server.schema.sluggedRoutes.create({
     slug: 'test_user',
   });
+
   let user = sluggedRoute.createOwner({
     username: 'test_user',
     slug: 'test_user',
     twitter: 'test_twitter',
     website: 'test.com',
   }, 'User');
+
   sluggedRoute.save();
 
   for(let i = 1; i <= 3; i++) {
-    user.createOrganization({
-      slug: `organization_${i}`,
-      name: `Organization ${i}`
+    server.create('organization-membership', {
+      member: user,
+      organization: server.create('organization')
     });
   }
-
-  user.save();
 
   visit(user.username);
   andThen(() => {
@@ -43,46 +43,34 @@ test('it displays the user-details component with user details', (assert) => {
     assert.equal(find('.twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
     assert.equal(find('.website').text().trim(), 'test.com', "The user's website renders");
     assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
-    let renderedNames = find('.user-organization-item').map((index, item) => find(item).text().trim()).toArray();
-    let expectedNames = ['Organization 1', 'Organization 2', 'Organization 3'];
-    assert.deepEqual(renderedNames, expectedNames, 'The organization names render');
   });
 });
 
 test('the user can navigate to an organization from the organizations list', (assert) => {
   assert.expect(2);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_user',
-  });
-  let user = sluggedRoute.createOwner({
-    username: 'test_user',
-    slug: 'test_user',
-  }, 'User');
-  sluggedRoute.save();
+  let userRoute = server.create('slugged-route', { slug: 'andor_drakon' });
+  let user = userRoute.createOwner({ username: 'andor_drakon' }, 'User');
+  userRoute.save();
 
-  for(let i = 1; i <= 3; i++) {
-    let organization = user.createOrganization({
-      slug: `organization_${i}`,
-      name: `Organization ${i}`,
-    });
-    let organizationRoute = server.schema.sluggedRoutes.create({
-      slug: organization.slug,
-    });
-    organizationRoute.createOwner({
-      slug: organization.slug,
-    }, 'Organization');
-    organizationRoute.save();
-  }
+  let organizationRoute = server.create('slugged-route', { slug: 'chaos_inc' });
+  let organization = organizationRoute.createOwner({
+    title: 'Chaos Inc.', slug: 'chaos_inc'
+  }, 'Organization');
+  organizationRoute.save();
 
-  user.save();
+  server.create('organization-membership', { member: user, organization: organization });
 
   visit(user.username);
+
+  let href = `/${organization.slug}`;
+
   andThen(() => {
-    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), '/organization_1', 'The organization links render');
+    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), href, 'The link is rendered');
     click('.user-organization-item:eq(0) a');
   });
+
   andThen(() => {
-    assert.equal(currentURL(), '/organization_1', 'You can visit the organization');
+    assert.equal(currentURL(), href, 'You can visit the organization');
   });
 });
