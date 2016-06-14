@@ -10,8 +10,10 @@ moduleForComponent('project-category-item', 'Integration | Component | project c
 });
 
 let mockUserCategoriesService = Ember.Service.extend({
-  hasCategory(category) {
-    return category.id === mockUserCategory.get('categoryId');
+  findUserCategory(category) {
+    if (category.id === mockUserCategory.get('categoryId')) {
+      return mockUserCategory;
+    }
   },
 });
 

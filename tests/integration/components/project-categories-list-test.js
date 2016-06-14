@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
 
 moduleForComponent('project-categories-list', 'Integration | Component | project categories list', {
   integration: true
@@ -22,6 +23,11 @@ let categories = [
 
 test('it renders the categories and sorts them by name', function(assert) {
   assert.expect(4);
+
+  let mockUserCategoriesService = Ember.Service.extend({
+    findUserCategory: Ember.K,
+  });
+  this.register('service:user-categories', mockUserCategoriesService);
 
   this.set('categories', categories);
   this.render(hbs`{{project-categories-list categories=categories}}`);

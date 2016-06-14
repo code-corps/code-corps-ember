@@ -5,6 +5,12 @@ import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   authorizer: 'authorizer:oauth2',
+
+  // TODO: Fix this once many-to-many lands in ember-cli-mirage
+  // but as of right now there is no way to make this work for
+  // all possible cases
+  // coalesceFindRequests: true,
+
   host: ENV.API_BASE_URL,
 
   // by default, json API convers a modelName into model-name.

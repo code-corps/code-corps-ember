@@ -17,7 +17,7 @@ module('Acceptance: Login', {
 test('Logging in', function(assert) {
   assert.expect(2);
 
-  server.create('user', { id: 1 });
+  server.create('user', { id: 1, state: 'selected_skills' });
 
   visit('/login');
   fillIn('#identification', 'josh@coderly.com');

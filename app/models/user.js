@@ -19,10 +19,10 @@ export default Owner.extend({
 
   stateTransition: attr(),
 
-  categories: hasMany('category', { async: true }),
   organizations: hasMany('organization', { async: true }),
   organizationMemberships: hasMany('organization-membership', { async: true }),
   userCategories: hasMany('user-category', { async: true }),
+  userRoles: hasMany('user-role', { async: true }),
 
   atUsername: Ember.computed('username', function() {
     return `@${this.get('username')}`;

@@ -1,0 +1,5 @@
+{{#if selected}}
+  <button class="default has-spinner" {{action "removeRole" role}} disabled={{isLoading}}><span class="{{if isLoading "button-spinner" "check-mark"}}"></span>{{role.ability}}</button>
+{{else}}
+  <button class="clear has-spinner" {{action "addRole" role}} disabled={{isLoading}}><span class="{{if isLoading "button-spinner" "check-area"}}"></span>{{role.ability}}</button>
+{{/if}}

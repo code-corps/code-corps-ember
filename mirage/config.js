@@ -70,6 +70,9 @@ export default function() {
 
   this.get('/categories');
 
+  this.get('/user_categories', { /* coalesce: true */ });
+  this.get('/user_categories/:id');
+
   // TODO: Make this work when relationships work
   this.post('/user_categories', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
@@ -83,13 +86,40 @@ export default function() {
   this.delete('/user_categories/:id');
 
   this.get('/organization_memberships/:id');
+  this.post('/organization_memberships');
 
+  // TODO: Make this work when relationships work
+  this.post('/user_roles', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let relationships = requestBody.data.relationships;
+    let userId = relationships.user.data.id;
+    let roleId = relationships.role.data.id;
+    let userRole = schema.create('userRole', { roleId: roleId, userId: userId });
+    return userRole;
+  });
+
+  this.delete('/user_roles/:id');
+
+  this.get('/organizations', { /* coalesce: true */ });
   this.get('/organizations/:id');
 
   this.get('/projects/:id');
 
+  this.get('/roles');
+
   this.get('/users/:id');
-  this.get('/users');
+  // this.get('/users', (schema, request) => {
+  //   let ids = request.queryParams["filter[id]"];
+  //   return schema.users.find(ids.split(','));
+  // });
+
+  this.get('/users/email_available', () => {
+    return { available: true, valid: true };
+  });
+
+  this.get('/users/username_available', () => {
+    return { available: true, valid: true };
+  });
 
   this.get('/user', (schema) => {
     // due to the nature of how we fetch the current user, all we can do here is
@@ -299,7 +329,6 @@ export default function() {
     } else {
       posts = project.posts;
     }
-
 
     let postsPage = posts.filter((p, index) => {
       let pageNumberNotSpecified = !pageNumber;

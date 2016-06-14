@@ -8,5 +8,4 @@ export default Model.extend({
   slug: attr('string'),
 
   userCategories: hasMany('user-category', { async: true }),
-  users: hasMany('user', { async: true }),
 });

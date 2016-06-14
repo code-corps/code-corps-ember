@@ -8,10 +8,11 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
   credentials: Ember.inject.service(),
+  currentUser: Ember.inject.service(),
 
   actions: {
     joinProject() {
-      let currentUser = this.get('session.currentUser');
+      let currentUser = this.get('currentUser.user');
 
       this.get('project.organization').then((organization) => {
         let membership = this.get('store').createRecord('organization-membership', {

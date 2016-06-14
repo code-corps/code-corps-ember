@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
+import Ember from 'ember';
 
 moduleForComponent('project-grid-item', 'Integration | Component | project grid item', {
   integration: true,
@@ -39,6 +40,12 @@ test('it renders', function(assert) {
     },
     categories: categories,
   };
+
+  let mockUserCategoriesService = Ember.Service.extend({
+    findUserCategory: Ember.K,
+  });
+  this.register('service:user-categories', mockUserCategoriesService);
+
 
   this.set('project', mockedProject);
   this.render(hbs`{{project-grid-item project=project}}`);

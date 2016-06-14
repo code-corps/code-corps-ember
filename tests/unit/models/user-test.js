@@ -6,6 +6,7 @@ moduleForModel('user', 'Unit | Model | user', {
     'model:category',
     'model:organization',
     'model:user-category',
+    'model:user-role',
     'model:organization-membership'
   ]
 });

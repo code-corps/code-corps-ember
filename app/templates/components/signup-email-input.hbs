@@ -1,0 +1,29 @@
+{{input name="email" autocapitalize="off" type="text" placeholder='Your email' value=user.email key-down="keyDown"}}
+<div class="suggestions">
+{{#if canShowValidations}}
+  {{#if isOkay}}
+    <p class="ok"></p>
+  {{/if}}
+  {{#if isInvalid}}
+    <p class="not-ok simple">
+      <ul>
+        <li>
+          Please enter a valid email.
+        </li>
+      </ul>
+    </p>
+  {{/if}}
+  {{#if isUnavailable}}
+    <p class="not-ok">
+      <ul>
+        <li>
+          This email is already registered. Want to {{link-to "login" "login"}}?
+        </li>
+      </ul>
+    </p>
+  {{/if}}
+{{/if}}
+</div>
+{{#each user.errors.email as |error|}}
+  <p class="error">Your email {{error.message}}.</p>
+{{/each}}

@@ -8,20 +8,23 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   flashMessages: service(),
   onboarding: service(),
 
-  beforeModel() {
-    this._super(...arguments);
-    return this._loadCurrentUser().then((user) => {
-      this._attemptTransition(user);
-    });
+  isOnboarding: Ember.computed.alias('onboarding.isOnboarding'),
+  onboardingRoute: Ember.computed.alias('onboarding.currentRoute'),
+
+  beforeModel(transition) {
+    return this._loadCurrentUser().then(() => {
+      if (this._shouldTransitionToOnboardingRoute(transition)) {
+        return this.transitionTo(this.get('onboardingRoute'));
+      } else {
+        return this._super(...arguments);
+      }
+    }).catch(() => this._invalidateSession());
   },
 
   sessionAuthenticated() {
-    this._super(...arguments);
-    this._loadCurrentUser().then((user) => {
-      this._attemptTransition(user);
-    }).catch(() => {
-      this.get('session').invalidate();
-    });
+    return this._loadCurrentUser()
+      .then(() => this._attemptTransition())
+      .catch(() => this._invalidateSession());
   },
 
   actions: {
@@ -32,10 +35,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     },
 
     willTransition(transition) {
-      let isOnboarding = this.get('onboarding.isOnboarding');
-      let expectedOnboardingRoute = this.get('onboarding.currentRoute');
-      let target = transition.targetName;
-      if (isOnboarding && target !== expectedOnboardingRoute) {
+      if (this._shouldTransitionToOnboardingRoute(transition)) {
         this._abortAndFixHistory(transition);
       }
     },
@@ -58,9 +58,17 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     }
   },
 
-  _attemptTransition(user) {
-    if (this.get('onboarding.isOnboarding')) {
-      this._transitionToOnboarding(user);
+  _attemptTransition() {
+    if (this.get('isOnboarding')) {
+      this.transitionTo(this.get('onboardingRoute'));
+    } else {
+      let attemptedTransition = this.get('session.attemptedTransition');
+      if (Ember.isPresent(attemptedTransition)) {
+        attemptedTransition.retry();
+        this.set('session.attemptedTransition', null);
+      } else {
+        this.transitionTo('projects-list');
+      }
     }
   },
 
@@ -68,11 +76,17 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     return this.get('currentUser').loadCurrentUser();
   },
 
-  _transitionToOnboarding(user) {
-    this.transitionTo(this._transitionDestination(user));
+  _invalidateSession() {
+    this.get('session').invalidate();
   },
 
-  _transitionDestination() {
-    return this.get('onboarding.currentRoute');
-  },
+  _shouldTransitionToOnboardingRoute(transition) {
+    let isOnboarding = this.get('isOnboarding');
+
+    let onboardingRoutes = ['start.interests', 'start.expertise', 'start.skills'];
+    let targetRoute = transition.targetName;
+    let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
+
+    return isOnboarding && !isTransitionToOnboardingRoute;
+  }
 });
