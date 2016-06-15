@@ -72,4 +72,4 @@ To finish, you'll force push this new commit with the following command:
 git push origin [my-feature-branch] --force-with-lease
 ```
 
-The `--force-with-lease` flag will refuse to update a branch if nobody else has updated it upstream, making your force push a little safer.
+The `--force-with-lease` flag will refuse to update a branch if someone else has updated it upstream, making your force push a little safer.
