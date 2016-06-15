@@ -47,7 +47,11 @@ module.exports = function(environment) {
       // addon-specific options to configure theme
       theme: 'minimal',
       color: 'blue',
-    }
+    },
+
+    sentry: {
+      dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
+    },
   };
 
   if (environment === 'development') {
@@ -60,6 +64,8 @@ module.exports = function(environment) {
     ENV.API_BASE_URL = 'http://api.lvh.me:3000';
     ENV.OAUTH_CLIENT_ID = '549256d8a4ac06c537cefce8399b2e0220b717014c5a442af97d7629de57ca1f';
     ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:3000/oauth/token/';
+
+    ENV.sentry.development = true;
 
     ENV['ember-cli-mirage'] = {
       enabled: false
@@ -105,6 +111,8 @@ module.exports = function(environment) {
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/oauth/token/';
+
+    ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
   }
 
   if (environment === 'test') {
@@ -120,6 +128,8 @@ module.exports = function(environment) {
 
     ENV.API_BASE_URL = '';
     ENV.OAUTH_SERVER_TOKEN_ENDPOINT = '/oauth/token/';
+
+    ENV.sentry.development = true;
 
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'
