@@ -24,10 +24,6 @@
     border-color: $issue-background;
   }
 
-  &.progress .post-new-form-body {
-    border-color: $progress-background;
-  }
-
   &.idea .post-new-form-body {
     border-color: $idea-background;
   }
@@ -49,12 +45,6 @@
     &.issue {
       &:before {
         @include sprite($issue);
-      }
-    }
-
-    &.progress {
-      &:before {
-        @include sprite($progress);
       }
     }
 

@@ -8,9 +8,6 @@
       {{#if (can "create issue post in organization" organization membership=credentials.currentUserMembership)}}
         <option value="issue" selected={{eq post.postType 'issue'}}>Issue</option>
       {{/if}}
-      {{#if (can "create progress post in organization" organization membership=credentials.currentUserMembership)}}
-        <option value="progress" selected={{eq post.postType 'progress'}}>Progress</option>
-      {{/if}}
       {{#if (can "create idea post in organization" organization membership=credentials.currentUserMembership)}}
         <option value="idea" selected={{eq post.postType 'idea'}}>Idea</option>
       {{/if}}

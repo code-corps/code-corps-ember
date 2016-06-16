@@ -171,7 +171,6 @@
   &.task { @include postTypeButtonColors('task'); }
   &.issue { @include postTypeButtonColors('issue'); }
   &.idea { @include postTypeButtonColors('idea'); }
-  &.progress { @include postTypeButtonColors('progress'); }
 }
 
 #{$all-buttons-hover}, .button:hover {

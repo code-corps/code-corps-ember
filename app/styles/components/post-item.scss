@@ -53,16 +53,6 @@
     }
   }
 
-  &.progress {
-    @include postItemIcon($progress);
-    &:hover {
-      background-color: $progress-background;
-    }
-    a:hover {
-      color: $progress-color;
-    }
-  }
-
   &.idea {
     @include postItemIcon($idea);
     &:hover {

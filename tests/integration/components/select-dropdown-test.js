@@ -22,8 +22,8 @@ test('it renders proper ui elements, properly bound', function(assert) {
       label: 'Task'
     },
     {
-      value: 'progress',
-      label: 'Progress'
+      value: 'idea',
+      label: 'Idea'
     }
   ];
 

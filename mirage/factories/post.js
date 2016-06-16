@@ -5,7 +5,7 @@ export default Factory.extend({
   body: faker.lorem.paragraph,
   likesCount: faker.random.number,
   status: 'open',
-  postType: faker.list.random('task', 'idea', 'issue', 'progress'),
+  postType: faker.list.random('task', 'idea', 'issue'),
   number(i) {
     return i;
   }
