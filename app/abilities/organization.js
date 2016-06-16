@@ -7,6 +7,13 @@ export default Ability.extend({
   userCanLeaveOrganization: Ember.computed.or('membership.isContributor', 'membership.isAdmin'),
   userIsMemberInOrganization: Ember.computed.notEmpty('membership'),
 
+  isAtLeastContributor: Ember.computed.or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
+
   canJoin: Ember.computed.alias('userCanJoinOrganization'),
   canManage: Ember.computed.alias('isAtLeastAdmin'),
+
+  canCreateIssuePost: true,
+  canCreateIdeaPost: true,
+  canCreateProgressPost: Ember.computed.alias('isAtLeastContributor'),
+  canCreateTaskPost: Ember.computed.alias('isAtLeastContributor')
 });
