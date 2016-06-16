@@ -1,7 +1,7 @@
 <img class="icon" src={{post.user.photoThumbUrl}} />
 <div class="post-new-form-body">
   <div class="input-group post-type {{post.postType}}">
-    <select name="post-type" value={{post.postType}}>
+    <select class={{post.postType}} name="post-type" onchange={{action (mut post.postType) value="target.value"}} value={{post.postType}}>
       {{#if (can "create task post in organization" organization membership=credentials.currentUserMembership)}}
         <option value="task" selected={{eq post.postType 'task'}}>Task</option>
       {{/if}}

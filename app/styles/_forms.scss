@@ -130,20 +130,20 @@ form {
     &:focus {
       outline: none;
     }
-  }
 
-  .issue select {
-    background: $issue-color;
-    color: white;
-  }
+    &.issue {
+      background: $issue-color;
+      color: white;
+    }
 
-  .task select {
-    background: $task-color;
-    color: white;
-  }
+    &.task {
+      background: $task-color;
+      color: white;
+    }
 
-  .idea select {
-    background: $idea-color;
-    color: $dark-text;
+    &.idea {
+      background: $idea-color;
+      color: $dark-text;
+    }
   }
 }
