@@ -125,6 +125,13 @@ module.exports = function(environment) {
     }
   }
 
+  if (environment === 'remote-development') {
+    ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
+    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf-qri.org/oauth/token/';
+
+    ENV.sentry.development = true;
+  }
+
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/oauth/token/';

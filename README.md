@@ -28,9 +28,18 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `bower install`
 
-## Running / Development
+## Running / Development (with Rails)
+
+If you're running the Rails API on `localhost:3000`, then `ember-cli-deploy` will automatically watch for changes to your file tree and deploy new revisions to your running `redis` instance. Your API running on `:3000` will then serve the Ember app's `index.html`.
 
 * `ember server`
+* Visit your app at [http://localhost:3000](http://localhost:3000).
+
+## Running / Development (without Rails)
+
+If you'd like to run the app without having to set up the server, you can simply hit our `remote-development` endpoint.
+
+* `ember server --environment=remote-development`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
