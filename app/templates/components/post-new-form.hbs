@@ -1,12 +1,20 @@
 <img class="icon" src={{post.user.photoThumbUrl}} />
 <div class="post-new-form-body">
   <div class="input-group post-type {{post.postType}}">
-    {{select-dropdown
-      name='post-type'
-      items=types
-      selectedItem=post.postType
-      optionValuePath='slug'
-      optionLabelPath='label'}}
+    <select name="post-type" value={{post.postType}}>
+      {{#if (can "create task post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="task" selected={{eq post.postType 'task'}}>Task</option>
+      {{/if}}
+      {{#if (can "create issue post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="issue" selected={{eq post.postType 'issue'}}>Issue</option>
+      {{/if}}
+      {{#if (can "create progress post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="progress" selected={{eq post.postType 'progress'}}>Progress</option>
+      {{/if}}
+      {{#if (can "create idea post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="idea" selected={{eq post.postType 'idea'}}>Idea</option>
+      {{/if}}
+    </select>
     {{#each post.errors.postType as |error|}}
       <p class="error">{{error.message}}</p>
     {{/each}}

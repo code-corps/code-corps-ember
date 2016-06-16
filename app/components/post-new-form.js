@@ -23,12 +23,8 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
     },
   ],
   tagName: 'form',
-  types: [
-    {label: "Task",  slug: "task"},
-    {label: "Issue", slug: "issue"},
-    {label: "Progress", slug: "progress"},
-    {label: "Idea", slug: "idea"}
-  ],
+
+  credentials: Ember.inject.service(),
 
   placeholder: Ember.computed('post.postType', function() {
     let postType = this.get('post.postType');
