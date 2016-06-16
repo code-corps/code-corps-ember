@@ -25,14 +25,16 @@ export default Ember.Service.extend({
 
   findUserCategory: function(category) {
     let userCategories = this.get('userCategories');
-    let userCategory = userCategories.find(function(item) {
-      let itemUserId = item.belongsTo('user').id();
-      let itemCategoryId = item.belongsTo('category').id();
-      let userId = this.get('user.id');
-      let categoryId = category.get('id');
-      return (itemUserId === userId) && (itemCategoryId === categoryId);
-    }.bind(this));
-    return userCategory;
+    if (userCategories) {
+      let userCategory = userCategories.find(function(item) {
+        let itemUserId = item.belongsTo('user').id();
+        let itemCategoryId = item.belongsTo('category').id();
+        let userId = this.get('user.id');
+        let categoryId = category.get('id');
+        return (itemUserId === userId) && (itemCategoryId === categoryId);
+      }.bind(this));
+      return userCategory;
+    }
   },
 
   removeCategory(category) {
