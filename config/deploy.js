@@ -64,5 +64,4 @@ module.exports = function(deployTarget) {
   // a promise that resolves with the ENV object instead of returning the
   // ENV object synchronously.
   return ENV;
-
 };
