@@ -6,6 +6,7 @@ const { service } = Ember.inject;
 export default Ember.Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
   flashMessages: service(),
+  metrics: service(),
   onboarding: service(),
 
   isOnboarding: Ember.computed.alias('onboarding.isOnboarding'),
@@ -23,7 +24,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 
   sessionAuthenticated() {
     return this._loadCurrentUser()
-      .then(() => this._attemptTransition())
+      .then(() => {
+        this._attemptTransition();
+        this._trackAuthentication();
+      })
       .catch(() => this._invalidateSession());
   },
 
@@ -88,5 +92,11 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
 
     return isOnboarding && !isTransitionToOnboardingRoute;
+  },
+
+  _trackAuthentication() {
+    Ember.get(this, 'metrics').trackEvent({
+      event: 'Signed In'
+    });
   }
 });

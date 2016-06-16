@@ -3,7 +3,11 @@ import Ember from 'ember';
 
 moduleFor('route:application', 'Unit | Route | application', {
   // Specify the other units that are required for this test.
-  needs: ['service:session', 'service:flash-messages']
+  needs: [
+    'service:flash-messages',
+    'service:metrics',
+    'service:session',
+  ]
 });
 
 test('it clears flash messages on transition', function(assert) {
