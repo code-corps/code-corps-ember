@@ -39,8 +39,8 @@ test('it displays the user-details component with user details', (assert) => {
   visit(user.username);
   andThen(() => {
     assert.equal(find('.user-details').length, 1);
-    assert.equal(find('.twitter').text().trim(), '@test_twitter', "The user's twitter renders");
-    assert.equal(find('.twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
+    assert.equal(find('.user-details .twitter').text().trim(), '@test_twitter', "The user's twitter renders");
+    assert.equal(find('.user-details .twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
     assert.equal(find('.website').text().trim(), 'test.com', "The user's website renders");
     assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
   });
