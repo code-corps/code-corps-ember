@@ -2,10 +2,18 @@ import { Factory, faker } from 'ember-cli-mirage';
 import Ember from 'ember';
 
 export default Factory.extend({
-  title: faker.name.title,
-  description: faker.lorem.sentence,
-  iconThumbUrl: faker.image.imageUrl,
-  iconLargeUrl: faker.image.imageUrl,
+  title() {
+    return faker.name.title();
+  },
+  description() {
+    return faker.lorem.sentence();
+  },
+  iconThumbUrl() {
+    return faker.image.nature();
+  },
+  iconLargeUrl() {
+    return faker.image.nature();
+  },
 
   slug(i) {
     if(this.title) {

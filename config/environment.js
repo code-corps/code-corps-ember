@@ -54,6 +54,14 @@ module.exports = function(environment) {
     },
   };
 
+  if (environment === 'mirage') {
+    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = '/oauth/token/';
+
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
