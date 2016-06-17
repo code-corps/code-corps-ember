@@ -103,7 +103,18 @@ ul {
 .temporary-projects-notice {
   @include span-columns(4);
 
+  border: 1px dashed $border-light;
+  border-radius: 4px;
+  color: $light-text;
   padding: 20px;
+
+  p {
+    font-size: 14px;
+
+    &:last-child {
+      margin-bottom: 11px;
+    }
+  }
 
   .curved-arrow-icon {
     @include sprite($curved-arrow);
