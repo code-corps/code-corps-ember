@@ -20,12 +20,6 @@ let types = [
     selected: false,
   }),
   Ember.Object.create({
-    name: "Progress",
-    param: "progress",
-    slug: "progress",
-    selected: false,
-  }),
-  Ember.Object.create({
     name: "Ideas",
     param: "idea",
     slug: "ideas",
