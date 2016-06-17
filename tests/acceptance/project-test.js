@@ -93,15 +93,14 @@ test('It renders all the required ui elements for post list', (assert) => {
 });
 
 test('Post filtering by type works', (assert) => {
-  assert.expect(5);
+  assert.expect(4);
 
   let project = createProject();
 
   // we use server.createList so factories are used in creation
   server.createList('post', 1, { postType: 'idea', projectId: project.id });
-  server.createList('post', 2, { postType: 'progress', projectId: project.id });
-  server.createList('post', 3, { postType: 'task', projectId: project.id });
-  server.createList('post', 4, { postType: 'issue', projectId: project.id });
+  server.createList('post', 6, { postType: 'task', projectId: project.id });
+  server.createList('post', 3, { postType: 'issue', projectId: project.id });
 
   let postsURL = `${project.organization.slug}/${project.slug}/posts`;
 
@@ -115,23 +114,17 @@ test('Post filtering by type works', (assert) => {
   andThen(() => {
     assert.equal(find('.project-post-list .post-item').length, 1, 'only ideas are rendered');
     click('.posts-filters .all a');
-    click('.filter.progress');
-  });
-
-  andThen(() => {
-    assert.equal(find('.project-post-list .post-item').length, 2, 'ideas and progress posts are rendered');
-    click('.posts-filters .all a');
     click('.filter.tasks');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post-item').length, 3, 'ideas, progress, and tasks are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 6, 'only task posts are rendered');
     click('.posts-filters .all a');
     click('.filter.issues');
   });
 
   andThen(() => {
-    assert.equal(find('.project-post-list .post-item').length, 4, 'all issues are rendered');
+    assert.equal(find('.project-post-list .post-item').length, 3, 'only issues are rendered');
   });
 });
 
@@ -142,7 +135,7 @@ test('Post paging links are correct', (assert) =>  {
 
   // we use server.createList so factories are used in creation
   server.createList('post', 20, { postType: 'idea', projectId: project.id });
-  server.createList('post', 20, { postType: 'progress', projectId: project.id });
+  server.createList('post', 20, { postType: 'task', projectId: project.id });
 
   let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
 

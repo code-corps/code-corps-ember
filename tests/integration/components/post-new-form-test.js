@@ -69,7 +69,7 @@ test('it has a loading indicator when previewing and post is saving', function(a
 });
 
 test('it renders only idea and issue post type options if user is not at least a contributor to the organization', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   this.register('service:credentials', Ember.Service.extend({
     currentUserMembership: { isContributor: false, isAdmin: false, isOwner: false }
@@ -80,11 +80,10 @@ test('it renders only idea and issue post type options if user is not at least a
   assert.equal(this.$('option[value=idea]').length, 1, 'idea option is rendered');
   assert.equal(this.$('option[value=issue]').length, 1, 'issue option is rendered');
   assert.equal(this.$('option[value=task]').length, 0, 'task option is rendered');
-  assert.equal(this.$('option[value=progress]').length, 0, 'progress option is rendered');
 });
 
 test('it renders all post type options if user is at least contributor', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   this.register('service:credentials', Ember.Service.extend({
     currentUserMembership: { isContributor: true }
@@ -95,5 +94,4 @@ test('it renders all post type options if user is at least contributor', functio
   assert.equal(this.$('option[value=idea]').length, 1, 'idea option is rendered');
   assert.equal(this.$('option[value=issue]').length, 1, 'issue option is rendered');
   assert.equal(this.$('option[value=task]').length, 1, 'task option is rendered');
-  assert.equal(this.$('option[value=progress]').length, 1, 'progress option is rendered');
 });

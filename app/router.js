@@ -57,6 +57,7 @@ Router.map(function() {
 
   this.route('slugged-route', { path: '/:slugged_route_slug' });
   this.route('team');
+  this.route('about');
 });
 
 export default Router;

@@ -14,6 +14,5 @@ export default Ability.extend({
 
   canCreateIssuePost: true,
   canCreateIdeaPost: true,
-  canCreateProgressPost: Ember.computed.alias('isAtLeastContributor'),
   canCreateTaskPost: Ember.computed.alias('isAtLeastContributor')
 });

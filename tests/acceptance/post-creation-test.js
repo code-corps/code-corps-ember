@@ -53,7 +53,7 @@ test('Creating a post requires logging in', (assert) => {
 });
 
 test('A post can be successfully created', (assert) => {
-  assert.expect(8);
+  assert.expect(9);
 
   let user = server.schema.users.create({ username: 'test_user' });
 
@@ -81,9 +81,10 @@ test('A post can be successfully created', (assert) => {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.posts.new', 'Button takes us to the proper route');
+    assert.equal(find('[name=post-type]').val(), 'issue', 'Has the right default post type');
     fillIn('[name=title]', 'A post title');
     fillIn('[name=markdown]', 'A post body');
-    fillIn('[name=post-type]', 'task');
+    fillIn('[name=post-type]', 'idea');
     click('[name=submit]');
   });
 
@@ -94,7 +95,7 @@ test('A post can be successfully created', (assert) => {
 
     assert.equal(post.title, 'A post title');
     assert.equal(post.markdown, 'A post body');
-    assert.equal(post.postType, 'task');
+    assert.equal(post.postType, 'idea');
 
     assert.equal(post.userId, user.id, 'The correct user was assigned');
     assert.equal(post.projectId, project.id, 'The correct project was assigned');

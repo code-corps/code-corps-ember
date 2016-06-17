@@ -12,10 +12,6 @@
     @include postItemIcon($issue);
   }
 
-  &.progress {
-    @include postItemIcon($progress);
-  }
-
   &.idea {
     @include postItemIcon($idea);
   }

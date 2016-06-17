@@ -36,10 +36,6 @@ test('it renders with correct post-type class', function(assert) {
   this.render(hbs`{{post-item post=post}}`);
   assert.equal(this.$('.post-item.issue').length, 1, 'Issue rendered with an .issue class');
 
-  this.set('post', { postType: 'progress' });
-  this.render(hbs`{{post-item post=post}}`);
-  assert.equal(this.$('.post-item.progress').length, 1, 'Progress post rendered with a .progress class');
-
   this.set('post', { postType: 'idea' });
   this.render(hbs`{{post-item post=post}}`);
   assert.equal(this.$('.post-item.idea').length, 1, 'Idea rendered with an .idea class');
