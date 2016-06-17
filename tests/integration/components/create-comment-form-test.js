@@ -7,6 +7,12 @@ let mockSession = Ember.Service.extend({
   isAuthenticated: true
 });
 
+let pressCtrlEnter = Ember.$.Event('keydown', {
+  keyCode: 13,
+  which: 13,
+  ctrlKey: true
+});
+
 moduleForComponent('create-comment-form', 'Integration | Component | create comment form', {
   integration: true,
   setup() {
@@ -45,6 +51,20 @@ test('it calls action when user clicks submit', function(assert) {
 
   this.render(hbs`{{create-comment-form comment=comment saveComment='saveComment'}}`);
   this.$('[name=save]').click();
+});
+
+test('it calls action when user hits ctrl+enter', function(assert) {
+  assert.expect(1);
+
+  this.register('service:session', mockSession);
+
+  this.set('comment', Ember.Object.create({ markdown: 'Test markdown' }));
+  this.on('saveComment', (comment) => {
+    assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
+  });
+
+  this.render(hbs`{{create-comment-form comment=comment saveComment='saveComment'}}`);
+  this.$('textarea').trigger(pressCtrlEnter);
 });
 
 test('it renders a sign up button and sign in link when not authenticated', function(assert) {
