@@ -278,7 +278,7 @@ test('Paging and filtering uses query parameters', (assert) => {
 });
 
 test('A user can join the organization of the project', (assert) => {
-  assert.expect(7);
+  assert.expect(5);
 
   let project = createProject();
   let projectURL = `/${project.organization.slug}/${project.slug}/`;
@@ -287,8 +287,7 @@ test('A user can join the organization of the project', (assert) => {
   visit(projectURL);
 
   andThen(() => {
-    assert.equal(find('button.join-project').length, 0, 'The link to join project is missing when logged out');
-    assert.equal(find('span.join-project').length, 1, 'The helper indicating user must login to join project is present when logged out');
+    assert.equal(find('.join-project a').text().trim(), 'Sign up', 'The link to sign up is present when logged out');
 
     authenticateSession(application, { user_id: user.id });
     visit(projectURL);
@@ -296,9 +295,8 @@ test('A user can join the organization of the project', (assert) => {
 
 
   andThen(() => {
-    assert.equal(find('button.join-project').length, 1, 'The link to join the project is present when logged in');
-    assert.equal(find('span.join-project').length, 0, 'The helper indicating user must login to join project is missing when logged in.');
-    click('button.join-project');
+    assert.equal(find('.join-project button').text().trim(), 'Join project', 'The button to join is present when logged in');
+    click('.join-project button');
   });
 
   let done = assert.async();

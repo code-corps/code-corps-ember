@@ -11,21 +11,26 @@
     @include span-columns(4);
   }
 
+  .join-project {
+    font-size: 14px;
+    margin: 7px 0;
+  }
+
   h2 {
     margin: 7px 0;
     font-size: 26px;
+
+    a {
+      color: $hidden-link-color;
+      &:hover {
+        color: $link-color;
+      }
+    }
   }
 
   p {
     margin: 3px 0;
     font-size: 16px;
-  }
-
-  a {
-    color: $hidden-link-color;
-    &:hover {
-      color: $link-hover-color;
-    }
   }
 
   .icon-container {
