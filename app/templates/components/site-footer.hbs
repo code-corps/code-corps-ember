@@ -7,10 +7,14 @@
       <h4>Code Corps</h4>
       <ul class="footer-links">
         <li>
-          <a href="#">About us</a>
+          {{#scroll-top}}
+            {{link-to 'About us' 'about'}}
+          {{/scroll-top}}
         </li>
         <li>
-          {{link-to 'Team' 'team'}}
+          {{#scroll-top}}
+            {{link-to 'Team' 'team'}}
+          {{/scroll-top}}
         </li>
       </ul>
     </li>
