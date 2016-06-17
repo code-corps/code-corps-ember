@@ -69,10 +69,6 @@
     @include postTypeFilter("issue");
   }
 
-  &.progress {
-    @include postTypeFilter("progress");
-  }
-
   &.ideas {
     @include postTypeFilter("idea");
   }
@@ -132,10 +128,6 @@
 
     &.issue {
       @include tagLink($red);
-    }
-
-    &.progress {
-      @include tagLink($green);
     }
 
     &.idea {

@@ -7,19 +7,15 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
   placeholders: [
     {
       type: "task",
-      text: "How can you describe the task so anyone can work on it?"
+      text: "How can you describe the steps to complete the task so anyone can work on it?"
     },
     {
       type: "issue",
       text: "What issue needs resolved? If it's a bug, how can anyone reproduce it?"
     },
     {
-      type: "progress",
-      text: "What kind of progress has your team made? Be sure to mention team members who contributed!"
-    },
-    {
       type: "idea",
-      text: "What's your idea?"
+      text: "What's your idea? Be specific so people can give more accurate feedback."
     },
   ],
   tagName: 'form',
