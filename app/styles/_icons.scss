@@ -415,3 +415,30 @@ $roles-bgiSizeH: 210px;
 $technology: 181px 70px $roles-spriteURL 0px 0px $roles-spritex2URL;
 $creative: 181px 70px $roles-spriteURL 0px -70px $roles-spritex2URL;
 $support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;
+
+@mixin aboutSprite($spriteVals) {
+  width: nth($spriteVals, 1);
+  height: nth($spriteVals, 2);
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth($spriteVals, 4) nth($spriteVals, 5);
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $about-bgiSizeW $about-bgiSizeH;
+  }
+}
+
+$about-spritePath: 'assets/images/icons/about-sprite';
+$about-spriteURL: $about-spritePath + '.png';
+$about-spritex2URL: $about-spritePath + '@2x.png';
+$about-bgiSizeW: 751px;
+$about-bgiSizeH: 162px;
+$cars: 751px 75px $about-spriteURL 0px 0px $about-spritex2URL;
+$rocketship: 75px 87px $about-spriteURL 0px -75px $about-spritex2URL;
+$connect: 75px 75px $about-spriteURL -75px -76px $about-spritex2URL;
+$support: 75px 75px $about-spriteURL -150px -76px $about-spritex2URL;
+$fund: 75px 75px $about-spriteURL -225px -76px $about-spritex2URL;
+$develop: 75px 75px $about-spriteURL -300px -76px $about-spritex2URL;
+$airplane: 102px 36px $about-spriteURL -375px -75px $about-spritex2URL;
