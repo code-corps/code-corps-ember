@@ -6,25 +6,22 @@
     <h2 class="title">{{#link-to 'project.index' project}}{{project.title}}{{/link-to}}</h2>
     {{#if expanded}}
       <p class="description">{{project.description}}</p>
-      <p class="organization">
-        {{#link-to 'slugged-route' project.organization.slug}}
-          <img class="icon tiny description-icon" src={{project.organization.iconThumbUrl}} />{{project.organization.name}}
-        {{/link-to}}
-      </p>
     {{/if}}
   </div>
 </div>
 <div class="more-details">
   <div class="right">
+    <p class="join-project">
     {{#if session.isAuthenticated}}
       {{#if (can "join organization" project.organization membership=credentials.currentUserMembership)}}
-        <button class="join-project btn-default" {{action 'joinProject'}}>Join Project</button>
+        <button class="default small" {{action 'joinProject'}}>Join project</button>
       {{/if}}
       {{#if credentials.userMembershipIsPending}}
-        <button class="clear" disabled>Membership pending</button>
+        <button class="clear small" disabled>Membership pending</button>
       {{/if}}
     {{else}}
-      <span class="join-project">You need to be logged in to join this project</span>
+      {{link-to "Sign up" "signup" class="button default small"}} to join this project.
     {{/if}}
+    </p>
   </div>
 </div>

@@ -26,7 +26,6 @@ test('when expanded', function(assert) {
 
   assert.equal(this.$('.title').text().trim(), project.title, 'Title is rendered');
   assert.equal(this.$('.description').text().trim(), project.description, 'Description is rendered');
-  assert.equal(this.$('.icon').attr('src'), project.iconLargeUrl, 'Image element is rendered');
 });
 
 test('when not expanded', function(assert) {
@@ -37,5 +36,4 @@ test('when not expanded', function(assert) {
 
   assert.equal(this.$('.title').text().trim(), project.title, 'Title is rendered');
   assert.equal(this.$('.description').length, 0, 'Hides description');
-  assert.equal(this.$('.icon').attr('src'), project.iconLargeUrl, 'Image element is rendered');
 });
