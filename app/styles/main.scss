@@ -98,3 +98,16 @@ ul {
     width: 24px;
   }
 }
+
+// TODO: Remove when we add more projects
+.temporary-projects-notice {
+  @include span-columns(4);
+
+  padding: 20px;
+
+  .curved-arrow-icon {
+    @include sprite($curved-arrow);
+
+    margin-top: 90px;
+  }
+}
