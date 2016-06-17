@@ -287,7 +287,7 @@ test('A user can join the organization of the project', (assert) => {
   visit(projectURL);
 
   andThen(() => {
-    assert.equal(find('.join-project button').text().trim(), 'Sign up', 'The link to sign up is present when logged out');
+    assert.equal(find('.join-project a').text().trim(), 'Sign up', 'The link to sign up is present when logged out');
 
     authenticateSession(application, { user_id: user.id });
     visit(projectURL);
@@ -295,7 +295,7 @@ test('A user can join the organization of the project', (assert) => {
 
 
   andThen(() => {
-    assert.equal(find('.join-project button').text().trim(), 'Join project', 'The link to sign up is present when logged out');
+    assert.equal(find('.join-project button').text().trim(), 'Join project', 'The button to join is present when logged in');
     click('.join-project button');
   });
 
