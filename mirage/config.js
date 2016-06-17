@@ -379,6 +379,18 @@ export default function() {
     return project.posts.filter((p) => { return p.number === number; }).models[0];
   });
 
+  // PATCH /projects/:id
+  this.patch('/projects/:id', function(schema, request) {
+    // the API takes takes markdown and renders body
+    let attrs = this.normalizedRequestAttrs();
+    attrs.longDescriptionBody = `<p>${attrs.longDescriptionMarkdown}</p>`
+
+    let project = schema.projects.find(attrs.id);
+    project.attrs = attrs;
+    project.save();
+    return project;
+  });
+
   ////////
   // Roles
   ////////

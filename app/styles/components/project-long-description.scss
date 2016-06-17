@@ -1,0 +1,59 @@
+.project-long-description {
+  @include span-columns(12);
+}
+
+.long-description {
+  @include span-columns(12);
+
+  &.empty {
+    background: $background-gray;
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+
+    .long-description-inner {
+      @include span-columns(6);
+      @include shift(3);
+    }
+
+    ul {
+      font-size: 14px;
+      padding-left: 70px;
+      text-align: left;
+    }
+
+    li {
+      padding: 3px 0;
+    }
+  }
+
+  .box-icon {
+    @include sprite($box);
+    margin: 0 auto;
+  }
+}
+
+.long-description-editor {
+  @include span-columns(12);
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  button.save {
+    float: right;
+  }
+}
+
+.long-description-header {
+  @include span-columns(12);
+
+  h3 {
+    float: left;
+    font-weight: 300;
+    margin: 10px 0;
+  }
+
+  button {
+    float: right;
+    margin: 10px 0;
+  }
+}
