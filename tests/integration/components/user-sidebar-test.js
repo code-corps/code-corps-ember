@@ -53,3 +53,28 @@ test('it renders all required elements', function(assert) {
   assert.equal(this.$('li.website').text().trim(), "https://codecorps.org", 'Their website renders');
   assert.equal(this.$('li.website a').attr('href'), "https://codecorps.org", 'The website link renders');
 });
+
+test('it does not show some details if blank', function(assert) {
+  assert.expect(2);
+
+  let user = {};
+  this.set('user', user);
+
+  this.render(hbs`{{user-sidebar user=user}}`);
+
+  assert.equal(this.$('li.twitter').length, 0);
+  assert.equal(this.$('li.website').length, 0);
+});
+
+test('it sets the name to username if name is blank', function(assert) {
+  assert.expect(1);
+
+  let user = {
+    username: 'joshsmith'
+  };
+  this.set('user', user);
+
+  this.render(hbs`{{user-sidebar user=user}}`);
+
+  assert.equal(this.$('h2 .name').text(), "joshsmith");
+});
