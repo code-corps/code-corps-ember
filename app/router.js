@@ -50,6 +50,7 @@ Router.map(function() {
   this.route('signup');
 
   this.route('start', function() {
+    this.route('hello');
     this.route('interests');
     this.route('expertise');
     this.route('skills');

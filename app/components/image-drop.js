@@ -4,12 +4,21 @@ export default Ember.Component.extend({
   active: false,
   attributeBindings: ['style'],
   classNames: ['image-drop'],
-  classNameBindings: ['isDraggingOnApp:is-dragging', 'active'],
+  classNameBindings: [
+    'active',
+    'circle:is-circular',
+    'isDraggingOnApp:is-dragging',
+    'hasImage',
+  ],
   droppedImage: null,
   helpText: "Drop your image here.",
   originalImage: null,
 
   appDragState: Ember.inject.service('dragState'),
+
+  hasDroppedImage: Ember.computed.notEmpty('droppedImage'),
+  hasImage: Ember.computed.or('hasDroppedImage', 'hasOriginalImage'),
+  hasOriginalImage: Ember.computed.notEmpty('originalImage'),
   isDraggingOnApp: Ember.computed.alias('appDragState.isDragging'),
 
   style: Ember.computed('droppedImage', 'originalImage', function() {

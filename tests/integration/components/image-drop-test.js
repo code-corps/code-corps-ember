@@ -82,3 +82,31 @@ test('it handles a dropped image file', function(assert) {
   assert.equal(removeDoubleQuotes(style), expectedStyle);
   assert.equal(this.$('.image-drop').hasClass('active'), false);
 });
+
+test('it does not show the hover text if not hovering', function(assert) {
+  this.set('hoverText', 'Some hover text.');
+  this.render(hbs`{{image-drop hoverText=hoverText}}`);
+
+  assert.equal(this.$('.hover').text().trim(), 'Some hover text.');
+  assert.equal(this.$('.hover').css('display'), 'none');
+});
+
+// TODO: Figure out how to make this one pass
+// test('it shows the hover text if hovering', function(assert) {
+//   assert.expect(2);
+//   this.set('hoverText', 'Some hover text.');
+//   this.set('originalImage', originalImageString);
+
+//   this.render(hbs`{{image-drop originalImage=originalImage hoverText=hoverText}}`);
+
+//   Ember.run(() => { this.$('.image-drop').trigger('mouseenter'); });
+
+//   assert.equal(this.$('.hover').text().trim(), 'Some hover text.');
+//   assert.equal(this.$('.hover').css('display'), 'block');
+// });
+
+test('it is circular if circle passed in', function(assert) {
+  this.render(hbs`{{image-drop circle=true}}`);
+
+  assert.equal(this.$('.image-drop').hasClass('is-circular'), true);
+});

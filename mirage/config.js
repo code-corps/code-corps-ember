@@ -423,6 +423,9 @@ export default function() {
     // Mock out state machine
     var state;
     switch (attributes.state_transition) {
+      case 'edit_profile':
+        state = 'edited_profile';
+        break;
       case 'select_categories':
         state = 'selected_categories';
         break;
@@ -433,6 +436,7 @@ export default function() {
         state = 'selected_skills';
         break;
       default:
+        console.error("You added a transition without changing the state machine in Mirage.");
         break;
     }
 
