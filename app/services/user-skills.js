@@ -23,6 +23,16 @@ export default Ember.Service.extend({
     return userSkill.save();
   },
 
+  hasSkill(skill) {
+    let userSkills = this.get('userSkills');
+    let matchedSkill = userSkills.find(function(item) {
+      let itemSkillId = item.belongsTo('skill').id();
+      let skillId = skill.get('id');
+      return (itemSkillId === skillId);
+    }.bind(this));
+    return !Ember.isEmpty(matchedSkill);
+  },
+
   findUserSkill: function(skill) {
     let userSkills = this.get('userSkills');
     let userSkill = userSkills.find((item) => {

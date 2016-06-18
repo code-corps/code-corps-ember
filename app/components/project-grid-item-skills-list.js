@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['project-grid-item-skills-list'],
-  showToggle: false,
   overflowHidden: true,
+  showToggle: false,
 
   actions: {
     showLess() {
