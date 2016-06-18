@@ -87,7 +87,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   _shouldTransitionToOnboardingRoute(transition) {
     let isOnboarding = this.get('isOnboarding');
 
-    let onboardingRoutes = ['start.interests', 'start.expertise', 'start.skills'];
+    let onboardingRoutes = this.get('onboarding.routes');
     let targetRoute = transition.targetName;
     let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
 

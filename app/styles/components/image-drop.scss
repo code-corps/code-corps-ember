@@ -1,3 +1,24 @@
+@mixin outside-border($width, $style, $color, $radius: 0px) {
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -$width;
+    left: -$width;
+    right: -$width;
+    bottom: -$width;
+    border-color: $color;
+    border-style: $style;
+    border-width: $width;
+  }
+
+  &.is-circular {
+    &:before {
+      border-radius: $radius + ($width * 2);
+    }
+  }
+}
+
 .image-drop {
   height: 150px;
   width: 150px;
@@ -7,9 +28,21 @@
   background-repeat: no-repeat;
   position: relative;
 
+  &.is-circular {
+    border-radius: 75px;
+
+    .hover {
+      border-radius: 75px;
+    }
+
+    input[type=file] {
+      border-radius: 75px;
+    }
+  }
+
   &.is-dragging {
-    outline: 2px dashed $border-default;
-    outline-offset: -2px;
+    @include outside-border(2px, dashed, $border-default, 75px);
+
     background: transparent !important;
 
     p {
@@ -18,11 +51,51 @@
   }
 
   &.active {
-    outline-color: $green;
-    background: $light-green !important;
+    background: $light-blue-background !important;
+
+    &:before {
+      border-color: $dark-blue;
+    }
 
     p {
-      color: $green;
+      color: $dark-blue;
+    }
+  }
+
+  .hover {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+
+    &:before {
+      @include sprite($camera);
+      content: "";
+      display: block;
+      margin: 15px auto 5px auto;
+    }
+
+    p {
+      color: white;
+      display: block;
+      font-size: 16px;
+      margin: 5px 0;
+      padding: 0 10px;
+      width: 100%;
+    }
+  }
+
+  &:hover:not(.is-dragging) {
+    @include outside-border(2px, solid, $dark-blue, 75px);
+
+    .hover {
+      display: block;
     }
   }
 }
@@ -31,12 +104,13 @@
   color: #a9a9a9;
   display: none;
   width: 80%;
-  margin: 0 auto;
   text-align: center;
 }
 
 .image-drop p.help-text {
-  font-size: 0.9em;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0 auto;
 }
 
 .image-drop .text {
@@ -60,4 +134,5 @@
   opacity: 0;
   filter: alpha(opacity=0);
   cursor: pointer;
+  z-index: 3;
 }

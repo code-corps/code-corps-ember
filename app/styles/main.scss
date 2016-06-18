@@ -99,6 +99,10 @@ ul {
   }
 }
 
+p.subtext {
+  font-size: 13px;
+}
+
 // TODO: Remove when we add more projects
 .temporary-projects-notice {
   @include span-columns(4);

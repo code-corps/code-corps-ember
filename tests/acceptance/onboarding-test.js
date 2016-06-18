@@ -41,6 +41,17 @@ test('A user can onboard as expected', (assert) => {
   visit('/');
 
   andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    assert.equal(find('.start-actions button').is(':disabled'), true);
+    fillIn('input[name="name"]', 'Josh Smith');
+  });
+
+  andThen(() => {
+    assert.equal(find('.start-actions button').is(':disabled'), false);
+    click('.start-actions button');
+  });
+
+  andThen(() => {
     assert.equal(currentURL(), '/start/interests');
     assert.equal(find('.start-actions button').is(':disabled'), true);
     click('.category-item button');
@@ -134,12 +145,12 @@ test('A user cannot navigate away from the onboarding', (assert) => {
   visit('/');
 
   andThen(() => {
-    assert.equal(currentURL(), '/start/interests');
+    assert.equal(currentURL(), '/start/hello');
     click('.site-logo a');
   });
 
   andThen(() => {
-    assert.equal(currentURL(), '/start/interests');
+    assert.equal(currentURL(), '/start/hello');
   });
 });
 

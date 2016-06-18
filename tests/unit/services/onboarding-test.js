@@ -32,7 +32,7 @@ test('it returns the number of steps', function(assert) {
       }
     }
   });
-  assert.equal(service.get('totalSteps'), 3);
+  assert.equal(service.get('totalSteps'), 4);
 });
 
 test('it returns the current step number', function(assert) {
@@ -57,8 +57,8 @@ test('it returns the current step state', function(assert) {
   assert.equal(service.get('currentStepState'), 'signed_up');
 });
 
-test('it computes selecting of categories, roles, and skills', function(assert) {
-  assert.expect(3);
+test('it computes states', function(assert) {
+  assert.expect(4);
   let service = this.subject({
     currentUser: {
       user: {
@@ -66,7 +66,8 @@ test('it computes selecting of categories, roles, and skills', function(assert) 
       }
     }
   });
-  assert.ok(service.get('isSelectingCategories'));
+  assert.ok(service.get('isEditingProfile'));
+  assert.notOk(service.get('isSelectingCategories'));
   assert.notOk(service.get('isSelectingRoles'));
   assert.notOk(service.get('isSelectingSkills'));
 });
@@ -101,7 +102,7 @@ test('it knows the progress percentage', function(assert) {
       }
     }
   });
-  assert.equal(service.get('progressPercentage'), 33.33333333333333);
+  assert.equal(service.get('progressPercentage'), 25);
 });
 
 test('it knows the current route', function(assert) {
@@ -112,7 +113,7 @@ test('it knows the current route', function(assert) {
       }
     }
   });
-  assert.equal(service.get('currentRoute'), 'start.interests');
+  assert.equal(service.get('currentRoute'), 'start.hello');
 });
 
 test('it knows the next route', function(assert) {
@@ -123,7 +124,7 @@ test('it knows the next route', function(assert) {
       }
     }
   });
-  assert.equal(service.get('nextRoute'), 'start.expertise');
+  assert.equal(service.get('nextRoute'), 'start.interests');
 });
 
 test('it knows the next state transition', function(assert) {
@@ -134,7 +135,7 @@ test('it knows the next state transition', function(assert) {
       }
     }
   });
-  assert.equal(service.get('nextStateTransition'), 'select_categories');
+  assert.equal(service.get('nextStateTransition'), 'edit_profile');
 });
 
 test('it knows the onboarding routes', function(assert) {

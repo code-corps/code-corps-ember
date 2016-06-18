@@ -74,7 +74,7 @@ test('Successful signup', (assert) => {
   });
 
   andThen(() => {
-    assert.equal(currentURL(), '/start/interests');
+    assert.equal(currentURL(), '/start/hello');
   });
 });
 
