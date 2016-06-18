@@ -167,3 +167,17 @@ test('A user cannot navigate to onboarding when signed out', (assert) => {
   visit('/start/skills').then(validateLoginRoute);
   visit('/start/expertise').then(validateLoginRoute);
 });
+
+test('The footer is hidden when onboarding', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  visit('/');
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    click('.site-logo a');
+    assert.equal(find('.site-footer').length, 0);
+  });
+});

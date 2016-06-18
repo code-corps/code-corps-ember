@@ -4,5 +4,7 @@
   <div class="main container {{codeTheme.className}}">
     {{outlet}}
   </div>
-  {{site-footer}}
+  {{#unless isOnboarding}}
+    {{site-footer}}
+  {{/unless}}
 {{/drag-zone}}
