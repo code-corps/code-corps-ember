@@ -30,7 +30,9 @@ module.exports = function(defaults) {
       shouldActivate: true
     },
     sourcemaps: {
-      enabled: !isProductionLikeBuild,
+      // To see errors in Sentry, this is needed;
+      // Our app is open source, so deal with it.
+      enabled: true,
     },
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },
