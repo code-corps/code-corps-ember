@@ -104,19 +104,21 @@ export default Ember.Component.extend({
   },
 
   _selectSkill() {
-    let cursorAt = this.get('cursorAt');
-    let results = this.get('results');
-    let skill = results.objectAt(cursorAt);
-    let userSkills = this.get('userSkills');
+    if (this.get('hasResults')) {
+      let cursorAt = this.get('cursorAt');
+      let results = this.get('results');
+      let skill = results.objectAt(cursorAt);
+      let userSkills = this.get('userSkills');
 
-    let foundSkill = userSkills.findUserSkill(skill);
+      let foundSkill = userSkills.findUserSkill(skill);
 
-    this._reset();
+      this._reset();
 
-    if (Ember.isEmpty(foundSkill)) {
-      userSkills.addSkill(skill);
-    } else {
-      userSkills.removeSkill(skill);
+      if (Ember.isEmpty(foundSkill)) {
+        userSkills.addSkill(skill);
+      } else {
+        userSkills.removeSkill(skill);
+      }
     }
   },
 
