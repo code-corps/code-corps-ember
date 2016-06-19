@@ -25,6 +25,7 @@ export default Ember.Component.extend({
     this.set('keyCode', e.keyCode);
 
     let cursorAt = this.get('cursorAt');
+    let isCommaKey = this.get('_isCommaKey');
     let isDownKey = this.get('_isDownKey');
     let isEnterKey = this.get('_isEnterKey');
     let isEscKey = this.get('_isEscKey');
@@ -38,7 +39,8 @@ export default Ember.Component.extend({
       e.preventDefault();
       this._setPosition(--cursorAt);
       this.set('hidden', false);
-    } else if (isEnterKey) {
+    } else if (isCommaKey || isEnterKey) {
+      e.preventDefault();
       this._selectSkill();
     } else if (isEscKey) {
       this.set('hidden', true);
@@ -47,6 +49,7 @@ export default Ember.Component.extend({
     }
   },
 
+  _isCommaKey: Ember.computed.equal('keyCode', 188),
   _isDownKey: Ember.computed.equal('keyCode', 40),
   _isEnterKey: Ember.computed.equal('keyCode', 13),
   _isEscKey: Ember.computed.equal('keyCode', 27),

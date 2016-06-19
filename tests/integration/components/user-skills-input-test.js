@@ -29,6 +29,11 @@ moduleForComponent('user-skills-input', 'Integration | Component | user skills i
   }
 });
 
+let pressCommaKey = jQuery.Event('keydown', {
+  keyCode: 188,
+  which: 188
+});
+
 let pressDownKey = jQuery.Event('keydown', {
   keyCode: 40,
   which: 40
@@ -144,6 +149,18 @@ test('it selects the skill when hitting enter', function(assert) {
   this.$('input').trigger(jQuery.Event('focus'));
   this.set('query', 'ruby ra');
   this.$('input').trigger(pressEnterKey);
+
+  assert.equal(this.$('input').val().trim(), '');
+  assert.equal(this.$('.dropdown-menu li').length, 0);
+});
+
+test('it selects the skill when hitting comma', function(assert) {
+  assert.expect(2);
+  this.render(hbs`{{user-skills-input query=query}}`);
+
+  this.$('input').trigger(jQuery.Event('focus'));
+  this.set('query', 'ruby ra');
+  this.$('input').trigger(pressCommaKey);
 
   assert.equal(this.$('input').val().trim(), '');
   assert.equal(this.$('.dropdown-menu li').length, 0);
