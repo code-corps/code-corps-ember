@@ -1,5 +1,6 @@
-#landing {
+.landing {
   .landing-section {
+    margin-bottom: 80px;
     text-align: center;
   }
 
@@ -17,6 +18,12 @@
     margin: 10px;
   }
 
+  h4 {
+    font-size: 28px;
+    font-weight: 500;
+    margin: 10px;
+  }
+
   .icons-header {
     $file: "/assets/images/icons-header";
     @include background-image-retina($file, "png", 810px, 186px);
@@ -28,6 +35,59 @@
   .button {
     margin: 0 auto;
   }
+}
+
+.demo-categories {
+  @include shift(2.4);
+  @include span-columns(2.4 * 3);
+
+  .category-item {
+    @include omega(3n);
+    @include span-columns(4);
+  }
+}
+
+.demo-skills {
+  ul {
+    li {
+      display: inline;
+
+      &:nth-child(6n) {
+        &:after {
+          content: "\A";
+          white-space: pre;
+        }
+      }
+
+      button {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+.demo-projects {
+  @include shift(2);
+  @include span-columns(8);
+
+  .project-grid-item {
+    @include span-columns(6);
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 50;
+      background: white;
+      z-index: 2;
+    }
+  }
+}
+
+.demo-posts {
+  @include shift(2);
+  @include span-columns(8);
 }
 
 .typed-cursor {
@@ -53,4 +113,38 @@
   0% { opacity:1; }
   50% { opacity:0; }
   100% { opacity:1; }
+}
+
+.landing-subsection {
+  @include span-columns(12);
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  &.displayed {
+    .landing-subsection-header, .landing-subsection-content {
+      display: block;
+    }
+  }
+
+  &.animated {
+    .landing-subsection-header {
+      display: block;
+      @include fadeInDown(1s);
+    }
+
+    .landing-subsection-content {
+      display: block;
+      @include fadeInUp(1s);
+    }
+  }
+}
+
+.landing-subsection-header {
+  display: none;
+  margin-bottom: 30px;
+}
+
+.landing-subsection-content {
+  @include clearfix;
+  display: none;
 }

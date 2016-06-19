@@ -14,6 +14,14 @@
           animation: fadeInDown $duration;
 }
 
+@mixin fadeInUp($duration: 2s) {
+  -webkit-animation: fadeInUp $duration; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadeInUp $duration; /* Firefox < 16 */
+      -ms-animation: fadeInUp $duration; /* Internet Explorer */
+       -o-animation: fadeInUp $duration; /* Opera < 12.1 */
+          animation: fadeInUp $duration;
+}
+
 @mixin fadeOut($duration: 2s) {
   -webkit-animation: fadeOut $duration; /* Safari, Chrome and Opera > 12.1 */
      -moz-animation: fadeOut $duration; /* Firefox < 16 */
@@ -88,6 +96,35 @@
 /* Opera < 12.1 */
 @-o-keyframes fadeInDown {
   from { opacity: 0; transform: translate3d(0, -100%, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 50%, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 50%, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 50%, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 50%, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeInUp {
+  from { opacity: 0; transform: translate3d(0, 50%, 0); }
   to { opacity: 1; transform: none; }
 }
 

@@ -1,0 +1,11 @@
+<ul>
+  {{#each skills as |skill|}}
+    <li>
+    {{#if skill.selected}}
+      <button class="default has-spinner" disabled={{skill.isLoading}}><span class="{{if skill.isLoading "button-spinner" "check-mark"}}"></span>{{skill.title}}</button>
+    {{else}}
+      <button class="clear has-spinner" disabled={{skill.isLoading}}><span class="{{if skill.isLoading "button-spinner"}}"></span>{{skill.title}}</button>
+    {{/if}}
+    </li>
+  {{/each}}
+</ul>

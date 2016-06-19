@@ -4,9 +4,10 @@
 
 .post-item {
   @include clearfix;
+  border-top: 1px solid $border-light;
   margin: 0;
   padding: 15px;
-  border-top: 1px solid $border-light;
+  text-align: left;
 
   &:hover {
     background-color: $background-gray;
@@ -71,6 +72,33 @@
 .post-description {
   font-size: 13px;
   color: $light-text;
+}
+
+.main-description {
+  float: left;
+}
+
+.post-item {
+  .skills {
+    float: left;
+    margin-left: 15px;
+    li {
+      display: inline-block;
+      padding-right: 5px;
+      a {
+        font-weight: 300;
+        &:hover {
+          color: $link-hover-color;
+        }
+      }
+      &.matched {
+        a {
+          color: $link-color;
+          font-weight: 600;
+        }
+      }
+    }
+  }
 }
 
 .post-expertise {
