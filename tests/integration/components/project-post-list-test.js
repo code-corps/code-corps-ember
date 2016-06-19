@@ -18,7 +18,21 @@ test('it renders a message if the post count is 0', function(assert) {
 
   this.render(hbs`{{project-post-list posts=posts}}`);
 
-  assert.equal(this.$('.no-posts').length, 1, 'The message is rendered');
+  assert.equal(this.$('.empty').length, 1, 'The message is rendered');
+  assert.equal(this.$('.empty .empty-icon.box-icon').length, 1, 'The icon is rendered');
+  assert.equal(this.$('.empty h3').text().trim(), "Here's where the magic happens.");
+  assert.equal(this.$('.empty button').text().trim(), "Create a post");
+});
+
+test('it renders a message if the post count is 0 and posts are filtered', function(assert) {
+  this.set('posts', []);
+
+  this.render(hbs`{{project-post-list posts=posts isFiltered=true}}`);
+
+  assert.equal(this.$('.empty').length, 1, 'The message is rendered');
+  assert.equal(this.$('.empty .empty-icon.search-icon').length, 1, 'The icon is rendered');
+  assert.equal(this.$('.empty h3').text().trim(), 'Your filters look a little too specific.');
+  assert.equal(this.$('.empty p').text().trim(), "We couldn't find any posts that match all your filters.");
 });
 
 test('it renders a post item for each post', function(assert) {
