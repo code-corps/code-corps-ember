@@ -3,7 +3,7 @@
     {{post-filter-type project=project selectedTypes=selectedTypes filterByType="filterByType"}}
   </div>
   <div class="right">
-    {{link-to 'New Post' 'project.posts.new' tagName='button' class="default small new-post"}}
+    {{link-to 'New post' 'project.posts.new' tagName='button' class="default small new-post"}}
   </div>
 </div>
 
@@ -37,7 +37,20 @@
   {{#each posts as |post|}}
     {{post-item post=post}}
   {{else}}
-    <div class="no-posts">There are currently no posts of any type created for this project</div>
+    {{#if isFiltered}}
+      <div class="empty">
+        <div class="empty-icon search-icon"></div>
+        <h3>Your filters look a little too specific.</h3>
+        <p>We couldn't find any posts that match all your filters.</p>
+      </div>
+    {{else}}
+      <div class="empty">
+        <div class="empty-icon box-icon"></div>
+        <h3>Here's where the magic happens.</h3>
+        <p>You can track everything that's happening in your project right here: all your tasks, issues, and ideas.</p>
+        <p>Ready to get started? {{link-to 'Create a post' 'project.posts.new' tagName='button' class="default small new-post"}}</p>
+      </div>
+    {{/if}}
   {{/each}}
 </div>
 

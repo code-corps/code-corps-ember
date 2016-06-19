@@ -50,6 +50,15 @@ $slack-footer: 16px 16px $spriteURL -48px -162px $spritex2URL;
 $box: 50px 50px $spriteURL 0px -178px $spritex2URL;
 $curved-arrow: 50px 50px $spriteURL -50px -178px $spritex2URL;
 $camera: 50px 50px $spriteURL -100px -178px $spritex2URL;
+$search: 50px 50px $spriteURL -150px -178px $spritex2URL;
+
+.box-icon {
+  @include sprite($box);
+}
+
+.search-icon {
+  @include sprite($search);
+}
 
 $postTypeIcons: (
   "idea": $idea,

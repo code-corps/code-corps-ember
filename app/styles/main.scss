@@ -103,6 +103,17 @@ p.subtext {
   font-size: 13px;
 }
 
+.empty {
+  background: $background-gray;
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+
+  .empty-icon {
+    margin: 0 auto;
+  }
+}
+
 // TODO: Remove when we add more projects
 .temporary-projects-notice {
   @include span-columns(4);
