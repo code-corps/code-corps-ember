@@ -1,20 +1,23 @@
-@mixin outside-border($width, $style, $color, $radius: 0px) {
+@mixin outside-border($width, $style, $color, $radius: 5px) {
+  $border-radius: $radius + ($width * 2);
+
   &:before {
+    border-color: $color;
+    border-radius: $border-radius;
+    border-style: $style;
+    border-width: $width;
     content: "";
     position: absolute;
-    z-index: -1;
     top: -$width;
     left: -$width;
     right: -$width;
     bottom: -$width;
-    border-color: $color;
-    border-style: $style;
-    border-width: $width;
+    z-index: -1;
   }
 
   &.is-circular {
     &:before {
-      border-radius: $radius + ($width * 2);
+      border-radius: $border-radius;
     }
   }
 }
@@ -63,6 +66,7 @@
   }
 
   .hover {
+    border-radius: 5px;
     display: none;
     position: absolute;
     top: 0;
@@ -92,7 +96,11 @@
   }
 
   &:hover:not(.is-dragging) {
-    @include outside-border(2px, solid, $dark-blue, 75px);
+    @include outside-border(2px, solid, $dark-blue);
+
+    &.is-circular {
+      @include outside-border(2px, solid, $dark-blue, 75px);
+    }
 
     .hover {
       display: block;

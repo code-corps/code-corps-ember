@@ -3,7 +3,7 @@
     <img class="icon" src={{comment.user.photoThumbUrl}} />
   {{/link-to}}
   <div class="comment-content">
-    <div class="input-group">
+    <div>
       {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving generatePreview=(action 'generatePreview')}}
         {{#unless comment.isSaving}}
           <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
