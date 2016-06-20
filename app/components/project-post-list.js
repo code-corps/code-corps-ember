@@ -12,13 +12,21 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    filterByType: function(type) {
+    filterByType(type) {
       this.sendAction('filterByType', type);
     },
 
-    removeTypeFilter: function(type) {
+    removeTypeFilter(type) {
       this.sendAction('removeTypeFilter', type);
     },
+
+    filterByStatus(status) {
+      this.sendAction('filterByStatus', status);
+    },
+
+    removeStatusFilter(status) {
+      this.sendAction('removeStatusFilter', status);
+    }
   },
 
   _normalizeMeta(meta) {

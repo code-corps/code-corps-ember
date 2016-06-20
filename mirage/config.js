@@ -326,22 +326,25 @@ export default function() {
   // GET /projects/:id
   this.get('/projects/:id');
 
-  // GET project/posts
+  // GET project/:id/posts
   this.get("/projects/:projectId/posts", (schema, request) => {
     let projectId = request.params.projectId;
     let postType = request.queryParams.post_type;
+    let postStatus = request.queryParams.status;
 
     let pageNumber = request.queryParams['page[number]'];
     let pageSize = request.queryParams['page[size]'] || 10;
 
     let project = schema.projects.find(projectId);
 
-    let posts;
+    let posts = project.posts;
 
     if (postType) {
-      posts = project.posts.filter((p) =>  p.postType === postType );
-    } else {
-      posts = project.posts;
+      posts = posts.filter((p) =>  p.postType === postType );
+    }
+
+    if (postStatus) {
+      posts = posts.filter((p) => p.status === postStatus);
     }
 
     let postsPage = posts.filter((p, index) => {

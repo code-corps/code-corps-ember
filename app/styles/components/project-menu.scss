@@ -24,23 +24,31 @@
       border-bottom-color: $primary-color;
       color: $primary-color;
       font-weight: 700;
+
+      span.info {
+        background: $dark-blue;
+      }
     }
 
     &:hover {
       border-bottom-color: $primary-color;
       color: $primary-color;
       transition: border-bottom-color ease 0.3s;
+
+      span.info {
+        background: $dark-blue;
+      }
     }
 
     span.info {
-      background: $dark-blue;
+      background: $extra-light-text;
       border-radius: 4px;
       color: white;
       font-size: 12px;
       font-weight: 300;
-      padding: 2px 7px 4px 7px;
+      padding: 2px 7px 3px 7px;
       margin-left: 5px;
-      vertical-align: 2px;
+      vertical-align: 1px;
 
       strong {
         font-weight: 700;
