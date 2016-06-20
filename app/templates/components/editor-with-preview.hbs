@@ -9,7 +9,9 @@
   {{code-theme-selector}}
 </div>
 {{#if editing}}
-  {{textarea placeholder=placeholder autoresize=true max-height=350 name="markdown" value=input onBlur="blurTextarea" classNameBindings="textareaFocused:focused"}}
+  <div class="input-group">
+    {{textarea placeholder=placeholder autoresize=true max-height=350 name="markdown" value=input onBlur="blurTextarea" classNameBindings="textareaFocused:focused"}}
+  </div>
 {{else}}
   {{yield}}
 {{/if}}

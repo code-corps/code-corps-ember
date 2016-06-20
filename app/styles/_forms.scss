@@ -1,13 +1,30 @@
+$inner-border-radius: 0px;
+$outer-border-radius: 4px;
+
 .input-group {
   @include clearfix;
 
+  display: table;
   margin: 0 0 10px 0;
   position: relative;
+  max-width: 100%;
+  width: 100%;
 
   #{$all-text-inputs} {
+    border-radius: $inner-border-radius;
     float: left;
     max-width: 100%;
     width: 100%;
+
+    &:first-child {
+      border-bottom-left-radius: $outer-border-radius;
+      border-top-left-radius: $outer-border-radius;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: $outer-border-radius;
+      border-top-right-radius: $outer-border-radius;
+    }
   }
 
   > #{$all-buttons}, > .button {
@@ -24,6 +41,29 @@
         margin-left: 0px;
       }
     }
+  }
+}
+
+.input-group-addon {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: #333;
+  text-align: center;
+  background-color: $background-gray;
+  border: 1px solid $border-default;
+  border-radius: $outer-border-radius;
+  display: table-cell;
+  line-height: 6px;
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  &:first-child {
+    border-bottom-right-radius: $inner-border-radius;
+    border-top-right-radius: $inner-border-radius;
+    border-right-width: 0;
   }
 }
 

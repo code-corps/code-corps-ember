@@ -1,22 +1,20 @@
-{{image-drop originalImage=user.photoLargeUrl droppedImage=user.base64PhotoData}}
-
 <div class="input-group">
-  <label class="input-label" for="name">Name</label>
-  {{input type="text" name="name" value=user.name}}
+  {{image-drop originalImage=user.photoLargeUrl droppedImage=user.base64PhotoData hoverText="Change your profile photo."}}
 </div>
 <div class="input-group">
-  <label class="input-label" for="twitter">Twitter</label>
-  {{input type="text" name="twitter" value=user.twitter}}
+  {{input type="text" name="name" value=user.name placeholder="Name"}}
 </div>
 <div class="input-group">
-  <label class="input-label" for="website">Website</label>
-  {{input type="text" name="website" value=user.website}}
+  <span class="input-group-addon">@</span>
+  {{input type="text" name="twitter" value=user.twitter placeholder="Twitter"}}
 </div>
 <div class="input-group">
-  <label class="input-label" for="biography">Biography</label>
-  {{input type="text" name="biography" value=user.biography}}
+  {{input type="text" name="website" value=user.website placeholder="Website"}}
+</div>
+<div class="input-group">
+  {{input type="text" name="biography" value=user.biography placeholder="Bio"}}
 </div>
 
 <div class="input-group">
-  <button class="save" {{action 'save'}}>Update Profile</button>
+  <button class="default save" {{action 'save'}}>Update Profile</button>
 </div>

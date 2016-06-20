@@ -1,16 +1,15 @@
-{{image-drop originalImage=organization.iconLargeUrl droppedImage=organization.base64IconData}}
-
 <div class="form-container">
   <div class="input-group">
-    <label class="input-label" for="name">Name</label>
-    {{input type="text" name="name" value=organization.name}}
+    {{image-drop originalImage=organization.iconLargeUrl droppedImage=organization.base64IconData hoverText="Change your logo."}}
   </div>
   <div class="input-group">
-    <label class="input-label" for="description">Description</label>
-    {{input type="text" name="description" value=organization.description}}
+    {{input type="text" name="name" value=organization.name placeholder="Organization Name"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="description" value=organization.description placeholder="Description"}}
   </div>
 
   <div class="input-group">
-    <button class="save success" {{action 'save'}}>Update Settings</button>
+    <button class="save default" {{action 'save'}}>Update Settings</button>
   </div>
 </div>
