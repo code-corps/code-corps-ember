@@ -1,4 +1,5 @@
 .post-header {
+  @include clearfix;
   @include outer-container;
   @include span-columns(12);
 

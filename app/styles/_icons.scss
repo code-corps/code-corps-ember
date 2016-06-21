@@ -15,7 +15,7 @@ $spritePath: '/assets/images/icons/sprite';
 $spriteURL: $spritePath + '.png';
 $spritex2URL: $spritePath + '@2x.png';
 $sprite-bgiSizeW: 230px;
-$sprite-bgiSizeH: 228px;
+$sprite-bgiSizeH: 248px;
 $logo: 230px 50px $spriteURL 0px 0px $spritex2URL;
 $logo-small: 161px 35px $spriteURL 0px -50px $spritex2URL;
 $location: 16px 16px $spriteURL 0px -85px $spritex2URL;
@@ -51,6 +51,10 @@ $box: 50px 50px $spriteURL 0px -178px $spritex2URL;
 $curved-arrow: 50px 50px $spriteURL -50px -178px $spritex2URL;
 $camera: 50px 50px $spriteURL -100px -178px $spritex2URL;
 $search: 50px 50px $spriteURL -150px -178px $spritex2URL;
+$closed: 20px 20px $spriteURL 0px -228px $spritex2URL;
+$open: 20px 20px $spriteURL -20px -228px $spritex2URL;
+$closed-white: 20px 20px $spriteURL -40px -228px $spritex2URL;
+$open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
