@@ -22,7 +22,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
   let post = {
     title: 'A post',
-    markdownPreview: 'A body',
+    markdown: 'A body',
     postType: 'idea'
   };
 
@@ -56,16 +56,6 @@ test('it triggers an action when the post is saved', function(assert) {
   this.render(hbs`{{post-new-form post=post savePost='savePost'}}`);
 
   this.$('[type=submit]').click();
-});
-
-test('it has a loading indicator when previewing and post is saving', function(assert) {
-  assert.expect(1);
-
-  let post = Ember.Object.create({ isSaving: true });
-  this.set('post', post);
-  this.render(hbs`{{post-new-form post=post}}`);
-
-  assert.equal(this.$('.editor-with-preview .spinner').length, 1);
 });
 
 test('it renders only idea and issue post type options if user is not at least a contributor to the organization', function(assert) {

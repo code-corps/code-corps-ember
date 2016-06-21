@@ -4,11 +4,7 @@
 <div class="comment-content">
 {{#if isEditing}}
   <div class="input-group">
-    {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving preview=comment.bodyPreview generatePreview='generatePreview'}}
-      {{#unless comment.isSaving}}
-        <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
-      {{/unless}}
-    {{/editor-with-preview}}
+    {{editor-with-preview input=comment.markdown isLoading=comment.isSaving}}
   </div>
   <div class="input-group">
     <button {{action 'save'}} class="default small right save">Save</button>

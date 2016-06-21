@@ -115,7 +115,7 @@ test('Comment preview works during creation', (assert) => {
 
   andThen(() => {
     assert.equal(find('.create-comment-form .body-preview').html(), expectedBody, 'The preview is rendered');
-    assert.equal(server.schema.comments.all().models[0].bodyPreview, expectedBody, 'The comment preview was saved');
+    assert.equal(server.schema.previews.first().body, expectedBody, 'The preview was saved');
   });
 });
 
@@ -345,7 +345,7 @@ test('Comment editing with preview works', (assert) => {
   });
 
   andThen(() => {
-    let comment = server.schema.comments.all().models[0];
+    let comment = server.schema.comments.first();
     assert.equal(comment.body, expectedBody);
     assert.equal(comment.markdown, markdown);
     assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The comment body is rendered');

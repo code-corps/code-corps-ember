@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import CommentMentionFetcherMixin from 'code-corps-ember/mixins/comment-mention-fetcher';
 
-export default Ember.Component.extend(CommentMentionFetcherMixin, {
+export default Ember.Component.extend({
   classNames: ['comment-item', 'timeline-comment-wrapper'],
   classNameBindings: ['isEditing:editing'],
 
   currentUser: Ember.inject.service(),
+  mentionFetcher: Ember.inject.service(),
 
   canEdit: Ember.computed.alias('currentUserIsCommentAuthor'),
   commentAuthorId: Ember.computed.alias('comment.user.id'),
@@ -18,7 +18,7 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
 
   init() {
     this.set('isEditing', false);
-    this.send('fetch', 'published');
+    this._fetchMentions(this.get('comment'));
     return this._super(...arguments);
   },
 
@@ -31,21 +31,19 @@ export default Ember.Component.extend(CommentMentionFetcherMixin, {
       this.set('isEditing', true);
     },
 
-    generatePreview(markdown) {
-      let comment = this.get('comment');
-      comment.set('markdownPreview', markdown);
-      comment.set('preview', true);
-      comment.save().then(() => this.send('fetch', 'preview'));
-    },
-
     save() {
       let component = this;
       let comment = this.get('comment');
-      comment.set('preview', false);
-      comment.save().then(() => {
+      comment.save().then((comment) => {
         component.set('isEditing', false);
-        component.send('fetch', 'published');
+        this._fetchMentions(comment);
       });
     },
+  },
+
+  _fetchMentions(comment) {
+    this.get('mentionFetcher').fetchBodyWithMentions(comment, 'comment').then((body) => {
+      this.set('commentBodyWithMentions', body);
+    });
   }
 });

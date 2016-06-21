@@ -35,7 +35,6 @@ let mockCommentWithMentions = Ember.Object.create({
   body: '<p>Mentioning @user1 and @user2</p>',
   user: { id: 1 },
   save() {
-    this.set('bodyPreview', this.get('body'));
     return Ember.RSVP.resolve();
   }
 });
@@ -49,6 +48,12 @@ moduleForComponent('comment-item', 'Integration | Component | comment item', {
 
 test('it renders', function(assert) {
   assert.expect(1);
+
+  let mockMentionFetcher = Ember.Service.extend({
+    fetchBodyWithMentions: Ember.RSVP.resolve
+  });
+  this.register('service:mention-fetcher', mockMentionFetcher);
+
   this.render(hbs`{{comment-item}}`);
 
   assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
@@ -71,6 +76,12 @@ test('it renders all required comment elements properly', function(assert) {
 
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
+
+  let mockMentionFetcher = Ember.Service.extend({
+    fetchBodyWithMentions: Ember.RSVP.resolve
+  });
+
+  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.register('service:current-user', mockCurrentUser);
 

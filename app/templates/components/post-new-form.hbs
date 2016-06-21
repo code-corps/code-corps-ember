@@ -23,11 +23,7 @@
     {{/each}}
   </div>
   <div class="input-group">
-    {{#editor-with-preview input=post.markdownPreview isLoading=post.isSaving placeholder=placeholder generatePreview=(action 'generatePreview') as |previewHeight|}}
-      {{#unless post.isSaving}}
-        <div class="body-preview" style="{{previewHeight}}">{{{postBodyPreviewWithMentions}}}</div>
-      {{/unless}}
-    {{/editor-with-preview}}
+    {{editor-with-preview input=post.markdown isLoading=post.isSaving placeholder=placeholder}}
     {{#each post.errors.markdown as |error|}}
       <p class="error">{{error.message}}</p>
     {{/each}}

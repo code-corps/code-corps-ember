@@ -5,14 +5,11 @@ import Ember from 'ember';
 
 export default Model.extend({
   body: attr('string'),
-  bodyPreview: attr('string'),
   createdAt: attr('date'),
   likesCount: attr('number'),
   markdown: attr('string'),
-  markdownPreview: attr('string'),
   number: attr('number'),
   postType: attr('string'),
-  preview: attr('boolean'),
   title: attr('string'),
 
   comments: hasMany('comment', { async: true }),
