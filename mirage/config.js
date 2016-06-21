@@ -1,7 +1,7 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
 
-function generateCommentMentions(schema, comment, mentionStatus) {
+function generateCommentMentions(schema, comment) {
   let body = comment.body || '';
   let matches = body.match(/@\w+/g) || [];
 
@@ -12,14 +12,14 @@ function generateCommentMentions(schema, comment, mentionStatus) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.commentUserMentions.create({
-        username: username, indices: [startIndex, endIndex], status: mentionStatus,
+        username: username, indices: [startIndex, endIndex],
         userId: matchedUser.id, commentId: comment.id
       });
     }
   });
 }
 
-function generatePostMentions(schema, post, mentionStatus) {
+function generatePostMentions(schema, post) {
   let body = post.body || '';
   let matches = body.match(/@\w+/g) || [];
 
@@ -30,8 +30,26 @@ function generatePostMentions(schema, post, mentionStatus) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.postUserMentions.create({
-        username: username, indices: [startIndex, endIndex], status: mentionStatus,
+        username: username, indices: [startIndex, endIndex],
         userId: matchedUser.id, postId: post.id
+      });
+    }
+  });
+}
+
+function generatePreviewMentions(schema, preview) {
+  let body = preview.body || '';
+  let matches = body.match(/@\w+/g) || [];
+
+  matches.forEach((match) => {
+    let username = match.substr(1);
+    let matchedUser = schema.users.where({ username: username }).models[0];
+    if (matchedUser) {
+      let startIndex = body.indexOf(match);
+      let endIndex = startIndex + match.length - 1;
+      schema.previewUserMentions.create({
+        username: username, indices: [startIndex, endIndex],
+        userId: matchedUser.id, previewId: preview.id
       });
     }
   });
@@ -40,7 +58,7 @@ function generatePostMentions(schema, post, mentionStatus) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment_user_mentions', 'comments', 'organizations',
-  'post_user_mentions', 'posts', 'projects', 'project_categories',
+  'post_user_mentions', 'posts', 'previews', 'projects', 'project_categories',
   'slugged_routes', 'user_categories', 'users',
 ];
 
@@ -61,11 +79,10 @@ export default function() {
   this.get('/comment_user_mentions', (schema, request) => {
     let commentId = request.queryParams.comment_id;
     let comment = schema.comments.find(commentId);
-    let status = request.queryParams.status;
 
-    generateCommentMentions(schema, comment, status);
+    generateCommentMentions(schema, comment);
 
-    return schema.commentUserMentions.where({ commentId: commentId, status: status });
+    return schema.commentUserMentions.where({ commentId: commentId });
   });
 
 
@@ -79,16 +96,13 @@ export default function() {
     let attributes = requestBody.data.attributes;
     let relationships = requestBody.data.relationships;
 
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
+    // the API takes takes markdown and renders body
+    let markdown = attributes.markdown;
     let body = `<p>${markdown}</p>`;
 
     let attrs = {
       markdown: markdown,
-      markdownPreview: markdown,
       body: body,
-      bodyPreview: body,
     };
 
     let rels = {
@@ -106,17 +120,14 @@ export default function() {
     let attributes = requestBody.data.attributes;
     let commentId = request.params.id;
     let comment = schema.comments.find(commentId);
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
+    // the API takes takes markdown and renders body
+    let markdown = attributes.markdown;
     let body = `<p>${markdown}</p>`;
 
     let attrs = {
       id: commentId,
       markdown: markdown,
-      markdownPreview: markdown,
       body: body,
-      bodyPreview: body,
     };
 
     // for some reason, post.update(key, value) updates post properties, but
@@ -191,11 +202,10 @@ export default function() {
   this.get('/post_user_mentions', (schema, request) => {
     let postId = request.queryParams.post_id;
     let post = schema.posts.find(postId);
-    let status = request.queryParams.status;
 
-    generatePostMentions(schema, post, status);
+    generatePostMentions(schema, post);
 
-    return schema.postUserMentions.where({ postId: postId, status: status });
+    return schema.postUserMentions.where({ postId: postId });
   });
 
 
@@ -209,9 +219,8 @@ export default function() {
     let attributes = requestBody.data.attributes;
     let relationships = requestBody.data.relationships;
 
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
+    // the API takes takes markdown and renders body
+    let markdown = attributes.markdown;
     let body = `<p>${markdown}</p>`;
 
     // the API sets post number as an auto-incrementing value, scoped to project,
@@ -220,9 +229,7 @@ export default function() {
 
     let attrs = {
       markdown: markdown,
-      markdownPreview: markdown,
       body: body,
-      bodyPreview: body,
       number: number,
       title: attributes.title,
       postType: attributes.post_type
@@ -244,17 +251,14 @@ export default function() {
     let attributes = requestBody.data.attributes;
     let postId = request.params.id;
     let post = schema.posts.find(postId);
-    // the API takes takes markdown_preview and renders body_preview, then copies
-    // both to markdown and body respectively
-    let markdown = attributes.markdown_preview;
+    // the API takes takes markdown and renders body
+    let markdown = attributes.markdown;
     let body = `<p>${markdown}</p>`;
 
     let attrs = {
       id: postId,
       markdown: markdown,
-      markdownPreview: markdown,
       body: body,
-      bodyPreview: body,
       title: attributes.title,
       postType: attributes.post_type
     };
@@ -277,10 +281,55 @@ export default function() {
     return post.comments;
   });
 
+  ///////////
+  // Previews
+  ///////////
+
+  // POST /previews
+  this.post('/previews', (schema, request) => {
+    let requestBody = JSON.parse(request.requestBody);
+    let attributes = requestBody.data.attributes;
+    let relationships = requestBody.data.relationships;
+
+    // the API takes takes markdown and renders body
+    let markdown = attributes.markdown;
+    let body = `<p>${markdown}</p>`;
+
+    let attrs = { markdown: markdown, body: body };
+
+    // preview user is set API-side
+    let rels = { };
+    let currentUser = schema.users.first();
+    if (currentUser) {
+      rels.userId = currentUser.id;
+    }
+
+    let preview = schema.create('preview', Ember.merge(attrs, rels));
+
+    return preview;
+  });
+
+  /////////////////////
+  // Preview user mentions
+  /////////////////////
+
+  // GET /preview_user_mentions
+  this.get('/preview_user_mentions', (schema, request) => {
+    let previewId = request.queryParams.preview_id;
+    let preview = schema.previews.find(previewId);
+
+    generatePreviewMentions(schema, preview);
+
+    return schema.previewUserMentions.where({ previewId: previewId });
+  });
+
 
   ///////////
   // Projects
   ///////////
+
+  // GET /projects
+  this.get('/projects');
 
   // GET /projects/:id
   this.get('/projects/:id');
@@ -321,6 +370,21 @@ export default function() {
     return postsPage;
   });
 
+  // GET /projects/:id/post/:number
+  this.get('/projects/:projectId/posts/:number', (schema, request) => {
+    let projectId = parseInt(request.params.projectId);
+    let number = parseInt(request.params.number);
+
+    let project = schema.projects.find(projectId);
+    return project.posts.filter((p) => { return p.number === number; }).models[0];
+  });
+
+  ////////
+  // Roles
+  ////////
+
+  // GET /roles
+  this.get('/roles');
 
   ///////////////////////////
   // Slugs and slugged routes
@@ -350,32 +414,6 @@ export default function() {
 
     return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
   });
-
-
-  ///////////
-  // Projects
-  ///////////
-
-  // GET /projects
-  this.get('/projects');
-
-  // GET /projects/:id/post/:number
-  this.get('/projects/:projectId/posts/:number', (schema, request) => {
-    let projectId = parseInt(request.params.projectId);
-    let number = parseInt(request.params.number);
-
-    let project = schema.projects.find(projectId);
-    return project.posts.filter((p) => { return p.number === number; }).models[0];
-  });
-
-
-  ////////
-  // Roles
-  ////////
-
-  // GET /roles
-  this.get('/roles');
-
 
   /////////
   // Skills

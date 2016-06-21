@@ -1,8 +1,33 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+let mockPreview = Ember.Object.create({
+  markdown: 'A **body**',
+  body: 'A <strong>body</strong>',
+  save() {
+    return Ember.RSVP.resolve(this);
+  }
+});
+
+let mockStore = Ember.Service.extend({
+  createRecord() {
+    return mockPreview;
+  }
+});
+
+let mockMentionFetcher = Ember.Service.extend({
+  fetchBodyWithMentions() {
+    return Ember.RSVP.resolve('Lorem ipsum <strong>bla</strong>');
+  }
+});
+
 moduleForComponent('editor-with-preview', 'Integration | Component | editor with preview', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    this.register('service:store', mockStore);
+    this.register('service:mention-fetcher', mockMentionFetcher);
+  }
 });
 
 test('it renders', function(assert) {
@@ -33,24 +58,18 @@ test('user can switch between editing and preview mode', function(assert) {
   assert.equal(this.$('.editor-with-preview.editing').length, 1, 'The component switches to edit mode');
 });
 
-test('It triggers a "generatePreview" action when preview button is clicked', function(assert) {
+test('It renders the preview tab with proper content when clicking the preview button', function(assert) {
   assert.expect(1);
   this.render(hbs`{{editor-with-preview input='test' generatePreview='generatePreview'}}`);
-
-  this.on('generatePreview', function(content) {
-    assert.equal(content, 'test', 'The action was triggered with correct content');
-  });
   this.$('.preview').click();
+  assert.equal(this.$('.body-preview').html(), 'Lorem ipsum <strong>bla</strong>');
 });
 
-test('It yields to a preview block in preview mode', function(assert) {
-  assert.expect(2);
-
-  this.render(hbs`{{#editor-with-preview}}<div class="block"></div>{{/editor-with-preview}}`);
-
-  assert.equal(this.$('.block').length, 0, 'The yielded block is not rendered in edit mode');
+test('it renders the preview tab with no content message when input is blank when clicking the preview button', function(assert) {
+  assert.expect(1);
+  this.render(hbs`{{editor-with-preview input='' generatePreview='generatePreview'}}`);
   this.$('.preview').click();
-  assert.equal(this.$('.block').length, 1, 'The yielded block is rendered in preview mode');
+  assert.equal(this.$('.body-preview').html(), '<p>Nothing to preview.</p>');
 });
 
 test('it has a spinner when loading', function(assert) {

@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import PostMentionFetcherMixin from 'code-corps-ember/mixins/post-mention-fetcher';
 
-export default Ember.Component.extend(PostMentionFetcherMixin, {
+export default Ember.Component.extend({
   classNames: ['post-details'],
 
   currentUser: Ember.inject.service(),
+  mentionFetcher: Ember.inject.service(),
 
   canEdit: Ember.computed.alias('currentUserIsPostAuthor'),
   currentUserId: Ember.computed.alias('currentUser.user.id'),
@@ -18,7 +18,7 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
 
   init() {
     this.set('isEditingBody', false);
-    this.send('fetch', 'published');
+    this._fetchMentions(this.get('post'));
     return this._super(...arguments);
   },
 
@@ -31,21 +31,19 @@ export default Ember.Component.extend(PostMentionFetcherMixin, {
       this.set('isEditingBody', true);
     },
 
-    generatePreview(markdown) {
-      let post = this.get('post');
-      post.set('markdownPreview', markdown);
-      post.set('preview', true);
-      post.save().then(() => this.send('fetch', 'preview'));
-    },
-
     savePostBody() {
       let component = this;
       let post = this.get('post');
-      post.set('preview', false);
-      post.save().then(() => {
+      post.save().then((post) => {
         component.set('isEditingBody', false);
-        component.send('fetch', 'published');
+        this._fetchMentions(post);
       });
     }
+  },
+
+  _fetchMentions(post) {
+    this.get('mentionFetcher').fetchBodyWithMentions(post, 'post').then((body) => {
+      this.set('postBodyWithMentions', body);
+    });
   }
 });

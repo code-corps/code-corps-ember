@@ -4,11 +4,7 @@
   {{/link-to}}
   <div class="comment-content">
     <div>
-      {{#editor-with-preview input=comment.markdownPreview isLoading=comment.isSaving generatePreview=(action 'generatePreview')}}
-        {{#unless comment.isSaving}}
-          <div class="body-preview">{{{commentBodyPreviewWithMentions}}}</div>
-        {{/unless}}
-      {{/editor-with-preview}}
+      {{editor-with-preview input=comment.markdown isLoading=comment.isSaving}}
       {{#each comment.errors.markdown as |error|}}
         <p class="error">{{error.message}}</p>
       {{/each}}

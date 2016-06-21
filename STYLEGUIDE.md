@@ -34,10 +34,8 @@ import Ember from 'ember';
 
 export default Model.extend({
   body: attr('string'),
-  bodyPreview: attr('string'),
   createdAt: attr('date'),
   markdown: attr('string'),
-  markdownPreview: attr('string'),
 
   preview: attr('boolean'), // virtual attribute, will not persist
 

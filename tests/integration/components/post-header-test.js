@@ -8,7 +8,6 @@ let mockPost = Ember.Object.create({
   number: 12,
   postType: 'issue',
   save() {
-    this.set('bodyPreview', this.get('body'));
     return Ember.RSVP.resolve();
   }
 });
