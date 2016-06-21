@@ -4,13 +4,14 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
 export default Model.extend({
-  body: attr('string'),
+  body: attr(),
   createdAt: attr('date'),
   likesCount: attr('number'),
-  markdown: attr('string'),
+  markdown: attr(),
   number: attr('number'),
-  postType: attr('string'),
-  title: attr('string'),
+  postType: attr(),
+  status: attr(),
+  title: attr(),
 
   comments: hasMany('comment', { async: true }),
   postUserMentions: hasMany('post-user-mention', { asnyc: true }),
