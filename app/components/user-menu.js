@@ -4,7 +4,8 @@ export default Ember.Component.extend({
   classNames: ['user-menu', 'dropdown'],
   classNameBindings: ['hidden:menu-hidden:menu-visible'],
 
-  didInitAttrs() {
+  init() {
+    this._super(...arguments);
     this.hidden = true;
   },
 

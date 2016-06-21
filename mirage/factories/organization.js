@@ -1,5 +1,4 @@
 import { Factory, faker } from 'ember-cli-mirage';
-import Ember from 'ember';
 
 export default Factory.extend({
   name() {
@@ -14,7 +13,7 @@ export default Factory.extend({
   iconLargeUrl() {
     return faker.image.avatar();
   },
-  slug(i) {
+  slug() {
     if(this.name) {
       return this.name.toLowerCase();
     }

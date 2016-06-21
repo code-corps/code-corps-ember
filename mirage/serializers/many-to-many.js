@@ -7,7 +7,7 @@ import _flatten from 'lodash/array/flatten';
 import _trim from 'lodash/string/trim';
 import _ from 'lodash';
 
-import { singularize, pluralize, camelize } from 'ember-cli-mirage/utils/inflector';
+import { camelize } from 'ember-cli-mirage/utils/inflector';
 import Collection from 'ember-cli-mirage/orm/collection';
 
 export default MirageApplicationSerializer.extend({

@@ -9,7 +9,7 @@ export default Factory.extend({
   openPostsCount: 0,
   title: faker.name.title,
 
-  slug(i) {
+  slug() {
     if(this.title) {
       return Ember.String.underscore(this.title.toLowerCase());
     }
