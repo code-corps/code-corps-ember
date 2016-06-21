@@ -1,5 +1,7 @@
 # Code Corps Ember
 
+![Code Corps Ember Logo](https://d3pgew4wbk2vb1.cloudfront.net/images/github/code-corps-ember.png)
+
 [![Code Climate](https://codeclimate.com/github/code-corps/code-corps-ember/badges/gpa.svg)](https://codeclimate.com/github/code-corps/code-corps-ember) [ ![Codeship Status for code-corps/code-corps-api](https://codeship.com/projects/f79468b0-fd8d-0132-18d2-123cfeffb5ea/status)](https://codeship.com/projects/87849) [![Dependency Status](https://david-dm.org/code-corps/code-corps-ember.svg)](https://david-dm.org/code-corps/code-corps-ember) [![devDependency Status](https://david-dm.org/code-corps/code-corps-ember/dev-status.svg)](https://david-dm.org/code-corps/code-corps-ember#info=devDependencies) [![Slack Status](http://slack.codecorps.org/badge.svg)](http://slack.codecorps.org)
 
 This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Rails JSON API.
