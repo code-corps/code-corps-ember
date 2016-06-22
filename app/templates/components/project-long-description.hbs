@@ -1,0 +1,46 @@
+{{#if descriptionIsBlank}}
+  <div class="long-description empty">
+    <div class="long-description-inner">
+      {{#if (can "manage organization" project.organization membership=credentials.currentUserMembership)}}
+        <div class="no-description user-can-add">
+          <h3>Add your project description.</h3>
+          <div class="box-icon"></div>
+          <p>Let's add some detailed information about your project:</p>
+          <ul>
+            <li>What do you hope to accomplish?</li>
+            <li>What real problem is this solving?</li>
+            <li>What kind of support will you need, both right now and in the future?</li>
+            <li>What risks and challenges will you face?</li>
+          </ul>
+        </div>
+      {{else}}
+        <div class="no-description user-cannot-add">
+          <h3>Nothing to see here!</h3>
+          <div class="box-icon"></div>
+          <p>Looks like this project is still getting set up!</p>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  <div class="long-description">
+    {{#unless inEditMode}}
+      <div class="long-description-header">
+        <h3>About this project</h3>
+        {{#if (can "manage organization" project.organization membership=credentials.currentUserMembership)}}
+          <button class="clear small" name="edit" {{action 'edit'}}>Edit description</button>
+        {{/if}}
+      </div>
+      {{{project.longDescriptionBody}}}
+    {{/unless}}
+  </div>
+{{/if}}
+
+{{#if (can "manage organization" project.organization membership=credentials.currentUserMembership)}}
+  {{#if shouldDisplayEditor}}
+    <div class="long-description-editor">
+      {{editor-with-preview input=project.longDescriptionMarkdown isLoading=project.isSaving modifiedSubmit="save"}}
+      <button class="default save" name="save" {{action 'save'}}>Save description</button>
+    </div>
+  {{/if}}
+{{/if}}
