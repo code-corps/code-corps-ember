@@ -166,6 +166,18 @@ test('it selects the skill when hitting comma', function(assert) {
   assert.equal(this.$('.dropdown-menu li').length, 0);
 });
 
+test('it selects the skill when clicking it', function(assert) {
+  assert.expect(2);
+  this.render(hbs`{{user-skills-input query=query}}`);
+
+  this.$('input').trigger(jQuery.Event('focus'));
+  this.set('query', 'ruby ra');
+  this.$('.dropdown-menu li').trigger('mousedown');
+
+  assert.equal(this.$('input').val().trim(), '');
+  assert.equal(this.$('.dropdown-menu li').length, 0);
+});
+
 test('it does nothing when there are no results', function(assert) {
   assert.expect(1);
 
