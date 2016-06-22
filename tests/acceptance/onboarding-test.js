@@ -109,12 +109,12 @@ test('A user can onboard as expected', (assert) => {
   andThen(() => {
     find('input').trigger('focus');
     assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
-    find('.dropdown-menu li:eq(0)').click();
+    click('.dropdown-menu li:eq(0)');
   });
 
   andThen(() => {
     assert.equal(find('.user-skills-list button:eq(0)').text().trim(), 'Ruby');
-    find('.user-skills-list button:eq(0)').click();
+    click('.user-skills-list button:eq(0)');
   });
 
   andThen(() => {
@@ -125,7 +125,7 @@ test('A user can onboard as expected', (assert) => {
   andThen(() => {
     find('input').trigger('focus');
     assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
-    find('.dropdown-menu li:eq(0)').click();
+    click('.dropdown-menu li:eq(0)');
   });
 
   andThen(() => {
