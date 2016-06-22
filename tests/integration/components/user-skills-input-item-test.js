@@ -50,7 +50,7 @@ test('it sends the hover action on mouseEnter', function(assert) {
   this.$('li').trigger('mouseenter');
 });
 
-test('it sends the hover and selectSkill actions on click', function(assert) {
+test('it sends the hover and selectSkill actions on mousedown', function(assert) {
   assert.expect(2);
 
   this.set('skill', skill);
@@ -64,5 +64,5 @@ test('it sends the hover and selectSkill actions on click', function(assert) {
   });
   this.render(hbs`{{user-skills-input-item skill=skill query=query hover="hover" selectSkill="selectSkill"}}`);
 
-  this.$('li').click();
+  this.$('li').trigger('mousedown');
 });

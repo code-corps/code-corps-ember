@@ -4,11 +4,18 @@
 <div class="comment-content">
 {{#if isEditing}}
   <div class="input-group">
-    {{editor-with-preview input=comment.markdown isLoading=comment.isSaving}}
+    {{editor-with-preview
+      input=comment.markdown
+      isLoading=comment.isSaving
+      modifiedSubmit="save"}}
   </div>
   <div class="input-group">
-    <button {{action 'save'}} class="default small right save">Save</button>
-    <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+    {{#if comment.isSaving}}
+      <button class="default small right">Saving...</button>
+    {{else}}
+      <button {{action 'save'}} class="default small right save">Save</button>
+      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+    {{/if}}
   </div>
 {{else}}
   <div class="comment-info">
