@@ -31,6 +31,29 @@ moduleForAcceptance('Acceptance: Contributors', {
   }
 });
 
+test('when not an admin on the project', function(assert) {
+  assert.expect(1);
+
+  let project = createProject();
+
+  let user = server.create('user');
+  server.create('organizationMembership', {
+    member: user,
+    organization: project.organization,
+    role: 'contributor'
+  });
+
+  let contributorsURL = `/${project.organization.slug}/${project.slug}/settings/contributors`;
+
+  authenticateSession(application, { user_id: user.id });
+
+  visit(contributorsURL);
+
+  andThen(function() {
+    assert.equal(currentURL(), '/projects');
+  });
+});
+
 test('when only the owner is a contributor', function(assert) {
   assert.expect(9);
 

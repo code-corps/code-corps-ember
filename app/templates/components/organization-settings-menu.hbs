@@ -2,7 +2,7 @@
   {{#if session.isAuthenticated}}
     {{#if (can "manage organization" organization membership=credentials.currentUserMembership) }}
       <li>
-        {{#link-to 'organizations.settings.profile' organization.slug}}
+        {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}
           Organization Profile
         {{/link-to}}
       </li>
