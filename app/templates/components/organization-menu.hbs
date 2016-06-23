@@ -4,6 +4,6 @@
 
 {{#if (can "manage organization" organization membership=credentials.currentUserMembership)}}
   <li>
-    {{#link-to 'organizations.settings.profile' organization.slug}}Settings{{/link-to}}
+    {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}Settings{{/link-to}}
   </li>
 {{/if}}

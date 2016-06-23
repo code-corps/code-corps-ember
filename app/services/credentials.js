@@ -16,6 +16,21 @@ export default Ember.Service.extend({
     return membership;
   }),
 
+  currentUserMembershipPromise: Ember.computed('currentOrganizationMemberships', 'user', function() {
+    let memberships = this.get('currentOrganizationMemberships');
+    let fulfilled = this.get('currentOrganizationMemberships.isFulfilled');
+
+    if (fulfilled) {
+      let membership = memberships.find((item) => this.findMembership(item));
+      return Ember.RSVP.resolve(membership);
+    } else {
+      return memberships.then((memberships) => {
+        let membership = memberships.find((item) => this.findMembership(item));
+        return membership;
+      });
+    }
+  }),
+
   findMembership: function(item) {
     let itemMemberId = item.belongsTo('member').id();
     let itemOrganizationId = item.belongsTo('organization').id();

@@ -24,8 +24,10 @@ Router.map(function() {
   this.route('login');
 
   this.route('organizations', function() {
-    this.route('settings', { path: '/:slugged_route_slug/settings'}, function() {
-      this.route('profile');
+    this.route('slugged-route', { path: '/:slugged_route_slug' }, function() {
+      this.route('settings', function() {
+        this.route('profile');
+      });
     });
   });
 
