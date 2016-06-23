@@ -187,3 +187,106 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
     assert.equal(find('.body-preview').html(), expectedBody, 'The mentions render');
   });
 });
+
+test('A post can be opened or closed by the author', (assert) => {
+  assert.expect(2);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
+  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  sluggedRoute.save();
+
+  let project = server.create('project', { organization: organization });
+
+  let post = server.schema.create('post', {
+    type: 'issue',
+    status: 'open',
+    number: 1,
+    user: user,
+    project: project
+  });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    click('.post-status-button [name=close]');
+  });
+
+  andThen(() => {
+    post.reload();
+    assert.equal(post.status, 'closed');
+    click('.post-status-button [name=open]');
+  });
+
+  andThen(() => {
+    post.reload();
+    assert.equal(post.status, 'open');
+  });
+});
+
+test('A post can be opened or closed by the organization admin', (assert) => {
+  assert.expect(2);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
+  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  sluggedRoute.save();
+
+  let project = server.create('project', { organization: organization });
+
+  let post = server.schema.create('post', {
+    type: 'issue',
+    status: 'open',
+    number: 1,
+    project: project
+  });
+
+  server.schema.create('organization-membership', { organization: organization, member:  user, role: 'admin' });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    click('.post-status-button [name=close]');
+  });
+
+  andThen(() => {
+    post.reload();
+    assert.equal(post.status, 'closed');
+    click('.post-status-button [name=open]');
+  });
+
+  andThen(() => {
+    post.reload();
+    assert.equal(post.status, 'open');
+  });
+});
+
+test('A post cannot be opened or closed by someone else', (assert) => {
+  assert.expect(1);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+  authenticateSession(application, { user_id: user.id });
+
+  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
+  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  sluggedRoute.save();
+
+  let project = server.create('project', { organization: organization });
+
+  let post = server.schema.create('post', {
+    type: 'issue',
+    status: 'open',
+    number: 1,
+    project: project
+  });
+
+  visit(`/${organization.slug}/${project.slug}/posts/${post.number}`);
+
+  andThen(() => {
+    assert.equal(find('.post-status-button [name=close]').length, 0, 'The close button is not rendered');
+  });
+});

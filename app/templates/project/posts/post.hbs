@@ -4,7 +4,9 @@
   {{post-details post=post}}
   {{post-comment-list comments=comments}}
   <div>
-    {{create-comment-form comment=newComment saveComment='saveComment'}}
+    {{#create-comment-form comment=newComment saveComment='saveComment'}}
+      {{#if (can "edit post" post)}}{{post-status-button post=post}}{{/if}}
+    {{/create-comment-form}}
     {{#if error}}
       {{error-formatter error=error}}
     {{/if}}
