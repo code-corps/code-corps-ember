@@ -8,9 +8,14 @@ export default ApplicationSerializer.extend({
     } else {
       // for updating existing records, we have 2 cases
       // 1. we're editing the title. In that case, we only push the title
-      // 2. We're outright editing the post body - we only send markdown
+      // 2. we're opening/closing the post. We only push the status
+      // 3. We're outright editing the post body - we only send markdown
       if (snapshot.changedAttributes().title) {
         if (attribute.name === 'title') {
+          this._super(snapshot, json, key, attribute);
+        }
+      } else if (snapshot.changedAttributes().status) {
+        if (attribute.name === 'status') {
           this._super(snapshot, json, key, attribute);
         }
       } else {

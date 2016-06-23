@@ -252,26 +252,12 @@ export default function() {
   });
 
   // PATCH /posts/:id
-  this.patch('/posts/:id', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let postId = request.params.id;
-    let post = schema.posts.find(postId);
+  this.patch('/posts/:id', function(schema, request) {
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
+    let attrs = this.normalizedRequestAttrs();
+    attrs.body = `<p>${attrs.markdown}</p>`
 
-    let attrs = {
-      id: postId,
-      markdown: markdown,
-      body: body,
-      title: attributes.title,
-      postType: attributes.post_type
-    };
-
-    // for some reason, post.update(key, value) updates post properties, but
-    // doesn't touch the post.attrs object, which is what is used in response
-    // serialization
+    let post = schema.posts.find(attrs.id);
     post.attrs = attrs;
 
     post.postUserMentions.models.forEach((mention) => mention.destroy());

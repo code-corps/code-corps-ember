@@ -27,6 +27,16 @@ test('it renders', function(assert) {
   assert.equal(this.$('form.create-comment-form').length, 1, 'The component\'s element is rendered');
 });
 
+test('it yelds to content', function(assert) {
+  assert.expect(1);
+
+  this.register('service:session', mockSession);
+
+  this.render(hbs`{{#create-comment-form}}Random content{{/create-comment-form}}`);
+  let componentTextContent = this.$('form.create-comment-form').text().trim();
+  assert.ok(componentTextContent.indexOf('Random content') > -1, 'The provided content is yielded to');
+});
+
 test('it renders the proper elements', function(assert) {
   assert.expect(2);
 
