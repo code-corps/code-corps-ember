@@ -67,5 +67,3 @@ test('when not authenticated, it renders properly', function(assert) {
   assert.equal(this.$('.organization-settings-menu').length, 1, 'The component itself renders');
   assert.equal(this.$('li a:contains("Organization Profile")').length, 0, 'The organization profile link does not render');
 });
-
-

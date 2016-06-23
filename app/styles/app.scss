@@ -39,6 +39,7 @@
 @import "components/error-wrapper";
 @import "components/image-drop";
 @import "components/login-form";
+@import "components/member-list-item";
 @import "components/navigation-menu";
 @import "components/organization-header";
 @import "components/organization-members";
@@ -60,6 +61,7 @@
 @import "components/project-menu";
 @import "components/project-post-list";
 @import "components/role-item";
+@import "components/settings-menu";
 @import "components/signup-form";
 @import "components/site-footer";
 @import "components/user-details";
@@ -70,6 +72,7 @@
 
 @import "templates/about";
 @import "templates/project/index";
+@import "templates/project/settings/contributors";
 @import "templates/start/expertise";
 @import "templates/start/hello";
 @import "templates/start/skills";

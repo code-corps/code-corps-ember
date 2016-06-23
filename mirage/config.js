@@ -179,8 +179,14 @@ export default function() {
   // POST /organization_memberships
   this.post('/organization_memberships');
 
+  // DELETE /organization_memberships/:id
+  this.delete('/organization_memberships/:id');
+
   // GET /organization_memberships/:id
   this.get('/organization_memberships/:id');
+
+  // PATCH /organization_memberships/:id
+  this.patch('/organization_memberships/:id');
 
 
   ////////////////
