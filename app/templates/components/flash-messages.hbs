@@ -7,8 +7,11 @@
         </div>
       </div>
     {{else}}
-      <div class="container">
-        <p>{{flash.message}}</p>
+      <div class="full-width-container">
+        <div class="container">
+          <p>{{flash.message}}</p>
+          <span class="close">&times;</span>
+        </div>
       </div>
     {{/if}}
   {{/flash-message}}
