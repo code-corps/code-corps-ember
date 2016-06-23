@@ -5,7 +5,7 @@ export default Ember.Route.extend({
     return this.store.queryRecord('project', {
       slug: params.project_slug,
       sluggedRouteSlug: params.slugged_route_slug
-    });
+    }, { reload: true });
   },
 
   credentials: Ember.inject.service(),
@@ -26,5 +26,5 @@ export default Ember.Route.extend({
     } else {
       return this._super(...arguments);
     }
-  }
+  },
 });

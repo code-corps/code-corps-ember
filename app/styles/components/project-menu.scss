@@ -31,5 +31,20 @@
       color: $primary-color;
       transition: border-bottom-color ease 0.3s;
     }
+
+    span.info {
+      background: $dark-blue;
+      border-radius: 4px;
+      color: white;
+      font-size: 12px;
+      font-weight: 300;
+      padding: 2px 7px 4px 7px;
+      margin-left: 5px;
+      vertical-align: 2px;
+
+      strong {
+        font-weight: 700;
+      }
+    }
   }
 }

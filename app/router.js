@@ -31,6 +31,7 @@ Router.map(function() {
 
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
     this.route('settings', function() {
+      this.route('contributors');
       this.route('profile');
     });
     this.route('posts', function() {
@@ -59,6 +60,10 @@ Router.map(function() {
   this.route('slugged-route', { path: '/:slugged_route_slug' });
   this.route('team');
   this.route('about');
+
+  this.route('organization', function() {
+    this.route('settings', function() {});
+  });
 });
 
 export default Router;
