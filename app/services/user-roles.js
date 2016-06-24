@@ -25,13 +25,13 @@ export default Ember.Service.extend({
 
   findUserRole: function(role) {
     let userRoles = this.get('userRoles');
-    let userRole = userRoles.find(function(item) {
+    let userRole = userRoles.find((item) => {
       let itemUserId = item.belongsTo('user').id();
       let itemRoleId = item.belongsTo('role').id();
       let userId = this.get('user.id');
       let roleId = role.get('id');
       return (itemUserId === userId) && (itemRoleId === roleId);
-    }.bind(this));
+    });
     return userRole;
   },
 
