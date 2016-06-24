@@ -106,10 +106,5 @@ export default Ember.Controller.extend({
     filterByStatus(status) {
       this.set('postStatus', status);
     },
-
-    removeStatusFilter() {
-      this.set('postStatus', null);
-      this.resetPage();
-    }
   }
 });

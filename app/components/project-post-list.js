@@ -23,10 +23,6 @@ export default Ember.Component.extend({
     filterByStatus(status) {
       this.sendAction('filterByStatus', status);
     },
-
-    removeStatusFilter(status) {
-      this.sendAction('removeStatusFilter', status);
-    }
   },
 
   _normalizeMeta(meta) {
