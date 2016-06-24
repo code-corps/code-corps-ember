@@ -14,9 +14,4 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       });
     });
   },
-
-  afterModel(organization) {
-    this.get('credentials').setOrganization(organization);
-    return this._super(...arguments);
-  },
 });
