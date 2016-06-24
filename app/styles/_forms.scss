@@ -164,7 +164,8 @@ form {
     font-family: $body-font-family;
     font-size: 16px;
     height: 34px;
-    padding: 10px 16px;
+    padding: 0 16px;
+    cursor: pointer;
     width: 100px;
 
     &:focus {
