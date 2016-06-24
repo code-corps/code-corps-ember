@@ -11,9 +11,12 @@ function generateCommentMentions(schema, comment) {
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
-      schema.commentUserMentions.create({
-        username: username, indices: [startIndex, endIndex],
-        userId: matchedUser.id, commentId: comment.id
+      schema.create('commentUserMention', {
+        username: username,
+        indices: [startIndex, endIndex],
+        userId: matchedUser.id,
+        commentId: comment.id,
+        postId: comment.postId
       });
     }
   });
@@ -30,8 +33,10 @@ function generatePostMentions(schema, post) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.postUserMentions.create({
-        username: username, indices: [startIndex, endIndex],
-        userId: matchedUser.id, postId: post.id
+        username: username,
+        indices: [startIndex, endIndex],
+        userId: matchedUser.id,
+        postId: post.id
       });
     }
   });
@@ -48,8 +53,10 @@ function generatePreviewMentions(schema, preview) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.previewUserMentions.create({
-        username: username, indices: [startIndex, endIndex],
-        userId: matchedUser.id, previewId: preview.id
+        username: username,
+        indices: [startIndex, endIndex],
+        userId: matchedUser.id,
+        previewId: preview.id
       });
     }
   });
@@ -63,6 +70,8 @@ const routes = [
 ];
 
 export default function() {
+  this.coalesce = true;
+
   /////////////
   // Categories
   /////////////
@@ -176,6 +185,9 @@ export default function() {
   // Organization memberships
   ///////////////////////////
 
+  // GET /organization_memberships
+  this.get('/organization_memberships');
+
   // POST /organization_memberships
   this.post('/organization_memberships');
 
@@ -270,8 +282,10 @@ export default function() {
   this.get('/posts/:postId/comments', function(schema, request) {
     let postId = request.params.postId;
     let post = schema.posts.find(postId);
+
     return post.comments;
   });
+
 
   ///////////
   // Previews
@@ -370,7 +384,13 @@ export default function() {
     let number = parseInt(request.params.number);
 
     let project = schema.projects.find(projectId);
-    return project.posts.filter((p) => { return p.number === number; }).models[0];
+    let post = project.posts.filter((p) => { return p.number === number; }).models[0];
+
+    post.comments.models.forEach((comment) => {
+      generateCommentMentions(schema, comment);
+    });
+
+    return post;
   });
 
   // PATCH /projects/:id
@@ -505,7 +525,7 @@ export default function() {
   //////////////////
 
   // GET /user_categories
-  this.get('/user_categories', { /* coalesce: true */ });
+  this.get('/user_categories');
 
   // POST /user_categories
   this.post('/user_categories');

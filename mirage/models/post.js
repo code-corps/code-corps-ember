@@ -4,5 +4,6 @@ export default Model.extend({
   user: belongsTo(),
   project: belongsTo(),
   comments: hasMany(),
-  postUserMentions: hasMany()
+  commentUserMentions: hasMany(),
+  postUserMentions: hasMany(),
 });

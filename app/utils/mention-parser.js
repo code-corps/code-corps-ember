@@ -14,7 +14,6 @@ function _generateLink(mention) {
 }
 
 function _parseMentions(body, mentions) {
-
   let parsedBody = '';
   let currentPosition = 0;
 

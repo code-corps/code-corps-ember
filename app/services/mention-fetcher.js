@@ -4,6 +4,13 @@ import { parse } from 'code-corps-ember/utils/mention-parser';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
 
+  prefetchBodyWithMentions(record, type) {
+    let relationshipType = `${type}UserMentions`;
+    let body = record.get('body');
+    let mentions = record.get(relationshipType);
+    return parse(body, mentions);
+  },
+
   fetchBodyWithMentions(record, type) {
     let store = this.get('store');
 

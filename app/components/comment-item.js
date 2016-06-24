@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 
   init() {
     this.set('isEditing', false);
-    this._fetchMentions(this.get('comment'));
+    this._prefetchMentions(this.get('comment'));
     return this._super(...arguments);
   },
 
@@ -45,5 +45,10 @@ export default Ember.Component.extend({
     this.get('mentionFetcher').fetchBodyWithMentions(comment, 'comment').then((body) => {
       this.set('commentBodyWithMentions', body);
     });
-  }
+  },
+
+  _prefetchMentions(comment) {
+    let body = this.get('mentionFetcher').prefetchBodyWithMentions(comment, 'comment');
+    this.set('commentBodyWithMentions', body);
+  },
 });

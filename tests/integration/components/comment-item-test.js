@@ -2,18 +2,14 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+let mockMentionFetcher = Ember.Service.extend({
+  fetchBodyWithMentions: Ember.RSVP.resolve,
+  prefetchBodyWithMentions: Ember.K
+});
+
 let mockStore = Ember.Service.extend({
   query () {
     return Ember.RSVP.resolve([]);
-  }
-});
-
-let mockStoreReturningMentions = Ember.Service.extend({
-  query () {
-    return Ember.RSVP.resolve([
-      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
-    ]);
   }
 });
 
@@ -36,7 +32,11 @@ let mockCommentWithMentions = Ember.Object.create({
   user: { id: 1 },
   save() {
     return Ember.RSVP.resolve();
-  }
+  },
+  commentUserMentions: [
+    Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+    Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+  ]
 });
 
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
@@ -49,12 +49,10 @@ moduleForComponent('comment-item', 'Integration | Component | comment item', {
 test('it renders', function(assert) {
   assert.expect(1);
 
-  let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions: Ember.RSVP.resolve
-  });
   this.register('service:mention-fetcher', mockMentionFetcher);
 
-  this.render(hbs`{{comment-item}}`);
+  this.set('comment', mockComment);
+  this.render(hbs`{{comment-item comment=comment}}`);
 
   assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
 });
@@ -77,12 +75,7 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions: Ember.RSVP.resolve
-  });
-
   this.register('service:mention-fetcher', mockMentionFetcher);
-
   this.register('service:current-user', mockCurrentUser);
 
   this.set('comment', mockComment);
@@ -99,8 +92,6 @@ test('it switches between editing and viewing mode', function(assert) {
 
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
-
-  this.register('service:store', mockStoreReturningMentions);
 
   this.set('comment', mockCommentWithMentions);
 

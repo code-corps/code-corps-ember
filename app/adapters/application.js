@@ -9,7 +9,7 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   // TODO: Fix this once many-to-many lands in ember-cli-mirage
   // but as of right now there is no way to make this work for
   // all possible cases
-  // coalesceFindRequests: true,
+  coalesceFindRequests: true,
 
   host: ENV.API_BASE_URL,
 

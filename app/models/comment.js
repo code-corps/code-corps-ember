@@ -8,7 +8,7 @@ export default Model.extend({
   createdAt: attr('date'),
   markdown: attr('string'),
 
-  commentUserMentions: hasMany('commentUserMention', { async: true }),
+  commentUserMentions: hasMany('comment-user-mention', { async: true }),
   post: belongsTo('post', { async: true }),
   user: belongsTo('user', { async: true }),
 

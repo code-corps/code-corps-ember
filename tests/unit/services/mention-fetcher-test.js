@@ -4,7 +4,7 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('service:mention-fetcher', 'Unit | Service | mention fetcher', {
 });
 
-test('it queries store for proper type of mentions, with a proper type of parameter', function(assert) {
+test('when fetching, it queries store for proper type of mentions, with a proper type of parameter', function(assert) {
   assert.expect(2);
 
   let service = this.subject();
@@ -26,7 +26,7 @@ test('it queries store for proper type of mentions, with a proper type of parame
   service.fetchBodyWithMentions(mockFooRecord, 'foo');
 });
 
-test('if there are no mentions, it just returns the record body', function(assert) {
+test('when fetching, if there are no mentions, it just returns the record body', function(assert) {
   assert.expect(1);
 
   let service = this.subject();
@@ -52,7 +52,7 @@ test('if there are no mentions, it just returns the record body', function(asser
   });
 });
 
-test('if there are mentions, it just the record body, with those mentions inserted', function(assert) {
+test('when fetching, if there are mentions, it returns the record body, with those mentions inserted', function(assert) {
   assert.expect(1);
 
   let service = this.subject();
@@ -85,3 +85,34 @@ test('if there are mentions, it just the record body, with those mentions insert
   });
 });
 
+test('when prefetching, if there are no mentions, it just returns the record body', function(assert) {
+  assert.expect(1);
+
+  let service = this.subject();
+
+  let mockFooRecord = Ember.Object.create({
+    id: 'nope',
+    body: 'Foo body'
+  });
+
+  let body = service.prefetchBodyWithMentions(mockFooRecord, 'foo');
+  assert.equal(body, 'Foo body');
+});
+
+test('when prefetching, if there are mentions, it returns the record body, with those mentions inserted', function(assert) {
+  assert.expect(1);
+
+  let service = this.subject();
+
+  let mockFooWithMentions = Ember.Object.create({
+    body: '<p>Mentioning @user1 and @user2</p>',
+    fooUserMentions: [
+      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+    ]
+  });
+
+  let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
+  let body = service.prefetchBodyWithMentions(mockFooWithMentions, 'foo');
+  assert.equal(body, expectedOutput);
+});

@@ -14,6 +14,7 @@ export default Model.extend({
   title: attr(),
 
   comments: hasMany('comment', { async: true }),
+  commentUserMentions: hasMany('comment-user-mention', { asnyc: true }),
   postUserMentions: hasMany('post-user-mention', { asnyc: true }),
   project: belongsTo('project', { async: true }),
   user: belongsTo('user', { async: true }),
