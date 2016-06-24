@@ -1,5 +1,4 @@
 import ManyToManySerializer from './many-to-many';
-import Model from 'ember-cli-mirage/orm/model';
 import Collection from 'ember-cli-mirage/orm/collection';
 
 export default ManyToManySerializer.extend({

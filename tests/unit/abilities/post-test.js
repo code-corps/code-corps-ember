@@ -29,10 +29,10 @@ test('it can edit post if user is at least admin in organization', function(asse
   assert.ok(ability.get('canEdit'));
 });
 
-test('it can edit post if user is at least admin in organization', function(assert) {
+test('it cannot edit post if user is not at least admin in organization', function(assert) {
   let ability = this.subject({
     credentials: Ember.Object.create({
-      currentUserMembership: Ember.Object.create({ isAdmin: false })
+      currentUserMembership: Ember.Object.create({ isAdmin: false }),
     }),
   });
   assert.notOk(ability.get('canEdit'));

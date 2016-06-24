@@ -252,10 +252,10 @@ export default function() {
   });
 
   // PATCH /posts/:id
-  this.patch('/posts/:id', function(schema, request) {
+  this.patch('/posts/:id', function(schema) {
     // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
-    attrs.body = `<p>${attrs.markdown}</p>`
+    attrs.body = `<p>${attrs.markdown}</p>`;
 
     let post = schema.posts.find(attrs.id);
     post.attrs = attrs;
@@ -281,7 +281,6 @@ export default function() {
   this.post('/previews', (schema, request) => {
     let requestBody = JSON.parse(request.requestBody);
     let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
 
     // the API takes takes markdown and renders body
     let markdown = attributes.markdown;
@@ -375,10 +374,10 @@ export default function() {
   });
 
   // PATCH /projects/:id
-  this.patch('/projects/:id', function(schema, request) {
+  this.patch('/projects/:id', function(schema) {
     // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
-    attrs.longDescriptionBody = `<p>${attrs.longDescriptionMarkdown}</p>`
+    attrs.longDescriptionBody = `<p>${attrs.longDescriptionMarkdown}</p>`;
 
     let project = schema.projects.find(attrs.id);
     project.attrs = attrs;

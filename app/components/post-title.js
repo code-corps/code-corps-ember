@@ -16,7 +16,8 @@ export default Ember.Component.extend({
     return userId === authorId;
   }),
 
-  didInitAttrs() {
+  init() {
+    this._super(...arguments);
     this.setProperties({
       isEditing: false,
     });

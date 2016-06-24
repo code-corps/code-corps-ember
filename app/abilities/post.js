@@ -11,6 +11,10 @@ export default Ability.extend({
     let postUserId = this.get('post.user.id');
     let currentUserId = this.get('currentUser.user.id');
 
+    if (Ember.isEmpty(postUserId) || Ember.isEmpty(currentUserId)) {
+      return false;
+    }
+
     return postUserId === currentUserId;
   }),
 
