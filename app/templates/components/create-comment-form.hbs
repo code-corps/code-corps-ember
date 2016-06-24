@@ -3,17 +3,14 @@
     <img class="icon" src={{comment.user.photoThumbUrl}} />
   {{/link-to}}
   <div class="comment-content">
-    <div class="input-group">
-      {{editor-with-preview
-        input=comment.markdown
-        isLoading=comment.isSaving
-        modifiedSubmit="saveComment"}}
+    <div>
+      {{editor-with-preview input=comment.markdown isLoading=comment.isSaving}}
       {{#each comment.errors.markdown as |error|}}
         <p class="error">{{error.message}}</p>
       {{/each}}
     </div>
     <div class="input-group">
-      <button class="default right {{if comment.isSaving "disabled"}}" name="save" {{action 'saveComment'}}>Comment</button>
+      <button class="default right" name="save" {{action 'saveComment'}}>Comment</button>
     </div>
   </div>
 {{else}}

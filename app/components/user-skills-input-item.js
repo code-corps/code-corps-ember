@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     return userSkills.findUserSkill(skill);
   }),
 
-  mouseDown() {
+  click() {
     this.sendAction('hover', this.get('skill'));
     this.sendAction('selectSkill');
   },

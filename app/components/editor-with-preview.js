@@ -50,10 +50,6 @@ export default Ember.Component.extend({
       this._handleEdit();
     },
 
-    modifiedSubmit() {
-      this.sendAction('modifiedSubmit');
-    },
-
     preview() {
       this._handlePreview();
     },

@@ -10,15 +10,9 @@
 </div>
 {{#if editing}}
   <div class="input-group">
-    {{submittable-textarea
-      autoresize=true
+    {{textarea autoresize=true max-height=350 name="markdown"
       classNameBindings="textareaFocused:focused"
-      max-height=350
-      modifiedSubmit="modifiedSubmit"
-      name="markdown"
-      onBlur="blurTextarea"
-      placeholder=placeholder
-      value=input}}
+      placeholder=placeholder value=input onBlur="blurTextarea" }}
   </div>
 {{else}}
   <div class="body-preview">{{{preview}}}</div>

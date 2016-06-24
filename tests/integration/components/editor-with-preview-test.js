@@ -1,6 +1,6 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 
 let mockPreview = Ember.Object.create({
   markdown: 'A **body**',
@@ -28,12 +28,6 @@ moduleForComponent('editor-with-preview', 'Integration | Component | editor with
     this.register('service:store', mockStore);
     this.register('service:mention-fetcher', mockMentionFetcher);
   }
-});
-
-let pressCtrlEnter = Ember.$.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
 });
 
 test('it renders', function(assert) {
@@ -190,16 +184,4 @@ test('it autoresizes to a max height of 350px', function(assert) {
 
   this.set('input', '');
   assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
-});
-
-test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {
-  assert.expect(2);
-
-  this.on('modifiedSubmit', () => {
-    assert.ok(true);
-  });
-  this.render(hbs`{{editor-with-preview modifiedSubmit="modifiedSubmit"}}`);
-
-  this.$('textarea').trigger(pressCtrlEnter);
-  assert.equal(this.$('textarea').val().trim(), '');
 });
