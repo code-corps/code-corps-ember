@@ -35,15 +35,15 @@ export default Ember.Component.extend({
     this.updateBackground();
   }),
 
-  didInsertElement: function() {
+  didRender() {
     this.updateBackground();
   },
 
-  willDestroyElement: function() {
+  willDestroyElement() {
     this.get('background').reset();
   },
 
-  updateBackground: function() {
+  updateBackground() {
     this.set('background.class', this.get('errorClass'));
     this.get('background').updateBackgroundClass();
   },

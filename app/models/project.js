@@ -18,6 +18,7 @@ export default Model.extend({
   categories: hasMany('categories', { async: true }),
   organization: belongsTo('organization', { async: true }),
   posts: hasMany('posts', { async: true }),
+  skills: hasMany('skills', { async: true }),
 
   hasOpenPosts: Ember.computed.gt('openPostsCount', 0),
   hasPendingMembers: Ember.computed.alias('organization.hasPendingMembers'),
