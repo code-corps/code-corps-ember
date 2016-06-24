@@ -8,6 +8,41 @@
       padding: 1px 0;
     }
   }
+
+  .statuses {
+    margin: 0 20px;
+
+    li {
+      display: inline-block;
+      font-size: 14px;
+      padding: 7px 0;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+
+    a {
+      color: $extra-light-text;
+      font-weight: 300;
+
+      &.active {
+        font-weight: 700;
+      }
+
+      &.closed {
+        &:hover, &.active {
+          color: $danger-color;
+        }
+      }
+
+      &.open {
+        &:hover, &.active {
+          color: $default-color;
+        }
+      }
+    }
+  }
 }
 
 @mixin postTypeFilter($type) {
