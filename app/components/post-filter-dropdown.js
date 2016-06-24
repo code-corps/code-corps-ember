@@ -4,16 +4,16 @@ export default Ember.Component.extend({
   classNames: ['dropdown-menu'],
   tagName: 'ul',
 
-  click: function() {
+  click() {
     this.sendAction('hide');
   },
 
   actions: {
-    filterByType: function(type) {
-      this.sendAction('filterByType', type);
+    filterBy(filter) {
+      this.sendAction('filterBy', filter);
     },
 
-    hide: function() {
+    hide() {
       this.sendAction('hide');
     },
   }

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   page: 1,
+  postStatus: 'open',
   postType: null,
   types: [
     Ember.Object.create({
@@ -24,13 +25,18 @@ export default Ember.Controller.extend({
     }),
   ],
 
-  isFiltered: Ember.computed.notEmpty('postTypes'),
+  status: Ember.computed.alias('postStatus'),
+
+  isFilteringClosedPosts: Ember.computed.equal('status', 'closed'),
+  isFilteringOpenPosts: Ember.computed.equal('status', 'open'),
+  isFilteredByType: Ember.computed.notEmpty('postTypes'),
+  isFiltered: Ember.computed.or('isFilteredByType'),
 
   postTypes: Ember.computed('postType', function() {
     var postTypes;
     let array = this.get('postType');
 
-    if(array) {
+    if (array) {
       postTypes = array.split(',');
     } else {
       postTypes = [];
@@ -59,7 +65,7 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    filterByType: function(type) {
+    filterByType(type) {
       let postTypes = this.get('postTypes');
       let typeParam = type.get('param');
 
@@ -79,7 +85,7 @@ export default Ember.Controller.extend({
       this.resetPage();
     },
 
-    removeTypeFilter: function(type) {
+    removeTypeFilter(type) {
       let postTypes = this.get('postTypes');
       let typeParam = type.get('param');
 
@@ -95,6 +101,10 @@ export default Ember.Controller.extend({
       }
 
       this.resetPage();
-    }
+    },
+
+    filterByStatus(status) {
+      this.set('postStatus', status);
+    },
   }
 });

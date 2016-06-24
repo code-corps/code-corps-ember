@@ -25,6 +25,34 @@ test('when not authenticated, it renders properly', function(assert) {
 
 });
 
+test('it renders the post count when it has posts', function(assert) {
+  assert.expect(1);
+
+  this.register('service:session', Ember.Service.extend({ isAuthenticated: false }));
+  this.set('project', {
+    hasOpenPosts: true,
+    openPostsCount: 7
+  });
+
+  this.render(hbs`{{project-menu project=project}}`);
+
+  assert.equal(this.$('.project-menu li a span.info').text().trim(), '7', 'The number of open posts are rendered');
+});
+
+test('it does not render the post count when it has no posts', function(assert) {
+  assert.expect(1);
+
+  this.register('service:session', Ember.Service.extend({ isAuthenticated: false }));
+  this.set('project', {
+    hasOpenPosts: false,
+    openPostsCount: 0
+  });
+
+  this.render(hbs`{{project-menu project=project}}`);
+
+  assert.equal(this.$('.project-menu li a span.info').length, 0, 'The number of open posts are not rendered');
+});
+
 test('when authenticated, and user cannot manage organization, it renders properly', function(assert) {
   assert.expect(5);
 

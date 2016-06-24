@@ -128,6 +128,42 @@ test('Post filtering by type works', (assert) => {
   });
 });
 
+test('Post filtering by status works', (assert) => {
+  assert.expect(8);
+
+  let project = createProject();
+  project.closedPostsCount = 2;
+  project.openPostsCount = 4;
+  project.save();
+
+  server.createList('post', 2, { postType: 'issue', status: 'closed', projectId: project.id });
+  server.createList('post', 4, { postType: 'issue', status: 'open', projectId: project.id });
+
+  let postsURL = `${project.organization.slug}/${project.slug}/posts`;
+
+  visit(postsURL);
+
+  andThen(() => {
+    assert.equal(find('.statuses .open').text().trim(), '4 Open', 'open count is rendered');
+    assert.equal(find('.statuses .closed').text().trim(), '2 Closed', 'closed count is rendered');
+
+    assert.equal(find('.statuses .open').hasClass('active'), true, 'open count has the active class');
+    assert.equal(find('.project-post-list .post-item').length, 4, 'open posts are rendered by default');
+    click('.statuses .closed');
+  });
+
+  andThen(() => {
+    assert.equal(find('.statuses .closed').hasClass('active'), true, 'closed count has the active class');
+    assert.equal(find('.project-post-list .post-item').length, 2, 'only closed posts are rendered');
+    click('.statuses .open');
+  });
+
+  andThen(() => {
+    assert.equal(find('.statuses .open').hasClass('active'), true, 'open count has the active class');
+    assert.equal(find('.project-post-list .post-item').length, 4, 'open posts are rendered');
+  });
+});
+
 test('Post paging links are correct', (assert) =>  {
   assert.expect(10);
 

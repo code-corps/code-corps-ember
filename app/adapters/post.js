@@ -20,6 +20,12 @@ export default ApplicationAdapter.extend({
       delete query.postType;
     }
 
+    // we don't want to send the status parameter to the API if it does not
+    // have a proper value
+    if (Ember.isEmpty(query.status)) {
+      delete query.status;
+    }
+
     // projectId is part of the url in `projects/:projectId/posts`, so we
     // do not want to see it in the query as well
     if (query.projectId) {

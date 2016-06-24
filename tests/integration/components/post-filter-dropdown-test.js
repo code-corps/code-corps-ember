@@ -33,8 +33,8 @@ test('it renders', function(assert) {
 });
 
 test('it renders all required elements', function(assert) {
-  this.render(hbs`{{post-filter-dropdown selectedTypes=selectedTypes}}`);
   this.set('selectedTypes', types);
+  this.render(hbs`{{post-filter-dropdown field='type' selectedFilters=selectedTypes}}`);
 
   let firstType = types[0];
 
@@ -49,7 +49,7 @@ test('it renders all required elements', function(assert) {
 test('it sends filterByType action with the right type when clicking a link', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{post-filter-dropdown selectedTypes=selectedTypes filterByType="filterByType"}}`);
+  this.render(hbs`{{post-filter-dropdown selectedFilters=selectedTypes filterBy="filterByType"}}`);
   this.set('selectedTypes', types);
 
   let firstType = types[0];
@@ -76,7 +76,7 @@ test('it sends the hide action when clicking close', function(assert) {
 test('it sends the hide action when clicking an item', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{post-filter-dropdown selectedTypes=selectedTypes hide="hide"}}`);
+  this.render(hbs`{{post-filter-dropdown selectedFilters=selectedTypes hide="hide"}}`);
   this.set('selectedTypes', types);
 
   this.on('hide', function() {

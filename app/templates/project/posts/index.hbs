@@ -1,1 +1,12 @@
-{{project-post-list posts=model pageNumber=page selectedTypes=selectedTypes isFiltered=isFiltered filterByType="filterByType" removeTypeFilter="removeTypeFilter"}}
+{{project-post-list
+  isFiltered=isFiltered
+  isFilteringClosedPosts=isFilteringClosedPosts
+  isFilteringOpenPosts=isFilteringOpenPosts
+  filterByStatus="filterByStatus"
+  filterByType="filterByType"
+  pageNumber=page
+  posts=model
+  project=project
+  removeTypeFilter="removeTypeFilter"
+  selectedTypes=selectedTypes
+}}

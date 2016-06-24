@@ -5,11 +5,13 @@ import Ember from 'ember';
 
 export default Model.extend({
   base64IconData: attr(),
+  closedPostsCount: attr('number'),
   description: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),
   longDescriptionBody: attr(),
   longDescriptionMarkdown: attr(),
+  openPostsCount: attr('number'),
   slug: attr(),
   title: attr(),
 
@@ -17,6 +19,7 @@ export default Model.extend({
   organization: belongsTo('organization', { async: true }),
   posts: hasMany('posts', { async: true }),
 
+  hasOpenPosts: Ember.computed.gt('openPostsCount', 0),
   hasPendingMembers: Ember.computed.alias('organization.hasPendingMembers'),
   pendingMembersCount: Ember.computed.alias('organization.pendingMembersCount'),
 });

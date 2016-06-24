@@ -1,6 +1,16 @@
 <div class="posts-menu">
   <div class="left">
-    {{post-filter-type project=project selectedTypes=selectedTypes filterByType="filterByType"}}
+    {{post-filter-type selectedTypes=selectedTypes filterByType="filterByType"}}
+  </div>
+  <div class="left statuses">
+    <ul>
+      <li>
+        <a class="open {{if isFilteringOpenPosts "active"}}" {{action "filterByStatus" "open"}}>{{project.openPostsCount}} Open</a>
+      </li>
+      <li>
+        <a class="closed {{if isFilteringClosedPosts "active"}}" {{action "filterByStatus" "closed"}}>{{project.closedPostsCount}} Closed</a>
+      </li>
+    </ul>
   </div>
   <div class="right">
     {{link-to 'New post' 'project.posts.new' tagName='button' class="default small new-post"}}
