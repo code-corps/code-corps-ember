@@ -1,0 +1,27 @@
+<div class="timeline-comment-wrapper post-body">
+  {{#link-to 'slugged-route' post.user.username}}
+    <img class="icon" src={{post.user.photoThumbUrl}} />
+  {{/link-to}}
+  <div class="comment-content">
+    {{#if isEditingBody}}
+      <div class="input-group">
+        {{editor-with-preview input=post.markdown isLoading=post.isSaving autofocus=true}}
+      </div>
+      <div class="input-group">
+        <button {{action 'savePostBody'}} class="default small right save">Save</button>
+        <button {{action 'cancelEditingPostBody'}} class="clear small right cancel">Cancel</button>
+      </div>
+    {{else}}
+      <div class="comment-info">
+        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.createdAt}}
+        {{#if canEdit}}
+          <a class="edit" {{action 'editPostBody'}}>edit</a>
+        {{/if}}
+        {{#if post.containsCode}}
+          {{code-theme-selector}}
+        {{/if}}
+      </div>
+      <div class="comment-body">{{{postBodyWithMentions}}}</div>
+    {{/if}}
+  </div>
+</div>

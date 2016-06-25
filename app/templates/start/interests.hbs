@@ -1,0 +1,11 @@
+<div class="start-header">
+  <h2>What are you interested in?</h2>
+  <h3>We'll help you find projects you'll care about.</h3>
+</div>
+
+{{categories-list categories=model}}
+
+<div class="start-actions">
+  <p>Finished adding your interests?</p>
+  <button class="{{if userCategories.isEmpty "clear" "default"}}" disabled={{userCategories.isEmpty}} {{action 'continue'}}>Continue</button>
+</div>

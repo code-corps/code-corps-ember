@@ -1,0 +1,190 @@
+$inner-border-radius: 0px;
+$outer-border-radius: 4px;
+
+.input-group {
+  @include clearfix;
+
+  display: table;
+  margin: 0 0 10px 0;
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+
+  #{$all-text-inputs} {
+    border-radius: $inner-border-radius;
+    float: left;
+    max-width: 100%;
+    width: 100%;
+
+    &:first-child {
+      border-bottom-left-radius: $outer-border-radius;
+      border-top-left-radius: $outer-border-radius;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: $outer-border-radius;
+      border-top-right-radius: $outer-border-radius;
+    }
+  }
+
+  > #{$all-buttons}, > .button {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+
+    &.right {
+      margin-left: 5px;
+      margin-right: 0px;
+      &:last-child {
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+.input-group-addon {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  color: #333;
+  text-align: center;
+  background-color: $background-gray;
+  border: 1px solid $border-default;
+  border-radius: $outer-border-radius;
+  display: table-cell;
+  line-height: 6px;
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  &:first-child {
+    border-bottom-right-radius: $inner-border-radius;
+    border-top-right-radius: $inner-border-radius;
+    border-right-width: 0;
+  }
+}
+
+.input-label {
+  margin-bottom: 5px;
+  font-size: 0.8em;
+  font-weight: 700;
+  display: block;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+.form-container {
+  @include span-columns(8);
+}
+
+form {
+  h2 {
+    font-family: $body-font-family;
+    font-size: 32px;
+    font-weight: 500;
+  }
+}
+
+.error {
+  margin: 5px;
+}
+
+.signup-form {
+  .input-group {
+    margin: 0 0 24px 0;
+  }
+}
+
+.suggestions {
+  left: 394px;
+  position: absolute;
+  width: 250px;
+
+  p {
+    font-size: 13px;
+    margin: 4px 0;
+
+    &:before {
+      content: "";
+      display: block;
+      float: left;
+      height: 10px;
+      margin: 11px 10px;
+      width: 12px;
+    }
+
+    &.ok {
+      &:before { @include sprite($tick-blue); }
+    }
+
+    &.not-ok {
+      color: $red;
+
+      &:before { @include sprite($cross-red); }
+    }
+
+    &.simple {
+      ul {
+        padding-top: 7px;
+      }
+    }
+
+    ul {
+      padding-left: 36px;
+    }
+
+    li {
+      margin-bottom: 2px;
+      &.highlight {
+        color: $dark-blue;
+      }
+    }
+  }
+}
+
+.strength {
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  width: 50px;
+
+  .progress-bar-container {
+    height: 10px;
+  }
+}
+
+.post-type {
+  select {
+    border: none;
+    font-family: $body-font-family;
+    font-size: 16px;
+    height: 34px;
+    padding: 0 16px;
+    cursor: pointer;
+    width: 100px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.issue {
+      background: $issue-color;
+      color: white;
+    }
+
+    &.task {
+      background: $task-color;
+      color: white;
+    }
+
+    &.idea {
+      background: $idea-color;
+      color: $dark-text;
+    }
+  }
+}

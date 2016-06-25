@@ -1,0 +1,146 @@
+@mixin outside-border($width, $style, $color, $radius: 5px) {
+  $border-radius: $radius + ($width * 2);
+
+  &:before {
+    border-color: $color;
+    border-radius: $border-radius;
+    border-style: $style;
+    border-width: $width;
+    content: "";
+    position: absolute;
+    top: -$width;
+    left: -$width;
+    right: -$width;
+    bottom: -$width;
+    z-index: -1;
+  }
+
+  &.is-circular {
+    &:before {
+      border-radius: $border-radius;
+    }
+  }
+}
+
+.image-drop {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  background: transparent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &.is-circular {
+    border-radius: 75px;
+
+    .hover {
+      border-radius: 75px;
+    }
+
+    input[type=file] {
+      border-radius: 75px;
+    }
+  }
+
+  &.is-dragging {
+    @include outside-border(2px, dashed, $border-default, 75px);
+
+    background: transparent !important;
+
+    p {
+      display: block;
+    }
+  }
+
+  &.active {
+    background: $light-blue-background !important;
+
+    &:before {
+      border-color: $dark-blue;
+    }
+
+    p {
+      color: $dark-blue;
+    }
+  }
+
+  .hover {
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 5px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+
+    &:before {
+      @include sprite($camera);
+      content: "";
+      display: block;
+      margin: 15px auto 5px auto;
+    }
+
+    p {
+      color: white;
+      display: block;
+      font-size: 16px;
+      margin: 5px 0;
+      padding: 0 10px;
+      width: 100%;
+    }
+  }
+
+  &:hover:not(.is-dragging) {
+    @include outside-border(2px, solid, $dark-blue);
+
+    &.is-circular {
+      @include outside-border(2px, solid, $dark-blue, 75px);
+    }
+
+    .hover {
+      display: block;
+    }
+  }
+}
+
+.image-drop p {
+  color: #a9a9a9;
+  display: none;
+  width: 80%;
+  text-align: center;
+}
+
+.image-drop p.help-text {
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0 auto;
+}
+
+.image-drop .text {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+}
+
+.image-drop input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  cursor: pointer;
+  z-index: 3;
+}

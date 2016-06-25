@@ -1,0 +1,23 @@
+.editor-with-preview {
+  textarea {
+    font-family: $body-font-family;
+    width: 100%;
+  }
+
+  .editor-header {
+    margin: 0 0 10px 0;
+    position: relative;
+  }
+
+  .spinner {
+    @include fadeIn;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .code-theme-selector {
+    position: absolute;
+    margin: auto;
+    bottom: 0; right: 0; top: 0;
+  }
+}

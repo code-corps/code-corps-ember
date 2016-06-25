@@ -1,0 +1,85 @@
+.about-us {
+  h2, h3, h4 {
+    text-align: center;
+  }
+
+  h2 {
+    color: $dark-text;
+    font-size: 28px;
+    font-weight: 500;
+    margin: 30px 0;
+  }
+
+  h3 {
+    color: $dark-text;
+    font-size: 24px;
+    font-weight: 300;
+    margin: 10px 0;
+  }
+
+  h4 {
+    color: $dark-text;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 10px 0;
+  }
+
+  ul {
+    @include span-columns(8);
+    @include shift(2);
+  }
+
+  li.step {
+    @include span-columns(6);
+    @include omega(2n);
+  }
+}
+
+.help {
+  @include span-columns(12);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.airplane-icon-container {
+  height: 36px;
+  margin: 50px auto;
+}
+
+.airplane-icon {
+  @include aboutSprite($about-airplane);
+  @include fly;
+  left: 45%;
+  position: absolute;
+}
+
+.cars-icon {
+  @include aboutSprite($about-cars);
+  margin: 50px auto;
+}
+
+.rocketship-icon {
+  @include aboutSprite($about-rocketship);
+  margin: 50px auto;
+}
+
+.connect-icon {
+  @include aboutSprite($about-connect);
+  margin: 10px auto;
+}
+
+.support-icon {
+  @include aboutSprite($about-support);
+  margin: 10px auto;
+}
+
+.fund-icon {
+  @include aboutSprite($about-fund);
+  margin: 10px auto;
+}
+
+.develop-icon {
+  @include aboutSprite($about-develop);
+  margin: 10px auto;
+}

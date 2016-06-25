@@ -1,0 +1,37 @@
+.start-header {
+  text-align: center;
+
+  h2 {
+    color: $dark-text;
+    font-size: 32px;
+    font-weight: 500;
+    margin: 10px 0;
+  }
+
+  h3 {
+    color: $extra-light-text;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 10px 0;
+  }
+}
+
+.start-actions {
+  @include span-columns(12);
+
+  border-top: 3px solid $border-light;
+  margin: 20px 0;
+  padding: 10px 0;
+  text-align: center;
+
+  p {
+    font-size: 16px;
+    color: $extra-light-text;
+  }
+
+  button {
+    font-size: 16px;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}

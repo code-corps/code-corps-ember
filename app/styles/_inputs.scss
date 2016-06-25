@@ -1,0 +1,20 @@
+#{$all-text-inputs} {
+  padding: 11px 12px;
+  font-size: 1em;
+  margin: 0;
+  outline: none;
+  border: 1px solid $border-default;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+  background-color: #FAFAFA;
+
+  &.has-progress {
+    padding-right: 70px;
+  }
+}
+
+#{$all-text-inputs-focus} {
+  border-color: $border-focus;
+  background-color: #FFFFFF;
+  box-shadow: inset 0 2px 2px rgba(0,0,0,0.075), 0 0 5px rgba(81,167,232,0.5);
+}

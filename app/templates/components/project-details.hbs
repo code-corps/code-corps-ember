@@ -1,0 +1,27 @@
+<div class="basic-details">
+  <div class="icon-container">
+    {{#link-to 'project.index' project}}<img class="icon" src={{project.iconThumbUrl}} />{{/link-to}}
+  </div>
+  <div class="details-container">
+    <h2 class="title">{{#link-to 'project.index' project}}{{project.title}}{{/link-to}}</h2>
+    {{#if expanded}}
+      <p class="description">{{project.description}}</p>
+    {{/if}}
+  </div>
+</div>
+<div class="more-details">
+  <div class="right">
+    <p class="join-project">
+    {{#if session.isAuthenticated}}
+      {{#if (can "join organization" project.organization membership=credentials.currentUserMembership)}}
+        <button class="default small" {{action 'joinProject'}}>Join project</button>
+      {{/if}}
+      {{#if credentials.userMembershipIsPending}}
+        <button class="clear small" disabled>Membership pending</button>
+      {{/if}}
+    {{else}}
+      {{link-to "Sign up" "signup" class="button default small"}} to join this project.
+    {{/if}}
+    </p>
+  </div>
+</div>

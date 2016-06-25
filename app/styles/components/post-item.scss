@@ -1,0 +1,89 @@
+.posts {
+  margin: 10px 0;
+}
+
+.post-item {
+  @include clearfix;
+  margin: 0;
+  padding: 15px;
+  border-top: 1px solid $border-light;
+
+  &:hover {
+    background-color: $background-gray;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $border-light;
+  }
+
+  .post-icon {
+    float: left;
+  }
+
+  .post-content {
+    padding-left: 35px;
+  }
+
+  a {
+    color: $dark-text;
+    font-weight: 700;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  &.task {
+    @include postItemIcon($task);
+    &:hover {
+      background-color: $task-background;
+    }
+    a:hover {
+      color: $task-color;
+    }
+  }
+
+  &.issue {
+    @include postItemIcon($issue);
+    &:hover {
+      background-color: $issue-background;
+    }
+    a:hover {
+      color: $issue-color;
+    }
+  }
+
+  &.idea {
+    @include postItemIcon($idea);
+    &:hover {
+      background-color: $idea-background;
+    }
+    a:hover {
+      color: $idea-color;
+    }
+  }
+}
+
+.post-title {
+  font-size: 17px;
+}
+
+.post-description {
+  font-size: 13px;
+  color: $light-text;
+}
+
+.post-expertise {
+  margin-top: 5px;
+  font-size: 11px;
+  color: $extra-light-text;
+  &.beginner {
+    @include postExpertiseIcon($beginner);
+  }
+  &.intermediate {
+    @include postExpertiseIcon($intermediate);
+  }
+  &.expert {
+    @include postExpertiseIcon($expert);
+  }
+}

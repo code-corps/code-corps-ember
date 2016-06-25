@@ -1,0 +1,34 @@
+<img class="icon" src={{post.user.photoThumbUrl}} />
+<div class="post-new-form-body">
+  <div class="input-group post-type {{post.postType}}">
+    <select class={{post.postType}} name="post-type" onchange={{action (mut post.postType) value="target.value"}} value={{post.postType}}>
+      {{#if (can "create task post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="task" selected={{eq post.postType 'task'}}>Task</option>
+      {{/if}}
+      {{#if (can "create issue post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="issue" selected={{eq post.postType 'issue'}}>Issue</option>
+      {{/if}}
+      {{#if (can "create idea post in organization" organization membership=credentials.currentUserMembership)}}
+        <option value="idea" selected={{eq post.postType 'idea'}}>Idea</option>
+      {{/if}}
+    </select>
+    {{#each post.errors.postType as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    {{input name="title" type="text" placeholder="Title" value=post.title}}
+    {{#each post.errors.title as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    {{editor-with-preview input=post.markdown isLoading=post.isSaving placeholder=placeholder}}
+    {{#each post.errors.markdown as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
+  </div>
+  <div class="input-group">
+    <input class="button right {{post.postType}}" name="submit" type="submit" value="Submit new {{post.postType}}" {{action 'submit'}} />
+  </div>
+</div>

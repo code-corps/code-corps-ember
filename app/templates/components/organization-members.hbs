@@ -1,0 +1,10 @@
+<h3>People</h3>
+<ul>
+{{#each members as |user|}}
+  <li>
+    {{#link-to 'slugged-route' user.username}}
+      <img class="icon" src={{user.photoThumbUrl}} />
+    {{/link-to}}
+  </li>
+{{/each}}
+</ul>

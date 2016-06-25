@@ -1,0 +1,26 @@
+{{#if session.isAuthenticated}}
+  {{#link-to 'slugged-route' comment.user.username}}
+    <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{/link-to}}
+  <div class="comment-content">
+    <div class="input-group">
+      {{editor-with-preview
+        input=comment.markdown
+        isLoading=comment.isSaving
+        modifiedSubmit="saveComment"}}
+      {{#each comment.errors.markdown as |error|}}
+        <p class="error">{{error.message}}</p>
+      {{/each}}
+    </div>
+    <div class="input-group">
+      <button class="default right {{if comment.isSaving "disabled"}}" name="save" {{action 'saveComment'}}>Comment</button>
+      {{yield}}
+    </div>
+  </div>
+{{else}}
+  <div class="comment-content comment-signup">
+    <p>
+      {{#link-to 'signup' class='button default small'}}Sign up for free{{/link-to}} to comment on this conversation, or {{#link-to 'login'}}sign in{{/link-to}}.
+    </p>
+  </div>
+{{/if}}

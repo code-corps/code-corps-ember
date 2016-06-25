@@ -1,0 +1,5 @@
+{{#if isOpen}}
+  <button class="button clear" name="close" {{action 'closePost'}}>Close post</button>
+{{else}}
+  <button class="button clear" name="open" {{action 'reopenPost'}}>Reopen post</button>
+{{/if}}

@@ -1,0 +1,78 @@
+.project-grid-item {
+  @include omega(3n);
+  @include span-columns(4);
+  border: 1px solid $border-light;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  .icon-container {
+    text-align: center;
+  }
+
+  h4 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 10px 0 4px 0;
+    text-align: center;
+
+    a {
+      color: $dark-text;
+      &:hover {
+        color: $dark-blue;
+      }
+    }
+  }
+
+  p {
+    color: $light-text;
+    font-size: 14px;
+  }
+
+  .organization {
+    margin: 4px 0;
+    text-align: center;
+  }
+
+  .categories {
+    height: 35px;
+    margin: 15px 0;
+    text-align: center;
+    li {
+      display: inline-block;
+      height: 35px;
+      margin: 0 5px;
+      width: 35px;
+    }
+  }
+
+  .description {
+    $font-size: 14px;
+    $line-height: 1.3;
+    $lines-to-show: 3;
+
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    height: $font-size * $line-height * $lines-to-show; /* Fallback for non-webkit */
+    font-size: $font-size;
+    line-height: $line-height;
+    -webkit-line-clamp: $lines-to-show;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .members {
+    height: 25px;
+    margin: 10px 0 0 0;
+
+    li {
+      display: inline-block;
+      padding-right: 5px;
+
+      &:last-child {
+        padding-right: 0px;
+      }
+    }
+  }
+}

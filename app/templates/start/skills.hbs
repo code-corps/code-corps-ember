@@ -1,0 +1,23 @@
+<div class="start-header">
+  <h2>What skills can you share?</h2>
+  <h3>We'll help you find projects that need your exact skills.</h3>
+</div>
+
+<div class="start-skills">
+  <div class="user-skills-list">
+  {{#each model as |userSkill|}}
+    {{skill-button skill=userSkill.skill isLoading=userSkill.isLoading}}
+  {{else}}
+    <p>Add your skills and they'll show up here.</p>
+  {{/each}}
+  </div>
+
+  <div class="user-skills-input-container">
+    {{user-skills-input}}
+  </div>
+</div>
+
+<div class="start-actions">
+  <p>Finished adding your skills?</p>
+  <button class="{{if userSkills.isEmpty "clear" "default"}}" disabled={{userSkills.isEmpty}} {{action 'continue'}}>Find Projects</button>
+</div>

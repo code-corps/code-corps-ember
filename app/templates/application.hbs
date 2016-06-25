@@ -1,3 +1,10 @@
-<h2 id="title">Welcome to Ember.js</h2>
-
-{{outlet}}
+{{#drag-zone}}
+  {{navigation-menu}}
+  {{flash-messages}}
+  <div class="main container {{codeTheme.className}}">
+    {{outlet}}
+  </div>
+  {{#unless isOnboarding}}
+    {{site-footer}}
+  {{/unless}}
+{{/drag-zone}}

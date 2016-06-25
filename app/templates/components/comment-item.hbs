@@ -1,0 +1,32 @@
+{{#link-to 'slugged-route' comment.user.username}}
+  <img class="icon" src={{comment.user.photoThumbUrl}} />
+{{/link-to}}
+<div class="comment-content">
+{{#if isEditing}}
+  <div class="input-group">
+    {{editor-with-preview
+      input=comment.markdown
+      isLoading=comment.isSaving
+      modifiedSubmit="save"}}
+  </div>
+  <div class="input-group">
+    {{#if comment.isSaving}}
+      <button class="default small right">Saving...</button>
+    {{else}}
+      <button {{action 'save'}} class="default small right save">Save</button>
+      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="comment-info">
+    {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.createdAt}}
+    {{#if canEdit}}
+      <a class="edit" {{action 'edit'}}>edit</a>
+    {{/if}}
+    {{#if comment.containsCode}}
+      {{code-theme-selector}}
+    {{/if}}
+  </div>
+  <div class="comment-body">{{{commentBodyWithMentions}}}</div>
+{{/if}}
+</div>

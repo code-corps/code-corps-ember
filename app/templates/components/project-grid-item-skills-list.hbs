@@ -1,0 +1,8 @@
+{{skill-list-items skills=skills skillItemHidden="skillItemHidden" overflowHidden=overflowHidden}}
+<div class="expander {{if showToggle 'visible' 'hidden'}}">
+  {{#if overflowHidden}}
+    <a {{action "showMore"}}>show more</a>
+  {{else}}
+    <a {{action "showLess"}}>show less</a>
+  {{/if}}
+</div>

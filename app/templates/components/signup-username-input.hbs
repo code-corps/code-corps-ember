@@ -1,0 +1,31 @@
+{{#auto-focus}}
+  {{input name="username" autocapitalize="off" autofocus=true tabindex=0 type="text" placeholder="Pick a username" value=user.username key-down="keyDown"}}
+{{/auto-focus}}
+<div class="suggestions">
+{{#if canShowValidations}}
+  {{#if isOkay}}
+    <p class="ok"></p>
+  {{/if}}
+  {{#if isInvalid}}
+    <p class="not-ok">
+      <ul>
+        <li>
+          Please enter a username with only letters, numbers, or underscores.
+        </li>
+      </ul>
+    </p>
+  {{/if}}
+  {{#if isUnavailable}}
+    <p class="not-ok">
+      <ul>
+        <li>
+          This username is already registered. Want to {{link-to "login" "login"}}?
+        </li>
+      </ul>
+    </p>
+  {{/if}}
+{{/if}}
+</div>
+{{#each user.errors.username as |error|}}
+  <p class="error">Your username {{error.message}}.</p>
+{{/each}}

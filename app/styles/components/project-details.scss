@@ -1,0 +1,49 @@
+.project-details {
+  margin: 0 0 10px 0;
+
+  @include clearfix;
+
+  .basic-details {
+    @include span-columns(8);
+  }
+
+  .more-details {
+    @include span-columns(4);
+  }
+
+  .join-project {
+    font-size: 14px;
+    margin: 7px 0;
+  }
+
+  h2 {
+    margin: 7px 0;
+    font-size: 26px;
+
+    a {
+      color: $hidden-link-color;
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
+
+  p {
+    margin: 3px 0;
+    font-size: 16px;
+  }
+
+  .icon-container {
+    float: left;
+  }
+
+  .details-container {
+    padding-left: 70px;
+  }
+
+  .organization {
+    margin-top: 8px;
+    font-size: 13px;
+    min-height: 25px;
+  }
+}

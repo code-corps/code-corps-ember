@@ -1,8 +1,17 @@
 # Code Corps Ember
 
-[![Code Climate](https://codeclimate.com/github/code-corps/code-corps-ember/badges/gpa.svg)](https://codeclimate.com/github/code-corps/code-corps-ember) [ ![Codeship Status for code-corps/code-corps-api](https://codeship.com/projects/f79468b0-fd8d-0132-18d2-123cfeffb5ea/status)](https://codeship.com/projects/87849)
+![Code Corps Ember Logo](https://d3pgew4wbk2vb1.cloudfront.net/images/github/code-corps-ember.png)
+
+[![Code Climate](https://codeclimate.com/github/code-corps/code-corps-ember/badges/gpa.svg)](https://codeclimate.com/github/code-corps/code-corps-ember) [ ![Codeship Status for code-corps/code-corps-api](https://codeship.com/projects/f79468b0-fd8d-0132-18d2-123cfeffb5ea/status)](https://codeship.com/projects/87849) [![Dependency Status](https://david-dm.org/code-corps/code-corps-ember.svg)](https://david-dm.org/code-corps/code-corps-ember) [![devDependency Status](https://david-dm.org/code-corps/code-corps-ember/dev-status.svg)](https://david-dm.org/code-corps/code-corps-ember#info=devDependencies) [![Slack Status](http://slack.codecorps.org/badge.svg)](http://slack.codecorps.org)
 
 This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Rails JSON API.
+
+Contributing
+------------
+
+We'd love to have you contribute to Code Corps directly!
+
+To do so, please read the guidelines in our [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Prerequisites
 
@@ -21,9 +30,18 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `bower install`
 
-## Running / Development
+## Running / Development (with Rails)
+
+If you're running the Rails API on `localhost:3000`, then `ember-cli-deploy` will automatically watch for changes to your file tree and deploy new revisions to your running `redis` instance. Your API running on `:3000` will then serve the Ember app's `index.html`.
 
 * `ember server`
+* Visit your app at [http://localhost:3000](http://localhost:3000).
+
+## Running / Development (without Rails)
+
+If you'd like to run the app without having to set up the server, you can simply hit our `remote-development` endpoint.
+
+* `ember server --environment=remote-development`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
@@ -40,9 +58,13 @@ Make use of the many generators for code, try `ember help generate` for more det
 * `ember build` (development)
 * `ember build --environment production` (production)
 
+### Style Guide
+
+You should refer to our [style guide](STYLEGUIDE.md) for writing Ember.js, HTML/Handlebars, and SCSS that makes it easier for everyone to work on Code Corps together.
+
 ### Deploying
 
-Specify what it takes to deploy your app.
+The app uses Circle for continuous integration and deploys automatically to a staging server when merging into `develop` and to production when merging into `master`.
 
 ## Further Reading / Useful Links
 

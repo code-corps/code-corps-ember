@@ -1,0 +1,58 @@
+.horizontal-menu {
+  @include clearfix;
+
+  border-bottom: 1px solid $border-default;
+  list-style-type: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+  width: 100%;
+
+  li {
+    float: left;
+  }
+
+  a {
+    border-bottom: 3px solid transparent;
+    color: $extra-light-text;
+    display: block;
+    font-weight: 500;
+    margin-bottom: -1px;
+    padding: 6px 14px;
+    text-decoration: none;
+
+    &.active {
+      border-bottom-color: $primary-color;
+      color: $primary-color;
+      font-weight: 700;
+
+      span.info {
+        background: $dark-blue;
+      }
+    }
+
+    &:hover {
+      border-bottom-color: $primary-color;
+      color: $primary-color;
+      transition: border-bottom-color ease 0.3s;
+
+      span.info {
+        background: $dark-blue;
+      }
+    }
+
+    span.info {
+      background: $extra-light-text;
+      border-radius: 4px;
+      color: white;
+      font-size: 12px;
+      font-weight: 300;
+      padding: 2px 7px 3px 7px;
+      margin-left: 5px;
+      vertical-align: 1px;
+
+      strong {
+        font-weight: 700;
+      }
+    }
+  }
+}

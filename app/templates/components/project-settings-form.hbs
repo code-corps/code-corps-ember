@@ -1,0 +1,15 @@
+<div class="form-container">
+  <div class="input-group">
+    {{image-drop originalImage=project.iconLargeUrl droppedImage=project.base64IconData hoverText="Change your project logo."}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="title" value=project.title placeholder="Title"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="description" value=project.description placeholder="Description"}}
+  </div>
+
+  <div class="input-group">
+    <button class="save default" {{action 'save'}}>Update Settings</button>
+  </div>
+</div>

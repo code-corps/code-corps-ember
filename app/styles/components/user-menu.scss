@@ -1,0 +1,38 @@
+.user-menu {
+  .avatar {
+    background: $gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .dropdown-menu {
+    min-width: 220px;
+  }
+
+  &.menu-hidden {
+    .dropdown-arrow {
+      @include arrow-down;
+    }
+  }
+
+  &.menu-visible {
+    .dropdown-arrow {
+      @include arrow-up;
+    }
+  }
+
+  a:hover {
+    .dropdown-arrow {
+      border-top-color: $link-hover-color;
+      border-bottom-color: $link-hover-color;
+    }
+  }
+}
+
+.user-menu-select {
+  padding: 5px;
+  display: block;
+}

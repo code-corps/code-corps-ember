@@ -1,0 +1,23 @@
+<div class="form-area">
+  <h2>Hey, thanks for joining!</h2>
+  <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
+  <div class="form">
+    <div class="photo">
+      {{image-drop originalImage=model.photoLargeUrl droppedImage=model.base64PhotoData circle=true hoverText="Change your profile photo."}}
+    </div>
+    <div class="name">
+      <p>Let’s get to know you by putting a face to a name.</p>
+      <div class="input-group">
+        {{input type="text" name="name" value=model.name placeholder="What's your name?" autofocus=true}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="image-area">
+  <div class="people-signup"></div>
+</div>
+
+<div class="start-actions">
+  <p>Nice to finally meet you.</p>
+  <button class="{{if usersNameIsEmpty "clear" "default"}}" disabled={{usersNameIsEmpty}} {{action 'continue'}}>Let's go!</button>
+</div>

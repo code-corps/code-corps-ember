@@ -1,0 +1,21 @@
+.settings-menu {
+  li {
+    a {
+      border-left: 1px solid transparent;
+      color: $extra-light-text;
+      display: block;
+      padding: 10px 15px;
+
+      &:hover {
+        background: $light-blue-background;
+        border-color: $border-default;
+        color: $dark-blue;
+      }
+
+      &.active {
+        border-color: $dark-blue;
+        color: $dark-blue;
+      }
+    }
+  }
+}

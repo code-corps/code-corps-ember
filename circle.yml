@@ -1,0 +1,23 @@
+machine:
+  node:
+    version: 4.4.5
+dependencies:
+  cache_directories:
+    - /home/ubuntu/nvm/versions/node/v4.4.5/bin
+    - /home/ubuntu/nvm/versions/node/v4.4.5/lib/node_modules
+    - node_modules
+    - bower_components
+  override:
+    - npm install -g bower
+    - npm install
+    - bower install
+    - npm rebuild node-sass
+deployment:
+  production:
+    branch: master
+    commands:
+      - 'node_modules/.bin/ember deploy production --activate'
+  staging:
+    branch: develop
+    commands:
+      - 'node_modules/.bin/ember deploy staging --activate'

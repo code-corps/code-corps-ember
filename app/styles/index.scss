@@ -1,0 +1,56 @@
+#landing {
+  .landing-section {
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 42px;
+    font-weight: 500;
+    margin: 10px;
+  }
+
+  h3 {
+    color: #777777;
+    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+    font-size: 28px;
+    font-weight: 200;
+    margin: 10px;
+  }
+
+  .icons-header {
+    $file: "/assets/images/icons-header";
+    @include background-image-retina($file, "png", 810px, 186px);
+    height: 186px;
+    margin: 40px auto;
+    width: 810px;
+  }
+
+  .button {
+    margin: 0 auto;
+  }
+}
+
+.typed-cursor {
+  opacity: 1;
+  -webkit-animation: blink 0.7s infinite;
+  -moz-animation: blink 0.7s infinite;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+
+@-webkit-keyframes blink {
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}
+
+@-moz-keyframes blink {
+  0% { opacity:1; }
+  50% { opacity:0; }
+  100% { opacity:1; }
+}

@@ -1,0 +1,12 @@
+<div class="dropdown-body">
+  <ul>
+    <li>{{#link-to 'slugged-route' user.username class="slugged-route"}}Your profile{{/link-to}}</li>
+    <li>{{#link-to 'settings.profile' class="profile"}}Settings{{/link-to}}</li>
+    <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
+  </ul>
+</div>
+<div class="dropdown-footer">
+  <p>
+    Signed in as <strong class="css-truncate-target">{{user.username}}</strong>
+  </p>
+</div>

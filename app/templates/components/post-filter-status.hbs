@@ -1,0 +1,4 @@
+{{#click-outside action=(action "hide")}}
+  <button class="clear small {{if active "active"}}" {{action 'toggle'}}>Status</button>
+  {{post-filter-dropdown field="status" selectedFilters=selectedStatuses hide="hide" filterBy="filterByStatus"}}
+{{/click-outside}}

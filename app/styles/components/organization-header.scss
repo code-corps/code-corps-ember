@@ -1,0 +1,30 @@
+.organization-header {
+  margin: 10px 0;
+
+  @include clearfix;
+
+  h2 {
+    margin: 7px 0;
+    font-size: 26px;
+  }
+
+  p {
+    margin: 3px 0;
+    font-size: 16px;
+  }
+
+  a {
+    color: $hidden-link-color;
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  .icon-container, .details-container {
+    float: left;
+  }
+
+  .details-container {
+    padding-left: 10px;
+  }
+}

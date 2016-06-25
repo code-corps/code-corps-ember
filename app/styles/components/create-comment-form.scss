@@ -1,0 +1,17 @@
+.create-comment-form {
+  display: block;
+  float: left;
+  margin: 10px 0;
+  padding-left: 60px;
+  width: 100%;
+
+  .icon {
+    float: left;
+    margin-left: -60px;
+  }
+}
+
+.comment-signup {
+  background: $task-background;
+  padding: 10px 20px;
+}

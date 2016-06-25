@@ -1,0 +1,460 @@
+@mixin sprite( $spriteVals ) {
+  width: nth( $spriteVals, 1 );
+  height: nth( $spriteVals, 2 );
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+  @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $sprite-bgiSizeW $sprite-bgiSizeH;
+  }
+}
+$spritePath: '/assets/images/icons/sprite';
+$spriteURL: $spritePath + '.png';
+$spritex2URL: $spritePath + '@2x.png';
+$sprite-bgiSizeW: 230px;
+$sprite-bgiSizeH: 248px;
+$logo: 230px 50px $spriteURL 0px 0px $spritex2URL;
+$logo-small: 161px 35px $spriteURL 0px -50px $spritex2URL;
+$location: 16px 16px $spriteURL 0px -85px $spritex2URL;
+$twitter: 16px 16px $spriteURL -16px -85px $spritex2URL;
+$link: 16px 16px $spriteURL -32px -85px $spritex2URL;
+$beginner: 16px 16px $spriteURL 0px -101px $spritex2URL;
+$intermediate: 16px 16px $spriteURL -16px -101px $spritex2URL;
+$expert: 16px 16px $spriteURL -32px -101px $spritex2URL;
+$idea-hover: 24px 24px $spriteURL -120px -109px $spritex2URL;
+$task-hover: 24px 24px $spriteURL -48px -109px $spritex2URL;
+$idea: 24px 24px $spriteURL -120px -85px $spritex2URL;
+$progress-hover: 24px 24px $spriteURL -96px -109px $spritex2URL;
+$issue-hover: 24px 24px $spriteURL -72px -109px $spritex2URL;
+$progress: 24px 24px $spriteURL -96px -85px $spritex2URL;
+$issue: 24px 24px $spriteURL -72px -85px $spritex2URL;
+$task: 24px 24px $spriteURL -48px -85px $spritex2URL;
+$light-theme: 24px 19px $spriteURL 0px -117px $spritex2URL;
+$dark-theme: 24px 19px $spriteURL -24px -117px $spritex2URL;
+$tick-white: 12px 10px $spriteURL 0px -136px $spritex2URL;
+$tick-black: 12px 10px $spriteURL -12px -136px $spritex2URL;
+$tick-blue: 12px 10px $spriteURL -24px -136px $spritex2URL;
+$cross-red: 16px 10px $spriteURL -36px -136px $spritex2URL;
+$enter-blue: 16px 10px $spriteURL -52px -136px $spritex2URL;
+$check-area: 18px 16px $spriteURL 0px -146px $spritex2URL;
+$check-area-white: 18px 16px $spriteURL -18px -146px $spritex2URL;
+$check-mark: 18px 16px $spriteURL -36px -146px $spritex2URL;
+$x-mark: 18px 16px $spriteURL -54px -146px $spritex2URL;
+$fb-footer: 16px 16px $spriteURL 0px -162px $spritex2URL;
+$github-footer: 16px 16px $spriteURL -16px -162px $spritex2URL;
+$twitter-footer: 16px 16px $spriteURL -32px -162px $spritex2URL;
+$slack-footer: 16px 16px $spriteURL -48px -162px $spritex2URL;
+$box: 50px 50px $spriteURL 0px -178px $spritex2URL;
+$curved-arrow: 50px 50px $spriteURL -50px -178px $spritex2URL;
+$camera: 50px 50px $spriteURL -100px -178px $spritex2URL;
+$search: 50px 50px $spriteURL -150px -178px $spritex2URL;
+$closed: 20px 20px $spriteURL 0px -228px $spritex2URL;
+$open: 20px 20px $spriteURL -20px -228px $spritex2URL;
+$closed-white: 20px 20px $spriteURL -40px -228px $spritex2URL;
+$open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
+
+.box-icon {
+  @include sprite($box);
+}
+
+.search-icon {
+  @include sprite($search);
+}
+
+$postTypeIcons: (
+  "idea": $idea,
+  "issue": $issue,
+  "progress": $progress,
+  "task": $task,
+);
+
+$postTypeIconHovers: (
+  "idea": $idea-hover,
+  "issue": $issue-hover,
+  "progress": $progress-hover,
+  "task": $task-hover,
+);
+
+@mixin postItemIcon($icon) {
+  .post-icon:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+  }
+}
+
+@mixin postExpertiseIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    margin: 0 5px -4px 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@mixin userSidebarIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+  }
+}
+
+@mixin interestIconSprite( $spriteVals ) {
+  width: nth( $spriteVals, 1 );
+  height: nth( $spriteVals, 2 );
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+  @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $interest-bgiSizeW $interest-bgiSizeH;
+  }
+}
+
+$interestsPath: '/assets/images/icons/interests';
+$interestsURL: $interestsPath + '.png';
+$interestsx2URL: $interestsPath + '@2x.png';
+$interest-bgiSizeW: 140px;
+$interest-bgiSizeH: 280px;
+$arts-hover: 35px 35px $interestsURL 0px -140px $interestsx2URL;
+$arts: 35px 35px $interestsURL 0px 0px $interestsx2URL;
+$economy: 35px 35px $interestsURL -35px 0px $interestsx2URL;
+$education: 35px 35px $interestsURL -70px 1px $interestsx2URL;
+$environment: 35px 35px $interestsURL -105px 0px $interestsx2URL;
+$government: 35px 35px $interestsURL 0px -35px $interestsx2URL;
+$health: 35px 35px $interestsURL -35px -35px $interestsx2URL;
+$justice: 35px 35px $interestsURL -70px -35px $interestsx2URL;
+$politics: 35px 35px $interestsURL -105px -35px $interestsx2URL;
+$public-safety: 35px 35px $interestsURL 0px -70px $interestsx2URL;
+$science: 35px 35px $interestsURL -35px -70px $interestsx2URL;
+$security: 35px 35px $interestsURL -70px -70px $interestsx2URL;
+$society: 35px 35px $interestsURL -105px -70px $interestsx2URL;
+$technology: 35px 35px $interestsURL 0px -105px $interestsx2URL;
+$transportation: 35px 35px $interestsURL -35px -105px $interestsx2URL;
+$economy-hover: 35px 35px $interestsURL -35px -140px $interestsx2URL;
+$education-hover: 35px 35px $interestsURL -70px -140px $interestsx2URL;
+$environment-hover: 35px 35px $interestsURL -105px -140px $interestsx2URL;
+$government-hover: 35px 35px $interestsURL 0px -175px $interestsx2URL;
+$health-hover: 35px 35px $interestsURL -35px -175px $interestsx2URL;
+$justice-hover: 35px 35px $interestsURL -70px -175px $interestsx2URL;
+$politics-hover: 35px 35px $interestsURL -105px -175px $interestsx2URL;
+$public-safety-hover: 35px 35px $interestsURL 0px -210px $interestsx2URL;
+$science-hover: 35px 35px $interestsURL -35px -210px $interestsx2URL;
+$society-hover: 35px 35px $interestsURL -105px -210px $interestsx2URL;
+$security-hover: 35px 35px $interestsURL -70px -210px $interestsx2URL;
+$technology-hover: 35px 35px $interestsURL 0px -245px $interestsx2URL;
+$transportation-hover: 35px 35px $interestsURL -35px -245px $interestsx2URL;
+
+.interest-icon {
+  display: block;
+  height: 35px;
+  width: 35px;
+
+  &.arts {
+    @include interestIconSprite($arts);
+    &:hover, &.selected {
+      @include interestIconSprite($arts-hover);
+    }
+  }
+
+  &.economy {
+    @include interestIconSprite($economy);
+    &:hover, &.selected {
+      @include interestIconSprite($economy-hover);
+    }
+  }
+
+  &.education {
+    @include interestIconSprite($education);
+    &:hover, &.selected {
+      @include interestIconSprite($education-hover);
+    }
+  }
+
+  &.environment {
+    @include interestIconSprite($environment);
+    &:hover, &.selected {
+      @include interestIconSprite($environment-hover);
+    }
+  }
+
+  &.government {
+    @include interestIconSprite($government);
+    &:hover, &.selected {
+      @include interestIconSprite($government-hover);
+    }
+  }
+
+  &.health {
+    @include interestIconSprite($health);
+    &:hover, &.selected {
+      @include interestIconSprite($health-hover);
+    }
+  }
+
+  &.justice {
+    @include interestIconSprite($justice);
+    &:hover, &.selected {
+      @include interestIconSprite($justice-hover);
+    }
+  }
+
+  &.politics {
+    @include interestIconSprite($politics);
+    &:hover, &.selected {
+      @include interestIconSprite($politics-hover);
+    }
+  }
+
+  &.public-safety {
+    @include interestIconSprite($public-safety);
+    &:hover, &.selected {
+      @include interestIconSprite($public-safety-hover);
+    }
+  }
+
+  &.science {
+    @include interestIconSprite($science);
+    &:hover, &.selected {
+      @include interestIconSprite($science-hover);
+    }
+  }
+
+  &.security {
+    @include interestIconSprite($security);
+    &:hover, &.selected {
+      @include interestIconSprite($security-hover);
+    }
+  }
+
+  &.society {
+    @include interestIconSprite($society);
+    &:hover, &.selected {
+      @include interestIconSprite($society-hover);
+    }
+  }
+
+  &.technology {
+    @include interestIconSprite($technology);
+    &:hover, &.selected {
+      @include interestIconSprite($technology-hover);
+    }
+  }
+
+  &.transportation {
+    @include interestIconSprite($transportation);
+    &:hover, &.selected {
+      @include interestIconSprite($transportation-hover);
+    }
+  }
+}
+
+@mixin categoryIconSprite( $spriteVals ) {
+  width: nth( $spriteVals, 1 );
+  height: nth( $spriteVals, 2 );
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
+  @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $category-bgiSizeW $category-bgiSizeH;
+  }
+}
+$categoriesPath: '/assets/images/icons/categories';
+$categoriesURL: $categoriesPath + '.png';
+$categoriesx2URL: $categoriesPath + '@2x.png';
+$category-bgiSizeW: 420px;
+$category-bgiSizeH: 420px;
+$arts-hover: 70px 70px $categoriesURL 0px -210px $categoriesx2URL;
+$economy-hover: 70px 70px $categoriesURL -70px -210px $categoriesx2URL;
+$education-hover: 70px 70px $categoriesURL -140px -210px $categoriesx2URL;
+$environment-hover: 70px 70px $categoriesURL -210px -210px $categoriesx2URL;
+$government-hover: 70px 70px $categoriesURL -280px -210px $categoriesx2URL;
+$health-hover: 70px 70px $categoriesURL -350px -210px $categoriesx2URL;
+$justice-hover: 70px 70px $categoriesURL 0px -280px $categoriesx2URL;
+$politics-hover: 70px 70px $categoriesURL -70px -280px $categoriesx2URL;
+$public-safety-hover: 70px 70px $categoriesURL -140px -280px $categoriesx2URL;
+$science-hover: 70px 70px $categoriesURL -210px -280px $categoriesx2URL;
+$security-hover: 70px 70px $categoriesURL -280px -280px $categoriesx2URL;
+$society-hover: 70px 70px $categoriesURL -350px -280px $categoriesx2URL;
+$technology-hover: 70px 70px $categoriesURL 0px -350px $categoriesx2URL;
+$transportation-hover: 70px 70px $categoriesURL -70px -350px $categoriesx2URL;
+$arts: 70px 70px $categoriesURL 0px 0px $categoriesx2URL;
+$economy: 70px 70px $categoriesURL -70px 0px $categoriesx2URL;
+$education: 70px 70px $categoriesURL -140px 0px $categoriesx2URL;
+$environment: 70px 70px $categoriesURL -210px 0px $categoriesx2URL;
+$government: 70px 70px $categoriesURL -280px 0px $categoriesx2URL;
+$health: 70px 70px $categoriesURL -350px 0px $categoriesx2URL;
+$justice: 70px 70px $categoriesURL 0px -70px $categoriesx2URL;
+$politics: 70px 70px $categoriesURL -70px -70px $categoriesx2URL;
+$public-safety: 70px 70px $categoriesURL -140px -70px $categoriesx2URL;
+$science: 70px 70px $categoriesURL -210px -70px $categoriesx2URL;
+$security: 70px 70px $categoriesURL -280px -70px $categoriesx2URL;
+$society: 70px 70px $categoriesURL -350px -70px $categoriesx2URL;
+$technology: 70px 70px $categoriesURL 0px -140px $categoriesx2URL;
+$transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
+
+.category-icon {
+  display: block;
+  height: 70px;
+  width: 70px;
+
+  &.arts {
+    @include categoryIconSprite($arts);
+    &.selected {
+      @include categoryIconSprite($arts-hover);
+    }
+  }
+
+  &.economy {
+    @include categoryIconSprite($economy);
+    &.selected {
+      @include categoryIconSprite($economy-hover);
+    }
+  }
+
+  &.education {
+    @include categoryIconSprite($education);
+    &.selected {
+      @include categoryIconSprite($education-hover);
+    }
+  }
+
+  &.environment {
+    @include categoryIconSprite($environment);
+    &.selected {
+      @include categoryIconSprite($environment-hover);
+    }
+  }
+
+  &.government {
+    @include categoryIconSprite($government);
+    &.selected {
+      @include categoryIconSprite($government-hover);
+    }
+  }
+
+  &.health {
+    @include categoryIconSprite($health);
+    &.selected {
+      @include categoryIconSprite($health-hover);
+    }
+  }
+
+  &.justice {
+    @include categoryIconSprite($justice);
+    &.selected {
+      @include categoryIconSprite($justice-hover);
+    }
+  }
+
+  &.politics {
+    @include categoryIconSprite($politics);
+    &.selected {
+      @include categoryIconSprite($politics-hover);
+    }
+  }
+
+  &.public-safety {
+    @include categoryIconSprite($public-safety);
+    &.selected {
+      @include categoryIconSprite($public-safety-hover);
+    }
+  }
+
+  &.science {
+    @include categoryIconSprite($science);
+    &.selected {
+      @include categoryIconSprite($science-hover);
+    }
+  }
+
+  &.security {
+    @include categoryIconSprite($security);
+    &.selected {
+      @include categoryIconSprite($security-hover);
+    }
+  }
+
+  &.society {
+    @include categoryIconSprite($society);
+    &.selected {
+      @include categoryIconSprite($society-hover);
+    }
+  }
+
+  &.technology {
+    @include categoryIconSprite($technology);
+    &.selected {
+      @include categoryIconSprite($technology-hover);
+    }
+  }
+
+  &.transportation {
+    @include categoryIconSprite($transportation);
+    &.selected {
+      @include categoryIconSprite($transportation-hover);
+    }
+  }
+}
+
+@mixin rolesSprite($spriteVals) {
+  width: nth($spriteVals, 1);
+  height: nth($spriteVals, 2);
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth($spriteVals, 4) nth($spriteVals, 5);
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $roles-bgiSizeW $roles-bgiSizeH;
+  }
+}
+$roles-spritePath: 'assets/images/icons/roles-sprite';
+$roles-spriteURL: $roles-spritePath + '.png';
+$roles-spritex2URL: $roles-spritePath + '@2x.png';
+$roles-bgiSizeW: 181px;
+$roles-bgiSizeH: 210px;
+$technology: 181px 70px $roles-spriteURL 0px 0px $roles-spritex2URL;
+$creative: 181px 70px $roles-spriteURL 0px -70px $roles-spritex2URL;
+$support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;
+
+@mixin aboutSprite($spriteVals) {
+  width: nth($spriteVals, 1);
+  height: nth($spriteVals, 2);
+  background-repeat: no-repeat;
+  $url: nth($spriteVals,3);
+  background-image: url($url);
+  background-position: nth($spriteVals, 4) nth($spriteVals, 5);
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    $retinaUrl: nth($spriteVals,6);
+    background-image: url($retinaUrl);
+    background-size: $about-bgiSizeW $about-bgiSizeH;
+  }
+}
+
+$about-spritePath: 'assets/images/icons/about-sprite';
+$about-spriteURL: $about-spritePath + '.png';
+$about-spritex2URL: $about-spritePath + '@2x.png';
+$about-bgiSizeW: 751px;
+$about-bgiSizeH: 162px;
+$about-cars: 751px 75px $about-spriteURL 0px 0px $about-spritex2URL;
+$about-rocketship: 75px 87px $about-spriteURL 0px -75px $about-spritex2URL;
+$about-connect: 75px 75px $about-spriteURL -75px -76px $about-spritex2URL;
+$about-support: 75px 75px $about-spriteURL -150px -76px $about-spritex2URL;
+$about-fund: 75px 75px $about-spriteURL -225px -76px $about-spritex2URL;
+$about-develop: 75px 75px $about-spriteURL -300px -76px $about-spritex2URL;
+$about-airplane: 102px 36px $about-spriteURL -375px -75px $about-spritex2URL;

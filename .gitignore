@@ -15,3 +15,7 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
+
+.env
+.env.deploy.staging
+.env.deploy.production

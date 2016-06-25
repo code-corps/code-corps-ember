@@ -1,0 +1,307 @@
+@mixin postTypeButtonColors($type) {
+  $background: map-get($postTypeColors, $type);
+  $text: map-get($postTypeTextOnBackgroundColors, $type);
+
+  $darker-color: darken($background, 5%);
+  background-color: $background;
+  border-color: $background;
+  color: $text;
+  &:hover {
+    background-color: $darker-color;
+    background-image: linear-gradient($background, $darker-color);
+    border-color: $darker-color;
+  }
+}
+
+
+@mixin primary-active {
+  &.primary-active {
+    &.active {
+      background: $primary-color;
+      border-color: $primary-color;
+      color: white;
+    }
+  }
+}
+
+#{$all-buttons}, .button {
+  color: white;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 11px 14px;
+  font-family: $body-font-family;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.small {
+    font-size: 14px;
+    padding: 6px 14px;
+  }
+
+  &.large {
+    font-size: 26px;
+    padding: 15px 40px;
+  }
+
+  &.on-solid {
+    background: transparent;
+    border-color: white;
+    &:hover {
+      background: white;
+    }
+  }
+
+  &.default {
+    background: $default-color;
+    border: 1px solid $default-color;
+    &.on-solid {
+      background: transparent;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  &.clear {
+    background: white;
+    border: 1px solid $border-default;
+    color: $dark-text;
+    font-weight: 300;
+
+    &:focus {
+      background: $clear-focus;
+      border-color: darken($border-default, 2%);
+    }
+
+    @include primary-active;
+  }
+
+  &.success {
+    background: $success-color;
+    border: 1px solid $success-color;
+    &.on-solid {
+      background: transparent;
+      &:hover {
+        color: $success-color;
+      }
+    }
+  }
+
+  &.danger {
+    background: $danger-color;
+    border: 1px solid $danger-color;
+    &.on-solid {
+      &:hover {
+        color: $danger-color;
+      }
+    }
+  }
+
+  &.warning {
+    &.on-solid {
+      &:hover {
+        color: $warning-color;
+      }
+    }
+  }
+
+  &.has-error {
+    @include shake;
+  }
+
+  span {
+    &.check-area, &.check-mark, &.x-mark {
+      display: inline-block;
+      height: 16px;
+      margin: -3px 10px 0 0;
+      vertical-align: middle;
+      width: 18px;
+    }
+
+    &.check-area {
+      @include sprite($check-area);
+    }
+
+    &.check-mark {
+      @include sprite($check-mark);
+    }
+
+    &.x-mark {
+      @include sprite($x-mark);
+    }
+
+    &.button-spinner {
+      display: inline-block;
+      margin: -4px 8px -2px -2px;
+      vertical-align: middle;
+      height: 22px;
+      width: 22px;
+
+      @include fadeIn(0.6s);
+    }
+  }
+
+  &.clear {
+    span {
+      &.button-spinner {
+        $file: "/assets/images/icons/button-spinner-on-clear";
+        @include background-image-retina($file, "gif", 22px, 22px);
+      }
+    }
+  }
+
+  &.default {
+    span {
+      &.check-area {
+        @include sprite($check-area-white);
+      }
+
+      &.button-spinner {
+        $file: "/assets/images/icons/button-spinner-on-default";
+        @include background-image-retina($file, "gif", 22px, 22px);
+      }
+    }
+  }
+
+  &.task { @include postTypeButtonColors('task'); }
+  &.issue { @include postTypeButtonColors('issue'); }
+  &.idea { @include postTypeButtonColors('idea'); }
+}
+
+#{$all-buttons-hover}, .button:hover {
+  cursor: pointer;
+  $darker-color: darken($primary-color, 5%);
+  background: $darker-color;
+  background-image: linear-gradient($default-color, $darker-color);
+  border-color: $darker-color;
+  @include transition(background 0.2s ease-in);
+
+  &.default {
+    $darker-color: darken($default-color, 5%);
+    background: $darker-color;
+    background-image: linear-gradient($default-color, $darker-color);
+    border-color: $darker-color;
+    color: white;
+  }
+
+  &.clear {
+    background: $clear-hover;
+    background-image: linear-gradient(white, $clear-hover);
+    border-color: $border-default;
+
+    &:disabled {
+      background: white;
+    }
+  }
+
+  &.success {
+    $darker-color: darken($success-color, 5%);
+    background: $darker-color;
+    background-image: linear-gradient($success-color, $darker-color);
+    border-color: $darker-color;
+    color: white;
+  }
+
+  &.danger {
+    $darker-color: darken($danger-color, 5%);
+    background: $darker-color;
+    background-image: linear-gradient($danger-color, $darker-color);
+    border-color: $darker-color;
+    color: white;
+  }
+
+  &.can-delete {
+    @include transition(background 0s ease-in);
+    background: $red;
+    border: 1px solid $red;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+#{$all-buttons}, .button {
+  &:not(.has-spinner) {
+    &.active, &:active {
+      &.clear {
+        background: $clear-active;
+        @include primary-active;
+      }
+
+      &.default {
+        background: $primary-active;
+      }
+    }
+  }
+}
+
+.button-group {
+  @include clearfix;
+
+  position: relative;
+  display: inline-block;
+  font-size: 0;
+  vertical-align: middle;
+
+  #{$all-buttons}, .button {
+    border-radius: 4px;
+    margin: 0 0 0 -1px;
+    position: relative;
+
+    &:first-child {
+      margin-left: 0px;
+    }
+
+    &:not(:first-child) {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    &.active {
+      z-index: 3;
+    }
+  }
+
+  &.dropdown {
+    #{$all-buttons}, .button {
+      &::after {
+        @include arrow-down;
+        height: 8px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+p {
+  #{$all-buttons}, .button {
+    &.small {
+      margin-right: 5px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+
+  &.clear {
+    &:disabled {
+      background: white;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

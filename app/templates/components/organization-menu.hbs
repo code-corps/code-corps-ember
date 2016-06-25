@@ -1,0 +1,9 @@
+<li>
+  {{#link-to 'slugged-route' organization.slug}}Projects{{/link-to}}
+</li>
+
+{{#if (can "manage organization" organization membership=credentials.currentUserMembership)}}
+  <li>
+    {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}Settings{{/link-to}}
+  </li>
+{{/if}}
