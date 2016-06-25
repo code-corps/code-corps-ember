@@ -448,6 +448,9 @@ export default function() {
   // GET /skills
   this.get('/skills');
 
+  // GET /skills/:id
+  this.get('/skills/:id');
+
 
   ////////
   // Users

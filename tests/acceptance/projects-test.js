@@ -1,39 +1,45 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 
-let application;
+function createProject(slug) {
+  slug = slug || 'test_organization';
 
-module('Acceptance: Projects', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+  // server.create uses factories. server.schema.<obj>.create does not
+  let project = server.create('project');
 
-test('It renders all the required ui elements', (assert) => {
-  assert.expect(3);
-
+  // need to assign polymorphic properties explicitly
+  // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
   let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  sluggedRoute.owner = organization;
   sluggedRoute.save();
-  for (let i = 0; i < 5; i++) {
-    organization.createProject({
-      slug: `test_project_${i}`,
-      title: `Test project ${i}`
-    });
-  }
-  organization.save();
 
-  visit('/test_organization/projects');
+  project.organization = organization;
+  project.save();
+
+  return project;
+}
+
+moduleForAcceptance('Acceptance | projects');
+
+test('visiting /projects', function(assert) {
+  let project = createProject();
+
+  let skill = server.create('skill', {
+    title: 'Ruby'
+  });
+
+  server.create('project-skill', {
+    project: project,
+    skill: skill,
+  });
+
+  project.skills = [skill];
+  project.save();
+
+  visit('/projects');
 
   andThen(function() {
-    assert.equal(find('.project-list').length, 1, 'project-list component is rendered');
-    assert.equal(find('.project-list .project-item').length, 5, 'correct number of project-items is rendered');
-
-    let firstProjectHref = find('.project-list .project-item:eq(0) a').attr('href');
-    assert.ok(firstProjectHref.indexOf('/test_organization/test_project_0') > -1, 'The link to a project is properly rendered');
+    assert.equal(currentURL(), '/projects');
   });
 });

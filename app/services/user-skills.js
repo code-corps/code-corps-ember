@@ -25,24 +25,28 @@ export default Ember.Service.extend({
 
   hasSkill(skill) {
     let userSkills = this.get('userSkills');
-    let matchedSkill = userSkills.find(function(item) {
-      let itemSkillId = item.belongsTo('skill').id();
-      let skillId = skill.get('id');
-      return (itemSkillId === skillId);
-    }.bind(this));
-    return !Ember.isEmpty(matchedSkill);
+    if (userSkills) {
+      let matchedSkill = userSkills.find(function(item) {
+        let itemSkillId = item.belongsTo('skill').id();
+        let skillId = skill.get('id');
+        return (itemSkillId === skillId);
+      }.bind(this));
+      return !Ember.isEmpty(matchedSkill);
+    }
   },
 
   findUserSkill: function(skill) {
     let userSkills = this.get('userSkills');
-    let userSkill = userSkills.find((item) => {
-      let itemUserId = item.belongsTo('user').id();
-      let itemSkillId = item.belongsTo('skill').id();
-      let userId = this.get('user.id');
-      let skillId = skill.get('id');
-      return (itemUserId === userId) && (itemSkillId === skillId);
-    });
-    return userSkill;
+    if (userSkills) {
+      let userSkill = userSkills.find((item) => {
+        let itemUserId = item.belongsTo('user').id();
+        let itemSkillId = item.belongsTo('skill').id();
+        let userId = this.get('user.id');
+        let skillId = skill.get('id');
+        return (itemUserId === userId) && (itemSkillId === skillId);
+      });
+      return userSkill;
+    }
   },
 
   removeSkill(skill) {
