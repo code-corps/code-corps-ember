@@ -7,6 +7,7 @@ moduleForModel('post', 'Unit | Serializer | post', {
     'model:project',
     'model:user',
     'model:comment',
+    'model:comment-user-mention',
     'model:post-user-mention'
   ]
 });

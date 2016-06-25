@@ -2,6 +2,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+let mockMentionFetcher = Ember.Service.extend({
+  fetchBodyWithMentions: Ember.RSVP.resolve,
+  prefetchBodyWithMentions: Ember.K
+});
+
 let mockCurrentUser = Ember.Service.extend({
   user: {
     id: 1
@@ -11,15 +16,6 @@ let mockCurrentUser = Ember.Service.extend({
 let mockStore = Ember.Service.extend({
   query() {
     return Ember.RSVP.resolve([]);
-  }
-});
-
-let mockStoreReturningMentions = Ember.Service.extend({
-  query() {
-    return Ember.RSVP.resolve([
-      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
-    ]);
   }
 });
 
@@ -39,7 +35,11 @@ let mockPostWithMentions = Ember.Object.create({
   body: '<p>Mentioning @user1 and @user2</p>',
   save() {
     return Ember.RSVP.resolve();
-  }
+  },
+  postUserMentions: [
+    Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+    Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+  ]
 });
 
 moduleForComponent('post-details', 'Integration | Component | post details', {
@@ -51,9 +51,6 @@ moduleForComponent('post-details', 'Integration | Component | post details', {
 });
 
 test('it renders', function(assert) {
-  let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions: Ember.RSVP.resolve
-  });
 
   this.register('service:mention-fetcher', mockMentionFetcher);
 
@@ -67,8 +64,8 @@ test('it renders all the ui elements properly bound', function(assert) {
   this.set('post', mockPost);
 
   let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions() {
-      return Ember.RSVP.resolve('A body');
+    prefetchBodyWithMentions() {
+      return 'A body';
     }
   });
 
@@ -82,8 +79,8 @@ test('it renders all the ui elements properly bound', function(assert) {
 
 test('the post body is rendered as unescaped html', function (assert) {
   let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions() {
-      return Ember.RSVP.resolve('A body with a <strong>strong element</strong>');
+    prefetchBodyWithMentions() {
+      return 'A body with a <strong>strong element</strong>';
     }
   });
 
@@ -99,10 +96,6 @@ test('user can switch between view and edit mode for post body', function(assert
   assert.expect(3);
   this.set('post', mockPost);
 
-  let mockMentionFetcher = Ember.Service.extend({
-    fetchBodyWithMentions: Ember.RSVP.resolve
-  });
-
   this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{post-details post=post}}`);
@@ -117,8 +110,6 @@ test('user can switch between view and edit mode for post body', function(assert
 
 test('mentions are rendered on post body in read-only mode', function(assert) {
   assert.expect(1);
-
-  this.register('service:store', mockStoreReturningMentions);
 
   this.set('post', mockPostWithMentions);
 

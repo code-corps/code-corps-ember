@@ -1,6 +1,7 @@
 import MirageApplicationSerializer from './application';
 
 export default MirageApplicationSerializer.extend({
+  include: ['comments', 'comment-user-mentions', 'post-user-mentions'],
   serialize(modelOrCollection) {
     let response = MirageApplicationSerializer.prototype.serialize.call(this, ...arguments);
 
