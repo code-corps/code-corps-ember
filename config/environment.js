@@ -165,7 +165,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.API_BASE_URL = 'http://api.codecorps.org';
+    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.codecorps.org/oauth/token/';
   }
 
   return ENV;
