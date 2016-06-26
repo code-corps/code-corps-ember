@@ -1,0 +1,51 @@
+.terms-section {
+    @include span-columns(12);
+    margin: 10px 0;
+    border-bottom: 1px solid $border-light;
+    
+    h2 {
+        color: $dark-text;
+        font-size: 32px;
+        font-weight: 500;
+        margin: 10px 0;
+        text-align: center;
+    }
+    
+    h3 {
+        margin: 10px 0;
+        padding-left:16px;
+        color: $light-text;
+        font-size: 18px;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    
+    p {
+        border-radius: 8px;
+        padding: 0 16px;
+        
+        &.intro {
+            @include span-columns(8);
+            @include shift(2);
+            text-align: center;
+        }
+        
+        &.plain-english {
+            background: $primary-color;
+            color: #D8D8D8;
+            padding: 16px;
+        }
+        
+        &.address,&.copyright {
+            text-align: center;
+        }
+        
+        &.address {
+            margin: 0;
+        }
+    }
+    
+    &:first-of-type {
+        border-bottom: none;
+    }
+}
