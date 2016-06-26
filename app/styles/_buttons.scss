@@ -13,7 +13,6 @@
   }
 }
 
-
 @mixin primary-active {
   &.primary-active {
     &.active {
@@ -22,6 +21,10 @@
       color: white;
     }
   }
+}
+
+@mixin focus($color) {
+  box-shadow: 0 0 0 1px #FFFFFF, 0 0 0 3px $color;
 }
 
 #{$all-buttons}, .button {
@@ -38,6 +41,7 @@
 
   &:focus {
     outline: none;
+    @include focus($default-color);
   }
 
   &.small {
@@ -97,6 +101,7 @@
   &.danger {
     background: $danger-color;
     border: 1px solid $danger-color;
+    &:focus { @include focus($danger-color); }
     &.on-solid {
       &:hover {
         color: $danger-color;
@@ -303,5 +308,11 @@ p {
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+select {
+  &:focus {
+    @include focus($default-color);
   }
 }
