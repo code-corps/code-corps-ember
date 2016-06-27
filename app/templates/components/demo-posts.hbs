@@ -1,0 +1,17 @@
+{{#each posts as |post|}}
+  <div class="post-item {{post.postType}}">
+    <div class="post-icon"></div>
+    <div class="post-content">
+      <div class="post-title"><a>{{post.title}}</a></div>
+      <div class="post-description">
+        <span class="main-description">#{{post.number}} by {{post.user.username}} {{moment-from-now post.createdAt}}</span>
+        <ul class="skills">
+          {{#each post.skills as |skill|}}
+            {{skill-list-item skill=skill}}
+          {{/each}}
+        </ul>
+      </div>
+      {{!-- <div class="post-expertise expert">Expert</div> --}}
+    </div>
+  </div>
+{{/each}}
