@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { task, timeout } from 'ember-concurrency';
 
 export default Ember.Component.extend({
   classNames: ['user-skills-input'],
@@ -18,7 +19,7 @@ export default Ember.Component.extend({
   queryString: Ember.computed.alias('query'),
 
   queryStringChanged: Ember.observer('queryString', function() {
-    Ember.run.once(this, '_search');
+    this.get('_searchTask').perform();
   }),
 
   keyDown(e) {
@@ -89,6 +90,11 @@ export default Ember.Component.extend({
     this.set('queryString', '');
     this.$('input').focus();
   },
+
+  _searchTask: task(function * () {
+    this._search();
+    yield timeout(500);
+  }).drop(),
 
   _search() {
     let queryString = this.get('queryString');
