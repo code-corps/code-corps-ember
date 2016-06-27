@@ -1,0 +1,30 @@
+{{#each projects as |project|}}
+  <div class="project-grid-item">
+    <div class="icon-container">
+      <img class="icon medium" src={{project.iconLargeUrl}} />
+    </div>
+    <div class="details-container">
+      <h4>
+        {{project.title}}
+      </h4>
+      <p class="organization">by {{project.organizationName}}</p>
+      <ul class="categories">
+        {{#each project.categories as |category|}}
+          <li>
+            <a class="interest-icon {{category.slug}} {{if category.selected "selected"}}"></a>
+          </li>
+        {{/each}}
+      </ul>
+      <p class="description">
+        {{project.description}}
+      </p>
+      <div class="project-grid-item-skills-list">
+        <ul class="skills">
+          {{#each project.skills as |skill|}}
+            {{skill-list-item skill=skill}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+{{/each}}
