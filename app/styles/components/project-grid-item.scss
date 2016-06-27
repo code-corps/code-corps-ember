@@ -61,18 +61,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-  .members {
-    height: 25px;
-    margin: 10px 0 0 0;
-
-    li {
-      display: inline-block;
-      padding-right: 5px;
-
-      &:last-child {
-        padding-right: 0px;
-      }
-    }
-  }
 }

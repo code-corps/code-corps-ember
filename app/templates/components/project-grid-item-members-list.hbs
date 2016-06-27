@@ -1,0 +1,6 @@
+{{#each visibleMembers as |user|}}
+  <li>
+    <img class="icon tiny circle" src={{user.photoThumbUrl}} />
+  </li>
+{{/each}}
+{{#if hiddenMembersExist}}<li>+{{hiddenMembersCount}} more</li>{{/if}}
