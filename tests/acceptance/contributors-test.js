@@ -2,9 +2,20 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import page from '../pages/contributors';
 import Ember from 'ember';
 
 let application;
+
+function buildURLParts(project_organization_slug, project_slug) {
+  return {
+    args: {
+      project_organization_slug,
+      project_slug
+    },
+    url: `/${project_organization_slug}/${project_slug}/settings/contributors`
+  };
+}
 
 function createProject() {
   // server.create uses factories. server.schema.<obj>.create does not
@@ -43,11 +54,11 @@ test('when not an admin on the project', function(assert) {
     role: 'contributor'
   });
 
-  let contributorsURL = `/${project.organization.slug}/${project.slug}/settings/contributors`;
+  let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
   authenticateSession(application, { user_id: user.id });
 
-  visit(contributorsURL);
+  page.visit(contributorURLParts.args);
 
   andThen(function() {
     assert.equal(currentURL(), '/projects');
@@ -65,24 +76,24 @@ test('when only the owner is a contributor', function(assert) {
     role: 'owner'
   });
 
-  let contributorsURL = `/${project.organization.slug}/${project.slug}/settings/contributors`;
+  let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
   authenticateSession(application, { user_id: user.id });
 
-  visit(contributorsURL);
+  page.visit(contributorURLParts.args);
 
   andThen(function() {
-    assert.equal(currentURL(), contributorsURL);
+    assert.equal(currentURL(), contributorURLParts.url);
 
-    assert.equal(find('.contributors-list:eq(0) .contributors-list-empty').length, 1);
-    assert.equal(find('.contributors-list:eq(1) .contributors-list-empty').length, 0);
-    assert.equal(find('.contributors-list:eq(2) .contributors-list-empty').length, 1);
-    assert.equal(find('.contributors-list:eq(3) .contributors-list-empty').length, 1);
+    assert.ok(page.pendingContributors.emptyMessageVisible, 'Pending contributors list is empty');
+    assert.notOk(page.owners.emptyMessageVisible, 'Owners list is NOT empty');
+    assert.ok(page.admins.emptyMessageVisible, 'Admins list is empty');
+    assert.ok(page.others.emptyMessageVisible, 'Others list is empty');
 
-    assert.equal(find('.contributors-list:eq(0) .member-list-item').length, 0);
-    assert.equal(find('.contributors-list:eq(1) .member-list-item').length, 1);
-    assert.equal(find('.contributors-list:eq(2) .member-list-item').length, 0);
-    assert.equal(find('.contributors-list:eq(3) .member-list-item').length, 0);
+    assert.equal(page.pendingContributors.members().count, 0, 'Pending contributors has no members listed');
+    assert.equal(page.owners.members().count, 1, 'Owners has 1 member listed');
+    assert.equal(page.admins.members().count, 0, 'Admins has no members listed');
+    assert.equal(page.others.members().count, 0, 'Others has no members listed');
   });
 });
 
@@ -121,42 +132,42 @@ test('when there are multiple contributors', function(assert) {
     role: 'contributor'
   });
 
-  let contributorsURL = `/${project.organization.slug}/${project.slug}/settings/contributors`;
+  let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
   authenticateSession(application, { user_id: user.id });
 
-  visit(contributorsURL);
+  page.visit(contributorURLParts.args);
 
   andThen(function() {
-    assert.equal(currentURL(), contributorsURL);
+    assert.equal(currentURL(), contributorURLParts.url);
 
-    assert.equal(find('.project-menu .contributors .info').text().trim(), '2 pending');
+    assert.equal(page.projectMenu.contributors.infoText, '2 pending');
 
-    assert.equal(find('.contributors-list:eq(0) .contributors-list-empty').length, 0);
-    assert.equal(find('.contributors-list:eq(1) .contributors-list-empty').length, 0);
-    assert.equal(find('.contributors-list:eq(2) .contributors-list-empty').length, 0);
-    assert.equal(find('.contributors-list:eq(3) .contributors-list-empty').length, 0);
+    assert.notOk(page.pendingContributors.emptyMessageVisible, 'Pending contributors list is not empty');
+    assert.notOk(page.owners.emptyMessageVisible, 'Owners list is not empty');
+    assert.notOk(page.admins.emptyMessageVisible, 'Admins list is not empty');
+    assert.notOk(page.others.emptyMessageVisible, 'Others list is not empty');
 
-    assert.equal(find('.contributors-list:eq(0) .member-list-item').length, 2);
-    assert.equal(find('.contributors-list:eq(1) .member-list-item').length, 1);
-    assert.equal(find('.contributors-list:eq(2) .member-list-item').length, 1);
-    assert.equal(find('.contributors-list:eq(3) .member-list-item').length, 1);
+    assert.equal(page.pendingContributors.members().count, 2, 'Pending contributors has 2 members listed');
+    assert.equal(page.owners.members().count, 1, 'Owners has 1 member listed');
+    assert.equal(page.admins.members().count, 1, 'Admins has 1 member listed');
+    assert.equal(page.others.members().count, 1, 'Others has 1 member listed');
 
-    click('.contributors-list:eq(0) .member-list-item:eq(0) button.default');
+    page.pendingContributors.members(0).approveMembership();
   });
 
   andThen(function() {
-    assert.equal(find('.project-menu .contributors .info').text().trim(), '1 pending');
-    assert.equal(find('.contributors-list:eq(0) .member-list-item').length, 1);
-    assert.equal(find('.contributors-list:eq(3) .member-list-item').length, 2);
+    assert.equal(page.projectMenu.contributors.infoText, '1 pending');
+    assert.equal(page.pendingContributors.members().count, 1, 'Pending contributors has 1 member listed');
+    assert.equal(page.others.members().count, 2, 'Others has 2 members listed');
 
     window.confirm = function() { return true; };
-    click('.contributors-list:eq(0) .member-list-item:eq(0) button.danger');
+    page.pendingContributors.members(0).denyMembership();
   });
 
   andThen(function() {
-    assert.equal(find('.project-menu .contributors .info').length, 0);
-    assert.equal(find('.contributors-list:eq(0) .member-list-item').length, 0);
-    assert.equal(find('.contributors-list:eq(3) .member-list-item').length, 2);
+    assert.notOk(page.projectMenu.contributors.infoVisible);
+    assert.equal(page.pendingContributors.members().count, 0, 'Pending contributors no members listed');
+    assert.equal(page.others.members().count, 2, 'Others has 2 members listed');
   });
 });
