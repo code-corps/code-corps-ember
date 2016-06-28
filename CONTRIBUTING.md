@@ -1,6 +1,8 @@
 Contributing
 ============
 
+**Contributions are managed on [Code Corps](https://codecorps.org).**
+
 We love pull requests from everyone.
 
 Here's a quick guide for contributing:
