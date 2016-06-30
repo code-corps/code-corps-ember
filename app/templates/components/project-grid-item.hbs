@@ -15,11 +15,5 @@
     {{project.description}}
   </p>
   {{project-grid-item-skills-list skills=project.skills}}
-  <ul class="members">
-    {{#each project.organization.members as |user|}}
-      <li>
-        <img class="icon tiny circle" src={{user.photoThumbUrl}} />
-      </li>
-    {{/each}}
-  </ul>
+  {{project-grid-item-members-list members=project.organization.members}}
 </div>

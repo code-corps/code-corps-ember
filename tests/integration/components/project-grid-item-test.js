@@ -56,6 +56,6 @@ test('it renders', function(assert) {
   assert.equal(this.$('ul.categories li').length, 3);
   assert.equal(this.$('p.description').text().trim(), project.description);
   assert.equal(this.$('.project-grid-item-skills-list').length, 1);
-  assert.equal(this.$('ul.members li').length, 1);
-  assert.equal(this.$('ul.members li:first img').attr('src'), user.photoThumbUrl);
+  assert.equal(this.$('ul.project-grid-item-members-list li').length, 1);
+  assert.equal(this.$('ul.project-grid-item-members-list li:first img').attr('src'), user.photoThumbUrl);
 });

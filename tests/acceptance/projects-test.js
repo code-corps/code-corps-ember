@@ -20,7 +20,7 @@ function createProject(slug) {
   return project;
 }
 
-moduleForAcceptance('Acceptance | projects');
+moduleForAcceptance('Acceptance | Projects');
 
 test('visiting /projects', function(assert) {
   let project = createProject();
@@ -41,5 +41,21 @@ test('visiting /projects', function(assert) {
 
   andThen(function() {
     assert.equal(currentURL(), '/projects');
+  });
+});
+
+test('members are displayed correctly', (assert) => {
+  let project = createProject();
+  let organization = project.organization;
+
+  for (let i = 0; i < 10; i++) {
+    let user = server.create('user');
+    server.create('organization-membership', { role: "contributor", member: user, organization: organization});
+  }
+
+  visit('/projects');
+  andThen(() => {
+    assert.equal(find('.icon.tiny.circle').length, 7, '7 members are rendered');
+    assert.ok(find('.project-grid-item-members-list').text().trim().indexOf('+ 3 more') !== 0, 'The "+ 3 more" text is rendered');
   });
 });
