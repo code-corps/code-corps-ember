@@ -19,3 +19,5 @@ testem.log
 .env
 .env.deploy.staging
 .env.deploy.production
+
+.DS_Store
