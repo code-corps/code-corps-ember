@@ -3,7 +3,7 @@ import Ember from 'ember';
 const VISIBLE_MEMBERS_COUNT = 8;
 
 export default Ember.Component.extend({
-  classNames: ['project-grid-item-members-list'],
+  classNames: ['project-card-members'],
   tagName: 'ul',
 
   visibleMembers: Ember.computed('members', function() {

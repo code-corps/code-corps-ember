@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['project-grid-item-skills-list'],
+  classNames: ['project-card-skills'],
   overflowHidden: true,
   showToggle: false,
 
