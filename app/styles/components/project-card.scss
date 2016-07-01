@@ -1,4 +1,4 @@
-.project-grid-item {
+.project-card {
   @include omega(3n);
   @include span-columns(4);
   border: 1px solid $border-light;

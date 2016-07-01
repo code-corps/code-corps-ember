@@ -11,7 +11,7 @@ let userSkillsService = Ember.Service.extend({
   },
 });
 
-moduleForComponent('project-grid-item-skills-list', 'Integration | Component | project grid item skills list', {
+moduleForComponent('project-card-ksills', 'Integration | Component | project card skills', {
   integration: true,
   beforeEach() {
     this.register('service:user-skills', userSkillsService);
@@ -24,7 +24,7 @@ test('it shows no expander for few skills', function(assert) {
   let skills = [{ title: 'Ruby' }];
 
   this.set('skills', skills);
-  this.render(hbs`{{project-grid-item-skills-list skills=skills}}`);
+  this.render(hbs`{{project-card-skills skills=skills}}`);
 
   assert.equal(this.$('.skills li').length, 1);
   assert.ok(this.$('.skills').hasClass('overflow-hidden'));
@@ -42,7 +42,7 @@ test('it shows expander and toggles for lots of skills', function(assert) {
   }
 
   this.set('skills', skills);
-  this.render(hbs`{{project-grid-item-skills-list skills=skills}}`);
+  this.render(hbs`{{project-card-skills skills=skills}}`);
 
   assert.equal(this.$('.skills li').length, 100);
   assert.ok(this.$('.skills').hasClass('overflow-hidden'));

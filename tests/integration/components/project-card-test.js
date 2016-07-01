@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import Ember from 'ember';
 
-moduleForComponent('project-grid-item', 'Integration | Component | project grid item', {
+moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
   setup() {
     startMirage(this.container);
@@ -48,14 +48,14 @@ test('it renders', function(assert) {
 
 
   this.set('project', mockedProject);
-  this.render(hbs`{{project-grid-item project=project}}`);
+  this.render(hbs`{{project-card project=project}}`);
 
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
   assert.equal(this.$('p.organization').text().trim(), `by ${organization.name}`);
   assert.equal(this.$('ul.categories li').length, 3);
   assert.equal(this.$('p.description').text().trim(), project.description);
-  assert.equal(this.$('.project-grid-item-skills-list').length, 1);
-  assert.equal(this.$('ul.project-grid-item-members-list li').length, 1);
-  assert.equal(this.$('ul.project-grid-item-members-list li:first img').attr('src'), user.photoThumbUrl);
+  assert.equal(this.$('.project-card-skills').length, 1);
+  assert.equal(this.$('ul.project-card-members li').length, 1);
+  assert.equal(this.$('ul.project-card-members li:first img').attr('src'), user.photoThumbUrl);
 });

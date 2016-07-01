@@ -56,6 +56,6 @@ test('members are displayed correctly', (assert) => {
   visit('/projects');
   andThen(() => {
     assert.equal(find('.icon.tiny.circle').length, 8, '8 members are rendered');
-    assert.equal(find('.project-grid-item-members-list .count').text().trim(), '+2 more', 'The "+2 more" text is rendered');
+    assert.equal(find('.project-card-members .count').text().trim(), '+2 more', 'The "+2 more" text is rendered');
   });
 });
