@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const VISIBLE_MEMBERS_COUNT = 7;
+const VISIBLE_MEMBERS_COUNT = 8;
 
 export default Ember.Component.extend({
   classNames: ['project-grid-item-members-list'],
