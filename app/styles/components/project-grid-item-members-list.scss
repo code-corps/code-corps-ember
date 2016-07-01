@@ -1,14 +1,20 @@
-  .project-grid-item-members-list {
-    height: 25px;
-    margin: 10px 0 0 0;
+$height: 25px;
 
-    li {
-      display: inline-block;
-      padding-right: 5px;
-      vertical-align: middle;
+.project-grid-item-members-list {
+  height: $height;
+  margin: 10px 0 0 0;
 
-      &:last-child {
-        padding-right: 0px;
-      }
+  li {
+    color: $light-text;
+    display: inline-block;
+    font-size: 13px;
+    height: $height;
+    line-height: $height;
+    margin-right: -5px;
+    vertical-align: middle;
+
+    &.count {
+      margin-left: 15px;
     }
   }
+}
