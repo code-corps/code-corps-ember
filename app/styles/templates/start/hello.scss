@@ -29,8 +29,16 @@
 
   .name {
     float: left;
-    padding: 10px 20px;
+    padding: 0 20px;
     width: 328px;
+  }
+
+  .input-group input {
+    width: 50%;
+
+    &:first-child {
+      border-right: none;
+    }
   }
 }
 

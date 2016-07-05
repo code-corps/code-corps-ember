@@ -15,20 +15,22 @@ test('it renders', function(assert) {
 });
 
 let user = {
-  name: 'Test User',
+  firstName: 'Test',
+  lastName: 'User',
   twitter: '@testuser',
   website: 'example.com',
   biography: 'A test user',
 };
 
 test('it renders form elements properly', function(assert) {
-  assert.expect(5);
+  assert.expect(6);
 
   this.set('user', user);
 
   this.render(hbs`{{user-settings-form user=user}}`);
 
-  assert.equal(this.$('input[name=name]').val(), 'Test User');
+  assert.equal(this.$('input[name=firstName]').val(), 'Test');
+  assert.equal(this.$('input[name=lastName]').val(), 'User');
   assert.equal(this.$('input[name=twitter]').val(), '@testuser');
   assert.equal(this.$('input[name=website]').val(), 'example.com');
   assert.equal(this.$('input[name=biography]').val(), 'A test user');
