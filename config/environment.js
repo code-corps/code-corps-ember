@@ -78,9 +78,9 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.API_BASE_URL = 'http://api.lvh.me:5000';
+    ENV.API_BASE_URL = 'http://api.codecorps.dev';
     ENV.OAUTH_CLIENT_ID = '549256d8a4ac06c537cefce8399b2e0220b717014c5a442af97d7629de57ca1f';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:5000/oauth/token/';
+    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.codecorps.dev/oauth/token/';
 
     ENV.sentry.development = true;
 
@@ -97,10 +97,10 @@ module.exports = function(environment) {
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
-      // Allow data (ajax/websocket) from api.lvh.me
+      // Allow data (ajax/websocket) from api.codecorps.dev
       'connect-src': [
         "'self'",
-        "http://api.lvh.me:5000"
+        "http://api.codecorps.dev"
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
