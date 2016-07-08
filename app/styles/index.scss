@@ -70,7 +70,7 @@
   @include shift(2);
   @include span-columns(8);
 
-  .project-grid-item {
+  .project-card {
     @include span-columns(6);
     &:before {
       content: "";

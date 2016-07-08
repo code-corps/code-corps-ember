@@ -13,7 +13,7 @@ We'd love to have you contribute to Code Corps directly!
 
 To do so, please read the guidelines in our [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
-Then head over to [Code Corps](https://codecorps.org), where we manage contributions.
+Then check out some GitHub issues to see where you can help out.
 
 ## Prerequisites
 
@@ -34,10 +34,10 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development (with Rails)
 
-If you're running the Rails API on `localhost:3000`, then `ember-cli-deploy` will automatically watch for changes to your file tree and deploy new revisions to your running `redis` instance. Your API running on `:3000` will then serve the Ember app's `index.html`.
+If you're running the Rails API with Docker, then `ember-cli-deploy` will automatically watch for changes to your file tree and deploy new revisions to your running `redis` instance. Your API running on `http://api.lvh.me` will then serve the Ember app's `index.html`.
 
 * `ember server`
-* Visit your app at [http://localhost:3000](http://localhost:3000).
+* Visit your app at [http://lvh.me](http://lvh.me).
 
 ## Running / Development (without Rails)
 

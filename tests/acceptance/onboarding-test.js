@@ -43,7 +43,8 @@ test('A user can onboard as expected', (assert) => {
   andThen(() => {
     assert.equal(currentURL(), '/start/hello');
     assert.equal(find('.start-actions button').is(':disabled'), true);
-    fillIn('input[name="name"]', 'Josh Smith');
+    fillIn('input[name="firstName"]', 'Josh');
+    fillIn('input[name="lastName"]', 'Smith');
   });
 
   andThen(() => {

@@ -8,6 +8,8 @@ export default Owner.extend({
   biography: attr(),
   createdAt: attr('date'),
   email: attr(),
+  firstName: attr(),
+  lastName: attr(),
   name: attr(),
   password: attr(),
   photoLargeUrl: attr(),

@@ -28,8 +28,8 @@ module.exports = function(deployTarget) {
       keyPrefix: 'code-corps-ember:index',
       revisionKey: '__development__',
       allowOverwrite: true,
-      host: 'localhost', // this can be omitted because it is the default
-      port: 6379, // this can be omitted because it is the default
+      host: 'api.lvh.me', // modified for Docker setup
+      port: 6380, // modified for Docker setup
       distDir: function(context) {
         return context.commandOptions.buildDir;
       }

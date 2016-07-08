@@ -2,7 +2,10 @@
   {{image-drop originalImage=user.photoLargeUrl droppedImage=user.base64PhotoData hoverText="Change your profile photo."}}
 </div>
 <div class="input-group">
-  {{input type="text" name="name" value=user.name placeholder="Name"}}
+  {{input type="text" name="firstName" value=user.firstName placeholder="First name"}}
+</div>
+<div class="input-group">
+  {{input type="text" name="lastName" value=user.lastName placeholder="Last name"}}
 </div>
 <div class="input-group">
   <span class="input-group-addon">@</span>
