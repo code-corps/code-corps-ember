@@ -68,6 +68,23 @@ You should refer to our [style guide](STYLEGUIDE.md) for writing Ember.js, HTML/
 
 The app uses Circle for continuous integration and deploys automatically to a staging server when merging into `develop` and to production when merging into `master`.
 
+## Documentation
+
+The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for documentation. When contributing to the documentation please follow the [YUIDoc syntax](http://yui.github.io/yuidoc/syntax/index.html) and our [style guide](STYLEGUIDE.md) for application specific documenation standards.
+
+### Generating Documentation
+
+* `npm install -g yuidocjs`
+* `yuidoc -c yuidoc.json`
+
+The documentation will be generated in the `/docs` folder.
+
+### Serving Documentation
+
+* Generate the docs
+* `yuidoc --server [your port of choice]`
+* Visit `localhost:[your port of choice]` in your browser.
+
 ## Further Reading / Useful Links
 
 * [ember.js](http://emberjs.com/)
