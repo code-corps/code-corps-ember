@@ -1,0 +1,15 @@
+{
+  "name": "code-corps-ember",
+  "description": "Small description for code-corps-ember goes here",
+  "version": "0.0.0",
+  "options": {
+    "exclude": "vendor",
+    "linkNatives": true,
+    "lint": false,
+    "outdir": "docs",
+    "parseOnly": false,
+    "paths": [
+      "app"
+    ]
+  }
+}

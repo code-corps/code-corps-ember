@@ -10,6 +10,7 @@
 
 + [Ember models](#ember-models)
 + [Ember modules](#ember-modules)
++ [Documentation](#documentation)
 
 ### Ember models
 
@@ -129,6 +130,34 @@ export default Ember.Component.extend({
   }
 });
 ```
+
+### Documentation
+
+Follow the syntax outlined on the [YUIDoc Syntax Page](http://yui.github.io/yuidoc/syntax/index.html). As YUIDoc was built for `Javascript`, not for `Ember` specifically, we've set our own rough guidelines for this `Ember` project.
+
+* `Components/Services/Routes/Models` will each be a module. All extensions of them should define which `@module` it belongs to.
+* All extensions of these modules are defined as `@class`
+* Actions are defined as `@method`, but should be specified that they are actions in the description.
+* Properties & Computed Properties should be defined as `@property`
+* Components should have an example of default usage
+
+
+        // some-component.js
+        
+        /**
+          @module Components
+          @extends Ember.Component
+          @class some-component
+        
+          Component description
+        
+          ## default usage
+          ```handlebars
+          {{some-component attrs=attrs}}
+          ```
+         */
+        export default Ember.Component.extend({
+
 
 ## HTML and Handlebars
 
