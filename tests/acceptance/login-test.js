@@ -2,6 +2,8 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import loginPage from '../pages/login';
+import signupPage from '../pages/signup';
 
 let application;
 
@@ -19,30 +21,32 @@ test('Logging in', function(assert) {
 
   server.create('user', { id: 1, state: 'selected_skills' });
 
-  visit('/login');
-  fillIn('#identification', 'josh@coderly.com');
-  fillIn('#password', 'password');
-  click('#login');
+  loginPage
+    .visit()
+    .form
+      .loginSuccessfully();
 
   andThen(function() {
-    assert.equal(find('a.logout').text().trim(), 'Log out', 'Page contains logout link');
+    assert.equal(loginPage.logOut.text, 'Log out', 'Page contains logout link');
     assert.equal(currentURL(), '/projects');
   });
 });
 
 test('Login failure', function(assert) {
+  const ERROR_TEXT = 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.';
+
   assert.expect(2);
-  visit('/login');
+
+  loginPage
+    .visit();
 
   andThen(() => {
-    fillIn('#identification', 'josh@coderly.com');
-    fillIn('#password', 'wrongpassword');
-    click('#login');
+    loginPage.form.loginUnsuccessfully();
   });
 
   andThen(function() {
-    assert.equal(find('.error').length, 1);
-    assert.equal(find('.error').text(), 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.', 'Page contains login error');
+    assert.equal(loginPage.form.errors().count, 1, 'One error is shown');
+    assert.equal(loginPage.form.errors(0).text, ERROR_TEXT, 'Page contains login error');
   });
 });
 
@@ -51,7 +55,8 @@ test('When authenticated, redirects from login', function(assert) {
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
-  visit('/login');
+
+  loginPage.visit();
 
   andThen(function() {
     assert.equal(currentURL(), '/projects');
@@ -63,7 +68,8 @@ test('When authenticated, redirects from signup', function(assert) {
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
-  visit('/signup');
+
+  signupPage.visit();
 
   andThen(function() {
     assert.equal(currentURL(), '/projects');
