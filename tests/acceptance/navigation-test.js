@@ -2,6 +2,9 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import indexPage from '../pages/index';
+import signupPage from '../pages/signup';
+import loginPage from '../pages/login';
 
 let application;
 
@@ -16,25 +19,25 @@ module('Acceptance: Navigation', {
 
 test("Logged out, can sign up", function(assert) {
   assert.expect(2);
-  visit('/');
+  indexPage.visit();
   andThen(function() {
-    assert.equal(find('.auth-nav li:first').text().trim(), "Sign up", "Page contains sign up link");
-    click('.auth-nav li:first a');
+    assert.equal(indexPage.navMenu.signUp.text, "Sign up", "Page contains sign up link");
+    indexPage.navMenu.signUp.click();
   });
   andThen(function() {
-    assert.equal(find('.signup-form').length, 1, "Page contains sign up form");
+    assert.ok(signupPage.form.isVisible, "Page contains sign up form");
   });
 });
 
 test("Logged out, can sign in", function(assert) {
   assert.expect(2);
-  visit('/');
+  indexPage.visit();
   andThen(function() {
-    assert.equal(find('.auth-nav li:last').text().trim(), "Sign in", "Page contains sign in link");
-    click('.auth-nav li:last a');
+    assert.equal(indexPage.navMenu.logIn.text, "Sign in", "Page contains sign in link");
+    indexPage.navMenu.logIn.click();
   });
   andThen(function() {
-    assert.equal(find('.login-form').length, 1, "Page contains login form");
+    assert.ok(loginPage.form.isVisible, "Page contains login form");
   });
 });
 
@@ -48,14 +51,14 @@ test('Logged in, from user menu can visit profile', function(assert) {
   sluggedRoute.createOwner({ username: user.username }, 'User');
   sluggedRoute.save();
 
-  visit('/');
+  indexPage.visit();
 
   andThen(function() {
-    click('.user-menu-select');
+    indexPage.navMenu.userMenu.open();
   });
   andThen(function() {
-    assert.equal(find('.user-menu.dropdown .slugged-route').attr('href'), `/${user.username}`, 'Menu links to the profile settings');
-    click('.user-menu.dropdown .slugged-route');
+    assert.equal(indexPage.navMenu.userMenu.profileLink.href, `/${user.username}`, 'Menu links to the account settings');
+    indexPage.navMenu.userMenu.profileLink.click();
   });
   andThen(function() {
     assert.equal(currentURL(), `/${user.username}`, 'Link took us to user slugged route');
@@ -68,13 +71,13 @@ test('Logged in, from user menu can visit profile settings', function(assert) {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  visit('/');
+  indexPage.visit();
   andThen(function() {
-    click('.user-menu-select');
+    indexPage.navMenu.userMenu.open();
   });
   andThen(function() {
-    assert.equal(find('.user-menu.dropdown .profile').attr('href'), "/settings/profile", "Menu links to the profile settings");
-    click('.user-menu.dropdown .profile');
+    assert.equal(indexPage.navMenu.userMenu.settingsLink.href, "/settings/profile", "Menu links to the profile settings");
+    indexPage.navMenu.userMenu.settingsLink.click();
   });
   andThen(function() {
     assert.equal(currentURL(), '/settings/profile', 'Link took us to profile settings');
@@ -87,14 +90,14 @@ test("Logged in, from user menu can log out", function(assert) {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  visit('/');
+  indexPage.visit();
   andThen(function() {
-    click('.user-menu-select');
+    indexPage.navMenu.userMenu.open();
   });
   andThen(function() {
-    click('.user-menu.dropdown .logout');
+    indexPage.navMenu.userMenu.logOut.click();
   });
   andThen(function() {
-    assert.equal(find('.auth-nav li:last').text().trim(), "Sign in", "Page contains sign in link");
+    assert.equal(indexPage.navMenu.logIn.text, "Sign in", "Page contains sign in link");
   });
 });
