@@ -27,7 +27,7 @@ test('Logging in', function(assert) {
       .loginSuccessfully();
 
   andThen(function() {
-    assert.equal(loginPage.navMenu.logOut.text, 'Log out', 'Page contains logout link');
+    assert.equal(loginPage.navMenu.userMenu.logOut.text, 'Log out', 'Page contains logout link');
     assert.equal(currentURL(), '/projects');
   });
 });
