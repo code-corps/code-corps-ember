@@ -4,5 +4,9 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/signup')
+  visit: visitable('/signup'),
+
+  form: {
+    scope: '.signup-form'
+  }
 });
