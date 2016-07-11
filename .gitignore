@@ -21,3 +21,8 @@ testem.log
 .env.deploy.production
 
 .DS_Store
+
+# editor cruft
+.*~
+.*swp
+.*swo
