@@ -7,5 +7,12 @@ import {
 export default create({
   visit: visitable('/'),
 
-  isLightTheme: hasClass('light', '.main.container')
+  isLightTheme: hasClass('light', '.main.container'),
+
+  logOut: {
+    scope: 'a.logout'
+  },
+  logIn: {
+    scope: 'a.login'
+  }
 });
