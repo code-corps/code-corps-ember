@@ -65,10 +65,6 @@ module.exports = function(environment) {
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
-
-    typekit: {
-      kitId: 'jkb2eqa'
-    },
   };
 
   if (environment === 'development') {
@@ -92,8 +88,6 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': [
         "'self'",
-        "http://use.typekit.net",
-        "https://use.typekit.net",
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
@@ -110,14 +104,11 @@ module.exports = function(environment) {
         "https://dawxes9syhrgg.cloudfront.net",
         "http://lorempixel.com",
         "https://s3.amazonaws.com",
-        "https://ping.typekit.net",
-        "https://p.typekit.net",
       ],
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com
       'style-src': [
         "'self'",
         "'unsafe-inline'",
-        "https://use.typekit.net"
       ],
       // `media-src` will be omitted from policy
       // Browser will fallback to default-src for media resources (which is to deny, see above).
