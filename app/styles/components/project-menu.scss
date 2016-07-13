@@ -9,6 +9,7 @@
 
   li {
     float: left;
+    font-size: $body-font-size-normal;
   }
 
   a {
@@ -44,7 +45,7 @@
       background: $extra-light-text;
       border-radius: 4px;
       color: white;
-      font-size: 12px;
+      font-size: $body-font-size-small;
       font-weight: 300;
       padding: 2px 7px 3px 7px;
       margin-left: 5px;

@@ -46,7 +46,7 @@ $outer-border-radius: 4px;
 
 .input-group-addon {
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: $body-font-size-small;
   font-weight: 700;
   line-height: 1;
   color: #333;
@@ -85,7 +85,7 @@ textarea {
 form {
   h2 {
     font-family: $body-font-family;
-    font-size: 32px;
+    font-size: $header-font-size-large;
     font-weight: 500;
   }
 }
@@ -106,7 +106,7 @@ form {
   width: 250px;
 
   p {
-    font-size: 13px;
+    font-size: $body-font-size-small;
     margin: 4px 0;
 
     &:before {
@@ -162,7 +162,7 @@ form {
   select {
     border: none;
     font-family: $body-font-family;
-    font-size: 16px;
+    font-size: $body-font-size-normal;
     height: 34px;
     padding: 0 16px;
     cursor: pointer;

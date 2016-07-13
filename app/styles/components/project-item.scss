@@ -5,12 +5,12 @@
 
   h4 {
     margin: 9px 0;
-    font-size: 22px;
+    font-size: $header-font-size-small;
   }
 
   p {
     margin: 8px 0 3px 0;
-    font-size: 14px;
+    font-size: $body-font-size-small;
   }
 
   .icon-container, .details-container {

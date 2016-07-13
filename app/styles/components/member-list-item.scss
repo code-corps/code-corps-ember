@@ -35,7 +35,7 @@
 
     &.interests, &.skills {
       color: $extra-light-text;
-      font-size: 14px;
+      font-size: $body-font-size-small;
       margin: 5px 0;
     }
   }
