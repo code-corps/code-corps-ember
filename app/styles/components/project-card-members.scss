@@ -7,7 +7,7 @@ $height: 25px;
   li {
     color: $light-text;
     display: inline-block;
-    font-size: 13px;
+    font-size: $body-font-size-small;
     height: $height;
     line-height: $height;
     margin-right: -5px;

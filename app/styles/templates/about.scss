@@ -5,21 +5,21 @@
 
   h2 {
     color: $dark-text;
-    font-size: 28px;
+    font-size: $header-font-size-large;
     font-weight: 500;
     margin: 30px 0;
   }
 
   h3 {
     color: $dark-text;
-    font-size: 24px;
+    font-size: $header-font-size-medium;
     font-weight: 300;
     margin: 10px 0;
   }
 
   h4 {
     color: $dark-text;
-    font-size: 18px;
+    font-size: $header-font-size-small;
     font-weight: 300;
     margin: 10px 0;
   }

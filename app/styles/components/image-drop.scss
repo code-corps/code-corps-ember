@@ -88,7 +88,7 @@
     p {
       color: white;
       display: block;
-      font-size: 16px;
+      font-size: $body-font-size-normal;
       margin: 5px 0;
       padding: 0 10px;
       width: 100%;
@@ -116,7 +116,7 @@
 }
 
 .image-drop p.help-text {
-  font-size: 16px;
+  font-size: $body-font-size-normal;
   line-height: 22px;
   margin: 0 auto;
 }

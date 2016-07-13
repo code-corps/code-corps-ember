@@ -34,7 +34,7 @@
   }
 
   .skills {
-    $font-size: 12px;
+    $font-size: $body-font-size-small;
     $line-height: 1.6;
     $lines-to-show: 1;
     $max-height: $font-size * $line-height * $lines-to-show;

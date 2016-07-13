@@ -34,7 +34,7 @@
   border-width: 1px;
   padding: 11px 14px;
   font-family: $body-font-family;
-  font-size: 1em;
+  font-size: $body-font-size-normal;
   font-weight: 500;
   text-decoration: none;
   display: inline-block;
@@ -45,12 +45,12 @@
   }
 
   &.small {
-    font-size: 14px;
+    font-size: $body-font-size-small;
     padding: 6px 14px;
   }
 
   &.large {
-    font-size: 18px;
+    font-size: $body-font-size-large;
     padding: 15px 40px;
   }
 

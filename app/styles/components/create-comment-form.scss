@@ -14,4 +14,8 @@
 .comment-signup {
   background: $task-background;
   padding: 10px 20px;
+
+  p {
+    font-size: $body-font-size-small;
+  }
 }
