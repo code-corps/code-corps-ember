@@ -21,7 +21,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "ember-ajax": "2.4.1",
-    "ember-auto-focus": "0.0.4",
+    "ember-auto-focus": "0.0.6",
     "ember-autoresize": "0.5.16",
     "ember-can": "0.8.1",
     "ember-cli": "2.6.2",
