@@ -1,6 +1,10 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
+const INIT_DELAY          = Ember.testing ? 0 : 1500;
+const LOADING_TOGGLE      = Ember.testing ? 0 : 700;
+const CONCURRENCY_TIMEOUT = Ember.testing ? 0 : 1500;
+
 export default Ember.Component.extend({
   categories: [
     Ember.Object.create({
@@ -37,7 +41,7 @@ export default Ember.Component.extend({
           let category = categories[index];
           this.get('_animateItem').perform(category);
         });
-      }, 1500);
+      }, INIT_DELAY);
     }
   }),
 
@@ -46,7 +50,7 @@ export default Ember.Component.extend({
     category.set('isLoading', true);
     Ember.run.later(() => {
       category.set('isLoading', false);
-    }, 700);
-    yield timeout(1500);
+    }, LOADING_TOGGLE);
+    yield timeout(CONCURRENCY_TIMEOUT);
   }).enqueue(),
 });
