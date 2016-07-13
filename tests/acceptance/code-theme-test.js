@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import indexPage from '../pages/index';
 
 let application;
 
@@ -15,8 +16,10 @@ module('Acceptance: Code Theme', {
 
 test('Code theme class exists on the main container', function(assert) {
   assert.expect(1);
-  visit('/');
+
+  indexPage.visit();
+
   andThen(function() {
-    assert.equal(find('.main.container').hasClass('light'), true);
+    assert.ok(indexPage.isLightTheme, 'light class added to .main.container');
   });
 });
