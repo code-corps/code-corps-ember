@@ -100,47 +100,22 @@ export default function() {
   ///////////
 
   // POST /comments
-  this.post('/comments', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
-
+  this.post('/comments', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
-
-    let attrs = {
-      markdown: markdown,
-      body: body,
-    };
-
-    let rels = {
-      postId: relationships.post.data.id,
-      userId: relationships.user.data.id
-    };
-
-    let comment = schema.create('comment', Ember.merge(attrs, rels));
-    return comment;
+    attrs.body = `<p>${attrs.markdown}</p>`;
+    return schema.create('comment', attrs);
   });
 
   // GET /comments/:id
-  this.patch('/comments/:id', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let commentId = request.params.id;
-    let comment = schema.comments.find(commentId);
+  this.patch('/comments/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let comment = schema.comments.find(attrs.id);
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
+    attrs.body = `<p>${attrs.markdown}</p>`;
 
-    let attrs = {
-      id: commentId,
-      markdown: markdown,
-      body: body,
-    };
-
-    // for some reason, post.update(key, value) updates post properties, but
-    // doesn't touch the post.attrs object, which is what is used in response
+    // for some reason, comment.update(key, value) updates comment properties, but
+    // doesn't touch the comment.attrs object, which is what is used in response
     // serialization
     comment.attrs = attrs;
 
@@ -232,41 +207,24 @@ export default function() {
   ////////
 
   // POST /posts
-  this.post('/posts', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
+  this.post('/posts', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
 
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
+    attrs.body = `<p>${attrs.markdown}</p>`;
 
     // the API sets post number as an auto-incrementing value, scoped to project,
     // so we need to simulate that here
-    let number = schema.projects.find(relationships.project.data.id).posts.models.length + 1;
+    attrs.number = schema.projects.find(attrs.projectId).posts.models.length + 1;
 
-    let attrs = {
-      markdown: markdown,
-      body: body,
-      number: number,
-      title: attributes.title,
-      postType: attributes.post_type
-    };
-
-    let rels = {
-      projectId: relationships.project.data.id,
-      userId: relationships.user.data.id
-    };
-
-    let post = schema.create('post', Ember.merge(attrs, rels));
-
-    return post;
+    return schema.create('post', attrs);
   });
 
   // PATCH /posts/:id
   this.patch('/posts/:id', function(schema) {
-    // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
+
+    // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
     let post = schema.posts.find(attrs.id);
@@ -481,36 +439,29 @@ export default function() {
   });
 
   // PATCH /users/me
-  this.patch('/users/me', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let userId = requestBody.data.id;
+  this.patch('/users/me', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let userId = attrs.id;
     let user = schema.users.find(userId);
 
     // Mock out state machine
-    var state;
-    switch (attributes.state_transition) {
+    switch (attrs.stateTransition) {
       case 'edit_profile':
-        state = 'edited_profile';
+        attrs.state = 'edited_profile';
         break;
       case 'select_categories':
-        state = 'selected_categories';
+        attrs.state = 'selected_categories';
         break;
       case 'select_roles':
-        state = 'selected_roles';
+        attrs.state = 'selected_roles';
         break;
       case 'select_skills':
-        state = 'selected_skills';
+        attrs.state = 'selected_skills';
         break;
       default:
         console.error("You added a transition without changing the state machine in Mirage.");
         break;
     }
-
-    let attrs = {
-      id: userId,
-      state: state,
-    };
 
     user.attrs = attrs;
     user.save();

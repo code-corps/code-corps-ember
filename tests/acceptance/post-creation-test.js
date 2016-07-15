@@ -241,19 +241,19 @@ test('When post creation fails due to validation, validation errors are displaye
 
   andThen(() => {
     let postCreationDone = assert.async();
-    server.post('/posts', () => {
+    server.post('/posts', function() {
       postCreationDone();
       return new Mirage.Response(422, {}, {
         errors: [
           {
             id: "VALIDATION_ERROR",
-            source: { pointer:"data/attributes/title" },
+            source: { pointer: "data/attributes/title" },
             detail:"is invalid",
             status: 422
           },
           {
             id:"VALIDATION_ERROR",
-            source: { pointer:"data/attributes/markdown" },
+            source: { pointer: "data/attributes/markdown" },
             detail: "can't be blank",
             status: 422
           },

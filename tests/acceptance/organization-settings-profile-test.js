@@ -67,20 +67,14 @@ test("it allows editing of organization profile", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/organizations/1', (db, request) => {
-    let params = JSON.parse(request.requestBody).data.attributes;
+  server.patch('/organizations/1', function(schema, request) {
+    let attrs = this.normalizedRequestAttrs();
 
-    assert.equal(params.name, 'Test User');
-    assert.equal(params.description, 'Lorem edit');
+    assert.equal(attrs.name, 'Test User');
+    assert.equal(attrs.description, 'Lorem edit');
     done();
 
-    return {
-      data: {
-        id: organization.id,
-        type: "organizations",
-        attributes: params
-      }
-    };
+    return this._getJsonApiDocForRequest(request, "organization");
   });
 
   andThen(() => {
@@ -124,19 +118,13 @@ test("it allows editing of organization's image", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/organizations/1', (db, request) => {
-    let params = JSON.parse(request.requestBody).data.attributes;
+  server.patch('/organizations/1', function(schema, request) {
+    let attrs = this.normalizedRequestAttrs();
 
-    assert.equal(params.base64_icon_data, droppedImageString);
+    assert.equal(attrs.base64IconData, droppedImageString);
     done();
 
-    return {
-      data: {
-        id: organization.id,
-        type: "organizations",
-        attributes: params
-      }
-    };
+    return this._getJsonApiDocForRequest(request, "organization");
   });
 
   andThen(() => {
