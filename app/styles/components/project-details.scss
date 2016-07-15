@@ -12,13 +12,13 @@
   }
 
   .join-project {
-    font-size: 14px;
+    font-size: $body-font-size-small;
     margin: 7px 0;
   }
 
   h2 {
-    margin: 7px 0;
-    font-size: 26px;
+    margin: 10px 0;
+    font-size: $header-font-size-medium;
 
     a {
       color: $hidden-link-color;
@@ -30,7 +30,7 @@
 
   p {
     margin: 3px 0;
-    font-size: 16px;
+    font-size: $body-font-size-small;
   }
 
   .icon-container {
@@ -43,7 +43,7 @@
 
   .organization {
     margin-top: 8px;
-    font-size: 13px;
+    font-size: $body-font-size-small;
     min-height: 25px;
   }
 }

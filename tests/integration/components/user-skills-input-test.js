@@ -72,10 +72,11 @@ test('it fetches results when changing the input', function(assert) {
   assert.expect(5);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
 
   assert.equal(this.$('input').val().trim(), 'ruby ra');
+  this.$('input').keydown();
 
   let firstItemHtml = '<strong>Ruby</strong>';
   assert.equal(this.$('.dropdown-menu li:eq(0) a').html().trim(), firstItemHtml);
@@ -90,8 +91,9 @@ test('it changes the selection when arrowing up or down', function(assert) {
   assert.expect(10);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
 
   assert.equal(this.$('.dropdown-menu li:eq(0)').hasClass('selected'), true);
   assert.equal(this.$('.dropdown-menu li:eq(1)').hasClass('selected'), false);
@@ -117,8 +119,9 @@ test('it hides when hitting esc key', function(assert) {
   assert.expect(2);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger('focus');
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
 
   assert.equal(this.$('.dropdown-menu').length, 1);
 
@@ -131,8 +134,9 @@ test('it changes the selection when hovering', function(assert) {
   assert.expect(4);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
 
   assert.equal(this.$('.dropdown-menu li:eq(0)').hasClass('selected'), true);
   assert.equal(this.$('.dropdown-menu li:eq(1)').hasClass('selected'), false);
@@ -146,8 +150,9 @@ test('it selects the skill when hitting enter', function(assert) {
   assert.expect(2);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
   this.$('input').trigger(pressEnterKey);
 
   assert.equal(this.$('input').val().trim(), '');
@@ -158,7 +163,7 @@ test('it selects the skill when hitting comma', function(assert) {
   assert.expect(2);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
   this.$('input').trigger(pressCommaKey);
 
@@ -170,8 +175,9 @@ test('it selects the skill when clicking it', function(assert) {
   assert.expect(2);
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
   this.$('.dropdown-menu li').trigger('mousedown');
 
   assert.equal(this.$('input').val().trim(), '');
@@ -191,8 +197,9 @@ test('it does nothing when there are no results', function(assert) {
 
   this.render(hbs`{{user-skills-input query=query}}`);
 
-  this.$('input').trigger(jQuery.Event('focus'));
+  this.$('input').focus();
   this.set('query', 'ruby ra');
+  this.$('input').keydown();
   this.$('input').trigger(pressEnterKey);
 
   assert.equal(this.$('input').val().trim(), 'ruby ra');
