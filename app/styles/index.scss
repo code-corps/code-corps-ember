@@ -5,7 +5,7 @@
   }
 
   h2 {
-    font-size: 42px;
+    font-size: $header-font-size-x-large;
     font-weight: 500;
     margin: 10px;
   }
@@ -13,13 +13,13 @@
   h3 {
     color: #777777;
     font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
-    font-size: 28px;
+    font-size: $header-font-size-large;
     font-weight: 200;
     margin: 10px;
   }
 
   h4 {
-    font-size: 28px;
+    font-size: $header-font-size-large;
     font-weight: 500;
     margin: 10px;
   }

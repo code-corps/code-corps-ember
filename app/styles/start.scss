@@ -3,14 +3,14 @@
 
   h2 {
     color: $dark-text;
-    font-size: 32px;
+    font-size: $header-font-size-medium;
     font-weight: 500;
     margin: 10px 0;
   }
 
   h3 {
     color: $extra-light-text;
-    font-size: 18px;
+    font-size: $header-font-size-small;
     font-weight: 300;
     margin: 10px 0;
   }
@@ -25,12 +25,12 @@
   text-align: center;
 
   p {
-    font-size: 16px;
+    font-size: $body-font-size-normal;
     color: $extra-light-text;
   }
 
   button {
-    font-size: 16px;
+    font-size: $body-font-size-normal;
     padding-left: 50px;
     padding-right: 50px;
   }

@@ -10,7 +10,7 @@
   }
 
   .username {
-    font-size: 16px;
+    font-size: $body-font-size-normal;
     font-weight: 500;
     color: $light-text;
   }
@@ -18,7 +18,7 @@
   .details {
     margin: 10px 0;
     padding: 10px 0;
-    font-size: 14px;
+    font-size: $body-font-size-small;
     color: $light-text;
 
     li {

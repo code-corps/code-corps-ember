@@ -40,7 +40,7 @@
   }
 
   a {
-    font-size: 13px;
+    font-size: $body-font-size-small;
 
     &.facebook:before {
       @include footer-icon;

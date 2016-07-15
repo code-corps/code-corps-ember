@@ -10,7 +10,7 @@
 
   p {
     color: $light-text;
-    font-size: 14px;
+    font-size: $body-font-size-small;
     margin: 10px 0;
 
     &.selected {
