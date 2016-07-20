@@ -1,9 +1,9 @@
 import {
-  fillable,
-  triggerable,
-  text,
   clickable,
-  collection
+  collection,
+  fillable,
+  text,
+  triggerable
 } from 'ember-cli-page-object';
 
 export default {

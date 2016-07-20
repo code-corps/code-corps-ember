@@ -1,11 +1,11 @@
 import {
-  create,
   attribute,
   clickable,
-  fillable,
   collection,
-  text,
+  create,
+  fillable,
   hasClass,
+  text,
   visitable,
 } from 'ember-cli-page-object';
 import userSkillsInput from './components/user-skills-input';
@@ -55,7 +55,8 @@ export default create({
     }
   }),
 
+  // select and manipulate .user-skills-input and various site-chrome nodes to
+  // this page
   userSkillsInput,
   navMenu
-
 });
