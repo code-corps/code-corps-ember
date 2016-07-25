@@ -38,12 +38,12 @@ test('it works for unselected categories', function(assert) {
 
   assert.ok(this.$('.interest-icon').hasClass('technology'));
   assert.notOk(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('tooltip-target'));
-  assert.equal(this.$('.tooltip').text().trim(), 'Technology');
-  assert.equal(this.$('.tooltip').attr('aria-hidden'), "true");
+  assert.ok(this.$('li').hasClass('ember-tooltip-target'));
+  assert.equal(this.$('.ember-tooltip').text().trim(), 'Technology');
+  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), "true");
 
   Ember.run(() => { this.$('li').trigger('mouseenter'); });
-  assert.equal(this.$('.tooltip').attr('aria-hidden'), "false");
+  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), "false");
 });
 
 test('it works for selected categories', function(assert) {
@@ -61,10 +61,10 @@ test('it works for selected categories', function(assert) {
 
   assert.ok(this.$('.interest-icon').hasClass('society'));
   assert.ok(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('tooltip-target'));
-  assert.equal(this.$('.tooltip').text().trim(), 'Society');
-  assert.equal(this.$('.tooltip').attr('aria-hidden'), "true");
+  assert.ok(this.$('li').hasClass('ember-tooltip-target'));
+  assert.equal(this.$('.ember-tooltip').text().trim(), 'Society');
+  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), "true");
 
   Ember.run(() => { this.$('li').trigger('mouseenter'); });
-  assert.ok(this.$('.tooltip').attr('aria-hidden'), "false");
+  assert.ok(this.$('.ember-tooltip').attr('aria-hidden'), "false");
 });
