@@ -14,7 +14,7 @@
     > li {
       display: inline-block;
       float: left;
-      font-size: 16px;
+      font-size: $body-font-size-normal;
     }
 
     > li > a, .user-menu-select {
@@ -38,7 +38,7 @@
 .main-nav, .auth-nav {
   font-family: $body-font-family;
   font-style: normal;
-  font-size: 14px;
+  font-size: $body-font-size-small;
   font-weight: 500;
   padding: 0 30px;
 

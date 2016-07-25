@@ -5,14 +5,14 @@
 
   h2 {
     color: $dark-text;
-    font-size: 32px;
+    font-size: $header-font-size-large;
     font-weight: 500;
     margin: 10px 0;
   }
 
   h3 {
     color: $extra-light-text;
-    font-size: 18px;
+    font-size: $header-font-size-small;
     font-weight: 300;
     margin: 10px 0;
   }
@@ -40,12 +40,12 @@
   }
 
   h4 {
-    font-size: 18px;
+    font-size: $header-font-size-small;
     margin: 10px 0 5px 0;
   }
 
   p {
-    font-size: 16px;
+    font-size: $body-font-size-normal;
     margin: 5px 0;
   }
 }

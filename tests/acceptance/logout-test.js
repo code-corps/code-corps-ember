@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import indexPage from '../pages/index';
 
 let application;
 
@@ -18,12 +19,12 @@ test("Logging out", function(assert) {
   assert.expect(2);
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
-  visit('/');
+  indexPage.visit();
   andThen(function() {
-    assert.equal(find('a.logout').text(), "Log out", "Page contains logout link");
-    click('a.logout');
+    assert.equal(indexPage.navMenu.userMenu.logOut.text, "Log out", "Page contains logout link");
+    indexPage.navMenu.userMenu.logOut.click();
   });
   andThen(function() {
-    assert.equal(find('a.login').text(), "Sign in", "Page contains login link");
+    assert.equal(indexPage.navMenu.logIn.text, "Sign in", "Page contains login link");
   });
 });

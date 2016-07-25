@@ -23,7 +23,7 @@ html, body {
 }
 
 p {
-  font-size: 15px;
+  font-size: $body-font-size-normal;
 }
 
 a {
@@ -85,7 +85,7 @@ ul {
 }
 
 .close {
-  font-size: 18px;
+  font-size: $body-font-size-large;
   font-weight: 900;
   margin-right: 2px;
 }
@@ -100,7 +100,7 @@ ul {
 }
 
 p.subtext {
-  font-size: 13px;
+  font-size: $body-font-size-small;
 }
 
 .empty {
@@ -125,7 +125,7 @@ p.subtext {
   padding: 20px;
 
   p {
-    font-size: 14px;
+    font-size: $body-font-size-small;
   }
 
   .curved-arrow-icon {

@@ -29,7 +29,7 @@
 
 .comment-info {
   position: relative;
-  font-size: 13px;
+  font-size: $body-font-size-small;
   color: $light-text;
   line-height: 20px;
 
@@ -50,6 +50,9 @@
 }
 
 .comment-body {
+  font-size: $body-font-size-normal;
+  padding: 10px 0;
+
   h1 {
     margin: 10px 0;
   }
@@ -63,7 +66,7 @@
   }
 
   p {
-    font-size: 16px;
+    font-size: $body-font-size-normal;
   }
 
   ul {

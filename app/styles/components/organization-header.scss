@@ -4,13 +4,13 @@
   @include clearfix;
 
   h2 {
-    margin: 7px 0;
-    font-size: 26px;
+    margin: 10px 0;
+    font-size: $header-font-size-medium;
   }
 
   p {
     margin: 3px 0;
-    font-size: 16px;
+    font-size: $body-font-size-normal;
   }
 
   a {

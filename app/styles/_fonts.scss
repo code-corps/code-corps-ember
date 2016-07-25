@@ -1,1 +1,15 @@
-$body-font-family: "myriad-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,400italic);
+
+$body-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$body-font-size-x-large: 18px;
+$body-font-size-large: 16px;
+$body-font-size-normal: 14px;
+$body-font-size-small: 12px;
+
+$header-font-size-x-large: 36px;
+$header-font-size-large: 26px;
+$header-font-size-medium: 22px;
+$header-font-size-small: 18px;
+
+$close-icon-font-size: 20px;
