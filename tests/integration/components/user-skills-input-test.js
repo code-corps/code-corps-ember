@@ -87,6 +87,35 @@ test('it fetches results when changing the input', function(assert) {
   assert.equal(this.$('.dropdown-menu li:eq(1)').hasClass('selected'), false);
 });
 
+test('it delays asking for results and only sends one request for multiple inputs', function(assert) {
+  assert.expect(2);
+
+  let fetchCount = 0;
+
+  let mockStoreWithCounter = Ember.Service.extend({
+    query (model, queryObject) {
+      fetchCount++;
+      assert.equal(queryObject.query, 'rub', 'The request made is the first one typed in');
+
+      return Ember.RSVP.resolve([
+        Ember.Object.create({ title: "Ruby" }),
+        Ember.Object.create({ title: "Ruby on Rails" }),
+      ]);
+    }
+  });
+
+  this.register('service:store', mockStoreWithCounter);
+  this.render(hbs`{{user-skills-input query=query}}`);
+
+  this.$('input').trigger(jQuery.Event('focus'));
+  this.set('query', 'rub');
+  this.set('query', 'ruby');
+  this.set('query', 'ruby r');
+  this.set('query', 'ruby ra');
+
+  assert.equal(fetchCount, 1, 'Only one request was made');
+});
+
 test('it changes the selection when arrowing up or down', function(assert) {
   assert.expect(10);
   this.render(hbs`{{user-skills-input query=query}}`);
