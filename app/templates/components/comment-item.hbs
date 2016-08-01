@@ -14,14 +14,14 @@
       <button class="default small right">Saving...</button>
     {{else}}
       <button {{action 'save'}} class="default small right save">Save</button>
-      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+      <button {{action 'toggleEdit'}} class="clear small right cancel">Cancel</button>
     {{/if}}
   </div>
 {{else}}
   <div class="comment-info">
     {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.createdAt}}
     {{#if canEdit}}
-      <a class="edit" {{action 'edit'}}>edit</a>
+      <a class="edit" {{action 'toggleEdit'}}>edit</a>
     {{/if}}
     {{#if comment.containsCode}}
       {{code-theme-selector}}

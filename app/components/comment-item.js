@@ -1,39 +1,117 @@
 import Ember from 'ember';
+import { alias } from 'ember-computed';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  get,
+  inject,
+  isEqual,
+  set,
+} = Ember;
+
+const { service } = inject;
+
+/**
+  `comment-item` composes a comment
+
+  ```handlebars
+  {{comment-item comment=comment}}
+  ```
+
+  @class comment-item
+  @module Component
+  @extends Ember.Component
+ */
+export default Component.extend({
   classNames: ['comment-item', 'timeline-comment-wrapper'],
   classNameBindings: ['isEditing:editing'],
 
-  currentUser: Ember.inject.service(),
-  mentionFetcher: Ember.inject.service(),
+  /**
+    @property currentUser
+    @type Ember.Service
+   */
+  currentUser: service(),
 
-  canEdit: Ember.computed.alias('currentUserIsCommentAuthor'),
-  commentAuthorId: Ember.computed.alias('comment.user.id'),
-  currentUserId: Ember.computed.alias('currentUser.user.id'),
-  currentUserIsCommentAuthor: Ember.computed('currentUserId', 'commentAuthorId', function() {
-    let userId = parseInt(this.get('currentUserId'), 10);
-    let authorId = parseInt(this.get('commentAuthorId'), 10);
-    return userId === authorId;
+  /**
+    A service that is used for fetching mentions within a body of text.
+
+    @property mentionFetcher
+    @type Ember.Service
+   */
+  mentionFetcher: service(),
+
+  /**
+    Returns whether or not the current user can edit the current comment.
+
+    @property canEdit
+    @type Boolean
+   */
+  canEdit: alias('currentUserIsCommentAuthor'),
+
+  /**
+    Returns the comment author's ID.
+
+    @property commentAuthorId
+    @type Number
+   */
+  commentAuthorId: alias('comment.user.id'),
+
+  /**
+    Returns the current user's ID.
+
+    @property currentUserId
+    @type Number
+   */
+  currentUserId: alias('currentUser.user.id'),
+
+  /**
+    Consumes `currentUserId` and `commentAuthorId` and returns if the current
+    user is the comment author.
+
+    @property currentUserIsCommentAuthor
+    @type Boolean
+   */
+  currentUserIsCommentAuthor: computed('currentUserId', 'commentAuthorId', function() {
+    let userId = parseInt(get(this, 'currentUserId'), 10);
+    let authorId = parseInt(get(this, 'commentAuthorId'), 10);
+
+    return isEqual(userId, authorId);
   }),
 
+  /**
+    Overrides the init method, sets the `isEditing` property to `false`,
+    prefetches mentions and calls the `super` on `init`.
+
+    @method init
+   */
   init() {
-    this.set('isEditing', false);
-    this._prefetchMentions(this.get('comment'));
+    set(this, 'isEditing', false);
+    this._prefetchMentions(get(this, 'comment'));
     return this._super(...arguments);
   },
 
   actions: {
-    cancel() {
-      this.set('isEditing', false);
+
+    /**
+      Action that toggle editing of the corresponding comment.
+
+      @method toggleEdit
+     */
+    toggleEdit() {
+      this.toggleProperty('isEditing');
     },
 
-    edit() {
-      this.set('isEditing', true);
-    },
+    /**
+      Action that saves the corresponding comment, turns off edit mode, and
+      refetches the mentions.
 
+      @method save
+     */
     save() {
       let component = this;
-      let comment = this.get('comment');
+      let comment = get(this, 'comment');
+
       comment.save().then((comment) => {
         component.set('isEditing', false);
         this._fetchMentions(comment);
@@ -41,14 +119,28 @@ export default Ember.Component.extend({
     },
   },
 
+  /**
+    Queries the store for body of text with mentions.
+
+    @method _fetchMentions
+    @param {Object} comment
+    @private
+   */
   _fetchMentions(comment) {
-    this.get('mentionFetcher').fetchBodyWithMentions(comment, 'comment').then((body) => {
-      this.set('commentBodyWithMentions', body);
+    get(this, 'mentionFetcher').fetchBodyWithMentions(comment, 'comment').then((body) => {
+      set(this, 'commentBodyWithMentions', body);
     });
   },
 
+  /**
+    Parses the body of text and prefetches mentions.
+
+    @method _prefetchMentions
+    @param {Object} comment
+    @private
+   */
   _prefetchMentions(comment) {
-    let body = this.get('mentionFetcher').prefetchBodyWithMentions(comment, 'comment');
-    this.set('commentBodyWithMentions', body);
+    let body = get(this, 'mentionFetcher').prefetchBodyWithMentions(comment, 'comment');
+    set(this, 'commentBodyWithMentions', body);
   },
 });
