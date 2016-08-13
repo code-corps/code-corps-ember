@@ -27,17 +27,17 @@ let mockComment = Ember.Object.create({
   }
 });
 
-let mockCommentWithMentions = Ember.Object.create({
-  body: '<p>Mentioning @user1 and @user2</p>',
-  user: { id: 1 },
-  save() {
-    return Ember.RSVP.resolve();
-  },
-  commentUserMentions: [
-    Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-    Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
-  ]
-});
+// let mockCommentWithMentions = Ember.Object.create({
+//   body: '<p>Mentioning @user1 and @user2</p>',
+//   user: { id: 1 },
+//   save() {
+//     return Ember.RSVP.resolve();
+//   },
+//   commentUserMentions: [
+//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//   ]
+// });
 
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
@@ -90,6 +90,8 @@ test('it switches between editing and viewing mode', function(assert) {
   assert.equal(this.$('.comment-item.editing').length, 0, 'Component switched back the UI to view mode on save');
 });
 
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
 
@@ -100,3 +102,4 @@ test('mentions are rendered on comment body in read-only mode', function(assert)
   this.render(hbs`{{comment-item comment=comment}}`);
   assert.equal(this.$('.comment-item .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });
+*/

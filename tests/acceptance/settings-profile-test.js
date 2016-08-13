@@ -56,7 +56,7 @@ test("it allows editing of users profile", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/users/me', function(schema, request) {
+  server.patch('/users/:id', function(schema, request) {
     let attrs = this.normalizedRequestAttrs();
 
     assert.equal(attrs.firstName, 'Test');
@@ -88,7 +88,7 @@ test("it allows editing of users image", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/users/me', function(schema, request) {
+  server.patch('/users/:id', function(schema, request) {
     let attrs = this.normalizedRequestAttrs();
 
     assert.equal(attrs.base64PhotoData, droppedImageString);

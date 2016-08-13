@@ -12,10 +12,10 @@ function createProject(slug) {
   let project = server.create('project');
 
   // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create<<<<<<< HEAD
+  // TODO: see if it's possible to override models so we can do this in server.create
   let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -278,7 +278,6 @@ test('Paging and filtering uses query parameters', (assert) => {
   server.createList('post', 12, { postType: 'issue', projectId: project.id });
 
   let postsURL = `/${project.organization.slug}/${project.slug}/posts`;
-  visit(postsURL);
 
   visit(postsURL);
 
@@ -337,7 +336,7 @@ test('A user can join the organization of the project', (assert) => {
 
   let done = assert.async();
 
-  server.post('/organization_memberships', (db, request) => {
+  server.post('/organization-memberships', (db, request) => {
     let attributes = JSON.parse(request.requestBody).data.attributes;
     let relationships = JSON.parse(request.requestBody).data.relationships;
     assert.equal(attributes.role, 'pending');
@@ -348,7 +347,7 @@ test('A user can join the organization of the project', (assert) => {
     return {
       data: {
         id: 1,
-        type: "organization_memberships",
+        type: "organization-membership",
         attributes: attributes,
         relationships: relationships
       }

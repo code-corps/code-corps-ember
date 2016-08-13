@@ -22,11 +22,11 @@ test("it displays the organization's details", (assert) => {
     slug: 'test_organization',
   });
 
-  let organization = sluggedRoute.createOwner({
+  let organization = sluggedRoute.createOrganization({
     name: 'Test Organization',
     slug: 'test_organization',
     description: 'Test organization description.'
-  }, 'Organization');
+  });
 
   sluggedRoute.save();
 
@@ -60,11 +60,11 @@ test('an admin can navigate to settings', (assert) => {
     slug: 'test_organization',
   });
 
-  let organization = sluggedRoute.createOwner({
+  let organization = sluggedRoute.createOrganization({
     name: 'Test Organization',
     slug: 'test_organization',
     description: 'Test organization description.'
-  }, 'Organization');
+  });
   sluggedRoute.save();
 
   let user = server.create('user');
@@ -101,15 +101,15 @@ test('anyone can navigate to projects', (assert) => {
     slug: 'test_organization',
   });
 
-  let organization = sluggedRoute.createOwner({
+  let organization = sluggedRoute.createOrganization({
     name: 'Test Organization',
     slug: 'test_organization',
     description: 'Test organization description.'
-  }, 'Organization');
+  });
 
   sluggedRoute.save();
 
-  let project = server.create('project', {organization: organization});
+  let project = server.create('project', { organization: organization });
 
   organization.save();
 

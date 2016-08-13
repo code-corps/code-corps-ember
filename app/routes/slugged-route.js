@@ -10,13 +10,12 @@ export default Ember.Route.extend({
   },
 
   afterModel(sluggedRoute) {
-    let type = sluggedRoute.get('ownerType');
-
-    if (type === 'Organization') {
-      sluggedRoute.get('owner').then((organization) => {
-        this.get('credentials').setOrganization(organization);
-        return this._super(...arguments);
-      });
-    }
+    return sluggedRoute.get('organization').then((organization) => {
+      if (organization) {
+        return this.get('credentials').setOrganization(organization);
+      } else {
+        return Ember.RSVP.resolve();
+      }
+    });
   }
 });

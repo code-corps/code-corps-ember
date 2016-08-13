@@ -11,7 +11,7 @@ export default ApplicationAdapter.extend({
     // transform the page number to the proper JSON api format here, in the
     // adapter, instead of back in the route
     if (Ember.isPresent(query.page)) {
-      query.page = { number: query.page };
+      query.page = { page: query.page };
     }
 
     // we don't want to send the postType parameter to the API if it does not

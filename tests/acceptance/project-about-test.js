@@ -18,7 +18,7 @@ test('When unauthenticated, and project has no long description, it shows proper
   assert.expect(2);
 
   let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  let organization = sluggedRoute.createOrganization({ slug: 'test' });
   sluggedRoute.save();
 
   let projectWithoutDescription = server.create('project', {
@@ -41,7 +41,7 @@ test('When unauthenticated, and project has long description, it shows the proje
   assert.expect(2);
 
   let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  let organization = sluggedRoute.createOrganization({ slug: 'test' });
   sluggedRoute.save();
 
   let projectWithDescription = server.create('project', {
@@ -68,7 +68,7 @@ test('When authenticated as admin, and project has no long description, it allow
   let user = server.create('user');
 
   let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  let organization = sluggedRoute.createOrganization({ slug: 'test' });
   sluggedRoute.save();
 
   server.create('organization-membership', { organization: organization, member: user, role: 'admin' });
@@ -105,7 +105,7 @@ test('When authenticated as admin, and project has long description, it allows e
   let user = server.create('user');
 
   let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOwner({ slug: 'test' }, 'Organization');
+  let organization = sluggedRoute.createOrganization({ slug: 'test' });
   sluggedRoute.save();
 
   server.create('organization-membership', { organization: organization, member: user, role: 'admin' });

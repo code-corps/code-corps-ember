@@ -115,6 +115,12 @@ export default Component.extend({
       comment.save().then((comment) => {
         component.set('isEditing', false);
         this._fetchMentions(comment);
+      }).catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
+          this.controllerFor('project.posts.post').set('error', error);
+        }
       });
     },
   },

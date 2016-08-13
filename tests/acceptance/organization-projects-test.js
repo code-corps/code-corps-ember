@@ -18,8 +18,8 @@ test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
   let slug = 'test_organization';
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug });
-  let organization = sluggedRoute.createOwner({ slug }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: slug });
+  let organization = sluggedRoute.createOrganization({ slug: slug });
   sluggedRoute.save();
   for (let i = 0; i < 5; i++) {
     organization.createProject({

@@ -8,6 +8,9 @@
       input=comment.markdown
       isLoading=comment.isSaving
       modifiedSubmit="save"}}
+    {{#each comment.errors.markdown as |error|}}
+      <p class="error">{{error.message}}</p>
+    {{/each}}
   </div>
   <div class="input-group">
     {{#if comment.isSaving}}

@@ -1,6 +1,6 @@
-{{#if belongsToOrganization}}
-  {{organization-profile organization=sluggedRoute.owner}}
+{{#if sluggedRoute.organization}}
+  {{organization-profile organization=sluggedRoute.organization}}
 {{/if}}
-{{#if belongsToUser}}
-  {{user-details user=sluggedRoute.owner}}
+{{#if sluggedRoute.user}}
+  {{user-details user=sluggedRoute.user}}
 {{/if}}

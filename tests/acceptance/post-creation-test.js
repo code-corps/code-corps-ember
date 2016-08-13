@@ -20,13 +20,13 @@ module('Acceptance: Post Creation', {
 test('Creating a post requires logging in', (assert) => {
   assert.expect(2);
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = server.schema.organizations.create({slug: 'test_organization'});
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -54,14 +54,13 @@ test('A post can be successfully created', (assert) => {
   assert.expect(9);
   let user = server.schema.users.create({ username: 'test_user' });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -88,6 +87,7 @@ test('A post can be successfully created', (assert) => {
 
     assert.equal(post.title, 'A post title');
     assert.equal(post.markdown, 'A post body');
+    console.log(post);
     assert.equal(post.postType, 'idea');
 
     assert.equal(post.userId, user.id, 'The correct user was assigned');
@@ -105,13 +105,14 @@ test('Post preview works during creation', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -132,17 +133,18 @@ test('Post preview works during creation', (assert) => {
   });
 });
 
-test('Post preview during creation renders user mentions', (assert) => {
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*test('Post preview during creation renders user mentions', (assert) => {
   assert.expect(1);
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
   let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
   let project = server.create('project');
 
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -162,20 +164,20 @@ test('Post preview during creation renders user mentions', (assert) => {
       assert.equal(projectPostsPage.previewBody.text, expectedBody, 'The mentions render');
     });
   });
-});
+});*/
 
 test('When post creation succeeeds, the user is redirected to the post page for the new post', (assert) => {
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -203,13 +205,14 @@ test('When post creation fails due to validation, validation errors are displaye
   let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -242,13 +245,13 @@ test('When post creation fails due to validation, validation errors are displaye
           },
           {
             id: "VALIDATION_ERROR",
-            source: { pointer: "data/attributes/post_type" },
+            source: { pointer: "data/attributes/post-type" },
             detail: "is invalid",
             status: 422
           },
           {
             id: "VALIDATION_ERROR",
-            source: { pointer: "data/attributes/post_type" },
+            source: { pointer: "data/attributes/post-type" },
             detail: "can only be one of the specified values",
             status: 422
           }
@@ -266,13 +269,13 @@ test('When post creation fails due to non-validation issues, the error is displa
   let user = server.schema.users.create({ username: 'test_user' });
 
   // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
-  let projectId = server.create('project').id;
+  let organization = server.schema.organizations.create({ slug: 'test_organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
