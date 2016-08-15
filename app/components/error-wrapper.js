@@ -67,8 +67,7 @@ export default Ember.Component.extend({
   /**
     Updates the background based on the error class.
 
-    @property observeErrorClass
-    @type Ember.observer
+    @method observeErrorClass
   */
   observeErrorClass: Ember.observer('errorClass', function() {
     this.updateBackground();
