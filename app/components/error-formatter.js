@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 /**
-  `error-formatter`returns a formatted error message. Place within an 'if'
+  `error-formatter' returns a formatted error message. Place within an 'if'
   block to return only when there really is an error.
 
   ## default usage

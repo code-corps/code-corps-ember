@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     Returns a message based on the type of error thrown.
 
     @property errorClass
-    @type string
+    @type String
   */
   errorClass: Ember.computed('is404', function() {
     if(this.get('is404')) {
@@ -39,7 +39,7 @@ export default Ember.Component.extend({
 
     @property httpStatusCodes
     @type Array
-   */
+  */
   // Map the HTTP status codes into an array or
   // an empty array if there are no such status codes
   httpStatusCodes: Ember.computed('model', function() {
@@ -68,7 +68,7 @@ export default Ember.Component.extend({
     Updates the background based on the error class.
 
     @property observeErrorClass
-    @type error-wrapper.updateBackground
+    @type Ember.observer
   */
   observeErrorClass: Ember.observer('errorClass', function() {
     this.updateBackground();
@@ -78,7 +78,7 @@ export default Ember.Component.extend({
     Updates the background on render.
 
     @method didRender
-   */
+  */
   didRender() {
     this.updateBackground();
   },
@@ -87,7 +87,7 @@ export default Ember.Component.extend({
     Resets the background.
 
     @method willDestroyElement
-   */
+  */
   willDestroyElement() {
     this.get('background').reset();
   },
@@ -96,7 +96,7 @@ export default Ember.Component.extend({
     Updates the background based on the error thrown.
 
     @method updateBackground
-   */
+  */
   updateBackground() {
     this.set('background.class', this.get('errorClass'));
     this.get('background').updateBackgroundClass();
