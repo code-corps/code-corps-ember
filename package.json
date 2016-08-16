@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
-    "ember-ajax": "2.4.1",
+    "ember-ajax": "2.5.1",
     "ember-auto-focus": "1.0.2",
     "ember-autoresize": "0.5.16",
     "ember-can": "0.8.1",
