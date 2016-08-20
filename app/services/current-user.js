@@ -27,7 +27,7 @@ export default Ember.Service.extend({
     Ember.get(this, 'metrics').identify({
       distinctId: user.get('id'),
       biography: user.get('biography'),
-      createdAt: user.get('createdAt'),
+      insertedAt: user.get('insertedAt'),
       email: user.get('email'),
       name: user.get('name'),
       state: user.get('state'),

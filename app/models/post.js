@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Model.extend({
   body: attr(),
-  createdAt: attr('date'),
+  insertedAt: attr('date'),
   likesCount: attr('number'),
   markdown: attr(),
   number: attr('number'),

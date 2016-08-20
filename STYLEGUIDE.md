@@ -35,7 +35,7 @@ import Ember from 'ember';
 
 export default Model.extend({
   body: attr('string'),
-  createdAt: attr('date'),
+  insertedAt: attr('date'),
   markdown: attr('string'),
 
   preview: attr('boolean'), // virtual attribute, will not persist
@@ -143,14 +143,14 @@ Follow the syntax outlined on the [YUIDoc Syntax Page](http://yui.github.io/yuid
 
 
         // some-component.js
-        
+
         /**
           @module Components
           @extends Ember.Component
           @class some-component
-        
+
           Component description
-        
+
           ## default usage
           ```handlebars
           {{some-component attrs=attrs}}

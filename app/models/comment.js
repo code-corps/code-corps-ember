@@ -5,7 +5,7 @@ import Ember from 'ember';
 
 export default Model.extend({
   body: attr('string'),
-  createdAt: attr('date'),
+  insertedAt: attr('date'),
   markdown: attr('string'),
 
   commentUserMentions: hasMany('comment-user-mention', { async: true }),
