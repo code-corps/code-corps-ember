@@ -13,7 +13,7 @@
       </div>
     {{else}}
       <div class="comment-info">
-        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.createdAt}}
+        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.insertedAt}}
         {{#if canEdit}}
           <a class="edit" {{action 'editPostBody'}}>edit</a>
         {{/if}}

@@ -6,7 +6,7 @@ import Ember from 'ember';
 export default Owner.extend({
   base64PhotoData: attr(),
   biography: attr(),
-  createdAt: attr('date'),
+  insertedAt: attr('date'),
   email: attr(),
   firstName: attr(),
   lastName: attr(),

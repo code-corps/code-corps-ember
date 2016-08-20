@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   classNames: ['demo-posts'],
   posts: [
     Ember.Object.create({
-      createdAt: moment().subtract(2, 'days'),
+      insertedAt: moment().subtract(2, 'days'),
       number: 27,
       postType: 'task',
       title: "Improve the user experience of the landing page",
@@ -40,7 +40,7 @@ export default Ember.Component.extend({
       ],
     }),
     Ember.Object.create({
-      createdAt: moment().subtract(3, 'days'),
+      insertedAt: moment().subtract(3, 'days'),
       number: 26,
       postType: 'issue',
       title: "When signing up, there doesn't seem to be a GitHub option",
