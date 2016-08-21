@@ -6,6 +6,7 @@ import {
   fillable,
   hasClass,
   text,
+  triggerable,
   visitable,
 } from 'ember-cli-page-object';
 import userSkillsInput from './components/user-skills-input';
@@ -18,7 +19,9 @@ export default create({
   expertise: visitable('/start/expertise'),
 
   firstName: fillable('[name="firstName"]'),
+  firstNameEnter: triggerable('keyup', '[name="firstName"]', { eventProperties: { keyCode: 13 } }),
   lastName: fillable('[name="lastName"]'),
+  lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
   footer: {
     scope: '.site-footer',
