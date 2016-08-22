@@ -44,7 +44,7 @@ test('when fetching, if there are no mentions, it just returns the record body',
 
   service.set('store', mockStore);
 
-  let done = assert.async;
+  let done = assert.async();
 
   service.fetchBodyWithMentions(mockFooRecord, 'foo').then((body) => {
     assert.equal(body, 'Foo body');
@@ -76,7 +76,7 @@ test('when fetching, if there are mentions, it returns the record body, with tho
 
   service.set('store', mockStoreReturningMentions);
 
-  let done = assert.async;
+  let done = assert.async();
   let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
 
   service.fetchBodyWithMentions(mockFooWithMentions, 'foo').then((body) => {
