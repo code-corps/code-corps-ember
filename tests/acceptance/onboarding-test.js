@@ -171,6 +171,100 @@ test('A user cannot navigate to onboarding when signed out', (assert) => {
   onboardingPage.expertise().then(validateLoginRoute);
 });
 
+test('A user can submit name by hitting enter key on firstName input field', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/interests');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+  });
+});
+
+test('A user can submit name by hitting enter key on lastName input field', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.lastNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/interests');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+  });
+});
+
+test('A user cannot submit name by hitting enter key if firstName input field is blank', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.lastNameEnter();
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+  });
+});
+
+test('A user cannot submit name by hitting enter key if lastName input field is blank', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+  });
+
+  andThen(() => {
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.lastNameEnter();
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+  });
+});
+
 test('The footer is hidden when onboarding', (assert) => {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
