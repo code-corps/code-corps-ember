@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import organizationPage from '../pages/organization';
 
 let application;
 
@@ -40,15 +41,15 @@ test("it displays the organization's details", (assert) => {
 
   organization.save();
 
-  visit(organization.slug);
+  organizationPage.visitIndex({ organization: organization.slug });
   andThen(() => {
-    assert.equal(find('.organization-header').length, 1, 'The organization header component renders');
-    assert.equal(find('.project-list').length, 1, 'The projects list component renders');
-    assert.equal(find('.organization-members').length, 1, 'The organization members component renders');
-    assert.equal(find('h2').text().trim(), 'Test Organization', 'The organization title renders');
-    assert.equal(find('.organization-header p').text().trim(), 'Test organization description.', 'The organization description renders');
-    assert.equal(find('.project-list .project-item').length, 3, 'The projects render');
-    assert.equal(find('.organization-members li').length, 3, 'The members render');
+    assert.equal(organizationPage.orgHeader.isVisible, true, 'The organization header component renders');
+    assert.equal(organizationPage.projectList.isVisible, true, 'The projects list component renders');
+    assert.equal(organizationPage.orgMembersSection.isVisible, true, 'The organization members component renders');
+    assert.equal(organizationPage.orgTitle.text.trim(), organization.name, 'The organization title renders');
+    assert.equal(organizationPage.orgDescription.text.trim(), organization.description, 'The organization description renders');
+    assert.equal(organizationPage.projectListItems().count, 3, 'The projects render');
+    assert.equal(organizationPage.orgMembers().count, 3, 'The members render');
   });
 });
 
@@ -78,19 +79,19 @@ test('an admin can navigate to settings', (assert) => {
   // showing/hiding of links is handled in the organization-menu component integration test
   authenticateSession(application, { user_id: user.id });
 
-  visit(organization.slug);
+  organizationPage.visitIndex({ organization: organization.slug });
 
   andThen(() => {
-    assert.ok(find('.organization-menu li a:contains("Projects")').hasClass('active'), 'The organization projects menu is active');
+    assert.ok(organizationPage.projectsMenuItemIsActive, 'The organization projects menu is active');
     Ember.run.next(() => {
-      click('.organization-menu li a:contains("Settings")');
+      organizationPage.clickSettingsMenuItem();
+      andThen(() => {
+        assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');
+        assert.equal(organizationPage.settingsForm.isVisible, true, 'The organization settings form renders');
+      });
     });
   });
 
-  andThen(() => {
-    assert.ok(find('.organization-menu li a:contains("Settings")').hasClass('active'), 'The organization settings menu is active');
-    assert.equal(find('.organization-settings-form').length, 1, 'The organization settings form renders');
-  });
 });
 
 test('anyone can navigate to projects', (assert) => {
@@ -118,14 +119,14 @@ test('anyone can navigate to projects', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  visit(organization.slug);
+  organizationPage.visitIndex({ organization: organization.slug });
 
   andThen(() => {
-    assert.equal(find('.project-item:eq(0) h4').text().trim(), project.title, 'The project in the list is correct');
-    click('.project-item:eq(0) a');
+    assert.equal(organizationPage.projectListItems(0).text, project.title, 'The project in the list is correct');
+    organizationPage.projectListItems(0).click();
   });
 
   andThen(() => {
-    assert.equal(find('.project-details').length, 1, "The project's details render");
+    assert.equal(organizationPage.projectDetails.isVisible, true, "The project's details render");
   });
 });

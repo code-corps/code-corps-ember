@@ -4,6 +4,7 @@ import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import fillInFileInput from '../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../helpers/remove-double-quotes';
+import organizationPage from '../pages/organization';
 
 let application;
 
@@ -27,9 +28,7 @@ test("it requires authentication", (assert) => {
   }, 'Organization');
   sluggedRoute.save();
 
-  let url = "organizations/" + organization.slug + "/settings/profile";
-
-  visit(url);
+  organizationPage.visitSettingsProfile({ organization: organization.slug });
   andThen(() => {
     assert.equal(currentRouteName(), 'login');
   });
@@ -56,13 +55,9 @@ test("it allows editing of organization profile", (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  let url = "organizations/" + organization.slug + "/settings/profile";
-
-  visit(url);
+  organizationPage.visitSettingsProfile({ organization: organization.slug });
   andThen(() => {
-    fillIn('input[name=name]', 'Test User');
-    fillIn('input[name=description]', 'Lorem edit');
-    click('.save');
+    organizationPage.name('Test User').description('Lorem edit').clickSave();
   });
 
   let done = assert.async();
@@ -78,8 +73,8 @@ test("it allows editing of organization profile", (assert) => {
   });
 
   andThen(() => {
-    assert.equal(find('.alert-success').length, 1);
-    assert.equal(find('.alert-success p').text(), "Organization updated successfully");
+    assert.equal(organizationPage.successAlerts().count, 1);
+    assert.equal(organizationPage.successAlerts(0).contains('Organization updated successfully'), true);
   });
 });
 
@@ -107,13 +102,11 @@ test("it allows editing of organization's image", (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  let url = "organizations/" + organization.slug + "/settings/profile";
-
-  visit(url);
+  organizationPage.visitSettingsProfile({ organization: organization.slug });
 
   andThen(() => {
     fillInFileInput('.image-drop input', { name: fileName, content: droppedImageString });
-    click('.save');
+    organizationPage.clickSave();
   });
 
   let done = assert.async();
@@ -128,8 +121,8 @@ test("it allows editing of organization's image", (assert) => {
   });
 
   andThen(() => {
-    assert.equal(find('.alert-success').length, 1);
-    assert.equal(find('.alert-success p').text(), "Organization updated successfully");
+    assert.equal(organizationPage.successAlerts().count, 1);
+    assert.equal(organizationPage.successAlerts(0).contains('Organization updated successfully'), true);
     let expectedStyle = `url(${droppedImageString})`;
     assert.equal(removeDoubleQuotes(find('.image-drop').css('background-image')), expectedStyle);
   });
