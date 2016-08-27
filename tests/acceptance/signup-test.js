@@ -1,6 +1,8 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import indexPage from '../pages/index';
+import signupPage from '../pages/signup';
 
 let application;
 
@@ -16,11 +18,11 @@ module('Acceptance: Signup', {
 test('Signup form is accessible from the main site', (assert) => {
   assert.expect(2);
 
-  visit('/');
+  indexPage.visit();
 
   andThen(() => {
-    assert.equal(find('a.signup').length, 1, 'Link to sign-up route is visible');
-    click('a.signup');
+    assert.ok(indexPage.navMenu.signUp.isVisible, 'Link to sign-up route is visible');
+    indexPage.navMenu.signUp.click();
   });
 
   andThen(() => {
@@ -31,13 +33,10 @@ test('Signup form is accessible from the main site', (assert) => {
 test('Successful signup', (assert) => {
   assert.expect(6);
 
-  visit('/signup');
+  signupPage.visit();
 
   andThen(function() {
-    fillIn('[name=username]', 'username');
-    fillIn('[name=email]', 'email@example.com');
-    fillIn('[name=password]', 'password');
-    click('[name=signup]');
+    signupPage.form.username('username').email('email@example.com').password('password').save();
   });
 
   let signUpDone = assert.async();
@@ -81,13 +80,9 @@ test('Successful signup', (assert) => {
 test('Failed signup due to invalid data stays on same page', (assert) => {
   assert.expect(1);
 
-  visit('/signup');
+  signupPage.visit();
 
-  andThen(() => {
-    click('[name=signup]');
-  });
+  andThen(() => signupPage.form.save());
 
-  andThen(() => {
-    assert.equal(currentURL(), '/signup');
-  });
+  andThen(() => assert.equal(currentURL(), '/signup'));
 });
