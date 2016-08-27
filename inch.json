@@ -1,0 +1,15 @@
+{
+  "files": {
+    "included": [
+      "app/**/*.js"
+    ],
+    "excluded": [
+      "app/app.js",
+      "app/resolver.js",
+      "app/router.js",
+      "app/services/ajax.js",
+      "app/services/raven.js",
+      "app/services/session.js"
+    ]
+  }
+}
