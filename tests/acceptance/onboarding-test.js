@@ -17,8 +17,8 @@ module('Acceptance: Onboarding', {
 });
 
 test('A user can onboard as expected', (assert) => {
-  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
-  server.create('category');
+    let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+    server.create('category');
   server.create('role', {
     name: 'Backend Developer',
     ability: 'Backend Development',
@@ -165,10 +165,15 @@ test('A user cannot navigate to onboarding when signed out', (assert) => {
     assert.equal(currentPath(), 'login');
   }
 
+  let done = assert.async();
   onboardingPage.start().then(validateLoginRoute);
   onboardingPage.interests().then(validateLoginRoute);
   onboardingPage.skills().then(validateLoginRoute);
   onboardingPage.expertise().then(validateLoginRoute);
+
+  andThen(() => {
+    done();
+  });
 });
 
 test('A user can submit name by hitting enter key on firstName input field', (assert) => {

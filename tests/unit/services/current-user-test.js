@@ -9,8 +9,10 @@ moduleFor('service:current-user', 'Unit | Service | current user', {
 test('it returns null for loadCurrentUser when there is no user', function(assert) {
   assert.expect(1);
   let service = this.subject();
+  let done = assert.async();
   service.loadCurrentUser().then((user) => {
     assert.equal(user, null);
+    done();
   });
 });
 
@@ -36,9 +38,11 @@ test('it sets the user when there is a user', function(assert) {
     }
   });
 
+  let done = assert.async();
   service.loadCurrentUser().then((user) => {
     assert.equal(user.get('id'), 1);
     assert.equal(service.get('user'), user);
+    done();
   });
 });
 
@@ -59,7 +63,9 @@ test('it rejects when the user is not returned from the store', function(assert)
     }
   });
 
+  let done = assert.async();
   service.loadCurrentUser().catch(() => {
     assert.ok(true);
+    done();
   });
 });
