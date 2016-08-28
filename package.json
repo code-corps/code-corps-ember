@@ -61,7 +61,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
     "ember-metrics": "0.6.2",
-    "ember-modal-dialog": "0.8.8",
+    "ember-modal-dialog": "0.9.0",
     "ember-moment": "6.1.0",
     "ember-resolver": "^2.0.3",
     "ember-simple-auth": "1.1.0",
