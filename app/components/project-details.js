@@ -8,7 +8,7 @@ import Ember from 'ember';
   {{project-details project=project}}
   ```
 
-  @module Components
+  @module Component
   @extends Ember.Component
   @class project-details
  */
