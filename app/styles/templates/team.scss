@@ -19,19 +19,33 @@
 }
 
 .team-section-header {
-  @include span-columns(6);
-  @include shift(3);
-  margin-bottom: 30px;
+  margin: 0 auto 30px;
+  text-align: center;
+  width: 50%;
+  @include media($sm-screen) {
+    width: 100%;
+  }
 }
 
 .company {
   ul {
-    @include span-columns(8);
     @include shift(2);
+    @include span-columns(8);
+    @include media($sm-screen) {
+      @include shift(0);
+      @include span-columns(12);
+    }
   }
 
   li {
-    @include span-columns(6);
+    @include span-columns(4 of 8);
+    @include media($sm-screen) {
+      @include span-columns(6 of 12);
+    }
+    @include media($xs-screen) {
+      @include span-columns(12 of 12);
+      margin: 10px 0;
+    }
   }
 
   img {
@@ -51,11 +65,26 @@
 }
 
 .contributors {
+  ul {
+    @include span-columns(12);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
   li {
-    @include span-columns(12/7);
-    @include omega(7n);
+    @include span-columns(2 of 12);
+    margin: 0;
     padding: 20px 0;
     text-align: center;
+    @include media($sm-screen) {
+      @include span-columns(12/5 of 12);
+      margin: 0;
+    }
+    @include media($xs-screen) {
+      @include span-columns(6 of 12);
+      margin: 0;
+    }
   }
 
   img {

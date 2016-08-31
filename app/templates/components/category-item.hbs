@@ -6,4 +6,4 @@
   <button class="clear has-spinner" {{action "addCategory" category}} disabled={{isLoading}}><span class="{{if isLoading "button-spinner" "check-area"}}"></span>{{category.name}}</button>
 {{/if}}
 
-<p class="{{if selected "selected"}}">{{category.description}}</p>
+<p class="description {{if selected "selected"}}">{{category.description}}</p>

@@ -1,5 +1,8 @@
 .project-main {
   @include span-columns(8);
+  @include media($sm-screen) {
+    @include span-columns(12);
+  }
 }
 
 .project-sidebar {

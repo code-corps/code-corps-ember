@@ -1,8 +1,15 @@
 .signup-form {
-  @include span-columns(5);
   @include shift(3.5);
   padding-top: 10vh;
-
+  @include span-columns(5);
+  @include media($sm-screen) {
+    @include shift(2);
+    @include span-columns(8);
+  }
+  @include media($xs-screen) {
+    @include shift(1);
+    @include span-columns(10);
+  }
   input[type="submit"] {
     width: 100%;
   }

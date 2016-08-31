@@ -1,5 +1,9 @@
 .user-sidebar {
   @include span-columns(3);
+  @include media($xs-screen) {
+    @include shift(4);
+    @include span-columns(4);
+  }
   img {
     width: 100%;
     border-radius: 4px;

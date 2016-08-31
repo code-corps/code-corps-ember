@@ -1,8 +1,22 @@
 .category-item {
-  @include omega(5n);
-  @include span-columns(2.4);
+  @include span-columns(2.3 of 12);
+  margin: 0 10px;
+  @include media($sm-screen) {
+    @include span-columns(3 of 12);
+    margin: 0;
+  }
+  @include media($xs-screen) {
+    @include span-columns(6 of 12);
+    margin: 0;
+  }
 
   text-align: center;
+
+  .description {
+    @include media($sm-screen) {
+      padding: 0 5px;
+    }
+  }
 
   .category-icon {
     margin: 10px auto;
