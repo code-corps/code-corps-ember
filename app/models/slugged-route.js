@@ -3,8 +3,8 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  ownerType: attr('string'),
   slug: attr('string'),
 
-  owner: belongsTo('owner', { async: true, polymorphic: true }),
+  organization: belongsTo('organization', { async: true }),
+  user: belongsTo('user', { async: true }),
 });

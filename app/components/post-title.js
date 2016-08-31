@@ -95,6 +95,12 @@ export default Ember.Component.extend({
       post.set('title', newTitle);
       post.save().then(() => {
         component.set('isEditing', false);
+      }).catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
+          this.controllerFor('project.posts.post').set('error', error);
+        }
       });
     },
   },

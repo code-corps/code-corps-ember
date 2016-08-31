@@ -20,12 +20,8 @@ module('Acceptance: Organization Settings – Profile', {
 test("it requires authentication", (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
   sluggedRoute.save();
 
   organizationPage.visitSettingsProfile({ organization: organization.slug });
@@ -39,12 +35,8 @@ test("it allows editing of organization profile", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
   sluggedRoute.save();
 
   server.create('organizationMembership', {
@@ -70,6 +62,7 @@ test("it allows editing of organization profile", (assert) => {
     done();
 
     return this._getJsonApiDocForRequest(request, "organization");
+
   });
 
   andThen(() => {
@@ -86,12 +79,8 @@ test("it allows editing of organization's image", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
   sluggedRoute.save();
 
   server.create('organizationMembership', {

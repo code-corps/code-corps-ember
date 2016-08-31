@@ -74,15 +74,18 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.API_BASE_URL = 'http://api.lvh.me:5001';
-    ENV.OAUTH_CLIENT_ID = '549256d8a4ac06c537cefce8399b2e0220b717014c5a442af97d7629de57ca1f';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:5001/oauth/token/';
+    ENV.API_BASE_URL = 'http://api.lvh.me:49235';
+    ENV.SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:49235/login';
 
     ENV.sentry.development = true;
 
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
+
+    ENV['ember-simple-auth-token'] = {
+      serverTokenEndpoint: '/login',
+    }
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
@@ -91,10 +94,10 @@ module.exports = function(environment) {
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
-      // Allow data (ajax/websocket) from api.lvh.me:5001
+      // Allow data (ajax/websocket) from api.lvh.me:49235
       'connect-src': [
         "'self'",
-        "http://api.lvh.me:5001"
+        "http://api.lvh.me:49235"
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
@@ -118,14 +121,14 @@ module.exports = function(environment) {
 
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf-qri.org/oauth/token/';
+    ENV.SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf-qri.org/login';
 
     ENV.sentry.development = true;
   }
 
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/oauth/token/';
+    ENV.SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/login';
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
   }
@@ -142,7 +145,7 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
 
     ENV.API_BASE_URL = '';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = '/oauth/token/';
+    ENV.SERVER_TOKEN_ENDPOINT = '/login';
 
     ENV.sentry.development = true;
 
@@ -157,8 +160,12 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
-    ENV.OAUTH_SERVER_TOKEN_ENDPOINT = 'https://api.codecorps.org/oauth/token/';
+    ENV.SERVER_TOKEN_ENDPOINT = 'https://api.codecorps.org/login';
   }
+
+  ENV['ember-simple-auth-token'] = {
+    serverTokenEndpoint: ENV.SERVER_TOKEN_ENDPOINT,
+  };
 
   return ENV;
 };

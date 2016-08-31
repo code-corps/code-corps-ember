@@ -48,7 +48,7 @@ test('Logged in, from user menu can visit profile', function(assert) {
   authenticateSession(application, { user_id: user.id });
 
   let sluggedRoute = server.schema.sluggedRoutes.create({ slug: user.username });
-  sluggedRoute.createOwner({ username: user.username }, 'User');
+  sluggedRoute.createUser({ username: user.username }, 'User');
   sluggedRoute.save();
 
   indexPage.visit();

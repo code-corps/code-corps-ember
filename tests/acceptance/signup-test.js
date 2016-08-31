@@ -56,19 +56,17 @@ test('Successful signup', (assert) => {
 
   let signInDone = assert.async();
 
-  server.post('/oauth/token', function(db, request) {
-    let queryString = request.requestBody;
+  server.post('/login', function(db, request) {
+    let json = request.requestBody;
 
-    assert.ok(queryString.indexOf('username=email%40example.com') > -1);
-    assert.ok(queryString.indexOf('password=password') > -1);
+    assert.ok(json.indexOf('"username":"email@example.com"') > -1);
+    assert.ok(json.indexOf('"password":"password"') > -1);
 
     signInDone();
 
     return {
-      access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ",
       user_id: 1,
-      token_type: "bearer",
-      expires_in: 7200
     };
   });
 

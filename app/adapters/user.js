@@ -19,7 +19,7 @@ export default ApplicationAdapter.extend({
     var prefix = this.urlPrefix();
 
     url.push(encodeURIComponent('users'));
-    url.push(encodeURIComponent('me'));
+    url.push(encodeURIComponent(this.get('currentUser.user.id')));
 
     if (prefix) { url.unshift(prefix); }
 

@@ -108,6 +108,12 @@ export default Ember.Component.extend({
       post.save().then((post) => {
         component.set('isEditingBody', false);
         this._fetchMentions(post);
+      }).catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
+          this.controllerFor('project.posts.post').set('error', error);
+        }
       });
     }
   },

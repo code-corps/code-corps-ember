@@ -41,9 +41,10 @@ export default Component.extend({
       @method authenticate
      */
     authenticate() {
-      let { identification, password } = this.getProperties('identification', 'password');
+      let credentials = this.getProperties('identification', 'password');
 
-      get(this, 'session').authenticate('authenticator:oauth2', identification, password).catch((reason) => {
+      get(this, 'session').authenticate('authenticator:jwt', credentials).catch((reason) => {
+        console.log(reason);
         set(this, 'errors', reason.error || reason);
       });
     },

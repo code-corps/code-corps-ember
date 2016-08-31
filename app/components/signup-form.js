@@ -48,9 +48,8 @@ export default Ember.Component.extend({
 
   _signIn(credentials) {
     this.get('session').authenticate(
-      'authenticator:oauth2',
-      credentials.identification,
-      credentials.password);
+      'authenticator:jwt',
+      credentials);
   },
 
   _shakeButton() {
@@ -71,8 +70,10 @@ export default Ember.Component.extend({
     this.get('user').save().then(() => {
       this._signIn(credentials);
     }).catch((error) => {
-      if (error.errors.length === 1) {
-        this.set('error', error);
+      let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+      if (!payloadContainsValidationErrors) {
+        this.controllerFor('signup').set('error', error);
       }
     });
   },

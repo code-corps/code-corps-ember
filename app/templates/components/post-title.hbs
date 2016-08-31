@@ -4,6 +4,9 @@
     <button class="default save" {{action 'save'}}>Save</button>
   </div>
   {{input type="text" value=newTitle name="title"}}
+  {{#each post.errors.title as |error|}}
+    <p class="error">{{error.message}}</p>
+  {{/each}}
 {{else}}
   {{#if canEdit}}
   <div class="title-actions">

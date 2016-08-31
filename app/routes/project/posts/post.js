@@ -37,7 +37,9 @@ export default Ember.Route.extend({
       comment.save().then(() => {
         route.refresh();
       }).catch((error) => {
-        if (error.errors.length === 1) {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
           this.controllerFor('project.posts.post').set('error', error);
         }
       });

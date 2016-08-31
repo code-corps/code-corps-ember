@@ -30,17 +30,17 @@ let mockPost = Ember.Object.create({
   }
 });
 
-let mockPostWithMentions = Ember.Object.create({
-  title: 'A post with mentions',
-  body: '<p>Mentioning @user1 and @user2</p>',
-  save() {
-    return Ember.RSVP.resolve();
-  },
-  postUserMentions: [
-    Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-    Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
-  ]
-});
+// let mockPostWithMentions = Ember.Object.create({
+//   title: 'A post with mentions',
+//   body: '<p>Mentioning @user1 and @user2</p>',
+//   save() {
+//     return Ember.RSVP.resolve();
+//   },
+//   postUserMentions: [
+//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//   ]
+// });
 
 moduleForComponent('post-details', 'Integration | Component | post details', {
   integration: true,
@@ -108,6 +108,8 @@ test('user can switch between view and edit mode for post body', function(assert
   assert.equal(this.$('.post-body .edit').length, 1, 'The edit button is rendered');
 });
 
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*
 test('mentions are rendered on post body in read-only mode', function(assert) {
   assert.expect(1);
 
@@ -118,3 +120,4 @@ test('mentions are rendered on post body in read-only mode', function(assert) {
   this.render(hbs`{{post-details post=post}}`);
   assert.equal(this.$('.post-body .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });
+*/

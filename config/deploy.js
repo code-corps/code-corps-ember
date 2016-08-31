@@ -18,22 +18,22 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'development-postbuild') {
-    ENV.plugins = ['redis'];
+    // ENV.plugins = ['redis'];
 
     ENV.build = {
       environment: 'development'
     };
 
-    ENV.redis = {
-      keyPrefix: 'code-corps-ember:index',
-      revisionKey: '__development__',
-      allowOverwrite: true,
-      host: 'api.lvh.me', // modified for Docker setup
-      port: 6380, // modified for Docker setup
-      distDir: function(context) {
-        return context.commandOptions.buildDir;
-      }
-    };
+    // ENV.redis = {
+    //   keyPrefix: 'code-corps-ember:index',
+    //   revisionKey: '__development__',
+    //   allowOverwrite: true,
+    //   host: 'api.lvh.me', // modified for Docker setup
+    //   port: 6380, // modified for Docker setup
+    //   distDir: function(context) {
+    //     return context.commandOptions.buildDir;
+    //   }
+    // };
   }
 
   if (deployTarget === 'staging' || deployTarget === 'production') {

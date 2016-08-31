@@ -19,12 +19,8 @@ module('Acceptance: Project Settings - Profile', {
 test("it requires authentication", (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({slug: 'test_organization'});
   sluggedRoute.save();
 
   let project = organization.createProject({
@@ -47,12 +43,8 @@ test("it allows editing of project profile", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({slug: 'test_organization'});
   sluggedRoute.save();
 
   let project = organization.createProject({
@@ -105,12 +97,8 @@ test("it allows editing of project's image", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-  let organization = sluggedRoute.createOwner({
-    slug: 'test_organization',
-  }, 'Organization');
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
+  let organization = sluggedRoute.createOrganization({slug: 'test_organization'});
   sluggedRoute.save();
 
   let project = organization.createProject({
