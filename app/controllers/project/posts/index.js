@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
     types.forEach((type) => {
       let postTypes = this.get('postTypes');
 
-      if(postTypes.contains(type.get('param'))) {
+      if(postTypes.includes(type.get('param'))) {
         type.set('selected', true);
       } else {
         type.set('selected', false);
@@ -69,7 +69,7 @@ export default Ember.Controller.extend({
       let postTypes = this.get('postTypes');
       let typeParam = type.get('param');
 
-      if(postTypes.contains(typeParam)) {
+      if(postTypes.includes(typeParam)) {
         postTypes.removeObject(typeParam);
       } else {
         postTypes.pushObject(typeParam);
@@ -89,7 +89,7 @@ export default Ember.Controller.extend({
       let postTypes = this.get('postTypes');
       let typeParam = type.get('param');
 
-      if(postTypes.contains(typeParam)) {
+      if(postTypes.includes(typeParam)) {
         postTypes.removeObject(typeParam);
       }
 

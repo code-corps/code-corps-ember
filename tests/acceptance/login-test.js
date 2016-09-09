@@ -8,10 +8,10 @@ import signupPage from '../pages/signup';
 let application;
 
 module('Acceptance: Login', {
-  beforeEach: function() {
+  beforeEach: () => {
     application = startApp();
   },
-  afterEach: function() {
+  afterEach: () => {
     Ember.run(application, 'destroy');
   }
 });
@@ -21,12 +21,13 @@ test('Logging in', function(assert) {
 
   server.create('user', { id: 1, state: 'selected_skills' });
 
-  loginPage
-    .visit()
-    .form
-      .loginSuccessfully();
+  loginPage.visit();
 
-  andThen(function() {
+  andThen(() => {
+    loginPage.form.loginSuccessfully();
+  });
+
+  andThen(() => {
     assert.equal(loginPage.navMenu.userMenu.logOut.text, 'Log out', 'Page contains logout link');
     assert.equal(currentURL(), '/projects');
   });
@@ -37,14 +38,13 @@ test('Login failure', function(assert) {
 
   assert.expect(2);
 
-  loginPage
-    .visit();
+  loginPage.visit();
 
   andThen(() => {
     loginPage.form.loginUnsuccessfully();
   });
 
-  andThen(function() {
+  andThen(() => {
     assert.equal(loginPage.form.errors().count, 1, 'One error is shown');
     assert.equal(loginPage.form.errors(0).text, ERROR_TEXT, 'Page contains login error');
   });
@@ -58,7 +58,7 @@ test('When authenticated, redirects from login', function(assert) {
 
   loginPage.visit();
 
-  andThen(function() {
+  andThen(() => {
     assert.equal(currentURL(), '/projects');
   });
 });
@@ -71,7 +71,7 @@ test('When authenticated, redirects from signup', function(assert) {
 
   signupPage.visit();
 
-  andThen(function() {
+  andThen(() => {
     assert.equal(currentURL(), '/projects');
   });
 });

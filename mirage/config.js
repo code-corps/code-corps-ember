@@ -389,7 +389,7 @@ export default function() {
 
   // GET /:slug
   this.get('/:slug', (schema, request) => {
-    if (routes.contains(request.params.slug)) {
+    if (routes.includes(request.params.slug)) {
       console.error('API route being caught in /:slug in mirage/config.js', request.params.slug);
     }
     return schema.sluggedRoutes.where({'slug': request.params.slug }).models[0];

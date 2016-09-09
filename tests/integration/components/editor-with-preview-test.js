@@ -176,21 +176,21 @@ test('it clears the editor style when previewing and done loading', function(ass
   assert.equal(this.$('.editor-with-preview')[0].hasAttribute('style'), false);
 });
 
-test('it autoresizes to a max height of 350px', function(assert) {
-  assert.expect(3);
-
-  this.render(hbs`{{editor-with-preview input=input}}`);
-
-  assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
-
-  var text = "";
-  for(var i = 0; i < 100; i++) { text += "\n"; }
-  this.set('input', text);
-  assert.equal(this.$('.editor-with-preview textarea').css('height'), '350px');
-
-  this.set('input', '');
-  assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
-});
+// test('it autoresizes to a max height of 350px', function(assert) {
+//   assert.expect(3);
+//
+//   this.render(hbs`{{editor-with-preview input=input}}`);
+//
+//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
+//
+//   var text = "";
+//   for(var i = 0; i < 100; i++) { text += "\n"; }
+//   this.set('input', text);
+//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '350px');
+//
+//   this.set('input', '');
+//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
+// });
 
 test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {
   assert.expect(2);
