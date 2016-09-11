@@ -9,7 +9,7 @@ dependencies:
     - bower_components
   override:
     - npm install -g bower
-    - npm install --cache-min Infinity
+    - npm install
     - bower install
     - npm rebuild node-sass
 deployment:
