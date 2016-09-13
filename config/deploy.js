@@ -11,6 +11,12 @@ module.exports = function(deployTarget) {
       allowOverwrite: true,
       keyPrefix: 'code-corps-ember:index'
     },
+    ssh-index: {
+      username: '<your-remote-username>',
+      host: '<your-remote-host>',
+      remoteDir: '<your-remote-directory>',
+      privateKeyFile: '<absolute-path-to-private-key>'
+    }
   };
 
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
