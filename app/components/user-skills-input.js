@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   cursorWas: 0,
   hidden: true,
   lastQuery: null,
+  limit: 5,
   results: [],
 
   store: Ember.inject.service(),
@@ -91,6 +92,7 @@ export default Ember.Component.extend({
   },
 
   _search() {
+    let limit = this.get('limit');
     let queryString = this.get('queryString');
     let store = this.get('store');
 
@@ -98,7 +100,7 @@ export default Ember.Component.extend({
       this.set('results', []);
     } else if (this.get('_isNewQuery')) {
       this.set('lastQuery', queryString);
-      store.query('skill', { query: queryString }).then((skills) => {
+      store.query('skill', { query: queryString, limit: limit }).then((skills) => {
         this.set('results', skills);
         this.set('cursorAt', 0);
         this._updateSelected();
