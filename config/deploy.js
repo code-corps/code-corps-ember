@@ -6,11 +6,7 @@ var VALID_DEPLOY_TARGETS = [ //update these to match what you call your deployme
 
 module.exports = function(deployTarget) {
   var ENV = {
-    build: {},
-    redis: {
-      allowOverwrite: true,
-      keyPrefix: 'code-corps-ember:index'
-    }
+    build: {}
   };
 
   if (VALID_DEPLOY_TARGETS.indexOf(deployTarget) === -1) {
@@ -18,22 +14,9 @@ module.exports = function(deployTarget) {
   }
 
   if (deployTarget === 'development-postbuild') {
-    // ENV.plugins = ['redis'];
-
     ENV.build = {
       environment: 'development'
     };
-
-    // ENV.redis = {
-    //   keyPrefix: 'code-corps-ember:index',
-    //   revisionKey: '__development__',
-    //   allowOverwrite: true,
-    //   host: 'api.lvh.me', // modified for Docker setup
-    //   port: 6380, // modified for Docker setup
-    //   distDir: function(context) {
-    //     return context.commandOptions.buildDir;
-    //   }
-    // };
   }
 
   if (deployTarget === 'staging' || deployTarget === 'production') {
@@ -54,20 +37,18 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'staging') {
     ENV.build.environment = 'staging';
-    ENV.redis.url = process.env.STAGING_REDIS_URL;
     ENV.s3.bucket = process.env.STAGING_S3_BUCKET;
     ENV.s3.region = process.env.STAGING_S3_REGION;
-    ENV['s3-index']['bucket'] = process.env.STAGING_S3_BUCKET;
-    ENV['s3-index']['region'] = process.env.STAGING_S3_REGION;
+    ENV['s3-index']['bucket'] = process.env.STAGING_S3_INDEX_BUCKET;
+    ENV['s3-index']['region'] = process.env.STAGING_S3_INDEX_REGION;
   }
 
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
-    ENV.redis.url = process.env.PRODUCTION_REDIS_URL;
     ENV.s3.bucket = process.env.PRODUCTION_S3_BUCKET;
     ENV.s3.region = process.env.PRODUCTION_S3_REGION;
-    ENV['s3-index']['bucket'] = process.env.PRODUCTION_S3_BUCKET;
-    ENV['s3-index']['region'] = process.env.PRODUCTION_S3_REGION;
+    ENV['s3-index']['bucket'] = process.env.PRODUCTION_S3_INDEX_BUCKET;
+    ENV['s3-index']['region'] = process.env.PRODUCTION_S3_INDEX_REGION;
   }
 
   // Note: if you need to build some configuration asynchronously,ou can return
