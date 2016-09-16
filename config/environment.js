@@ -127,8 +127,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV.API_BASE_URL = 'https://api.pbqrpbecf.org';
-    ENV.SERVER_TOKEN_ENDPOINT = 'https://api.pbqrpbecf.org/login';
+    ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
+    ENV.SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/login';
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
   }
