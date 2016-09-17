@@ -6,6 +6,9 @@
     {{#if isEditingBody}}
       <div class="input-group">
         {{editor-with-preview input=post.markdown isLoading=post.isSaving autofocus=true}}
+        {{#each post.errors.markdown as |error|}}
+          <p class="error">{{error.message}}</p>
+        {{/each}}
       </div>
       <div class="input-group">
         <button {{action 'savePostBody'}} class="default small right save">Save</button>
@@ -13,7 +16,7 @@
       </div>
     {{else}}
       <div class="comment-info">
-        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.createdAt}}
+        {{#link-to 'slugged-route' post.user.username class="username"}}{{post.user.username}}{{/link-to}} posted {{moment-from-now post.insertedAt}}
         {{#if canEdit}}
           <a class="edit" {{action 'editPostBody'}}>edit</a>
         {{/if}}

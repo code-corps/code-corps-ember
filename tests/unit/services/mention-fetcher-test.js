@@ -1,9 +1,11 @@
-import Ember from 'ember';
-import { moduleFor, test } from 'ember-qunit';
+// import Ember from 'ember';
+import { moduleFor /*, test */ } from 'ember-qunit';
 
 moduleFor('service:mention-fetcher', 'Unit | Service | mention fetcher', {
 });
 
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*
 test('when fetching, it queries store for proper type of mentions, with a proper type of parameter', function(assert) {
   assert.expect(2);
 
@@ -44,7 +46,7 @@ test('when fetching, if there are no mentions, it just returns the record body',
 
   service.set('store', mockStore);
 
-  let done = assert.async;
+  let done = assert.async();
 
   service.fetchBodyWithMentions(mockFooRecord, 'foo').then((body) => {
     assert.equal(body, 'Foo body');
@@ -76,7 +78,7 @@ test('when fetching, if there are mentions, it returns the record body, with tho
 
   service.set('store', mockStoreReturningMentions);
 
-  let done = assert.async;
+  let done = assert.async();
   let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
 
   service.fetchBodyWithMentions(mockFooWithMentions, 'foo').then((body) => {
@@ -116,3 +118,4 @@ test('when prefetching, if there are mentions, it returns the record body, with 
   let body = service.prefetchBodyWithMentions(mockFooWithMentions, 'foo');
   assert.equal(body, expectedOutput);
 });
+*/

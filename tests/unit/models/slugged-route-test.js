@@ -2,7 +2,7 @@ import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('slugged-route', 'Unit | Model | slugged-route', {
   // Specify the other units that are required for this test.
-  needs: ['model:owner']
+  needs: ['model:organization', 'model:user']
 });
 
 test('it exists', function(assert) {

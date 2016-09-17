@@ -11,7 +11,6 @@ export default Ember.Mixin.create({
     rect = this.get('boundingClientRect');
     windowHeight = this.get('windowHeight');
     windowWidth = this.get('windowWidth');
-    console.log(rect.top, windowHeight);
     return (
       rect.top <= windowHeight - 150
     );

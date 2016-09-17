@@ -16,16 +16,14 @@ module('Acceptance: Profile', {
 test('it displays the user-details component with user details', (assert) => {
   assert.expect(5);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_user',
-  });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_user' });
 
-  let user = sluggedRoute.createOwner({
+  let user = sluggedRoute.createUser({
     username: 'test_user',
     slug: 'test_user',
     twitter: 'test_twitter',
     website: 'test.com',
-  }, 'User');
+  });
 
   sluggedRoute.save();
 
@@ -50,13 +48,11 @@ test('the user can navigate to an organization from the organizations list', (as
   assert.expect(2);
 
   let userRoute = server.create('slugged-route', { slug: 'andor_drakon' });
-  let user = userRoute.createOwner({ username: 'andor_drakon' }, 'User');
+  let user = userRoute.createUser({ username: 'andor_drakon' });
   userRoute.save();
 
   let organizationRoute = server.create('slugged-route', { slug: 'chaos_inc' });
-  let organization = organizationRoute.createOwner({
-    title: 'Chaos Inc.', slug: 'chaos_inc'
-  }, 'Organization');
+  let organization = organizationRoute.createOrganization({ title: 'Chaos Inc.', slug: 'chaos_inc' });
   organizationRoute.save();
 
   server.create('organization-membership', { member: user, organization: organization });

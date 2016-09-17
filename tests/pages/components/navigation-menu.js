@@ -4,6 +4,9 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
+  logo: {
+    scope: '.site-logo a'
+  },
   logIn: {
     scope: 'a.login'
   },

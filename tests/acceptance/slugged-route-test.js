@@ -17,7 +17,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
   assert.expect(1);
 
   let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_user' });
-  sluggedRoute.createOwner({ username: 'test_user' }, 'User');
+  sluggedRoute.createUser({ username: 'test_user' });
   sluggedRoute.save();
 
   visit('/test_user');
@@ -30,7 +30,7 @@ test("It renders organization profile when the sluggedRoute model is an organiza
   assert.expect(1);
 
   let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
+  sluggedRoute.createOrganization({ slug: 'test_organization' });
   sluggedRoute.save();
 
   visit('/test_organization');

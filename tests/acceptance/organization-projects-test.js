@@ -1,6 +1,7 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import organizationProjects from '../pages/organization-projects';
 
 let application;
 
@@ -16,8 +17,9 @@ module('Acceptance: Organization projects', {
 test('It renders all the required ui elements', (assert) => {
   assert.expect(3);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOwner({ slug: 'test_organization' }, 'Organization');
+  let slug = 'test_organization';
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: slug });
+  let organization = sluggedRoute.createOrganization({ slug: slug });
   sluggedRoute.save();
   for (let i = 0; i < 5; i++) {
     organization.createProject({
@@ -27,13 +29,13 @@ test('It renders all the required ui elements', (assert) => {
   }
   organization.save();
 
-  visit('/test_organization/projects');
+  organizationProjects.visit({ slug });
 
   andThen(function() {
-    assert.equal(find('.project-list').length, 1, 'project-list component is rendered');
-    assert.equal(find('.project-list .project-item').length, 5, 'correct number of project-items is rendered');
+    assert.ok(organizationProjects.project.isVisible, 'project-list component is rendered');
+    assert.equal(organizationProjects.project.items().count, 5, 'correct number of project-items is rendered');
 
-    let firstProjectHref = find('.project-list .project-item:eq(0) a').attr('href');
-    assert.ok(firstProjectHref.indexOf('/test_organization/test_project_0') > -1, 'The link to a project is properly rendered');
+    let firstProjectHref = organizationProjects.project.items(0).href;
+    assert.ok(firstProjectHref.indexOf(`/${slug}/test_project_0`) > -1, 'The link to a project is properly rendered');
   });
 });

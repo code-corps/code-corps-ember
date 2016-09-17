@@ -20,12 +20,12 @@ test('Post comments are displayed correctly', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -47,11 +47,11 @@ test('A comment can be added to a post', (assert) => {
   assert.expect(6);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -90,12 +90,12 @@ test('Comment preview works during creation', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
   let project = server.create('project');
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -119,7 +119,8 @@ test('Comment preview works during creation', (assert) => {
   });
 });
 
-test('Comment user mentions are being rendered during creation', (assert) => {
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*test('Comment user mentions are being rendered during creation', (assert) => {
   assert.expect(2);
 
   let user = server.create('user');
@@ -127,12 +128,12 @@ test('Comment user mentions are being rendered during creation', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
   let project = server.create('project');
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -160,18 +161,18 @@ test('Comment user mentions are being rendered during creation', (assert) => {
   andThen(() => {
     assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The body is rendered with mentions');
   });
-});
+});*/
 
 test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -221,12 +222,12 @@ test('When comment creation fails due to non-validation issues, the error is dis
   assert.expect(2);
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -273,12 +274,12 @@ test('A comment can only be edited by the author', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization', ownerType: 'organization' });
+  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
   let projectId = server.create('project', { slug: 'test_project' }).id;
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   let project = server.schema.projects.find(projectId);
@@ -310,12 +311,12 @@ test('Comment editing with preview works', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
   let project = server.create('project');
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -352,7 +353,8 @@ test('Comment editing with preview works', (assert) => {
   });
 });
 
-test('Comment user mentions are being rendered during editing', (assert) => {
+// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
+/*test('Comment user mentions are being rendered during editing', (assert) => {
   assert.expect(2);
 
   let user = server.create('user');
@@ -360,12 +362,12 @@ test('Comment user mentions are being rendered during editing', (assert) => {
 
   // server.create uses factories. server.schema.<obj>.create does not
   let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug, ownerType: 'organization' });
+  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
   let project = server.create('project');
 
   // need to assign polymorphic properties explicitly
   // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.owner = organization;
+  sluggedRoute.organization = organization;
   sluggedRoute.save();
 
   project.organization = organization;
@@ -400,3 +402,4 @@ test('Comment user mentions are being rendered during editing', (assert) => {
     assert.equal(find('.comment-item .comment-body').html(), expectedBody, 'The comment body is rendered with mentions');
   });
 });
+*/

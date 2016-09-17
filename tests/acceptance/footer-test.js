@@ -1,13 +1,14 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
+import indexPage from '../pages/index';
 
 moduleForAcceptance('Acceptance | footer');
 
 test('can visit links from footer', function(assert) {
-  visit('/');
+  indexPage.visit();
 
   andThen(function() {
-    click('.site-footer ul > li:eq(1) li:eq(0) a');
+    indexPage.siteFooter.clickAboutLink();
   });
 
   andThen(function() {
@@ -15,7 +16,7 @@ test('can visit links from footer', function(assert) {
   });
 
   andThen(function() {
-    click('.site-footer ul > li:eq(1) li:eq(1) a');
+    indexPage.siteFooter.clickTeamLink();
   });
 
   andThen(function() {
@@ -23,7 +24,7 @@ test('can visit links from footer', function(assert) {
   });
 
   andThen(function() {
-    click('.footer-logo');
+    indexPage.siteFooter.clickLogo();
   });
 
   andThen(function() {

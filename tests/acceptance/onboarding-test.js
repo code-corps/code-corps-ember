@@ -2,6 +2,8 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import onboardingPage from '../pages/onboarding';
+import indexPage from '../pages/index';
 
 let application;
 
@@ -15,8 +17,8 @@ module('Acceptance: Onboarding', {
 });
 
 test('A user can onboard as expected', (assert) => {
-  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
-  server.create('category');
+    let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+    server.create('category');
   server.create('role', {
     name: 'Backend Developer',
     ability: 'Backend Development',
@@ -38,99 +40,99 @@ test('A user can onboard as expected', (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/');
+  indexPage.visit();
 
   andThen(() => {
     assert.equal(currentURL(), '/start/hello');
-    assert.equal(find('.start-actions button').is(':disabled'), true);
-    fillIn('input[name="firstName"]', 'Josh');
-    fillIn('input[name="lastName"]', 'Smith');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button disabled by default');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
   });
 
   andThen(() => {
-    assert.equal(find('.start-actions button').is(':disabled'), false);
-    click('.start-actions button');
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.startButton.click();
   });
 
   andThen(() => {
     assert.equal(currentURL(), '/start/interests');
-    assert.equal(find('.start-actions button').is(':disabled'), true);
-    click('.category-item button');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    assert.equal(find('.start-actions button').is(':disabled'), false);
-    click('.category-item button');
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    assert.equal(find('.start-actions button').is(':disabled'), true);
-    click('.category-item button');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    click('.start-actions button');
+    onboardingPage.startButton.click();
   });
 
   andThen(() => {
     assert.equal(currentURL(), '/start/expertise');
-    assert.equal(find('.roles-column:eq(0) h3').text().trim(), 'Technology');
-    assert.equal(find('.roles-column:eq(0) .roles-column-header').hasClass('technology'), true);
-    assert.equal(find('.roles-column:eq(0) button').text().trim(), 'Backend Development');
-    assert.equal(find('.roles-column:eq(1) h3').text().trim(), 'Creative');
-    assert.equal(find('.roles-column:eq(1) .roles-column-header').hasClass('creative'), true);
-    assert.equal(find('.roles-column:eq(1) button').text().trim(), 'Marketing');
-    assert.equal(find('.roles-column:eq(2) h3').text().trim(), 'Support');
-    assert.equal(find('.roles-column:eq(2) .roles-column-header').hasClass('support'), true);
-    assert.equal(find('.roles-column:eq(2) button').text().trim(), 'Donations');
-    assert.equal(find('.start-actions button').is(':disabled'), true);
+    assert.equal(onboardingPage.roles(0).title, 'Technology');
+    assert.ok(onboardingPage.roles(0).header.hasClass('technology'));
+    assert.equal(onboardingPage.roles(0).button.text, 'Backend Development');
+    assert.equal(onboardingPage.roles(1).title, 'Creative');
+    assert.ok(onboardingPage.roles(1).header.hasClass('creative'));
+    assert.equal(onboardingPage.roles(1).button.text, 'Marketing');
+    assert.equal(onboardingPage.roles(2).title, 'Support');
+    assert.ok(onboardingPage.roles(2).header.hasClass('support'));
+    assert.equal(onboardingPage.roles(2).button.text, 'Donations');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
 
-    click('.roles-column:eq(0) button');
+    onboardingPage.roles(0).button.click();
   });
 
   andThen(() => {
-    assert.equal(find('.start-actions button').is(':disabled'), false);
-    click('.roles-column:eq(0) button');
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.roles(0).button.click();
   });
 
   andThen(() => {
-    assert.equal(find('.start-actions button').is(':disabled'), true);
-    click('.roles-column:eq(0) button');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.roles(0).button.click();
   });
 
   andThen(() => {
-    click('.start-actions button');
+    onboardingPage.startButton.click();
   });
 
   andThen(() => {
     assert.equal(currentURL(), '/start/skills');
-    fillIn('input', 'ru');
+    onboardingPage.userSkillsInput.fillIn('ru');
   });
 
   andThen(() => {
-    find('input').trigger('focus');
-    assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
-    click('.dropdown-menu li:eq(0)');
+    onboardingPage.userSkillsInput.focus();
+    assert.equal(onboardingPage.userSkillsInput.dropdown(0).text, 'Ruby');
+    onboardingPage.userSkillsInput.dropdown(0).click();
   });
 
   andThen(() => {
-    assert.equal(find('.user-skills-list button:eq(0)').text().trim(), 'Ruby');
-    click('.user-skills-list button:eq(0)');
+    assert.equal(onboardingPage.userSkillsList(0).text, 'Ruby');
+    onboardingPage.userSkillsList(0).click();
   });
 
   andThen(() => {
-    assert.equal(find('.user-skills-list button').length, 0);
-    fillIn('input', 'r');
+    assert.equal(onboardingPage.userSkillsList().count, 0);
+    onboardingPage.userSkillsInput.fillIn('r');
   });
 
   andThen(() => {
-    find('input').trigger('focus');
-    assert.equal(find('.dropdown-menu li:eq(0)').text().trim(), 'Ruby');
-    click('.dropdown-menu li:eq(0)');
+    onboardingPage.userSkillsInput.focus();
+    assert.equal(onboardingPage.userSkillsInput.dropdown(0).text, 'Ruby');
+    onboardingPage.userSkillsInput.dropdown(0).click();
   });
 
   andThen(() => {
-    click('.start-actions button');
+    onboardingPage.startButton.click();
   });
 
   andThen(() => {
@@ -143,11 +145,11 @@ test('A user cannot navigate away from the onboarding', (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/');
+  indexPage.visit();
 
   andThen(() => {
     assert.equal(currentURL(), '/start/hello');
-    click('.site-logo a');
+    onboardingPage.navMenu.logo.click();
   });
 
   andThen(() => {
@@ -163,10 +165,109 @@ test('A user cannot navigate to onboarding when signed out', (assert) => {
     assert.equal(currentPath(), 'login');
   }
 
-  visit('/start').then(validateLoginRoute);
-  visit('/start/interests').then(validateLoginRoute);
-  visit('/start/skills').then(validateLoginRoute);
-  visit('/start/expertise').then(validateLoginRoute);
+  let done = assert.async();
+  onboardingPage.start().then(validateLoginRoute);
+  onboardingPage.interests().then(validateLoginRoute);
+  onboardingPage.skills().then(validateLoginRoute);
+  onboardingPage.expertise().then(validateLoginRoute);
+
+  andThen(() => {
+    done();
+  });
+});
+
+test('A user can submit name by hitting enter key on firstName input field', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/interests');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+  });
+});
+
+test('A user can submit name by hitting enter key on lastName input field', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    onboardingPage.lastNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/interests');
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+  });
+});
+
+test('A user cannot submit name by hitting enter key if firstName input field is blank', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.lastNameEnter();
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+  });
+});
+
+test('A user cannot submit name by hitting enter key if lastName input field is blank', (assert) => {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+  });
+
+  andThen(() => {
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.lastNameEnter();
+    onboardingPage.firstNameEnter();
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+  });
 });
 
 test('The footer is hidden when onboarding', (assert) => {
@@ -174,11 +275,11 @@ test('The footer is hidden when onboarding', (assert) => {
 
   authenticateSession(application, { user_id: user.id });
 
-  visit('/');
+  indexPage.visit();
 
   andThen(() => {
     assert.equal(currentURL(), '/start/hello');
-    click('.site-logo a');
-    assert.equal(find('.site-footer').length, 0);
+    onboardingPage.navMenu.logo.click();
+    assert.ok(onboardingPage.footer.isHidden, 'no footer visible');
   });
 });

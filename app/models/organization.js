@@ -1,9 +1,9 @@
-import Owner from 'code-corps-ember/models/owner';
+import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-export default Owner.extend({
+export default Model.extend({
   base64IconData: attr(),
   description: attr(),
   iconLargeUrl: attr(),

@@ -1,12 +1,41 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  Handlebars,
+} = Ember;
+
+/**
+  The `progress-bar` component is used to represent progress on a given
+  workflow. (example: progress on the onboarding process)
+
+  ## default usage
+
+  ```Handlebars
+  {{progress-bar percentage=progressInPercent}}
+  ```
+
+  @class progress-bar
+  @module Component
+  @extends Ember.Component
+ */
+export default Component.extend({
   attributeBindings: ['style'],
   classNames: ['progress-bar'],
 
-  style: Ember.computed('percentage', function() {
-    let percentage = this.get('percentage') || 0;
-    let css = "width: " + percentage + "%;";
-    return new Ember.Handlebars.SafeString(css);
+  /**
+    The `style` property consumes the current percentage to generate the style
+    string for the `progress-bar`. `style` is bound to the components style
+    attribute.
+
+    @property style
+    @type String
+   */
+  style: computed('percentage', function() {
+    const percentage = this.get('percentage') || 0;
+    const css = "width: " + percentage + "%;";
+
+    return new Handlebars.SafeString(css);
   }),
 });

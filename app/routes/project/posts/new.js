@@ -33,7 +33,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       post.save().then((post) => {
         this.transitionTo('project.posts.post', post.get('number'));
       }).catch((error) => {
-        if (error.errors.length === 1) {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
           this.controllerFor('project.posts.new').set('error', error);
         }
       });

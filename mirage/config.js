@@ -64,9 +64,9 @@ function generatePreviewMentions(schema, preview) {
 
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
-  'categories', 'comment_user_mentions', 'comments', 'organizations',
-  'post_user_mentions', 'posts', 'previews', 'projects', 'project_categories',
-  'slugged_routes', 'user_categories', 'users',
+  'categories', 'comment-user-mentions', 'comments', 'organizations',
+  'post-user-mentions', 'posts', 'previews', 'projects', 'project-categories',
+  'slugged-routes', 'user-categories', 'users',
 ];
 
 export default function() {
@@ -84,8 +84,8 @@ export default function() {
   // Comment user mentions
   ////////////////////////
 
-  // GET /comment_user_mentions
-  this.get('/comment_user_mentions', (schema, request) => {
+  // GET /comment-user-mentions
+  this.get('/comment-user-mentions', (schema, request) => {
     let commentId = request.queryParams.comment_id;
     let comment = schema.comments.find(commentId);
 
@@ -100,47 +100,22 @@ export default function() {
   ///////////
 
   // POST /comments
-  this.post('/comments', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
-
+  this.post('/comments', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
-
-    let attrs = {
-      markdown: markdown,
-      body: body,
-    };
-
-    let rels = {
-      postId: relationships.post.data.id,
-      userId: relationships.user.data.id
-    };
-
-    let comment = schema.create('comment', Ember.merge(attrs, rels));
-    return comment;
+    attrs.body = `<p>${attrs.markdown}</p>`;
+    return schema.create('comment', attrs);
   });
 
   // GET /comments/:id
-  this.patch('/comments/:id', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let commentId = request.params.id;
-    let comment = schema.comments.find(commentId);
+  this.patch('/comments/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let comment = schema.comments.find(attrs.id);
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
+    attrs.body = `<p>${attrs.markdown}</p>`;
 
-    let attrs = {
-      id: commentId,
-      markdown: markdown,
-      body: body,
-    };
-
-    // for some reason, post.update(key, value) updates post properties, but
-    // doesn't touch the post.attrs object, which is what is used in response
+    // for some reason, comment.update(key, value) updates comment properties, but
+    // doesn't touch the comment.attrs object, which is what is used in response
     // serialization
     comment.attrs = attrs;
 
@@ -152,19 +127,17 @@ export default function() {
 
 
   ////////
-  // OAuth
+  // Login
   ////////
 
-  // POST /oauth/token
-  this.post('/oauth/token', (db, request) => {
-    var expected = "grant_type=password&username=josh%40coderly.com&password=password";
+  // POST /login
+  this.post('/login', (db, request) => {
+    let json = JSON.parse(request.requestBody);
 
-    if(request.requestBody === expected) {
+    if(json.username === "josh@coderly.com" && json.password === "password") {
       return {
-        access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
-        user_id: 1,
-        token_type: "bearer",
-        expires_in: 7200
+        // token encoded at https://jwt.io/
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ"
       };
     } else {
       return new Mirage.Response(400, {}, {
@@ -185,20 +158,20 @@ export default function() {
   // Organization memberships
   ///////////////////////////
 
-  // GET /organization_memberships
-  this.get('/organization_memberships');
+  // GET /organization-memberships
+  this.get('/organization-memberships');
 
-  // POST /organization_memberships
-  this.post('/organization_memberships');
+  // POST /organization-memberships
+  this.post('/organization-memberships');
 
-  // DELETE /organization_memberships/:id
-  this.delete('/organization_memberships/:id');
+  // DELETE /organization-memberships/:id
+  this.delete('/organization-memberships/:id');
 
-  // GET /organization_memberships/:id
-  this.get('/organization_memberships/:id');
+  // GET /organization-memberships/:id
+  this.get('/organization-memberships/:id');
 
-  // PATCH /organization_memberships/:id
-  this.patch('/organization_memberships/:id');
+  // PATCH /organization-memberships/:id
+  this.patch('/organization-memberships/:id');
 
 
   ////////////////
@@ -216,8 +189,8 @@ export default function() {
   // Post user mentions
   /////////////////////
 
-  // GET /post_user_mentions
-  this.get('/post_user_mentions', (schema, request) => {
+  // GET /post-user-mentions
+  this.get('/post-user-mentions', (schema, request) => {
     let postId = request.queryParams.post_id;
     let post = schema.posts.find(postId);
 
@@ -232,41 +205,24 @@ export default function() {
   ////////
 
   // POST /posts
-  this.post('/posts', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let relationships = requestBody.data.relationships;
+  this.post('/posts', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
 
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
+    attrs.body = `<p>${attrs.markdown}</p>`;
 
     // the API sets post number as an auto-incrementing value, scoped to project,
     // so we need to simulate that here
-    let number = schema.projects.find(relationships.project.data.id).posts.models.length + 1;
+    attrs.number = schema.projects.find(attrs.projectId).posts.models.length + 1;
 
-    let attrs = {
-      markdown: markdown,
-      body: body,
-      number: number,
-      title: attributes.title,
-      postType: attributes.post_type
-    };
-
-    let rels = {
-      projectId: relationships.project.data.id,
-      userId: relationships.user.data.id
-    };
-
-    let post = schema.create('post', Ember.merge(attrs, rels));
-
-    return post;
+    return schema.create('post', attrs);
   });
 
   // PATCH /posts/:id
   this.patch('/posts/:id', function(schema) {
-    // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
+
+    // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
     let post = schema.posts.find(attrs.id);
@@ -318,8 +274,8 @@ export default function() {
   // Preview user mentions
   /////////////////////
 
-  // GET /preview_user_mentions
-  this.get('/preview_user_mentions', (schema, request) => {
+  // GET /preview-user-mentions
+  this.get('/preview-user-mentions', (schema, request) => {
     let previewId = request.queryParams.preview_id;
     let preview = schema.previews.find(previewId);
 
@@ -342,11 +298,11 @@ export default function() {
   // GET project/:id/posts
   this.get("/projects/:projectId/posts", (schema, request) => {
     let projectId = request.params.projectId;
-    let postType = request.queryParams.post_type;
+    let postType = request.queryParams["post_type"];
     let postStatus = request.queryParams.status;
 
-    let pageNumber = request.queryParams['page[number]'];
-    let pageSize = request.queryParams['page[size]'] || 10;
+    let pageNumber = parseInt(request.queryParams['page[page]']);
+    let pageSize = request.queryParams['page[page-size]'] || 10;
 
     let project = schema.projects.find(projectId);
 
@@ -369,10 +325,10 @@ export default function() {
     // hacky, but the only way I could find to pass in a mocked meta object
     // for our pagination tests
     postsPage.meta = {
-      total_records: posts.models.length,
-      total_pages: Math.ceil(posts.models.length / pageSize),
-      page_size: pageSize,
-      current_page: pageNumber || 1
+      "total_records": posts.models.length,
+      "total_pages": Math.ceil(posts.models.length / pageSize),
+      "page_size": pageSize,
+      "current_page": pageNumber || 1
     };
 
     return postsPage;
@@ -438,7 +394,7 @@ export default function() {
 
     let sluggedRoute = schema.sluggedRoutes.where({ 'slug': sluggedRouteSlug }).models[0];
 
-    return sluggedRoute.owner.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
+    return sluggedRoute.organization.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
   });
 
   /////////
@@ -480,41 +436,39 @@ export default function() {
     return { available: true, valid: true };
   });
 
-  // PATCH /users/me
-  this.patch('/users/me', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-    let userId = requestBody.data.id;
+  // PATCH /users/:id
+  this.patch('/users/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let userId = attrs.id;
     let user = schema.users.find(userId);
 
     // Mock out state machine
-    var state;
-    switch (attributes.state_transition) {
+    switch (attrs.stateTransition) {
       case 'edit_profile':
-        state = 'edited_profile';
+        attrs.state = 'edited_profile';
         break;
       case 'select_categories':
-        state = 'selected_categories';
+        attrs.state = 'selected_categories';
         break;
       case 'select_roles':
-        state = 'selected_roles';
+        attrs.state = 'selected_roles';
         break;
       case 'select_skills':
-        state = 'selected_skills';
+        attrs.state = 'selected_skills';
         break;
       default:
         console.error("You added a transition without changing the state machine in Mirage.");
         break;
     }
 
-    let attrs = {
-      id: userId,
-      state: state,
-    };
-
     user.attrs = attrs;
     user.save();
     return user;
+  });
+
+  // GET /users/email_available
+  this.get('/users/email_available', () => {
+    return { available: true, valid: true };
   });
 
   // GET /users/username_available
@@ -527,40 +481,40 @@ export default function() {
   // User categories
   //////////////////
 
-  // GET /user_categories
-  this.get('/user_categories');
+  // GET /user-categories
+  this.get('/user-categories');
 
-  // POST /user_categories
-  this.post('/user_categories');
+  // POST /user-categories
+  this.post('/user-categories');
 
-  // GET /user_categories/:id
-  this.get('/user_categories/:id');
+  // GET /user-categories/:id
+  this.get('/user-categories/:id');
 
-  // DELETE /user_categories/:id
-  this.delete('/user_categories/:id');
+  // DELETE /user-categories/:id
+  this.delete('/user-categories/:id');
 
 
   /////////////
   // User roles
   /////////////
 
-  // POST /user_roles
-  this.post('/user_roles');
+  // POST /user-roles
+  this.post('/user-roles');
 
-  // DELETE /user_roles
-  this.delete('/user_roles/:id');
+  // DELETE /user-roles
+  this.delete('/user-roles/:id');
 
 
   //////////////
   // User skills
   //////////////
 
-  // GET /user_skills
-  this.get('/user_skills');
+  // GET /user-skills
+  this.get('/user-skills');
 
-  // POST /user_skills
-  this.post('/user_skills');
+  // POST /user-skills
+  this.post('/user-skills');
 
-  // DELETE /user_skills/:id
-  this.delete('/user_skills/:id');
+  // DELETE /user-skills/:id
+  this.delete('/user-skills/:id');
 }

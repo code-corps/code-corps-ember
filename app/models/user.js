@@ -1,12 +1,12 @@
-import Owner from 'code-corps-ember/models/owner';
+import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-export default Owner.extend({
+export default Model.extend({
   base64PhotoData: attr(),
   biography: attr(),
-  createdAt: attr('date'),
+  insertedAt: attr('date'),
   email: attr(),
   firstName: attr(),
   lastName: attr(),

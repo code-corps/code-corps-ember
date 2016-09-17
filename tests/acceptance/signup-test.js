@@ -1,6 +1,8 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import indexPage from '../pages/index';
+import signupPage from '../pages/signup';
 
 let application;
 
@@ -16,11 +18,11 @@ module('Acceptance: Signup', {
 test('Signup form is accessible from the main site', (assert) => {
   assert.expect(2);
 
-  visit('/');
+  indexPage.visit();
 
   andThen(() => {
-    assert.equal(find('a.signup').length, 1, 'Link to sign-up route is visible');
-    click('a.signup');
+    assert.ok(indexPage.navMenu.signUp.isVisible, 'Link to sign-up route is visible');
+    indexPage.navMenu.signUp.click();
   });
 
   andThen(() => {
@@ -31,13 +33,10 @@ test('Signup form is accessible from the main site', (assert) => {
 test('Successful signup', (assert) => {
   assert.expect(6);
 
-  visit('/signup');
+  signupPage.visit();
 
   andThen(function() {
-    fillIn('[name=username]', 'username');
-    fillIn('[name=email]', 'email@example.com');
-    fillIn('[name=password]', 'password');
-    click('[name=signup]');
+    signupPage.form.username('username').email('email@example.com').password('password').save();
   });
 
   let signUpDone = assert.async();
@@ -57,19 +56,17 @@ test('Successful signup', (assert) => {
 
   let signInDone = assert.async();
 
-  server.post('/oauth/token', function(db, request) {
-    let queryString = request.requestBody;
+  server.post('/login', function(db, request) {
+    let json = request.requestBody;
 
-    assert.ok(queryString.indexOf('username=email%40example.com') > -1);
-    assert.ok(queryString.indexOf('password=password') > -1);
+    assert.ok(json.indexOf('"username":"email@example.com"') > -1);
+    assert.ok(json.indexOf('"password":"password"') > -1);
 
     signInDone();
 
     return {
-      access_token: "d3e45a8a3bbfbb437219e132a8286e329268d57f2d9d8153fbdee9a88c2e96f7",
+      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ",
       user_id: 1,
-      token_type: "bearer",
-      expires_in: 7200
     };
   });
 
@@ -81,13 +78,9 @@ test('Successful signup', (assert) => {
 test('Failed signup due to invalid data stays on same page', (assert) => {
   assert.expect(1);
 
-  visit('/signup');
+  signupPage.visit();
 
-  andThen(() => {
-    click('[name=signup]');
-  });
+  andThen(() => signupPage.form.save());
 
-  andThen(() => {
-    assert.equal(currentURL(), '/signup');
-  });
+  andThen(() => assert.equal(currentURL(), '/signup'));
 });

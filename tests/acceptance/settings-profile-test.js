@@ -56,23 +56,17 @@ test("it allows editing of users profile", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/users/me', (db, request) => {
-    let params = JSON.parse(request.requestBody).data.attributes;
+  server.patch('/users/:id', function(schema, request) {
+    let attrs = this.normalizedRequestAttrs();
 
-    assert.equal(params.first_name, 'Test');
-    assert.equal(params.last_name, 'User');
-    assert.equal(params.twitter, '@edited');
-    assert.equal(params.website, 'edit.com');
-    assert.equal(params.biography, 'Lorem edit');
+    assert.equal(attrs.firstName, 'Test');
+    assert.equal(attrs.lastName, 'User');
+    assert.equal(attrs.twitter, '@edited');
+    assert.equal(attrs.website, 'edit.com');
+    assert.equal(attrs.biography, 'Lorem edit');
     done();
 
-    return {
-      data: {
-        id: user.id,
-        type: "users",
-        attributes: params
-      }
-    };
+    return this._getJsonApiDocForRequest(request, "user");
   });
 
   andThen(() => {
@@ -94,19 +88,13 @@ test("it allows editing of users image", (assert) => {
 
   let done = assert.async();
 
-  server.patch('/users/me', (db, request) => {
-    let params = JSON.parse(request.requestBody).data.attributes;
+  server.patch('/users/:id', function(schema, request) {
+    let attrs = this.normalizedRequestAttrs();
 
-    assert.equal(params.base64_photo_data, droppedImageString);
+    assert.equal(attrs.base64PhotoData, droppedImageString);
     done();
 
-    return {
-      data: {
-        id: user.id,
-        type: "users",
-        attributes: params
-      }
-    };
+    return this._getJsonApiDocForRequest(request, "user");
   });
 
   andThen(() => {
