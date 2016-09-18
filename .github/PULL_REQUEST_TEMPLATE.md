@@ -1,10 +1,8 @@
-<!-- Don't forget a short, descriptive title! -->
-
 # What's in this PR?
 
-<!-- List the changes you made and your reasons for them.-->
+List the changes you made and your reasons for them.
 
-<!-- Make sure any changes to code include changes to documentation.-->
+Make sure any changes to code include changes to documentation.
 
 ## References
 Fixes #
