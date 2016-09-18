@@ -1,8 +1,6 @@
-<!-- Don't forget a short, descriptive title! -->
-<!-- This is a template, feel free to modify as your specific Issue needs, but
-keep the same basic structure. -->
-
 # Problem
+
+Detail the problem here, including any possible solutions.
 
 ## Subtasks
 - [ ]
