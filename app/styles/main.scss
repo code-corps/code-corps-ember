@@ -23,6 +23,10 @@ html, body {
   height: 100%;
 }
 
+.body-container {
+  min-height: calc(100vh - 317px);
+}
+
 p {
   font-size: $body-font-size-normal;
 }

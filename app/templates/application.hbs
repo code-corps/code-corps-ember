@@ -1,8 +1,10 @@
 {{#drag-zone}}
   {{navigation-menu}}
-  {{flash-messages}}
-  <div class="main container {{codeTheme.className}}">
-    {{outlet}}
+  <div class="body-container">
+    {{flash-messages}}
+    <div class="main container {{codeTheme.className}}">
+      {{outlet}}
+    </div>
   </div>
   {{#unless isOnboarding}}
     {{site-footer}}
