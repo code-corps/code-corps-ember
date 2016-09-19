@@ -52,8 +52,12 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Running Tests
 
-* `ember test`
-* `ember test --server`
+We use [ember-exam](https://github.com/trentmwillis/ember-exam) for running tests since it allows for parallel testing, randomized orders, and other neat configurations. You can check out the repository readme there to see the available options. A few handy ones to use when running tests locally are outlined below.
+
+* `ember exam` will run the tests
+* `ember exam --split=3 --weighted --parallel` will run tests in 3 PhantomJS instances in parallel with an equal split
+* `ember exam --random` will run the tests in a random order
+* `ember exam --filter='acceptance'` will only run acceptance tests. The same sytax can be used for other types of tests, such as `ember exam --filter='unit'` and `ember exam --filter='integration'`
 
 ### Building
 

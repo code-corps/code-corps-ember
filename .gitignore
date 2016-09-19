@@ -27,3 +27,6 @@ testem.log
 .*swp
 .*swo
 .idea
+.vscodeignore
+jsconfig.json
+/typings/*/*
