@@ -62,6 +62,11 @@ module.exports = function(environment) {
       color: 'blue',
     },
 
+    pageTitle: {
+      prepend: true,
+      separator: " — "
+    },
+
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
