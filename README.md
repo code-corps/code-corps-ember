@@ -11,7 +11,7 @@ Contributing
 
 We'd love to have you contribute to Code Corps directly!
 
-To do so, please read the guidelines in our [`CONTRIBUTING.md`](./github/CONTRIBUTING.md).
+To do so, please read the guidelines in our [`CONTRIBUTING.md`](.github/CONTRIBUTING.md).
 
 Then check out some GitHub issues to see where you can help out.
 
