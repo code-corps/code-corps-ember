@@ -32,6 +32,16 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    save(task) {
+      return task.save().catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+
+        if (!payloadContainsValidationErrors) {
+          this.controllerFor('project.tasks.task').set('error', error);
+        }
+      });
+    },
+
     saveComment(comment) {
       let route = this;
       comment.save().then(() => {
@@ -43,6 +53,6 @@ export default Ember.Route.extend({
           this.controllerFor('project.tasks.task').set('error', error);
         }
       });
-    },
-  },
+    }
+  }
 });

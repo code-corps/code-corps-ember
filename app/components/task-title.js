@@ -93,21 +93,15 @@ export default Component.extend({
 
       @method save
      */
-    save() {
+    applyEdit() {
       let component = this;
       let task = this.get('task');
       let newTitle = this.get('newTitle');
 
       task.set('title', newTitle);
-      task.save().then(() => {
+      this.get('saveTask')(task).then(() => {
         component.set('isEditing', false);
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
       });
-    },
-  },
+    }
+  }
 });

@@ -4,28 +4,28 @@ import Ember from 'ember';
 
 let mockCurrentUser = Ember.Service.extend({
   user: {
-    id: 1
-  }
+          id: 1
+        }
 });
 
 let mockDifferentUser = Ember.Service.extend({
   user: {
-    id: 2
-  }
+          id: 2
+        }
 });
 
 let mockTask = Ember.Object.create({
   title: 'Original title',
-  body: 'A <strong>body</strong>',
-  number: 12,
-  taskType: 'issue',
-  user: {
-    id: 1,
-  },
-  save() {
-    this.set('title', this.get('title'));
-    return Ember.RSVP.resolve();
-  }
+    body: 'A <strong>body</strong>',
+    number: 12,
+    taskType: 'issue',
+    user: {
+      id: 1,
+    },
+    save() {
+      this.set('title', this.get('title'));
+      return Ember.RSVP.resolve();
+    }
 });
 
 moduleForComponent('task-title', 'Integration | Component | task title', {
@@ -75,7 +75,10 @@ test('it saves', function(assert) {
   this.register('service:current-user', mockCurrentUser);
 
   this.set('task', mockTask);
-  this.render(hbs`{{task-title task=task}}`);
+  this.on('applyEdit', () => {
+    return Ember.RSVP.resolve();
+  });
+  this.render(hbs`{{task-title task=task saveTask=(action "applyEdit")}}`);
 
   assert.equal(this.$('.task-title .title').text().trim(), 'Original title #12', 'The original title is right');
 
