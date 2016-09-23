@@ -20,4 +20,6 @@ const {
  */
 export default Component.extend({
   classNames: ['project-card'],
+
+  projectOrganizationMembers: Ember.computed.mapBy('project.organization.organizationMemberships', 'member')
 });

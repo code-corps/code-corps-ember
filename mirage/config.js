@@ -70,8 +70,6 @@ const routes = [
 ];
 
 export default function() {
-  this.coalesce = true;
-
   /////////////
   // Categories
   /////////////
@@ -159,7 +157,7 @@ export default function() {
   ///////////////////////////
 
   // GET /organization-memberships
-  this.get('/organization-memberships');
+  this.get('/organization-memberships', { coalesce: true });
 
   // POST /organization-memberships
   this.post('/organization-memberships');
@@ -178,10 +176,8 @@ export default function() {
   // Organizations
   ////////////////
 
-  // GET /organizations
-  this.get('/organizations', { /* coalesce: true */ });
+  this.get('/organizations', { coalesce: true });
 
-  // GET /organizations/:id
   this.get('/organizations/:id');
 
 
@@ -412,29 +408,10 @@ export default function() {
   // Users
   ////////
 
-  // GET /user
-  this.get('/user', (schema) => {
-    // due to the nature of how we fetch the current user, all we can do here is
-    // return one of the users available in the schema, or create a new one
-    let users = schema.users.all();
-    if (users.models.length > 0) {
-      return users.models[0];
-    } else {
-      return schema.create('user');
-    }
-  });
 
-  // GET /users/:id
+  this.get('/users', { coalesce: true });
+
   this.get('/users/:id');
-  // this.get('/users', (schema, request) => {
-  //   let ids = request.queryParams["filter[id]"];
-  //   return schema.users.find(ids.split(','));
-  // });
-
-  // GET /users/email_available
-  this.get('/users/email_available', () => {
-    return { available: true, valid: true };
-  });
 
   // PATCH /users/:id
   this.patch('/users/:id', function(schema) {
@@ -470,6 +447,7 @@ export default function() {
   this.get('/users/email_available', () => {
     return { available: true, valid: true };
   });
+
 
   // GET /users/username_available
   this.get('/users/username_available', () => {

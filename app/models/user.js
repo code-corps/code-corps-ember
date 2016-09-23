@@ -21,7 +21,6 @@ export default Model.extend({
 
   stateTransition: attr(),
 
-  organizations: hasMany('organization', { async: true }),
   organizationMemberships: hasMany('organization-membership', { async: true }),
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
