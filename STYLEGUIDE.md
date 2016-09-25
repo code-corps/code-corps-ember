@@ -92,7 +92,7 @@ export default Ember.Component.extend({
     // ...
   }),
 
-  didInitAttrs() {
+  init() {
     this._super(...arguments);
     this.mode = 'editing';
   },
