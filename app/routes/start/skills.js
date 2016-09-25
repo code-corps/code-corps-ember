@@ -3,6 +3,6 @@ import OnboardingRouteMixin from '../../mixins/onboarding-route';
 
 export default Ember.Route.extend(OnboardingRouteMixin, {
   model() {
-    return this.get('store').findAll('user-skill');
+    return this.get('currentUser.user.userSkills');
   },
 });

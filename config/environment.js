@@ -76,6 +76,7 @@ module.exports = function(environment) {
 
     ENV.API_BASE_URL = 'http://api.lvh.me:49235';
     ENV.SERVER_TOKEN_ENDPOINT = 'http://api.lvh.me:49235/login';
+    ENV.WEB_BASE_URL = 'http://localhost:4200';
 
     ENV.sentry.development = true;
 
@@ -122,6 +123,7 @@ module.exports = function(environment) {
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
     ENV.SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf-qri.org/login';
+    ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
 
     ENV.sentry.development = true;
   }
@@ -129,6 +131,7 @@ module.exports = function(environment) {
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.SERVER_TOKEN_ENDPOINT = 'http://api.pbqrpbecf.org/login';
+    ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
   }
@@ -146,6 +149,7 @@ module.exports = function(environment) {
 
     ENV.API_BASE_URL = '';
     ENV.SERVER_TOKEN_ENDPOINT = '/login';
+    ENV.WEB_BASE_URL = '';
 
     ENV.sentry.development = true;
 
@@ -161,6 +165,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
     ENV.SERVER_TOKEN_ENDPOINT = 'https://api.codecorps.org/login';
+    ENV.WEB_BASE_URL = 'http://www.codecorps.org';
   }
 
   ENV['ember-simple-auth-token'] = {
