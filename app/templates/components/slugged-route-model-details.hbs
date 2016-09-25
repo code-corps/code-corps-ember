@@ -1,6 +1,13 @@
 {{#if sluggedRoute.organization}}
+  {{title sluggedRoute.organization.name}}
   {{organization-profile organization=sluggedRoute.organization}}
 {{/if}}
 {{#if sluggedRoute.user}}
+  {{#if user.name}}
+    {{title sluggedRoute.user.name " (" sluggedRoute.user.atUsername ")"}}
+  {{else}}
+    {{title sluggedRoute.user.username " (" sluggedRoute.user.atUsername ")"}}
+  {{/if}}
+
   {{user-details user=sluggedRoute.user}}
 {{/if}}
