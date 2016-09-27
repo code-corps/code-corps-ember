@@ -1,7 +1,7 @@
 import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
-  user: belongsTo(),
+  commentUserMentions: hasMany(),
   post: belongsTo(),
-  commentUserMentions: hasMany()
+  user: belongsTo(),
 });

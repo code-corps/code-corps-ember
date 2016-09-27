@@ -280,6 +280,25 @@ export default function() {
     return schema.previewUserMentions.where({ previewId: previewId });
   });
 
+  /////////////////////
+  // Project categories
+  /////////////////////
+
+  // GET /project-categories
+  this.get('/project-categories');
+
+  // GET /project-categories
+  this.get('/project-categories/:id');
+
+  /////////////////
+  // Project skills
+  /////////////////
+
+  // GET /project-skills
+  this.get('/project-skills');
+
+  // GET /project-skills
+  this.get('/project-skills/:id');
 
   ///////////
   // Projects
