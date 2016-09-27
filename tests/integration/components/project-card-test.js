@@ -15,20 +15,7 @@ test('it renders', function(assert) {
   let organization = server.create('organization');
   let user = server.create('user');
   let membership = server.create('organization-membership', { member: user, organization: organization});
-  let categories = [
-    {
-      name: 'Society',
-      slug: 'society',
-    },
-    {
-      name: 'Technology',
-      slug: 'technology',
-    },
-    {
-      name: 'Politics',
-      slug: 'politics',
-    },
-  ];
+  let projectCategory = server.create('project-category', { project: project });
 
   let mockedProject = {
     id: project.id,
@@ -39,7 +26,7 @@ test('it renders', function(assert) {
       name: organization.name,
       organizationMemberships: [membership]
     },
-    categories: categories,
+    projectCategories: [projectCategory],
   };
 
   let mockUserCategoriesService = Ember.Service.extend({
@@ -54,7 +41,7 @@ test('it renders', function(assert) {
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
   assert.equal(this.$('p.organization').text().trim(), `by ${organization.name}`);
-  assert.equal(this.$('ul.categories li').length, 3);
+  assert.equal(this.$('ul.categories li').length, 1);
   assert.equal(this.$('p.description').text().trim(), project.description);
   assert.equal(this.$('.project-card-skills').length, 1);
   assert.equal(this.$('ul.project-card-members li').length, 1);
