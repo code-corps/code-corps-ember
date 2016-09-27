@@ -11,7 +11,6 @@ export default Model.extend({
   name: attr(),
   slug: attr(),
 
-  members: hasMany('user', { async: true }),
   organizationMemberships: hasMany('organization-membership', { async: true }),
   projects: hasMany('project', { async: true }),
 

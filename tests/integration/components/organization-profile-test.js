@@ -15,6 +15,10 @@ let members = [
   { id: 3, }
 ];
 
+let memberships = members.map((member) => {
+  return { id: member.id, member: member };
+});
+
 let projects = [
   { id: 1, },
   { id: 2, },
@@ -25,7 +29,7 @@ let organization = {
   name: "Test Organization",
   description: "Test organization description",
   slug: 'test_organization',
-  members: members,
+  organizationMemberships: memberships,
   projects: projects,
 };
 
