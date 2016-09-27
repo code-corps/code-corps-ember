@@ -11,11 +11,4 @@ export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
   coalesceFindRequests: true,
 
   host: ENV.API_BASE_URL,
-
-  // eliminates a deprecation warning
-  // default behavior will return true in ember data 2.x
-  // so we should consider accounting for that
-  shouldBackgroundReloadRecord: function() {
-    return false;
-  },
 });
