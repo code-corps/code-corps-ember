@@ -14,6 +14,7 @@ test('it renders', function(assert) {
   let project = server.create('project');
   let organization = server.create('organization');
   let user = server.create('user');
+  let membership = server.create('organization-membership', { member: user, organization: organization});
   let categories = [
     {
       name: 'Society',
@@ -36,7 +37,7 @@ test('it renders', function(assert) {
     iconLargeUrl: project.iconLargeUrl,
     organization: {
       name: organization.name,
-      members: [user]
+      organizationMemberships: [membership]
     },
     categories: categories,
   };

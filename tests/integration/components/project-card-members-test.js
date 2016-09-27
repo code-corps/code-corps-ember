@@ -11,7 +11,7 @@ function createMembers(count) {
   let members = [];
   for (let i = 1; i <= count; i++) {
     members.push(Ember.Object.create({
-      photoThumbUrl: faker.internet.avatar
+      photoThumbUrl: faker.internet.avatar()
     }));
   }
   return members;
