@@ -5,11 +5,10 @@ export default Ember.Component.extend({
 
   credentials: Ember.inject.service(),
 
-  organizationMembers: Ember.computed.mapBy('organization.organizationMemberships', 'organization'),
+  organizationMembers: Ember.computed.mapBy('organization.organizationMemberships', 'member'),
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.get('credentials').set('currentOrganization', this.get('organization'));
   },
-
 });
