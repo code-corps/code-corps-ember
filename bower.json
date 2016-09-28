@@ -7,12 +7,14 @@
     "dom-ruler": "0.1.13",
     "es5-shim": "^4.5.9",
     "FakeXMLHttpRequest": "^1.4.0",
-    "route-recognizer": "^0.2.6",
     "pretender": "^1.1.0",
     "Faker": "^3.1.0",
     "zxcvbn": "^4.3.0",
     "typed.js": "^1.1.1",
     "bourbon": "^4.2.7",
     "neat": "^1.8.0"
+  },
+  "resolutions": {
+    "route-recognizer": "^0.2.7"
   }
 }
