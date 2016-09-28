@@ -41,7 +41,7 @@
     "ember-cli-ic-ajax": "1.0.0",
     "ember-cli-inject-live-reload": "^1.4.0",
     "ember-cli-jshint": "^1.0.0",
-    "ember-cli-meta-tags": "2.0.2",
+    "ember-cli-meta-tags": "3.0.1",
     "ember-cli-mirage": "^0.2.1",
     "ember-cli-moment-shim": "2.1.0",
     "ember-cli-neat": "0.0.5",
