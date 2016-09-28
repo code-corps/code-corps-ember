@@ -23,6 +23,8 @@ export default RavenLogger.extend({
     //
     // Once this issue https://github.com/emberjs/ember.js/issues/12505 is
     // resolved we can remove this code.
+    //
+    // Last checked 9/28/2016
     return error.name === 'TransitionAborted';
   },
 

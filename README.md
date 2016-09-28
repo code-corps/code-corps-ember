@@ -4,7 +4,7 @@
 
 [![Code Climate](https://codeclimate.com/github/code-corps/code-corps-ember/badges/gpa.svg)](https://codeclimate.com/github/code-corps/code-corps-ember) [![CircleCI](https://circleci.com/gh/code-corps/code-corps-ember.svg?style=svg)](https://circleci.com/gh/code-corps/code-corps-ember) [![Dependency Status](https://david-dm.org/code-corps/code-corps-ember.svg)](https://david-dm.org/code-corps/code-corps-ember) [![devDependency Status](https://david-dm.org/code-corps/code-corps-ember/dev-status.svg)](https://david-dm.org/code-corps/code-corps-ember#info=devDependencies) [![Inline docs](http://inch-ci.org/github/code-corps/code-corps-ember.svg?branch=develop&style=shields)](http://inch-ci.org/github/code-corps/code-corps-ember) [![Slack Status](http://slack.codecorps.org/badge.svg)](http://slack.codecorps.org)
 
-This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Rails JSON API.
+This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Elixir JSON API.
 
 Contributing
 ------------
@@ -32,14 +32,14 @@ You will need the following things properly installed on your computer.
 * `npm install`
 * `bower install`
 
-## Running / Development (with Rails)
+## Running / Development (with Elixir)
 
-If you're running the Rails API with Docker, then `ember-cli-deploy` will automatically watch for changes to your file tree and deploy new revisions to your running `redis` instance. Your API running on `http://api.lvh.me` will then serve the Ember app's `index.html`.
+If you're running the Elixir API with Docker, then you can serve normally at `localhost:4200` and it will connect to your locally running Elixir API.
 
 * `ember server`
-* Visit your app at [http://lvh.me](http://lvh.me).
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
-## Running / Development (without Rails)
+## Running / Development (without Elixir)
 
 If you'd like to run the app without having to set up the server, you can simply hit our `remote-development` endpoint.
 

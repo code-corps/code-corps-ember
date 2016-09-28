@@ -41,6 +41,15 @@ module.exports = function(deployTarget) {
     ENV.s3.region = process.env.STAGING_S3_REGION;
     ENV['s3-index']['bucket'] = process.env.STAGING_S3_INDEX_BUCKET;
     ENV['s3-index']['region'] = process.env.STAGING_S3_INDEX_REGION;
+
+    ENV.sentry = {
+      publicUrl: process.env.STAGING_SENTRY_SITE_URL,
+      sentryUrl: process.env.SENTRY_BASE_URL,
+      sentryOrganizationSlug: process.env.STAGING_SENTRY_ORGANIZATION_SLUG,
+      sentryProjectSlug: process.env.STAGING_SENTRY_PROJECT_SLUG,
+      sentryApiKey: process.env.STAGING_SENTRY_API_KEY,
+      sentryBearerApiKey: process.env.STAGING_SENTRY_API_KEY,
+    }
   }
 
   if (deployTarget === 'production') {
@@ -49,6 +58,15 @@ module.exports = function(deployTarget) {
     ENV.s3.region = process.env.PRODUCTION_S3_REGION;
     ENV['s3-index']['bucket'] = process.env.PRODUCTION_S3_INDEX_BUCKET;
     ENV['s3-index']['region'] = process.env.PRODUCTION_S3_INDEX_REGION;
+
+    ENV.sentry = {
+      publicUrl: process.env.PRODUCTION_SENTRY_SITE_URL,
+      sentryUrl: process.env.SENTRY_BASE_URL,
+      sentryOrganizationSlug: process.env.PRODUCTION_SENTRY_ORGANIZATION_SLUG,
+      sentryProjectSlug: process.env.PRODUCTION_SENTRY_PROJECT_SLUG,
+      sentryApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
+      sentryBearerApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
+    }
   }
 
   // Note: if you need to build some configuration asynchronously,ou can return

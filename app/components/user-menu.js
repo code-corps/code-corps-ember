@@ -17,11 +17,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['user-menu', 'dropdown'],
   classNameBindings: ['hidden:menu-hidden:menu-visible'],
-
-  init() {
-    this._super(...arguments);
-    this.hidden = true;
-  },
+  hidden: true,
 
   actions: {
     /**
@@ -30,6 +26,10 @@ export default Ember.Component.extend({
      * @method hide
      */
     hide: function() {
+      // Don't try to hide a destroyed menu component
+      if(this.get('isDestroyed')) {
+        return;
+      }
       this.set('hidden', true);
     },
 
