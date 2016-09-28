@@ -12,7 +12,8 @@
     "zxcvbn": "^4.3.0",
     "typed.js": "^1.1.1",
     "bourbon": "^4.2.7",
-    "neat": "^1.8.0"
+    "neat": "^1.8.0",
+    "raven-js": "~3.3"
   },
   "resolutions": {
     "route-recognizer": "^0.2.7"
