@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  Handlebars,
 } = Ember;
 
 /**
@@ -36,6 +35,6 @@ export default Component.extend({
     const percentage = this.get('percentage') || 0;
     const css = "width: " + percentage + "%;";
 
-    return new Handlebars.SafeString(css);
+    return Ember.String.htmlSafe(css);
   }),
 });

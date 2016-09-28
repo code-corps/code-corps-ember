@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['dropdown-menu', 'right'],
+  classNames: ['user-dropdown', 'dropdown-menu', 'right'],
 
   session: Ember.inject.service(),
 

@@ -61,7 +61,7 @@ export default Ember.Component.extend({
     @type Boolean
   */
   is404: Ember.computed('httpStatusCodes', function() {
-    return this.get('httpStatusCodes').contains(404);
+    return this.get('httpStatusCodes').includes(404);
   }),
 
   /**

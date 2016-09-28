@@ -16,7 +16,7 @@ export default Ember.Mixin.create({
       this._abortAndFixHistory(transition);
     } else if (isOnboarding) {
       return this._super(...arguments);
-    } else if (user && routes.contains(target)) {
+    } else if (user && routes.includes(target)) {
       this._abortAndFixHistory(transition);
       this.transitionTo('projects-list');
     }

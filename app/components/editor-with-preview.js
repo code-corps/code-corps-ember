@@ -117,7 +117,7 @@ export default Component.extend({
 
     if (height) {
       const css = "min-height: " + height + ";";
-      return new Ember.Handlebars.SafeString(css);
+      return Ember.String.htmlSafe(css);
     }
   }),
 
