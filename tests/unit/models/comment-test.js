@@ -3,7 +3,7 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('comment', 'Unit | Model | comment', {
   // Specify the other units that are required for this test.
   needs: [
-    'model:post',
+    'model:task',
     'model:user',
     'model:comment-user-mention'
   ]

@@ -64,29 +64,29 @@ $open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
   @include sprite($search);
 }
 
-$postTypeIcons: (
+$taskTypeIcons: (
   "idea": $idea,
   "issue": $issue,
   "progress": $progress,
   "task": $task,
 );
 
-$postTypeIconHovers: (
+$taskTypeIconHovers: (
   "idea": $idea-hover,
   "issue": $issue-hover,
   "progress": $progress-hover,
   "task": $task-hover,
 );
 
-@mixin postItemIcon($icon) {
-  .post-icon:before {
+@mixin taskItemIcon($icon) {
+  .task-icon:before {
     @include sprite($icon);
     content: "";
     display: inline-block;
   }
 }
 
-@mixin postExpertiseIcon($icon) {
+@mixin taskExpertiseIcon($icon) {
   &:before {
     @include sprite($icon);
     content: "";

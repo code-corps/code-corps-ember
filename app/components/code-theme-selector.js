@@ -11,7 +11,7 @@ const { service } = inject;
 
 /**
  * The `code-theme-selector` component is used to toggle code themes on
- * posts/comments/etc.
+ * tasks/comments/etc.
  *
  * @class code-theme-selector
  * @module Component

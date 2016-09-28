@@ -1,0 +1,5 @@
+.task-comment-list {
+  @include span-columns(12);
+
+  border-bottom: 3px solid $background-gray;
+}

@@ -9,7 +9,7 @@ export default Model.extend({
   markdown: attr('string'),
 
   commentUserMentions: hasMany('comment-user-mention', { async: true }),
-  post: belongsTo('post', { async: true }),
+  task: belongsTo('task', { async: true }),
   user: belongsTo('user', { async: true }),
 
   containsCode: Ember.computed('body', function() {

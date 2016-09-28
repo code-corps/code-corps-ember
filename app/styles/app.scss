@@ -25,8 +25,8 @@
 @import "dropdown-menu";
 
 @import "index";
-@import "post";
-@import "post-new";
+@import "task";
+@import "task-new";
 @import "start";
 
 @import "components/categories-list";
@@ -44,14 +44,14 @@
 @import "components/organization-header";
 @import "components/organization-members";
 @import "components/pager-control";
-@import "components/post-comment-list";
-@import "components/post-details";
-@import "components/post-header";
-@import "components/post-item";
-@import "components/post-status";
-@import "components/post-new-form";
-@import "components/post-title";
-@import "components/post-status-button";
+@import "components/task-comment-list";
+@import "components/task-details";
+@import "components/task-header";
+@import "components/task-item";
+@import "components/task-status";
+@import "components/task-new-form";
+@import "components/task-title";
+@import "components/task-status-button";
 @import "components/progress-bar";
 @import "components/project-details";
 @import "components/project-card";
@@ -61,7 +61,7 @@
 @import "components/project-list";
 @import "components/project-long-description";
 @import "components/project-menu";
-@import "components/project-post-list";
+@import "components/project-task-list";
 @import "components/role-item";
 @import "components/settings-menu";
 @import "components/signup-form";

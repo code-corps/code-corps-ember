@@ -5,22 +5,22 @@ import Ember from 'ember';
 
 export default Model.extend({
   base64IconData: attr(),
-  closedPostsCount: attr('number'),
+  closedTasksCount: attr('number'),
   description: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),
   longDescriptionBody: attr(),
   longDescriptionMarkdown: attr(),
-  openPostsCount: attr('number'),
+  openTasksCount: attr('number'),
   slug: attr(),
   title: attr(),
 
   organization: belongsTo('organization', { async: true }),
-  posts: hasMany('posts', { async: true }),
+  tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
 
-  hasOpenPosts: Ember.computed.gt('openPostsCount', 0),
+  hasOpenTasks: Ember.computed.gt('openTasksCount', 0),
   hasPendingMembers: Ember.computed.alias('organization.hasPendingMembers'),
   pendingMembersCount: Ember.computed.alias('organization.pendingMembersCount'),
 });

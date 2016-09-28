@@ -16,7 +16,7 @@ const {
 const { service } = inject;
 
 /**
-  `editor-with-preview` composes the comment/post editor with the ability to
+  `editor-with-preview` composes the comment/task editor with the ability to
   preview the content.
 
   ## default usage

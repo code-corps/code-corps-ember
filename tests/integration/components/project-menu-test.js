@@ -19,38 +19,38 @@ test('when not authenticated, it renders properly', function(assert) {
 
   assert.equal(this.$('.project-menu li a').length, 2, 'The correct number of links render');
   assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Posts")').length, 1, 'The posts link is rendered');
+  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
   assert.equal(this.$('.project-menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
 
 });
 
-test('it renders the post count when it has posts', function(assert) {
+test('it renders the task count when it has tasks', function(assert) {
   assert.expect(1);
 
   this.register('service:session', Ember.Service.extend({ isAuthenticated: false }));
   this.set('project', {
-    hasOpenPosts: true,
-    openPostsCount: 7
+    hasOpenTasks: true,
+    openTasksCount: 7
   });
 
   this.render(hbs`{{project-menu project=project}}`);
 
-  assert.equal(this.$('.project-menu li a span.info').text().trim(), '7', 'The number of open posts are rendered');
+  assert.equal(this.$('.project-menu li a span.info').text().trim(), '7', 'The number of open tasks are rendered');
 });
 
-test('it does not render the post count when it has no posts', function(assert) {
+test('it does not render the task count when it has no tasks', function(assert) {
   assert.expect(1);
 
   this.register('service:session', Ember.Service.extend({ isAuthenticated: false }));
   this.set('project', {
-    hasOpenPosts: false,
-    openPostsCount: 0
+    hasOpenTasks: false,
+    openTasksCount: 0
   });
 
   this.render(hbs`{{project-menu project=project}}`);
 
-  assert.equal(this.$('.project-menu li a span.info').length, 0, 'The number of open posts are not rendered');
+  assert.equal(this.$('.project-menu li a span.info').length, 0, 'The number of open tasks are not rendered');
 });
 
 test('when authenticated, and user cannot manage organization, it renders properly', function(assert) {
@@ -63,7 +63,7 @@ test('when authenticated, and user cannot manage organization, it renders proper
 
   assert.equal(this.$('.project-menu li a').length, 2, 'The correct number of links render');
   assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Posts")').length, 1, 'The posts link is rendered');
+  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
   assert.equal(this.$('.project-menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
 });
@@ -78,7 +78,7 @@ test('when authenticated, and user can manage organization, it renders properly'
 
   assert.equal(this.$('.project-menu li a').length, 4, 'The correct number of links render');
   assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Posts")').length, 1, 'The posts link is rendered');
+  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 1, 'The contributors link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Settings")').length, 1, 'The settings link is rendered');
 });
