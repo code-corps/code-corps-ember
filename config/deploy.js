@@ -44,10 +44,11 @@ module.exports = function(deployTarget) {
 
     ENV.sentry = {
       publicUrl: process.env.STAGING_SENTRY_SITE_URL,
-      sentryUrl: process.env.STAGING_SENTRY_SENTRY_URL,
+      sentryUrl: process.env.SENTRY_BASE_URL,
       sentryOrganizationSlug: process.env.STAGING_SENTRY_ORGANIZATION_SLUG,
       sentryProjectSlug: process.env.STAGING_SENTRY_PROJECT_SLUG,
-      bearerApiKey: process.env.STAGING_SENTRY_API_KEY,
+      sentryApiKey: process.env.STAGING_SENTRY_API_KEY,
+      sentryBearerApiKey: process.env.STAGING_SENTRY_API_KEY,
     }
   }
 
@@ -60,10 +61,11 @@ module.exports = function(deployTarget) {
 
     ENV.sentry = {
       publicUrl: process.env.PRODUCTION_SENTRY_SITE_URL,
-      sentryUrl: process.env.PRODUCTION_SENTRY_SENTRY_URL,
+      sentryUrl: process.env.SENTRY_BASE_URL,
       sentryOrganizationSlug: process.env.PRODUCTION_SENTRY_ORGANIZATION_SLUG,
       sentryProjectSlug: process.env.PRODUCTION_SENTRY_PROJECT_SLUG,
-      bearerApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
+      sentryApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
+      sentryBearerApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
     }
   }
 
