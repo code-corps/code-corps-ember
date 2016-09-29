@@ -2,7 +2,7 @@
   <div class="pagination">
     {{#unless onFirstPage}}
       {{#scroll-top}}
-        {{link-to "Previous" 'project.posts.index' (query-params page=previousPage) class="previous-page clear"}}
+        {{link-to "Previous" 'project.tasks.index' (query-params page=previousPage) class="previous-page clear"}}
       {{/scroll-top}}
     {{else}}
       <div>
@@ -11,12 +11,12 @@
     {{/unless}}
     {{#each pages as |page|}}
       {{#scroll-top}}
-        {{link-to page 'project.posts.index' (query-params page=page) classNameBindings="page :page :clear"}}
+        {{link-to page 'project.tasks.index' (query-params page=page) classNameBindings="page :page :clear"}}
       {{/scroll-top}}
     {{/each}}
     {{#unless onLastPage}}
       {{#scroll-top}}
-        {{link-to "Next" 'project.posts.index' (query-params page=nextPage) class="next-page clear"}}
+        {{link-to "Next" 'project.tasks.index' (query-params page=nextPage) class="next-page clear"}}
       {{/scroll-top}}
     {{else}}
       <div>

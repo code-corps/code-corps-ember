@@ -10,7 +10,7 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember test"
+    "test": "ember exam"
   },
   "repository": "",
   "engines": {
@@ -66,6 +66,8 @@
     "ember-concurrency": "0.7.9",
     "ember-data": "^2.8.0",
     "ember-deferred-content": "0.2.0",
+    "ember-disable-proxy-controllers": "^1.0.1",
+    "ember-exam": "0.5.0",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
     "ember-metrics": "0.6.3",

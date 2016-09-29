@@ -37,7 +37,7 @@ test('it renders and sends an action when its hidden', function(assert) {
     </div>
   `);
 
-  assert.equal(this.$('li a').text().trim(), 'Ruby');
+  assert.equal(this.$('li').text().trim(), 'Ruby');
 });
 
 test('it renders and sends no action when not hidden', function(assert) {
@@ -55,5 +55,5 @@ test('it renders and sends no action when not hidden', function(assert) {
 
   this.render(hbs`{{skill-list-item skill=skill action='skillItemHidden'}}`);
 
-  assert.equal(this.$('li a').text().trim(), 'Ruby');
+  assert.equal(this.$('li').text().trim(), 'Ruby');
 });

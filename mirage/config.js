@@ -16,14 +16,14 @@ function generateCommentMentions(schema, comment) {
         indices: [startIndex, endIndex],
         userId: matchedUser.id,
         commentId: comment.id,
-        postId: comment.postId
+        taskId: comment.taskId
       });
     }
   });
 }
 
-function generatePostMentions(schema, post) {
-  let body = post.body || '';
+function generateTaskMentions(schema, task) {
+  let body = task.body || '';
   let matches = body.match(/@\w+/g) || [];
 
   matches.forEach((match) => {
@@ -32,11 +32,11 @@ function generatePostMentions(schema, post) {
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
-      schema.postUserMentions.create({
+      schema.taskUserMentions.create({
         username: username,
         indices: [startIndex, endIndex],
         userId: matchedUser.id,
-        postId: post.id
+        taskId: task.id
       });
     }
   });
@@ -65,7 +65,7 @@ function generatePreviewMentions(schema, preview) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'organizations',
-  'post-user-mentions', 'posts', 'previews', 'projects', 'project-categories',
+  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
   'slugged-routes', 'user-categories', 'users',
 ];
 
@@ -182,60 +182,60 @@ export default function() {
 
 
   /////////////////////
-  // Post user mentions
+  // Task user mentions
   /////////////////////
 
-  // GET /post-user-mentions
-  this.get('/post-user-mentions', (schema, request) => {
-    let postId = request.queryParams.post_id;
-    let post = schema.posts.find(postId);
+  // GET /task-user-mentions
+  this.get('/task-user-mentions', (schema, request) => {
+    let taskId = request.queryParams.task_id;
+    let task = schema.tasks.find(taskId);
 
-    generatePostMentions(schema, post);
+    generateTaskMentions(schema, task);
 
-    return schema.postUserMentions.where({ postId: postId });
+    return schema.taskUserMentions.where({ taskId: taskId });
   });
 
 
   ////////
-  // Posts
+  // Tasks
   ////////
 
-  // POST /posts
-  this.post('/posts', function(schema) {
+  // POST /tasks
+  this.post('/tasks', function(schema) {
     let attrs = this.normalizedRequestAttrs();
 
     // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
-    // the API sets post number as an auto-incrementing value, scoped to project,
+    // the API sets task number as an auto-incrementing value, scoped to project,
     // so we need to simulate that here
-    attrs.number = schema.projects.find(attrs.projectId).posts.models.length + 1;
+    attrs.number = schema.projects.find(attrs.projectId).tasks.models.length + 1;
 
-    return schema.create('post', attrs);
+    return schema.create('task', attrs);
   });
 
-  // PATCH /posts/:id
-  this.patch('/posts/:id', function(schema) {
+  // PATCH /tasks/:id
+  this.patch('/tasks/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
 
     // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
-    let post = schema.posts.find(attrs.id);
-    post.attrs = attrs;
+    let task = schema.tasks.find(attrs.id);
+    task.attrs = attrs;
 
-    post.postUserMentions.models.forEach((mention) => mention.destroy());
-    post.save();
+    task.taskUserMentions.models.forEach((mention) => mention.destroy());
+    task.save();
 
-    return post;
+    return task;
   });
 
-  // GET posts/:number/comments
-  this.get('/posts/:postId/comments', function(schema, request) {
-    let postId = request.params.postId;
-    let post = schema.posts.find(postId);
+  // GET tasks/:number/comments
+  this.get('/tasks/:taskId/comments', function(schema, request) {
+    let taskId = request.params.taskId;
+    let task = schema.tasks.find(taskId);
 
-    return post.comments;
+    return task.comments;
   });
 
 
@@ -310,28 +310,28 @@ export default function() {
   // GET /projects/:id
   this.get('/projects/:id');
 
-  // GET project/:id/posts
-  this.get("/projects/:projectId/posts", (schema, request) => {
+  // GET project/:id/tasks
+  this.get("/projects/:projectId/tasks", (schema, request) => {
     let projectId = request.params.projectId;
-    let postType = request.queryParams["post_type"];
-    let postStatus = request.queryParams.status;
+    let taskType = request.queryParams["task_type"];
+    let taskStatus = request.queryParams.status;
 
     let pageNumber = parseInt(request.queryParams['page[page]']);
     let pageSize = request.queryParams['page[page-size]'] || 10;
 
     let project = schema.projects.find(projectId);
 
-    let posts = project.posts;
+    let tasks = project.tasks;
 
-    if (postType) {
-      posts = posts.filter((p) =>  p.postType === postType );
+    if (taskType) {
+      tasks = tasks.filter((p) =>  p.taskType === taskType );
     }
 
-    if (postStatus) {
-      posts = posts.filter((p) => p.status === postStatus);
+    if (taskStatus) {
+      tasks = tasks.filter((p) => p.status === taskStatus);
     }
 
-    let postsPage = posts.filter((p, index) => {
+    let tasksPage = tasks.filter((p, index) => {
       let pageNumberNotSpecified = !pageNumber;
       let indexIsOnSpecifiedPage = (index >= (pageNumber - 1) * pageSize) && (index < pageNumber * pageSize);
       return pageNumberNotSpecified || indexIsOnSpecifiedPage;
@@ -339,29 +339,29 @@ export default function() {
 
     // hacky, but the only way I could find to pass in a mocked meta object
     // for our pagination tests
-    postsPage.meta = {
-      "total_records": posts.models.length,
-      "total_pages": Math.ceil(posts.models.length / pageSize),
+    tasksPage.meta = {
+      "total_records": tasks.models.length,
+      "total_pages": Math.ceil(tasks.models.length / pageSize),
       "page_size": pageSize,
       "current_page": pageNumber || 1
     };
 
-    return postsPage;
+    return tasksPage;
   });
 
-  // GET /projects/:id/post/:number
-  this.get('/projects/:projectId/posts/:number', (schema, request) => {
+  // GET /projects/:id/task/:number
+  this.get('/projects/:projectId/tasks/:number', (schema, request) => {
     let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
 
     let project = schema.projects.find(projectId);
-    let post = project.posts.filter((p) => { return p.number === number; }).models[0];
+    let task = project.tasks.filter((p) => { return p.number === number; }).models[0];
 
-    post.comments.models.forEach((comment) => {
+    task.comments.models.forEach((comment) => {
       generateCommentMentions(schema, comment);
     });
 
-    return post;
+    return task;
   });
 
   // PATCH /projects/:id

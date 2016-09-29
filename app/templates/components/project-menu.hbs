@@ -1,5 +1,5 @@
 <li>{{#link-to 'project.index' project}}About{{/link-to}}</li>
-<li>{{#link-to 'project.posts' project}}Posts {{#if project.hasOpenPosts}}<span class="info">{{project.openPostsCount}}</span>{{/if}}{{/link-to}}</li>
+<li>{{#link-to 'project.tasks' project}}Tasks {{#if project.hasOpenTasks}}<span class="info">{{project.openTasksCount}}</span>{{/if}}{{/link-to}}</li>
 {{#if session.isAuthenticated}}
   {{#if (can "manage organization" project.organization membership=credentials.currentUserMembership)}}
     <li class="contributors">

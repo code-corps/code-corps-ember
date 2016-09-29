@@ -41,7 +41,7 @@ export default Model.extend({
   preview: attr('boolean'), // virtual attribute, will not persist
 
   commentUserMentions: hasMany('commentUserMention', { async: true }),
-  post: belongsTo('post', { async: true }),
+  task: belongsTo('task', { async: true }),
   user: belongsTo('user', { async: true }),
 
   containsCode: Ember.computed('body', function() {
@@ -86,7 +86,7 @@ export default Ember.Component.extend({
 
   editing: Ember.computed.equal('mode', 'editing'),
   previewing: Ember.computed.equal('mode', 'previewing'),
-  selectedItem: Ember.computed.alias('post')
+  selectedItem: Ember.computed.alias('task')
 
   value: Ember.computed('selectedItem', function() {
     // ...

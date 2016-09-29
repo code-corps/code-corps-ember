@@ -3,6 +3,8 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
+const { getOwner } = Ember;
+
 moduleForComponent('role-item', 'Integration | Component | role item', {
   integration: true,
   beforeEach() {
@@ -22,7 +24,7 @@ let mockUserRolesService = Ember.Service.extend({
     return new Ember.RSVP.Promise((fulfill) => {
       Ember.run.next(() => {
         mockUserRole.set('roleId', role.get('id'));
-        this.container.lookup('service:user-roles').set('userRoles', [mockUserRole]);
+        getOwner(this).lookup('service:user-roles').set('userRoles', [mockUserRole]);
         fulfill();
       });
     });
@@ -31,7 +33,7 @@ let mockUserRolesService = Ember.Service.extend({
     return new Ember.RSVP.Promise((fulfill, reject) => {
       Ember.run.next(() => {
         mockUserRole.set('roleId', null);
-        this.container.lookup('service:user-roles').set('userRoles', []);
+        getOwner(this).lookup('service:user-roles').set('userRoles', []);
         reject();
       });
     });
