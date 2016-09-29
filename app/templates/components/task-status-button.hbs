@@ -1,0 +1,5 @@
+{{#if isOpen}}
+  <button class="button clear small" name="close" {{action 'closeTask'}}>Close task</button>
+{{else}}
+  <button class="button clear small" name="open" {{action 'reopenTask'}}>Reopen task</button>
+{{/if}}

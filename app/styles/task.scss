@@ -1,0 +1,7 @@
+.task-timeline {
+  @include span-columns(9);
+}
+
+.task-sidebar {
+  @include span-columns(3);
+}

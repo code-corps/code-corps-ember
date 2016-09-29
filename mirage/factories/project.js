@@ -2,11 +2,11 @@ import { Factory, faker } from 'ember-cli-mirage';
 import Ember from 'ember';
 
 export default Factory.extend({
-  closedPostsCount: 0,
+  closedTasksCount: 0,
   description: faker.lorem.sentence,
   iconLargeUrl: faker.image.imageUrl,
   iconThumbUrl: faker.image.imageUrl,
-  openPostsCount: 0,
+  openTasksCount: 0,
   title: faker.name.title,
 
   slug() {

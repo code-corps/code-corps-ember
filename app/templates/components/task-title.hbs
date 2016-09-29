@@ -1,0 +1,17 @@
+{{#if isEditing}}
+  <div class="title-actions input-group">
+    <button class="clear cancel" {{action 'cancel'}}>Cancel</button>
+    <button class="default save" {{action 'save'}}>Save</button>
+  </div>
+  {{input type="text" value=newTitle name="title"}}
+  {{#each task.errors.title as |error|}}
+    <p class="error">{{error.message}}</p>
+  {{/each}}
+{{else}}
+  {{#if canEdit}}
+  <div class="title-actions">
+    <button class="clear small right edit" {{action 'edit'}}>Edit Title</button>
+  </div>
+  {{/if}}
+  <h2 class="title">{{task.title}} <span class="task-number">#{{task.number}}</span></h2>
+{{/if}}

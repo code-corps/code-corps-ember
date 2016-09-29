@@ -37,9 +37,9 @@ Router.map(function() {
       this.route('contributors');
       this.route('profile');
     });
-    this.route('posts', function() {
+    this.route('tasks', function() {
       this.route('new');
-      this.route('post', { path: '/:number' });
+      this.route('task', { path: '/:number' });
     });
   });
 

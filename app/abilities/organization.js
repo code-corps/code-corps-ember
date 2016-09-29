@@ -12,7 +12,7 @@ export default Ability.extend({
   canJoin: Ember.computed.alias('userCanJoinOrganization'),
   canManage: Ember.computed.alias('isAtLeastAdmin'),
 
-  canCreateIssuePost: true,
-  canCreateIdeaPost: true,
-  canCreateTaskPost: Ember.computed.alias('isAtLeastContributor')
+  canCreateIssueTask: true,
+  canCreateIdeaTask: true,
+  canCreateTaskTask: Ember.computed.alias('isAtLeastContributor')
 });

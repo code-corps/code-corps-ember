@@ -1,6 +1,6 @@
-@mixin postTypeButtonColors($type) {
-  $background: map-get($postTypeColors, $type);
-  $text: map-get($postTypeTextOnBackgroundColors, $type);
+@mixin taskTypeButtonColors($type) {
+  $background: map-get($taskTypeColors, $type);
+  $text: map-get($taskTypeTextOnBackgroundColors, $type);
 
   $darker-color: darken($background, 5%);
   background-color: $background;
@@ -175,9 +175,9 @@
     }
   }
 
-  &.task { @include postTypeButtonColors('task'); }
-  &.issue { @include postTypeButtonColors('issue'); }
-  &.idea { @include postTypeButtonColors('idea'); }
+  &.task { @include taskTypeButtonColors('task'); }
+  &.issue { @include taskTypeButtonColors('issue'); }
+  &.idea { @include taskTypeButtonColors('idea'); }
 }
 
 #{$all-buttons-hover}, .button:hover {

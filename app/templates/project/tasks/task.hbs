@@ -1,0 +1,16 @@
+{{task-header task=task saveTitle="saveTaskTitle"}}
+{{task-status task=task}}
+<div class="task-timeline">
+  {{task-details task=task}}
+  {{task-comment-list comments=comments}}
+  <div>
+    {{#create-comment-form comment=newComment saveComment='saveComment'}}
+      {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}
+    {{/create-comment-form}}
+    {{#if error}}
+      {{error-formatter error=error}}
+    {{/if}}
+  </div>
+</div>
+<div class="task-sidebar">
+</div>
