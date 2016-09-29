@@ -3,6 +3,8 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
+const { getOwner } = Ember;
+
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
@@ -22,7 +24,7 @@ let mockUserCategoriesService = Ember.Service.extend({
     return new Ember.RSVP.Promise((fulfill) => {
       Ember.run.next(() => {
         mockUserCategory.set('categoryId', category.get('id'));
-        this.container.lookup('service:user-categories').set('userCategories', [mockUserCategory]);
+        getOwner(this).lookup('service:user-categories').set('userCategories', [mockUserCategory]);
         fulfill();
       });
     });
@@ -31,7 +33,7 @@ let mockUserCategoriesService = Ember.Service.extend({
     return new Ember.RSVP.Promise((fulfill, reject) => {
       Ember.run.next(() => {
         mockUserCategory.set('categoryId', null);
-        this.container.lookup('service:user-categories').set('userCategories', []);
+        getOwner(this).lookup('service:user-categories').set('userCategories', []);
         reject();
       });
     });
