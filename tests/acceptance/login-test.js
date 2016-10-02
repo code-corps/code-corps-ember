@@ -34,7 +34,8 @@ test('Logging in', function(assert) {
 });
 
 test('Login failure', function(assert) {
-  const ERROR_TEXT = 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.';
+  // Mirage expects volunteers@codecorps.org as default email
+  const ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
 
   assert.expect(2);
 
