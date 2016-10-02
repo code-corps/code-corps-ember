@@ -2,7 +2,7 @@
 
 ![Code Corps Ember Logo](https://d3pgew4wbk2vb1.cloudfront.net/images/github/code-corps-ember.png)
 
-[![CircleCI](https://circleci.com/gh/code-corps/code-corps-ember.svg?style=svg)](https://circleci.com/gh/code-corps/code-corps-ember) [![Dependency Status](https://david-dm.org/code-corps/code-corps-ember.svg)](https://david-dm.org/code-corps/code-corps-ember) [![devDependency Status](https://david-dm.org/code-corps/code-corps-ember/dev-status.svg)](https://david-dm.org/code-corps/code-corps-ember#info=devDependencies) [![Inline docs](http://inch-ci.org/github/code-corps/code-corps-ember.svg?branch=develop&style=shields)](http://inch-ci.org/github/code-corps/code-corps-ember) [![Slack Status](http://slack.codecorps.org/badge.svg)](http://slack.codecorps.org)
+[![CircleCI](https://circleci.com/gh/code-corps/code-corps-ember.svg?style=shield)](https://circleci.com/gh/code-corps/code-corps-ember) [![devDependency Status](https://david-dm.org/code-corps/code-corps-ember/dev-status.svg)](https://david-dm.org/code-corps/code-corps-ember#info=devDependencies) [![Inline docs](http://inch-ci.org/github/code-corps/code-corps-ember.svg?branch=develop&style=shields)](http://inch-ci.org/github/code-corps/code-corps-ember) [![Slack Status](http://slack.codecorps.org/badge.svg)](http://slack.codecorps.org)
 
 This Code Corps Ember application powers the front-end website for the Code Corps platform, consuming our Elixir JSON API.
 

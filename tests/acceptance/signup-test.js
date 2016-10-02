@@ -56,7 +56,7 @@ test('Successful signup', (assert) => {
 
   let signInDone = assert.async();
 
-  server.post('/login', function(db, request) {
+  server.post('/token', function(db, request) {
     let json = request.requestBody;
 
     assert.ok(json.indexOf('"username":"email@example.com"') > -1);

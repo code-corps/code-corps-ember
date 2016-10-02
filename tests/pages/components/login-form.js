@@ -17,13 +17,13 @@ export default {
 
   loginSuccessfully() {
     this
-      .username('josh@coderly.com')
+      .username('volunteers@codecorps.org')
       .password('password')
       .submit();
   },
   loginUnsuccessfully() {
     this
-      .username('josh@coderly.com')
+      .username('volunteers@codecorps.org')
       .password('wrongpassword')
       .submit();
   }

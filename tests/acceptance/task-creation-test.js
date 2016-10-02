@@ -41,7 +41,7 @@ test('Creating a task requires logging in', (assert) => {
   andThen(() => {
     assert.equal(currentRouteName(), 'login', 'Got redirected to login');
 
-    server.schema.users.create({ id: 1, email: 'josh@coderly.com' });
+    server.schema.users.create({ id: 1, email: 'volunteers@codecorps.org' });
     loginPage.form.loginSuccessfully();
   });
 
