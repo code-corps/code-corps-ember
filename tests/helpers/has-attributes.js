@@ -1,6 +1,14 @@
 import QUnit from 'qunit';
 
-function compareArrays(attributes, attributesToTest){
+/**
+  Creates a custom QUnit Assertion.
+  This assertion will compare 2 arrays of attributes.
+
+  @method hasAttributes
+  @param {Array} attributes
+  @param {Array} attributesToTest
+*/
+function compareArrays(attributes, attributesToTest) {
   attributesToTest.sort();
 
   return attributes.sort().every(function(element, index) {
