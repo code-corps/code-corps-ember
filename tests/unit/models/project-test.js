@@ -35,22 +35,10 @@ test('it should have all of its attributes', function(assert) {
   assert.hasAttributes(attributes, attributesToTest);
 });
 
-test('it should have relationships', function(assert) {
-  let Project = this.store().modelFor('project');
-  let relationships = Ember.get(Project, 'relationshipsByName');
-  
-  assert.equal(relationships.get('organization').key, 'organization', 'has relationship with organization');
-  assert.equal(relationships.get('organization').kind, 'belongsTo', 'kind of relationship is belongsTo');
-
-  assert.equal(relationships.get('tasks').key, 'tasks', 'has relationship with tasks');
-  assert.equal(relationships.get('tasks').kind, 'hasMany', 'kind of relationship is hasMany');
-
-  assert.equal(relationships.get('projectCategories').key, 'projectCategories', 'has relationship with projectCategories');
-  assert.equal(relationships.get('projectCategories').kind, 'hasMany', 'kind of relationship is hasMany');
-
-  assert.equal(relationships.get('projectSkills').key, 'projectSkills', 'has relationship with projectSkills');
-  assert.equal(relationships.get('projectSkills').kind, 'hasMany', 'kind of relationship is hasMany');
-});
+testForBelongsTo('project', 'organization');
+testForHasMany('project', 'tasks');
+testForHasMany('project', 'projectCategories');
+testForHasMany('project', 'projectSkills');
 
 test('it should have open tasks', function(assert) {
   let project = this.subject({ openTasksCount: 1 });
