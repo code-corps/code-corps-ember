@@ -77,7 +77,6 @@ export default function() {
   // GET /categories
   this.get('/categories');
 
-
   ////////////////////////
   // Comment user mentions
   ////////////////////////
@@ -91,7 +90,6 @@ export default function() {
 
     return schema.commentUserMentions.where({ commentId: commentId });
   });
-
 
   ///////////
   // Comments
@@ -123,35 +121,6 @@ export default function() {
     return comment;
   });
 
-
-  ////////
-  // Login
-  ////////
-
-  // POST /login
-  this.post('/login', (db, request) => {
-    let json = JSON.parse(request.requestBody);
-
-    if(json.username === "josh@coderly.com" && json.password === "password") {
-      return {
-        // token encoded at https://jwt.io/
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ"
-      };
-    } else {
-      return new Mirage.Response(400, {}, {
-        errors: [
-          {
-            id: "INVALID_GRANT",
-            title: "Invalid grant",
-            detail: "The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.",
-            status: 401
-          }
-        ]
-      });
-    }
-  });
-
-
   ///////////////////////////
   // Organization memberships
   ///////////////////////////
@@ -171,7 +140,6 @@ export default function() {
   // PATCH /organization-memberships/:id
   this.patch('/organization-memberships/:id');
 
-
   ////////////////
   // Organizations
   ////////////////
@@ -179,65 +147,6 @@ export default function() {
   this.get('/organizations', { coalesce: true });
 
   this.get('/organizations/:id');
-
-
-  /////////////////////
-  // Task user mentions
-  /////////////////////
-
-  // GET /task-user-mentions
-  this.get('/task-user-mentions', (schema, request) => {
-    let taskId = request.queryParams.task_id;
-    let task = schema.tasks.find(taskId);
-
-    generateTaskMentions(schema, task);
-
-    return schema.taskUserMentions.where({ taskId: taskId });
-  });
-
-
-  ////////
-  // Tasks
-  ////////
-
-  // POST /tasks
-  this.post('/tasks', function(schema) {
-    let attrs = this.normalizedRequestAttrs();
-
-    // the API takes takes markdown and renders body
-    attrs.body = `<p>${attrs.markdown}</p>`;
-
-    // the API sets task number as an auto-incrementing value, scoped to project,
-    // so we need to simulate that here
-    attrs.number = schema.projects.find(attrs.projectId).tasks.models.length + 1;
-
-    return schema.create('task', attrs);
-  });
-
-  // PATCH /tasks/:id
-  this.patch('/tasks/:id', function(schema) {
-    let attrs = this.normalizedRequestAttrs();
-
-    // the API takes takes markdown and renders body
-    attrs.body = `<p>${attrs.markdown}</p>`;
-
-    let task = schema.tasks.find(attrs.id);
-    task.attrs = attrs;
-
-    task.taskUserMentions.models.forEach((mention) => mention.destroy());
-    task.save();
-
-    return task;
-  });
-
-  // GET tasks/:number/comments
-  this.get('/tasks/:taskId/comments', function(schema, request) {
-    let taskId = request.params.taskId;
-    let task = schema.tasks.find(taskId);
-
-    return task.comments;
-  });
-
 
   ///////////
   // Previews
@@ -422,11 +331,94 @@ export default function() {
   // GET /skills/:id
   this.get('/skills/:id');
 
+  /////////////////////
+  // Task user mentions
+  /////////////////////
+
+  // GET /task-user-mentions
+  this.get('/task-user-mentions', (schema, request) => {
+    let taskId = request.queryParams.task_id;
+    let task = schema.tasks.find(taskId);
+
+    generateTaskMentions(schema, task);
+
+    return schema.taskUserMentions.where({ taskId: taskId });
+  });
+
+  ////////
+  // Tasks
+  ////////
+
+  // POST /tasks
+  this.post('/tasks', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+
+    // the API takes takes markdown and renders body
+    attrs.body = `<p>${attrs.markdown}</p>`;
+
+    // the API sets task number as an auto-incrementing value, scoped to project,
+    // so we need to simulate that here
+    attrs.number = schema.projects.find(attrs.projectId).tasks.models.length + 1;
+
+    return schema.create('task', attrs);
+  });
+
+  // PATCH /tasks/:id
+  this.patch('/tasks/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+
+    // the API takes takes markdown and renders body
+    attrs.body = `<p>${attrs.markdown}</p>`;
+
+    let task = schema.tasks.find(attrs.id);
+    task.attrs = attrs;
+
+    task.taskUserMentions.models.forEach((mention) => mention.destroy());
+    task.save();
+
+    return task;
+  });
+
+  // GET tasks/:number/comments
+  this.get('/tasks/:taskId/comments', function(schema, request) {
+    let taskId = request.params.taskId;
+    let task = schema.tasks.find(taskId);
+
+    return task.comments;
+  });
+
+  ////////
+  // Token
+  ////////
+
+  // POST /token
+  this.post('/token', (db, request) => {
+    console.log(request);
+    let json = JSON.parse(request.requestBody);
+
+    if(json.username === "volunteers@codecorps.org" && json.password === "password") {
+      return {
+        // token encoded at https://jwt.io/
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ"
+      };
+    } else {
+      let errorDetail = "Your password doesn't match the email " + json.username + ".";
+      return new Mirage.Response(401, {}, {
+        errors: [
+          {
+            id: "UNAUTHORIZED",
+            title: "401 Unauthorized",
+            detail: errorDetail,
+            status: 401
+          }
+        ]
+      });
+    }
+  });
 
   ////////
   // Users
   ////////
-
 
   this.get('/users', { coalesce: true });
 
@@ -467,12 +459,10 @@ export default function() {
     return { available: true, valid: true };
   });
 
-
   // GET /users/username_available
   this.get('/users/username_available', () => {
     return { available: true, valid: true };
   });
-
 
   //////////////////
   // User categories
@@ -490,7 +480,6 @@ export default function() {
   // DELETE /user-categories/:id
   this.delete('/user-categories/:id');
 
-
   /////////////
   // User roles
   /////////////
@@ -500,7 +489,6 @@ export default function() {
 
   // DELETE /user-roles
   this.delete('/user-roles/:id');
-
 
   //////////////
   // User skills

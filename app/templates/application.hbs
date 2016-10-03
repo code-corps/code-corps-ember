@@ -1,12 +1,15 @@
 {{title "Code Corps"}}
 
 {{#drag-zone}}
-  {{navigation-menu}}
-  {{flash-messages}}
-  <div class="main container {{codeTheme.className}}">
-    {{outlet}}
+  <div class="flexbox-container">
+    {{navigation-menu}}
+    {{flash-messages}}
+    <div class="main container {{codeTheme.className}}">
+      {{outlet}}
+    </div>
+    <div class="flexbox-spacer"></div>
+    {{#unless isOnboarding}}
+      {{site-footer}}
+    {{/unless}}
   </div>
-  {{#unless isOnboarding}}
-    {{site-footer}}
-  {{/unless}}
 {{/drag-zone}}
