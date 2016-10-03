@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import userProfile from '../pages/user';
 
 let application;
 
@@ -27,20 +28,16 @@ test('it displays the user-details component with user details', (assert) => {
 
   sluggedRoute.save();
 
-  for(let i = 1; i <= 3; i++) {
-    server.create('organization-membership', {
-      member: user,
-      organization: server.create('organization')
-    });
-  }
+  server.createList('organization-membership', 3, { member: user, organization: server.create('organization')});
 
-  visit(user.username);
+  userProfile.visit({ username: user.username });
+
   andThen(() => {
-    assert.equal(find('.user-details').length, 1);
-    assert.equal(find('.user-details .twitter').text().trim(), '@test_twitter', "The user's twitter renders");
-    assert.equal(find('.user-details .twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
-    assert.equal(find('.website').text().trim(), 'test.com', "The user's website renders");
-    assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
+    assert.equal(userProfile.userDetails.isVisible, true, 'The user details component renders');
+    assert.equal(userProfile.userDetails.twitter.text, `@${user.twitter}`, "The user's twitter renders");
+    assert.equal(userProfile.userDetails.twitter.link.href, 'https://twitter.com/test_twitter', "The user's twitter URL renders");
+    assert.equal(userProfile.userDetails.website.text, 'test.com', "The user's website renders");
+    assert.equal(userProfile.organizations().count, 3, "The user's organizations are rendered");
   });
 });
 
@@ -57,13 +54,13 @@ test('the user can navigate to an organization from the organizations list', (as
 
   server.create('organization-membership', { member: user, organization: organization });
 
-  visit(user.username);
+  userProfile.visit({ username: user.username });
 
   let href = `/${organization.slug}`;
 
   andThen(() => {
-    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), href, 'The link is rendered');
-    click('.user-organization-item:eq(0) a');
+    assert.equal(userProfile.organizations(0).href, href, 'The link is rendered');
+    userProfile.organizations(0).click();
   });
 
   andThen(() => {
