@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/docs/yuidoc
 
 # dependencies
 /node_modules
