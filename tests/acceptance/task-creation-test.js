@@ -5,7 +5,8 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 import loginPage from '../pages/login';
-import projectTasksPage from '../pages/project-tasks';
+import projectTasksIndexPage from '../pages/project/tasks/index';
+import projectTasksNewPage from '../pages/project/tasks/new';
 
 let application;
 
@@ -24,10 +25,10 @@ test('Creating a task requires logging in', (assert) => {
   let project = createProjectWithSluggedRoute();
   let organization = project.organization;
 
-  projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    projectTasksPage.clickNewTask();
+    projectTasksIndexPage.clickNewTask();
   });
 
   andThen(() => {
@@ -49,16 +50,16 @@ test('A task can be successfully created', (assert) => {
   let project = createProjectWithSluggedRoute();
   let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
-  projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    projectTasksPage.clickNewTask();
+    projectTasksIndexPage.clickNewTask();
   });
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
     assert.equal(find('[name=task-type]').val(), 'issue', 'Has the right default task type');
-    projectTasksPage.taskTitle('A task title').taskMarkdown('A task body').taskType('idea').clickSubmit();
+    projectTasksNewPage.taskTitle('A task title').taskMarkdown('A task body').taskType('idea').clickSubmit();
   });
 
   andThen(() => {
@@ -87,15 +88,15 @@ test('Task preview works during creation', (assert) => {
   let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
-  projectTasksPage.visitNew({ organization: organization.slug, project: project.slug });
+  projectTasksNewPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    projectTasksPage.taskMarkdown('Some type of markdown');
-    projectTasksPage.clickPreviewTask();
+    projectTasksNewPage.taskMarkdown('Some type of markdown');
+    projectTasksNewPage.clickPreviewTask();
   });
 
   andThen(() => {
-    assert.equal(projectTasksPage.previewBody.text, 'Some type of markdown', 'The preview is rendered');
+    assert.equal(projectTasksNewPage.previewBody.text, 'Some type of markdown', 'The preview is rendered');
   });
 });
 
@@ -109,14 +110,14 @@ test('Task preview works during creation', (assert) => {
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
   const expectedBody = `Mentioning @${user1.username} and @${user2.username}`;
-  projectTasksPage.visitNew({ organization: organization.slug, project: project.slug });
+  projectTasksNewPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    projectTasksPage.taskMarkdown(markdown);
-    projectTasksPage.clickPreviewTask();
+    projectTasksIndexPage.taskMarkdown(markdown);
+    projectTasksIndexPage.clickPreviewTask();
 
     andThen(() => {
-      assert.equal(projectTasksPage.previewBody.text, expectedBody, 'The mentions render');
+      assert.equal(projectTasksIndexPage.previewBody.text, expectedBody, 'The mentions render');
     });
   });
 });*/
@@ -129,12 +130,12 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
-  projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
-  andThen(() => projectTasksPage.clickNewTask());
+  andThen(() => projectTasksIndexPage.clickNewTask());
 
   andThen(() => {
-    projectTasksPage.taskTitle('A task title').taskMarkdown('A task body').taskType('Task').clickSubmit();
+    projectTasksNewPage.taskTitle('A task title').taskMarkdown('A task body').taskType('Task').clickSubmit();
   });
 
   andThen(() => {
@@ -150,9 +151,9 @@ test('When task creation fails due to validation, validation errors are displaye
   let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
-  projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
-  andThen(() => projectTasksPage.clickNewTask());
+  andThen(() => projectTasksIndexPage.clickNewTask());
 
   andThen(() => {
     let taskCreationDone = assert.async();
@@ -186,10 +187,10 @@ test('When task creation fails due to validation, validation errors are displaye
           }
       ]});
     });
-    projectTasksPage.clickSubmit();
+    projectTasksNewPage.clickSubmit();
   });
 
-  andThen(() => assert.equal(projectTasksPage.errors().count, 4));
+  andThen(() => assert.equal(projectTasksNewPage.errors().count, 4));
 });
 
 test('When task creation fails due to non-validation issues, the error is displayed', (assert) => {
@@ -201,10 +202,10 @@ test('When task creation fails due to non-validation issues, the error is displa
   let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
-  projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    projectTasksPage.clickNewTask();
+    projectTasksIndexPage.clickNewTask();
   });
 
   andThen(() => {
@@ -222,11 +223,11 @@ test('When task creation fails due to non-validation issues, the error is displa
         ]
       });
     });
-    projectTasksPage.clickSubmit();
+    projectTasksNewPage.clickSubmit();
   });
 
   andThen(() => {
-    assert.equal(projectTasksPage.errors().count, 1);
-    assert.equal(projectTasksPage.errors().contains('An unknown error: Something happened', 'The error is messaged'), true);
+    assert.equal(projectTasksNewPage.errors().count, 1);
+    assert.equal(projectTasksNewPage.errors().contains('An unknown error: Something happened', 'The error is messaged'), true);
   });
 });
