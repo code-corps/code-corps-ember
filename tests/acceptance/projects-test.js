@@ -1,38 +1,17 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-
-function createProject(slug) {
-  slug = slug || 'test_organization';
-
-  // server.create uses factories. server.schema.<obj>.create does not
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  sluggedRoute.owner = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
-
-  return project;
-}
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 
 moduleForAcceptance('Acceptance | Projects');
 
 test('visiting /projects', function(assert) {
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   let skill = server.create('skill', {
     title: 'Ruby'
   });
 
-  server.create('project-skill', {
-    project: project,
-    skill: skill,
-  });
+  server.create('project-skill', { project, skill });
 
   project.skills = [skill];
   project.save();
@@ -45,13 +24,12 @@ test('visiting /projects', function(assert) {
 });
 
 test('members are displayed correctly', (assert) => {
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let organization = project.organization;
-
-  for (let i = 0; i < 10; i++) {
-    let user = server.create('user');
-    server.create('organization-membership', { role: "contributor", member: user, organization: organization});
-  }
+  server.createList('organizationMembership', 10, {
+    role: "contributor",
+    organization
+  });
 
   visit('/projects');
   andThen(() => {

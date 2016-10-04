@@ -17,8 +17,8 @@ export default Ember.Service.extend({
   addSkill(skill) {
     let user = this.get('user');
     let userSkill = this.get('store').createRecord('user-skill', {
-      user: user,
-      skill: skill
+      user,
+      skill
     });
     return userSkill.save();
   },

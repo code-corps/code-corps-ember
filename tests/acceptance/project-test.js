@@ -2,27 +2,9 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 
 let application;
-
-function createProject(slug) {
-  slug = slug || 'test_organization';
-
-  // server.create uses factories. server.schema.<obj>.create does not
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
-
-  return project;
-}
 
 module('Acceptance: Project', {
   beforeEach: function() {
@@ -36,7 +18,7 @@ module('Acceptance: Project', {
 test('It renders navigation properly', (assert) => {
   assert.expect(2);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let aboutURL = `/${project.organization.slug}/${project.slug}`;
   let tasksURL = `/${project.organization.slug}/${project.slug}/tasks`;
   visit(tasksURL);
@@ -52,7 +34,7 @@ test('It renders navigation properly', (assert) => {
 test('Navigation works', (assert) => {
   assert.expect(6);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let tasksURL = `/${project.organization.slug}/${project.slug}/tasks`;
   visit(tasksURL);
 
@@ -75,7 +57,7 @@ test('Navigation works', (assert) => {
 test('It renders all the required ui elements for task list', (assert) => {
   assert.expect(4);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   server.createList('task', 5, { projectId: project.id });
   let tasksURL = `/${project.organization.slug}/${project.slug}/tasks`;
   visit(tasksURL);
@@ -95,7 +77,7 @@ test('It renders all the required ui elements for task list', (assert) => {
 test('Task filtering by type works', (assert) => {
   assert.expect(4);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   // we use server.createList so factories are used in creation
   server.createList('task', 1, { taskType: 'idea', projectId: project.id });
@@ -131,7 +113,7 @@ test('Task filtering by type works', (assert) => {
 test('Task filtering by status works', (assert) => {
   assert.expect(8);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   project.closedTasksCount = 2;
   project.openTasksCount = 4;
   project.save();
@@ -167,7 +149,7 @@ test('Task filtering by status works', (assert) => {
 test('Task paging links are correct', (assert) =>  {
   assert.expect(10);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   // we use server.createList so factories are used in creation
   server.createList('task', 20, { taskType: 'idea', projectId: project.id });
@@ -202,7 +184,7 @@ test('Task paging links are correct', (assert) =>  {
 test('Paging of tasks works', (assert) => {
   assert.expect(3);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   server.createList('task', 12, { projectId: project.id });
 
@@ -223,7 +205,7 @@ test('Paging of tasks works', (assert) => {
 test('Paging and filtering of tasks combined works', (assert) => {
   assert.expect(9);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   server.createList('task', 12, { taskType: 'task', projectId: project.id });
   server.createList('task', 12, { taskType: 'issue', projectId: project.id });
@@ -272,7 +254,7 @@ test('Paging and filtering of tasks combined works', (assert) => {
 test('Paging and filtering uses query parameters', (assert) => {
   assert.expect(6);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   server.createList('task', 22, { taskType: 'task', projectId: project.id });
   server.createList('task', 12, { taskType: 'issue', projectId: project.id });
@@ -315,7 +297,7 @@ test('Paging and filtering uses query parameters', (assert) => {
 test('A user can join the organization of the project', (assert) => {
   assert.expect(5);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let projectURL = `/${project.organization.slug}/${project.slug}/`;
   let user = server.create('user');
 

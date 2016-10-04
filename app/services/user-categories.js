@@ -17,8 +17,8 @@ export default Ember.Service.extend({
   addCategory(category) {
     let user = this.get('user');
     let userCategory = this.get('store').createRecord('user-category', {
-      user: user,
-      category: category
+      user,
+      category
     });
     return userCategory.save();
   },

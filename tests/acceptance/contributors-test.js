@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import page from '../pages/contributors';
 import Ember from 'ember';
 
@@ -17,22 +18,6 @@ function buildURLParts(project_organization_slug, project_slug) {
   };
 }
 
-function createProject() {
-  // server.create uses factories. server.schema.<obj>.create does not
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
-  return project;
-}
-
 moduleForAcceptance('Acceptance: Contributors', {
   beforeEach: function() {
     application = startApp();
@@ -45,7 +30,7 @@ moduleForAcceptance('Acceptance: Contributors', {
 test('when not an admin on the project', function(assert) {
   assert.expect(1);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
 
   let user = server.create('user');
   server.create('organizationMembership', {
@@ -68,7 +53,7 @@ test('when not an admin on the project', function(assert) {
 test('when only the owner is a contributor', function(assert) {
   assert.expect(9);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let user = server.create('user');
   server.create('organizationMembership', {
     member: user,
@@ -100,7 +85,7 @@ test('when only the owner is a contributor', function(assert) {
 test('when there are multiple contributors', function(assert) {
   assert.expect(16);
 
-  let project = createProject();
+  let project = createProjectWithSluggedRoute();
   let user = server.create('user');
   server.create('organizationMembership', {
     member: user,

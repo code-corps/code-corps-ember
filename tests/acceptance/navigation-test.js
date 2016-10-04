@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 import loginPage from '../pages/login';
@@ -44,12 +45,8 @@ test("Logged out, can sign in", function(assert) {
 test('Logged in, from user menu can visit profile', function(assert) {
   assert.expect(2);
 
-  let user = server.create('user');
+  let user = createUserWithSluggedRoute();
   authenticateSession(application, { user_id: user.id });
-
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: user.username });
-  sluggedRoute.createUser({ username: user.username }, 'User');
-  sluggedRoute.save();
 
   indexPage.visit();
 

@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import fillInFileInput from '../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../helpers/remove-double-quotes';
 import organizationPage from '../pages/organization';
@@ -20,9 +21,7 @@ module('Acceptance: Organization Settings – Profile', {
 test("it requires authentication", (assert) => {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
-  sluggedRoute.save();
+  let organization = createOrganizationWithSluggedRoute();
 
   organizationPage.visitSettingsProfile({ organization: organization.slug });
   andThen(() => {
@@ -35,13 +34,11 @@ test("it allows editing of organization profile", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
-  sluggedRoute.save();
+  let organization = createOrganizationWithSluggedRoute();
 
   server.create('organizationMembership', {
     member: user,
-    organization: organization,
+    organization,
     role: 'admin'
   });
 
@@ -79,13 +76,11 @@ test("it allows editing of organization's image", (assert) => {
 
   var user = server.create('user');
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test_organization'});
-  sluggedRoute.save();
+  let organization = createOrganizationWithSluggedRoute();
 
   server.create('organizationMembership', {
     member: user,
-    organization: organization,
+    organization,
     role: 'admin'
   });
 
