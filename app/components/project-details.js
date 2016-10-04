@@ -54,7 +54,7 @@ export default Ember.Component.extend({
       this.get('project.organization').then((organization) => {
         let membership = this.get('store').createRecord('organization-membership', {
           member: currentUser,
-          organization: organization,
+          organization,
           role: 'pending'
         });
 

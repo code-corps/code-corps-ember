@@ -5,8 +5,8 @@ import Ember from 'ember';
 
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
-  needs: ['model:project-category', 'model:organization', 
-          'model:organization-membership', 'model:user', 
+  needs: ['model:project-category', 'model:organization',
+          'model:organization-membership', 'model:user',
           'model:task', 'model:project-skill']
 });
 
@@ -56,9 +56,9 @@ test('it should have computed properties for its organization\'s members', funct
 
   Ember.run(function(){
     let organization = _this.store().createRecord('organization');
-    _this.store().createRecord('organization-membership', { organization: organization, role: 'pending'});
+    _this.store().createRecord('organization-membership', { organization, role: 'pending'});
 
-    project = _this.subject({ organization: organization });
+    project = _this.subject({ organization });
   });
 
   assert.equal(project.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');

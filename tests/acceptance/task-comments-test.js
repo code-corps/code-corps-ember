@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 
 let application;
@@ -17,20 +18,8 @@ module('Acceptance: Task Comments', {
 
 test('Task comments are displayed correctly', (assert) => {
   assert.expect(1);
-
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
@@ -45,19 +34,9 @@ test('Task comments are displayed correctly', (assert) => {
 
 test('A comment can be added to a task', (assert) => {
   assert.expect(6);
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
 
-  // need to assign polymorphic properties explicitly
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
   let user = server.schema.users.create({ username: 'test_user' });
@@ -88,22 +67,12 @@ test('Comment preview works during creation', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
 
-  visit(`${sluggedRoute.slug}/${project.slug}/tasks/${task.number}`);
+  visit(`${organization.slug}/${project.slug}/tasks/${task.number}`);
 
   let markdown = 'Some type of markdown';
   let expectedBody = `<p>${markdown}</p>`;
@@ -126,22 +95,12 @@ test('Comment preview works during creation', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
 
-  visit(`${sluggedRoute.slug}/${project.slug}/tasks/${task.number}`);
+  visit(`${organization.slug}/${project.slug}/tasks/${task.number}`);
 
   let user1 = server.create('user');
   let user2 = server.create('user');
@@ -164,20 +123,8 @@ test('Comment preview works during creation', (assert) => {
 });*/
 
 test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
-  assert.expect(1);
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
@@ -219,20 +166,8 @@ test('When comment creation fails due to validation, validation errors are displ
 });
 
 test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
-  assert.expect(2);
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
@@ -271,20 +206,8 @@ test('A comment can only be edited by the author', (assert) => {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
-
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
@@ -309,18 +232,8 @@ test('Comment editing with preview works', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 
@@ -360,18 +273,8 @@ test('Comment editing with preview works', (assert) => {
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
-  let project = server.create('project');
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
 

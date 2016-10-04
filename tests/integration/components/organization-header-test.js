@@ -20,7 +20,7 @@ let organization = Ember.Object.create({
 let mockCredentials = Ember.Service.extend({
   currentUserMembership: Ember.Object.create({
     member: user,
-    organization: organization,
+    organization,
     role: "admin"
   })
 });

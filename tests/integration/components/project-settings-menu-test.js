@@ -7,12 +7,12 @@ moduleForComponent('project-settings-menu', 'Integration | Component | project s
 });
 
 let organization = Ember.Object.create({ id: 1 });
-let project = Ember.Object.create({ organization: organization });
+let project = Ember.Object.create({ organization });
 
 test('when authenticated and can manage organization, it renders properly', function(assert) {
   assert.expect(4);
 
-  let membership = Ember.Object.create({ isAdmin: true, organization: organization });
+  let membership = Ember.Object.create({ isAdmin: true, organization });
   let mockSession = Ember.Service.extend({ isAuthenticated: true });
   let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });
 
@@ -32,7 +32,7 @@ test('when authenticated and can manage organization, it renders properly', func
 test('when authenticated and cannot manage organization, it renders properly', function(assert) {
   assert.expect(2);
 
-  let membership = Ember.Object.create({ isAdmin: false, organization: organization });
+  let membership = Ember.Object.create({ isAdmin: false, organization });
   let mockSession = Ember.Service.extend({ isAuthenticated: true });
   let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });
 

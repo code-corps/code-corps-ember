@@ -1,6 +1,8 @@
 import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
+import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import sluggedRoutePage from '../pages/slugged-route';
 
 let application;
@@ -17,11 +19,9 @@ module('Acceptance: Slugged Route', {
 test("It renders user details when the sluggedRoute model is a user", function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_user' });
-  sluggedRoute.createUser({ username: 'test_user' });
-  sluggedRoute.save();
-
-  sluggedRoutePage.visit({ slug: 'test_user' });
+  let user = createUserWithSluggedRoute();
+  
+  sluggedRoutePage.visit({ slug: user.username });
 
   andThen(function() {
     assert.equal(sluggedRoutePage.userDetails.isVisible, true, 'user-details component is rendered');
@@ -31,11 +31,9 @@ test("It renders user details when the sluggedRoute model is a user", function(a
 test("It renders organization profile when the sluggedRoute model is an organization", function(assert) {
   assert.expect(1);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  sluggedRoute.createOrganization({ slug: 'test_organization' });
-  sluggedRoute.save();
+  let organization = createOrganizationWithSluggedRoute();
 
-  sluggedRoutePage.visit({ slug: 'test_organization' });
+  sluggedRoutePage.visit({ slug: organization.slug });
 
   andThen(function() {
     assert.equal(sluggedRoutePage.organizationProfile.isVisible, true, 'organization-profile component is rendered');

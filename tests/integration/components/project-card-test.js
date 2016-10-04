@@ -14,8 +14,8 @@ test('it renders', function(assert) {
   let project = server.create('project');
   let organization = server.create('organization');
   let user = server.create('user');
-  let membership = server.create('organization-membership', { member: user, organization: organization});
-  let projectCategory = server.create('project-category', { project: project });
+  let membership = server.create('organization-membership', { member: user, organization});
+  let projectCategory = server.create('project-category', { project });
 
   let mockedProject = {
     id: project.id,

@@ -103,7 +103,6 @@ test("it allows editing of users image", (assert) => {
   andThen(() => {
     assert.ok(settingsProfilePage.successAlert.isVisible);
     assert.equal(settingsProfilePage.successAlert.message, "Profile updated successfully");
-    let expectedStyle = `url(${droppedImageString})`;
-    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.backgroundImageData(), expectedStyle);
+    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.backgroundImageData(), `url(${droppedImageString})`);
   });
 });

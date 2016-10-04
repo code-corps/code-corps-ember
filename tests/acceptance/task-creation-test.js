@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 import loginPage from '../pages/login';
 import projectTasksPage from '../pages/project-tasks';
@@ -19,19 +20,10 @@ module('Acceptance: Task Creation', {
 
 test('Creating a task requires logging in', (assert) => {
   assert.expect(2);
-  // server.create uses factories. server.schema.<obj>.create does not
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let organization = server.schema.organizations.create({slug: 'test_organization'});
-  let projectId = server.create('project', { slug: 'test_project' }).id;
 
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
   projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
@@ -54,19 +46,8 @@ test('A task can be successfully created', (assert) => {
   assert.expect(9);
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
   projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
 
@@ -87,7 +68,6 @@ test('A task can be successfully created', (assert) => {
 
     assert.equal(task.title, 'A task title');
     assert.equal(task.markdown, 'A task body');
-    console.log(task);
     assert.equal(task.taskType, 'idea');
 
     assert.equal(task.userId, user.id, 'The correct user was assigned');
@@ -103,22 +83,8 @@ test('Task preview works during creation', (assert) => {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
-
-  // server.create uses factories. server.schema.<obj>.create does not
-
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
   projectTasksPage.visitNew({ organization: organization.slug, project: project.slug });
@@ -137,19 +103,8 @@ test('Task preview works during creation', (assert) => {
 /*test('Task preview during creation renders user mentions', (assert) => {
   assert.expect(1);
 
-  let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
-
-  let organization = server.create('organization');
-  let sluggedRoute = server.create('sluggedRoute', { slug: organization.slug });
-  let project = server.create('project');
-
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   let user1 = server.create('user');
   let user2 = server.create('user');
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
@@ -170,20 +125,8 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
   projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
@@ -203,22 +146,8 @@ test('When task creation succeeeds, the user is redirected to the task page for 
 test('When task creation fails due to validation, validation errors are displayed', (assert) => {
   assert.expect(1);
   let user = server.schema.users.create({ username: 'test_user' });
-
-  // server.create uses factories. server.schema.<obj>.create does not
-
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
   projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });
@@ -268,20 +197,8 @@ test('When task creation fails due to non-validation issues, the error is displa
 
   let user = server.schema.users.create({ username: 'test_user' });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project', { slug: 'test_project' }).id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   authenticateSession(application, { user_id: user.id });
 
   projectTasksPage.visitIndex({ organization: organization.slug, project: project.slug });

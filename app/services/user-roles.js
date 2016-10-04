@@ -17,8 +17,8 @@ export default Ember.Service.extend({
   addRole(role) {
     let user = this.get('user');
     let userRole = this.get('store').createRecord('user-role', {
-      user: user,
-      role: role
+      user,
+      role
     });
     return userRole.save();
   },

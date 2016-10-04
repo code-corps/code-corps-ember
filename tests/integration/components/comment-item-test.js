@@ -61,7 +61,7 @@ test('it renders all required comment elements properly', function(assert) {
   assert.expect(4);
 
   let user = { id: 1, username: 'tester' };
-  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user: user, containsCode: true });
+  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user, containsCode: true });
 
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);

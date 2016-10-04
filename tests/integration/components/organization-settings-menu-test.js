@@ -12,7 +12,7 @@ test('when authenticated and can manage organization, it renders properly', func
   let organization = Ember.Object.create({ id: 1 });
   let membership = Ember.Object.create({
     isAdmin: true,
-    organization: organization,
+    organization,
   });
 
   let mockSession = Ember.Service.extend({ isAuthenticated: true });
@@ -35,7 +35,7 @@ test('when authenticated and cannot manage organization, it renders properly', f
   assert.expect(2);
 
   let organization = Ember.Object.create({ id: 1 });
-  let membership = Ember.Object.create({ isAdmin: false, organization: organization });
+  let membership = Ember.Object.create({ isAdmin: false, organization });
 
   let mockSession = Ember.Service.extend({ isAuthenticated: true });
   let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });

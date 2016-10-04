@@ -2,6 +2,7 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectAboutPage from '../pages/project/about';
 
 let application;
@@ -17,15 +18,11 @@ module('Acceptance: Project - About', {
 
 test('When unauthenticated, and project has no long description, it shows proper UI', (assert) => {
   assert.expect(2);
-
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
+  let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
     longDescriptionBody: null,
     longDescriptionMarkdown: null,
-    organization: organization
+    organization
   });
 
   projectAboutPage.visit({
@@ -41,15 +38,11 @@ test('When unauthenticated, and project has no long description, it shows proper
 
 test('When unauthenticated, and project has long description, it shows the project long description', (assert) => {
   assert.expect(2);
-
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
+  let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
     longDescriptionBody: 'A body',
     longDescriptionMarkdown: 'A body',
-    organization: organization
+    organization
   });
 
   projectAboutPage.visit({
@@ -67,17 +60,13 @@ test('When authenticated as admin, and project has no long description, it allow
   assert.expect(4);
 
   let user = server.create('user');
-
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  server.create('organization-membership', { organization: organization, member: user, role: 'admin' });
+  let organization = createOrganizationWithSluggedRoute();
+  server.create('organization-membership', { organization, member: user, role: 'admin' });
 
   let project = server.create('project', {
     longDescriptionBody: null,
     longDescriptionMarkdown: null,
-    organization: organization
+    organization
   });
 
   authenticateSession(application, { user_id: user.id });
@@ -104,17 +93,13 @@ test('When authenticated as admin, and project has long description, it allows e
   assert.expect(4);
 
   let user = server.create('user');
-
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  server.create('organization-membership', { organization: organization, member: user, role: 'admin' });
+  let organization = createOrganizationWithSluggedRoute();
+  server.create('organization-membership', { organization, member: user, role: 'admin' });
 
   let project = server.create('project', {
     longDescriptionBody: 'A body',
     longDescriptionMarkdown: 'A body',
-    organization: organization
+    organization
   });
 
   authenticateSession(application, { user_id: user.id });

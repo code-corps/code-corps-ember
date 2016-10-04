@@ -2,6 +2,8 @@ import Ember from "ember";
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 
 let application;
 
@@ -17,20 +19,8 @@ module('Acceptance: Task Editing', {
 test('Task editing requires logging in', (assert) => {
   assert.expect(4);
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   let user = server.schema.users.create({ username: 'test_user' });
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
   task.user = user;
@@ -58,20 +48,8 @@ test('A task body can be edited on its own', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
   task.user = user;
   task.save();
@@ -104,20 +82,8 @@ test('A task title can be edited on its own', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
   let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
   task.user = user;
   task.save();
@@ -146,19 +112,8 @@ test('A task title can be edited on its own', (assert) => {
 test('Mentions are rendered during editing in preview mode', (assert) => {
   assert.expect(1);
 
-  let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
-
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({
     title: "Test title",
@@ -197,18 +152,15 @@ test('A task can be opened or closed by the author', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    user: user,
-    project: project
+    user,
+    project
   });
 
   visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
@@ -235,20 +187,17 @@ test('A task can be opened or closed by the organization admin', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    project: project
+    project
   });
 
-  server.schema.create('organization-membership', { organization: organization, member:  user, role: 'admin' });
+  server.schema.create('organization-membership', { organization, member:  user, role: 'admin' });
 
   visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
 
@@ -274,17 +223,14 @@ test('A task cannot be opened or closed by someone else', (assert) => {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    project: project
+    project
   });
 
   visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
