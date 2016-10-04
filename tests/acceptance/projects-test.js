@@ -1,6 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
+import projectsPage from '../pages/projects';
 
 moduleForAcceptance('Acceptance | Projects');
 
@@ -16,7 +17,7 @@ test('visiting /projects', function(assert) {
   project.skills = [skill];
   project.save();
 
-  visit('/projects');
+  projectsPage.visit();
 
   andThen(function() {
     assert.equal(currentURL(), '/projects');
@@ -31,9 +32,9 @@ test('members are displayed correctly', (assert) => {
     organization
   });
 
-  visit('/projects');
+  projectsPage.visit();
   andThen(() => {
-    assert.equal(find('.icon.tiny.circle').length, 8, '8 members are rendered');
-    assert.equal(find('.project-card-members .count').text().trim(), '+2 more', 'The "+2 more" text is rendered');
+    assert.equal(projectsPage.projectCard.members().count, 8, '8 members are rendered');
+    assert.equal(projectsPage.projectCard.memberCount.text, '+2 more', 'The "+2 more" text is rendered');
   });
 });
