@@ -1,5 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from '../../helpers/relationship';
+import '../../helpers/has-attributes';
 
 moduleForModel('slugged-route', 'Unit | Model | slugged-route', {
   // Specify the other units that are required for this test.
@@ -13,12 +14,15 @@ test('it exists', function(assert) {
 });
 
 test('should have all of its attributes', function(assert) {
-  assert.expect(1);
-
   let sluggedRoute = this.subject();
-  let attributes = Object.keys(sluggedRoute.toJSON());
+  let actualAttributes = Object.keys(sluggedRoute.toJSON());
+  let expectedAttributes = [
+    "organization",
+    "slug",
+    "user",
+  ];
 
-  assert.ok(attributes.includes('slug'), 'should have the slug attribute');
+  assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 // slugged-route may belong to either a user or organization, but not both

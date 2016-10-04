@@ -1,5 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
+import '../../helpers/has-attributes';
 
 moduleForModel('comment', 'Unit | Model | comment', {
   // Specify the other units that are required for this test.
@@ -17,14 +18,17 @@ test('it exists', function(assert) {
 });
 
 test('it has all of its attributes', function(assert) {
-  assert.expect(3);
+  let comment = this.subject();
+  let actualAttributes = Object.keys(comment.toJSON());
+  let expectedAttributes = [
+    "body",
+    "insertedAt",
+    "markdown",
+    "task",
+    "user",
+  ];
 
-  const comment = this.subject();
-  const attributes = Object.keys(comment.toJSON());
-
-  assert.ok(attributes.includes('body'), 'should have body attribute');
-  assert.ok(attributes.includes('insertedAt'), 'should have insertedAt attribute');
-  assert.ok(attributes.includes('markdown'), 'should have markdown attribute');
+  assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 testForBelongsTo('comment', 'task');

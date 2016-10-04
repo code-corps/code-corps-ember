@@ -1,5 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
+import '../../helpers/has-attributes';
 
 moduleForModel('task', 'Unit | Model | task', {
   // Specify the other units that are required for this test.
@@ -19,19 +20,23 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-  assert.expect(8);
-
   let task = this.subject();
-  let attributes = Object.keys(task.toJSON());
+  let actualAttributes = Object.keys(task.toJSON());
+  let expectedAttributes = [
+    "body",
+    "commentUserMentions",
+    "insertedAt",
+    "likesCount",
+    "markdown",
+    "number",
+    "project",
+    "status",
+    "taskType",
+    "title",
+    "user",
+  ];
 
-  assert.ok(attributes.includes('body'), 'task should have the body attribute');
-  assert.ok(attributes.includes('insertedAt'), 'task should have the insertedAt attribute');
-  assert.ok(attributes.includes('likesCount'), 'task should have the likesCount attribute');
-  assert.ok(attributes.includes('markdown'), 'task should have the markdown attribute');
-  assert.ok(attributes.includes('number'), 'task should have the number attribute');
-  assert.ok(attributes.includes('status'), 'task should have the status attribute');
-  assert.ok(attributes.includes('taskType'), 'task should have the taskType attribute');
-  assert.ok(attributes.includes('title'), 'task should have the title attribute');
+  assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 testForBelongsTo('task', 'project');

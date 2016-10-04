@@ -1,5 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForHasMany } from '../../helpers/relationship';
+import '../../helpers/has-attributes';
 
 moduleForModel('user', 'Unit | Model | user', {
   // Specify the other units that are required for this test.
@@ -19,26 +20,27 @@ test('it exists', function(assert) {
 });
 
 test('it has all of its attributes', function(assert) {
-  assert.expect(15);
+  let user = this.subject();
+  let actualAttributes = Object.keys(user.toJSON());
+  let expectedAttributes = [
+    "base64PhotoData",
+    "biography",
+    "email",
+    "firstName",
+    "insertedAt",
+    "lastName",
+    "name",
+    "password",
+    "photoLargeUrl",
+    "photoThumbUrl",
+    "state",
+    "stateTransition",
+    "twitter",
+    "username",
+    "website",
+  ];
 
-  const user = this.subject();
-  const attributes = Object.keys(user.toJSON());
-
-  assert.ok(attributes.includes('base64PhotoData'), 'should have base64PhotoData attribute');
-  assert.ok(attributes.includes('biography'), 'should have biography attribute');
-  assert.ok(attributes.includes('email'), 'should have email attribute');
-  assert.ok(attributes.includes('firstName'), 'should have firstName attribute');
-  assert.ok(attributes.includes('insertedAt'), 'should have insertedAt attribute');
-  assert.ok(attributes.includes('lastName'), 'should have lastName attribute');
-  assert.ok(attributes.includes('name'), 'should have name attribute');
-  assert.ok(attributes.includes('password'), 'should have password attribute');
-  assert.ok(attributes.includes('photoLargeUrl'), 'should have photoLargeUrl attribute');
-  assert.ok(attributes.includes('photoThumbUrl'), 'should have photoThumbUrl attribute');
-  assert.ok(attributes.includes('state'), 'should have state attribute');
-  assert.ok(attributes.includes('stateTransition'), 'should have stateTransition attribute');
-  assert.ok(attributes.includes('twitter'), 'should have twitter attribute');
-  assert.ok(attributes.includes('username'), 'should have username attribute');
-  assert.ok(attributes.includes('website'), 'should have website attribute');
+  assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 testForHasMany('user', 'organizationMemberships');
