@@ -1,5 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 import Ember from 'ember';
+import '../../helpers/has-attributes';
 
 const {
   get,
@@ -14,6 +15,18 @@ test('it exists', function(assert) {
   let model = this.subject();
   // let store = this.store();
   assert.ok(!!model);
+});
+
+test('it should have all of its attributes', function(assert) {
+   let preview = this.subject();
+   let actualAttributes = Object.keys(preview.toJSON());
+   let expectedAttributes = [
+     "body",
+     "markdown",
+     "user"
+   ];
+
+   assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 test('should belong to a user', function(assert) {
