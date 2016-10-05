@@ -681,4 +681,8 @@ export default function() {
 
   // DELETE /user-skills/:id
   this.delete('/user-skills/:id');
+
+  // Create a passthrough for ember-cli-code-coverage
+  // https://github.com/kategengler/ember-cli-code-coverage
+  this.passthrough('/write-coverage');
 }
