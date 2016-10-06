@@ -1,12 +1,17 @@
 import Ember from 'ember';
 import ApplicationAdapter from './application';
 
+const {
+  get,
+  inject: { service }
+} = Ember;
+
 export default ApplicationAdapter.extend({
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
   buildURL(modelName, id, snapshot, requestType) {
     if (requestType === 'updateRecord') {
-      if (id === this.get('currentUser.user.id')) {
+      if (id === get(this, 'currentUser.user.id')) {
         return this.urlForProfileEdit();
       }
     }
@@ -15,11 +20,11 @@ export default ApplicationAdapter.extend({
 
   urlForProfileEdit() {
     var url = [];
-    var host = Ember.get(this, 'host');
+    var host = get(this, 'host');
     var prefix = this.urlPrefix();
 
     url.push(encodeURIComponent('users'));
-    url.push(encodeURIComponent(this.get('currentUser.user.id')));
+    url.push(encodeURIComponent(get(this, 'currentUser.user.id')));
 
     if (prefix) { url.unshift(prefix); }
 

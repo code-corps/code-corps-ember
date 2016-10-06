@@ -1,16 +1,21 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['organization-settings-form'],
 
-  flashMessages: Ember.inject.service(),
+  flashMessages: service(),
 
   actions: {
     save() {
-      const flashMessages = Ember.get(this, 'flashMessages');
-      this.get('organization').save()
-        .then(function() {
-          flashMessages.success("Organization updated successfully");
+      const flashMessages = get(this, 'flashMessages');
+      get(this, 'organization').save().then(() => {
+        flashMessages.success("Organization updated successfully");
       });
     },
   },

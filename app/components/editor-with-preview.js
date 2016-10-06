@@ -8,12 +8,10 @@ const {
   Component,
   computed,
   get,
-  inject,
+  inject: { service },
   isEmpty,
   set,
 } = Ember;
-
-const { service } = inject;
 
 /**
   `editor-with-preview` composes the comment/task editor with the ability to

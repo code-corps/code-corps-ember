@@ -5,12 +5,10 @@ const {
   Component,
   computed,
   get,
-  inject,
+  inject: { service },
   isEqual,
   set,
 } = Ember;
-
-const { service } = inject;
 
 /**
   `comment-item` composes a comment

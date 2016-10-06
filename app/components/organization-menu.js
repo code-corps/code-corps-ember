@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['organization-menu', 'horizontal-menu'],
 
-  credentials: Ember.inject.service(),
+  credentials: service(),
 });

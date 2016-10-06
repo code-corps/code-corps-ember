@@ -1,10 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['member-list-item'],
   tagName: 'li',
 
-  flashMessages: Ember.inject.service(),
+  flashMessages: service(),
 
   actions: {
     approve(membership) {
@@ -24,7 +30,7 @@ export default Ember.Component.extend({
   },
 
   _flashSuccess(message) {
-    const flashMessages = Ember.get(this, 'flashMessages');
+    const flashMessages = get(this, 'flashMessages');
     flashMessages.clearMessages();
     return flashMessages.add({
       message: message,

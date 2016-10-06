@@ -1,7 +1,12 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  run: { later }
+} = Ember;
+
+export default Component.extend({
   skills: [
     Ember.Object.create({
       isLoading: false,
@@ -51,7 +56,7 @@ export default Ember.Component.extend({
       let skills = this.get('skills');
       let indexesToAnimate = [2, 3, 5, 6, 8, 9];
 
-      Ember.run.later(() => {
+      later(() => {
         indexesToAnimate.forEach((index) => {
           let skill = skills[index];
           this.get('_animateItem').perform(skill);
@@ -63,7 +68,7 @@ export default Ember.Component.extend({
   _animateItem: task(function * (skill) {
     skill.set('selected', true);
     skill.set('isLoading', true);
-    Ember.run.later(() => {
+    later(() => {
       skill.set('isLoading', false);
     }, 700);
     yield timeout(1000);

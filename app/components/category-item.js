@@ -5,12 +5,9 @@ const {
   Component,
   computed,
   get,
-  inject,
+  inject: { service },
   set,
 } = Ember;
-
-const { service } = inject;
-
 
 /**
  * `category-item` composes a category's icon, and description.
