@@ -26,7 +26,7 @@ export default Ember.Component.extend({
       return {
         lower: currentPage - (pagesToShow - 1),
         upper: currentPage
-      }
+      };
     } else {
       let centerPage = this.get('centerPage');
       let range = Math.floor(pagesToShow / 2);
