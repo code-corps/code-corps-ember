@@ -1,15 +1,21 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['drag-zone'],
 
-  dragState: Ember.inject.service(),
+  dragState: service(),
 
   dragLeave() {
-    this.get('dragState').leaving();
+    get(this, 'dragState').leaving();
   },
 
   dragOver() {
-    this.get('dragState').dragging();
+    get(this, 'dragState').dragging();
   },
 });

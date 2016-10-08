@@ -3,11 +3,9 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject,
+  inject: { service },
   set,
 } = Ember;
-
-const { service } = inject;
 
 /**
   `login-form` composes the login form, and makes the required calls to

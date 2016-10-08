@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Component, computed } = Ember;
+
 /**
   `error-formatter' returns a formatted error message. Place within an 'if'
   block to return only when there really is an error.
@@ -17,7 +19,7 @@ import Ember from 'ember';
   @extends Ember.Component
  */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['error-formatter'],
 
   /**
@@ -34,7 +36,7 @@ export default Ember.Component.extend({
     @property messages
     @type String
    */
-  messages: Ember.computed('error.errors', function() {
+  messages: computed('error.errors', function() {
     return (this.get('error.errors') || []).map((e) => {
       return `${e.title}: ${e.detail}`;
     });

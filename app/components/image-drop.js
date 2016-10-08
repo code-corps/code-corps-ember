@@ -1,6 +1,15 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  String: { htmlSafe },
+  computed,
+  computed: { alias, notEmpty, or },
+  inject: { service },
+  on
+} = Ember;
+
+export default Component.extend({
   active: false,
   attributeBindings: ['style'],
   classNames: ['image-drop'],
@@ -14,14 +23,14 @@ export default Ember.Component.extend({
   helpText: "Drop your image here.",
   originalImage: null,
 
-  appDragState: Ember.inject.service('dragState'),
+  appDragState: service('dragState'),
 
-  hasDroppedImage: Ember.computed.notEmpty('droppedImage'),
-  hasImage: Ember.computed.or('hasDroppedImage', 'hasOriginalImage'),
-  hasOriginalImage: Ember.computed.notEmpty('originalImage'),
-  isDraggingOnApp: Ember.computed.alias('appDragState.isDragging'),
+  hasDroppedImage: notEmpty('droppedImage'),
+  hasImage: or('hasDroppedImage', 'hasOriginalImage'),
+  hasOriginalImage: notEmpty('originalImage'),
+  isDraggingOnApp: alias('appDragState.isDragging'),
 
-  style: Ember.computed('droppedImage', 'originalImage', function() {
+  style: computed('droppedImage', 'originalImage', function() {
     let backgroundStyle = "";
 
     if (this.get('droppedImage')) {
@@ -30,10 +39,10 @@ export default Ember.Component.extend({
       backgroundStyle = `background-image: url(${this.get('originalImage')});`;
     }
 
-    return Ember.String.htmlSafe(backgroundStyle);
+    return htmlSafe(backgroundStyle);
   }),
 
-  setup: Ember.on('willInsertElement', function() {
+  setup: on('willInsertElement', function() {
     const $input = this.$('input');
     $input.on('change', (event) => {
       this.handleFileDrop(event.target.files[0]);
