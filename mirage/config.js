@@ -1,5 +1,4 @@
 import Mirage from 'ember-cli-mirage';
-import Ember from 'ember';
 
 function generateCommentMentions(schema, comment) {
   let body = comment.body || '';
@@ -153,26 +152,11 @@ export default function() {
   ///////////
 
   // POST /previews
-  this.post('/previews', (schema, request) => {
-    let requestBody = JSON.parse(request.requestBody);
-    let attributes = requestBody.data.attributes;
-
+  this.post('/previews', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
     // the API takes takes markdown and renders body
-    let markdown = attributes.markdown;
-    let body = `<p>${markdown}</p>`;
-
-    let attrs = { markdown: markdown, body: body };
-
-    // preview user is set API-side
-    let rels = { };
-    let currentUser = schema.users.first();
-    if (currentUser) {
-      rels.userId = currentUser.id;
-    }
-
-    let preview = schema.create('preview', Ember.merge(attrs, rels));
-
-    return preview;
+    attrs.body = `<p>${attrs.markdown}</p>`;
+    return schema.create('preview', attrs);
   });
 
   /////////////////////
