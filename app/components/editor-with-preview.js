@@ -70,10 +70,10 @@ export default Component.extend({
   textareaFocused: false,
 
   /**
-    @property store
+    @property currentUser
     @type Ember.Service
    */
-  store: service(),
+  currentUser: service(),
 
   /**
     @property mentionFetcher
@@ -81,6 +81,11 @@ export default Component.extend({
    */
   mentionFetcher: service(),
 
+  /**
+    @property store
+    @type Ember.Service
+   */
+  store: service(),
 
   /**
     Returns if the editor is in editing mode.
@@ -156,7 +161,6 @@ export default Component.extend({
   },
 
   actions: {
-
     /**
       Action that sets the `textareaFocused` property to `false`.
 
@@ -209,7 +213,10 @@ export default Component.extend({
       set(this, 'preview', this.get('nothingToPreviewMessage'));
       set(this, 'fetchingPreview', false);
     } else {
-      let preview = get(this, 'store').createRecord('preview', { markdown: markdown });
+      let preview = get(this, 'store').createRecord('preview', {
+        markdown: markdown,
+        user: this.get('currentUser.user'),
+      });
       preview.save().then((preview) => {
         this.get('mentionFetcher').fetchBodyWithMentions(preview, 'preview').then((body) => {
           set(this, 'preview', body);
