@@ -1,10 +1,14 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
+import Ember from 'ember';
 
 moduleForModel('slugged-route', 'Unit | Model | slugged-route', {
   // Specify the other units that are required for this test.
-  needs: ['model:organization', 'model:user']
+  needs: [
+    'model:organization',
+    'model:user'
+  ]
 });
 
 test('it exists', function(assert) {
@@ -14,12 +18,11 @@ test('it exists', function(assert) {
 });
 
 test('should have all of its attributes', function(assert) {
-  let sluggedRoute = this.subject();
-  let actualAttributes = Object.keys(sluggedRoute.toJSON());
+  let model = this.store().modelFor('slugged-route');
+  let actualAttributes = Ember.get(model, 'attributes');
+
   let expectedAttributes = [
-    "organization",
-    "slug",
-    "user",
+    "slug"
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

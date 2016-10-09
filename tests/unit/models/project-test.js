@@ -5,9 +5,14 @@ import Ember from 'ember';
 
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
-  needs: ['model:project-category', 'model:organization',
-          'model:organization-membership', 'model:user',
-          'model:task', 'model:project-skill']
+  needs: [
+    'model:organization',
+    'model:organization-membership',
+    'model:project-category',
+    'model:project-skill',
+    'model:task',
+    'model:user'
+  ]
 });
 
 test('it exists', function(assert) {
@@ -16,8 +21,9 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-  let model = this.subject();
-  let actualAttributes = Object.keys(model.toJSON());
+  let model = this.store().modelFor('project');
+  let actualAttributes = Ember.get(model, 'attributes');
+
   let expectedAttributes = [
     "base64IconData",
     "closedTasksCount",
@@ -27,9 +33,8 @@ test('it should have all of its attributes', function(assert) {
     "longDescriptionBody",
     "longDescriptionMarkdown",
     "openTasksCount",
-    "organization",
     "slug",
-    "title",
+    "title"
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);
