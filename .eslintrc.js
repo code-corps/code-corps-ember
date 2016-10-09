@@ -21,7 +21,6 @@ module.exports = {
     'keyword-spacing': 'off',
     'no-var': 'off',
     'space-in-parens': 'off',
-    'generator-star-spacing': 'off',
     'indent': 'off',
     'space-infix-ops': 'off',
     'operator-linebreak': 'off',
@@ -33,17 +32,14 @@ module.exports = {
     'comma-spacing': 'off',
     'no-multiple-empty-lines': 'off',
     'camelcase': 'off',
-    'no-trailing-spaces': 'off',
     'key-spacing': 'off',
     'new-cap': 'off',
-    'one-var': 'off',
     'space-before-blocks': 'off',
     'ember-suave/no-const-outside-module-scope': 'off',
     'ember-suave/no-direct-property-access': 'off',
     'ember-suave/prefer-destructuring': 'off',
     'ember-suave/require-access-in-comments': 'off',
-    'ember-suave/require-const-for-ember-properties': 'off',
-    'no-unused-vars': 'off'
+    'ember-suave/require-const-for-ember-properties': 'off'
   },
   globals: {
     'server': true,

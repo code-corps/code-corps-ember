@@ -19,6 +19,6 @@ test('it should have all of its attributes', function(assert) {
      "matched",
      "title",
    ];
- 
+
    assert.hasAttributes(actualAttributes, expectedAttributes);
 });

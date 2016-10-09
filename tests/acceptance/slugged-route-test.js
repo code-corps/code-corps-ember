@@ -20,7 +20,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
   assert.expect(1);
 
   let user = createUserWithSluggedRoute();
-  
+
   sluggedRoutePage.visit({ slug: user.username });
 
   andThen(function() {
