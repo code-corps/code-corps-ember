@@ -1,5 +1,11 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  inject: { service }
+} = Ember;
+
 /**
   The task-new-form component is used for creating new tasks. It includes the
   task type, title, editor and preview
@@ -14,7 +20,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-new-form'],
   classNameBindings: ['task.taskType'],
   tagName: 'form',
@@ -23,7 +29,7 @@ export default Ember.Component.extend({
     @property credentials
     @type Ember.Service
    */
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
   /**
     Holds the placeholder messages for each task type: task, issue, idea.
@@ -44,7 +50,7 @@ export default Ember.Component.extend({
     @property placeholder
     @type String
    */
-  placeholder: Ember.computed('task.taskType', function() {
+  placeholder: computed('task.taskType', function() {
     let taskType = this.get('task.taskType');
     if (taskType) {
       return this.get(`placeholders.$(taskType)`);

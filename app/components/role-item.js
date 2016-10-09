@@ -1,16 +1,24 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { notEmpty },
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['role-item'],
   classNameBindings: ['selected'],
   isLoading: false,
 
-  flashMessages: Ember.inject.service(),
-  userRoles: Ember.inject.service(),
+  flashMessages: service(),
+  userRoles: service(),
 
-  selected: Ember.computed.notEmpty('userRole'),
+  selected: notEmpty('userRole'),
 
-  userRole: Ember.computed('role', 'userRoles.userRoles', function() {
+  userRole: computed('role', 'userRoles.userRoles', function() {
     let role = this.get('role');
     let userRoles = this.get('userRoles');
     return userRoles.findUserRole(role);
@@ -41,7 +49,7 @@ export default Ember.Component.extend({
   },
 
   _flashError(message) {
-    const flashMessages = Ember.get(this, 'flashMessages');
+    const flashMessages = get(this, 'flashMessages');
     flashMessages.clearMessages();
     return flashMessages.add({
       message: message,

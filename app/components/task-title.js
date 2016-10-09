@@ -1,11 +1,17 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed: { alias },
+  inject: { service }
+} = Ember;
+
 /**
   @class task-title
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-title'],
   classNameBindings: ['isEditing:editing'],
 
@@ -13,7 +19,7 @@ export default Ember.Component.extend({
     @property currentUser
     @type Ember.Service
    */
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
   /**
     Returns whether or not the current user can edit the current task.
@@ -21,7 +27,7 @@ export default Ember.Component.extend({
     @property canEdit
     @type Boolean
    */
-  canEdit: Ember.computed.alias('currentUserIsTaskAuthor'),
+  canEdit: alias('currentUserIsTaskAuthor'),
 
   /**
     Returns the current user's ID.
@@ -29,7 +35,7 @@ export default Ember.Component.extend({
     @property currentUserId
     @type Number
    */
-  currentUserId: Ember.computed.alias('currentUser.user.id'),
+  currentUserId: alias('currentUser.user.id'),
 
   /**
     Returns the task author's ID.
@@ -37,7 +43,7 @@ export default Ember.Component.extend({
     @property taskAuthorId
     @type Number
    */
-  taskAuthorId: Ember.computed.alias('task.user.id'),
+  taskAuthorId: alias('task.user.id'),
 
   /**
     Consumes `currentUserId` and `taskAuthorId` and returns if the current user

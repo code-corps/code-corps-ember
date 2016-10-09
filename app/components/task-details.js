@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  computed: { alias },
+  inject: { service }
+} = Ember;
+
 /**
   The task-details component composes a task object, it's author, info,
   and body.
@@ -14,14 +21,14 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-details'],
 
   /**
     @property currentUser
     @type Ember.Service
    */
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
   /**
     A service that is used for fetching mentions within a body of text.
@@ -29,7 +36,7 @@ export default Ember.Component.extend({
     @property mentionFetcher
     @type Ember.Service
    */
-  mentionFetcher: Ember.inject.service(),
+  mentionFetcher: service(),
 
   /**
     Returns whether or not the current user can edit the current task.
@@ -37,7 +44,7 @@ export default Ember.Component.extend({
     @property canEdit
     @type Boolean
    */
-  canEdit: Ember.computed.alias('currentUserIsTaskAuthor'),
+  canEdit: alias('currentUserIsTaskAuthor'),
 
   /**
     Returns the current user's ID.
@@ -45,7 +52,7 @@ export default Ember.Component.extend({
     @property currentUserId
     @type Number
    */
-  currentUserId: Ember.computed.alias('currentUser.user.id'),
+  currentUserId: alias('currentUser.user.id'),
 
   /**
     Returns the task author's ID.
@@ -53,7 +60,7 @@ export default Ember.Component.extend({
     @property taskAuthorId
     @type Number
    */
-  taskAuthorId: Ember.computed.alias('task.user.id'),
+  taskAuthorId: alias('task.user.id'),
 
   /**
     Consumes `currentUserId` and `taskAuthorId` and returns if the current user
@@ -62,7 +69,7 @@ export default Ember.Component.extend({
     @property currentUserIsTaskAuthor
     @type Boolean
    */
-  currentUserIsTaskAuthor: Ember.computed('currentUserId', 'taskAuthorId', function() {
+  currentUserIsTaskAuthor: computed('currentUserId', 'taskAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
     let authorId = parseInt(this.get('taskAuthorId'), 10);
     return userId === authorId;

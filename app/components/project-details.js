@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  inject: { service }
+} = Ember;
+
 /**
   Displays information about the project and allows a user to join the project
 
@@ -13,7 +18,7 @@ import Ember from 'ember';
   @class project-details
  */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['project-details'],
   classNameBindings: ['expanded'],
   expanded: false,
@@ -22,25 +27,25 @@ export default Ember.Component.extend({
     @property store
     @type Ember.service
    */
-  store: Ember.inject.service(),
+  store: service(),
 
   /**
     @property session
     @type Ember.service
    */
-  session: Ember.inject.service(),
+  session: service(),
 
   /**
     @property credentials
     @type Ember.service
    */
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
   /**
     @property currentUser
     @type Ember.service
    */
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
   actions: {
     /**

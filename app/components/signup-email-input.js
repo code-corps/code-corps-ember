@@ -1,6 +1,15 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, and, empty, not },
+  inject: { service },
+  observer,
+  run: { cancel, debounce, once }
+} = Ember;
+
+export default Component.extend({
   cachedEmail: '',
   canSubmit: false,
   classNames: ['input-group'],
@@ -10,21 +19,21 @@ export default Ember.Component.extend({
   isValid: false,
   timer: null,
 
-  ajax: Ember.inject.service(),
+  ajax: service(),
 
-  canCheck: Ember.computed.and('isNotEmpty', 'isNotSameEmail'),
-  canShowValidations: Ember.computed.and('hasCheckedOnce', 'isNotChecking', 'isNotEmpty'),
-  email: Ember.computed.alias('user.email'),
-  isAvailable: Ember.computed.and('isAvailableOnServer', 'isNotEmpty'),
-  isEmpty: Ember.computed.empty('email'),
-  isInvalid: Ember.computed.not('isValid'),
-  isNotEmpty: Ember.computed.not('isEmpty'),
-  isNotSameEmail: Ember.computed.not('isSameEmail'),
-  isNotChecking: Ember.computed.not('isChecking'),
-  isOkay: Ember.computed.and('isAvailable', 'isValid'),
-  isUnavailable: Ember.computed.not('isAvailable'),
+  canCheck: and('isNotEmpty', 'isNotSameEmail'),
+  canShowValidations: and('hasCheckedOnce', 'isNotChecking', 'isNotEmpty'),
+  email: alias('user.email'),
+  isAvailable: and('isAvailableOnServer', 'isNotEmpty'),
+  isEmpty: empty('email'),
+  isInvalid: not('isValid'),
+  isNotEmpty: not('isEmpty'),
+  isNotSameEmail: not('isSameEmail'),
+  isNotChecking: not('isChecking'),
+  isOkay: and('isAvailable', 'isValid'),
+  isUnavailable: not('isAvailable'),
 
-  isSameEmail: Ember.computed('cachedEmail', 'email', function() {
+  isSameEmail: computed('cachedEmail', 'email', function() {
     return this.get('cachedEmail') === this.get('email');
   }),
 
@@ -46,8 +55,8 @@ export default Ember.Component.extend({
     });
   },
 
-  emailChanged: Ember.observer('email', function() {
-    Ember.run.once(this, '_check');
+  emailChanged: observer('email', function() {
+    once(this, '_check');
   }),
 
   sendRequest(email) {
@@ -71,11 +80,11 @@ export default Ember.Component.extend({
     this.set('isChecking', true);
 
     if (this.get('canCheck')) {
-      Ember.run.cancel(this.get('timer'));
-      let debounce = Ember.run.debounce(this, function() {
+      cancel(this.get('timer'));
+      let deferredAction = debounce(this, function() {
         this.checkAvailable();
       }, 500);
-      this.set('timer', debounce);
+      this.set('timer', deferredAction);
     } else if (this.get('isSameEmail') && this.get('isNotEmpty')) {
       this.sendAction('emailValidated', this.get('canSubmit'));
       this.set('isChecking', false);

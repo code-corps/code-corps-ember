@@ -1,21 +1,27 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, and, gte },
+  inject: { service },
+  run: { later }
+} = Ember;
+
+export default Component.extend({
   classNames: ['signup-form'],
   emailValid: false,
   hasError: false,
   usernameValid: false,
 
-  session: Ember.inject.service(),
-  store: Ember.inject.service(),
+  session: service(),
+  store: service(),
 
-  canSubmit: Ember.computed.and('emailValid',
-                                'passwordValid',
-                                'usernameValid'),
-  passwordLength: Ember.computed.alias('password.length'),
-  passwordValid: Ember.computed.gte('passwordLength', 6),
+  canSubmit: and('emailValid', 'passwordValid', 'usernameValid'),
+  passwordLength: alias('password.length'),
+  passwordValid: gte('passwordLength', 6),
 
-  password: Ember.computed('user.password', function() {
+  password: computed('user.password', function() {
     return this.get('user.password') || '';
   }),
 
@@ -55,7 +61,7 @@ export default Ember.Component.extend({
   _shakeButton() {
     if(!this.get('hasError')) {
       this.set('hasError', true);
-      Ember.run.later(this, function() {
+      later(this, function() {
         this.set('hasError', false);
       }, 1000);
     }
