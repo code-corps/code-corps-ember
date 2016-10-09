@@ -6,11 +6,10 @@ export default Ember.Mixin.create({
   windowHeight: 0,
   windowWidth: 0,
 
-  canAnimate: Ember.computed('boundingClientRect', 'windowHeight', 'windowWidth', function() {
-    var rect, windowHeight, windowWidth;
+  canAnimate: Ember.computed('boundingClientRect', 'windowHeight', function() {
+    var rect, windowHeight;
     rect = this.get('boundingClientRect');
     windowHeight = this.get('windowHeight');
-    windowWidth = this.get('windowWidth');
     return (
       rect.top <= windowHeight - 150
     );

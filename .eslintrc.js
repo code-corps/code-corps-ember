@@ -42,8 +42,7 @@ module.exports = {
     'ember-suave/no-direct-property-access': 'off',
     'ember-suave/prefer-destructuring': 'off',
     'ember-suave/require-access-in-comments': 'off',
-    'ember-suave/require-const-for-ember-properties': 'off',
-    'no-unused-vars': 'off'
+    'ember-suave/require-const-for-ember-properties': 'off'
   },
   globals: {
     'server': true,
