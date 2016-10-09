@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  String: { htmlSafe },
   computed,
 } = Ember;
 
@@ -33,8 +34,8 @@ export default Component.extend({
    */
   style: computed('percentage', function() {
     const percentage = this.get('percentage') || 0;
-    const css = "width: " + percentage + "%;";
+    const css = 'width: ' + percentage + '%;';
 
-    return Ember.String.htmlSafe(css);
+    return htmlSafe(css);
   }),
 });

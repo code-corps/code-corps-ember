@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed: { mapBy }
+} = Ember;
+
+export default Component.extend({
   classNames: ['user-details'],
 
-  userOrganizations: Ember.computed.mapBy('user.organizationMemberships', 'organization')
+  userOrganizations: mapBy('user.organizationMemberships', 'organization')
 });
