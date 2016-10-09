@@ -32,7 +32,6 @@ module.exports = {
     'comma-spacing': 'off',
     'no-multiple-empty-lines': 'off',
     'camelcase': 'off',
-    'no-trailing-spaces': 'off',
     'key-spacing': 'off',
     'new-cap': 'off',
     'space-before-blocks': 'off',

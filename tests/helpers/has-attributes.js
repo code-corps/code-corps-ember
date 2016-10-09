@@ -11,7 +11,7 @@ function compareArrays(actualAttributes, expectedAttributes) {
   expectedAttributes.sort();
 
   return actualAttributes.sort().every(function(element, index) {
-    return element === expectedAttributes[index]; 
+    return element === expectedAttributes[index];
   });
 }
 
