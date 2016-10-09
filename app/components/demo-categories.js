@@ -52,7 +52,7 @@ export default Component.extend({
     }
   }),
 
-  _animateItem: task(function * (category) {
+  _animateItem: task(function* (category) {
     category.set('selected', true);
     category.set('isLoading', true);
     later(() => {

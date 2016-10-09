@@ -65,7 +65,7 @@ export default Component.extend({
     }
   }),
 
-  _animateItem: task(function * (skill) {
+  _animateItem: task(function* (skill) {
     skill.set('selected', true);
     skill.set('isLoading', true);
     later(() => {

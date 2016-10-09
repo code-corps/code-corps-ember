@@ -21,7 +21,6 @@ module.exports = {
     'keyword-spacing': 'off',
     'no-var': 'off',
     'space-in-parens': 'off',
-    'generator-star-spacing': 'off',
     'indent': 'off',
     'space-infix-ops': 'off',
     'operator-linebreak': 'off',
