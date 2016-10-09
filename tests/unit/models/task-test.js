@@ -1,15 +1,16 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
+import Ember from 'ember';
 
 moduleForModel('task', 'Unit | Model | task', {
   // Specify the other units that are required for this test.
   needs: [
-    'model:project',
-    'model:user',
     'model:comment',
     'model:comment-user-mention',
-    'model:task-user-mention'
+    'model:project',
+    'model:task-user-mention',
+    'model:user'
   ]
 });
 
@@ -20,20 +21,18 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-  let task = this.subject();
-  let actualAttributes = Object.keys(task.toJSON());
+  let model = this.store().modelFor('task');
+  let actualAttributes = Ember.get(model, 'attributes');
+
   let expectedAttributes = [
     "body",
-    "commentUserMentions",
     "insertedAt",
     "likesCount",
     "markdown",
     "number",
-    "project",
     "status",
     "taskType",
-    "title",
-    "user",
+    "title"
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

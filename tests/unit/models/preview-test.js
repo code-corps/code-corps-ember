@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
-import Ember from 'ember';
 import '../../helpers/has-attributes';
+import Ember from 'ember';
 
 const {
   get,
@@ -8,7 +8,10 @@ const {
 
 moduleForModel('preview', 'Unit | Model | preview', {
   // Specify the other units that are required for this test.
-  needs: ['model:user', 'model:preview-user-mention']
+  needs: [
+    'model:preview-user-mention',
+    'model:user'
+  ]
 });
 
 test('it exists', function(assert) {
@@ -18,15 +21,15 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-   let preview = this.subject();
-   let actualAttributes = Object.keys(preview.toJSON());
-   let expectedAttributes = [
-     "body",
-     "markdown",
-     "user"
-   ];
+  let model = this.store().modelFor('preview');
+  let actualAttributes = Ember.get(model, 'attributes');
 
-   assert.hasAttributes(actualAttributes, expectedAttributes);
+  let expectedAttributes = [
+    "body",
+    "markdown"
+  ];
+
+  assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
 test('should belong to a user', function(assert) {
