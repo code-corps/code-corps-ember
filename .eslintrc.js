@@ -36,7 +36,6 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'key-spacing': 'off',
     'new-cap': 'off',
-    'one-var': 'off',
     'space-before-blocks': 'off',
     'ember-suave/no-const-outside-module-scope': 'off',
     'ember-suave/no-direct-property-access': 'off',

@@ -51,8 +51,8 @@ test('it should have open tasks', function(assert) {
 test('it should have computed properties for its organization\'s members', function(assert) {
   assert.expect(2);
 
-  let _this = this,
-      project;
+  let _this = this;
+  let project;
 
   Ember.run(function(){
     let organization = _this.store().createRecord('organization');
