@@ -7,5 +7,5 @@ export default Model.extend({
   markdown: attr('string'),
 
   previewUserMentions: hasMany('preview-user-mention', { async: true }),
-  user: belongsTo('user', { async: true }),
+  user: belongsTo('user', { async: true })
 });

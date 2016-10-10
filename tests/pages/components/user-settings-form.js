@@ -1,7 +1,7 @@
 import {
   clickable,
   fillable,
-  findElement,
+  findElement
 } from 'ember-cli-page-object';
 
 import fillInFileInput from '../../helpers/fill-in-file-input';
@@ -22,13 +22,13 @@ export default {
     scope: '.image-drop',
 
     dropFile(content) {
-      fillInFileInput(`${this.scope} input`, { name: 'file.png', content: content });
+      fillInFileInput(`${this.scope} input`, { name: 'file.png', content });
     },
 
     backgroundImageData() {
       let $el = findElement(this);
       let backgroundImageData = $el.css('background-image');
       return removeDoubleQuotes(backgroundImageData);
-    },
-  },
+    }
+  }
 };

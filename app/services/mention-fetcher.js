@@ -1,13 +1,19 @@
 import Ember from 'ember';
 // import { parse } from 'code-corps-ember/utils/mention-parser';
 
-// NOTE: memtions are disabled until we reimplement them phoenix-side, so right now
+// NOTE: mentions are disabled until we reimplement them phoenix-side, so right now
 // this service just returns the unmodified body
 
-export default Ember.Service.extend({
-  store: Ember.inject.service(),
+const {
+  inject: { service },
+  RSVP,
+  Service
+} = Ember;
 
-  prefetchBodyWithMentions(record/*, type*/) {
+export default Service.extend({
+  store: service(),
+
+  prefetchBodyWithMentions(record/* , type*/) {
     let body = record.get('body');
 
     return body;
@@ -19,7 +25,7 @@ export default Ember.Service.extend({
     */
   },
 
-  fetchBodyWithMentions(record/*, type*/) {
+  fetchBodyWithMentions(record/* , type*/) {
     /*
     let store = this.get('store');
     let mentionType = `${type}-user-mention`;
@@ -32,6 +38,6 @@ export default Ember.Service.extend({
     });
     */
 
-    return Ember.RSVP.resolve(record.get('body'));
+    return RSVP.resolve(record.get('body'));
   }
 });

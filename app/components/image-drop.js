@@ -6,7 +6,8 @@ const {
   computed,
   computed: { alias, notEmpty, or },
   inject: { service },
-  on
+  on,
+  run
 } = Ember;
 
 export default Component.extend({
@@ -17,10 +18,10 @@ export default Component.extend({
     'active',
     'circle:is-circular',
     'isDraggingOnApp:is-dragging',
-    'hasImage',
+    'hasImage'
   ],
   droppedImage: null,
-  helpText: "Drop your image here.",
+  helpText: 'Drop your image here.',
   originalImage: null,
 
   appDragState: service('dragState'),
@@ -31,7 +32,7 @@ export default Component.extend({
   isDraggingOnApp: alias('appDragState.isDragging'),
 
   style: computed('droppedImage', 'originalImage', function() {
-    let backgroundStyle = "";
+    let backgroundStyle = '';
 
     if (this.get('droppedImage')) {
       backgroundStyle = `background-image: url(${this.get('droppedImage')});`;
@@ -43,25 +44,25 @@ export default Component.extend({
   }),
 
   setup: on('willInsertElement', function() {
-    const $input = this.$('input');
+    let $input = this.$('input');
     $input.on('change', (event) => {
       this.handleFileDrop(event.target.files[0]);
     });
   }),
 
   convertImgToBase64URL(url, callback, outputFormat) {
-    var img = new Image();
+    let img = new Image();
     img.crossOrigin = 'Anonymous';
-    img.onload = function(){
-        var canvas = document.createElement('CANVAS');
-        var ctx = canvas.getContext('2d');
-        var dataURL;
-        canvas.height = this.height;
-        canvas.width = this.width;
-        ctx.drawImage(this, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        callback(dataURL);
-        canvas = null;
+    img.onload = function() {
+      let canvas = document.createElement('CANVAS');
+      let ctx = canvas.getContext('2d');
+      let dataURL;
+      canvas.height = this.height;
+      canvas.width = this.width;
+      ctx.drawImage(this, 0, 0);
+      dataURL = canvas.toDataURL(outputFormat);
+      callback(dataURL);
+      canvas = null;
     };
     img.src = url;
   },
@@ -102,15 +103,15 @@ export default Component.extend({
     }
 
     this.set('file', file);
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = (e) => {
-      var fileToUpload = e.target.result;
-      Ember.run(() => {
+      let fileToUpload = e.target.result;
+      run(() => {
         this.set('droppedImage', fileToUpload);
         this.dragEnded();
       });
     };
 
     reader.readAsDataURL(file);
-  },
+  }
 });

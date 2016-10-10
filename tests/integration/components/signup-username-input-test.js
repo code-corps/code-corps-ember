@@ -4,6 +4,8 @@ import Ember from 'ember';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import wait from 'ember-test-helpers/wait';
 
+const { run } = Ember;
+
 moduleForComponent('signup-username-input', 'Integration | Component | signup username input', {
   integration: true,
   setup() {
@@ -24,17 +26,17 @@ test('it shows suggestions when invalid', function(assert) {
   assert.expect(5);
 
   server.get('/users/username_available', () => {
-   return { valid: false, available: true };
+    return { valid: false, available: true };
   });
 
   this.on('usernameValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
-  this.set('user', { username: 'lots--of--hypens'});
+  this.set('user', { username: 'lots--of--hypens' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);
@@ -50,17 +52,17 @@ test('it shows suggestions when unavailable', function(assert) {
   assert.expect(5);
 
   server.get('/users/username_available', () => {
-   return { valid: true, available: false };
+    return { valid: true, available: false };
   });
 
   this.on('usernameValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
-  this.set('user', { username: 'taken'});
+  this.set('user', { username: 'taken' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);
@@ -76,17 +78,17 @@ test('it shows ok when valid and available', function(assert) {
   assert.expect(4);
 
   server.get('/users/username_available', () => {
-   return { valid: true, available: true };
+    return { valid: true, available: true };
   });
 
   this.on('usernameValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, true);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
-  this.set('user', { username: 'available'});
+  this.set('user', { username: 'available' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), true);
@@ -101,18 +103,18 @@ test('it resets to invalid when deleted', function(assert) {
   assert.expect(4);
 
   server.get('/users/username_available', () => {
-   return { valid: true, available: true };
+    return { valid: true, available: true };
   });
 
   this.on('usernameValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
-  this.set('user', { username: 'available'});
+  this.set('user', { username: 'available' });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
-  this.set('user', { username: ''});
+  this.set('user', { username: '' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);

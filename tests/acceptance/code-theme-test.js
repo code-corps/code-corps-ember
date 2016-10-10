@@ -3,14 +3,16 @@ import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import indexPage from '../pages/index';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Code Theme', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 

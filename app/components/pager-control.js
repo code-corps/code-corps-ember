@@ -18,7 +18,7 @@ export default Component.extend({
   totalPages: alias('options.totalPages'),
   totalRecords: alias('options.totalRecords'),
 
-  bounds: computed('centerPage', 'pagesToShow', 'totalPages', function () {
+  bounds: computed('centerPage', 'pagesToShow', 'totalPages', function() {
     let pagesToShow = this.get('pagesToShow');
     let totalPages = this.get('totalPages');
 
@@ -44,7 +44,7 @@ export default Component.extend({
     let pagesToShow = this.get('pagesToShow');
 
     let minCenterPage = Math.ceil(pagesToShow / 2);
-    return (currentPage >= minCenterPage) ? currentPage: minCenterPage;
+    return (currentPage >= minCenterPage) ? currentPage : minCenterPage;
   }),
 
   nextPage: computed('currentPage', function() {
@@ -52,14 +52,13 @@ export default Component.extend({
   }),
 
   onLastPage: computed('currentPage', 'totalPages', 'hasOnePage', function() {
-    return this.get('currentPage') === this.get('totalPages') ||
-      this.get('hasOnePage');
+    return this.get('currentPage') === this.get('totalPages') || this.get('hasOnePage');
   }),
 
   pages: computed('bounds', function() {
     let bounds = this.get('bounds');
 
-    var pages = [];
+    let pages = [];
     for (let i = bounds.lower; i <= bounds.upper; i++) {
       pages.push(i);
     }
@@ -69,5 +68,5 @@ export default Component.extend({
 
   previousPage: computed('currentPage', function() {
     return this.get('currentPage') - 1;
-  }),
+  })
 });

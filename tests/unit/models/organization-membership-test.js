@@ -6,7 +6,7 @@ import Ember from 'ember';
 const {
   get,
   set,
-  run,
+  run
 } = Ember;
 
 moduleForModel('organization-membership', 'Unit | Model | organization membership', {
@@ -25,10 +25,10 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('organization-membership');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "role"
+    'role'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

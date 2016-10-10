@@ -2,6 +2,8 @@ import { moduleForModel, test } from 'ember-qunit';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const { get } = Ember;
+
 moduleForModel('comment-user-mention', 'Unit | Model | comment user mention', {
   // Specify the other units that are required for this test.
   needs: [
@@ -18,11 +20,11 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('comment-user-mention');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "indices",
-    "username"
+    'indices',
+    'username'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

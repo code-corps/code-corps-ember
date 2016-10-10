@@ -31,5 +31,5 @@ export default Component.extend({
     @property sortedCategories
     @type Ember.Array
    */
-  sortedCategories: sort('categories', 'sortByName'),
+  sortedCategories: sort('categories', 'sortByName')
 });

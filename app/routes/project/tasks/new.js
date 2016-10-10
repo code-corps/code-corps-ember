@@ -1,17 +1,23 @@
-import { computed } from 'ember-can';
+import EmberCan from 'ember-can';
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  credentials: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+const {
+  computed,
+  Route,
+  inject: { service }
+} = Ember;
 
-  ability: computed.ability('organization', 'currentUserMembership'),
+export default Route.extend(AuthenticatedRouteMixin, {
+  credentials: service(),
+  currentUser: service(),
 
-  canCreateTask: Ember.computed.alias('ability.canCreateTaskTask'),
-  currentUserMembership: Ember.computed.alias('credentials.currentUserMembership'),
+  ability: EmberCan.computed.ability('organization', 'currentUserMembership'),
 
-  taskType: Ember.computed('canCreateTask', function() {
+  canCreateTask: computed.alias('ability.canCreateTaskTask'),
+  currentUserMembership: computed.alias('credentials.currentUserMembership'),
+
+  taskType: computed('canCreateTask', function() {
     return this.get('canCreateTask') ? 'task' : 'issue';
   }),
 
@@ -23,7 +29,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     let newTask = this.store.createRecord('task', {
       project: model,
       user: this.get('currentUser.user'),
-      taskType: this.get('taskType'),
+      taskType: this.get('taskType')
     });
     controller.set('task', newTask);
   },
@@ -33,12 +39,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       task.save().then((task) => {
         this.transitionTo('project.tasks.task', task.get('number'));
       }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
           this.controllerFor('project.tasks.new').set('error', error);
         }
       });
-    },
-  },
+    }
+  }
 });

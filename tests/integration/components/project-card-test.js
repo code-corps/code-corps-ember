@@ -3,6 +3,11 @@ import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import Ember from 'ember';
 
+const {
+  K,
+  Service
+} = Ember;
+
 moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
   setup() {
@@ -14,7 +19,7 @@ test('it renders', function(assert) {
   let project = server.create('project');
   let organization = server.create('organization');
   let user = server.create('user');
-  let membership = server.create('organization-membership', { member: user, organization});
+  let membership = server.create('organization-membership', { member: user, organization });
   let projectCategory = server.create('project-category', { project });
 
   let mockedProject = {
@@ -26,14 +31,13 @@ test('it renders', function(assert) {
       name: organization.name,
       organizationMemberships: [membership]
     },
-    projectCategories: [projectCategory],
+    projectCategories: [projectCategory]
   };
 
-  let mockUserCategoriesService = Ember.Service.extend({
-    findUserCategory: Ember.K,
+  let mockUserCategoriesService = Service.extend({
+    findUserCategory: K
   });
   this.register('service:user-categories', mockUserCategoriesService);
-
 
   this.set('project', mockedProject);
   this.render(hbs`{{project-card project=project}}`);

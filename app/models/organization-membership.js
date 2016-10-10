@@ -1,14 +1,18 @@
+import Model from 'ember-data/model';
+import attr from 'ember-data/attr';
+import { belongsTo } from 'ember-data/relationships';
 import Ember from 'ember';
-import DS from 'ember-data';
 
-export default DS.Model.extend({
-  role: DS.attr(),
+const { computed } = Ember;
 
-  member: DS.belongsTo('user', { async: true }),
-  organization: DS.belongsTo('organization', { async: true }),
+export default Model.extend({
+  role: attr(),
 
-  isAdmin: Ember.computed.equal('role', 'admin'),
-  isContributor: Ember.computed.equal('role', 'contributor'),
-  isOwner: Ember.computed.equal('role', 'owner'),
-  isPending: Ember.computed.equal('role', 'pending'),
+  member: belongsTo('user', { async: true }),
+  organization: belongsTo('organization', { async: true }),
+
+  isAdmin: computed.equal('role', 'admin'),
+  isContributor: computed.equal('role', 'contributor'),
+  isOwner: computed.equal('role', 'owner'),
+  isPending: computed.equal('role', 'pending')
 });

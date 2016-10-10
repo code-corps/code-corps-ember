@@ -1,6 +1,6 @@
 import {
   attribute,
-  collection,
+  collection
 } from 'ember-cli-page-object';
 
 export default {
@@ -14,8 +14,8 @@ export default {
     scope: '.task-item',
     itemScope: 'a',
     item: {
-      href: attribute('href'),
-    },
+      href: attribute('href')
+    }
   }),
 
   tasks: collection({

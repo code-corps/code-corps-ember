@@ -2,6 +2,8 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const { Object } = Ember;
+
 moduleForComponent('task-status-button', 'Integration | Component | task status button', {
   integration: true
 });
@@ -13,11 +15,10 @@ test('it renders', function(assert) {
   assert.equal(this.$('.task-status-button').length, 1, 'The element renders');
 });
 
-
 test('when task is open, it renders the button to close it', function(assert) {
   assert.expect(4);
 
-  let mockTask = Ember.Object.create({
+  let mockTask = Object.create({
     status: 'open',
     set(property, value) {
       assert.equal(property, 'status', 'Status is set to closed');
@@ -38,7 +39,7 @@ test('when task is open, it renders the button to close it', function(assert) {
 test('when task is closed, it renders the button to open it', function(assert) {
   assert.expect(4);
 
-  let mockTask = Ember.Object.create({
+  let mockTask = Object.create({
     status: 'closed',
     set(property, value) {
       assert.equal(property, 'status', 'Status is set to open');

@@ -92,7 +92,6 @@ export default Component.extend({
       this.set('isEditingBody', false);
     },
 
-
     /**
       Action that sets the corresponding task to edit mode.
 
@@ -109,14 +108,14 @@ export default Component.extend({
       @method saveTaskBody
      */
     saveTaskBody() {
-      const component = this;
-      const task = this.get('task');
+      let component = this;
+      let task = this.get('task');
 
       task.save().then((task) => {
         component.set('isEditingBody', false);
         this._fetchMentions(task);
       }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
           this.controllerFor('project.tasks.task').set('error', error);
@@ -138,7 +137,6 @@ export default Component.extend({
     });
   },
 
-
   /**
     Parses the body of text and prefetches mentions.
 
@@ -147,8 +145,8 @@ export default Component.extend({
     @private
    */
   _prefetchMentions(task) {
-    const body = this.get('mentionFetcher').prefetchBodyWithMentions(task, 'task');
+    let body = this.get('mentionFetcher').prefetchBodyWithMentions(task, 'task');
 
     this.set('taskBodyWithMentions', body);
-  },
+  }
 });

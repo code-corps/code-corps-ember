@@ -2,7 +2,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let userSkillsService = Ember.Service.extend({
+const {
+  Object,
+  Service
+} = Ember;
+
+let userSkillsService = Service.extend({
   hasSkill(queriedSkill) {
     return queriedSkill === skills[1];
   },
@@ -14,18 +19,18 @@ let userSkillsService = Ember.Service.extend({
 });
 
 let skills = [
-  Ember.Object.create({
-    title: "Rails"
+  Object.create({
+    title: 'Rails'
   }),
-  Ember.Object.create({
-    title: "HTML"
+  Object.create({
+    title: 'HTML'
   }),
-  Ember.Object.create({
-    title: "Ruby"
+  Object.create({
+    title: 'Ruby'
   }),
-  Ember.Object.create({
-    title: "Ember.js"
-  }),
+  Object.create({
+    title: 'Ember.js'
+  })
 ];
 
 moduleForComponent('skill-list-items', 'Integration | Component | skill list items', {

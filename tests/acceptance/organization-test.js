@@ -5,14 +5,16 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import organizationPage from '../pages/organization';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Organization', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
@@ -22,7 +24,7 @@ test("it displays the organization's details", (assert) => {
   let organization = server.create('organization', { description: 'Test description.' });
   server.create('sluggedRoute', {
     slug: organization.slug,
-    organization,
+    organization
   });
 
   server.createList('project', 3, { organization });
@@ -49,7 +51,7 @@ test('an admin can navigate to settings', (assert) => {
   server.create('organization-membership', {
     member: user,
     organization,
-    role: 'admin',
+    role: 'admin'
   });
 
   // we assume authenticate session here. specific behavior regarding authentication and
@@ -60,7 +62,7 @@ test('an admin can navigate to settings', (assert) => {
 
   andThen(() => {
     assert.ok(organizationPage.projectsMenuItemIsActive, 'The organization projects menu is active');
-    Ember.run.next(() => {
+    run.next(() => {
       organizationPage.clickSettingsMenuItem();
       andThen(() => {
         assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');

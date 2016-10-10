@@ -43,5 +43,5 @@ export default Component.extend({
     @property session
     @type Ember.Service
    */
-  session: service(),
+  session: service()
 });

@@ -11,6 +11,6 @@ export default {
 
   members: collection({
     scope: '.project-card-members',
-    itemScope: 'li.member',
-  }),
+    itemScope: 'li.member'
+  })
 };

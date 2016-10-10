@@ -1,7 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-  credentials: Ember.inject.service(),
+const {
+  Route,
+  RSVP,
+  inject: { service }
+} = Ember;
+
+export default Route.extend({
+  credentials: service(),
 
   model(params) {
     return this.store.queryRecord('slugged-route', {
@@ -14,7 +20,7 @@ export default Ember.Route.extend({
       if (organization) {
         return this.get('credentials').setOrganization(organization);
       } else {
-        return Ember.RSVP.resolve();
+        return RSVP.resolve();
       }
     });
   }

@@ -1,23 +1,28 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-  model: function(params) {
+const {
+  Route,
+  inject: { service }
+} = Ember;
+
+export default Route.extend({
+  model(params) {
     return this.store.queryRecord('project', {
       slug: params.project_slug,
       sluggedRouteSlug: params.slugged_route_slug
     }, { reload: true });
   },
 
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
-  afterModel: function(model) {
+  afterModel(model) {
     return model.get('organization').then((organization) => {
       this.get('credentials').setOrganization(organization);
       return this._super(...arguments);
     });
   },
 
-  serialize: function(model) {
+  serialize(model) {
     if (model) {
       return {
         slugged_route_slug: model.get('organization.slug'),
@@ -26,5 +31,5 @@ export default Ember.Route.extend({
     } else {
       return this._super(...arguments);
     }
-  },
+  }
 });

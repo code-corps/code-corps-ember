@@ -10,5 +10,5 @@ export default Component.extend({
   classNameBindings: ['expanded'],
   expanded: false,
 
-  credentials: service(),
+  credentials: service()
 });

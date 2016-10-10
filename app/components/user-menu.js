@@ -27,9 +27,9 @@ export default Component.extend({
      *
      * @method hide
      */
-    hide: function() {
+    hide() {
       // Don't try to hide a destroyed menu component
-      if(this.get('isDestroyed')) {
+      if (this.get('isDestroyed')) {
         return;
       }
       this.set('hidden', true);
@@ -40,8 +40,8 @@ export default Component.extend({
      *
      * @method toggle
      */
-    toggle: function() {
+    toggle() {
       this.toggleProperty('hidden');
-    },
+    }
   }
 });

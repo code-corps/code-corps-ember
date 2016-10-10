@@ -38,9 +38,9 @@ export default Component.extend({
     @type Object
    */
   placeholders: {
-    task: "How can you describe the steps to complete the task so anyone can work on it?",
+    task: 'How can you describe the steps to complete the task so anyone can work on it?',
     issue: "What issue needs resolved? If it's a bug, how can anyone reproduce it?",
-    idea: "What's your idea? Be specific so people can give more accurate feedback.",
+    idea: "What's your idea? Be specific so people can give more accurate feedback."
   },
 
   /**
@@ -53,7 +53,7 @@ export default Component.extend({
   placeholder: computed('task.taskType', function() {
     let taskType = this.get('task.taskType');
     if (taskType) {
-      return this.get(`placeholders.$(taskType)`);
+      return this.get('placeholders.$(taskType)');
     }
   }),
 
@@ -68,6 +68,6 @@ export default Component.extend({
     submit() {
       let task = this.get('task');
       this.sendAction('saveTask', task);
-    },
-  },
+    }
+  }
 });

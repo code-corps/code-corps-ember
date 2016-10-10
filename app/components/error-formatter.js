@@ -40,5 +40,5 @@ export default Component.extend({
     return (this.get('error.errors') || []).map((e) => {
       return `${e.title}: ${e.detail}`;
     });
-  }),
+  })
 });

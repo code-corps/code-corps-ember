@@ -3,6 +3,11 @@ import { testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const {
+  get,
+  run
+} = Ember;
+
 moduleForModel('organization', 'Unit | Model | organization', {
   // Specify the other units that are required for this test.
   needs: [
@@ -20,15 +25,15 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('organization');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "base64IconData",
-    "description",
-    "iconLargeUrl",
-    "iconThumbUrl",
-    "name",
-    "slug"
+    'base64IconData',
+    'description',
+    'iconLargeUrl',
+    'iconThumbUrl',
+    'name',
+    'slug'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);
@@ -43,8 +48,8 @@ test('it should have computed properties for its organization\'s members', funct
   let store = this.store();
   let model = this.subject();
 
-  Ember.run(function(){
-    store.createRecord('organization-membership', { organization: model, role: 'pending'});
+  run(function() {
+    store.createRecord('organization-membership', { organization: model, role: 'pending' });
   });
 
   assert.equal(model.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');

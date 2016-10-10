@@ -1,19 +1,24 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+const {
+  computed,
+  Service
+} = Ember;
+
+export default Service.extend({
   isLight: true,
 
-  isDark: Ember.computed.not('isLight'),
+  isDark: computed.not('isLight'),
 
-  className: Ember.computed('isLight', 'isDark', function() {
-    if(this.get('isLight')) {
+  className: computed('isLight', 'isDark', function() {
+    if (this.get('isLight')) {
       return 'light';
-    } else if(this.get('isDark')) {
+    } else if (this.get('isDark')) {
       return 'dark';
     }
   }),
 
   toggle() {
     this.toggleProperty('isLight');
-  },
+  }
 });

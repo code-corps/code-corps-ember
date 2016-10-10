@@ -2,11 +2,13 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const { Service } = Ember;
+
 moduleForComponent('slugged-route-model-details', 'Integration | Component | slugged route model details', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Ember.Service);
-  },
+    this.register('service:credentials', Service);
+  }
 });
 
 test('it renders', function(assert) {
@@ -24,7 +26,6 @@ test('when the slugged route is an organization, it renders the organization com
 
   assert.equal(this.$('.organization-profile').length, 1);
 });
-
 
 test('when the slugged route is a user, it renders the user component', function(assert) {
   assert.expect(1);

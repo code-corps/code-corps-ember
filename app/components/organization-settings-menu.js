@@ -9,5 +9,5 @@ export default Component.extend({
   classNames: ['organization-settings-menu', 'settings-menu'],
 
   credentials: service(),
-  session: service(),
+  session: service()
 });

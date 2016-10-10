@@ -4,7 +4,7 @@ import { alias } from 'ember-computed';
 const {
   Component,
   get,
-  inject: { service },
+  inject: { service }
 } = Ember;
 
 /**
@@ -40,5 +40,5 @@ export default Component.extend({
    */
   click() {
     get(this, 'codeTheme').toggle();
-  },
+  }
 });

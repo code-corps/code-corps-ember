@@ -1,12 +1,14 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   classNames: ['select-dropdown'],
   classNameBindings: ['selectedItem'],
 
   actions: {
     selectItem(item) {
       this.set('selectedItem', item);
-    },
-  },
+    }
+  }
 });

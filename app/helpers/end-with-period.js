@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Helper } = Ember;
+
 export function endWithPeriod([string]) {
   let lastCharacter = string.slice(-1);
   if (lastCharacter !== '.') {
@@ -8,4 +10,4 @@ export function endWithPeriod([string]) {
   return string;
 }
 
-export default Ember.Helper.helper(endWithPeriod);
+export default Helper.helper(endWithPeriod);

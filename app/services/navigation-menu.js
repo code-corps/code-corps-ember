@@ -1,19 +1,23 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  computed,
+  inject: { service },
+  Service
+} = Ember;
 
-export default Ember.Service.extend({
+export default Service.extend({
   onboarding: service(),
 
-  isDefault: Ember.computed.equal('menuType', 'default'),
-  isOnboarding: Ember.computed.equal('menuType', 'onboarding'),
+  isDefault: computed.equal('menuType', 'default'),
+  isOnboarding: computed.equal('menuType', 'onboarding'),
 
-  menuType: Ember.computed('onboarding.isOnboarding', function() {
+  menuType: computed('onboarding.isOnboarding', function() {
     let isOnboarding = this.get('onboarding.isOnboarding');
     if (isOnboarding) {
       return 'onboarding';
     } else {
       return 'default';
     }
-  }),
+  })
 });

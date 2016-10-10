@@ -1,13 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+const {
+  computed,
+  inject: { service },
+  isEmpty,
+  Service
+} = Ember;
 
-  isEmpty: Ember.computed.empty('userSkills'),
-  user: Ember.computed.alias('currentUser.user'),
+export default Service.extend({
+  currentUser: service(),
+  store: service(),
 
-  userSkills: Ember.computed('user.userSkills',
+  isEmpty: computed.empty('userSkills'),
+  user: computed.alias('currentUser.user'),
+
+  userSkills: computed('user.userSkills',
     'user.userSkills.@each.skill',
     'user.userSkills.@each.user',
   function() {
@@ -31,11 +38,11 @@ export default Ember.Service.extend({
         let skillId = skill.get('id');
         return (itemSkillId === skillId);
       }.bind(this));
-      return !Ember.isEmpty(matchedSkill);
+      return !isEmpty(matchedSkill);
     }
   },
 
-  findUserSkill: function(skill) {
+  findUserSkill(skill) {
     let userSkills = this.get('userSkills');
     if (userSkills) {
       let userSkill = userSkills.find((item) => {
@@ -52,5 +59,5 @@ export default Ember.Service.extend({
   removeSkill(skill) {
     let userSkill = this.findUserSkill(skill);
     return userSkill.destroyRecord();
-  },
+  }
 });

@@ -2,29 +2,31 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const { Object } = Ember;
+
 moduleForComponent('task-filter-dropdown', 'Integration | Component | task filter dropdown', {
   integration: true
 });
 
 let types = [
-  Ember.Object.create({
-    name: "Tasks",
-    param: "task",
-    slug: "tasks",
-    selected: true,
+  Object.create({
+    name: 'Tasks',
+    param: 'task',
+    slug: 'tasks',
+    selected: true
   }),
-  Ember.Object.create({
-    name: "Issues",
-    param: "issue",
-    slug: "issues",
-    selected: false,
+  Object.create({
+    name: 'Issues',
+    param: 'issue',
+    slug: 'issues',
+    selected: false
   }),
-  Ember.Object.create({
-    name: "Ideas",
-    param: "idea",
-    slug: "ideas",
-    selected: false,
-  }),
+  Object.create({
+    name: 'Ideas',
+    param: 'idea',
+    slug: 'ideas',
+    selected: false
+  })
 ];
 
 test('it renders', function(assert) {
@@ -36,7 +38,7 @@ test('it renders all required elements', function(assert) {
   this.set('selectedTypes', types);
   this.render(hbs`{{task-filter-dropdown field='type' selectedFilters=selectedTypes}}`);
 
-  let firstType = types[0];
+  let [firstType] = types;
 
   assert.equal(this.$('.dropdown-header p').text(), 'Filter by type ×', 'Header text renders');
   assert.equal(this.$('.dropdown-header a.close').length, 1, 'Close link renders');
@@ -52,7 +54,7 @@ test('it sends filterByType action with the right type when clicking a link', fu
   this.render(hbs`{{task-filter-dropdown selectedFilters=selectedTypes filterBy="filterByType"}}`);
   this.set('selectedTypes', types);
 
-  let firstType = types[0];
+  let [firstType] = types;
 
   this.on('filterByType', function(type) {
     assert.equal(type, firstType);

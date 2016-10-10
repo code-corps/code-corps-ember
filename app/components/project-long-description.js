@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   computed: { or },
-  inject: { service }
+  inject: { service },
+  isPresent
 } = Ember;
 
 /**
@@ -103,7 +104,7 @@ export default Component.extend({
   },
 
   _inferrIfAddingDescription() {
-    if (Ember.isPresent(this.get('project.longDescriptionBody'))) {
+    if (isPresent(this.get('project.longDescriptionBody'))) {
       this.set('descriptionIsBlank', false);
     } else {
       this.set('descriptionIsBlank', true);

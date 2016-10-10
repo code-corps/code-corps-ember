@@ -7,11 +7,11 @@ export default {
 
   joinProjectButton: {
     scope: '.join-project button',
-    href: attribute('href'),
+    href: attribute('href')
   },
 
   signUpLink: {
     scope: '.join-project a',
-    href: attribute('href'),
+    href: attribute('href')
   }
 };

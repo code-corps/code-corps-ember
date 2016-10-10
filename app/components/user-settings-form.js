@@ -13,11 +13,11 @@ export default Component.extend({
 
   actions: {
     save() {
-      const flashMessages = get(this, 'flashMessages');
+      let flashMessages = get(this, 'flashMessages');
 
       this.get('user').save().then(function() {
-        flashMessages.success("Profile updated successfully");
+        flashMessages.success('Profile updated successfully');
       });
-    },
+    }
   }
 });

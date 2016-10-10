@@ -2,7 +2,7 @@ import {
   clickable,
   fillable,
   hasClass,
-  text,
+  text
 } from 'ember-cli-page-object';
 
 export default {
@@ -14,7 +14,7 @@ export default {
   textarea: fillable('textarea'),
 
   editButton: {
-    scope: 'button[name=edit]',
+    scope: 'button[name=edit]'
   },
 
   longDescription: {
@@ -25,7 +25,7 @@ export default {
 
     paragraph: {
       scope: 'p',
-      text: text(),
+      text: text()
     }
-  },
+  }
 };

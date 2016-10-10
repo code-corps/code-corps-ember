@@ -1,10 +1,15 @@
 import Ember from 'ember';
 
+const {
+  isEmpty,
+  Helper
+} = Ember;
+
 export function capitalize([string]) {
-  if (Ember.isEmpty(string)) {
+  if (isEmpty(string)) {
     return;
   }
   return string.capitalize();
 }
 
-export default Ember.Helper.helper(capitalize);
+export default Helper.helper(capitalize);

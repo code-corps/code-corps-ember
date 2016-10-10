@@ -3,6 +3,8 @@ import { testForBelongsTo } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const { get } = Ember;
+
 moduleForModel('slugged-route', 'Unit | Model | slugged-route', {
   // Specify the other units that are required for this test.
   needs: [
@@ -19,10 +21,10 @@ test('it exists', function(assert) {
 
 test('should have all of its attributes', function(assert) {
   let model = this.store().modelFor('slugged-route');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "slug"
+    'slug'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

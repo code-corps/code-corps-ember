@@ -19,18 +19,22 @@ export default ApplicationAdapter.extend({
   },
 
   urlForProfileEdit() {
-    var url = [];
-    var host = get(this, 'host');
-    var prefix = this.urlPrefix();
+    let url = [];
+    let host = get(this, 'host');
+    let prefix = this.urlPrefix();
 
     url.push(encodeURIComponent('users'));
     url.push(encodeURIComponent(get(this, 'currentUser.user.id')));
 
-    if (prefix) { url.unshift(prefix); }
+    if (prefix) {
+      url.unshift(prefix);
+    }
 
     url = url.join('/');
-    if (!host && url) { url = '/' + url; }
+    if (!host && url) {
+      url = `/${url}`;
+    }
 
     return url;
-  },
+  }
 });

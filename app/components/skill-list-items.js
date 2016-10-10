@@ -25,7 +25,9 @@ export default Component.extend({
     let userSkillsService = get(this, 'userSkillsService');
     if (userSkillsService) {
       let hasSkill = userSkillsService.hasSkill(skill);
-      if (hasSkill) { return skill; }
+      if (hasSkill) {
+        return skill;
+      }
     }
   }),
 
@@ -36,6 +38,6 @@ export default Component.extend({
   actions: {
     skillItemHidden() {
       this.sendAction('skillItemHidden');
-    },
+    }
   }
 });

@@ -1,3 +1,3 @@
 export default {
-  scope: '.organization-profile',
+  scope: '.organization-profile'
 };

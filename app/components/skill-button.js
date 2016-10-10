@@ -33,6 +33,6 @@ export default Component.extend({
     removeSkill(skill) {
       let userSkills = this.get('userSkills');
       userSkills.removeSkill(skill);
-    },
-  },
+    }
+  }
 });

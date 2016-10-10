@@ -3,7 +3,7 @@ import {
   clickable,
   collection,
   create,
-  visitable,
+  visitable
 } from 'ember-cli-page-object';
 import userDetails from './components/user-details';
 
@@ -15,9 +15,9 @@ export default create({
     itemScope: 'h3 a',
     item: {
       click: clickable(),
-      href: attribute('href'),
-    },
+      href: attribute('href')
+    }
   }),
 
-  userDetails,
+  userDetails
 });

@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['project-item'],
+const { Component } = Ember;
+
+export default Component.extend({
+  classNames: ['project-item']
 });

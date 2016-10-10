@@ -4,5 +4,5 @@ export default Model.extend({
   organizationMemberships: hasMany({ inverse: 'member' }),
   userCategories: hasMany(),
   userRoles: hasMany(),
-  UserSkills: hasMany(),
+  UserSkills: hasMany()
 });

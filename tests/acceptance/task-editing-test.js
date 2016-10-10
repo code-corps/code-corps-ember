@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
@@ -6,14 +6,16 @@ import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/m
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import taskPage from '../pages/project/tasks/task';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Task Editing', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
@@ -21,9 +23,9 @@ test('Task editing requires logging in', (assert) => {
   assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
@@ -58,8 +60,8 @@ test('A task body can be edited on its own', (assert) => {
   authenticateSession(application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
@@ -96,8 +98,8 @@ test('A task title can be edited on its own', (assert) => {
   authenticateSession(application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 

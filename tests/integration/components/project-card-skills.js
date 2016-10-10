@@ -2,13 +2,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let userSkillsService = Ember.Service.extend({
+const { Service } = Ember;
+
+let userSkillsService = Service.extend({
   hasSkill(skill) {
     return skill;
   },
   findUserSkill(skill) {
     return skill;
-  },
+  }
 });
 
 moduleForComponent('project-card-ksills', 'Integration | Component | project card skills', {
@@ -35,7 +37,7 @@ test('it shows expander and toggles for lots of skills', function(assert) {
   assert.expect(11);
 
   let skills = [];
-  for(var i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 100; i++) {
     skills.pushObject({
       title: `Skill ${i}`
     });

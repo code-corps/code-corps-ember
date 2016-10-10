@@ -2,6 +2,10 @@ import { moduleForModel, test } from 'ember-qunit';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const {
+  get
+} = Ember;
+
 moduleForModel('task-user-mention', 'Unit | Model | task user mention', {
   // Specify the other units that are required for this test.
   needs: [
@@ -18,11 +22,11 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('task-user-mention');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "indices",
-    "username"
+    'indices',
+    'username'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);
