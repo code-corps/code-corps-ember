@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias, and, gte },
+  computed: { alias, and, gte, or },
   inject: { service },
   run: { later }
 } = Ember;
@@ -18,6 +18,7 @@ export default Component.extend({
   store: service(),
 
   canSubmit: and('emailValid', 'passwordValid', 'usernameValid'),
+  hasSaved: or('user.isLoading', 'user.isReloading', 'user.isSaving'),
   passwordLength: alias('password.length'),
   passwordValid: gte('passwordLength', 6),
 
