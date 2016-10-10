@@ -74,7 +74,16 @@ export default function() {
   */
 
   // GET /categories
-  this.get('/categories');
+  this.get('/categories', { coalesce: true });
+
+  // POST /categories
+  this.post('/categories');
+
+  // GET /categories/:id
+  this.get('/categories/:id');
+
+  // PATCH /categories
+  this.patch('/categories/:id');
 
   /**
   * Comment user mentions
@@ -103,6 +112,9 @@ export default function() {
   });
 
   // GET /comments/:id
+  this.get('/comments/:id');
+
+  // PATCH /comments/:id
   this.patch('/comments/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
     let comment = schema.comments.find(attrs.id);
@@ -130,9 +142,6 @@ export default function() {
   // POST /organization-memberships
   this.post('/organization-memberships');
 
-  // DELETE /organization-memberships/:id
-  this.delete('/organization-memberships/:id');
-
   // GET /organization-memberships/:id
   this.get('/organization-memberships/:id');
 
@@ -143,9 +152,20 @@ export default function() {
   * Organizations
   */
 
+  // DELETE /organization-memberships/:id
+  this.delete('/organization-memberships/:id');
+
+  // GET /organizations
   this.get('/organizations', { coalesce: true });
 
+  // POST /organizations
+  this.post('/organizations');
+
+  // GET /organizations/:id
   this.get('/organizations/:id');
+
+  // PATCH /organizations/:id
+  this.patch('/organizations/:id');
 
   /**
   * Previews
@@ -178,27 +198,42 @@ export default function() {
   */
 
   // GET /project-categories
-  this.get('/project-categories');
+  this.get('/project-categories', { coalesce: true });
 
-  // GET /project-categories
+  // POST /project-categories
+  this.post('/project-categories');
+
+  // GET /project-categories/:id
   this.get('/project-categories/:id');
+
+  // DELETE /project-categories/:id
+  this.delete('/project-categories/:id');
 
   /**
   * Project skills
   */
 
   // GET /project-skills
-  this.get('/project-skills');
+  this.get('/project-skills', { coalesce: true });
 
-  // GET /project-skills
+  // POST /project-skills
+  this.post('/project-skills');
+
+  // GET /project-skills/:id
   this.get('/project-skills/:id');
+
+  // DELETE /project-skills/:id
+  this.delete('/project-skills/:id');
 
   /**
   * Projects
   */
 
   // GET /projects
-  this.get('/projects');
+  this.get('/projects', { coalesce: true });
+
+  // POST /projects
+  this.post('/projects');
 
   // GET /projects/:id
   this.get('/projects/:id');
@@ -276,7 +311,29 @@ export default function() {
   */
 
   // GET /roles
-  this.get('/roles');
+  this.get('/roles', { coalesce: true });
+
+  // POST /roles
+  this.post('/roles');
+
+  // GET /roles/:id
+  this.get('/roles/:id');
+
+  /**
+  * Role Skills
+  */
+
+  // GET /role-skills
+  this.get('/role-skills', { coalesce: true });
+
+  // POST /role-skills
+  this.post('/role-skills');
+
+  // GET /role-skills/:id
+  this.get('/role-skills/:id');
+
+  // DELETE /role-skills/:id
+  this.delete('/role-skills/:id');
 
   /**
   * Slugs and slugged routes
@@ -313,7 +370,10 @@ export default function() {
   */
 
   // GET /skills
-  this.get('/skills');
+  this.get('/skills', { coalesce: true });
+
+  // POST /skills
+  this.post('/skills');
 
   // GET /skills/:id
   this.get('/skills/:id');
@@ -336,6 +396,9 @@ export default function() {
   * Tasks
   */
 
+  // GET /tasks
+  this.get('/tasks', { coalesce: true });
+
   // POST /tasks
   this.post('/tasks', function(schema) {
     let attrs = this.normalizedRequestAttrs();
@@ -349,6 +412,9 @@ export default function() {
 
     return schema.create('task', attrs);
   });
+
+  // GET /tasks/:id
+  this.get('/tasks/:id');
 
   // PATCH /tasks/:id
   this.patch('/tasks/:id', function(schema) {
@@ -455,7 +521,7 @@ export default function() {
   */
 
   // GET /user-categories
-  this.get('/user-categories');
+  this.get('/user-categories', { coalesce: true });
 
   // POST /user-categories
   this.post('/user-categories');
@@ -470,10 +536,16 @@ export default function() {
   * User roles
   */
 
+  // GET /user-roles
+  this.get('/user-roles', { coalesce: true });
+
   // POST /user-roles
   this.post('/user-roles');
 
-  // DELETE /user-roles
+  // GET /user-roles
+  this.get('/user-roles/:id');
+
+  // DELETE /user-roles/:id
   this.delete('/user-roles/:id');
 
   /**
@@ -481,10 +553,13 @@ export default function() {
   */
 
   // GET /user-skills
-  this.get('/user-skills');
+  this.get('/user-skills', { coalesce: true });
 
   // POST /user-skills
   this.post('/user-skills');
+
+  // GET /user-skills
+  this.get('/user-skills/:id');
 
   // DELETE /user-skills/:id
   this.delete('/user-skills/:id');
