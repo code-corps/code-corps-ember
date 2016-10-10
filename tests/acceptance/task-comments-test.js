@@ -163,13 +163,13 @@ test('When comment creation fails due to validation, validation errors are displ
         errors: [
           {
             id: "VALIDATION_ERROR",
-            source: { pointer:"data/attributes/markdown" },
-            detail:"is invalid",
+            source: { pointer: "data/attributes/markdown" },
+            detail: "is invalid",
             status: 422
           },
           {
-            id:"VALIDATION_ERROR",
-            source: { pointer:"data/attributes/markdown" },
+            id: "VALIDATION_ERROR",
+            source: { pointer: "data/attributes/markdown" },
             detail: "can't be blank",
             status: 422
           }
@@ -211,7 +211,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
           {
             id: "UNKNOWN ERROR",
             title: "An unknown error",
-            detail:"Something happened",
+            detail: "Something happened",
             status: 400
           }
         ]

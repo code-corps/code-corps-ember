@@ -5,13 +5,13 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope:    '.login-form',
+  scope: '.login-form',
 
   username: fillable('#identification'),
   password: fillable('#password'),
-  submit:   clickable('#login'),
+  submit: clickable('#login'),
 
-  errors:   collection({
+  errors: collection({
     itemScope: 'p.error',
   }),
 

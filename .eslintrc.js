@@ -32,7 +32,6 @@ module.exports = {
     'comma-spacing': 'off',
     'no-multiple-empty-lines': 'off',
     'camelcase': 'off',
-    'key-spacing': 'off',
     'new-cap': 'off',
     'space-before-blocks': 'off',
     'ember-suave/no-const-outside-module-scope': 'off',
