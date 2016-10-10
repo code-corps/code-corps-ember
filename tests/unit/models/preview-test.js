@@ -3,6 +3,8 @@ import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const { get } = Ember;
+
 moduleForModel('preview', 'Unit | Model | preview', {
   // Specify the other units that are required for this test.
   needs: [
@@ -19,11 +21,11 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('preview');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "body",
-    "markdown"
+    'body',
+    'markdown'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

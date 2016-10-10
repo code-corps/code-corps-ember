@@ -2,6 +2,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const {
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
 let user = {
   name: 'Josh Smith',
   username: 'joshsmith',
@@ -28,19 +34,19 @@ let user = {
       skill: {
         title: 'Ruby'
       }
-    },
+    }
   ]
 };
 
 function mockMembership(pending) {
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: pending,
     destroyRecord() {
-      return Ember.RSVP.resolve();
+      return RSVP.resolve();
     },
     save() {
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
   return membership;
 }
@@ -101,18 +107,18 @@ test('it does not render the buttons when not pending', function(assert) {
 test('it sends the approve action when clicking approve', function(assert) {
   assert.expect(7);
 
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: true,
     save() {
       assert.ok(true);
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
 
   this.set('membership', membership);
   this.set('user', user);
 
-  let mockFlashMessages = Ember.Service.extend({
+  let mockFlashMessages = Service.extend({
     clearMessages() {
       assert.ok(true);
     },
@@ -134,17 +140,19 @@ test('it sends the approve action when clicking approve', function(assert) {
 test('it sends the deny action when clicking deny', function(assert) {
   assert.expect(7);
 
-  window.confirm = function() { return true; };
+  window.confirm = function() {
+    return true;
+  };
 
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: true,
     destroyRecord() {
       assert.ok(true);
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
 
-  let mockFlashMessages = Ember.Service.extend({
+  let mockFlashMessages = Service.extend({
     clearMessages() {
       assert.ok(true);
     },

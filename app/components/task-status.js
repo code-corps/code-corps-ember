@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { alias },
+  computed: { alias }
 } = Ember;
 
 /**
@@ -21,5 +21,5 @@ const {
 export default Component.extend({
   classNames: ['task-status-badge'],
 
-  status: alias('task.status'),
+  status: alias('task.status')
 });

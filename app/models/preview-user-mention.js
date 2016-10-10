@@ -7,5 +7,5 @@ export default Model.extend({
   username: attr('string'),
 
   preview: belongsTo('preview', { async: true }),
-  user: belongsTo('user', { async: true }),
+  user: belongsTo('user', { async: true })
 });

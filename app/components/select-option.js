@@ -6,7 +6,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  attributeBindings: ['value','selected'],
+  attributeBindings: ['value', 'selected'],
   tagName: 'option',
 
   label: computed('optionLabelPath', 'item', function() {
@@ -21,5 +21,5 @@ export default Component.extend({
   value: computed('optionValuePath', 'item', function() {
     let value = this.get('optionValuePath');
     return value && this.get(`item.${value}`);
-  }),
+  })
 });

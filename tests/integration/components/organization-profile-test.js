@@ -2,42 +2,43 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const { Service } = Ember;
+
 moduleForComponent('organization-profile', 'Integration | Component | organization profile', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Ember.Service);
+    this.register('service:credentials', Service);
   }
 });
 
 let members = [
-  { id: 1, },
-  { id: 2, },
-  { id: 3, }
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
 ];
 
 let memberships = members.map((member) => {
-  return { id: member.id, member: member };
+  return { id: member.id, member };
 });
 
 let projects = [
-  { id: 1, },
-  { id: 2, },
-  { id: 3, }
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
 ];
 
 let organization = {
-  name: "Test Organization",
-  description: "Test organization description",
+  name: 'Test Organization',
+  description: 'Test organization description',
   slug: 'test_organization',
   organizationMemberships: memberships,
-  projects: projects,
+  projects
 };
 
 test('it renders all its elements', function(assert) {
   assert.expect(9);
 
   this.set('organization', organization);
-
 
   this.render(hbs`{{organization-profile organization=organization}}`);
 

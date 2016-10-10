@@ -21,7 +21,7 @@ export default Component.extend(CanAnimateMixin, {
   }),
 
   style: computed('minHeight', function() {
-    let css = 'min-height: ' + this.get('minHeight') + 'px;';
+    let css = `min-height: ${this.get('minHeight')  }px;`;
     return htmlSafe(css);
-  }),
+  })
 });

@@ -17,5 +17,5 @@ export default Component.extend({
 
   dragOver() {
     get(this, 'dragState').dragging();
-  },
+  }
 });

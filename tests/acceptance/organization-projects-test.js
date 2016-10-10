@@ -1,17 +1,19 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import organizationProjects from '../pages/organization-projects';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Organization projects', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 

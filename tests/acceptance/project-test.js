@@ -1,18 +1,20 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Project', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
@@ -20,7 +22,7 @@ test('It renders navigation properly', (assert) => {
   assert.expect(2);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
   let aboutURL = `/${organization.slug}/${project.slug}`;
   let tasksURL = `${aboutURL}/tasks`;
@@ -35,7 +37,7 @@ test('Navigation works', (assert) => {
   assert.expect(6);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(function() {
@@ -59,7 +61,7 @@ test('It renders all the required ui elements for task list', (assert) => {
 
   let project = createProjectWithSluggedRoute();
   server.createList('task', 5, { project });
-  let organization = project.organization;
+  let { organization } = project;
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
   let tasksURL = `/${organization.slug}/${project.slug}/tasks`;
 
@@ -78,7 +80,7 @@ test('Task filtering by type works', (assert) => {
   assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
   // we use server.createList so factories are used in creation
   server.createList('task', 1, { taskType: 'idea', project });
@@ -309,7 +311,6 @@ test('A user can join the organization of the project', (assert) => {
     visit(projectURL);
   });
 
-
   andThen(() => {
     let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
     assert.equal(joinButton.text, 'Join project', 'The button to join is present when logged in');
@@ -319,8 +320,7 @@ test('A user can join the organization of the project', (assert) => {
   let done = assert.async();
 
   server.post('/organization-memberships', (db, request) => {
-    let attributes = JSON.parse(request.requestBody).data.attributes;
-    let relationships = JSON.parse(request.requestBody).data.relationships;
+    let { attributes, relationships } = JSON.parse(request.requestBody).data;
     assert.equal(attributes.role, 'pending');
     assert.equal(relationships.member.data.id, user.id);
     assert.equal(relationships.organization.data.id, project.organization.id);
@@ -329,9 +329,9 @@ test('A user can join the organization of the project', (assert) => {
     return {
       data: {
         id: 1,
-        type: "organization-membership",
-        attributes: attributes,
-        relationships: relationships
+        type: 'organization-membership',
+        attributes,
+        relationships
       }
     };
   });

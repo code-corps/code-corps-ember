@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['user-sidebar'],
+const { Component } = Ember;
+
+export default Component.extend({
+  classNames: ['user-sidebar']
 });

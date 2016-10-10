@@ -13,7 +13,6 @@ test('it renders', function(assert) {
   assert.equal(this.$('.project-list').length, 1, 'The component\'s element is rendered');
 });
 
-
 test('it renders an item for each project in the list', function(assert) {
   assert.expect(1);
 

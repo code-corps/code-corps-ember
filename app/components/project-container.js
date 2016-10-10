@@ -6,5 +6,5 @@ const {
 } = Ember;
 
 export default Component.extend({
-  store: service(),
+  store: service()
 });

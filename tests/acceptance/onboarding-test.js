@@ -1,24 +1,26 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import onboardingPage from '../pages/onboarding';
 import indexPage from '../pages/index';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Onboarding', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
 test('A user can onboard as expected', (assert) => {
-    let user = server.create('user', { username: 'test_user', state: 'signed_up' });
-    server.create('category');
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+  server.create('category');
   server.create('role', {
     name: 'Backend Developer',
     ability: 'Backend Development',

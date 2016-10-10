@@ -2,29 +2,31 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const { Object } = Ember;
+
 moduleForComponent('task-filter-type', 'Integration | Component | task filter type', {
   integration: true
 });
 
 let types = [
-  Ember.Object.create({
-    name: "Tasks",
-    param: "task",
-    slug: "tasks",
-    selected: true,
+  Object.create({
+    name: 'Tasks',
+    param: 'task',
+    slug: 'tasks',
+    selected: true
   }),
-  Ember.Object.create({
-    name: "Issues",
-    param: "issue",
-    slug: "issues",
-    selected: false,
+  Object.create({
+    name: 'Issues',
+    param: 'issue',
+    slug: 'issues',
+    selected: false
   }),
-  Ember.Object.create({
-    name: "Ideas",
-    param: "idea",
-    slug: "ideas",
-    selected: false,
-  }),
+  Object.create({
+    name: 'Ideas',
+    param: 'idea',
+    slug: 'ideas',
+    selected: false
+  })
 ];
 
 test('it renders', function(assert) {
@@ -46,7 +48,7 @@ test('it sends filterByType action with the right type when clicking a link', fu
   this.render(hbs`{{task-filter-type selectedTypes=selectedTypes filterByType="filterByType"}}`);
   this.set('selectedTypes', types);
 
-  let firstType = types[0];
+  let [firstType] = types;
 
   this.on('filterByType', function(type) {
     assert.equal(type, firstType);

@@ -31,7 +31,7 @@ function mockUser() {
     website: 'https://codecorps.org',
     // TODO: remove this because it's a computed property and
     // Mirage doesn't do a great job with that
-    twitterUrl: 'https://twitter.com/joshsmith',
+    twitterUrl: 'https://twitter.com/joshsmith'
   };
   server.schema.users.create(user);
   return user;
@@ -46,12 +46,12 @@ test('it renders all required elements', function(assert) {
   this.render(hbs`{{user-sidebar user=user}}`);
 
   assert.equal(this.$('.user-sidebar').length, 1, 'Component\'s element is rendered');
-  assert.equal(this.$('h2 .name').text(), "Josh Smith", 'Their name renders');
-  assert.equal(this.$('h2 .username').text(), "JoshSmith", 'Their username renders');
-  assert.equal(this.$('li.twitter').text().trim(), "@joshsmith", 'Their twitter handler renders');
-  assert.equal(this.$('li.twitter a').attr('href'), "https://twitter.com/joshsmith", 'The twitter link renders');
-  assert.equal(this.$('li.website').text().trim(), "https://codecorps.org", 'Their website renders');
-  assert.equal(this.$('li.website a').attr('href'), "https://codecorps.org", 'The website link renders');
+  assert.equal(this.$('h2 .name').text(), 'Josh Smith', 'Their name renders');
+  assert.equal(this.$('h2 .username').text(), 'JoshSmith', 'Their username renders');
+  assert.equal(this.$('li.twitter').text().trim(), '@joshsmith', 'Their twitter handler renders');
+  assert.equal(this.$('li.twitter a').attr('href'), 'https://twitter.com/joshsmith', 'The twitter link renders');
+  assert.equal(this.$('li.website').text().trim(), 'https://codecorps.org', 'Their website renders');
+  assert.equal(this.$('li.website a').attr('href'), 'https://codecorps.org', 'The website link renders');
 });
 
 test('it does not show some details if blank', function(assert) {
@@ -76,5 +76,5 @@ test('it sets the name to username if name is blank', function(assert) {
 
   this.render(hbs`{{user-sidebar user=user}}`);
 
-  assert.equal(this.$('h2 .name').text(), "joshsmith");
+  assert.equal(this.$('h2 .name').text(), 'joshsmith');
 });

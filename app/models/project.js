@@ -3,6 +3,8 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Model.extend({
   base64IconData: attr(),
   closedTasksCount: attr('number'),
@@ -20,7 +22,7 @@ export default Model.extend({
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
 
-  hasOpenTasks: Ember.computed.gt('openTasksCount', 0),
-  hasPendingMembers: Ember.computed.alias('organization.hasPendingMembers'),
-  pendingMembersCount: Ember.computed.alias('organization.pendingMembersCount'),
+  hasOpenTasks: computed.gt('openTasksCount', 0),
+  hasPendingMembers: computed.alias('organization.hasPendingMembers'),
+  pendingMembersCount: computed.alias('organization.pendingMembersCount')
 });

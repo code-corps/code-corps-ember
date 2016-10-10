@@ -8,5 +8,5 @@ const {
 export default Component.extend({
   classNames: ['flash'],
 
-  flashMessages: service(),
+  flashMessages: service()
 });

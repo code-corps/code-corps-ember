@@ -11,5 +11,5 @@ export default Component.extend({
   src: computed('imageSlug', function() {
     let imageSlug = this.get('imageSlug');
     return `https://d3pgew4wbk2vb1.cloudfront.net/images/team/${imageSlug}.png`;
-  }),
+  })
 });

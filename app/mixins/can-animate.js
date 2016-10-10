@@ -1,13 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
+const {
+  $,
+  computed,
+  Mixin,
+  run
+} = Ember;
+
+export default Mixin.create({
   scrollTimeout: 100,
   boundingClientRect: 0,
   windowHeight: 0,
   windowWidth: 0,
 
-  canAnimate: Ember.computed('boundingClientRect', 'windowHeight', function() {
-    var rect, windowHeight;
+  canAnimate: computed('boundingClientRect', 'windowHeight', function() {
+    let rect, windowHeight;
     rect = this.get('boundingClientRect');
     windowHeight = this.get('windowHeight');
     return (
@@ -15,33 +22,33 @@ export default Ember.Mixin.create({
     );
   }),
 
-  _updateBoundingClientRect: function() {
-    var el;
+  _updateBoundingClientRect() {
+    let el;
     el = this.$()[0];
     this.set('boundingClientRect', el.getBoundingClientRect());
   },
 
   _setup: (function() {
-    return Ember.run.scheduleOnce('afterRender', this, function() {
+    return run.scheduleOnce('afterRender', this, function() {
       this._updateBoundingClientRect();
       this.set('windowHeight', window.innerHeight || document.documentElement.clientHeight);
       this.set('windowWidth', window.innerWidth || document.documentElement.clientWidth);
     });
   }).on('didInsertElement'),
 
-  _scrollHandler: function() {
-    return Ember.run.debounce(this, '_updateBoundingClientRect', this.get('scrollTimeout'));
+  _scrollHandler() {
+    return run.debounce(this, '_updateBoundingClientRect', this.get('scrollTimeout'));
   },
 
   _bindScroll: (function() {
-    var scrollHandler;
+    let scrollHandler;
     scrollHandler = this._scrollHandler.bind(this);
-    Ember.$(document).on('touchmove.scrollable', scrollHandler);
-    Ember.$(window).on('scroll.scrollable', scrollHandler);
+    $(document).on('touchmove.scrollable', scrollHandler);
+    $(window).on('scroll.scrollable', scrollHandler);
   }).on('didInsertElement'),
 
   _unbindScroll: (function() {
-    Ember.$(window).off('.scrollable');
-    Ember.$(document).off('.scrollable');
+    $(window).off('.scrollable');
+    $(document).off('.scrollable');
   }).on('willDestroyElement')
 });

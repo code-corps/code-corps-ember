@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { alias },
+  computed,
   inject: { service }
 } = Ember;
 
@@ -27,7 +27,7 @@ export default Component.extend({
     @property canEdit
     @type Boolean
    */
-  canEdit: alias('currentUserIsTaskAuthor'),
+  canEdit: computed.alias('currentUserIsTaskAuthor'),
 
   /**
     Returns the current user's ID.
@@ -35,7 +35,7 @@ export default Component.extend({
     @property currentUserId
     @type Number
    */
-  currentUserId: alias('currentUser.user.id'),
+  currentUserId: computed.alias('currentUser.user.id'),
 
   /**
     Returns the task author's ID.
@@ -43,7 +43,7 @@ export default Component.extend({
     @property taskAuthorId
     @type Number
    */
-  taskAuthorId: alias('task.user.id'),
+  taskAuthorId: computed.alias('task.user.id'),
 
   /**
     Consumes `currentUserId` and `taskAuthorId` and returns if the current user
@@ -52,7 +52,7 @@ export default Component.extend({
     @property currentUserIsTaskAuthor
     @type Boolean
    */
-  currentUserIsTaskAuthor: Ember.computed('currentUserId', 'taskAuthorId', function() {
+  currentUserIsTaskAuthor: computed('currentUserId', 'taskAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
     let authorId = parseInt(this.get('taskAuthorId'), 10);
     return userId === authorId;
@@ -61,7 +61,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.setProperties({
-      isEditing: false,
+      isEditing: false
     });
   },
 

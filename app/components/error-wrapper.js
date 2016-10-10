@@ -34,7 +34,7 @@ export default Component.extend({
     @type String
   */
   errorClass: computed('is404', function() {
-    if(this.get('is404')) {
+    if (this.get('is404')) {
       return 'warning';
     } else {
       return 'danger';
@@ -52,7 +52,7 @@ export default Component.extend({
   httpStatusCodes: computed('model', function() {
     let model = this.get('model');
     if (model && model.hasOwnProperty('errors')) {
-      let errors = model.errors;
+      let { errors } = model;
       return errors.map(function(err) {
         return err.status;
       });
@@ -106,5 +106,5 @@ export default Component.extend({
   updateBackground() {
     this.set('background.class', this.get('errorClass'));
     this.get('background').updateBackgroundClass();
-  },
+  }
 });

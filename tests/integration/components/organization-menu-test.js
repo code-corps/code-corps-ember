@@ -3,14 +3,16 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import { Ability } from 'ember-can';
 
+const { Service } = Ember;
+
 moduleForComponent('organization-menu', 'Integration | Component | organization menu', {
-  integration: true,
+  integration: true
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
 
-  this.register('service:credentials', Ember.Service);
+  this.register('service:credentials', Service);
 
   this.render(hbs`{{organization-menu}}`);
 
@@ -20,7 +22,7 @@ test('it renders', function(assert) {
 test('when user cannot manage organization the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  let mockCredentials = Ember.Service.extend({
+  let mockCredentials = Service.extend({
     userCanManageOrganization: false
   });
 
@@ -36,7 +38,7 @@ test('when user cannot manage organization the proper menu items are rendered', 
 test('when user can manage organization, the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  let mockCredentials = Ember.Service.extend({
+  let mockCredentials = Service.extend({
     userCanManageOrganization: true
   });
 

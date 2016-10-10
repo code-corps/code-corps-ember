@@ -1,10 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
-  currentUser: Ember.inject.service(),
-  onboarding: Ember.inject.service(),
+const {
+  computed,
+  inject: { service },
+  Mixin
+} = Ember;
 
-  user: Ember.computed.alias('currentUser.user'),
+export default Mixin.create({
+  currentUser: service(),
+  onboarding: service(),
+
+  user: computed.alias('currentUser.user'),
 
   actions: {
     continue() {
@@ -16,6 +22,6 @@ export default Ember.Mixin.create({
       user.save().then(() => {
         this.transitionToRoute(nextRoute);
       });
-    },
-  },
+    }
+  }
 });

@@ -2,25 +2,31 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
+const {
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
 moduleForComponent('project-long-description', 'Integration | Component | project long description', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Ember.Service.extend({}));
+    this.register('service:credentials', Service.extend({}));
   }
 });
 
-let credentialsWithAdminMembership = Ember.Service.extend({
-  currentUserMembership: Ember.Object.create({
+let credentialsWithAdminMembership = Service.extend({
+  currentUserMembership: Object.create({
     isAdmin: true
   })
 });
 
-let projectWithDescription = Ember.Object.create({
+let projectWithDescription = Object.create({
   longDescriptionBody: 'A <strong>body</strong>',
   longDescriptionMarkdown: 'A **body**'
 });
 
-let blankProject = Ember.Object.create({
+let blankProject = Object.create({
   longDescriptionBody: null,
   longDescriptionMarkdown: null
 });
@@ -81,10 +87,10 @@ test('it renders properly when description is present and user can edit', functi
 test('it is possible to add a description', function(assert) {
   assert.expect(1);
 
-  let savableProject = Ember.Object.create(blankProject, {
+  let savableProject = Object.create(blankProject, {
     save() {
       assert.ok(true);
-      return Ember.RSVP.resolve(this);
+      return RSVP.resolve(this);
     }
   });
 
@@ -99,10 +105,10 @@ test('it is possible to add a description', function(assert) {
 test('it is possible to edit a description', function(assert) {
   assert.expect(3);
 
-  let savableProject = Ember.Object.create(projectWithDescription, {
+  let savableProject = Object.create(projectWithDescription, {
     save() {
       assert.ok(true);
-      return Ember.RSVP.resolve(this);
+      return RSVP.resolve(this);
     }
   });
 

@@ -7,5 +7,5 @@ export default Model.extend({
   username: attr('string'),
 
   task: belongsTo('task', { async: true }),
-  user: belongsTo('user', { async: true }),
+  user: belongsTo('user', { async: true })
 });

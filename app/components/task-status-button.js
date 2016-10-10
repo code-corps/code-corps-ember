@@ -47,6 +47,6 @@ export default Component.extend({
       let task = this.get('task');
       task.set('status', 'open');
       return task.save();
-    },
+    }
   }
 });

@@ -26,14 +26,14 @@ export default Component.extend({
     return this.get('user.password') || '';
   }),
 
-  strength: computed('password', function () {
+  strength: computed('password', function() {
     let password = this.get('password') || '';
     return strength(password);
   }),
 
   strengthPercentage: computed('isValid', 'passwordLength', 'strength', function() {
     let isValid = this.get('isValid');
-    var percentage = 0;
+    let percentage = 0;
 
     if (isValid) {
       let score = this.get('strength.score');
@@ -43,5 +43,5 @@ export default Component.extend({
     }
 
     return percentage;
-  }),
+  })
 });

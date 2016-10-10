@@ -45,18 +45,18 @@ export default Component.extend({
       }).finally(() => {
         this.set('isLoading', false);
       });
-    },
+    }
   },
 
   _flashError(message) {
-    const flashMessages = get(this, 'flashMessages');
+    let flashMessages = get(this, 'flashMessages');
     flashMessages.clearMessages();
     return flashMessages.add({
-      message: message,
+      message,
       type: 'danger',
       fixed: true,
       sticky: false,
-      timeout: 5000,
+      timeout: 5000
     });
-  },
+  }
 });

@@ -13,10 +13,11 @@ export default Component.extend({
 
   actions: {
     save() {
-      const flashMessages = get(this, 'flashMessages');
+      let flashMessages = get(this, 'flashMessages');
 
       this.get('project').save().then(() => {
-          flashMessages.success("Project updated successfully");
+        flashMessages.success('Project updated successfully');
       });
-    },
-  }});
+    }
+  }
+});

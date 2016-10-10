@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Component } = Ember;
+
 /**
   The task-filter-type component composes the selected filter and dropdown
   list of selectable filters. It takes in a list of selectable filter types
@@ -14,7 +16,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['button-group', 'dropdown'],
   classNameBindings: ['active:menu-visible:menu-hidden'],
 
@@ -56,6 +58,6 @@ export default Ember.Component.extend({
      */
     toggle() {
       this.toggleProperty('active');
-    },
-  },
+    }
+  }
 });

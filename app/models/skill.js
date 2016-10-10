@@ -6,5 +6,5 @@ export default Model.extend({
   title: attr(),
 
   // Virtual attribute
-  matched: attr('boolean'),
+  matched: attr('boolean')
 });

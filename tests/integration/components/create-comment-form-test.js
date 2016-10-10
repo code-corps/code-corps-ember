@@ -3,11 +3,17 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import mockRouting from '../../helpers/mock-routing';
 
-let mockSession = Ember.Service.extend({
+const {
+  $,
+  Object,
+  Service
+} = Ember;
+
+let mockSession = Service.extend({
   isAuthenticated: true
 });
 
-let pressCtrlEnter = Ember.$.Event('keydown', {
+let pressCtrlEnter = $.Event('keydown', {
   keyCode: 13,
   which: 13,
   ctrlKey: true
@@ -54,7 +60,7 @@ test('it calls action when user clicks submit', function(assert) {
 
   this.register('service:session', mockSession);
 
-  this.set('comment', Ember.Object.create({ markdown: 'Test markdown' }));
+  this.set('comment', Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {
     assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
   });
@@ -68,7 +74,7 @@ test('it calls action when user hits ctrl+enter', function(assert) {
 
   this.register('service:session', mockSession);
 
-  this.set('comment', Ember.Object.create({ markdown: 'Test markdown' }));
+  this.set('comment', Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {
     assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
   });

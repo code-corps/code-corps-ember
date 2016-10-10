@@ -2,23 +2,30 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockPreview = Ember.Object.create({
+const {
+  $,
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
+let mockPreview = Object.create({
   markdown: 'A **body**',
   body: 'A <strong>body</strong>',
   save() {
-    return Ember.RSVP.resolve(this);
+    return RSVP.resolve(this);
   }
 });
 
-let mockStore = Ember.Service.extend({
+let mockStore = Service.extend({
   createRecord() {
     return mockPreview;
   }
 });
 
-let mockMentionFetcher = Ember.Service.extend({
+let mockMentionFetcher = Service.extend({
   fetchBodyWithMentions() {
-    return Ember.RSVP.resolve('Lorem ipsum <strong>bla</strong>');
+    return RSVP.resolve('Lorem ipsum <strong>bla</strong>');
   }
 });
 
@@ -30,7 +37,7 @@ moduleForComponent('editor-with-preview', 'Integration | Component | editor with
   }
 });
 
-let pressCtrlEnter = Ember.$.Event('keydown', {
+let pressCtrlEnter = $.Event('keydown', {
   keyCode: 13,
   which: 13,
   ctrlKey: true
@@ -159,7 +166,7 @@ test('it sets the editor min-height to the editor height when previewing and sti
 
   this.$('.preview').click();
 
-  let style = "min-height: " + height + ";";
+  let style = `min-height: ${height};`;
   assert.equal(this.$('.editor-with-preview').attr('style'), style);
 });
 

@@ -20,7 +20,7 @@ test('it isOnboarding when the user is onboarding', function(assert) {
   let service = this.subject({
     onboarding: {
       isOnboarding: true
-    },
+    }
   });
 
   assert.ok(service.get('isOnboarding'));

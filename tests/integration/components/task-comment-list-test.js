@@ -2,9 +2,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockStore = Ember.Service.extend({
-  query () {
-    return Ember.RSVP.resolve([]);
+const {
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
+let mockStore = Service.extend({
+  query() {
+    return RSVP.resolve([]);
   }
 });
 
@@ -25,9 +31,9 @@ test('It renders a list of comments if there are comments', function(assert) {
   assert.expect(1);
 
   let comments = [
-    Ember.Object.create({ body: "Comment 1" }),
-    Ember.Object.create({ body: "Comment 2" }),
-    Ember.Object.create({ body: "Comment 3" })
+    Object.create({ body: 'Comment 1' }),
+    Object.create({ body: 'Comment 2' }),
+    Object.create({ body: 'Comment 3' })
   ];
 
   this.set('comments', comments);

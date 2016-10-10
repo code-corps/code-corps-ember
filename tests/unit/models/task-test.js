@@ -3,6 +3,8 @@ import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const { get } = Ember;
+
 moduleForModel('task', 'Unit | Model | task', {
   // Specify the other units that are required for this test.
   needs: [
@@ -22,17 +24,17 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('task');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "body",
-    "insertedAt",
-    "likesCount",
-    "markdown",
-    "number",
-    "status",
-    "taskType",
-    "title"
+    'body',
+    'insertedAt',
+    'likesCount',
+    'markdown',
+    'number',
+    'status',
+    'taskType',
+    'title'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

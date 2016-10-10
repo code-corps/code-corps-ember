@@ -3,6 +3,11 @@ import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const {
+  get,
+  run
+} = Ember;
+
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
   needs: [
@@ -22,19 +27,19 @@ test('it exists', function(assert) {
 
 test('it should have all of its attributes', function(assert) {
   let model = this.store().modelFor('project');
-  let actualAttributes = Ember.get(model, 'attributes');
+  let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    "base64IconData",
-    "closedTasksCount",
-    "description",
-    "iconLargeUrl",
-    "iconThumbUrl",
-    "longDescriptionBody",
-    "longDescriptionMarkdown",
-    "openTasksCount",
-    "slug",
-    "title"
+    'base64IconData',
+    'closedTasksCount',
+    'description',
+    'iconLargeUrl',
+    'iconThumbUrl',
+    'longDescriptionBody',
+    'longDescriptionMarkdown',
+    'openTasksCount',
+    'slug',
+    'title'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);
@@ -59,9 +64,9 @@ test('it should have computed properties for its organization\'s members', funct
   let _this = this;
   let project;
 
-  Ember.run(function(){
+  run(function() {
     let organization = _this.store().createRecord('organization');
-    _this.store().createRecord('organization-membership', { organization, role: 'pending'});
+    _this.store().createRecord('organization-membership', { organization, role: 'pending' });
 
     project = _this.subject({ organization });
   });

@@ -45,7 +45,7 @@ export default Component.extend({
 
     usernameValidated(result) {
       this.set('usernameValid', result);
-    },
+    }
   },
 
   _setError() {
@@ -59,7 +59,7 @@ export default Component.extend({
   },
 
   _shakeButton() {
-    if(!this.get('hasError')) {
+    if (!this.get('hasError')) {
       this.set('hasError', true);
       later(this, function() {
         this.set('hasError', false);
@@ -76,11 +76,11 @@ export default Component.extend({
     this.get('user').save().then(() => {
       this._signIn(credentials);
     }).catch((error) => {
-      let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+      let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
       if (!payloadContainsValidationErrors) {
         this.controllerFor('signup').set('error', error);
       }
     });
-  },
+  }
 });

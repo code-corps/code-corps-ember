@@ -6,6 +6,8 @@ import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage
 import page from '../pages/contributors';
 import Ember from 'ember';
 
+const { run } = Ember;
+
 let application;
 
 function buildURLParts(project_organization_slug, project_slug) {
@@ -19,11 +21,11 @@ function buildURLParts(project_organization_slug, project_slug) {
 }
 
 moduleForAcceptance('Acceptance: Contributors', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
@@ -146,7 +148,9 @@ test('when there are multiple contributors', function(assert) {
     assert.equal(page.pendingContributors.members().count, 1, 'Pending contributors has 1 member listed');
     assert.equal(page.others.members().count, 2, 'Others has 2 members listed');
 
-    window.confirm = function() { return true; };
+    window.confirm = function() {
+      return true;
+    };
     page.pendingContributors.members(0).denyMembership();
   });
 

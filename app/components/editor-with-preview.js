@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import {
   equal,
-  or,
+  or
 } from 'ember-computed';
 
 const {
@@ -10,7 +10,9 @@ const {
   get,
   inject: { service },
   isEmpty,
+  run,
   set,
+  String
 } = Ember;
 
 /**
@@ -116,11 +118,11 @@ export default Component.extend({
     @type String
    */
   style: computed('height', function() {
-    const height = get(this, 'height');
+    let height = get(this, 'height');
 
     if (height) {
-      const css = "min-height: " + height + ";";
-      return Ember.String.htmlSafe(css);
+      let css = `min-height: ${height};`;
+      return String.htmlSafe(css);
     }
   }),
 
@@ -142,7 +144,7 @@ export default Component.extend({
    */
   didRender() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, '_attemptFocus');
+    run.scheduleOnce('afterRender', this, '_attemptFocus');
   },
 
   /**
@@ -198,7 +200,7 @@ export default Component.extend({
       set(this, 'mode', 'previewing');
       set(this, 'previewedOnce', true);
       this._fetchPreview();
-    },
+    }
   },
 
   _fetchPreview() {
@@ -212,8 +214,8 @@ export default Component.extend({
       set(this, 'fetchingPreview', false);
     } else {
       let preview = get(this, 'store').createRecord('preview', {
-        markdown: markdown,
-        user: this.get('currentUser.user'),
+        markdown,
+        user: this.get('currentUser.user')
       });
       preview.save().then((preview) => {
         this.get('mentionFetcher').fetchBodyWithMentions(preview, 'preview').then((body) => {
@@ -242,5 +244,5 @@ export default Component.extend({
   _focusTextarea() {
     this.$('textarea').focus();
     set(this, 'textareaFocused', true);
-  },
+  }
 });

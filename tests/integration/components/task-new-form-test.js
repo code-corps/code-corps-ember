@@ -2,10 +2,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const {
+  Object,
+  Service
+} = Ember;
+
 moduleForComponent('task-new-form', 'Integration | Component | task new form', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Ember.Service.extend({ currentUserMembership: null }));
+    this.register('service:credentials', Service.extend({ currentUserMembership: null }));
   }
 });
 
@@ -26,7 +31,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
     taskType: 'idea'
   };
 
-  let placeholder = "Test placeholder";
+  let placeholder = 'Test placeholder';
 
   this.set('task', task);
   this.set('placeholder', placeholder);
@@ -45,7 +50,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 test('it triggers an action when the task is saved', function(assert) {
   assert.expect(2);
 
-  let task = Ember.Object.create({ id: 1 });
+  let task = Object.create({ id: 1 });
 
   this.set('task', task);
   this.on('saveTask', (task) => {
@@ -61,7 +66,7 @@ test('it triggers an action when the task is saved', function(assert) {
 test('it renders only idea and issue task type options if user is not at least a contributor to the organization', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Ember.Service.extend({
+  this.register('service:credentials', Service.extend({
     currentUserMembership: { isContributor: false, isAdmin: false, isOwner: false }
   }));
 
@@ -75,7 +80,7 @@ test('it renders only idea and issue task type options if user is not at least a
 test('it renders all task type options if user is at least contributor', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Ember.Service.extend({
+  this.register('service:credentials', Service.extend({
     currentUserMembership: { isContributor: true }
   }));
 

@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed
+ } = Ember;
+
 /**
  * `categories-list` composes the list of categories
  *
@@ -13,7 +18,7 @@ import Ember from 'ember';
  * @module Component
  * @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['categories-list'],
 
   /**
@@ -31,5 +36,5 @@ export default Ember.Component.extend({
    * @property sortedCategories
    * @type Array
    */
-  sortedCategories: Ember.computed.sort('categories', 'sortByName'),
+  sortedCategories: computed.sort('categories', 'sortByName')
 });

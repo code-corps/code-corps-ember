@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Component } = Ember;
+
 /**
   The task-comment-list component composes the list of comments for a task.
 
@@ -13,6 +15,6 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-comment-list']
 });
