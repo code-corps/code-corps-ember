@@ -222,7 +222,7 @@ test('A task can be opened or closed by the organization admin', (assert) => {
     project
   });
 
-  server.schema.create('organization-membership', { organization, member:  user, role: 'admin' });
+  server.schema.create('organization-membership', { organization, member: user, role: 'admin' });
 
   taskPage.visit({
     organization: organization.slug,

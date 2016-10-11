@@ -164,11 +164,11 @@ test('When task creation fails due to validation, validation errors are displaye
           {
             id: "VALIDATION_ERROR",
             source: { pointer: "data/attributes/title" },
-            detail:"is invalid",
+            detail: "is invalid",
             status: 422
           },
           {
-            id:"VALIDATION_ERROR",
+            id: "VALIDATION_ERROR",
             source: { pointer: "data/attributes/markdown" },
             detail: "can't be blank",
             status: 422
@@ -217,7 +217,7 @@ test('When task creation fails due to non-validation issues, the error is displa
           {
             id: "UNKNOWN ERROR",
             title: "An unknown error",
-            detail:"Something happened",
+            detail: "Something happened",
             status: 400
           }
         ]
