@@ -3,26 +3,25 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 
-const { getOwner } = Ember;
-
-moduleForComponent('role-item', 'Integration | Component | role item', {
-  integration: true,
-  beforeEach() {
-    mockUserRole.set('roleId', defaultRoleId);
-  }
-});
+const {
+  getOwner,
+  Object,
+  RSVP,
+  run,
+  Service
+} = Ember;
 
 let defaultRoleId = 2;
 
-let mockUserRolesService = Ember.Service.extend({
+let mockUserRolesService = Service.extend({
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
     }
   },
   addRole(role) {
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill) => {
+      run.next(() => {
         mockUserRole.set('roleId', role.get('id'));
         getOwner(this).lookup('service:user-roles').set('userRoles', [mockUserRole]);
         fulfill();
@@ -30,48 +29,55 @@ let mockUserRolesService = Ember.Service.extend({
     });
   },
   removeRole() {
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill, reject) => {
+      run.next(() => {
         mockUserRole.set('roleId', null);
         getOwner(this).lookup('service:user-roles').set('userRoles', []);
         reject();
       });
     });
-  },
+  }
 });
 
-let mockUserRolesServiceForErrors = Ember.Service.extend({
+let mockUserRolesServiceForErrors = Service.extend({
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
     }
   },
   addRole() {
-    return Ember.RSVP.reject();
+    return RSVP.reject();
   },
   removeRole() {
-    return Ember.RSVP.reject();
-  },
+    return RSVP.reject();
+  }
 });
 
-let mockUserRole = Ember.Object.create({
+let mockUserRole = Object.create({
   id: 1,
   roleId: defaultRoleId,
-  userId: 1,
+  userId: 1
 });
 
-let unselectedRole = Ember.Object.create({
+let unselectedRole = Object.create({
   id: 1,
   name: 'Backend Developer',
   ability: 'Backend Development',
-  kind: 'technology',
+  kind: 'technology'
 });
 
-let selectedRole = Ember.Object.create({
+let selectedRole = Object.create({
   id: 2,
   name: 'Mobile Developer',
   ability: 'Mobile Development',
-  kind: 'technology',
+  kind: 'technology'
+});
+
+moduleForComponent('role-item', 'Integration | Component | role item', {
+  integration: true,
+  beforeEach() {
+    mockUserRole.set('roleId', defaultRoleId);
+  }
 });
 
 test('it works for selecting unselected roles', function(assert) {
@@ -119,7 +125,7 @@ test('it creates a flash message on an error when adding', function(assert) {
   this.register('service:user-roles', mockUserRolesServiceForErrors);
   this.set('role', unselectedRole);
 
-  let mockFlashMessages = Ember.Service.extend({
+  let mockFlashMessages = Service.extend({
     clearMessages() {
       assert.ok(true);
     },
@@ -149,7 +155,7 @@ test('it creates a flash message on an error when removing', function(assert) {
   this.register('service:user-roles', mockUserRolesServiceForErrors);
   this.set('role', selectedRole);
 
-  let mockFlashMessages = Ember.Service.extend({
+  let mockFlashMessages = Service.extend({
     clearMessages() {
       assert.ok(true);
     },

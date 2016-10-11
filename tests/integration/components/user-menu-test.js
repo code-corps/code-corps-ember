@@ -2,22 +2,27 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-const stubUser = Ember.Object.extend({
+const {
+  computed,
+  Object
+} = Ember;
+
+const stubUser = Object.extend({
   id: 1,
   username: 'tester',
   photoThumbUrl: '/assets/images/twitter.png',
 
-  atUsername: Ember.computed('username', function() {
+  atUsername: computed('username', function() {
     return `@${this.get('username')}`;
   }),
 
-  twitterUrl: Ember.computed('twitter', function() {
+  twitterUrl: computed('twitter', function() {
     return `https://twitter.com/${this.get('twitter')}`;
   })
 }).create();
 
 moduleForComponent('user-menu', 'Integration | Component | user menu', {
-  integration: true,
+  integration: true
 });
 
 test('it renders properly', function(assert) {

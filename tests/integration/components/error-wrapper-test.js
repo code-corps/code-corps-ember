@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 test('it renders all required elements for the 404 case', function(assert) {
   assert.expect(6);
 
-  var model = {
+  let model = {
     errors: [{
       status: 404
     }]
@@ -33,7 +33,7 @@ test('it renders all required elements for the 404 case', function(assert) {
 test('it renders all required elements for the general error case', function(assert) {
   assert.expect(6);
 
-  var model = {
+  let model = {
     errors: [{
       status: 500
     }]

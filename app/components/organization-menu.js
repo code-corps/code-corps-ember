@@ -8,5 +8,5 @@ const {
 export default Component.extend({
   classNames: ['organization-menu', 'horizontal-menu'],
 
-  credentials: service(),
+  credentials: service()
 });

@@ -40,8 +40,7 @@ export default Component.extend({
   checkAvailable() {
     let email = this.get('email');
     this.sendRequest(email).then((result) => {
-      let available = result.available;
-      let valid = result.valid;
+      let { available, valid } = result;
       let validation = valid && available;
 
       this.set('cachedEmail', this.get('email'));
@@ -63,7 +62,7 @@ export default Component.extend({
     return this.get('ajax').request('/users/email_available', {
       method: 'GET',
       data: {
-        email: email
+        email
       }
     });
   },
@@ -73,7 +72,7 @@ export default Component.extend({
       if (this.get('isNotSameEmail')) {
         this.set('isChecking', true);
       }
-    },
+    }
   },
 
   _check() {
@@ -92,5 +91,5 @@ export default Component.extend({
       this.sendAction('emailValidated', false);
       this.set('isChecking', false);
     }
-  },
+  }
 });

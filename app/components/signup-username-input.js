@@ -197,8 +197,7 @@ export default Component.extend({
   checkAvailable() {
     let username = this.get('username');
     this.sendRequest(username).then((result) => {
-      let available = result.available;
-      let valid = result.valid;
+      let { available, valid } = result;
       let validation = valid && available;
 
       this.set('cachedUsername', this.get('username'));
@@ -222,7 +221,7 @@ export default Component.extend({
     return this.get('ajax').request('/users/username_available', {
       method: 'GET',
       data: {
-        username: username
+        username
       }
     });
   },
@@ -239,7 +238,7 @@ export default Component.extend({
       if (this.get('isNotSameUsername')) {
         this.set('isChecking', true);
       }
-    },
+    }
   },
 
   _check() {
@@ -258,5 +257,5 @@ export default Component.extend({
       this.sendAction('usernameValidated', false);
       this.set('isChecking', false);
     }
-  },
+  }
 });

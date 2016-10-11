@@ -5,6 +5,8 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 import loginPage from '../pages/login';
 import signupPage from '../pages/signup';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Login', {
@@ -12,7 +14,7 @@ module('Acceptance: Login', {
     application = startApp();
   },
   afterEach: () => {
-    Ember.run(application, 'destroy');
+    run(application, 'destroy');
   }
 });
 
@@ -35,7 +37,7 @@ test('Logging in', function(assert) {
 
 test('Login failure', function(assert) {
   // Mirage expects volunteers@codecorps.org as default email
-  const ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
+  let ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
 
   assert.expect(2);
 

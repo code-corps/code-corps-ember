@@ -5,14 +5,16 @@ import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/m
 import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import userProfile from '../pages/user';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Profile', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 

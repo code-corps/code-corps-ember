@@ -1,6 +1,6 @@
 import {
   clickable,
-  text,
+  text
 } from 'ember-cli-page-object';
 
 export default {
@@ -10,6 +10,6 @@ export default {
 
   title: {
     scope: 'h1',
-    text: text(),
-  },
+    text: text()
+  }
 };

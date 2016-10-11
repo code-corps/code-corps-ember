@@ -2,40 +2,47 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockMentionFetcher = Ember.Service.extend({
-  fetchBodyWithMentions: Ember.RSVP.resolve,
-  prefetchBodyWithMentions: Ember.K
+const {
+  K,
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
+let mockMentionFetcher = Service.extend({
+  fetchBodyWithMentions: RSVP.resolve,
+  prefetchBodyWithMentions: K
 });
 
-let mockStore = Ember.Service.extend({
-  query () {
-    return Ember.RSVP.resolve([]);
+let mockStore = Service.extend({
+  query() {
+    return RSVP.resolve([]);
   }
 });
 
-let mockCurrentUser = Ember.Service.extend({
+let mockCurrentUser = Service.extend({
   user: {
     id: 1
   }
 });
 
-let mockComment = Ember.Object.create({
+let mockComment = Object.create({
   body: 'A <strong>body</strong>',
   user: { id: 1 },
   save() {
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 
-// let mockCommentWithMentions = Ember.Object.create({
+// let mockCommentWithMentions = Object.create({
 //   body: '<p>Mentioning @user1 and @user2</p>',
 //   user: { id: 1 },
 //   save() {
-//     return Ember.RSVP.resolve();
+//     return RSVP.resolve();
 //   },
 //   commentUserMentions: [
-//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
 //   ]
 // });
 
@@ -61,7 +68,7 @@ test('it renders all required comment elements properly', function(assert) {
   assert.expect(4);
 
   let user = { id: 1, username: 'tester' };
-  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user, containsCode: true });
+  let comment = Object.create({ id: 1, body: 'A <b>comment</b>', user, containsCode: true });
 
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -94,11 +101,8 @@ test('it switches between editing and viewing mode', function(assert) {
 /*
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
-
   this.set('comment', mockCommentWithMentions);
-
   let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
-
   this.render(hbs`{{comment-item comment=comment}}`);
   assert.equal(this.$('.comment-item .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });

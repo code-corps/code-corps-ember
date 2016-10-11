@@ -14,8 +14,8 @@ export default Factory.extend({
     return faker.image.avatar();
   },
   slug() {
-    if(this.name) {
+    if (this.name) {
       return this.name.toLowerCase();
     }
-  },
+  }
 });

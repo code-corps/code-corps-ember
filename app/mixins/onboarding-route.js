@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  inject: { service },
+  Mixin
+} = Ember;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   currentUser: service(),
   onboarding: service(),
 
@@ -27,5 +30,5 @@ export default Ember.Mixin.create({
     if (window.history) {
       window.history.forward();
     }
-  },
+  }
 });

@@ -2,6 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const { Service } = Ember;
+
 moduleForComponent('skill-button', 'Integration | Component | skill button', {
   integration: true
 });
@@ -64,7 +66,7 @@ test('it responds to hovering', function(assert) {
 
 test('it removes the skill when clicking', function(assert) {
   let skill = { title: 'Ruby' };
-  let mockUserSkillsService = Ember.Service.extend({
+  let mockUserSkillsService = Service.extend({
     removeSkill(removedSkill) {
       assert.deepEqual(skill, removedSkill);
     }

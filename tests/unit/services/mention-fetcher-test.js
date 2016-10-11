@@ -1,5 +1,5 @@
 // import Ember from 'ember';
-import { moduleFor /*, test */ } from 'ember-qunit';
+import { moduleFor /* , test */ } from 'ember-qunit';
 
 moduleFor('service:mention-fetcher', 'Unit | Service | mention fetcher', {
 });

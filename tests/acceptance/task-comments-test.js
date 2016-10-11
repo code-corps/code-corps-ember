@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
@@ -6,23 +6,25 @@ import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage
 import Mirage from 'ember-cli-mirage';
 import taskPage from '../pages/project/tasks/task';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Task Comments', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
 test('Task comments are displayed correctly', (assert) => {
   assert.expect(1);
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   server.createList('comment', 4, { taskId: task.id });
 
@@ -41,8 +43,8 @@ test('A comment can be added to a task', (assert) => {
   assert.expect(6);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -62,7 +64,7 @@ test('A comment can be added to a task', (assert) => {
   andThen(() => {
     assert.equal(server.schema.comments.all().models.length, 1, 'A new comment was created');
     assert.equal(taskPage.comments().count, 1, 'The comment is being rendered');
-    let comment = server.schema.comments.all().models[0];
+    let [comment] = server.schema.comments.all().models;
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
     assert.equal(comment.taskId, task.id, 'Correct task was assigned');
@@ -77,7 +79,7 @@ test('Comment preview works during creation', (assert) => {
   authenticateSession(application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
 
@@ -101,7 +103,7 @@ test('Comment preview works during creation', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/*test('Comment user mentions are being rendered during creation', (assert) => {
+/* test('Comment user mentions are being rendered during creation', (assert) => {
   assert.expect(2);
 
   let user = server.create('user');
@@ -140,9 +142,9 @@ test('Comment preview works during creation', (assert) => {
 
 test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -162,18 +164,18 @@ test('When comment creation fails due to validation, validation errors are displ
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: "VALIDATION_ERROR",
-            source: { pointer:"data/attributes/markdown" },
-            detail:"is invalid",
+            id: 'VALIDATION_ERROR',
+            source: { pointer:'data/attributes/markdown' },
+            detail:'is invalid',
             status: 422
           },
           {
-            id:"VALIDATION_ERROR",
-            source: { pointer:"data/attributes/markdown" },
+            id:'VALIDATION_ERROR',
+            source: { pointer:'data/attributes/markdown' },
             detail: "can't be blank",
             status: 422
           }
-      ]});
+        ] });
 
     });
 
@@ -187,9 +189,9 @@ test('When comment creation fails due to validation, validation errors are displ
 
 test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
   authenticateSession(application, { user_id: user.id });
@@ -209,9 +211,9 @@ test('When comment creation fails due to non-validation issues, the error is dis
       return new Mirage.Response(400, {}, {
         errors: [
           {
-            id: "UNKNOWN ERROR",
-            title: "An unknown error",
-            detail:"Something happened",
+            id: 'UNKNOWN ERROR',
+            title: 'An unknown error',
+            detail:'Something happened',
             status: 400
           }
         ]
@@ -231,9 +233,9 @@ test('A comment can only be edited by the author', (assert) => {
 
   let user = server.create('user');
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   server.createList('comment', 1, { task, user });
 
@@ -265,9 +267,9 @@ test('Comment editing with preview works', (assert) => {
   authenticateSession(application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   server.createList('comment', 1, { task, user });
 
@@ -302,7 +304,7 @@ test('Comment editing with preview works', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/*test('Comment user mentions are being rendered during editing', (assert) => {
+/* test('Comment user mentions are being rendered during editing', (assert) => {
   assert.expect(2);
 
   let user = server.create('user');

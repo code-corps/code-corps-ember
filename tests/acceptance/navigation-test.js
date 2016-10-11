@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
@@ -7,38 +7,40 @@ import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 import loginPage from '../pages/login';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Navigation', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
-test("Logged out, can sign up", function(assert) {
+test('Logged out, can sign up', function(assert) {
   assert.expect(2);
   indexPage.visit();
   andThen(function() {
-    assert.equal(indexPage.navMenu.signUp.text, "Sign up", "Page contains sign up link");
+    assert.equal(indexPage.navMenu.signUp.text, 'Sign up', 'Page contains sign up link');
     indexPage.navMenu.signUp.click();
   });
   andThen(function() {
-    assert.ok(signupPage.form.isVisible, "Page contains sign up form");
+    assert.ok(signupPage.form.isVisible, 'Page contains sign up form');
   });
 });
 
-test("Logged out, can sign in", function(assert) {
+test('Logged out, can sign in', function(assert) {
   assert.expect(2);
   indexPage.visit();
   andThen(function() {
-    assert.equal(indexPage.navMenu.logIn.text, "Sign in", "Page contains sign in link");
+    assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains sign in link');
     indexPage.navMenu.logIn.click();
   });
   andThen(function() {
-    assert.ok(loginPage.form.isVisible, "Page contains login form");
+    assert.ok(loginPage.form.isVisible, 'Page contains login form');
   });
 });
 
@@ -73,7 +75,7 @@ test('Logged in, from user menu can visit profile settings', function(assert) {
     indexPage.navMenu.userMenu.open();
   });
   andThen(function() {
-    assert.equal(indexPage.navMenu.userMenu.settingsLink.href, "/settings/profile", "Menu links to the profile settings");
+    assert.equal(indexPage.navMenu.userMenu.settingsLink.href, '/settings/profile', 'Menu links to the profile settings');
     indexPage.navMenu.userMenu.settingsLink.click();
   });
   andThen(function() {
@@ -81,7 +83,7 @@ test('Logged in, from user menu can visit profile settings', function(assert) {
   });
 });
 
-test("Logged in, from user menu can log out", function(assert) {
+test('Logged in, from user menu can log out', function(assert) {
   assert.expect(1);
 
   let user = server.create('user');
@@ -95,6 +97,6 @@ test("Logged in, from user menu can log out", function(assert) {
     indexPage.navMenu.userMenu.logOut.click();
   });
   andThen(function() {
-    assert.equal(indexPage.navMenu.logIn.text, "Sign in", "Page contains sign in link");
+    assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains sign in link');
   });
 });

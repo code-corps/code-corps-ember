@@ -1,13 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+const {
+  computed,
+  inject: { service },
+  Service
+} = Ember;
 
-  isEmpty: Ember.computed.empty('userRoles'),
-  user: Ember.computed.alias('currentUser.user'),
+export default Service.extend({
+  currentUser: service(),
+  store: service(),
 
-  userRoles: Ember.computed('user.userRoles',
+  isEmpty: computed.empty('userRoles'),
+  user: computed.alias('currentUser.user'),
+
+  userRoles: computed('user.userRoles',
     'user.userRoles.@each.role',
     'user.userRoles.@each.user',
   function() {
@@ -23,7 +29,7 @@ export default Ember.Service.extend({
     return userRole.save();
   },
 
-  findUserRole: function(role) {
+  findUserRole(role) {
     let userRoles = this.get('userRoles');
     let userRole = userRoles.find((item) => {
       let itemUserId = item.belongsTo('user').id();
@@ -38,5 +44,5 @@ export default Ember.Service.extend({
   removeRole(role) {
     let userRole = this.findUserRole(role);
     return userRole.destroyRecord();
-  },
+  }
 });

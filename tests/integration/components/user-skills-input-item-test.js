@@ -2,7 +2,12 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let userSkillsService = Ember.Service.extend({
+const {
+  Object,
+  Service
+} = Ember;
+
+let userSkillsService = Service.extend({
   findUserSkill(queriedSkill) {
     if (queriedSkill === skill) {
       return skill;
@@ -10,9 +15,9 @@ let userSkillsService = Ember.Service.extend({
   }
 });
 
-let skill = Ember.Object.create({
+let skill = Object.create({
   selected: true,
-  title: "Ruby on Rails"
+  title: 'Ruby on Rails'
 });
 
 moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {
@@ -22,7 +27,7 @@ moduleForComponent('user-skills-input-item', 'Integration | Component | user ski
   }
 });
 
-let query = "ru on r";
+let query = 'ru on r';
 
 test('it renders as selected with the highlighted string', function(assert) {
   this.set('skill', skill);

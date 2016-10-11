@@ -16,5 +16,5 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
     this.get('credentials').set('currentOrganization', this.get('organization'));
-  },
+  }
 });

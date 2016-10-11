@@ -6,7 +6,7 @@ const {
   computed,
   get,
   inject: { service },
-  set,
+  set
 } = Ember;
 
 /**
@@ -102,7 +102,7 @@ export default Component.extend({
       }).finally(() => {
         set(this, 'isLoading', false);
       });
-    },
+    }
   },
 
   /**
@@ -116,11 +116,11 @@ export default Component.extend({
     let flashMessages = get(this, 'flashMessages');
     flashMessages.clearMessages();
     return flashMessages.add({
-      message: message,
+      message,
       type: 'danger',
       fixed: true,
       sticky: false,
-      timeout: 5000,
+      timeout: 5000
     });
-  },
+  }
 });

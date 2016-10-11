@@ -3,6 +3,7 @@ import { task, timeout } from 'ember-concurrency';
 
 const {
   Component,
+  Object,
   observer,
   run: { later },
   testing
@@ -14,27 +15,27 @@ const CONCURRENCY_TIMEOUT = testing ? 0 : 1500;
 
 export default Component.extend({
   categories: [
-    Ember.Object.create({
-      description: "You want to improve government responsiveness.",
+    Object.create({
+      description: 'You want to improve government responsiveness.',
       isLoading: false,
-      name: "Government",
+      name: 'Government',
       selected: false,
-      slug: "government"
+      slug: 'government'
     }),
-    Ember.Object.create({
-      description: "You want to improve tools for advancing science.",
+    Object.create({
+      description: 'You want to improve tools for advancing science.',
       isLoading: false,
-      name: "Science",
+      name: 'Science',
       selected: false,
-      slug: "science"
+      slug: 'science'
     }),
-    Ember.Object.create({
-      description: "You want to improve software tools and infrastructure.",
+    Object.create({
+      description: 'You want to improve software tools and infrastructure.',
       isLoading: false,
-      name: "Technology",
+      name: 'Technology',
       selected: false,
-      slug: "technology"
-    }),
+      slug: 'technology'
+    })
   ],
   classNames: ['demo-categories'],
 
@@ -59,5 +60,5 @@ export default Component.extend({
       category.set('isLoading', false);
     }, LOADING_TOGGLE);
     yield timeout(CONCURRENCY_TIMEOUT);
-  }).enqueue(),
+  }).enqueue()
 });

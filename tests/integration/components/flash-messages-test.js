@@ -2,6 +2,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const {
+  getOwner,
+  run
+} = Ember;
+
 moduleForComponent('flash-messages', 'Integration | Component | flash messages', {
   integration: true
 });
@@ -9,13 +14,13 @@ moduleForComponent('flash-messages', 'Integration | Component | flash messages',
 test('it renders a fixed error message', function(assert) {
   this.render(hbs`{{flash-messages}}`);
 
-  Ember.run(() => {
-    Ember.getOwner(this).lookup('service:flash-messages').add({
-      message: "Error message",
+  run(() => {
+    getOwner(this).lookup('service:flash-messages').add({
+      message: 'Error message',
       type: 'danger',
       fixed: true,
       sticky: false,
-      timeout: 5000,
+      timeout: 5000
     });
   });
 
@@ -25,10 +30,10 @@ test('it renders a fixed error message', function(assert) {
 test('it renders a normal success message', function(assert) {
   this.render(hbs`{{flash-messages}}`);
 
-  Ember.run(() => {
-    Ember.getOwner(this).lookup('service:flash-messages').add({
-      message: "Success message",
-      type: 'success',
+  run(() => {
+    getOwner(this).lookup('service:flash-messages').add({
+      message: 'Success message',
+      type: 'success'
     });
   });
 

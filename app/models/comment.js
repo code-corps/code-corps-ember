@@ -3,6 +3,8 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Model.extend({
   body: attr('string'),
   insertedAt: attr('date'),
@@ -12,12 +14,12 @@ export default Model.extend({
   task: belongsTo('task', { async: true }),
   user: belongsTo('user', { async: true }),
 
-  containsCode: Ember.computed('body', function() {
+  containsCode: computed('body', function() {
     let body = this.get('body');
-    if(body) {
+    if (body) {
       return body.indexOf('<code>') !== -1;
     } else {
       return false;
     }
-  }),
+  })
 });

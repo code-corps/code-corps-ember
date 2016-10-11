@@ -6,5 +6,5 @@ export default Model.extend({
   slug: attr('string'),
 
   organization: belongsTo('organization', { async: true }),
-  user: belongsTo('user', { async: true }),
+  user: belongsTo('user', { async: true })
 });

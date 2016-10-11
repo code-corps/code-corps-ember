@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
-  set,
+  set
 } = Ember;
 
 /**
@@ -71,6 +71,6 @@ export default Component.extend({
      */
     skillItemHidden() {
       set(this, 'showToggle', true);
-    },
-  },
+    }
+  }
 });

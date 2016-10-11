@@ -2,13 +2,15 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let userSkillsService = Ember.Service.extend({
+const { Service } = Ember;
+
+let userSkillsService = Service.extend({
   hasSkill(skill) {
     return skill;
   },
   findUserSkill(skill) {
     return skill;
-  },
+  }
 });
 
 moduleForComponent('skill-list-item', 'Integration | Component | skill list item', {

@@ -13,7 +13,7 @@ test('it renders', function(assert) {
 test('it renders all required elements', function(assert) {
   assert.expect(3);
 
-  var task = {
+  let task = {
     title: 'Clean the house',
     taskType: 'task'
   };
@@ -25,7 +25,6 @@ test('it renders all required elements', function(assert) {
   assert.equal(this.$('.task-description').length, 1, 'The description renders');
   assert.equal(this.$('.task-icon').length, 1, 'The task icon renders');
 });
-
 
 test('it renders with correct task-type class', function(assert) {
   this.set('task', { taskType: 'task' });

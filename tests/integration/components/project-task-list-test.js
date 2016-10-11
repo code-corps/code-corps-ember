@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('project-task-list', 'Integration | Component | project task list', {
-  integration: true,
+  integration: true
 });
 
 test('it renders', function(assert) {
@@ -21,7 +21,7 @@ test('it renders a message if the task count is 0', function(assert) {
   assert.equal(this.$('.empty').length, 1, 'The message is rendered');
   assert.equal(this.$('.empty .empty-icon.box-icon').length, 1, 'The icon is rendered');
   assert.equal(this.$('.empty h3').text().trim(), "Here's where the magic happens.");
-  assert.equal(this.$('.empty button').text().trim(), "Create a task");
+  assert.equal(this.$('.empty button').text().trim(), 'Create a task');
 });
 
 test('it renders a message if the task count is 0 and tasks are filtered', function(assert) {
@@ -36,10 +36,10 @@ test('it renders a message if the task count is 0 and tasks are filtered', funct
 });
 
 test('it renders a task item for each task', function(assert) {
-  const tasks = [
-    { id: 1, },
-    { id: 2, },
-    { id: 3, }
+  let tasks = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 }
   ];
   this.set('tasks', tasks);
 

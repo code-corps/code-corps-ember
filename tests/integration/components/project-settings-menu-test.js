@@ -2,19 +2,24 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const {
+  Object,
+  Service
+} = Ember;
+
 moduleForComponent('project-settings-menu', 'Integration | Component | project settings menu', {
   integration: true
 });
 
-let organization = Ember.Object.create({ id: 1 });
-let project = Ember.Object.create({ organization });
+let organization = Object.create({ id: 1 });
+let project = Object.create({ organization });
 
 test('when authenticated and can manage organization, it renders properly', function(assert) {
   assert.expect(4);
 
-  let membership = Ember.Object.create({ isAdmin: true, organization });
-  let mockSession = Ember.Service.extend({ isAuthenticated: true });
-  let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });
+  let membership = Object.create({ isAdmin: true, organization });
+  let mockSession = Service.extend({ isAuthenticated: true });
+  let mockCredentials = Service.extend({ currentUserMembership: membership });
 
   this.register('service:session', mockSession);
   this.register('service:credentials', mockCredentials);
@@ -32,9 +37,9 @@ test('when authenticated and can manage organization, it renders properly', func
 test('when authenticated and cannot manage organization, it renders properly', function(assert) {
   assert.expect(2);
 
-  let membership = Ember.Object.create({ isAdmin: false, organization });
-  let mockSession = Ember.Service.extend({ isAuthenticated: true });
-  let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });
+  let membership = Object.create({ isAdmin: false, organization });
+  let mockSession = Service.extend({ isAuthenticated: true });
+  let mockCredentials = Service.extend({ currentUserMembership: membership });
 
   this.register('service:session', mockSession);
   this.register('service:credentials', mockCredentials);
@@ -50,7 +55,7 @@ test('when authenticated and cannot manage organization, it renders properly', f
 test('when not authenticated, it renders properly', function(assert) {
   assert.expect(2);
 
-  let mockSession = Ember.Service.extend({ isAuthenticated: false });
+  let mockSession = Service.extend({ isAuthenticated: false });
 
   this.register('service:session', mockSession);
 

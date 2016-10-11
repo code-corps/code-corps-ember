@@ -1,6 +1,8 @@
 import { Factory, faker } from 'ember-cli-mirage';
 import Ember from 'ember';
 
+const { String } = Ember;
+
 export default Factory.extend({
   closedTasksCount: 0,
   description: faker.lorem.sentence,
@@ -10,8 +12,8 @@ export default Factory.extend({
   title: faker.name.title,
 
   slug() {
-    if(this.title) {
-      return Ember.String.underscore(this.title.toLowerCase());
+    if (this.title) {
+      return String.underscore(this.title.toLowerCase());
     }
   }
 });

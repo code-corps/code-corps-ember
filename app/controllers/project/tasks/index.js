@@ -1,39 +1,46 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const {
+  computed,
+  Controller,
+  isEmpty,
+  Object
+} = Ember;
+
+export default Controller.extend({
   page: 1,
   taskStatus: 'open',
   taskType: null,
   types: [
-    Ember.Object.create({
-      name: "Tasks",
-      param: "task",
-      slug: "tasks",
-      selected: false,
+    Object.create({
+      name: 'Tasks',
+      param: 'task',
+      slug: 'tasks',
+      selected: false
     }),
-    Ember.Object.create({
-      name: "Issues",
-      param: "issue",
-      slug: "issues",
-      selected: false,
+    Object.create({
+      name: 'Issues',
+      param: 'issue',
+      slug: 'issues',
+      selected: false
     }),
-    Ember.Object.create({
-      name: "Ideas",
-      param: "idea",
-      slug: "ideas",
-      selected: false,
-    }),
+    Object.create({
+      name: 'Ideas',
+      param: 'idea',
+      slug: 'ideas',
+      selected: false
+    })
   ],
 
-  status: Ember.computed.alias('taskStatus'),
+  status: computed.alias('taskStatus'),
 
-  isFilteringClosedTasks: Ember.computed.equal('status', 'closed'),
-  isFilteringOpenTasks: Ember.computed.equal('status', 'open'),
-  isFilteredByType: Ember.computed.notEmpty('taskTypes'),
-  isFiltered: Ember.computed.or('isFilteredByType'),
+  isFilteringClosedTasks: computed.equal('status', 'closed'),
+  isFilteringOpenTasks: computed.equal('status', 'open'),
+  isFilteredByType: computed.notEmpty('taskTypes'),
+  isFiltered: computed.or('isFilteredByType'),
 
-  taskTypes: Ember.computed('taskType', function() {
-    var taskTypes;
+  taskTypes: computed('taskType', function() {
+    let taskTypes;
     let array = this.get('taskType');
 
     if (array) {
@@ -45,12 +52,12 @@ export default Ember.Controller.extend({
     return taskTypes;
   }),
 
-  selectedTypes: Ember.computed('types', 'taskTypes', function() {
+  selectedTypes: computed('types', 'taskTypes', function() {
     let types = this.get('types');
     types.forEach((type) => {
       let taskTypes = this.get('taskTypes');
 
-      if(taskTypes.includes(type.get('param'))) {
+      if (taskTypes.includes(type.get('param'))) {
         type.set('selected', true);
       } else {
         type.set('selected', false);
@@ -69,13 +76,13 @@ export default Ember.Controller.extend({
       let taskTypes = this.get('taskTypes');
       let typeParam = type.get('param');
 
-      if(taskTypes.includes(typeParam)) {
+      if (taskTypes.includes(typeParam)) {
         taskTypes.removeObject(typeParam);
       } else {
         taskTypes.pushObject(typeParam);
       }
 
-      if(Ember.isEmpty(taskTypes)) {
+      if (isEmpty(taskTypes)) {
         this.set('taskType', null);
       } else {
         let types = taskTypes.join(',');
@@ -89,11 +96,11 @@ export default Ember.Controller.extend({
       let taskTypes = this.get('taskTypes');
       let typeParam = type.get('param');
 
-      if(taskTypes.includes(typeParam)) {
+      if (taskTypes.includes(typeParam)) {
         taskTypes.removeObject(typeParam);
       }
 
-      if(Ember.isEmpty(taskTypes)) {
+      if (isEmpty(taskTypes)) {
         this.set('taskType', null);
       } else {
         let types = taskTypes.join(',');
@@ -105,6 +112,6 @@ export default Ember.Controller.extend({
 
     filterByStatus(status) {
       this.set('taskStatus', status);
-    },
+    }
   }
 });

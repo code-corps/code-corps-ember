@@ -41,6 +41,6 @@ export default Component.extend({
       let comment = get(this, 'comment');
 
       this.sendAction('saveComment', comment);
-    },
-  },
+    }
+  }
 });

@@ -65,5 +65,5 @@ export default Component.extend({
     let category = this.get('category');
     let userCategories = this.get('userCategories');
     return userCategories.findUserCategory(category);
-  }),
+  })
 });

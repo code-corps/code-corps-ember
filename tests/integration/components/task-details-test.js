@@ -2,43 +2,50 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockMentionFetcher = Ember.Service.extend({
-  fetchBodyWithMentions: Ember.RSVP.resolve,
-  prefetchBodyWithMentions: Ember.K
+const {
+  K,
+  Object,
+  RSVP,
+  Service
+} = Ember;
+
+let mockMentionFetcher = Service.extend({
+  fetchBodyWithMentions: RSVP.resolve,
+  prefetchBodyWithMentions: K
 });
 
-let mockCurrentUser = Ember.Service.extend({
+let mockCurrentUser = Service.extend({
   user: {
     id: 1
   }
 });
 
-let mockStore = Ember.Service.extend({
+let mockStore = Service.extend({
   query() {
-    return Ember.RSVP.resolve([]);
+    return RSVP.resolve([]);
   }
 });
 
-let mockTask = Ember.Object.create({
+let mockTask = Object.create({
   title: 'A task',
   body: 'A <strong>body</strong>',
   containsCode: true,
   taskType: 'issue',
   user: { id: 1 },
   save() {
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 
-// let mockTaskWithMentions = Ember.Object.create({
+// let mockTaskWithMentions = Object.create({
 //   title: 'A task with mentions',
 //   body: '<p>Mentioning @user1 and @user2</p>',
 //   save() {
-//     return Ember.RSVP.resolve();
+//     return RSVP.resolve();
 //   },
 //   taskUserMentions: [
-//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
 //   ]
 // });
 
@@ -59,11 +66,10 @@ test('it renders', function(assert) {
   assert.equal(this.$('.task-details').length, 1, 'The component\'s element is rendered');
 });
 
-
 test('it renders all the ui elements properly bound', function(assert) {
   this.set('task', mockTask);
 
-  let mockMentionFetcher = Ember.Service.extend({
+  let mockMentionFetcher = Service.extend({
     prefetchBodyWithMentions() {
       return 'A body';
     }
@@ -77,8 +83,8 @@ test('it renders all the ui elements properly bound', function(assert) {
   assert.equal(this.$('.task-details .code-theme-selector').length, 1);
 });
 
-test('the task body is rendered as unescaped html', function (assert) {
-  let mockMentionFetcher = Ember.Service.extend({
+test('the task body is rendered as unescaped html', function(assert) {
+  let mockMentionFetcher = Service.extend({
     prefetchBodyWithMentions() {
       return 'A body with a <strong>strong element</strong>';
     }

@@ -1,7 +1,12 @@
 import Ember from 'ember';
 
+const {
+  get,
+  isPresent
+} = Ember;
+
 function parse(body, mentions) {
-  if (Ember.isPresent(body) && Ember.isPresent(mentions)) {
+  if (isPresent(body) && isPresent(mentions)) {
     return _parseMentions(body, mentions);
   } else {
     return body;
@@ -9,7 +14,7 @@ function parse(body, mentions) {
 }
 
 function _generateLink(mention) {
-  let username = Ember.get(mention, 'username');
+  let username = get(mention, 'username');
   return `<a href="/${username}" class="username">@${username}</a>`;
 }
 
@@ -18,9 +23,8 @@ function _parseMentions(body, mentions) {
   let currentPosition = 0;
 
   mentions.forEach((mention) => {
-    let indices = Ember.get(mention, 'indices');
-    let startIndex = indices[0];
-    let endIndex = indices[1];
+    let indices = get(mention, 'indices');
+    let [startIndex, endIndex] = indices;
 
     parsedBody += body.slice(currentPosition, startIndex);
     parsedBody += _generateLink(mention);

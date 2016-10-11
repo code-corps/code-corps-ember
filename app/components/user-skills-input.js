@@ -92,7 +92,7 @@ export default Component.extend({
 
     selectSkill() {
       this._selectSkill();
-    },
+    }
   },
 
   _reset() {
@@ -110,7 +110,7 @@ export default Component.extend({
       this.set('results', []);
     } else if (this.get('_isNewQuery')) {
       this.set('lastQuery', queryString);
-      store.query('skill', { query: queryString, limit: limit }).then((skills) => {
+      store.query('skill', { query: queryString, limit }).then((skills) => {
         this.set('results', skills);
         this.set('cursorAt', 0);
         this._updateSelected();
@@ -166,5 +166,5 @@ export default Component.extend({
         item.set('selected', false);
       }
     });
-  },
+  }
 });

@@ -1,17 +1,19 @@
-import Ember from "ember";
+import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 
+const { run } = Ember;
+
 let application;
 
 module('Acceptance: Signup', {
-  beforeEach: function() {
+  beforeEach() {
     application = startApp();
   },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
+  afterEach() {
+    run(application, 'destroy');
   }
 });
 
@@ -43,7 +45,7 @@ test('Successful signup', (assert) => {
 
   server.post('/users/', (db, request) => {
     let params = JSON.parse(request.requestBody).data.attributes;
-    params["state"] = "signed_up";
+    params.state = 'signed_up';
 
     assert.equal(params.username, 'username');
     assert.equal(params.email, 'email@example.com');
@@ -65,8 +67,8 @@ test('Successful signup', (assert) => {
     signInDone();
 
     return {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ",
-      user_id: 1,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ',
+      user_id: 1
     };
   });
 

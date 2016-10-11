@@ -1,6 +1,6 @@
 import {
   attribute,
-  text,
+  text
 } from 'ember-cli-page-object';
 
 export default {
@@ -12,7 +12,7 @@ export default {
     link: {
       scope: 'a',
       href: attribute('href'),
-      text: text(),
+      text: text()
     }
   },
   website: {
@@ -21,7 +21,7 @@ export default {
     link: {
       scope: 'a',
       href: attribute('href'),
-      text: text(),
+      text: text()
     }
-  },
+  }
 };

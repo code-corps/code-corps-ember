@@ -3,6 +3,8 @@ import attr from 'ember-data/attr';
 import { hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Model.extend({
   ability: attr(),
   kind: attr(),
@@ -10,7 +12,7 @@ export default Model.extend({
 
   userRoles: hasMany('user-role', { async: true }),
 
-  isCreative: Ember.computed.equal('kind', 'creative'),
-  isSupport: Ember.computed.equal('kind', 'support'),
-  isTechnology: Ember.computed.equal('kind', 'technology'),
+  isCreative: computed.equal('kind', 'creative'),
+  isSupport: computed.equal('kind', 'support'),
+  isTechnology: computed.equal('kind', 'technology')
 });

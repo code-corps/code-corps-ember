@@ -30,5 +30,5 @@ export default Component.extend({
 
   mouseEnter() {
     this.sendAction('hover', this.get('skill'));
-  },
+  }
 });

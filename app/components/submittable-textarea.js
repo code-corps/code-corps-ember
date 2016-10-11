@@ -1,22 +1,24 @@
 import Ember from 'ember';
 
-export default Ember.TextArea.extend({
-  keyDown: function(event) {
+const { TextArea } = Ember;
+
+export default TextArea.extend({
+  keyDown(event) {
     if (this._isValidCombination(event)) {
       event.preventDefault();
       this.sendAction('modifiedSubmit');
     }
   },
 
-  _hasCorrectModifier: function(event) {
+  _hasCorrectModifier(event) {
     return event.ctrlKey || event.metaKey;
   },
 
-  _isCorrectKeyCode: function(keyCode) {
+  _isCorrectKeyCode(keyCode) {
     return keyCode === 13;
   },
 
-  _isValidCombination: function(event) {
+  _isValidCombination(event) {
     return this._hasCorrectModifier(event) && this._isCorrectKeyCode(event.keyCode);
   }
 });

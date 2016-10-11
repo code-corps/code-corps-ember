@@ -10,13 +10,13 @@ export default Component.extend({
 
   session: service(),
 
-  click: function() {
+  click() {
     this.sendAction();
   },
 
   actions: {
-    invalidateSession: function() {
+    invalidateSession() {
       this.get('session').invalidate();
-    },
-  },
+    }
+  }
 });

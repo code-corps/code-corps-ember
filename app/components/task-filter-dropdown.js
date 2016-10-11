@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Component } = Ember;
+
 /**
   The task-filter-dropdown component composes the filter dropdown list that is
   used for selecting filters for the list of tasks.
@@ -15,7 +17,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['dropdown-menu'],
   tagName: 'ul',
 
@@ -49,6 +51,6 @@ export default Ember.Component.extend({
      */
     hide() {
       this.sendAction('hide');
-    },
+    }
   }
 });

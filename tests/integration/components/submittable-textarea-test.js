@@ -2,17 +2,19 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
+const { $ } = Ember;
+
 moduleForComponent('submittable-textarea', 'Integration | Component | submittable textarea', {
   integration: true
 });
 
-let pressCtrlEnter = Ember.$.Event('keydown', {
+let pressCtrlEnter = $.Event('keydown', {
   keyCode: 13,
   which: 13,
   ctrlKey: true
 });
 
-let pressCmdEnter = Ember.$.Event('keydown', {
+let pressCmdEnter = $.Event('keydown', {
   keyCode: 13,
   which: 13,
   metaKey: true

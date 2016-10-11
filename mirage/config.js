@@ -6,12 +6,12 @@ function generateCommentMentions(schema, comment) {
 
   matches.forEach((match) => {
     let username = match.substr(1);
-    let matchedUser = schema.users.where({ username: username }).models[0];
+    let [matchedUser] = schema.users.where({ username }).models;
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.create('commentUserMention', {
-        username: username,
+        username,
         indices: [startIndex, endIndex],
         userId: matchedUser.id,
         commentId: comment.id,
@@ -27,12 +27,12 @@ function generateTaskMentions(schema, task) {
 
   matches.forEach((match) => {
     let username = match.substr(1);
-    let matchedUser = schema.users.where({ username: username }).models[0];
+    let [matchedUser] = schema.users.where({ username }).models;
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.taskUserMentions.create({
-        username: username,
+        username,
         indices: [startIndex, endIndex],
         userId: matchedUser.id,
         taskId: task.id
@@ -47,12 +47,12 @@ function generatePreviewMentions(schema, preview) {
 
   matches.forEach((match) => {
     let username = match.substr(1);
-    let matchedUser = schema.users.where({ username: username }).models[0];
+    let [matchedUser] = schema.users.where({ username });
     if (matchedUser) {
       let startIndex = body.indexOf(match);
       let endIndex = startIndex + match.length - 1;
       schema.previewUserMentions.create({
-        username: username,
+        username,
         indices: [startIndex, endIndex],
         userId: matchedUser.id,
         previewId: preview.id
@@ -65,20 +65,20 @@ function generatePreviewMentions(schema, preview) {
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'organizations',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'user-categories', 'users',
+  'slugged-routes', 'user-categories', 'users'
 ];
 
 export default function() {
-  /////////////
-  // Categories
-  /////////////
+  /**
+  * Categories
+  */
 
   // GET /categories
   this.get('/categories');
 
-  ////////////////////////
-  // Comment user mentions
-  ////////////////////////
+  /**
+  * Comment user mentions
+  */
 
   // GET /comment-user-mentions
   this.get('/comment-user-mentions', (schema, request) => {
@@ -87,12 +87,12 @@ export default function() {
 
     generateCommentMentions(schema, comment);
 
-    return schema.commentUserMentions.where({ commentId: commentId });
+    return schema.commentUserMentions.where({ commentId });
   });
 
-  ///////////
-  // Comments
-  ///////////
+  /**
+  * Comments
+  */
 
   // POST /comments
   this.post('/comments', function(schema) {
@@ -120,9 +120,9 @@ export default function() {
     return comment;
   });
 
-  ///////////////////////////
-  // Organization memberships
-  ///////////////////////////
+  /**
+  * Organization memberships
+  */
 
   // GET /organization-memberships
   this.get('/organization-memberships', { coalesce: true });
@@ -139,17 +139,17 @@ export default function() {
   // PATCH /organization-memberships/:id
   this.patch('/organization-memberships/:id');
 
-  ////////////////
-  // Organizations
-  ////////////////
+  /**
+  * Organizations
+  */
 
   this.get('/organizations', { coalesce: true });
 
   this.get('/organizations/:id');
 
-  ///////////
-  // Previews
-  ///////////
+  /**
+  * Previews
+  */
 
   // POST /previews
   this.post('/previews', function(schema) {
@@ -159,9 +159,9 @@ export default function() {
     return schema.create('preview', attrs);
   });
 
-  /////////////////////
-  // Preview user mentions
-  /////////////////////
+  /**
+  * Preview user mentions
+  */
 
   // GET /preview-user-mentions
   this.get('/preview-user-mentions', (schema, request) => {
@@ -170,12 +170,12 @@ export default function() {
 
     generatePreviewMentions(schema, preview);
 
-    return schema.previewUserMentions.where({ previewId: previewId });
+    return schema.previewUserMentions.where({ previewId });
   });
 
-  /////////////////////
-  // Project categories
-  /////////////////////
+  /**
+  * Project categories
+  */
 
   // GET /project-categories
   this.get('/project-categories');
@@ -183,9 +183,9 @@ export default function() {
   // GET /project-categories
   this.get('/project-categories/:id');
 
-  /////////////////
-  // Project skills
-  /////////////////
+  /**
+  * Project skills
+  */
 
   // GET /project-skills
   this.get('/project-skills');
@@ -193,9 +193,9 @@ export default function() {
   // GET /project-skills
   this.get('/project-skills/:id');
 
-  ///////////
-  // Projects
-  ///////////
+  /**
+  * Projects
+  */
 
   // GET /projects
   this.get('/projects');
@@ -204,9 +204,9 @@ export default function() {
   this.get('/projects/:id');
 
   // GET project/:id/tasks
-  this.get("/projects/:projectId/tasks", (schema, request) => {
-    let projectId = request.params.projectId;
-    let taskType = request.queryParams["task_type"];
+  this.get('/projects/:projectId/tasks', (schema, request) => {
+    let { projectId } = request.params;
+    let taskType = request.queryParams.task_type;
     let taskStatus = request.queryParams.status;
 
     let pageNumber = parseInt(request.queryParams['page[page]']);
@@ -214,10 +214,10 @@ export default function() {
 
     let project = schema.projects.find(projectId);
 
-    let tasks = project.tasks;
+    let { tasks } = project;
 
     if (taskType) {
-      tasks = tasks.filter((p) =>  p.taskType === taskType );
+      tasks = tasks.filter((p) =>  p.taskType === taskType);
     }
 
     if (taskStatus) {
@@ -233,10 +233,10 @@ export default function() {
     // hacky, but the only way I could find to pass in a mocked meta object
     // for our pagination tests
     tasksPage.meta = {
-      "total_records": tasks.models.length,
-      "total_pages": Math.ceil(tasks.models.length / pageSize),
-      "page_size": pageSize,
-      "current_page": pageNumber || 1
+      'total_records': tasks.models.length,
+      'total_pages': Math.ceil(tasks.models.length / pageSize),
+      'page_size': pageSize,
+      'current_page': pageNumber || 1
     };
 
     return tasksPage;
@@ -248,7 +248,9 @@ export default function() {
     let number = parseInt(request.params.number);
 
     let project = schema.projects.find(projectId);
-    let task = project.tasks.filter((p) => { return p.number === number; }).models[0];
+    let [task] = project.tasks.filter((p) => {
+      return p.number === number;
+    }).models;
 
     task.comments.models.forEach((comment) => {
       generateCommentMentions(schema, comment);
@@ -269,45 +271,46 @@ export default function() {
     return project;
   });
 
-  ////////
-  // Roles
-  ////////
+  /**
+  * Roles
+  */
 
   // GET /roles
   this.get('/roles');
 
-  ///////////////////////////
-  // Slugs and slugged routes
-  ///////////////////////////
+  /**
+  * Slugs and slugged routes
+  */
 
   // GET /:slug
   this.get('/:slug', (schema, request) => {
     if (routes.includes(request.params.slug)) {
       console.error('API route being caught in /:slug in mirage/config.js', request.params.slug);
     }
-    return schema.sluggedRoutes.where({'slug': request.params.slug }).models[0];
+    return schema.sluggedRoutes.where({ 'slug': request.params.slug }).models[0];
   });
 
   // GET /:slug/projects
   this.get('/:slug/projects', (schema, request) => {
-    let slug = request.params.slug;
-    let organization = schema.organizations.where({ 'slug': slug }).models[0];
+    let { slug } = request.params;
+    let [organization] = schema.organizations.where({ slug }).models;
     return organization.projects;
   });
 
   // GET /:slug/:project_slug
   this.get('/:sluggedRouteSlug/:projectSlug', (schema, request) => {
-    let sluggedRouteSlug = request.params.sluggedRouteSlug;
-    let projectSlug = request.params.projectSlug;
+    let { sluggedRouteSlug, projectSlug } = request.params;
 
-    let sluggedRoute = schema.sluggedRoutes.where({ 'slug': sluggedRouteSlug }).models[0];
+    let [sluggedRoute] = schema.sluggedRoutes.where({ 'slug': sluggedRouteSlug }).models;
 
-    return sluggedRoute.organization.projects.filter((p) => { return p.slug === projectSlug; }).models[0];
+    return sluggedRoute.organization.projects.filter((p) => {
+      return p.slug === projectSlug;
+    }).models[0];
   });
 
-  /////////
-  // Skills
-  /////////
+  /**
+  * Skills
+  */
 
   // GET /skills
   this.get('/skills');
@@ -315,9 +318,9 @@ export default function() {
   // GET /skills/:id
   this.get('/skills/:id');
 
-  /////////////////////
-  // Task user mentions
-  /////////////////////
+  /**
+  * Task user mentions
+  */
 
   // GET /task-user-mentions
   this.get('/task-user-mentions', (schema, request) => {
@@ -326,12 +329,12 @@ export default function() {
 
     generateTaskMentions(schema, task);
 
-    return schema.taskUserMentions.where({ taskId: taskId });
+    return schema.taskUserMentions.where({ taskId });
   });
 
-  ////////
-  // Tasks
-  ////////
+  /**
+  * Tasks
+  */
 
   // POST /tasks
   this.post('/tasks', function(schema) {
@@ -365,33 +368,32 @@ export default function() {
 
   // GET tasks/:number/comments
   this.get('/tasks/:taskId/comments', function(schema, request) {
-    let taskId = request.params.taskId;
+    let { taskId } = request.params;
     let task = schema.tasks.find(taskId);
 
     return task.comments;
   });
 
-  ////////
-  // Token
-  ////////
+  /**
+  * Token
+  */
 
   // POST /token
   this.post('/token', (db, request) => {
-    console.log(request);
     let json = JSON.parse(request.requestBody);
 
-    if(json.username === "volunteers@codecorps.org" && json.password === "password") {
+    if (json.username === 'volunteers@codecorps.org' && json.password === 'password') {
       return {
         // token encoded at https://jwt.io/
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ"
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ'
       };
     } else {
-      let errorDetail = "Your password doesn't match the email " + json.username + ".";
+      let errorDetail = `Your password doesn't match the email ${json.username}.`;
       return new Mirage.Response(401, {}, {
         errors: [
           {
-            id: "UNAUTHORIZED",
-            title: "401 Unauthorized",
+            id: 'UNAUTHORIZED',
+            title: '401 Unauthorized',
             detail: errorDetail,
             status: 401
           }
@@ -400,9 +402,9 @@ export default function() {
     }
   });
 
-  ////////
-  // Users
-  ////////
+  /**
+  * Users
+  */
 
   this.get('/users', { coalesce: true });
 
@@ -429,7 +431,7 @@ export default function() {
         attrs.state = 'selected_skills';
         break;
       default:
-        console.error("You added a transition without changing the state machine in Mirage.");
+        console.error('You added a transition without changing the state machine in Mirage.');
         break;
     }
 
@@ -448,9 +450,9 @@ export default function() {
     return { available: true, valid: true };
   });
 
-  //////////////////
-  // User categories
-  //////////////////
+  /**
+  * User categories
+  */
 
   // GET /user-categories
   this.get('/user-categories');
@@ -464,9 +466,9 @@ export default function() {
   // DELETE /user-categories/:id
   this.delete('/user-categories/:id');
 
-  /////////////
-  // User roles
-  /////////////
+  /**
+  * User roles
+  */
 
   // POST /user-roles
   this.post('/user-roles');
@@ -474,9 +476,9 @@ export default function() {
   // DELETE /user-roles
   this.delete('/user-roles/:id');
 
-  //////////////
-  // User skills
-  //////////////
+  /**
+  * User skills
+  */
 
   // GET /user-skills
   this.get('/user-skills');

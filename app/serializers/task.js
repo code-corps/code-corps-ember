@@ -1,7 +1,7 @@
 import ApplicationSerializer from './application';
 
 export default ApplicationSerializer.extend({
-  serializeAttribute: function(snapshot, json, key, attribute) {
+  serializeAttribute(snapshot, json, key, attribute) {
     // for creating records, just regularly serialize the payload
     if (snapshot.record.get('isNew')) {
       this._super(snapshot, json, key, attribute);
@@ -24,5 +24,5 @@ export default ApplicationSerializer.extend({
         }
       }
     }
-  },
+  }
 });

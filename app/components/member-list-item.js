@@ -16,28 +16,28 @@ export default Component.extend({
     approve(membership) {
       membership.set('role', 'contributor');
       return membership.save().then(() => {
-        this._flashSuccess("Membership approved");
+        this._flashSuccess('Membership approved');
       });
     },
 
     deny(membership) {
-      if (confirm("Are you sure want to deny their membership?")) {
+      if (confirm('Are you sure want to deny their membership?')) {
         return membership.destroyRecord().then(() => {
-          this._flashSuccess("Membership denied");
+          this._flashSuccess('Membership denied');
         });
       }
-    },
+    }
   },
 
   _flashSuccess(message) {
-    const flashMessages = get(this, 'flashMessages');
+    let flashMessages = get(this, 'flashMessages');
     flashMessages.clearMessages();
     return flashMessages.add({
-      message: message,
+      message,
       type: 'success',
       fixed: true,
       sticky: false,
-      timeout: 5000,
+      timeout: 5000
     });
-  },
+  }
 });

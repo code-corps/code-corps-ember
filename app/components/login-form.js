@@ -4,7 +4,7 @@ const {
   Component,
   get,
   inject: { service },
-  set,
+  set
 } = Ember;
 
 /**
@@ -42,9 +42,8 @@ export default Component.extend({
       let credentials = this.getProperties('identification', 'password');
 
       get(this, 'session').authenticate('authenticator:jwt', credentials).catch((reason) => {
-        console.log(reason);
         set(this, 'errors', reason.error || reason);
       });
-    },
-  },
+    }
+  }
 });

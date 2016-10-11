@@ -7,7 +7,7 @@ import {
   hasClass,
   text,
   triggerable,
-  visitable,
+  visitable
 } from 'ember-cli-page-object';
 import userSkillsInput from './components/user-skills-input';
 import navMenu from './components/navigation-menu';
@@ -24,7 +24,7 @@ export default create({
   lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
   footer: {
-    scope: '.site-footer',
+    scope: '.site-footer'
   },
 
   startButton: {
