@@ -2,10 +2,13 @@ import Ember from 'ember';
 import { Ability } from 'ember-can';
 
 const {
-  computed: { alias, empty, notEmpty, or }
+  computed: { alias, empty, notEmpty, or },
+  inject: { service }
 } = Ember;
 
 export default Ability.extend({
+  credentials: service(),
+
   isAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
   userCanJoinOrganization: empty('membership'),
   userCanLeaveOrganization: or('membership.isContributor', 'membership.isAdmin'),
@@ -18,5 +21,8 @@ export default Ability.extend({
 
   canCreateIssueTask: true,
   canCreateIdeaTask: true,
-  canCreateTaskTask: alias('isAtLeastContributor')
+  canCreateTaskTask: alias('isAtLeastContributor'),
+
+  membership: alias('credentials.currentUserMembership'),
+  organization: alias('model')
 });
