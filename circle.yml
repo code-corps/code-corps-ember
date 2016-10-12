@@ -2,12 +2,14 @@ machine:
   node:
     version: 4.5.0
 dependencies:
+  pre:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
   cache_directories:
     - /home/ubuntu/nvm/versions/node/v4.5.0/bin
     - /home/ubuntu/nvm/versions/node/v4.5.0/lib/node_modules
   override:
-    - npm install -g bower
-    - npm install
+    - yarn global add bower
+    - yarn
     - bower install
     - npm rebuild node-sass
 deployment:
