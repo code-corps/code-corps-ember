@@ -10,7 +10,7 @@
   "scripts": {
     "build": "ember build",
     "start": "ember server",
-    "test": "ember exam"
+    "test": "ember try:one default"
   },
   "repository": "",
   "engines": {
