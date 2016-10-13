@@ -14,7 +14,7 @@ const {
   ## default usage
 
   ```Handlebars
-  {{error-wrapper model=model}}
+  {{error-wrapper error=model}}
   ```
 
   @class error-wrapper
@@ -49,10 +49,10 @@ export default Component.extend({
   */
   // Map the HTTP status codes into an array or
   // an empty array if there are no such status codes
-  httpStatusCodes: computed('model', function() {
-    let model = this.get('model');
-    if (model && model.hasOwnProperty('errors')) {
-      let { errors } = model;
+  httpStatusCodes: computed('error', function() {
+    let error = this.get('error');
+    if (error && error.hasOwnProperty('errors')) {
+      let { errors } = error;
       return errors.map(function(err) {
         return err.status;
       });

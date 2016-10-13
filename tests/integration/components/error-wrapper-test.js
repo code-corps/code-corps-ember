@@ -13,14 +13,14 @@ test('it renders', function(assert) {
 test('it renders all required elements for the 404 case', function(assert) {
   assert.expect(6);
 
-  let model = {
+  let error = {
     errors: [{
       status: 404
     }]
   };
 
-  this.set('model', model);
-  this.render(hbs`{{error-wrapper model=model}}`);
+  this.set('model', error);
+  this.render(hbs`{{error-wrapper error=model}}`);
 
   assert.equal(this.$('.not-found-img').length, 1, 'The 404 image renders');
   assert.equal(this.$('h1').text().trim(), '404 Error', 'The title renders');
@@ -33,14 +33,14 @@ test('it renders all required elements for the 404 case', function(assert) {
 test('it renders all required elements for the general error case', function(assert) {
   assert.expect(6);
 
-  let model = {
+  let error = {
     errors: [{
       status: 500
     }]
   };
 
-  this.set('model', model);
-  this.render(hbs`{{error-wrapper model=model}}`);
+  this.set('model', error);
+  this.render(hbs`{{error-wrapper error=model}}`);
 
   assert.equal(this.$('.server-error-img').length, 1, 'The general error image renders');
   assert.equal(this.$('h1').text().trim(), 'Server Error', 'The title renders');
