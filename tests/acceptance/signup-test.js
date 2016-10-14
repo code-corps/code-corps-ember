@@ -1,23 +1,11 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Signup');
 
-let application;
-
-module('Acceptance: Signup', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('Signup form is accessible from the main site', (assert) => {
+test('Signup form is accessible from the main site', function(assert) {
   assert.expect(2);
 
   indexPage.visit();
@@ -32,7 +20,7 @@ test('Signup form is accessible from the main site', (assert) => {
   });
 });
 
-test('Successful signup', (assert) => {
+test('Successful signup', function(assert) {
   assert.expect(6);
 
   signupPage.visit();
@@ -77,7 +65,7 @@ test('Successful signup', (assert) => {
   });
 });
 
-test('Failed signup due to invalid data stays on same page', (assert) => {
+test('Failed signup due to invalid data stays on same page', function(assert) {
   assert.expect(1);
 
   signupPage.visit();

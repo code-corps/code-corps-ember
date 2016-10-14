@@ -1,25 +1,13 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 import taskPage from '../pages/project/tasks/task';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Task Comments');
 
-let application;
-
-module('Acceptance: Task Comments', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('Task comments are displayed correctly', (assert) => {
+test('Task comments are displayed correctly', function(assert) {
   assert.expect(1);
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
@@ -39,7 +27,7 @@ test('Task comments are displayed correctly', (assert) => {
   });
 });
 
-test('A comment can be added to a task', (assert) => {
+test('A comment can be added to a task', function(assert) {
   assert.expect(6);
 
   let project = createProjectWithSluggedRoute();
@@ -47,7 +35,7 @@ test('A comment can be added to a task', (assert) => {
   let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
     organization: organization.slug,
@@ -72,11 +60,11 @@ test('A comment can be added to a task', (assert) => {
   });
 });
 
-test('Comment preview works during creation', (assert) => {
+test('Comment preview works during creation', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
@@ -103,11 +91,11 @@ test('Comment preview works during creation', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/* test('Comment user mentions are being rendered during creation', (assert) => {
+/* test('Comment user mentions are being rendered during creation', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
   let organization = project.organization;
@@ -140,14 +128,14 @@ test('Comment preview works during creation', (assert) => {
   });
 });*/
 
-test('When comment creation fails due to validation, validation errors are displayed', (assert) => {
+test('When comment creation fails due to validation, validation errors are displayed', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
     organization: organization.slug,
@@ -187,14 +175,14 @@ test('When comment creation fails due to validation, validation errors are displ
   });
 });
 
-test('When comment creation fails due to non-validation issues, the error is displayed', (assert) => {
+test('When comment creation fails due to non-validation issues, the error is displayed', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
     organization: organization.slug,
@@ -228,7 +216,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
   });
 });
 
-test('A comment can only be edited by the author', (assert) => {
+test('A comment can only be edited by the author', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -247,7 +235,7 @@ test('A comment can only be edited by the author', (assert) => {
 
   andThen(() => {
     assert.notOk(taskPage.commentItem.editLink.isVisible, 'Edit link is not rendered when logged out');
-    authenticateSession(application, { user_id: user.id });
+    authenticateSession(this.application, { user_id: user.id });
     taskPage.visit({
       organization: organization.slug,
       project: project.slug,
@@ -260,11 +248,11 @@ test('A comment can only be edited by the author', (assert) => {
   });
 });
 
-test('Comment editing with preview works', (assert) => {
+test('Comment editing with preview works', function(assert) {
   assert.expect(4);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
@@ -304,11 +292,11 @@ test('Comment editing with preview works', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/* test('Comment user mentions are being rendered during editing', (assert) => {
+/* test('Comment user mentions are being rendered during editing', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
   let organization = project.organization;

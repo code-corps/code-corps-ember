@@ -6,6 +6,9 @@ moduleForComponent('user-sidebar', 'Integration | Component | user sidebar', {
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 

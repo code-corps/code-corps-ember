@@ -1,24 +1,12 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Project');
 
-let application;
-
-module('Acceptance: Project', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('It renders navigation properly', (assert) => {
+test('It renders navigation properly', function(assert) {
   assert.expect(2);
 
   let project = createProjectWithSluggedRoute();
@@ -33,7 +21,7 @@ test('It renders navigation properly', (assert) => {
   });
 });
 
-test('Navigation works', (assert) => {
+test('Navigation works', function(assert) {
   assert.expect(6);
 
   let project = createProjectWithSluggedRoute();
@@ -56,7 +44,7 @@ test('Navigation works', (assert) => {
   });
 });
 
-test('It renders all the required ui elements for task list', (assert) => {
+test('It renders all the required ui elements for task list', function(assert) {
   assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
@@ -76,7 +64,7 @@ test('It renders all the required ui elements for task list', (assert) => {
   });
 });
 
-test('Task filtering by type works', (assert) => {
+test('Task filtering by type works', function(assert) {
   assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
@@ -111,7 +99,7 @@ test('Task filtering by type works', (assert) => {
   });
 });
 
-test('Task filtering by status works', (assert) => {
+test('Task filtering by status works', function(assert) {
   assert.expect(8);
 
   let project = createProjectWithSluggedRoute();
@@ -182,7 +170,7 @@ test('Task paging links are correct', (assert) =>  {
   });
 });
 
-test('Paging of tasks works', (assert) => {
+test('Paging of tasks works', function(assert) {
   assert.expect(3);
 
   let project = createProjectWithSluggedRoute();
@@ -203,7 +191,7 @@ test('Paging of tasks works', (assert) => {
   });
 });
 
-test('Paging and filtering of tasks combined works', (assert) => {
+test('Paging and filtering of tasks combined works', function(assert) {
   assert.expect(9);
 
   let project = createProjectWithSluggedRoute();
@@ -252,7 +240,7 @@ test('Paging and filtering of tasks combined works', (assert) => {
   });
 });
 
-test('Paging and filtering uses query parameters', (assert) => {
+test('Paging and filtering uses query parameters', function(assert) {
   assert.expect(6);
 
   let project = createProjectWithSluggedRoute();
@@ -295,7 +283,7 @@ test('Paging and filtering uses query parameters', (assert) => {
   });
 });
 
-test('A user can join the organization of the project', (assert) => {
+test('A user can join the organization of the project', function(assert) {
   assert.expect(5);
 
   let project = createProjectWithSluggedRoute();
@@ -307,7 +295,7 @@ test('A user can join the organization of the project', (assert) => {
   andThen(() => {
     assert.equal(projectTasksIndexPage.projectDetails.signUpLink.text, 'Sign up', 'The link to sign up is present when logged out');
 
-    authenticateSession(application, { user_id: user.id });
+    authenticateSession(this.application, { user_id: user.id });
     visit(projectURL);
   });
 

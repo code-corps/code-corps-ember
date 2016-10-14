@@ -24,7 +24,7 @@ test('visiting /projects', function(assert) {
   });
 });
 
-test('members are displayed correctly', (assert) => {
+test('members are displayed correctly', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
   server.createList('organizationMembership', 10, {

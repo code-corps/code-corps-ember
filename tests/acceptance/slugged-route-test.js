@@ -1,22 +1,10 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import sluggedRoutePage from '../pages/slugged-route';
 
-const { run } = Ember;
-
-let application;
-
-module('Acceptance: Slugged Route', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Slugged Route');
 
 test('It renders user details when the sluggedRoute model is a user', function(assert) {
   assert.expect(1);
