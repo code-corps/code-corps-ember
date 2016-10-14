@@ -1,6 +1,5 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
@@ -8,20 +7,9 @@ import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 import projectTasksNewPage from '../pages/project/tasks/new';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Task Creation');
 
-let application;
-
-module('Acceptance: Task Creation', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('Creating a task requires logging in', (assert) => {
+test('Creating a task requires logging in', function(assert) {
   assert.expect(2);
 
   let project = createProjectWithSluggedRoute();
@@ -45,13 +33,13 @@ test('Creating a task requires logging in', (assert) => {
   });
 });
 
-test('A task can be successfully created', (assert) => {
+test('A task can be successfully created', function(assert) {
   assert.expect(9);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
@@ -82,13 +70,13 @@ test('A task can be successfully created', (assert) => {
   // TODO: Make sure we got redirected to the task route and task is properly rendered
 });
 
-test('Task preview works during creation', (assert) => {
+test('Task preview works during creation', function(assert) {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksNewPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -103,7 +91,7 @@ test('Task preview works during creation', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/* test('Task preview during creation renders user mentions', (assert) => {
+/* test('Task preview during creation renders user mentions', function(assert) {
   assert.expect(1);
 
   let project = createProjectWithSluggedRoute();
@@ -124,13 +112,13 @@ test('Task preview works during creation', (assert) => {
   });
 });*/
 
-test('When task creation succeeeds, the user is redirected to the task page for the new task', (assert) => {
+test('When task creation succeeeds, the user is redirected to the task page for the new task', function(assert) {
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -146,12 +134,12 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   });
 });
 
-test('When task creation fails due to validation, validation errors are displayed', (assert) => {
+test('When task creation fails due to validation, validation errors are displayed', function(assert) {
   assert.expect(1);
   let user = server.schema.users.create({ username: 'test_user' });
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -195,14 +183,14 @@ test('When task creation fails due to validation, validation errors are displaye
   andThen(() => assert.equal(projectTasksNewPage.errors().count, 4));
 });
 
-test('When task creation fails due to non-validation issues, the error is displayed', (assert) => {
+test('When task creation fails due to non-validation issues, the error is displayed', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 

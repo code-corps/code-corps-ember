@@ -10,6 +10,9 @@ moduleForComponent('signup-username-input', 'Integration | Component | signup us
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 

@@ -1,24 +1,12 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 import loginPage from '../pages/login';
 
-const { run } = Ember;
-
-let application;
-
-module('Acceptance: Navigation', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Navigation');
 
 test('Logged out, can sign up', function(assert) {
   assert.expect(2);
@@ -48,7 +36,7 @@ test('Logged in, from user menu can visit profile', function(assert) {
   assert.expect(2);
 
   let user = createUserWithSluggedRoute();
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -68,7 +56,7 @@ test('Logged in, from user menu can visit profile settings', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
   andThen(function() {
@@ -87,7 +75,7 @@ test('Logged in, from user menu can log out', function(assert) {
   assert.expect(1);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
   andThen(function() {

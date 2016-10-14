@@ -1,26 +1,14 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import indexPage from '../pages/index';
 
-const { run } = Ember;
-
-let application;
-
-module('Acceptance: Logout', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Logout');
 
 test('Logging out', function(assert) {
   assert.expect(2);
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
   indexPage.visit();
   andThen(function() {
     assert.equal(indexPage.navMenu.userMenu.logOut.text, 'Log out', 'Page contains logout link');

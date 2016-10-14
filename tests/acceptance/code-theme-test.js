@@ -1,20 +1,8 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import indexPage from '../pages/index';
 
-const { run } = Ember;
-
-let application;
-
-module('Acceptance: Code Theme', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Code Theme');
 
 test('Code theme class exists on the main container', function(assert) {
   assert.expect(1);

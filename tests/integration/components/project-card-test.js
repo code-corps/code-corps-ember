@@ -12,6 +12,9 @@ moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 

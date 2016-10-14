@@ -10,6 +10,9 @@ moduleForComponent('signup-email-input', 'Integration | Component | signup email
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 

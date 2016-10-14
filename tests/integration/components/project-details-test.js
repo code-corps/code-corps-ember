@@ -6,6 +6,9 @@ moduleForComponent('project-details', 'Integration | Component | project details
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 

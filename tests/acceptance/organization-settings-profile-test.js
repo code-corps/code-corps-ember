@@ -1,26 +1,14 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import fillInFileInput from '../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../helpers/remove-double-quotes';
 import organizationPage from '../pages/organization';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Organization Settings – Profile');
 
-let application;
-
-module('Acceptance: Organization Settings – Profile', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('it requires authentication', (assert) => {
+test('it requires authentication', function(assert) {
   assert.expect(1);
 
   let organization = createOrganizationWithSluggedRoute();
@@ -31,7 +19,7 @@ test('it requires authentication', (assert) => {
   });
 });
 
-test('it allows editing of organization profile', (assert) => {
+test('it allows editing of organization profile', function(assert) {
   assert.expect(4);
 
   let user = server.create('user');
@@ -44,7 +32,7 @@ test('it allows editing of organization profile', (assert) => {
     role: 'admin'
   });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   organizationPage.visitSettingsProfile({ organization: organization.slug });
   andThen(() => {
@@ -70,7 +58,7 @@ test('it allows editing of organization profile', (assert) => {
   });
 });
 
-test("it allows editing of organization's image", (assert) => {
+test("it allows editing of organization's image", function(assert) {
   assert.expect(4);
 
   let fileName = 'file.png';
@@ -86,7 +74,7 @@ test("it allows editing of organization's image", (assert) => {
     role: 'admin'
   });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   organizationPage.visitSettingsProfile({ organization: organization.slug });
 
