@@ -1,24 +1,12 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectAboutPage from '../pages/project/about';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Project - About');
 
-let application;
-
-module('Acceptance: Project - About', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('When unauthenticated, and project has no long description, it shows proper UI', (assert) => {
+test('When unauthenticated, and project has no long description, it shows proper UI', function(assert) {
   assert.expect(2);
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
@@ -38,7 +26,7 @@ test('When unauthenticated, and project has no long description, it shows proper
   });
 });
 
-test('When unauthenticated, and project has long description, it shows the project long description', (assert) => {
+test('When unauthenticated, and project has long description, it shows the project long description', function(assert) {
   assert.expect(2);
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
@@ -58,7 +46,7 @@ test('When unauthenticated, and project has long description, it shows the proje
   });
 });
 
-test('When authenticated as admin, and project has no long description, it allows setting it', (assert) => {
+test('When authenticated as admin, and project has no long description, it allows setting it', function(assert) {
   assert.expect(4);
 
   let user = server.create('user');
@@ -71,7 +59,7 @@ test('When authenticated as admin, and project has no long description, it allow
     organization
   });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
     organization: organization.slug,
@@ -91,7 +79,7 @@ test('When authenticated as admin, and project has no long description, it allow
   });
 });
 
-test('When authenticated as admin, and project has long description, it allows editing it', (assert) => {
+test('When authenticated as admin, and project has long description, it allows editing it', function(assert) {
   assert.expect(4);
 
   let user = server.create('user');
@@ -104,7 +92,7 @@ test('When authenticated as admin, and project has long description, it allows e
     organization
   });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
     organization: organization.slug,

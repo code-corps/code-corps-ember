@@ -1,24 +1,12 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import userProfile from '../pages/user';
 
-const { run } = Ember;
+moduleForAcceptance('Acceptance | Profile');
 
-let application;
-
-module('Acceptance: Profile', {
-  beforeEach() {
-    application = startApp();
-  },
-  afterEach() {
-    run(application, 'destroy');
-  }
-});
-
-test('it displays the user-details component with user details', (assert) => {
+test('it displays the user-details component with user details', function(assert) {
   assert.expect(5);
 
   let user = createUserWithSluggedRoute();
@@ -36,7 +24,7 @@ test('it displays the user-details component with user details', (assert) => {
   });
 });
 
-test('the user can navigate to an organization from the organizations list', (assert) => {
+test('the user can navigate to an organization from the organizations list', function(assert) {
   assert.expect(2);
 
   let user = createUserWithSluggedRoute();
