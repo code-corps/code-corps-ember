@@ -114,6 +114,34 @@ test('user can switch between view and edit mode for task body', function(assert
   assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
 });
 
+test('it saves', function(assert) {
+  assert.expect(2);
+
+  this.set('task', mockTask);
+  let mockMentionFetcher = Service.extend({
+    fetchBodyWithMentions(task) {
+      return RSVP.resolve(task.body);
+    },
+    prefetchBodyWithMentions() {
+      return 'A body';
+    }
+  });
+
+  this.register('service:mention-fetcher', mockMentionFetcher);
+
+  this.on('route-save', (task) => {
+    task.set('body', 'A new body');
+    return RSVP.resolve(task);
+  });
+
+  this.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
+  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A body', 'The original body is correct');
+
+  this.$('.task-body .edit').click();
+  this.$('.task-body .editor-with-preview textarea').val('A new body').trigger('change');
+  this.$('.task-body .save').click();
+  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A new body', 'The body is saved');
+});
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
 /*
 test('mentions are rendered on task body in read-only mode', function(assert) {
