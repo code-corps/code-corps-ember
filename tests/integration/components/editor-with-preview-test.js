@@ -1,12 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   $,
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
 let mockPreview = Object.create({
@@ -17,23 +17,23 @@ let mockPreview = Object.create({
   }
 });
 
-let mockStore = Service.extend({
+let mockStore = {
   createRecord() {
     return mockPreview;
   }
-});
+};
 
-let mockMentionFetcher = Service.extend({
+let mockMentionFetcher = {
   fetchBodyWithMentions() {
     return RSVP.resolve('Lorem ipsum <strong>bla</strong>');
   }
-});
+};
 
 moduleForComponent('editor-with-preview', 'Integration | Component | editor with preview', {
   integration: true,
   beforeEach() {
-    this.register('service:store', mockStore);
-    this.register('service:mention-fetcher', mockMentionFetcher);
+    stubService(this, 'store', mockStore);
+    stubService(this, 'mention-fetcher', mockMentionFetcher);
   }
 });
 
@@ -182,22 +182,6 @@ test('it clears the editor style when previewing and done loading', function(ass
   this.set('isLoading', false);
   assert.equal(this.$('.editor-with-preview')[0].hasAttribute('style'), false);
 });
-
-// test('it autoresizes to a max height of 350px', function(assert) {
-//   assert.expect(3);
-//
-//   this.render(hbs`{{editor-with-preview input=input}}`);
-//
-//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
-//
-//   var text = "";
-//   for(var i = 0; i < 100; i++) { text += "\n"; }
-//   this.set('input', text);
-//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '350px');
-//
-//   this.set('input', '');
-//   assert.equal(this.$('.editor-with-preview textarea').css('height'), '100px');
-// });
 
 test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {
   assert.expect(2);

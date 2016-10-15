@@ -2,16 +2,14 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import mockRouting from '../../helpers/mock-routing';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   $,
-  Object,
-  Service
+  Object
 } = Ember;
 
-let mockSession = Service.extend({
-  isAuthenticated: true
-});
+let mockSession = { isAuthenticated: true };
 
 let pressCtrlEnter = $.Event('keydown', {
   keyCode: 13,
@@ -36,7 +34,7 @@ test('it renders', function(assert) {
 test('it yelds to content', function(assert) {
   assert.expect(1);
 
-  this.register('service:session', mockSession);
+  stubService(this, 'session', mockSession);
 
   this.render(hbs`{{#create-comment-form}}Random content{{/create-comment-form}}`);
   let componentTextContent = this.$('form.create-comment-form').text().trim();
@@ -46,7 +44,7 @@ test('it yelds to content', function(assert) {
 test('it renders the proper elements', function(assert) {
   assert.expect(2);
 
-  this.register('service:session', mockSession);
+  stubService(this, 'session', mockSession);
 
   this.set('comment', {});
 
@@ -58,7 +56,7 @@ test('it renders the proper elements', function(assert) {
 test('it calls action when user clicks submit', function(assert) {
   assert.expect(1);
 
-  this.register('service:session', mockSession);
+  stubService(this, 'session', mockSession);
 
   this.set('comment', Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {
@@ -72,7 +70,7 @@ test('it calls action when user clicks submit', function(assert) {
 test('it calls action when user hits ctrl+enter', function(assert) {
   assert.expect(1);
 
-  this.register('service:session', mockSession);
+  stubService(this, 'session', mockSession);
 
   this.set('comment', Object.create({ markdown: 'Test markdown' }));
   this.on('saveComment', (comment) => {

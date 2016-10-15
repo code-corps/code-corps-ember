@@ -1,23 +1,21 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
-
-let mockStore = Service.extend({
-  query() {
-    return RSVP.resolve([]);
-  }
-});
 
 moduleForComponent('task-comment-list', 'Integration | Component | task comment list', {
   integration: true,
   beforeEach() {
-    this.register('service:store', mockStore);
+    stubService(this, 'store', {
+      query() {
+        return RSVP.resolve([]);
+      }
+    });
   }
 });
 

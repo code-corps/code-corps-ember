@@ -1,11 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  K,
-  Service
-} = Ember;
+const { K } = Ember;
 
 moduleForComponent('project-categories-list', 'Integration | Component | project categories list', {
   integration: true
@@ -29,10 +27,7 @@ let categories = [
 test('it renders the categories and sorts them by name', function(assert) {
   assert.expect(4);
 
-  let mockUserCategoriesService = Service.extend({
-    findUserCategory: K
-  });
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', { findUserCategory: K });
 
   this.set('categories', categories);
   this.render(hbs`{{project-categories-list categories=categories}}`);

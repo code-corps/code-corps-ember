@@ -1,16 +1,20 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  Object,
-  Service
-} = Ember;
+const { Object } = Ember;
 
 moduleForComponent('organization-header', 'Integration | Component | organization header', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', mockCredentials);
+    stubService(this, 'credentials', {
+      currentUserMembership: Object.create({
+        member: user,
+        organization,
+        role: 'admin'
+      })
+    });
   }
 });
 
@@ -20,14 +24,6 @@ let organization = Object.create({
   description: 'A test organization',
   iconThumbUrl: 'icon_thumb.png',
   iconLargeUrl: 'icon_large.png'
-});
-
-let mockCredentials = Service.extend({
-  currentUserMembership: Object.create({
-    member: user,
-    organization,
-    role: 'admin'
-  })
 });
 
 test('it renders', function(assert) {

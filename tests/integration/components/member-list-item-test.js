@@ -1,11 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
 let user = {
@@ -118,7 +118,7 @@ test('it sends the approve action when clicking approve', function(assert) {
   this.set('membership', membership);
   this.set('user', user);
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -130,7 +130,6 @@ test('it sends the approve action when clicking approve', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
@@ -152,7 +151,7 @@ test('it sends the deny action when clicking deny', function(assert) {
     }
   });
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -164,7 +163,6 @@ test('it sends the deny action when clicking deny', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.set('membership', membership);
   this.set('user', user);

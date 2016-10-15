@@ -1,22 +1,17 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  Object,
-  Service
-} = Ember;
+const { Object } = Ember;
 
 moduleForComponent('task-new-form', 'Integration | Component | task new form', {
-  integration: true,
-  beforeEach() {
-    this.register('service:credentials', Service.extend({ currentUserMembership: null }));
-  }
+  integration: true
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
-
+  stubService(this, 'credentials', { currentUserMembership: null });
   this.render(hbs`{{task-new-form}}`);
 
   assert.equal(this.$('.task-new-form').length, 1, 'The component\'s element renders');
@@ -24,6 +19,7 @@ test('it renders', function(assert) {
 
 test('it renders proper ui elements, properly bound', function(assert) {
   assert.expect(8);
+  stubService(this, 'credentials', { currentUserMembership: null });
 
   let task = {
     title: 'A task',
@@ -49,6 +45,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
 test('it triggers an action when the task is saved', function(assert) {
   assert.expect(2);
+  stubService(this, 'credentials', { currentUserMembership: null });
 
   let task = Object.create({ id: 1 });
 
@@ -66,9 +63,9 @@ test('it triggers an action when the task is saved', function(assert) {
 test('it renders only idea and issue task type options if user is not at least a contributor to the organization', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Service.extend({
+  stubService(this, 'credentials', {
     currentUserMembership: { isContributor: false, isAdmin: false, isOwner: false }
-  }));
+  });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 
@@ -80,9 +77,9 @@ test('it renders only idea and issue task type options if user is not at least a
 test('it renders all task type options if user is at least contributor', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Service.extend({
+  stubService(this, 'credentials', {
     currentUserMembership: { isContributor: true }
-  }));
+  });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 

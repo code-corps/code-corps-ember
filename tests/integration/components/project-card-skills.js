@@ -1,22 +1,20 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const { Service } = Ember;
-
-let userSkillsService = Service.extend({
+let userSkillsService = {
   hasSkill(skill) {
     return skill;
   },
   findUserSkill(skill) {
     return skill;
   }
-});
+};
 
 moduleForComponent('project-card-ksills', 'Integration | Component | project card skills', {
   integration: true,
   beforeEach() {
-    this.register('service:user-skills', userSkillsService);
+    stubService(this, 'user-skills', userSkillsService);
   }
 });
 
