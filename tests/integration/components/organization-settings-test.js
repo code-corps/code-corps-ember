@@ -1,8 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('organization-settings', 'Integration | Component | organization settings', {
   integration: true
@@ -11,9 +9,9 @@ moduleForComponent('organization-settings', 'Integration | Component | organizat
 test('it renders properly', function(assert) {
   assert.expect(3);
 
-  this.register('service:store', Service.extend({}));
-  this.register('service:session', Service.extend({}));
-  this.register('service:credentials', Service.extend({}));
+  stubService(this, 'store');
+  stubService(this, 'session');
+  stubService(this, 'credentials');
 
   this.render(hbs`{{organization-settings}}`);
 

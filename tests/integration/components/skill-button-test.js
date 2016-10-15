@@ -1,8 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('skill-button', 'Integration | Component | skill button', {
   integration: true
@@ -66,12 +64,11 @@ test('it responds to hovering', function(assert) {
 
 test('it removes the skill when clicking', function(assert) {
   let skill = { title: 'Ruby' };
-  let mockUserSkillsService = Service.extend({
+  stubService(this, 'user-skills', {
     removeSkill(removedSkill) {
       assert.deepEqual(skill, removedSkill);
     }
   });
-  this.register('service:user-skills', mockUserSkillsService);
   this.set('skill', skill);
   this.render(hbs`{{skill-button skill=skill}}`);
   this.$('button').click();

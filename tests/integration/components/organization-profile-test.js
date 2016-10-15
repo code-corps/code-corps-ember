@@ -1,13 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('organization-profile', 'Integration | Component | organization profile', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Service);
+    stubService(this, 'credentials');
   }
 });
 

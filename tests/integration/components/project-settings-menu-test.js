@@ -1,11 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  Object,
-  Service
-} = Ember;
+const { Object } = Ember;
 
 moduleForComponent('project-settings-menu', 'Integration | Component | project settings menu', {
   integration: true
@@ -18,11 +16,8 @@ test('when authenticated and can manage organization, it renders properly', func
   assert.expect(4);
 
   let membership = Object.create({ isAdmin: true, organization });
-  let mockSession = Service.extend({ isAuthenticated: true });
-  let mockCredentials = Service.extend({ currentUserMembership: membership });
-
-  this.register('service:session', mockSession);
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'session', { isAuthenticated: true });
+  stubService(this, 'credentials', { currentUserMembership: membership });
 
   this.set('project', project);
 
@@ -38,11 +33,8 @@ test('when authenticated and cannot manage organization, it renders properly', f
   assert.expect(2);
 
   let membership = Object.create({ isAdmin: false, organization });
-  let mockSession = Service.extend({ isAuthenticated: true });
-  let mockCredentials = Service.extend({ currentUserMembership: membership });
-
-  this.register('service:session', mockSession);
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'session', { isAuthenticated: true });
+  stubService(this, 'credentials', { currentUserMembership: membership });
 
   this.set('project', project);
 
@@ -55,9 +47,7 @@ test('when authenticated and cannot manage organization, it renders properly', f
 test('when not authenticated, it renders properly', function(assert) {
   assert.expect(2);
 
-  let mockSession = Service.extend({ isAuthenticated: false });
-
-  this.register('service:session', mockSession);
+  stubService(this, 'session', { isAuthenticated: false });
 
   this.set('project', project);
 

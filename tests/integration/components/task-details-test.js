@@ -1,30 +1,30 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   K,
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
-let mockMentionFetcher = Service.extend({
+let mockMentionFetcher = {
   fetchBodyWithMentions: RSVP.resolve,
   prefetchBodyWithMentions: K
-});
+};
 
-let mockCurrentUser = Service.extend({
+let mockCurrentUser = {
   user: {
     id: 1
   }
-});
+};
 
-let mockStore = Service.extend({
+let mockStore = {
   query() {
     return RSVP.resolve([]);
   }
-});
+};
 
 let mockTask = Object.create({
   title: 'A task',
@@ -52,14 +52,14 @@ let mockTask = Object.create({
 moduleForComponent('task-details', 'Integration | Component | task details', {
   integration: true,
   beforeEach() {
-    this.register('service:current-user', mockCurrentUser);
-    this.register('service:store', mockStore);
+    stubService(this, 'current-user', mockCurrentUser);
+    stubService(this, 'store', mockStore);
   }
 });
 
 test('it renders', function(assert) {
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details}}`);
 
@@ -69,13 +69,11 @@ test('it renders', function(assert) {
 test('it renders all the ui elements properly bound', function(assert) {
   this.set('task', mockTask);
 
-  let mockMentionFetcher = Service.extend({
+  stubService(this, 'mention-fetcher', {
     prefetchBodyWithMentions() {
       return 'A body';
     }
   });
-
-  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details task=task}}`);
 
@@ -84,13 +82,11 @@ test('it renders all the ui elements properly bound', function(assert) {
 });
 
 test('the task body is rendered as unescaped html', function(assert) {
-  let mockMentionFetcher = Service.extend({
+  stubService(this, 'mention-fetcher', {
     prefetchBodyWithMentions() {
       return 'A body with a <strong>strong element</strong>';
     }
   });
-
-  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.set('task', mockTask);
 
@@ -102,7 +98,7 @@ test('user can switch between view and edit mode for task body', function(assert
   assert.expect(3);
   this.set('task', mockTask);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details task=task}}`);
   assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
@@ -118,7 +114,7 @@ test('it saves', function(assert) {
   assert.expect(2);
 
   this.set('task', mockTask);
-  let mockMentionFetcher = Service.extend({
+  stubService(this, 'mention-fetcher', {
     fetchBodyWithMentions(task) {
       return RSVP.resolve(task.body);
     },
@@ -126,8 +122,6 @@ test('it saves', function(assert) {
       return 'A body';
     }
   });
-
-  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.on('route-save', (task) => {
     task.set('body', 'A new body');

@@ -1,13 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('slugged-route-model-details', 'Integration | Component | slugged route model details', {
   integration: true,
   beforeEach() {
-    this.register('service:credentials', Service);
+    stubService(this, 'credentials');
   }
 });
 

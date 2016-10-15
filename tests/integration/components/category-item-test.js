@@ -2,13 +2,13 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   getOwner,
   Object,
   run,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
 moduleForComponent('category-item', 'Integration | Component | category item', {
@@ -20,7 +20,7 @@ moduleForComponent('category-item', 'Integration | Component | category item', {
 
 let defaultCategoryId = 2;
 
-let mockUserCategoriesService = Service.extend({
+let mockUserCategoriesService = {
   findUserCategory(category) {
     if (category.id === mockUserCategory.get('categoryId')) {
       return mockUserCategory;
@@ -44,9 +44,9 @@ let mockUserCategoriesService = Service.extend({
       });
     });
   }
-});
+};
 
-let mockUserCategoriesServiceForErrors = Service.extend({
+let mockUserCategoriesServiceForErrors = {
   findUserCategory(category) {
     if (category.id === mockUserCategory.get('categoryId')) {
       return mockUserCategory;
@@ -58,7 +58,7 @@ let mockUserCategoriesServiceForErrors = Service.extend({
   removeCategory() {
     return RSVP.reject();
   }
-});
+};
 
 let mockUserCategory = Object.create({
   id: 1,
@@ -84,7 +84,7 @@ test('it works for selecting unselected categories', function(assert) {
   let done = assert.async();
   assert.expect(6);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
   this.render(hbs`{{category-item category=category}}`);
 
@@ -106,7 +106,7 @@ test('it works for removing selected categories', function(assert) {
   let done = assert.async();
   assert.expect(4);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
   this.render(hbs`{{category-item category=category}}`);
 
@@ -126,10 +126,10 @@ test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
+  stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -141,7 +141,6 @@ test('it creates a flash message on an error when adding', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{category-item category=category}}`);
 
@@ -156,10 +155,10 @@ test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
+  stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -171,7 +170,6 @@ test('it creates a flash message on an error when removing', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{category-item category=category}}`);
 
@@ -186,7 +184,7 @@ test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
 
   this.render(hbs`{{category-item category=category}}`);
@@ -203,7 +201,7 @@ test('it sets and unsets loading state when adding', function(assert) {
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   assert.expect(3);
 
   this.set('category', selectedCategory);

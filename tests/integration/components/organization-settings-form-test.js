@@ -1,11 +1,9 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  RSVP,
-  Service
-} = Ember;
+const { RSVP } = Ember;
 
 moduleForComponent('organization-settings-form', 'Integration | Component | organization settings form', {
   integration: true
@@ -47,13 +45,11 @@ test('it calls save on organization when save button is clicked', function(asser
 
   this.set('organization', organization);
 
-  let flashServiceStub = Service.extend({
+  stubService(this, 'flash-messages', {
     success() {
       assert.ok(true, 'Flash message service was called');
     }
   });
-
-  this.register('service:flash-messages', flashServiceStub);
 
   this.render(hbs`{{organization-settings-form organization=organization}}`);
 

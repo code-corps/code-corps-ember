@@ -1,25 +1,23 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   Object,
-  run,
-  Service
+  run
 } = Ember;
 
 moduleForComponent('project-category-item', 'Integration | Component | project category item', {
   integration: true,
   beforeEach() {
-    this.register('service:user-categories', mockUserCategoriesService);
-  }
-});
-
-let mockUserCategoriesService = Service.extend({
-  findUserCategory(category) {
-    if (category.id === mockUserCategory.get('categoryId')) {
-      return mockUserCategory;
-    }
+    stubService(this, 'user-categories', {
+      findUserCategory(category) {
+        if (category.id === mockUserCategory.get('categoryId')) {
+          return mockUserCategory;
+        }
+      }
+    });
   }
 });
 
