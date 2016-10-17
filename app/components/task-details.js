@@ -107,19 +107,12 @@ export default Component.extend({
 
       @method saveTaskBody
      */
-    saveTaskBody() {
-      let component = this;
+    applyEditTask() {
       let task = this.get('task');
 
-      task.save().then((task) => {
-        component.set('isEditingBody', false);
+      this.get('saveTask')(task).then((task) => {
+        this.set('isEditingBody', false);
         this._fetchMentions(task);
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
       });
     }
   },
