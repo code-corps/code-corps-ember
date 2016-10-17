@@ -1,25 +1,22 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
 moduleForComponent('project-long-description', 'Integration | Component | project long description', {
-  integration: true,
-  beforeEach() {
-    this.register('service:credentials', Service.extend({}));
-  }
+  integration: true
 });
 
-let credentialsWithAdminMembership = Service.extend({
+let credentialsWithAdminMembership = {
   currentUserMembership: Object.create({
     isAdmin: true
   })
-});
+};
 
 let projectWithDescription = Object.create({
   longDescriptionBody: 'A <strong>body</strong>',
@@ -33,6 +30,7 @@ let blankProject = Object.create({
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {
   assert.expect(3);
+  stubService(this, 'credentials');
 
   this.set('project', blankProject);
   this.render(hbs`{{project-long-description project=project}}`);
@@ -46,7 +44,7 @@ test('it renders properly when description is blank and the user can add to it',
   assert.expect(3);
 
   this.set('project', blankProject);
-  this.register('service:credentials', credentialsWithAdminMembership);
+  stubService(this, 'credentials', credentialsWithAdminMembership);
 
   this.render(hbs`{{project-long-description project=project}}`);
 
@@ -57,6 +55,7 @@ test('it renders properly when description is blank and the user can add to it',
 
 test('it renders properly when description is present and user cannot edit', function(assert) {
   assert.expect(6);
+  stubService(this, 'credentials');
 
   this.set('project', projectWithDescription);
 
@@ -74,7 +73,7 @@ test('it renders properly when description is present and user can edit', functi
   assert.expect(4);
 
   this.set('project', projectWithDescription);
-  this.register('service:credentials', credentialsWithAdminMembership);
+  stubService(this, 'credentials', credentialsWithAdminMembership);
 
   this.render(hbs`{{project-long-description project=project}}`);
 
@@ -95,7 +94,7 @@ test('it is possible to add a description', function(assert) {
   });
 
   this.set('project', savableProject);
-  this.register('service:credentials', credentialsWithAdminMembership);
+  stubService(this, 'credentials', credentialsWithAdminMembership);
 
   this.render(hbs`{{project-long-description project=project}}`);
 
@@ -113,7 +112,7 @@ test('it is possible to edit a description', function(assert) {
   });
 
   this.set('project', savableProject);
-  this.register('service:credentials', credentialsWithAdminMembership);
+  stubService(this, 'credentials', credentialsWithAdminMembership);
 
   this.render(hbs`{{project-long-description project=project}}`);
   assert.equal(this.$('.editor-with-preview').length, 0, 'The editor is not shown, since we are in read mode');

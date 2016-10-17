@@ -1,8 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('code-theme-selector', 'Integration | Component | code theme selector', {
   integration: true
@@ -11,12 +9,11 @@ moduleForComponent('code-theme-selector', 'Integration | Component | code theme 
 test('it toggles code theme service when clicked', function(assert) {
   assert.expect(1);
 
-  let codeThemeServiceStub = Service.extend({
+  stubService(this, 'code-theme', {
     toggle() {
       assert.ok(true, 'Code theme service was called');
     }
   });
-  this.register('service:code-theme', codeThemeServiceStub);
   this.render(hbs`{{code-theme-selector}}`);
 
   this.$('.code-theme-selector').click();
@@ -25,10 +22,9 @@ test('it toggles code theme service when clicked', function(assert) {
 test('it has the class name from the service', function(assert) {
   assert.expect(1);
 
-  let codeThemeServiceStub = Service.extend({
+  stubService(this, 'code-theme', {
     className: 'light'
   });
-  this.register('service:code-theme', codeThemeServiceStub);
   this.render(hbs`{{code-theme-selector}}`);
 
   assert.ok(this.$('.code-theme-selector').hasClass('light'));

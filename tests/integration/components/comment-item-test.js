@@ -1,30 +1,30 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   K,
   Object,
-  RSVP,
-  Service
+  RSVP
 } = Ember;
 
-let mockMentionFetcher = Service.extend({
+let mockMentionFetcher = {
   fetchBodyWithMentions: RSVP.resolve,
   prefetchBodyWithMentions: K
-});
+};
 
-let mockStore = Service.extend({
+let mockStore = {
   query() {
     return RSVP.resolve([]);
   }
-});
+};
 
-let mockCurrentUser = Service.extend({
+let mockCurrentUser = {
   user: {
     id: 1
   }
-});
+};
 
 let mockComment = Object.create({
   body: 'A <strong>body</strong>',
@@ -49,14 +49,14 @@ let mockComment = Object.create({
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
   beforeEach() {
-    this.register('service:store', mockStore);
+    stubService(this, 'store', mockStore);
   }
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -82,8 +82,8 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
-  this.register('service:current-user', mockCurrentUser);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
+  stubService(this, 'current-user', mockCurrentUser);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);

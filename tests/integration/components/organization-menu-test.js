@@ -1,9 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import { Ability } from 'ember-can';
-
-const { Service } = Ember;
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('organization-menu', 'Integration | Component | organization menu', {
   integration: true
@@ -12,7 +10,7 @@ moduleForComponent('organization-menu', 'Integration | Component | organization 
 test('it renders', function(assert) {
   assert.expect(1);
 
-  this.register('service:credentials', Service);
+  stubService(this, 'credentials');
 
   this.render(hbs`{{organization-menu}}`);
 
@@ -22,11 +20,7 @@ test('it renders', function(assert) {
 test('when user cannot manage organization the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  let mockCredentials = Service.extend({
-    userCanManageOrganization: false
-  });
-
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'credentials', { userCanManageOrganization: false });
   this.register('ability:organization', Ability.extend({ canManage: false }));
 
   this.render(hbs`{{organization-menu}}`);
@@ -38,11 +32,7 @@ test('when user cannot manage organization the proper menu items are rendered', 
 test('when user can manage organization, the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  let mockCredentials = Service.extend({
-    userCanManageOrganization: true
-  });
-
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'credentials', { userCanManageOrganization: true });
   this.register('ability:organization', Ability.extend({ canManage: true }));
 
   this.render(hbs`{{organization-menu}}`);

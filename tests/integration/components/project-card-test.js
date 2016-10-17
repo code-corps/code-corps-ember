@@ -2,11 +2,9 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const {
-  K,
-  Service
-} = Ember;
+const { K } = Ember;
 
 moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
@@ -37,10 +35,7 @@ test('it renders', function(assert) {
     projectCategories: [projectCategory]
   };
 
-  let mockUserCategoriesService = Service.extend({
-    findUserCategory: K
-  });
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', { findUserCategory: K });
 
   this.set('project', mockedProject);
   this.render(hbs`{{project-card project=project}}`);

@@ -2,18 +2,18 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   getOwner,
   Object,
   RSVP,
-  run,
-  Service
+  run
 } = Ember;
 
 let defaultRoleId = 2;
 
-let mockUserRolesService = Service.extend({
+let mockUserRolesService = {
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
@@ -37,9 +37,9 @@ let mockUserRolesService = Service.extend({
       });
     });
   }
-});
+};
 
-let mockUserRolesServiceForErrors = Service.extend({
+let mockUserRolesServiceForErrors = {
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
@@ -51,7 +51,7 @@ let mockUserRolesServiceForErrors = Service.extend({
   removeRole() {
     return RSVP.reject();
   }
-});
+};
 
 let mockUserRole = Object.create({
   id: 1,
@@ -84,7 +84,7 @@ test('it works for selecting unselected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -103,7 +103,7 @@ test('it works for removing selected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', selectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -122,10 +122,10 @@ test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', unselectedRole);
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -137,7 +137,6 @@ test('it creates a flash message on an error when adding', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
@@ -152,10 +151,10 @@ test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', selectedRole);
 
-  let mockFlashMessages = Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -167,7 +166,6 @@ test('it creates a flash message on an error when removing', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
@@ -182,7 +180,7 @@ test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
 
   this.render(hbs`{{role-item role=role}}`);
@@ -199,7 +197,7 @@ test('it sets and unsets loading state when adding', function(assert) {
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   assert.expect(3);
 
   this.set('role', selectedRole);
