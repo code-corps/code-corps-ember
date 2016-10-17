@@ -148,6 +148,6 @@ test('it knows the onboarding routes', function(assert) {
   assert.expect(totalSteps);
 
   for (let i = 0; i < totalSteps; i++) {
-    assert.ok(routes.contains(steps[i].currentRoute));
+    assert.ok(routes.includes(steps[i].currentRoute));
   }
 });
