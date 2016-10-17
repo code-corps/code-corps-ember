@@ -37,6 +37,14 @@ We use [ember-exam](https://github.com/trentmwillis/ember-exam) for running test
 * `ember exam --random` will run the tests in a random order
 * `ember exam --filter='acceptance'` will only run acceptance tests. The same syntax can be used for other types of tests, such as `ember exam --filter='unit'` and `ember exam --filter='integration'`
 
+We also take advantage of [ember-try](https://github.com/ember-cli/ember-try), which allows us to test against different versions of packages. We have a few set up in the [configuration file](../config/ember-try.js), which can be used as follows:
+* `ember try:one default` will run the tests with everything currently listed in `package.json` and `bower.json`
+* `ember try:one ember-release` will run the tests using the current release version of ember
+* `ember try:one ember-beta` will run the tests using the current beta release of ember
+* `ember try:one ember-canary` will run the tests using the current canary release of ember
+* `ember try:each` will run all configurations in `config/ember-try.js`
+You'll notice that all of these will run using `ember exam`. 
+
 ## Generating Documentation
 
 The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for documentation. 
