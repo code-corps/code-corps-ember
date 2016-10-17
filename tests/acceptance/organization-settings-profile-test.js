@@ -54,7 +54,7 @@ test('it allows editing of organization profile', function(assert) {
 
   andThen(() => {
     assert.equal(organizationPage.successAlerts().count, 1);
-    assert.equal(organizationPage.successAlerts(0).contains('Organization updated successfully'), true);
+    assert.equal(organizationPage.successAlerts(0).includes('Organization updated successfully'), true);
   });
 });
 
@@ -96,7 +96,7 @@ test("it allows editing of organization's image", function(assert) {
 
   andThen(() => {
     assert.equal(organizationPage.successAlerts().count, 1);
-    assert.equal(organizationPage.successAlerts(0).contains('Organization updated successfully'), true);
+    assert.equal(organizationPage.successAlerts(0).includes('Organization updated successfully'), true);
     let expectedStyle = `url(${droppedImageString})`;
     assert.equal(removeDoubleQuotes(find('.image-drop').css('background-image')), expectedStyle);
   });
