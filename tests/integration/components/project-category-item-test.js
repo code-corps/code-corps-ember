@@ -44,7 +44,7 @@ test('it works for unselected categories', function(assert) {
 
   assert.ok(this.$('.interest-icon').hasClass('technology'));
   assert.notOk(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('ember-tooltip-target'));
+  assert.ok(this.$('li').hasClass('ember-tooltip-or-popover-target'));
   assert.equal(this.$('.ember-tooltip').text().trim(), 'Technology');
   assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), 'true');
 
@@ -69,7 +69,7 @@ test('it works for selected categories', function(assert) {
 
   assert.ok(this.$('.interest-icon').hasClass('society'));
   assert.ok(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('ember-tooltip-target'));
+  assert.ok(this.$('li').hasClass('ember-tooltip-or-popover-target'));
   assert.equal(this.$('.ember-tooltip').text().trim(), 'Society');
   assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), 'true');
 
