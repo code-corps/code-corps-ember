@@ -148,12 +148,12 @@ export default function() {
   // PATCH /organization-memberships/:id
   this.patch('/organization-memberships/:id');
 
+  // DELETE /organization-memberships/:id
+  this.delete('/organization-memberships/:id');
+
   /**
   * Organizations
   */
-
-  // DELETE /organization-memberships/:id
-  this.delete('/organization-memberships/:id');
 
   // GET /organizations
   this.get('/organizations', { coalesce: true });
