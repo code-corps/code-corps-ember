@@ -1,6 +1,11 @@
 import Ember from 'ember';
 import OnboardingControllerMixin from '../../mixins/onboarding-controller';
 
-export default Ember.Controller.extend(OnboardingControllerMixin, {
-  userCategories: Ember.inject.service(),
+const {
+  Controller,
+  inject: { service }
+} = Ember;
+
+export default Controller.extend(OnboardingControllerMixin, {
+  userCategories: service()
 });

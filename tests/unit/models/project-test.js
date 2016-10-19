@@ -3,11 +3,21 @@ import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
+const {
+  get,
+  run
+} = Ember;
+
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
-  needs: ['model:project-category', 'model:organization',
-          'model:organization-membership', 'model:user',
-          'model:task', 'model:project-skill']
+  needs: [
+    'model:organization',
+    'model:organization-membership',
+    'model:project-category',
+    'model:project-skill',
+    'model:task',
+    'model:user'
+  ]
 });
 
 test('it exists', function(assert) {
@@ -16,20 +26,20 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-  let model = this.subject();
-  let actualAttributes = Object.keys(model.toJSON());
+  let model = this.store().modelFor('project');
+  let actualAttributes = get(model, 'attributes');
+
   let expectedAttributes = [
-    "base64IconData",
-    "closedTasksCount",
-    "description",
-    "iconLargeUrl",
-    "iconThumbUrl",
-    "longDescriptionBody",
-    "longDescriptionMarkdown",
-    "openTasksCount",
-    "organization",
-    "slug",
-    "title",
+    'base64IconData',
+    'closedTasksCount',
+    'description',
+    'iconLargeUrl',
+    'iconThumbUrl',
+    'longDescriptionBody',
+    'longDescriptionMarkdown',
+    'openTasksCount',
+    'slug',
+    'title'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);
@@ -51,12 +61,12 @@ test('it should have open tasks', function(assert) {
 test('it should have computed properties for its organization\'s members', function(assert) {
   assert.expect(2);
 
-  let _this = this,
-      project;
+  let _this = this;
+  let project;
 
-  Ember.run(function(){
+  run(function() {
     let organization = _this.store().createRecord('organization');
-    _this.store().createRecord('organization-membership', { organization, role: 'pending'});
+    _this.store().createRecord('organization-membership', { organization, role: 'pending' });
 
     project = _this.subject({ organization });
   });

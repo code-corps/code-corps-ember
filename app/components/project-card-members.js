@@ -1,5 +1,11 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  computed: { alias }
+} = Ember;
+
 const VISIBLE_MEMBERS_COUNT = 8;
 
 /**
@@ -17,7 +23,7 @@ const VISIBLE_MEMBERS_COUNT = 8;
   @extends Ember.Component
 */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['project-card-members'],
   tagName: 'ul',
 
@@ -27,7 +33,7 @@ export default Ember.Component.extend({
     @property visibleMembers
     @type Number
   */
-  visibleMembers: Ember.computed('members', function() {
+  visibleMembers: computed('members', function() {
     return this.get('members').slice(0, VISIBLE_MEMBERS_COUNT);
   }),
 
@@ -37,7 +43,7 @@ export default Ember.Component.extend({
     @property totalMembersCount
     @type Number
   */
-  totalMembersCount: Ember.computed.alias('members.length'),
+  totalMembersCount: alias('members.length'),
 
   /**
     Total number of members not shown on the project card.
@@ -45,7 +51,7 @@ export default Ember.Component.extend({
     @property hiddenMembersCount
     @type Number
   */
-  hiddenMembersCount: Ember.computed('totalMembersCount', function() {
+  hiddenMembersCount: computed('totalMembersCount', function() {
     return this.get('totalMembersCount') -  VISIBLE_MEMBERS_COUNT;
   }),
 
@@ -55,7 +61,7 @@ export default Ember.Component.extend({
     @property hiddenMembersExist
     @type Boolean
   */
-  hiddenMembersExist: Ember.computed('hiddenMembersCount', function() {
+  hiddenMembersExist: computed('hiddenMembersCount', function() {
     return this.get('hiddenMembersCount') > 0;
   })
 });

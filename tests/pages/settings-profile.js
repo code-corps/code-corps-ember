@@ -1,7 +1,7 @@
 import {
   create,
   text,
-  visitable,
+  visitable
 } from 'ember-cli-page-object';
 import userSettingsForm from './components/user-settings-form';
 
@@ -10,8 +10,8 @@ export default create({
 
   successAlert: {
     scope: '.alert-success',
-    message: text('p'),
+    message: text('p')
   },
 
-  userSettingsForm,
+  userSettingsForm
 });

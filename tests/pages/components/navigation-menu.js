@@ -27,6 +27,6 @@ export default {
     },
     logOut: {
       scope: 'a.logout'
-    },
+    }
   }
 };

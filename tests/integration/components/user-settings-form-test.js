@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const { RSVP } = Ember;
 
 moduleForComponent('user-settings-form', 'Integration | Component | user settings form', {
   integration: true
@@ -19,7 +22,7 @@ let user = {
   lastName: 'User',
   twitter: '@testuser',
   website: 'example.com',
-  biography: 'A test user',
+  biography: 'A test user'
 };
 
 test('it renders form elements properly', function(assert) {
@@ -43,19 +46,16 @@ test('it calls save on user when save button is clicked', function(assert) {
 
   user.save = function() {
     assert.ok(true, 'Save method was called on user');
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   };
 
   this.set('user', user);
 
-  const flashServiceStub = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     success() {
       assert.ok(true, 'Flash message service was called');
     }
   });
-
-  this.register('service:flash-messages', flashServiceStub);
-
 
   this.render(hbs`{{user-settings-form user=user}}`);
 

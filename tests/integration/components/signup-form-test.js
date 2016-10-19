@@ -15,7 +15,6 @@ test('it renders', function(assert) {
   assert.equal(this.$('.signup-form').length, 1);
 });
 
-
 test('it renders required ui elements', function(assert) {
   this.render(hbs`{{signup-form}}`);
 

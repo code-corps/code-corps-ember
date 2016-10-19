@@ -1,21 +1,11 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 
-let application;
+moduleForAcceptance('Acceptance | Signup');
 
-module('Acceptance: Signup', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('Signup form is accessible from the main site', (assert) => {
+test('Signup form is accessible from the main site', function(assert) {
   assert.expect(2);
 
   indexPage.visit();
@@ -30,7 +20,7 @@ test('Signup form is accessible from the main site', (assert) => {
   });
 });
 
-test('Successful signup', (assert) => {
+test('Successful signup', function(assert) {
   assert.expect(6);
 
   signupPage.visit();
@@ -43,7 +33,7 @@ test('Successful signup', (assert) => {
 
   server.post('/users/', (db, request) => {
     let params = JSON.parse(request.requestBody).data.attributes;
-    params["state"] = "signed_up";
+    params.state = 'signed_up';
 
     assert.equal(params.username, 'username');
     assert.equal(params.email, 'email@example.com');
@@ -65,8 +55,8 @@ test('Successful signup', (assert) => {
     signInDone();
 
     return {
-      token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ",
-      user_id: 1,
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ',
+      user_id: 1
     };
   });
 
@@ -75,7 +65,7 @@ test('Successful signup', (assert) => {
   });
 });
 
-test('Failed signup due to invalid data stays on same page', (assert) => {
+test('Failed signup due to invalid data stays on same page', function(assert) {
   assert.expect(1);
 
   signupPage.visit();

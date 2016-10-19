@@ -1,26 +1,16 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
 import sluggedRoutePage from '../pages/slugged-route';
 
-let application;
+moduleForAcceptance('Acceptance | Slugged Route');
 
-module('Acceptance: Slugged Route', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test("It renders user details when the sluggedRoute model is a user", function(assert) {
+test('It renders user details when the sluggedRoute model is a user', function(assert) {
   assert.expect(1);
 
   let user = createUserWithSluggedRoute();
-  
+
   sluggedRoutePage.visit({ slug: user.username });
 
   andThen(function() {
@@ -28,7 +18,7 @@ test("It renders user details when the sluggedRoute model is a user", function(a
   });
 });
 
-test("It renders organization profile when the sluggedRoute model is an organization", function(assert) {
+test('It renders organization profile when the sluggedRoute model is an organization', function(assert) {
   assert.expect(1);
 
   let organization = createOrganizationWithSluggedRoute();
@@ -40,14 +30,14 @@ test("It renders organization profile when the sluggedRoute model is an organiza
   });
 });
 
-test("It renders a 404 error when no slugged route exists", function(assert) {
+test('It renders a 404 error when no slugged route exists', function(assert) {
   assert.expect(5);
 
   server.get('/no_slug',
     {
       errors: [{
-        id: "RECORD_NOT_FOUND",
-        title: "Record not found",
+        id: 'RECORD_NOT_FOUND',
+        title: 'Record not found',
         detail: "Couldn't find SluggedRoute",
         status: 404
       }]

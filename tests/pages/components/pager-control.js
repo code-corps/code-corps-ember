@@ -1,6 +1,6 @@
 import {
   attribute,
-  collection,
+  collection
 } from 'ember-cli-page-object';
 
 export default {
@@ -14,12 +14,12 @@ export default {
   pages: collection({
     itemScope: '.page',
     item: {
-      href: attribute('href'),
+      href: attribute('href')
     }
   }),
 
   previousPage: {
     scope: '.previous-page',
     href: attribute('href')
-  },
+  }
 };

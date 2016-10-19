@@ -1,20 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-let userSkillsService = Ember.Service.extend({
-  hasSkill(skill) {
-    return skill;
-  },
-  findUserSkill(skill) {
-    return skill;
-  },
-});
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('skill-list-item', 'Integration | Component | skill list item', {
   integration: true,
   beforeEach() {
-    this.register('service:user-skills', userSkillsService);
+    stubService(this, 'user-skills', {
+      hasSkill(skill) {
+        return skill;
+      },
+      findUserSkill(skill) {
+        return skill;
+      }
+    });
   }
 });
 

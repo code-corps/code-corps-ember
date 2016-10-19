@@ -1,17 +1,22 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['user-dropdown', 'dropdown-menu', 'right'],
 
-  session: Ember.inject.service(),
+  session: service(),
 
-  click: function() {
+  click() {
     this.sendAction();
   },
 
   actions: {
-    invalidateSession: function() {
+    invalidateSession() {
       this.get('session').invalidate();
-    },
-  },
+    }
+  }
 });

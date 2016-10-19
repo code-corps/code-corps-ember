@@ -12,7 +12,7 @@ export default {
   submit:   clickable('#login'),
 
   errors:   collection({
-    itemScope: 'p.error',
+    itemScope: 'p.error'
   }),
 
   loginSuccessfully() {

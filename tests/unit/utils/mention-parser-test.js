@@ -2,6 +2,8 @@ import { parse } from 'code-corps-ember/utils/mention-parser';
 import { module, test } from 'qunit';
 import Ember from 'ember';
 
+const { Object } = Ember;
+
 module('Unit | Utility | mention parser');
 
 test('it replaces all "@username" mention strings with links to the user profile', function(assert) {
@@ -10,13 +12,13 @@ test('it replaces all "@username" mention strings with links to the user profile
   let body = '<p>Mentioning @user1 and @user2</p>';
   let mentions = [
 
-    Ember.Object.create({
+    Object.create({
       indices: [14, 19],
       username: 'user1',
       user: { id: 1 }
     }),
 
-    Ember.Object.create({
+    Object.create({
       indices: [25, 30],
       username: 'user2',
       user: { id: 2 }

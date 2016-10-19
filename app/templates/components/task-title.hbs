@@ -1,7 +1,7 @@
 {{#if isEditing}}
   <div class="title-actions input-group">
     <button class="clear cancel" {{action 'cancel'}}>Cancel</button>
-    <button class="default save" {{action 'save'}}>Save</button>
+    <button class="default save" {{action 'applyEdit'}}>Save</button>
   </div>
   {{input type="text" value=newTitle name="title"}}
   {{#each task.errors.title as |error|}}

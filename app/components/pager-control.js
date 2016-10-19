@@ -1,17 +1,24 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, equal, gt }
+} = Ember;
+
+export default Component.extend({
   classNames: ['pager-control'],
   pagesToShow: 5,
 
-  canShowPages: Ember.computed.gt('totalPages', 1),
-  currentPage: Ember.computed.alias('options.currentPage'),
-  hasOnePage: Ember.computed.equal('totalPages', 1),
-  pageSize: Ember.computed.alias('options.pageSize'),
-  totalPages: Ember.computed.alias('options.totalPages'),
-  totalRecords: Ember.computed.alias('options.totalRecords'),
+  canShowPages: gt('totalPages', 1),
+  currentPage: alias('options.currentPage'),
+  hasOnePage: equal('totalPages', 1),
+  onFirstPage: equal('currentPage', 1),
+  pageSize: alias('options.pageSize'),
+  totalPages: alias('options.totalPages'),
+  totalRecords: alias('options.totalRecords'),
 
-  bounds: Ember.computed('centerPage', 'pagesToShow', 'totalPages', function () {
+  bounds: computed('centerPage', 'pagesToShow', 'totalPages', function() {
     let pagesToShow = this.get('pagesToShow');
     let totalPages = this.get('totalPages');
 
@@ -39,31 +46,26 @@ export default Ember.Component.extend({
     }
   }),
 
-  centerPage: Ember.computed('currentPage', 'pagesToShow', function() {
+  centerPage: computed('currentPage', 'pagesToShow', function() {
     let currentPage = this.get('currentPage');
     let pagesToShow = this.get('pagesToShow');
 
     let minCenterPage = Math.ceil(pagesToShow / 2);
-    return (currentPage >= minCenterPage) ? currentPage: minCenterPage;
+    return (currentPage >= minCenterPage) ? currentPage : minCenterPage;
   }),
 
-  nextPage: Ember.computed('currentPage', function() {
+  nextPage: computed('currentPage', function() {
     return this.get('currentPage') + 1;
   }),
 
-  onFirstPage: Ember.computed('currentPage', function() {
-    return this.get('currentPage') === 1;
+  onLastPage: computed('currentPage', 'totalPages', 'hasOnePage', function() {
+    return this.get('currentPage') === this.get('totalPages') || this.get('hasOnePage');
   }),
 
-  onLastPage: Ember.computed('currentPage', 'totalPages', 'hasOnePage', function() {
-    return this.get('currentPage') === this.get('totalPages') ||
-      this.get('hasOnePage');
-  }),
-
-  pages: Ember.computed('bounds', function() {
+  pages: computed('bounds', function() {
     let bounds = this.get('bounds');
 
-    var pages = [];
+    let pages = [];
     for (let i = bounds.lower; i <= bounds.upper; i++) {
       pages.push(i);
     }
@@ -71,7 +73,7 @@ export default Ember.Component.extend({
     return pages;
   }),
 
-  previousPage: Ember.computed('currentPage', function() {
+  previousPage: computed('currentPage', function() {
     return this.get('currentPage') - 1;
-  }),
+  })
 });

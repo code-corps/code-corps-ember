@@ -1,10 +1,15 @@
 import Ember from 'ember';
 import OnboardingControllerMixin from '../../mixins/onboarding-controller';
 
-export default Ember.Controller.extend(OnboardingControllerMixin, {
-  firstNameIsEmpty: Ember.computed.empty('model.firstName'),
-  lastNameIsEmpty: Ember.computed.empty('model.lastName'),
-  usersNameIsEmpty: Ember.computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
+const {
+  computed,
+  Controller
+} = Ember;
+
+export default Controller.extend(OnboardingControllerMixin, {
+  firstNameIsEmpty: computed.empty('model.firstName'),
+  lastNameIsEmpty: computed.empty('model.lastName'),
+  usersNameIsEmpty: computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
 
   actions: {
     /**

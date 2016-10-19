@@ -7,6 +7,6 @@ moduleFor('ability:organization', 'Unit | Ability | organization', {
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  var ability = this.subject();
+  let ability = this.subject();
   assert.ok(ability);
 });

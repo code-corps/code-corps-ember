@@ -1,17 +1,20 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from '../../helpers/relationship';
-import Ember from 'ember';
 import '../../helpers/has-attributes';
+import Ember from 'ember';
 
 const {
   get,
   set,
-  run,
+  run
 } = Ember;
 
 moduleForModel('organization-membership', 'Unit | Model | organization membership', {
   // Specify the other units that are required for this test.
-  needs: ['model:user', 'model:organization']
+  needs: [
+    'model:organization',
+    'model:user'
+  ]
 });
 
 test('it exists', function(assert) {
@@ -21,12 +24,11 @@ test('it exists', function(assert) {
 });
 
 test('it should have all of its attributes', function(assert) {
-  let organizationMembership = this.subject();
-  let actualAttributes = Object.keys(organizationMembership.toJSON());
+  let model = this.store().modelFor('organization-membership');
+  let actualAttributes = get(model, 'attributes');
+
   let expectedAttributes = [
-    "member",
-    "organization",
-    "role",
+    'role'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

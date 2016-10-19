@@ -28,7 +28,7 @@ test('it renders the correct control elements', function(assert) {
   assert.equal(this.$('.page:last').text().trim(), '5', 'Last rendered page button is page 5');
 });
 
-test('If there is less than 5 pages of records in total, it only renders buttons for those pages', function (assert) {
+test('If there is less than 5 pages of records in total, it only renders buttons for those pages', function(assert) {
   this.set('options', {
     pageSize: 5,
     totalRecords: 7,

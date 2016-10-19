@@ -1,17 +1,23 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['user-settings-form'],
 
-  flashMessages: Ember.inject.service(),
+  flashMessages: service(),
 
   actions: {
     save() {
-      const flashMessages = Ember.get(this, 'flashMessages');
+      let flashMessages = get(this, 'flashMessages');
 
       this.get('user').save().then(function() {
-        flashMessages.success("Profile updated successfully");
+        flashMessages.success('Profile updated successfully');
       });
-    },
+    }
   }
 });

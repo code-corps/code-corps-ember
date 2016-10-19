@@ -1,21 +1,11 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import organizationProjects from '../pages/organization-projects';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 
-let application;
+moduleForAcceptance('Acceptance | Organization projects');
 
-module('Acceptance: Organization projects', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('It renders all the required ui elements', (assert) => {
+test('It renders all the required ui elements', function(assert) {
   assert.expect(3);
 
   let organization = createOrganizationWithSluggedRoute();

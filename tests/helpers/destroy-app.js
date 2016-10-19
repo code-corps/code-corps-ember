@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
+const { run } = Ember;
+
 export default function destroyApp(application) {
-  Ember.run(application, 'destroy');
+  run(application, 'destroy');
   server.shutdown();
 }

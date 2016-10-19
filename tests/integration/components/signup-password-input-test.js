@@ -12,7 +12,7 @@ test('it shows nothing when empty', function(assert) {
 });
 
 test('it shows suggestions when needed', function(assert) {
-  this.set('user', { password: 'password'});
+  this.set('user', { password: 'password' });
   this.render(hbs`{{signup-password-input user=user}}`);
 
   assert.equal(this.$('p').hasClass('ok'), true);
@@ -23,14 +23,14 @@ test('it shows suggestions when needed', function(assert) {
 
 test('it shows password strength', function(assert) {
   // https://xkcd.com/936/
-  this.set('user', { password: 'correcthorsebatterystaple'});
+  this.set('user', { password: 'correcthorsebatterystaple' });
   this.render(hbs`{{signup-password-input user=user}}`);
 
   assert.equal(this.$('.progress-bar').attr('style'), 'width: 100%;');
 });
 
 test('it shows minimum length error', function(assert) {
-  this.set('user', { password: 'p'});
+  this.set('user', { password: 'p' });
   this.render(hbs`{{signup-password-input user=user}}`);
 
   assert.equal(this.$('p').hasClass('not-ok'), true);

@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed: { equal }
+} = Ember;
+
 /**
   The task-status-button component is a button that is used for closing and
   re-opening tasks.
@@ -8,7 +13,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-status-button'],
   tagName: 'span',
 
@@ -18,7 +23,7 @@ export default Ember.Component.extend({
     @property isOpen
     @type Boolean
    */
-  isOpen: Ember.computed.equal('task.status', 'open'),
+  isOpen: equal('task.status', 'open'),
 
   actions: {
 
@@ -42,6 +47,6 @@ export default Ember.Component.extend({
       let task = this.get('task');
       task.set('status', 'open');
       return task.save();
-    },
+    }
   }
 });

@@ -3,10 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject,
+  inject: { service }
 } = Ember;
-
-const { service } = inject;
 
 /**
   `create-comment-form` composes the comment form. The comment form allows for
@@ -43,6 +41,6 @@ export default Component.extend({
       let comment = get(this, 'comment');
 
       this.sendAction('saveComment', comment);
-    },
-  },
+    }
+  }
 });

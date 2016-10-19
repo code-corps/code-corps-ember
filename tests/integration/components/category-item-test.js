@@ -2,8 +2,14 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const { getOwner } = Ember;
+const {
+  getOwner,
+  Object,
+  run,
+  RSVP
+} = Ember;
 
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
@@ -14,15 +20,15 @@ moduleForComponent('category-item', 'Integration | Component | category item', {
 
 let defaultCategoryId = 2;
 
-let mockUserCategoriesService = Ember.Service.extend({
+let mockUserCategoriesService = {
   findUserCategory(category) {
     if (category.id === mockUserCategory.get('categoryId')) {
       return mockUserCategory;
     }
   },
   addCategory(category) {
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill) => {
+      run.next(() => {
         mockUserCategory.set('categoryId', category.get('id'));
         getOwner(this).lookup('service:user-categories').set('userCategories', [mockUserCategory]);
         fulfill();
@@ -30,55 +36,55 @@ let mockUserCategoriesService = Ember.Service.extend({
     });
   },
   removeCategory() {
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill, reject) => {
+      run.next(() => {
         mockUserCategory.set('categoryId', null);
         getOwner(this).lookup('service:user-categories').set('userCategories', []);
         reject();
       });
     });
-  },
-});
+  }
+};
 
-let mockUserCategoriesServiceForErrors = Ember.Service.extend({
+let mockUserCategoriesServiceForErrors = {
   findUserCategory(category) {
     if (category.id === mockUserCategory.get('categoryId')) {
       return mockUserCategory;
     }
   },
   addCategory() {
-    return Ember.RSVP.reject();
+    return RSVP.reject();
   },
   removeCategory() {
-    return Ember.RSVP.reject();
-  },
-});
+    return RSVP.reject();
+  }
+};
 
-let mockUserCategory = Ember.Object.create({
+let mockUserCategory = Object.create({
   id: 1,
   categoryId: defaultCategoryId,
-  userId: 1,
+  userId: 1
 });
 
-let unselectedCategory = Ember.Object.create({
+let unselectedCategory = Object.create({
   id: 1,
   name: 'Technology',
   slug: 'technology',
-  description: 'You want to help technology.',
+  description: 'You want to help technology.'
 });
 
-let selectedCategory = Ember.Object.create({
+let selectedCategory = Object.create({
   id: 2,
   name: 'Society',
   slug: 'society',
-  description: 'You want to help society.',
+  description: 'You want to help society.'
 });
 
 test('it works for selecting unselected categories', function(assert) {
   let done = assert.async();
   assert.expect(6);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
   this.render(hbs`{{category-item category=category}}`);
 
@@ -100,7 +106,7 @@ test('it works for removing selected categories', function(assert) {
   let done = assert.async();
   assert.expect(4);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
   this.render(hbs`{{category-item category=category}}`);
 
@@ -120,10 +126,10 @@ test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
+  stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -135,7 +141,6 @@ test('it creates a flash message on an error when adding', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{category-item category=category}}`);
 
@@ -150,10 +155,10 @@ test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-categories', mockUserCategoriesServiceForErrors);
+  stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -165,7 +170,6 @@ test('it creates a flash message on an error when removing', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{category-item category=category}}`);
 
@@ -180,7 +184,7 @@ test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
 
   this.render(hbs`{{category-item category=category}}`);
@@ -197,7 +201,7 @@ test('it sets and unsets loading state when adding', function(assert) {
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', mockUserCategoriesService);
   assert.expect(3);
 
   this.set('category', selectedCategory);

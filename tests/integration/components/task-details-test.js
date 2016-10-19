@@ -1,75 +1,79 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-let mockMentionFetcher = Ember.Service.extend({
-  fetchBodyWithMentions: Ember.RSVP.resolve,
-  prefetchBodyWithMentions: Ember.K
-});
+const {
+  K,
+  Object,
+  RSVP
+} = Ember;
 
-let mockCurrentUser = Ember.Service.extend({
+let mockMentionFetcher = {
+  fetchBodyWithMentions: RSVP.resolve,
+  prefetchBodyWithMentions: K
+};
+
+let mockCurrentUser = {
   user: {
     id: 1
   }
-});
+};
 
-let mockStore = Ember.Service.extend({
+let mockStore = {
   query() {
-    return Ember.RSVP.resolve([]);
+    return RSVP.resolve([]);
   }
-});
+};
 
-let mockTask = Ember.Object.create({
+let mockTask = Object.create({
   title: 'A task',
   body: 'A <strong>body</strong>',
   containsCode: true,
   taskType: 'issue',
   user: { id: 1 },
   save() {
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 
-// let mockTaskWithMentions = Ember.Object.create({
+// let mockTaskWithMentions = Object.create({
 //   title: 'A task with mentions',
 //   body: '<p>Mentioning @user1 and @user2</p>',
 //   save() {
-//     return Ember.RSVP.resolve();
+//     return RSVP.resolve();
 //   },
 //   taskUserMentions: [
-//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
 //   ]
 // });
 
 moduleForComponent('task-details', 'Integration | Component | task details', {
   integration: true,
   beforeEach() {
-    this.register('service:current-user', mockCurrentUser);
-    this.register('service:store', mockStore);
+    stubService(this, 'current-user', mockCurrentUser);
+    stubService(this, 'store', mockStore);
   }
 });
 
 test('it renders', function(assert) {
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details}}`);
 
   assert.equal(this.$('.task-details').length, 1, 'The component\'s element is rendered');
 });
 
-
 test('it renders all the ui elements properly bound', function(assert) {
   this.set('task', mockTask);
 
-  let mockMentionFetcher = Ember.Service.extend({
+  stubService(this, 'mention-fetcher', {
     prefetchBodyWithMentions() {
       return 'A body';
     }
   });
-
-  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details task=task}}`);
 
@@ -77,14 +81,12 @@ test('it renders all the ui elements properly bound', function(assert) {
   assert.equal(this.$('.task-details .code-theme-selector').length, 1);
 });
 
-test('the task body is rendered as unescaped html', function (assert) {
-  let mockMentionFetcher = Ember.Service.extend({
+test('the task body is rendered as unescaped html', function(assert) {
+  stubService(this, 'mention-fetcher', {
     prefetchBodyWithMentions() {
       return 'A body with a <strong>strong element</strong>';
     }
   });
-
-  this.register('service:mention-fetcher', mockMentionFetcher);
 
   this.set('task', mockTask);
 
@@ -96,7 +98,7 @@ test('user can switch between view and edit mode for task body', function(assert
   assert.expect(3);
   this.set('task', mockTask);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.render(hbs`{{task-details task=task}}`);
   assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
@@ -108,6 +110,32 @@ test('user can switch between view and edit mode for task body', function(assert
   assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
 });
 
+test('it saves', function(assert) {
+  assert.expect(2);
+
+  this.set('task', mockTask);
+  stubService(this, 'mention-fetcher', {
+    fetchBodyWithMentions(task) {
+      return RSVP.resolve(task.body);
+    },
+    prefetchBodyWithMentions() {
+      return 'A body';
+    }
+  });
+
+  this.on('route-save', (task) => {
+    task.set('body', 'A new body');
+    return RSVP.resolve(task);
+  });
+
+  this.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
+  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A body', 'The original body is correct');
+
+  this.$('.task-body .edit').click();
+  this.$('.task-body .editor-with-preview textarea').val('A new body').trigger('change');
+  this.$('.task-body .save').click();
+  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A new body', 'The body is saved');
+});
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
 /*
 test('mentions are rendered on task body in read-only mode', function(assert) {

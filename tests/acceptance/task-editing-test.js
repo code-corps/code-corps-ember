@@ -1,29 +1,19 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import taskPage from '../pages/project/tasks/task';
 
-let application;
+moduleForAcceptance('Acceptance | Task Editing');
 
-module('Acceptance: Task Editing', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('Task editing requires logging in', (assert) => {
+test('Task editing requires logging in', function(assert) {
   assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
@@ -37,7 +27,7 @@ test('Task editing requires logging in', (assert) => {
     assert.notOk(taskPage.taskBody.editButton.isVisible, 'Body edit button is not rendered');
     assert.notOk(taskPage.taskTitle.editButton.isVisible, 'Title edit button is not rendered');
 
-    authenticateSession(application, { user_id: user.id });
+    authenticateSession(this.application, { user_id: user.id });
     taskPage.visit({
       organization: organization.slug,
       project: project.slug,
@@ -51,15 +41,15 @@ test('Task editing requires logging in', (assert) => {
   });
 });
 
-test('A task body can be edited on its own', (assert) => {
+test('A task body can be edited on its own', function(assert) {
   assert.expect(3);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
@@ -89,15 +79,15 @@ test('A task body can be edited on its own', (assert) => {
   });
 });
 
-test('A task title can be edited on its own', (assert) => {
+test('A task title can be edited on its own', function(assert) {
   assert.expect(4);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
@@ -126,7 +116,7 @@ test('A task title can be edited on its own', (assert) => {
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
 /*
-test('Mentions are rendered during editing in preview mode', (assert) => {
+test('Mentions are rendered during editing in preview mode', function(assert) {
   assert.expect(1);
 
   let project = createProjectWithSluggedRoute();
@@ -167,11 +157,11 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
 });
 */
 
-test('A task can be opened or closed by the author', (assert) => {
+test('A task can be opened or closed by the author', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', { organization });
@@ -206,11 +196,11 @@ test('A task can be opened or closed by the author', (assert) => {
   });
 });
 
-test('A task can be opened or closed by the organization admin', (assert) => {
+test('A task can be opened or closed by the organization admin', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', { organization });
@@ -246,11 +236,11 @@ test('A task can be opened or closed by the organization admin', (assert) => {
   });
 });
 
-test('A task cannot be opened or closed by someone else', (assert) => {
+test('A task cannot be opened or closed by someone else', function(assert) {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', { organization });

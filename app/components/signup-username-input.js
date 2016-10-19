@@ -1,18 +1,12 @@
 import Ember from 'ember';
-import {
-  alias,
-  and,
-  empty,
-  equal,
-  not,
-} from 'ember-computed';
 
 const {
   Component,
-  inject,
+  computed: { alias, and, empty, equal, not },
+  inject: { service },
+  observer,
+  run: { cancel, debounce, once }
 } = Ember;
-
-const { service } = inject;
 
 /**
   `signup-username-input` composes the username input on the signup page. It
@@ -190,8 +184,8 @@ export default Component.extend({
 
     @method usernameChanged
    */
-  usernameChanged: Ember.observer('username', function() {
-    Ember.run.once(this, '_check');
+  usernameChanged: observer('username', function() {
+    once(this, '_check');
   }),
 
   /**
@@ -203,8 +197,7 @@ export default Component.extend({
   checkAvailable() {
     let username = this.get('username');
     this.sendRequest(username).then((result) => {
-      let available = result.available;
-      let valid = result.valid;
+      let { available, valid } = result;
       let validation = valid && available;
 
       this.set('cachedUsername', this.get('username'));
@@ -228,7 +221,7 @@ export default Component.extend({
     return this.get('ajax').request('/users/username_available', {
       method: 'GET',
       data: {
-        username: username
+        username
       }
     });
   },
@@ -245,18 +238,18 @@ export default Component.extend({
       if (this.get('isNotSameUsername')) {
         this.set('isChecking', true);
       }
-    },
+    }
   },
 
   _check() {
     this.set('isChecking', true);
 
     if (this.get('canCheck')) {
-      Ember.run.cancel(this.get('timer'));
-      let debounce = Ember.run.debounce(this, function() {
+      cancel(this.get('timer'));
+      let deferredAction = debounce(this, function() {
         this.checkAvailable();
       }, 500);
-      this.set('timer', debounce);
+      this.set('timer', deferredAction);
     } else if (this.get('isSameUsername') && this.get('isNotEmpty')) {
       this.sendAction('usernameValidated', this.get('canSubmit'));
       this.set('isChecking', false);
@@ -264,5 +257,5 @@ export default Component.extend({
       this.sendAction('usernameValidated', false);
       this.set('isChecking', false);
     }
-  },
+  }
 });

@@ -1,12 +1,8 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-import startApp from '../helpers/start-app';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import page from '../pages/contributors';
-import Ember from 'ember';
-
-let application;
 
 function buildURLParts(project_organization_slug, project_slug) {
   return {
@@ -18,14 +14,7 @@ function buildURLParts(project_organization_slug, project_slug) {
   };
 }
 
-moduleForAcceptance('Acceptance: Contributors', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance: Contributors');
 
 test('when not an admin on the project', function(assert) {
   assert.expect(1);
@@ -41,7 +30,7 @@ test('when not an admin on the project', function(assert) {
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   page.visit(contributorURLParts.args);
 
@@ -63,7 +52,7 @@ test('when only the owner is a contributor', function(assert) {
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   page.visit(contributorURLParts.args);
 
@@ -119,7 +108,7 @@ test('when there are multiple contributors', function(assert) {
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   page.visit(contributorURLParts.args);
 
@@ -146,7 +135,9 @@ test('when there are multiple contributors', function(assert) {
     assert.equal(page.pendingContributors.members().count, 1, 'Pending contributors has 1 member listed');
     assert.equal(page.others.members().count, 2, 'Others has 2 members listed');
 
-    window.confirm = function() { return true; };
+    window.confirm = function() {
+      return true;
+    };
     page.pendingContributors.members(0).denyMembership();
   });
 

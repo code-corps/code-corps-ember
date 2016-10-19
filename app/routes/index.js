@@ -1,13 +1,16 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  inject: { service },
+  Route
+} = Ember;
 
-export default Ember.Route.extend({
+export default Route.extend({
   session: service(),
 
   beforeModel() {
     if (this.get('session.isAuthenticated')) {
       this.transitionTo('projects-list');
     }
-  },
+  }
 });

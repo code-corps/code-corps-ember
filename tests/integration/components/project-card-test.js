@@ -2,11 +2,17 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const { K } = Ember;
 
 moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 
@@ -14,7 +20,7 @@ test('it renders', function(assert) {
   let project = server.create('project');
   let organization = server.create('organization');
   let user = server.create('user');
-  let membership = server.create('organization-membership', { member: user, organization});
+  let membership = server.create('organization-membership', { member: user, organization });
   let projectCategory = server.create('project-category', { project });
 
   let mockedProject = {
@@ -26,14 +32,10 @@ test('it renders', function(assert) {
       name: organization.name,
       organizationMemberships: [membership]
     },
-    projectCategories: [projectCategory],
+    projectCategories: [projectCategory]
   };
 
-  let mockUserCategoriesService = Ember.Service.extend({
-    findUserCategory: Ember.K,
-  });
-  this.register('service:user-categories', mockUserCategoriesService);
-
+  stubService(this, 'user-categories', { findUserCategory: K });
 
   this.set('project', mockedProject);
   this.render(hbs`{{project-card project=project}}`);

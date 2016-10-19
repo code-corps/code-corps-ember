@@ -10,7 +10,6 @@ export default create({
 
   form: {
     scope: '.signup-form',
-    
     email: fillable('[name=email]'),
     password: fillable('[name=password]'),
     save: clickable('[name=signup]'),

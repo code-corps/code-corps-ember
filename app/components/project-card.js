@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  computed: { mapBy }
 } = Ember;
 
 /**
@@ -21,7 +22,7 @@ const {
 export default Component.extend({
   classNames: ['project-card'],
 
-  projectCategories: Ember.computed.mapBy('project.projectCategories', 'category'),
-  projectOrganizationMembers: Ember.computed.mapBy('project.organization.organizationMemberships', 'member'),
-  projectSkills: Ember.computed.mapBy('project.projectSkills', 'skill')
+  projectCategories: mapBy('project.projectCategories', 'category'),
+  projectOrganizationMembers: mapBy('project.organization.organizationMemberships', 'member'),
+  projectSkills: mapBy('project.projectSkills', 'skill')
 });

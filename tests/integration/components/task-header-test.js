@@ -2,13 +2,18 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
-let mockTask = Ember.Object.create({
+const {
+  Object,
+  RSVP
+} = Ember;
+
+let mockTask = Object.create({
   title: 'A task',
   body: 'A <strong>body</strong>',
   number: 12,
   taskType: 'issue',
   save() {
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 

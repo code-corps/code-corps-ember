@@ -1,7 +1,7 @@
 import {
   clickable,
   collection,
-  fillable,
+  fillable
 } from 'ember-cli-page-object';
 
 export default {
@@ -18,7 +18,7 @@ export default {
 
     clickPreview: clickable('.preview'),
 
-    markdown: fillable('textarea[name=markdown]'),
+    markdown: fillable('textarea[name=markdown]')
   },
 
   errors: collection({

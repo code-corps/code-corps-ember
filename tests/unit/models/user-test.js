@@ -1,6 +1,9 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
+import Ember from 'ember';
+
+const { get } = Ember;
 
 moduleForModel('user', 'Unit | Model | user', {
   // Specify the other units that are required for this test.
@@ -20,24 +23,25 @@ test('it exists', function(assert) {
 });
 
 test('it has all of its attributes', function(assert) {
-  let user = this.subject();
-  let actualAttributes = Object.keys(user.toJSON());
+  let model = this.store().modelFor('user');
+  let actualAttributes = get(model, 'attributes');
+
   let expectedAttributes = [
-    "base64PhotoData",
-    "biography",
-    "email",
-    "firstName",
-    "insertedAt",
-    "lastName",
-    "name",
-    "password",
-    "photoLargeUrl",
-    "photoThumbUrl",
-    "state",
-    "stateTransition",
-    "twitter",
-    "username",
-    "website",
+    'base64PhotoData',
+    'biography',
+    'email',
+    'firstName',
+    'insertedAt',
+    'lastName',
+    'name',
+    'password',
+    'photoLargeUrl',
+    'photoThumbUrl',
+    'state',
+    'stateTransition',
+    'twitter',
+    'username',
+    'website'
   ];
 
   assert.hasAttributes(actualAttributes, expectedAttributes);

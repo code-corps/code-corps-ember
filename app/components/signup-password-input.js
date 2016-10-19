@@ -1,32 +1,39 @@
 import Ember from 'ember';
 import strength from 'password-strength';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, gte, lt, not },
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['input-group'],
 
-  ajax: Ember.inject.service(),
+  ajax: service(),
 
-  canShowValidations: Ember.computed.alias('isNotEmpty'),
-  isEmpty: Ember.computed.lt('passwordLength', 1),
-  isInvalid: Ember.computed.not('isValid'),
-  isNotEmpty: Ember.computed.not('isEmpty'),
-  isOkay: Ember.computed.alias('isValid'),
-  isValid: Ember.computed.gte('passwordLength', 6),
-  passwordLength: Ember.computed.alias('password.length'),
-  suggestions: Ember.computed.alias('strength.feedback.suggestions'),
+  canShowValidations: alias('isNotEmpty'),
+  isEmpty: lt('passwordLength', 1),
+  isInvalid: not('isValid'),
+  isNotEmpty: not('isEmpty'),
+  isOkay: alias('isValid'),
+  isValid: gte('passwordLength', 6),
+  passwordLength: alias('password.length'),
+  suggestions: alias('strength.feedback.suggestions'),
 
-  password: Ember.computed('user.password', function() {
+  password: computed('user.password', function() {
     return this.get('user.password') || '';
   }),
 
-  strength: Ember.computed('password', function () {
+  strength: computed('password', function() {
     let password = this.get('password') || '';
     return strength(password);
   }),
 
-  strengthPercentage: Ember.computed('isValid', 'passwordLength', 'strength', function() {
+  strengthPercentage: computed('isValid', 'passwordLength', 'strength', function() {
     let isValid = this.get('isValid');
-    var percentage = 0;
+    let percentage = 0;
 
     if (isValid) {
       let score = this.get('strength.score');
@@ -36,5 +43,5 @@ export default Ember.Component.extend({
     }
 
     return percentage;
-  }),
+  })
 });

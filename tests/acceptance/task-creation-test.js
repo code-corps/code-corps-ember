@@ -1,6 +1,5 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
@@ -8,22 +7,13 @@ import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 import projectTasksNewPage from '../pages/project/tasks/new';
 
-let application;
+moduleForAcceptance('Acceptance | Task Creation');
 
-module('Acceptance: Task Creation', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('Creating a task requires logging in', (assert) => {
+test('Creating a task requires logging in', function(assert) {
   assert.expect(2);
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
+  let { organization } = project;
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -43,13 +33,13 @@ test('Creating a task requires logging in', (assert) => {
   });
 });
 
-test('A task can be successfully created', (assert) => {
+test('A task can be successfully created', function(assert) {
   assert.expect(9);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  authenticateSession(application, { user_id: user.id });
+  let { organization } = project;
+  authenticateSession(this.application, { user_id: user.id });
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
@@ -65,7 +55,7 @@ test('A task can be successfully created', (assert) => {
   andThen(() => {
     assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created');
 
-    let task = server.schema.tasks.all().models[0];
+    let [task] = server.schema.tasks.all().models;
 
     assert.equal(task.title, 'A task title');
     assert.equal(task.markdown, 'A task body');
@@ -80,13 +70,13 @@ test('A task can be successfully created', (assert) => {
   // TODO: Make sure we got redirected to the task route and task is properly rendered
 });
 
-test('Task preview works during creation', (assert) => {
+test('Task preview works during creation', function(assert) {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  authenticateSession(application, { user_id: user.id });
+  let { organization } = project;
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksNewPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -101,7 +91,7 @@ test('Task preview works during creation', (assert) => {
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/*test('Task preview during creation renders user mentions', (assert) => {
+/* test('Task preview during creation renders user mentions', function(assert) {
   assert.expect(1);
 
   let project = createProjectWithSluggedRoute();
@@ -122,13 +112,13 @@ test('Task preview works during creation', (assert) => {
   });
 });*/
 
-test('When task creation succeeeds, the user is redirected to the task page for the new task', (assert) => {
+test('When task creation succeeeds, the user is redirected to the task page for the new task', function(assert) {
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  authenticateSession(application, { user_id: user.id });
+  let { organization } = project;
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -144,12 +134,12 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   });
 });
 
-test('When task creation fails due to validation, validation errors are displayed', (assert) => {
+test('When task creation fails due to validation, validation errors are displayed', function(assert) {
   assert.expect(1);
   let user = server.schema.users.create({ username: 'test_user' });
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  authenticateSession(application, { user_id: user.id });
+  let { organization } = project;
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -162,30 +152,30 @@ test('When task creation fails due to validation, validation errors are displaye
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: "VALIDATION_ERROR",
-            source: { pointer: "data/attributes/title" },
-            detail:"is invalid",
+            id: 'VALIDATION_ERROR',
+            source: { pointer: 'data/attributes/title' },
+            detail:'is invalid',
             status: 422
           },
           {
-            id:"VALIDATION_ERROR",
-            source: { pointer: "data/attributes/markdown" },
+            id:'VALIDATION_ERROR',
+            source: { pointer: 'data/attributes/markdown' },
             detail: "can't be blank",
             status: 422
           },
           {
-            id: "VALIDATION_ERROR",
-            source: { pointer: "data/attributes/task-type" },
-            detail: "is invalid",
+            id: 'VALIDATION_ERROR',
+            source: { pointer: 'data/attributes/task-type' },
+            detail: 'is invalid',
             status: 422
           },
           {
-            id: "VALIDATION_ERROR",
-            source: { pointer: "data/attributes/task-type" },
-            detail: "can only be one of the specified values",
+            id: 'VALIDATION_ERROR',
+            source: { pointer: 'data/attributes/task-type' },
+            detail: 'can only be one of the specified values',
             status: 422
           }
-      ]});
+        ] });
     });
     projectTasksNewPage.clickSubmit();
   });
@@ -193,14 +183,14 @@ test('When task creation fails due to validation, validation errors are displaye
   andThen(() => assert.equal(projectTasksNewPage.errors().count, 4));
 });
 
-test('When task creation fails due to non-validation issues, the error is displayed', (assert) => {
+test('When task creation fails due to non-validation issues, the error is displayed', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
-  let organization = project.organization;
-  authenticateSession(application, { user_id: user.id });
+  let { organization } = project;
+  authenticateSession(this.application, { user_id: user.id });
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -215,9 +205,9 @@ test('When task creation fails due to non-validation issues, the error is displa
       return new Mirage.Response(400, {}, {
         errors: [
           {
-            id: "UNKNOWN ERROR",
-            title: "An unknown error",
-            detail:"Something happened",
+            id: 'UNKNOWN ERROR',
+            title: 'An unknown error',
+            detail:'Something happened',
             status: 400
           }
         ]

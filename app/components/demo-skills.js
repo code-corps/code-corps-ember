@@ -1,57 +1,64 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  Object,
+  observer,
+  run: { later }
+} = Ember;
+
+export default Component.extend({
   skills: [
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "BASIC"
+      title: 'BASIC'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Copywriting"
+      title: 'Copywriting'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Ember.js"
+      title: 'Ember.js'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "HTML"
+      title: 'HTML'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Python"
+      title: 'Python'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Rails"
+      title: 'Rails'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Ruby"
+      title: 'Ruby'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "SEO"
+      title: 'SEO'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "Sketch"
+      title: 'Sketch'
     }),
-    Ember.Object.create({
+    Object.create({
       isLoading: false,
-      title: "UX Design"
-    }),
+      title: 'UX Design'
+    })
   ],
   classNames: ['demo-skills'],
 
-  _animateItems: Ember.observer('animated', function() {
+  _animateItems: observer('animated', function() {
     if (this.get('animated')) {
       let skills = this.get('skills');
       let indexesToAnimate = [2, 3, 5, 6, 8, 9];
 
-      Ember.run.later(() => {
+      later(() => {
         indexesToAnimate.forEach((index) => {
           let skill = skills[index];
           this.get('_animateItem').perform(skill);
@@ -60,12 +67,12 @@ export default Ember.Component.extend({
     }
   }),
 
-  _animateItem: task(function * (skill) {
+  _animateItem: task(function* (skill) {
     skill.set('selected', true);
     skill.set('isLoading', true);
-    Ember.run.later(() => {
+    later(() => {
       skill.set('isLoading', false);
     }, 700);
     yield timeout(1000);
-  }).enqueue(),
+  }).enqueue()
 });

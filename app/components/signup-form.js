@@ -1,21 +1,27 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, and, gte },
+  inject: { service },
+  run: { later }
+} = Ember;
+
+export default Component.extend({
   classNames: ['signup-form'],
   emailValid: false,
   hasError: false,
   usernameValid: false,
 
-  session: Ember.inject.service(),
-  store: Ember.inject.service(),
+  session: service(),
+  store: service(),
 
-  canSubmit: Ember.computed.and('emailValid',
-                                'passwordValid',
-                                'usernameValid'),
-  passwordLength: Ember.computed.alias('password.length'),
-  passwordValid: Ember.computed.gte('passwordLength', 6),
+  canSubmit: and('emailValid', 'passwordValid', 'usernameValid'),
+  passwordLength: alias('password.length'),
+  passwordValid: gte('passwordLength', 6),
 
-  password: Ember.computed('user.password', function() {
+  password: computed('user.password', function() {
     return this.get('user.password') || '';
   }),
 
@@ -39,7 +45,7 @@ export default Ember.Component.extend({
 
     usernameValidated(result) {
       this.set('usernameValid', result);
-    },
+    }
   },
 
   _setError() {
@@ -53,9 +59,9 @@ export default Ember.Component.extend({
   },
 
   _shakeButton() {
-    if(!this.get('hasError')) {
+    if (!this.get('hasError')) {
       this.set('hasError', true);
-      Ember.run.later(this, function() {
+      later(this, function() {
         this.set('hasError', false);
       }, 1000);
     }
@@ -70,11 +76,11 @@ export default Ember.Component.extend({
     this.get('user').save().then(() => {
       this._signIn(credentials);
     }).catch((error) => {
-      let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+      let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
       if (!payloadContainsValidationErrors) {
         this.controllerFor('signup').set('error', error);
       }
     });
-  },
+  }
 });

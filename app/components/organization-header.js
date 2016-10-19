@@ -1,9 +1,14 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['organization-header'],
   classNameBindings: ['expanded'],
   expanded: false,
 
-  credentials: Ember.inject.service(),
+  credentials: service()
 });

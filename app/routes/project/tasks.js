@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-  model: function() {
+const { Route } = Ember;
+
+export default Route.extend({
+  model() {
     let project = this.modelFor('project');
     return project;
-  },
+  }
 });

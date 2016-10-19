@@ -1,12 +1,18 @@
 import Ember from 'ember';
 import CanAnimateMixin from 'code-corps-ember/mixins/can-animate';
 
-export default Ember.Component.extend(CanAnimateMixin, {
+const {
+  Component,
+  String: { htmlSafe },
+  computed
+} = Ember;
+
+export default Component.extend(CanAnimateMixin, {
   attributeBindings: ['style'],
   classNames: ['landing-subsection'],
   classNameBindings: ['animated:animated'],
 
-  animated: Ember.computed('canAnimate', function() {
+  animated: computed('canAnimate', function() {
     let canAnimate = this.get('canAnimate');
     if (canAnimate) {
       this.set('_hasAnimated', true);
@@ -14,8 +20,8 @@ export default Ember.Component.extend(CanAnimateMixin, {
     return this.get('_hasAnimated');
   }),
 
-  style: Ember.computed('minHeight', function() {
-    let css = 'min-height: ' + this.get('minHeight') + 'px;';
-    return Ember.String.htmlSafe(css);
-  }),
+  style: computed('minHeight', function() {
+    let css = `min-height: ${this.get('minHeight')  }px;`;
+    return htmlSafe(css);
+  })
 });

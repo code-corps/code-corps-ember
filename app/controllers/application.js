@@ -1,13 +1,17 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  computed,
+  Controller,
+  inject: { service }
+} = Ember;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   codeTheme: service(),
   onboarding: service(),
   session: service(),
 
-  isOnboarding: Ember.computed.alias('onboarding.isOnboarding'),
+  isOnboarding: computed.alias('onboarding.isOnboarding'),
 
   actions: {
     invalidateSession() {

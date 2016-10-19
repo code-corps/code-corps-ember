@@ -1,7 +1,15 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  computed: { alias },
+  inject: { service },
+  isPresent
+} = Ember;
+
 /**
-  `project-task-list` provides a list of tasks within the project and allows 
+  `project-task-list` provides a list of tasks within the project and allows
   for filtering and pagination.
 
   ## Default usage
@@ -30,14 +38,14 @@ import Ember from 'ember';
   @extends Ember.Component
  */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['project-task-list'],
 
   /**
     @property store
     @type Ember.Service
    */
-  store: Ember.inject.service(),
+  store: service(),
 
   /**
     Returns information to handle pagination in the `pager-control`
@@ -45,7 +53,7 @@ export default Ember.Component.extend({
     @property meta
     @type Object
    */
-  meta: Ember.computed.alias('tasks.meta'),
+  meta: alias('tasks.meta'),
 
   /**
     Returns information for the `pager-control` to handle pagination.
@@ -53,7 +61,7 @@ export default Ember.Component.extend({
     @property options
     @type Object
    */
-  options: Ember.computed('meta', function() {
+  options: computed('meta', function() {
     return this._normalizeMeta(this.get('meta'));
   }),
 
@@ -84,17 +92,17 @@ export default Ember.Component.extend({
      */
     filterByStatus(status) {
       this.sendAction('filterByStatus', status);
-    },
+    }
   },
 
   _normalizeMeta(meta) {
-    if (Ember.isPresent(meta)) {
+    if (isPresent(meta)) {
       return {
-        currentPage: parseInt(meta["current_page"], 10),
-        pageSize: parseInt(meta["page_size"], 10),
-        totalPages: parseInt(meta["total_pages"], 10),
-        totalRecords: parseInt(meta["total_records"])
+        currentPage: parseInt(meta.current_page, 10),
+        pageSize: parseInt(meta.page_size, 10),
+        totalPages: parseInt(meta.total_pages, 10),
+        totalRecords: parseInt(meta.total_records)
       };
     }
-  },
+  }
 });
