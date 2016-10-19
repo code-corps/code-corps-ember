@@ -42,6 +42,29 @@ $outer-border-radius: 4px;
       }
     }
   }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      width: 49%;
+      position: relative;
+    }
+  }
+
+  .icon-input {
+    padding-left: 35px;
+  }
+
+  .icon-label {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 8px;
+    }
+  }
 }
 
 .input-group-addon {

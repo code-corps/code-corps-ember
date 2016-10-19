@@ -1,0 +1,54 @@
+.donation-container {
+  max-width: 400px;
+  .donation-amount {
+    background-color: $light-blue;
+    border: 2px solid $border-light-blue;
+    border-radius: 5px;
+    padding: 15px;
+
+    h4 {
+      margin: 0;
+    }
+
+    .footnote {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  h3 {
+    margin-top: 35px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.credit-card-form {
+  &__icon-list {
+    margin-bottom: 15px;
+  }
+}
+
+.credit-card-label {
+  &:before {
+    @include sprite($credit-card);
+  }
+
+  .icon-input {
+    padding-left: 45px;
+  }
+}
+
+.lock-label {
+  &:before {
+    @include sprite($lock);
+  }
+}
+
+.calendar-label {
+  &:before {
+    @include sprite($calendar);
+  }
+}
