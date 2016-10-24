@@ -6,7 +6,7 @@ module('Unit | Helper | format-currency');
 test('formats hundreds correctly', function(assert) {
   assert.expect(1);
 
-  let result = formatCurrency([123]);
+  let result = formatCurrency([123.00]);
   assert.equal(result, '$123.00');
 });
 
@@ -22,4 +22,11 @@ test('formats millions correctly', function(assert) {
 
   let result = formatCurrency([234567890.55]);
   assert.equal(result, '$234,567,890.55');
+});
+
+test('formats empty values correctly', function(assert) {
+  assert.expect(1);
+
+  let result = formatCurrency([null]);
+  assert.equal(result, '');
 });

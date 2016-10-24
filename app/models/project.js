@@ -17,6 +17,7 @@ export default Model.extend({
   slug: attr(),
   title: attr(),
 
+  donationGoals: hasMany('donation-goals', { async: true }),
   organization: belongsTo('organization', { async: true }),
   tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),

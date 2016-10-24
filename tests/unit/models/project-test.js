@@ -11,6 +11,7 @@ const {
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
   needs: [
+    'model:donation-goal',
     'model:organization',
     'model:organization-membership',
     'model:project-category',
