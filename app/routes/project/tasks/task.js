@@ -18,7 +18,7 @@ export default Route.extend({
   setupController(controller, task) {
     let user = this.get('currentUser.user');
     let newComment = this.store.createRecord('comment', { user });
-    return controller.setProperties({ newComment, task });
+    controller.setProperties({ newComment, task });
   },
 
   actions: {
