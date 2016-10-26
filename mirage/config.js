@@ -103,6 +103,9 @@ export default function() {
   * Comments
   */
 
+  // GET /comments
+  this.get('/comments', { coalesce: true });
+
   // POST /comments
   this.post('/comments', function(schema) {
     let attrs = this.normalizedRequestAttrs();
@@ -430,14 +433,6 @@ export default function() {
     task.save();
 
     return task;
-  });
-
-  // GET tasks/:number/comments
-  this.get('/tasks/:taskId/comments', function(schema, request) {
-    let { taskId } = request.params;
-    let task = schema.tasks.find(taskId);
-
-    return task.comments;
   });
 
   /**

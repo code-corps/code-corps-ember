@@ -2,7 +2,7 @@
 {{task-status task=task}}
 <div class="task-timeline">
   {{task-details task=task saveTask=(route-action "save")}}
-  {{task-comment-list comments=comments}}
+  {{task-comment-list comments=task.comments}}
   <div>
     {{#create-comment-form comment=newComment saveComment='saveComment'}}
       {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}

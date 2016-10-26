@@ -4,8 +4,14 @@ import ApplicationAdapter from './application';
 const { get } = Ember;
 
 export default ApplicationAdapter.extend({
-   // need to delete properties from the query which we do not want to see
-  // appended to the end of the url as parameters
+  /**
+   * Clears out query parameters which are used to build a url.
+   * These would be `slug` and `sluggedRouteSlug`
+   *
+   * @method sortQueryParams
+   * @param  Object query query object
+   * @return Object modified query object
+   */
   sortQueryParams(query) {
     query = query || {};
 
@@ -19,6 +25,14 @@ export default ApplicationAdapter.extend({
     return query;
   },
 
+  /**
+   * Builds URL from query object if the object contains
+   * `sluggedRouteSlug` key
+   *
+   * @method urlForQuery
+   * @param  Object query Object containing all query parameters for the request
+   * @return String       Built URL string - `/:sluggedRouteSlug/projects/`
+   */
   urlForQuery(query) {
     query = query || {};
 
@@ -45,11 +59,17 @@ export default ApplicationAdapter.extend({
     }
   },
 
+  /**
+   * Builds URL from query object if the object contains
+   * `sluggedRouteSlug` and `slug` keys
+   *
+   * @method urlForQueryRecord
+   * @param  Object query Object containing all query parameters for the request
+   * @return String       Built URL string - `/:sluggedRouteSlug/projects/:slug`
+   */
   urlForQueryRecord(query) {
     query = query || {};
 
-    // if there are slug and sluggedRouteSlug properties in the query, we
-    // need to build the url as (prefix/)host/sluggedRouteSlug/slug
     if (query.slug && query.sluggedRouteSlug) {
       let url = [];
       let host = get(this, 'host');

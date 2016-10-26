@@ -4,8 +4,14 @@ import ApplicationAdapter from './application';
 const { get } = Ember;
 
 export default ApplicationAdapter.extend({
-  // need to drop out the slug query parameter,
-  // otherwise it will get auto-added to the end of the url
+  /**
+   * Clears out query parameters which are used to build a url.
+   * This would be the `slug` parameter
+   *
+   * @method sortQueryParams
+   * @param  Object query query object
+   * @return Object modified query object
+   */
   sortQueryParams(query) {
     query = query || {};
 
@@ -16,11 +22,17 @@ export default ApplicationAdapter.extend({
     return query;
   },
 
+  /**
+   * Builds URL from query object if the object contains
+   * `sluggedRouteSlug` and `slug` keys
+   *
+   * @method urlForQueryRecord
+   * @param  Object query Object containing all query parameters for the request
+   * @return String       Built URL string - `/:sluggedRouteSlug`
+   */
   urlForQueryRecord(query) {
     query = query || {};
 
-    // if the query contains a slug property, then the URL for the slugged route
-    // is formed as (prefix/)(host)/slug
     if (query.slug) {
       let url = [];
       let host = get(this, 'host');

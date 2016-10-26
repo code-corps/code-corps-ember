@@ -2,9 +2,7 @@ import Ember from 'ember';
 
 const {
   Route,
-  RSVP,
-  inject: { service },
-  isPresent
+  inject: { service }
 } = Ember;
 
 export default Route.extend({
@@ -12,30 +10,15 @@ export default Route.extend({
 
   model(params) {
     let projectId = this.modelFor('project').id;
-    let queryParams = {
-      projectId,
-      number: params.number
-    };
+    let { number } = params;
 
-    let userId = this.get('currentUser.user.id');
-
-    return RSVP.hash({
-      task: this.store.queryRecord('task', queryParams),
-      user: isPresent(userId) ? this.store.find('user', userId) : null
-    }).then((result) => {
-      return RSVP.hash({
-        task: result.task,
-        comment: this.store.createRecord('comment', { task: result.task, user: result.user }),
-        comments: this.store.query('comment', { taskId: result.task.id })
-      });
-    });
+    return this.store.queryRecord('task', { projectId, number });
   },
 
-  setupController(controller, models) {
-    this._super(controller, models);
-    controller.set('task', models.task);
-    controller.set('newComment', models.comment);
-    controller.set('comments', models.comments);
+  setupController(controller, task) {
+    let user = this.get('currentUser.user');
+    let newComment = this.store.createRecord('comment', { user });
+    return controller.setProperties({ newComment, task });
   },
 
   actions: {
@@ -50,10 +33,9 @@ export default Route.extend({
     },
 
     saveComment(comment) {
-      let route = this;
-      comment.save().then(() => {
-        route.refresh();
-      }).catch((error) => {
+      let task = this.get('controller.task');
+      comment.set('task', task);
+      comment.save().catch((error) => {
         let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
