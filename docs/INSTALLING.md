@@ -81,13 +81,18 @@ npm ERR! and the repository exists.
 you will need to [associate your ssh key with github](https://help.github.com/articles/generating-an-ssh-key/)
 
 ## Verify it worked
-Run `ember server`
 
-Point your browser (or make a direct request) to `http://localhost:4200`. You should see the code corps website.
+Start your server:
+
+```shell
+ember serve
+```
+
+Now point your browser (or make a direct request) to `http://localhost:4200`. You should see the Code Corps website!
 
 ### Next steps
 
-Now that you're set up, you should [read more about how to develop with the API](USAGE.md).
+Now that you're set up, you should [read more about how to use the app](USAGE.md).
 
 ## Issues installing?
 
