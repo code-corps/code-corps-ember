@@ -54,6 +54,7 @@ AppRouter.map(function() {
         path: '/:number'
       });
     });
+    this.route('donate');
   });
 
   this.route('projects', {
@@ -87,6 +88,7 @@ AppRouter.map(function() {
   this.route('organization', function() {
     this.route('settings', function() { });
   });
+  this.route('terms-of-use');
 });
 
 export default AppRouter;

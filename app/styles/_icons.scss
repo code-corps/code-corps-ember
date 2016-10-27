@@ -55,6 +55,9 @@ $closed: 20px 20px $spriteURL 0px -228px $spritex2URL;
 $open: 20px 20px $spriteURL -20px -228px $spritex2URL;
 $closed-white: 20px 20px $spriteURL -40px -228px $spritex2URL;
 $open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
+$credit-card: 27px 20px $spriteURL 0px -268px $spritex2URL;
+$lock: 14px 20px $spriteURL -28px -268px $spritex2URL;
+$calendar: 20px 20px $spriteURL -42px -268px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
