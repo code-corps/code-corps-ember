@@ -54,23 +54,23 @@ let mockUserRolesServiceForErrors = {
 };
 
 let mockUserRole = Object.create({
-  id: 1,
-  roleId: defaultRoleId,
-  userId: 1
+  id     : 1,
+  roleId : defaultRoleId,
+  userId : 1
 });
 
 let unselectedRole = Object.create({
-  id: 1,
-  name: 'Backend Developer',
-  ability: 'Backend Development',
-  kind: 'technology'
+  id      : 1,
+  name    : 'Backend Developer',
+  ability : 'Backend Development',
+  kind    : 'technology'
 });
 
 let selectedRole = Object.create({
-  id: 2,
-  name: 'Mobile Developer',
-  ability: 'Mobile Development',
-  kind: 'technology'
+  id      : 2,
+  name    : 'Mobile Developer',
+  ability : 'Mobile Development',
+  kind    : 'technology'
 });
 
 moduleForComponent('role-item', 'Integration | Component | role item', {

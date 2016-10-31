@@ -8,6 +8,6 @@ const {
 export default Component.extend({
   classNames: ['project-settings-menu', 'settings-menu'],
 
-  credentials: service(),
-  session: service()
+  credentials : service(),
+  session     : service()
 });

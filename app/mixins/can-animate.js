@@ -8,10 +8,10 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  scrollTimeout: 100,
-  boundingClientRect: 0,
-  windowHeight: 0,
-  windowWidth: 0,
+  scrollTimeout      : 100,
+  boundingClientRect : 0,
+  windowHeight       : 0,
+  windowWidth        : 0,
 
   canAnimate: computed('boundingClientRect', 'windowHeight', function() {
     let rect, windowHeight;

@@ -8,11 +8,11 @@ const {
 } = Ember;
 
 export default Service.extend({
-  currentUser: service(),
-  store: service(),
+  currentUser : service(),
+  store       : service(),
 
-  isEmpty: computed.empty('userSkills'),
-  user: computed.alias('currentUser.user'),
+  isEmpty : computed.empty('userSkills'),
+  user    : computed.alias('currentUser.user'),
 
   userSkills: computed('user.userSkills',
     'user.userSkills.@each.skill',

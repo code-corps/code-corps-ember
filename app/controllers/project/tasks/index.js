@@ -8,36 +8,36 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  page: 1,
-  taskStatus: 'open',
-  taskType: null,
-  types: [
+  page       : 1,
+  taskStatus : 'open',
+  taskType   : null,
+  types      : [
     Object.create({
-      name: 'Tasks',
-      param: 'task',
-      slug: 'tasks',
-      selected: false
+      name     : 'Tasks',
+      param    : 'task',
+      slug     : 'tasks',
+      selected : false
     }),
     Object.create({
-      name: 'Issues',
-      param: 'issue',
-      slug: 'issues',
-      selected: false
+      name     : 'Issues',
+      param    : 'issue',
+      slug     : 'issues',
+      selected : false
     }),
     Object.create({
-      name: 'Ideas',
-      param: 'idea',
-      slug: 'ideas',
-      selected: false
+      name     : 'Ideas',
+      param    : 'idea',
+      slug     : 'ideas',
+      selected : false
     })
   ],
 
   status: computed.alias('taskStatus'),
 
-  isFilteringClosedTasks: computed.equal('status', 'closed'),
-  isFilteringOpenTasks: computed.equal('status', 'open'),
-  isFilteredByType: computed.notEmpty('taskTypes'),
-  isFiltered: computed.or('isFilteredByType'),
+  isFilteringClosedTasks : computed.equal('status', 'closed'),
+  isFilteringOpenTasks   : computed.equal('status', 'open'),
+  isFilteredByType       : computed.notEmpty('taskTypes'),
+  isFiltered             : computed.or('isFilteredByType'),
 
   taskTypes: computed('taskType', function() {
     let taskTypes;

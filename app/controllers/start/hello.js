@@ -7,9 +7,9 @@ const {
 } = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
-  firstNameIsEmpty: computed.empty('model.firstName'),
-  lastNameIsEmpty: computed.empty('model.lastName'),
-  usersNameIsEmpty: computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
+  firstNameIsEmpty : computed.empty('model.firstName'),
+  lastNameIsEmpty  : computed.empty('model.lastName'),
+  usersNameIsEmpty : computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
 
   actions: {
     /**

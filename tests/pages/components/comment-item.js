@@ -7,8 +7,8 @@ import {
 export default {
   scope: '.comment-item',
 
-  clickEdit: clickable('.edit'),
-  clickSave: clickable('.save'),
+  clickEdit : clickable('.edit'),
+  clickSave : clickable('.save'),
 
   commentBody: {
     scope: '.comment-body p'

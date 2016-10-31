@@ -22,9 +22,9 @@ test('it renders proper ui elements, properly bound', function(assert) {
   stubService(this, 'credentials', { currentUserMembership: null });
 
   let task = {
-    title: 'A task',
-    markdown: 'A body',
-    taskType: 'idea'
+    title    : 'A task',
+    markdown : 'A body',
+    taskType : 'idea'
   };
 
   let placeholder = 'Test placeholder';

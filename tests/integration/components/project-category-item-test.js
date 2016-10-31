@@ -22,19 +22,19 @@ moduleForComponent('project-category-item', 'Integration | Component | project c
 });
 
 let mockUserCategory = Object.create({
-  id: 1,
-  categoryId: 2,
-  userId: 1
+  id         : 1,
+  categoryId : 2,
+  userId     : 1
 });
 
 test('it works for unselected categories', function(assert) {
   assert.expect(6);
 
   let category = {
-    id: 1,
-    name: 'Technology',
-    slug: 'technology',
-    description: 'You want to help technology.'
+    id          : 1,
+    name        : 'Technology',
+    slug        : 'technology',
+    description : 'You want to help technology.'
   };
 
   this.set('category', category);
@@ -56,10 +56,10 @@ test('it works for selected categories', function(assert) {
   assert.expect(6);
 
   let category = {
-    id: 2,
-    name: 'Society',
-    slug: 'society',
-    description: 'You want to help society.'
+    id          : 2,
+    name        : 'Society',
+    slug        : 'society',
+    description : 'You want to help society.'
   };
 
   this.set('category', category);

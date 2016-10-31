@@ -16,11 +16,11 @@ test('it renders a fixed error message', function(assert) {
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({
-      message: 'Error message',
-      type: 'danger',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
+      message : 'Error message',
+      type    : 'danger',
+      fixed   : true,
+      sticky  : false,
+      timeout : 5000
     });
   });
 
@@ -32,8 +32,8 @@ test('it renders a normal success message', function(assert) {
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({
-      message: 'Success message',
-      type: 'success'
+      message : 'Success message',
+      type    : 'success'
     });
   });
 

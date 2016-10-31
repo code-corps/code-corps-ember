@@ -9,17 +9,17 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['signup-form'],
-  emailValid: false,
-  hasError: false,
-  usernameValid: false,
+  classNames    : ['signup-form'],
+  emailValid    : false,
+  hasError      : false,
+  usernameValid : false,
 
-  session: service(),
-  store: service(),
+  session : service(),
+  store   : service(),
 
-  canSubmit: and('emailValid', 'passwordValid', 'usernameValid'),
-  passwordLength: alias('password.length'),
-  passwordValid: gte('passwordLength', 6),
+  canSubmit      : and('emailValid', 'passwordValid', 'usernameValid'),
+  passwordLength : alias('password.length'),
+  passwordValid  : gte('passwordLength', 6),
 
   password: computed('user.password', function() {
     return this.get('user.password') || '';
@@ -69,8 +69,8 @@ export default Component.extend({
 
   _submit() {
     let credentials = {
-      identification: this.get('user.email'),
-      password: this.get('user.password')
+      identification : this.get('user.email'),
+      password       : this.get('user.password')
     };
 
     this.get('user').save().then(() => {

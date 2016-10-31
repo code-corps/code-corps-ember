@@ -9,7 +9,7 @@ export default {
   clickLink: clickable('a'),
 
   title: {
-    scope: 'h1',
-    text: text()
+    scope : 'h1',
+    text  : text()
   }
 };

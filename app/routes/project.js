@@ -8,8 +8,8 @@ const {
 export default Route.extend({
   model(params) {
     return this.store.queryRecord('project', {
-      slug: params.project_slug,
-      sluggedRouteSlug: params.slugged_route_slug
+      slug             : params.project_slug,
+      sluggedRouteSlug : params.slugged_route_slug
     }, { reload: true });
   },
 
@@ -25,8 +25,8 @@ export default Route.extend({
   serialize(model) {
     if (model) {
       return {
-        slugged_route_slug: model.get('organization.slug'),
-        project_slug: model.get('slug')
+        slugged_route_slug : model.get('organization.slug'),
+        project_slug       : model.get('slug')
       };
     } else {
       return this._super(...arguments);

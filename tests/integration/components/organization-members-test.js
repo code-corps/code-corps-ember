@@ -19,8 +19,8 @@ test('it renders an item for each member in the list', function(assert) {
   let mockMembers = [];
   for (let i = 1; i <= 3; i++) {
     mockMembers.push({
-      id: i,
-      photoThumbUrl: `image_${i}.png`
+      id            : i,
+      photoThumbUrl : `image_${i}.png`
     });
   }
 

@@ -116,8 +116,8 @@ export default Component.extend({
 
     if (totalPages < pagesToShow) {
       return {
-        lower: 1,
-        upper: totalPages
+        lower : 1,
+        upper : totalPages
       };
     } else {
       let centerPage = this.get('centerPage');
@@ -125,8 +125,8 @@ export default Component.extend({
       let pagesToShowIsEven = pagesToShow % 2 === 0;
 
       return {
-        lower: centerPage - range,
-        upper: centerPage + (pagesToShowIsEven ? range - 1 : range)
+        lower : centerPage - range,
+        upper : centerPage + (pagesToShowIsEven ? range - 1 : range)
       };
     }
   }),

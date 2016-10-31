@@ -22,8 +22,8 @@ function _findPositionsToAdd(positionsToAdd, string, substrings, newString) {
       let substringToMatch = substrings[e].toLowerCase();
       if (stringOfSize === substringToMatch) {
         positionsToAdd.push({
-          index: i,
-          stringLength: substringToMatch.length
+          index        : i,
+          stringLength : substringToMatch.length
         });
       }
     }

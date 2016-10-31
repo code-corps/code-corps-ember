@@ -23,9 +23,9 @@ test('when not an admin on the project', function(assert) {
 
   let user = server.create('user');
   server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'contributor'
+    member       : user,
+    organization : project.organization,
+    role         : 'contributor'
   });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
@@ -45,9 +45,9 @@ test('when only the owner is a contributor', function(assert) {
   let project = createProjectWithSluggedRoute();
   let user = server.create('user');
   server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'owner'
+    member       : user,
+    organization : project.organization,
+    role         : 'owner'
   });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
@@ -77,33 +77,33 @@ test('when there are multiple contributors', function(assert) {
   let project = createProjectWithSluggedRoute();
   let user = server.create('user');
   server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'owner'
+    member       : user,
+    organization : project.organization,
+    role         : 'owner'
   });
 
   server.create('organizationMembership', {
-    member: server.create('user'),
-    organization: project.organization,
-    role: 'admin'
+    member       : server.create('user'),
+    organization : project.organization,
+    role         : 'admin'
   });
 
   server.create('organizationMembership', {
-    member: server.create('user'),
-    organization: project.organization,
-    role: 'pending'
+    member       : server.create('user'),
+    organization : project.organization,
+    role         : 'pending'
   });
 
   server.create('organizationMembership', {
-    member: server.create('user'),
-    organization: project.organization,
-    role: 'pending'
+    member       : server.create('user'),
+    organization : project.organization,
+    role         : 'pending'
   });
 
   server.create('organizationMembership', {
-    member: server.create('user'),
-    organization: project.organization,
-    role: 'contributor'
+    member       : server.create('user'),
+    organization : project.organization,
+    role         : 'contributor'
   });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);

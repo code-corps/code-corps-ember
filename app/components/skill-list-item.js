@@ -8,13 +8,13 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNameBindings: ['matched'],
-  tagName: 'li',
+  classNameBindings : ['matched'],
+  tagName           : 'li',
 
-  matched: notEmpty('userSkill'),
-  userSkills: service(),
-  user: alias('currentUser.user'),
-  usersUserSkills: alias('user.userSkills'),
+  matched         : notEmpty('userSkill'),
+  userSkills      : service(),
+  user            : alias('currentUser.user'),
+  usersUserSkills : alias('user.userSkills'),
 
   userSkill: computed('skill', 'userSkills.userSkills.isFulfilled', function() {
     let skill = this.get('skill');

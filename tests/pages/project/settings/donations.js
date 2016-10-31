@@ -11,7 +11,7 @@ export default create({
   clickStripeConnectButton: clickable('.stripe-connect'),
 
   stripeConnectButton: {
-    scope: '.stripe-connect',
-    href: attribute('href')
+    scope : '.stripe-connect',
+    href  : attribute('href')
   }
 });

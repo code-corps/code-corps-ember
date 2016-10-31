@@ -31,9 +31,9 @@ test('it renders elements for the default menu when logged in', function(assert)
 test('it renders elements for the onboarding menu', function(assert) {
   stubService(this, 'navigation-menu', { isOnboarding: true });
   stubService(this, 'onboarding', {
-    currentStepNumber: 1,
-    totalSteps: 3,
-    progressPercentage: 100
+    currentStepNumber  : 1,
+    totalSteps         : 3,
+    progressPercentage : 100
   });
 
   this.render(hbs`{{navigation-menu}}`);

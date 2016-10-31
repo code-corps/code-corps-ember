@@ -11,22 +11,22 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['user-skills-input'],
-  cursorAt: 0,
-  cursorWas: 0,
-  hidden: true,
-  lastQuery: null,
-  limit: 5,
-  results: [],
+  classNames : ['user-skills-input'],
+  cursorAt   : 0,
+  cursorWas  : 0,
+  hidden     : true,
+  lastQuery  : null,
+  limit      : 5,
+  results    : [],
 
-  store: service(),
-  userSkills: service(),
+  store      : service(),
+  userSkills : service(),
 
-  canShow: and('hasResults', 'notHidden'),
-  hasResults: notEmpty('results'),
-  notHidden: not('hidden'),
-  numberOfResults: alias('results.length'),
-  queryString: alias('query'),
+  canShow         : and('hasResults', 'notHidden'),
+  hasResults      : notEmpty('results'),
+  notHidden       : not('hidden'),
+  numberOfResults : alias('results.length'),
+  queryString     : alias('query'),
 
   queryStringChanged: observer('queryString', function() {
     once(this, '_search');
@@ -60,13 +60,13 @@ export default Component.extend({
     }
   },
 
-  _isCommaKey: equal('keyCode', 188),
-  _isDownKey: equal('keyCode', 40),
-  _isEnterKey: equal('keyCode', 13),
-  _isEscKey: equal('keyCode', 27),
-  _isUpKey: equal('keyCode', 38),
-  _isNewQuery: not('_sameQuery'),
-  _sameQuery: computed('queryString', 'lastQuery', function() {
+  _isCommaKey : equal('keyCode', 188),
+  _isDownKey  : equal('keyCode', 40),
+  _isEnterKey : equal('keyCode', 13),
+  _isEscKey   : equal('keyCode', 27),
+  _isUpKey    : equal('keyCode', 38),
+  _isNewQuery : not('_sameQuery'),
+  _sameQuery  : computed('queryString', 'lastQuery', function() {
     return this.get('queryString') === this.get('lastQuery');
   }),
 

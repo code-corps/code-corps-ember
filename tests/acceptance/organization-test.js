@@ -42,9 +42,9 @@ test('an admin can navigate to settings', function(assert) {
   let user = server.create('user');
 
   server.create('organization-membership', {
-    member: user,
+    member : user,
     organization,
-    role: 'admin'
+    role   : 'admin'
   });
 
   // we assume authenticate session here. specific behavior regarding authentication and

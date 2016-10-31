@@ -24,13 +24,13 @@ test('it renders', function(assert) {
   let projectCategory = server.create('project-category', { project });
 
   let mockedProject = {
-    id: project.id,
-    title: project.title,
-    description: project.description,
-    iconLargeUrl: project.iconLargeUrl,
-    organization: {
-      name: organization.name,
-      organizationMemberships: [membership]
+    id           : project.id,
+    title        : project.title,
+    description  : project.description,
+    iconLargeUrl : project.iconLargeUrl,
+    organization : {
+      name                    : organization.name,
+      organizationMemberships : [membership]
     },
     projectCategories: [projectCategory]
   };

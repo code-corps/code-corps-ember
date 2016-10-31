@@ -30,8 +30,8 @@ test('it renders the task count when it has tasks', function(assert) {
 
   stubService(this, 'session', { isAuthenticated: false });
   this.set('project', {
-    hasOpenTasks: true,
-    openTasksCount: 7
+    hasOpenTasks   : true,
+    openTasksCount : 7
   });
 
   this.render(hbs`{{project-menu project=project}}`);
@@ -44,8 +44,8 @@ test('it does not render the task count when it has no tasks', function(assert) 
 
   stubService(this, 'session', { isAuthenticated: false });
   this.set('project', {
-    hasOpenTasks: false,
-    openTasksCount: 0
+    hasOpenTasks   : false,
+    openTasksCount : 0
   });
 
   this.render(hbs`{{project-menu project=project}}`);

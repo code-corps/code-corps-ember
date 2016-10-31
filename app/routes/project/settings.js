@@ -8,8 +8,8 @@ const {
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
-  credentials: service(),
-  session: service(),
+  credentials : service(),
+  session     : service(),
 
   beforeModel() {
     if (this.get('session.isAuthenticated')) {

@@ -23,9 +23,9 @@ const {
  * @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['category-item'],
-  classNameBindings: ['selected'],
-  isLoading: false,
+  classNames        : ['category-item'],
+  classNameBindings : ['selected'],
+  isLoading         : false,
 
   /**
    * @property flashMessages
@@ -117,10 +117,10 @@ export default Component.extend({
     flashMessages.clearMessages();
     return flashMessages.add({
       message,
-      type: 'danger',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
+      type    : 'danger',
+      fixed   : true,
+      sticky  : false,
+      timeout : 5000
     });
   }
 });

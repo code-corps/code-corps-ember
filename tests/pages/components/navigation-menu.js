@@ -14,16 +14,16 @@ export default {
     scope: 'a.signup'
   },
   userMenu: {
-    scope: '.user-menu',
-    open: clickable('a.user-menu-select'),
+    scope : '.user-menu',
+    open  : clickable('a.user-menu-select'),
 
     profileLink: {
-      scope: 'a.slugged-route',
-      href: attribute('href')
+      scope : 'a.slugged-route',
+      href  : attribute('href')
     },
     settingsLink: {
-      scope: '.profile',
-      href: attribute('href')
+      scope : '.profile',
+      href  : attribute('href')
     },
     logOut: {
       scope: 'a.logout'

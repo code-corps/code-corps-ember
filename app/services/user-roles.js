@@ -7,11 +7,11 @@ const {
 } = Ember;
 
 export default Service.extend({
-  currentUser: service(),
-  store: service(),
+  currentUser : service(),
+  store       : service(),
 
-  isEmpty: computed.empty('userRoles'),
-  user: computed.alias('currentUser.user'),
+  isEmpty : computed.empty('userRoles'),
+  user    : computed.alias('currentUser.user'),
 
   userRoles: computed('user.userRoles',
     'user.userRoles.@each.role',

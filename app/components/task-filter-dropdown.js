@@ -18,8 +18,8 @@ const { Component } = Ember;
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['dropdown-menu'],
-  tagName: 'ul',
+  classNames : ['dropdown-menu'],
+  tagName    : 'ul',
 
   /**
     Sends the `hide` action when a filter is clicked.

@@ -21,9 +21,9 @@ const {
  */
 
 export default Component.extend({
-  classNames: ['categories'],
-  sortByName: ['name'],
-  tagName: 'ul',
+  classNames : ['categories'],
+  sortByName : ['name'],
+  tagName    : 'ul',
 
   /**
     Returns the categories sorted by name.

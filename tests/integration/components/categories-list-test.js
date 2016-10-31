@@ -16,16 +16,16 @@ test('it renders the categories and sorts them by name', function(assert) {
 
   let categories = [
     {
-      id: 2,
-      name: 'Society'
+      id   : 2,
+      name : 'Society'
     },
     {
-      id: 1,
-      name: 'Zoology'
+      id   : 1,
+      name : 'Zoology'
     },
     {
-      id: 3,
-      name: 'Alphabets'
+      id   : 3,
+      name : 'Alphabets'
     }
   ];
 

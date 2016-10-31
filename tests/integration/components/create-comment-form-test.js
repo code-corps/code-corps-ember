@@ -12,9 +12,9 @@ const {
 let mockSession = { isAuthenticated: true };
 
 let pressCtrlEnter = $.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
+  keyCode : 13,
+  which   : 13,
+  ctrlKey : true
 });
 
 moduleForComponent('create-comment-form', 'Integration | Component | create comment form', {

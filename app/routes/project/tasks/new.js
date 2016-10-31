@@ -9,13 +9,13 @@ const {
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  credentials: service(),
-  currentUser: service(),
+  credentials : service(),
+  currentUser : service(),
 
   ability: EmberCan.computed.ability('organization', 'currentUserMembership'),
 
-  canCreateTask: computed.alias('ability.canCreateTaskTask'),
-  currentUserMembership: computed.alias('credentials.currentUserMembership'),
+  canCreateTask         : computed.alias('ability.canCreateTaskTask'),
+  currentUserMembership : computed.alias('credentials.currentUserMembership'),
 
   taskType: computed('canCreateTask', function() {
     return this.get('canCreateTask') ? 'task' : 'issue';
@@ -27,9 +27,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   setupController(controller, model) {
     let newTask = this.store.createRecord('task', {
-      project: model,
-      user: this.get('currentUser.user'),
-      taskType: this.get('taskType')
+      project  : model,
+      user     : this.get('currentUser.user'),
+      taskType : this.get('taskType')
     });
     controller.set('task', newTask);
   },

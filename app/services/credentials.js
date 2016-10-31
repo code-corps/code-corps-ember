@@ -8,8 +8,8 @@ const {
 } = Ember;
 
 export default Service.extend({
-  currentUser: service(),
-  store: service(),
+  currentUser : service(),
+  store       : service(),
 
   user: computed.alias('currentUser.user'),
 
@@ -51,9 +51,9 @@ export default Service.extend({
     return this.get('currentOrganizationMemberships').reload();
   },
 
-  userIsMemberInOrganization: computed.notEmpty('currentUserMembership'),
-  userCanJoinOrganization: computed.empty('currentUserMembership'),
+  userIsMemberInOrganization : computed.notEmpty('currentUserMembership'),
+  userCanJoinOrganization    : computed.empty('currentUserMembership'),
 
-  userCanManageOrganization: computed.alias('currentUserMembership.isAtLeastAdmin'),
-  userMembershipIsPending: computed.alias('currentUserMembership.isPending')
+  userCanManageOrganization : computed.alias('currentUserMembership.isAtLeastAdmin'),
+  userMembershipIsPending   : computed.alias('currentUserMembership.isPending')
 });

@@ -14,8 +14,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['task-status-button'],
-  tagName: 'span',
+  classNames : ['task-status-button'],
+  tagName    : 'span',
 
   /**
     Computed property that checks if the task is open.

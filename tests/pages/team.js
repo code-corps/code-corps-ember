@@ -11,14 +11,14 @@ export default create({
   company: {
     scope: '.company',
 
-    header: text('h2'),
-    items: collection({ scope: 'li' })
+    header : text('h2'),
+    items  : collection({ scope: 'li' })
   },
 
   contributors: {
     scope: '.contributors',
 
-    header: text('h2'),
-    items: collection({ scope: 'li' })
+    header : text('h2'),
+    items  : collection({ scope: 'li' })
   }
 });

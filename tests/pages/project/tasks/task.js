@@ -18,8 +18,8 @@ export default create({
   clickSave: clickable('.save'),
 
   comments: collection({
-    scope: '.task-comment-list',
-    itemScope: '.comment-item'
+    scope     : '.task-comment-list',
+    itemScope : '.comment-item'
   }),
 
   editor: {

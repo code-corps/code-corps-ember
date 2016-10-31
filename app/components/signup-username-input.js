@@ -219,8 +219,8 @@ export default Component.extend({
    */
   sendRequest(username) {
     return this.get('ajax').request('/users/username_available', {
-      method: 'GET',
-      data: {
+      method : 'GET',
+      data   : {
         username
       }
     });

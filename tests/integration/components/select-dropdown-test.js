@@ -18,12 +18,12 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
   let items = [
     {
-      value: 'task',
-      label: 'Task'
+      value : 'task',
+      label : 'Task'
     },
     {
-      value: 'idea',
-      label: 'Idea'
+      value : 'idea',
+      label : 'Idea'
     }
   ];
 

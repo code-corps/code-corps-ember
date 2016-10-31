@@ -9,9 +9,9 @@ const {
 } = Ember;
 
 let AppRouter = Router.extend({
-  location: config.locationType,
-  rootURL: config.rootURL,
-  metrics: service(),
+  location : config.locationType,
+  rootURL  : config.rootURL,
+  metrics  : service(),
 
   didTransition() {
     this._super(...arguments);

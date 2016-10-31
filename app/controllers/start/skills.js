@@ -8,8 +8,8 @@ const {
 } = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
-  currentUser: service(),
-  userSkills: service(),
+  currentUser : service(),
+  userSkills  : service(),
 
   user: computed.alias('currentUser.user')
 });

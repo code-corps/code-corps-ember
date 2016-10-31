@@ -11,9 +11,9 @@ export default {
   }),
 
   taskItems: collection({
-    scope: '.task-item',
-    itemScope: 'a',
-    item: {
+    scope     : '.task-item',
+    itemScope : 'a',
+    item      : {
       href: attribute('href')
     }
   }),

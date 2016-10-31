@@ -10,8 +10,8 @@ const {
 } = Ember;
 
 let mockPreview = Object.create({
-  markdown: 'A **body**',
-  body: 'A <strong>body</strong>',
+  markdown : 'A **body**',
+  body     : 'A <strong>body</strong>',
   save() {
     return RSVP.resolve(this);
   }
@@ -38,9 +38,9 @@ moduleForComponent('editor-with-preview', 'Integration | Component | editor with
 });
 
 let pressCtrlEnter = $.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
+  keyCode : 13,
+  which   : 13,
+  ctrlKey : true
 });
 
 test('it renders', function(assert) {

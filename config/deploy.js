@@ -21,17 +21,17 @@ module.exports = function(deployTarget) {
 
   if (deployTarget === 'staging' || deployTarget === 'production') {
     ENV.s3 = {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+      accessKeyId     : process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY
     };
     ENV['s3-index'] = {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+      accessKeyId     : process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey : process.env.AWS_SECRET_ACCESS_KEY
     };
     ENV.slack = {
-      webhookURL: 'https://hooks.slack.com/services/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',
-      username: 'ember-cli-deploy',
-      iconEmoji: ':rocket:'
+      webhookURL : 'https://hooks.slack.com/services/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',
+      username   : 'ember-cli-deploy',
+      iconEmoji  : ':rocket:'
     };
   }
 
@@ -43,12 +43,12 @@ module.exports = function(deployTarget) {
     ENV['s3-index'].region = process.env.STAGING_S3_INDEX_REGION;
 
     ENV.sentry = {
-      publicUrl: process.env.STAGING_SENTRY_SITE_URL,
-      sentryUrl: process.env.SENTRY_BASE_URL,
-      sentryOrganizationSlug: process.env.STAGING_SENTRY_ORGANIZATION_SLUG,
-      sentryProjectSlug: process.env.STAGING_SENTRY_PROJECT_SLUG,
-      sentryApiKey: process.env.STAGING_SENTRY_API_KEY,
-      sentryBearerApiKey: process.env.STAGING_SENTRY_API_KEY
+      publicUrl              : process.env.STAGING_SENTRY_SITE_URL,
+      sentryUrl              : process.env.SENTRY_BASE_URL,
+      sentryOrganizationSlug : process.env.STAGING_SENTRY_ORGANIZATION_SLUG,
+      sentryProjectSlug      : process.env.STAGING_SENTRY_PROJECT_SLUG,
+      sentryApiKey           : process.env.STAGING_SENTRY_API_KEY,
+      sentryBearerApiKey     : process.env.STAGING_SENTRY_API_KEY
     };
   }
 
@@ -60,12 +60,12 @@ module.exports = function(deployTarget) {
     ENV['s3-index'].region = process.env.PRODUCTION_S3_INDEX_REGION;
 
     ENV.sentry = {
-      publicUrl: process.env.PRODUCTION_SENTRY_SITE_URL,
-      sentryUrl: process.env.SENTRY_BASE_URL,
-      sentryOrganizationSlug: process.env.PRODUCTION_SENTRY_ORGANIZATION_SLUG,
-      sentryProjectSlug: process.env.PRODUCTION_SENTRY_PROJECT_SLUG,
-      sentryApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
-      sentryBearerApiKey: process.env.PRODUCTION_SENTRY_API_KEY
+      publicUrl              : process.env.PRODUCTION_SENTRY_SITE_URL,
+      sentryUrl              : process.env.SENTRY_BASE_URL,
+      sentryOrganizationSlug : process.env.PRODUCTION_SENTRY_ORGANIZATION_SLUG,
+      sentryProjectSlug      : process.env.PRODUCTION_SENTRY_PROJECT_SLUG,
+      sentryApiKey           : process.env.PRODUCTION_SENTRY_API_KEY,
+      sentryBearerApiKey     : process.env.PRODUCTION_SENTRY_API_KEY
     };
   }
 

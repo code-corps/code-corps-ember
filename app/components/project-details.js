@@ -19,9 +19,9 @@ const {
  */
 
 export default Component.extend({
-  classNames: ['project-details'],
-  classNameBindings: ['expanded'],
-  expanded: false,
+  classNames        : ['project-details'],
+  classNameBindings : ['expanded'],
+  expanded          : false,
 
   /**
     @property store
@@ -58,9 +58,9 @@ export default Component.extend({
 
       this.get('project.organization').then((organization) => {
         let membership = this.get('store').createRecord('organization-membership', {
-          member: currentUser,
+          member : currentUser,
           organization,
-          role: 'pending'
+          role   : 'pending'
         });
 
         return membership.save();

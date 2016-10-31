@@ -152,28 +152,28 @@ test('When task creation fails due to validation, validation errors are displaye
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: 'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/title' },
-            detail:'is invalid',
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/title' },
+            detail : 'is invalid',
+            status : 422
           },
           {
-            id:'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/markdown' },
-            detail: "can't be blank",
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/markdown' },
+            detail : "can't be blank",
+            status : 422
           },
           {
-            id: 'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/task-type' },
-            detail: 'is invalid',
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/task-type' },
+            detail : 'is invalid',
+            status : 422
           },
           {
-            id: 'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/task-type' },
-            detail: 'can only be one of the specified values',
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/task-type' },
+            detail : 'can only be one of the specified values',
+            status : 422
           }
         ] });
     });
@@ -205,10 +205,10 @@ test('When task creation fails due to non-validation issues, the error is displa
       return new Mirage.Response(400, {}, {
         errors: [
           {
-            id: 'UNKNOWN ERROR',
-            title: 'An unknown error',
-            detail:'Something happened',
-            status: 400
+            id     : 'UNKNOWN ERROR',
+            title  : 'An unknown error',
+            detail : 'Something happened',
+            status : 400
           }
         ]
       });

@@ -6,27 +6,27 @@ import Ember from 'ember';
 const { computed } = Ember;
 
 export default Model.extend({
-  base64PhotoData: attr(),
-  biography: attr(),
-  insertedAt: attr('date'),
-  email: attr(),
-  firstName: attr(),
-  lastName: attr(),
-  name: attr(),
-  password: attr(),
-  photoLargeUrl: attr(),
-  photoThumbUrl: attr(),
-  state: attr(),
-  twitter: attr(),
-  username: attr(),
-  website: attr(),
+  base64PhotoData : attr(),
+  biography       : attr(),
+  insertedAt      : attr('date'),
+  email           : attr(),
+  firstName       : attr(),
+  lastName        : attr(),
+  name            : attr(),
+  password        : attr(),
+  photoLargeUrl   : attr(),
+  photoThumbUrl   : attr(),
+  state           : attr(),
+  twitter         : attr(),
+  username        : attr(),
+  website         : attr(),
 
   stateTransition: attr(),
 
-  organizationMemberships: hasMany('organization-membership', { async: true }),
-  userCategories: hasMany('user-category', { async: true }),
-  userRoles: hasMany('user-role', { async: true }),
-  userSkills: hasMany('user-skill', { async: true }),
+  organizationMemberships : hasMany('organization-membership', { async: true }),
+  userCategories          : hasMany('user-category', { async: true }),
+  userRoles               : hasMany('user-role', { async: true }),
+  userSkills              : hasMany('user-skill', { async: true }),
 
   atUsername: computed('username', function() {
     return `@${this.get('username')}`;

@@ -11,8 +11,8 @@ import projectTaskList from '../../components/project-task-list';
 export default create({
   visit: visitable(':organization/:project/tasks'),
 
-  clickNewTask: clickable('.new-task'),
-  clickPreviewTask: clickable('.preview'),
+  clickNewTask     : clickable('.new-task'),
+  clickPreviewTask : clickable('.preview'),
 
   pagerControl,
   projectDetails,

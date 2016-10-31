@@ -16,25 +16,25 @@ const CONCURRENCY_TIMEOUT = testing ? 0 : 1500;
 export default Component.extend({
   categories: [
     Object.create({
-      description: 'You want to improve government responsiveness.',
-      isLoading: false,
-      name: 'Government',
-      selected: false,
-      slug: 'government'
+      description : 'You want to improve government responsiveness.',
+      isLoading   : false,
+      name        : 'Government',
+      selected    : false,
+      slug        : 'government'
     }),
     Object.create({
-      description: 'You want to improve tools for advancing science.',
-      isLoading: false,
-      name: 'Science',
-      selected: false,
-      slug: 'science'
+      description : 'You want to improve tools for advancing science.',
+      isLoading   : false,
+      name        : 'Science',
+      selected    : false,
+      slug        : 'science'
     }),
     Object.create({
-      description: 'You want to improve software tools and infrastructure.',
-      isLoading: false,
-      name: 'Technology',
-      selected: false,
-      slug: 'technology'
+      description : 'You want to improve software tools and infrastructure.',
+      isLoading   : false,
+      name        : 'Technology',
+      selected    : false,
+      slug        : 'technology'
     })
   ],
   classNames: ['demo-categories'],

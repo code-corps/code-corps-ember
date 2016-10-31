@@ -3,9 +3,9 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  indices: attr('array'),
-  username: attr('string'),
+  indices  : attr('array'),
+  username : attr('string'),
 
-  preview: belongsTo('preview', { async: true }),
-  user: belongsTo('user', { async: true })
+  preview : belongsTo('preview', { async: true }),
+  user    : belongsTo('user', { async: true })
 });

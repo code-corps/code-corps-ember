@@ -7,11 +7,11 @@ const {
 } = Ember;
 
 export default Service.extend({
-  currentUser: service(),
-  store: service(),
+  currentUser : service(),
+  store       : service(),
 
-  isEmpty: computed.empty('userCategories'),
-  user: computed.alias('currentUser.user'),
+  isEmpty : computed.empty('userCategories'),
+  user    : computed.alias('currentUser.user'),
 
   userCategories: computed('user.userCategories',
     'user.userCategories.@each.category',

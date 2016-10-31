@@ -2,11 +2,11 @@
 
 module.exports = function(environment) {
   let ENV = {
-    modulePrefix: 'code-corps-ember',
+    modulePrefix : 'code-corps-ember',
     environment,
-    rootURL: '/',
-    locationType: 'auto',
-    EmberENV: {
+    rootURL      : '/',
+    locationType : 'auto',
+    EmberENV     : {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -24,33 +24,33 @@ module.exports = function(environment) {
 
     flashMessageDefaults: {
       // flash message defaults
-      timeout: 2000,
-      extendedTimeout: 0,
-      priority: 200,
-      sticky: true,
-      showProgress: true,
+      timeout         : 2000,
+      extendedTimeout : 0,
+      priority        : 200,
+      sticky          : true,
+      showProgress    : true,
 
       // service defaults
 
       // do not inject into factories automatically
       // use Ember.inject.service() explicitly where needed instead
       // since that's the new Ember convention
-      injectionFactories: [],
-      preventDuplicates: true
+      injectionFactories : [],
+      preventDuplicates  : true
     },
 
     metricsAdapters: [
       {
-        name: 'Segment',
-        environments: ['development', 'staging'],
-        config: {
+        name         : 'Segment',
+        environments : ['development', 'staging'],
+        config       : {
           key: 'AkZqGsSMgLz15lGhyatw2T0EXnAHfocr'
         }
       },
       {
-        name: 'Segment',
-        environments: ['production'],
-        config: {
+        name         : 'Segment',
+        environments : ['production'],
+        config       : {
           key: 'Nz7hL2eY2yHzuIwUbExfDanbJp2q0IO0'
         }
       }
@@ -62,17 +62,17 @@ module.exports = function(environment) {
 
     pace: {
       // addon-specific options to configure theme
-      theme: 'minimal',
-      color: 'blue',
-      restartOnRequestAfter: 500,
-      ajax: {
+      theme                 : 'minimal',
+      color                 : 'blue',
+      restartOnRequestAfter : 500,
+      ajax                  : {
         ignoreURLs: ['intercom', 'segment', 'sentry']
       }
     },
 
     pageTitle: {
-      prepend: true,
-      separator: ' — '
+      prepend   : true,
+      separator : ' — '
     },
 
     sentry: {
@@ -97,14 +97,14 @@ module.exports = function(environment) {
     };
 
     ENV.contentSecurityPolicy = {
-      'default-src': "'none'",
-      'script-src': [
+      'default-src' : "'none'",
+      'script-src'  : [
         "'self'"
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
-      'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
+      'font-src'    : ["'self'", 'data:', 'https://fonts.gstatic.com'],
       // Allow data (ajax/websocket) from api.lvh.me:49235
-      'connect-src': [
+      'connect-src' : [
         "'self'",
         'http://api.lvh.me:49235'
       ],
@@ -173,10 +173,10 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth-token'] = {
-    serverTokenEndpoint: `${ENV.API_BASE_URL  }/token`,
-    serverTokenRefreshEndpoint: `${ENV.API_BASE_URL  }/token/refresh`,
-    refreshLeeway: 3000, // 5 minutes before expiry
-    timeFactor: 1000
+    serverTokenEndpoint        : `${ENV.API_BASE_URL  }/token`,
+    serverTokenRefreshEndpoint : `${ENV.API_BASE_URL  }/token/refresh`,
+    refreshLeeway              : 3000, // 5 minutes before expiry
+    timeFactor                 : 1000
   };
 
   return ENV;

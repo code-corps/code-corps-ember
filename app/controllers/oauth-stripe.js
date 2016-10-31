@@ -5,7 +5,7 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  queryParams: ['code', 'state'],
-  code: null,
-  state: null
+  queryParams : ['code', 'state'],
+  code        : null,
+  state       : null
 });

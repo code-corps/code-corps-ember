@@ -22,8 +22,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['comment-item', 'timeline-comment-wrapper'],
-  classNameBindings: ['isEditing:editing'],
+  classNames        : ['comment-item', 'timeline-comment-wrapper'],
+  classNameBindings : ['isEditing:editing'],
 
   /**
     @property currentUser

@@ -9,9 +9,9 @@ const {
 } = Ember;
 
 export default Service.extend({
-  metrics: service(),
-  session: service(),
-  store: service(),
+  metrics : service(),
+  session : service(),
+  store   : service(),
 
   loadCurrentUser() {
     return new RSVP.Promise((resolve, reject) => {
@@ -31,14 +31,14 @@ export default Service.extend({
   _identifyUser(user) {
     // Segment
     get(this, 'metrics').identify({
-      distinctId: user.get('id'),
-      biography: user.get('biography'),
-      insertedAt: user.get('insertedAt'),
-      email: user.get('email'),
-      name: user.get('name'),
-      state: user.get('state'),
-      username: user.get('username'),
-      website: user.get('website')
+      distinctId : user.get('id'),
+      biography  : user.get('biography'),
+      insertedAt : user.get('insertedAt'),
+      email      : user.get('email'),
+      name       : user.get('name'),
+      state      : user.get('state'),
+      username   : user.get('username'),
+      website    : user.get('website')
     });
   }
 });

@@ -9,17 +9,17 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNameBindings: ['overflowHidden:overflow-hidden'],
-  classNames: ['skills'],
-  tagName: 'ul',
-  sortByTitle: ['title:asc'],
+  classNameBindings : ['overflowHidden:overflow-hidden'],
+  classNames        : ['skills'],
+  tagName           : 'ul',
+  sortByTitle       : ['title:asc'],
 
   userSkillsService: service('user-skills'),
 
-  alphaSkills: sort('skills', 'sortByTitle'),
-  skillsNotInCommon: setDiff('skillsToFilter', 'skillsInCommon'),
-  sortedSkills: union('skillsInCommon', 'skillsNotInCommon'),
-  userSkills: alias('userSkillsService.userSkills'),
+  alphaSkills       : sort('skills', 'sortByTitle'),
+  skillsNotInCommon : setDiff('skillsToFilter', 'skillsInCommon'),
+  sortedSkills      : union('skillsInCommon', 'skillsNotInCommon'),
+  userSkills        : alias('userSkillsService.userSkills'),
 
   skillsInCommon: filter('skillsToFilter', function(skill) {
     let userSkillsService = get(this, 'userSkillsService');

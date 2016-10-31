@@ -10,8 +10,8 @@ const {
 } = Ember;
 
 let mockMentionFetcher = {
-  fetchBodyWithMentions: RSVP.resolve,
-  prefetchBodyWithMentions: K
+  fetchBodyWithMentions    : RSVP.resolve,
+  prefetchBodyWithMentions : K
 };
 
 let mockCurrentUser = {
@@ -27,11 +27,11 @@ let mockStore = {
 };
 
 let mockTask = Object.create({
-  title: 'A task',
-  body: 'A <strong>body</strong>',
-  containsCode: true,
-  taskType: 'issue',
-  user: { id: 1 },
+  title        : 'A task',
+  body         : 'A <strong>body</strong>',
+  containsCode : true,
+  taskType     : 'issue',
+  user         : { id: 1 },
   save() {
     return RSVP.resolve();
   }

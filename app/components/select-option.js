@@ -6,8 +6,8 @@ const {
 } = Ember;
 
 export default Component.extend({
-  attributeBindings: ['value', 'selected'],
-  tagName: 'option',
+  attributeBindings : ['value', 'selected'],
+  tagName           : 'option',
 
   label: computed('optionLabelPath', 'item', function() {
     let label = this.get('optionLabelPath');

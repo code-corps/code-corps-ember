@@ -16,8 +16,8 @@ const {
  * @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['code-theme-selector'],
-  classNameBindings: ['themeClass'],
+  classNames        : ['code-theme-selector'],
+  classNameBindings : ['themeClass'],
 
   /**
    * @property codeTheme

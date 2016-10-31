@@ -6,9 +6,9 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['organization-header'],
-  classNameBindings: ['expanded'],
-  expanded: false,
+  classNames        : ['organization-header'],
+  classNameBindings : ['expanded'],
+  expanded          : false,
 
   credentials: service()
 });

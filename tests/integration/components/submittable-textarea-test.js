@@ -9,15 +9,15 @@ moduleForComponent('submittable-textarea', 'Integration | Component | submittabl
 });
 
 let pressCtrlEnter = $.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
+  keyCode : 13,
+  which   : 13,
+  ctrlKey : true
 });
 
 let pressCmdEnter = $.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  metaKey: true
+  keyCode : 13,
+  which   : 13,
+  metaKey : true
 });
 
 // This test is necessary because a new line after yield in the file will

@@ -9,16 +9,16 @@ import {
 export default {
   scope: '.user-skills-input',
 
-  fillIn: fillable('input'),
-  focus: triggerable('focus', 'input'),
+  fillIn : fillable('input'),
+  focus  : triggerable('focus', 'input'),
 
   dropdown: collection({
-    scope: '.dropdown-menu',
-    itemScope: 'li',
+    scope     : '.dropdown-menu',
+    itemScope : 'li',
 
     item: {
-      text: text(),
-      click: clickable()
+      text  : text(),
+      click : clickable()
     }
   })
 };

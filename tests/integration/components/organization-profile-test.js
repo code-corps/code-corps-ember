@@ -26,10 +26,10 @@ let projects = [
 ];
 
 let organization = {
-  name: 'Test Organization',
-  description: 'Test organization description',
-  slug: 'test_organization',
-  organizationMemberships: memberships,
+  name                    : 'Test Organization',
+  description             : 'Test organization description',
+  slug                    : 'test_organization',
+  organizationMemberships : memberships,
   projects
 };
 
