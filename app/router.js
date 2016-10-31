@@ -31,6 +31,10 @@ let AppRouter = Router.extend({
 AppRouter.map(function() {
   this.route('login');
 
+  this.route('oauth-stripe', {
+    path: '/oauth/stripe'
+  });
+
   this.route('organizations', function() {
     this.route('slugged-route', {
       path: '/:slugged_route_slug'
@@ -46,6 +50,7 @@ AppRouter.map(function() {
   }, function() {
     this.route('settings', function() {
       this.route('contributors');
+      this.route('donations');
       this.route('profile');
     });
     this.route('tasks', function() {
