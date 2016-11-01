@@ -21,8 +21,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  attributeBindings: ['style'],
-  classNames: ['progress-bar'],
+  attributeBindings : ['style'],
+  classNames        : ['progress-bar'],
 
   /**
     The `style` property consumes the current percentage to generate the style

@@ -17,9 +17,9 @@ test('Task comments are displayed correctly', function(assert) {
   server.createList('comment', 4, { taskId: task.id });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -38,9 +38,9 @@ test('A comment can be added to a task', function(assert) {
   authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -72,9 +72,9 @@ test('Comment preview works during creation', function(assert) {
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   let markdown = 'Some type of markdown';
@@ -138,9 +138,9 @@ test('When comment creation fails due to validation, validation errors are displ
   authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -152,16 +152,16 @@ test('When comment creation fails due to validation, validation errors are displ
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: 'VALIDATION_ERROR',
-            source: { pointer:'data/attributes/markdown' },
-            detail:'is invalid',
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/markdown' },
+            detail : 'is invalid',
+            status : 422
           },
           {
-            id:'VALIDATION_ERROR',
-            source: { pointer:'data/attributes/markdown' },
-            detail: "can't be blank",
-            status: 422
+            id     : 'VALIDATION_ERROR',
+            source : { pointer: 'data/attributes/markdown' },
+            detail : "can't be blank",
+            status : 422
           }
         ] });
 
@@ -185,9 +185,9 @@ test('When comment creation fails due to non-validation issues, the error is dis
   authenticateSession(this.application, { user_id: user.id });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -199,10 +199,10 @@ test('When comment creation fails due to non-validation issues, the error is dis
       return new Mirage.Response(400, {}, {
         errors: [
           {
-            id: 'UNKNOWN ERROR',
-            title: 'An unknown error',
-            detail:'Something happened',
-            status: 400
+            id     : 'UNKNOWN ERROR',
+            title  : 'An unknown error',
+            detail : 'Something happened',
+            status : 400
           }
         ]
       });
@@ -228,18 +228,18 @@ test('A comment can only be edited by the author', function(assert) {
   server.createList('comment', 1, { task, user });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
     assert.notOk(taskPage.commentItem.editLink.isVisible, 'Edit link is not rendered when logged out');
     authenticateSession(this.application, { user_id: user.id });
     taskPage.visit({
-      organization: organization.slug,
-      project: project.slug,
-      number: task.number
+      organization : organization.slug,
+      project      : project.slug,
+      number       : task.number
     });
   });
 
@@ -262,9 +262,9 @@ test('Comment editing with preview works', function(assert) {
   server.createList('comment', 1, { task, user });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {

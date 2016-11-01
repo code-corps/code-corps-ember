@@ -14,7 +14,15 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'camelcase': 'off',
-    'key-spacing': 'off',
+    'key-spacing': [
+      'error', {
+        'align': {
+          'beforeColon': true,
+          'afterColon': true,
+          'on': 'colon'
+        }
+      }
+    ],
     'new-cap': 'off',
     'ember-suave/require-access-in-comments': 'off',
   },

@@ -10,18 +10,18 @@ export default {
     scope: '.twitter',
 
     link: {
-      scope: 'a',
-      href: attribute('href'),
-      text: text()
+      scope : 'a',
+      href  : attribute('href'),
+      text  : text()
     }
   },
   website: {
     scope: '.website',
 
     link: {
-      scope: 'a',
-      href: attribute('href'),
-      text: text()
+      scope : 'a',
+      href  : attribute('href'),
+      text  : text()
     }
   }
 };

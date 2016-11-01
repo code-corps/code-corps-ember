@@ -12,9 +12,9 @@ moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
 });
 
 const stubUser = Object.extend({
-  id: 1,
-  username: 'tester',
-  photoThumbUrl: '/assets/images/twitter.png',
+  id            : 1,
+  username      : 'tester',
+  photoThumbUrl : '/assets/images/twitter.png',
 
   atUsername: computed('username', function() {
     return `@${this.get('username')}`;

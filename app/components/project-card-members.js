@@ -24,8 +24,8 @@ const VISIBLE_MEMBERS_COUNT = 8;
 */
 
 export default Component.extend({
-  classNames: ['project-card-members'],
-  tagName: 'ul',
+  classNames : ['project-card-members'],
+  tagName    : 'ul',
 
   /**
     The number of members visible on the project card.

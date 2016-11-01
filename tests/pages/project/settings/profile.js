@@ -9,8 +9,8 @@ export default create({
   visit: visitable(':organization/:project/settings/profile'),
 
   successAlert: {
-    scope: '.alert-success',
-    message: text('p')
+    scope   : '.alert-success',
+    message : text('p')
   },
 
   projectSettingsForm

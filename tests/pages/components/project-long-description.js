@@ -8,8 +8,8 @@ import {
 export default {
   scope: '.project-long-description',
 
-  clickEdit: clickable('button[name=edit]'),
-  clickSave: clickable('button[name=save]'),
+  clickEdit : clickable('button[name=edit]'),
+  clickSave : clickable('button[name=save]'),
 
   textarea: fillable('textarea'),
 
@@ -20,12 +20,12 @@ export default {
   longDescription: {
     scope: '.long-description',
 
-    text: text(),
-    isEmpty: hasClass('empty'),
+    text    : text(),
+    isEmpty : hasClass('empty'),
 
     paragraph: {
-      scope: 'p',
-      text: text()
+      scope : 'p',
+      text  : text()
     }
   }
 };

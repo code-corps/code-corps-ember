@@ -10,22 +10,22 @@ moduleForComponent('task-filter-type', 'Integration | Component | task filter ty
 
 let types = [
   Object.create({
-    name: 'Tasks',
-    param: 'task',
-    slug: 'tasks',
-    selected: true
+    name     : 'Tasks',
+    param    : 'task',
+    slug     : 'tasks',
+    selected : true
   }),
   Object.create({
-    name: 'Issues',
-    param: 'issue',
-    slug: 'issues',
-    selected: false
+    name     : 'Issues',
+    param    : 'issue',
+    slug     : 'issues',
+    selected : false
   }),
   Object.create({
-    name: 'Ideas',
-    param: 'idea',
-    slug: 'ideas',
-    selected: false
+    name     : 'Ideas',
+    param    : 'idea',
+    slug     : 'ideas',
+    selected : false
   })
 ];
 

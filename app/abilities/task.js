@@ -9,8 +9,8 @@ const {
 } = Ember;
 
 export default Ability.extend({
-  credentials: service(),
-  currentUser: service(),
+  credentials : service(),
+  currentUser : service(),
 
   task: alias('model'),
 
@@ -25,8 +25,8 @@ export default Ability.extend({
     return taskUserId === currentUserId;
   }),
 
-  membership: alias('credentials.currentUserMembership'),
-  userIsAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
+  membership         : alias('credentials.currentUserMembership'),
+  userIsAtLeastAdmin : or('membership.isAdmin', 'membership.isOwner'),
 
   canEdit: or('userIsAuthor', 'userIsAtLeastAdmin')
 });

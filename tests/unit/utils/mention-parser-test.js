@@ -13,15 +13,15 @@ test('it replaces all "@username" mention strings with links to the user profile
   let mentions = [
 
     Object.create({
-      indices: [14, 19],
-      username: 'user1',
-      user: { id: 1 }
+      indices  : [14, 19],
+      username : 'user1',
+      user     : { id: 1 }
     }),
 
     Object.create({
-      indices: [25, 30],
-      username: 'user2',
-      user: { id: 2 }
+      indices  : [25, 30],
+      username : 'user2',
+      user     : { id: 2 }
     })
 
   ];

@@ -17,8 +17,8 @@ const { Component } = Ember;
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['button-group', 'dropdown'],
-  classNameBindings: ['active:menu-visible:menu-hidden'],
+  classNames        : ['button-group', 'dropdown'],
+  classNameBindings : ['active:menu-visible:menu-hidden'],
 
   /**
     Boolean that reflects whether or not the filter dropdown should be shown

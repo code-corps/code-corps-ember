@@ -17,6 +17,6 @@ const { Component } = Ember;
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['task-header'],
-  classNameBindings: ['task.taskType']
+  classNames        : ['task-header'],
+  classNameBindings : ['task.taskType']
 });

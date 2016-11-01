@@ -27,9 +27,9 @@ test('it allows editing of organization profile', function(assert) {
   let organization = createOrganizationWithSluggedRoute();
 
   server.create('organizationMembership', {
-    member: user,
+    member : user,
     organization,
-    role: 'admin'
+    role   : 'admin'
   });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -69,9 +69,9 @@ test("it allows editing of organization's image", function(assert) {
   let organization = createOrganizationWithSluggedRoute();
 
   server.create('organizationMembership', {
-    member: user,
+    member : user,
     organization,
-    role: 'admin'
+    role   : 'admin'
   });
 
   authenticateSession(this.application, { user_id: user.id });

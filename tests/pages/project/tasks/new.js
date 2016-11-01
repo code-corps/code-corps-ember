@@ -11,9 +11,9 @@ export default create({
 
   clickPreviewTask: clickable('.preview'),
 
-  taskTitle: fillable('[name=title]'),
-  taskMarkdown: fillable('[name=markdown]'),
-  taskType: fillable('[name=task-type]'),
+  taskTitle    : fillable('[name=title]'),
+  taskMarkdown : fillable('[name=markdown]'),
+  taskType     : fillable('[name=task-type]'),
 
   clickSubmit: clickable('[name=submit]'),
 

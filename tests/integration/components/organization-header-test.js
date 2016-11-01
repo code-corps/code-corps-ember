@@ -10,9 +10,9 @@ moduleForComponent('organization-header', 'Integration | Component | organizatio
   beforeEach() {
     stubService(this, 'credentials', {
       currentUserMembership: Object.create({
-        member: user,
+        member : user,
         organization,
-        role: 'admin'
+        role   : 'admin'
       })
     });
   }
@@ -20,10 +20,10 @@ moduleForComponent('organization-header', 'Integration | Component | organizatio
 
 let user = Object.create({});
 let organization = Object.create({
-  name: 'Test Organization',
-  description: 'A test organization',
-  iconThumbUrl: 'icon_thumb.png',
-  iconLargeUrl: 'icon_large.png'
+  name         : 'Test Organization',
+  description  : 'A test organization',
+  iconThumbUrl : 'icon_thumb.png',
+  iconLargeUrl : 'icon_large.png'
 });
 
 test('it renders', function(assert) {

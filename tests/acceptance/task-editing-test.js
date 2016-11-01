@@ -18,9 +18,9 @@ test('Task editing requires logging in', function(assert) {
   task.save();
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -29,9 +29,9 @@ test('Task editing requires logging in', function(assert) {
 
     authenticateSession(this.application, { user_id: user.id });
     taskPage.visit({
-      organization: organization.slug,
-      project: project.slug,
-      number: task.number
+      organization : organization.slug,
+      project      : project.slug,
+      number       : task.number
     });
   });
 
@@ -54,9 +54,9 @@ test('A task body can be edited on its own', function(assert) {
   task.save();
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -92,9 +92,9 @@ test('A task title can be edited on its own', function(assert) {
   task.save();
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -167,17 +167,17 @@ test('A task can be opened or closed by the author', function(assert) {
   let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
-    type: 'issue',
-    status: 'open',
-    number: 1,
+    type   : 'issue',
+    status : 'open',
+    number : 1,
     user,
     project
   });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -206,18 +206,18 @@ test('A task can be opened or closed by the organization admin', function(assert
   let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
-    type: 'issue',
-    status: 'open',
-    number: 1,
+    type   : 'issue',
+    status : 'open',
+    number : 1,
     project
   });
 
-  server.schema.create('organization-membership', { organization, member:  user, role: 'admin' });
+  server.schema.create('organization-membership', { organization, member: user, role: 'admin' });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {
@@ -246,16 +246,16 @@ test('A task cannot be opened or closed by someone else', function(assert) {
   let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
-    type: 'issue',
-    status: 'open',
-    number: 1,
+    type   : 'issue',
+    status : 'open',
+    number : 1,
     project
   });
 
   taskPage.visit({
-    organization: organization.slug,
-    project: project.slug,
-    number: task.number
+    organization : organization.slug,
+    project      : project.slug,
+    number       : task.number
   });
 
   andThen(() => {

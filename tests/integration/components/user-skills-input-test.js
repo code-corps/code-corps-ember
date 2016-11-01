@@ -37,33 +37,33 @@ moduleForComponent('user-skills-input', 'Integration | Component | user skills i
 });
 
 let pressCommaKey = jQuery.Event('keydown', {
-  keyCode: 188,
-  which: 188
+  keyCode : 188,
+  which   : 188
 });
 
 let pressDownKey = jQuery.Event('keydown', {
-  keyCode: 40,
-  which: 40
+  keyCode : 40,
+  which   : 40
 });
 
 let pressEnterKey = jQuery.Event('keydown', {
-  keyCode: 13,
-  which: 13
+  keyCode : 13,
+  which   : 13
 });
 
 let pressEscKey = jQuery.Event('keydown', {
-  keyCode: 27,
-  which: 27
+  keyCode : 27,
+  which   : 27
 });
 
 let pressRKey = jQuery.Event('keydown', {
-  keyCode: 82,
-  which: 82
+  keyCode : 82,
+  which   : 82
 });
 
 let pressUpKey = jQuery.Event('keydown', {
-  keyCode: 38,
-  which: 38
+  keyCode : 38,
+  which   : 38
 });
 
 test('it does nothing when pressing a random key', function(assert) {

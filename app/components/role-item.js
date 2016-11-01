@@ -9,12 +9,12 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['role-item'],
-  classNameBindings: ['selected'],
-  isLoading: false,
+  classNames        : ['role-item'],
+  classNameBindings : ['selected'],
+  isLoading         : false,
 
-  flashMessages: service(),
-  userRoles: service(),
+  flashMessages : service(),
+  userRoles     : service(),
 
   selected: notEmpty('userRole'),
 
@@ -53,10 +53,10 @@ export default Component.extend({
     flashMessages.clearMessages();
     return flashMessages.add({
       message,
-      type: 'danger',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
+      type    : 'danger',
+      fixed   : true,
+      sticky  : false,
+      timeout : 5000
     });
   }
 });

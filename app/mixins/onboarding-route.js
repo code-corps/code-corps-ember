@@ -6,8 +6,8 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  currentUser: service(),
-  onboarding: service(),
+  currentUser : service(),
+  onboarding  : service(),
 
   beforeModel(transition) {
     let isOnboarding = this.get('onboarding.isOnboarding');

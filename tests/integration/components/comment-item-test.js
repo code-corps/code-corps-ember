@@ -10,8 +10,8 @@ const {
 } = Ember;
 
 let mockMentionFetcher = {
-  fetchBodyWithMentions: RSVP.resolve,
-  prefetchBodyWithMentions: K
+  fetchBodyWithMentions    : RSVP.resolve,
+  prefetchBodyWithMentions : K
 };
 
 let mockStore = {
@@ -27,8 +27,8 @@ let mockCurrentUser = {
 };
 
 let mockComment = Object.create({
-  body: 'A <strong>body</strong>',
-  user: { id: 1 },
+  body : 'A <strong>body</strong>',
+  user : { id: 1 },
   save() {
     return RSVP.resolve();
   }

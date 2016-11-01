@@ -14,8 +14,8 @@ test('it renders all required elements', function(assert) {
   assert.expect(3);
 
   let task = {
-    title: 'Clean the house',
-    taskType: 'task'
+    title    : 'Clean the house',
+    taskType : 'task'
   };
 
   this.set('task', task);

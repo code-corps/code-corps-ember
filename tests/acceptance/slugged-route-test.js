@@ -36,10 +36,10 @@ test('It renders a 404 error when no slugged route exists', function(assert) {
   server.get('/no_slug',
     {
       errors: [{
-        id: 'RECORD_NOT_FOUND',
-        title: 'Record not found',
-        detail: "Couldn't find SluggedRoute",
-        status: 404
+        id     : 'RECORD_NOT_FOUND',
+        title  : 'Record not found',
+        detail : "Couldn't find SluggedRoute",
+        status : 404
       }]
     },
     404);

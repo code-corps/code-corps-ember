@@ -27,14 +27,14 @@ function mockUser() {
   // trying to redefine its properties
   // TODO: figure out how to do it better
   let user = {
-    id: 1,
-    name: 'Josh Smith',
-    username: 'JoshSmith',
-    twitter: 'joshsmith',
-    website: 'https://codecorps.org',
+    id         : 1,
+    name       : 'Josh Smith',
+    username   : 'JoshSmith',
+    twitter    : 'joshsmith',
+    website    : 'https://codecorps.org',
     // TODO: remove this because it's a computed property and
     // Mirage doesn't do a great job with that
-    twitterUrl: 'https://twitter.com/joshsmith'
+    twitterUrl : 'https://twitter.com/joshsmith'
   };
   server.schema.users.create(user);
   return user;

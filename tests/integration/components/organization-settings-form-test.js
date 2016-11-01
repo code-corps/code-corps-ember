@@ -10,8 +10,8 @@ moduleForComponent('organization-settings-form', 'Integration | Component | orga
 });
 
 let organization = {
-  name: 'Test Organization',
-  description: 'A test organization'
+  name        : 'Test Organization',
+  description : 'A test organization'
 };
 
 test('it renders', function(assert) {

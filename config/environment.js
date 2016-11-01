@@ -1,12 +1,12 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-  var ENV = {
-    modulePrefix: 'code-corps-ember',
-    environment: environment,
-    rootURL: '/',
-    locationType: 'auto',
-    EmberENV: {
+  let ENV = {
+    modulePrefix : 'code-corps-ember',
+    environment,
+    rootURL      : '/',
+    locationType : 'auto',
+    EmberENV     : {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -24,36 +24,36 @@ module.exports = function(environment) {
 
     flashMessageDefaults: {
       // flash message defaults
-      timeout: 2000,
-      extendedTimeout: 0,
-      priority: 200,
-      sticky: true,
-      showProgress: true,
+      timeout         : 2000,
+      extendedTimeout : 0,
+      priority        : 200,
+      sticky          : true,
+      showProgress    : true,
 
       // service defaults
 
       // do not inject into factories automatically
       // use Ember.inject.service() explicitly where needed instead
       // since that's the new Ember convention
-      injectionFactories: [],
-      preventDuplicates: true
+      injectionFactories : [],
+      preventDuplicates  : true
     },
 
     metricsAdapters: [
       {
-        name: 'Segment',
-        environments: ['development', 'staging'],
-        config: {
+        name         : 'Segment',
+        environments : ['development', 'staging'],
+        config       : {
           key: 'AkZqGsSMgLz15lGhyatw2T0EXnAHfocr'
         }
       },
       {
-        name: 'Segment',
-        environments: ['production'],
-        config: {
+        name         : 'Segment',
+        environments : ['production'],
+        config       : {
           key: 'Nz7hL2eY2yHzuIwUbExfDanbJp2q0IO0'
         }
-      },
+      }
     ],
 
     moment: {
@@ -62,22 +62,22 @@ module.exports = function(environment) {
 
     pace: {
       // addon-specific options to configure theme
-      theme: 'minimal',
-      color: 'blue',
-      restartOnRequestAfter: 500,
-      ajax: {
+      theme                 : 'minimal',
+      color                 : 'blue',
+      restartOnRequestAfter : 500,
+      ajax                  : {
         ignoreURLs: ['intercom', 'segment', 'sentry']
       }
     },
 
     pageTitle: {
-      prepend: true,
-      separator: " — "
+      prepend   : true,
+      separator : ' — '
     },
 
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
-    },
+    }
   };
 
   if (environment === 'development') {
@@ -97,35 +97,35 @@ module.exports = function(environment) {
     };
 
     ENV.contentSecurityPolicy = {
-      'default-src': "'none'",
-      'script-src': [
-        "'self'",
+      'default-src' : "'none'",
+      'script-src'  : [
+        "'self'"
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
-      'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
+      'font-src'    : ["'self'", 'data:', 'https://fonts.gstatic.com'],
       // Allow data (ajax/websocket) from api.lvh.me:49235
-      'connect-src': [
+      'connect-src' : [
         "'self'",
-        "http://api.lvh.me:49235"
+        'http://api.lvh.me:49235'
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
         "'self'",
-        "data:",
-        "https://d3pgew4wbk2vb1.cloudfront.net",
-        "https://dawxes9syhrgg.cloudfront.net",
-        "http://lorempixel.com",
-        "https://s3.amazonaws.com",
+        'data:',
+        'https://d3pgew4wbk2vb1.cloudfront.net',
+        'https://dawxes9syhrgg.cloudfront.net',
+        'http://lorempixel.com',
+        'https://s3.amazonaws.com'
       ],
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com
       'style-src': [
         "'self'",
-        "'unsafe-inline'",
+        "'unsafe-inline'"
       ],
       // `media-src` will be omitted from policy
       // Browser will fallback to default-src for media resources (which is to deny, see above).
       'media-src': null
-    }
+    };
   }
 
   if (environment === 'remote-development') {
@@ -173,10 +173,10 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth-token'] = {
-    serverTokenEndpoint: ENV.API_BASE_URL + '/token',
-    serverTokenRefreshEndpoint: ENV.API_BASE_URL + '/token/refresh',
-    refreshLeeway: 3000, // 5 minutes before expiry
-    timeFactor: 1000,
+    serverTokenEndpoint        : `${ENV.API_BASE_URL  }/token`,
+    serverTokenRefreshEndpoint : `${ENV.API_BASE_URL  }/token/refresh`,
+    refreshLeeway              : 3000, // 5 minutes before expiry
+    timeFactor                 : 1000
   };
 
   return ENV;

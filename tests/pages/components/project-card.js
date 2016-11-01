@@ -10,7 +10,7 @@ export default {
   },
 
   members: collection({
-    scope: '.project-card-members',
-    itemScope: 'li.member'
+    scope     : '.project-card-members',
+    itemScope : 'li.member'
   })
 };

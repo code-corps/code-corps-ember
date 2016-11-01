@@ -61,23 +61,23 @@ let mockUserCategoriesServiceForErrors = {
 };
 
 let mockUserCategory = Object.create({
-  id: 1,
-  categoryId: defaultCategoryId,
-  userId: 1
+  id         : 1,
+  categoryId : defaultCategoryId,
+  userId     : 1
 });
 
 let unselectedCategory = Object.create({
-  id: 1,
-  name: 'Technology',
-  slug: 'technology',
-  description: 'You want to help technology.'
+  id          : 1,
+  name        : 'Technology',
+  slug        : 'technology',
+  description : 'You want to help technology.'
 });
 
 let selectedCategory = Object.create({
-  id: 2,
-  name: 'Society',
-  slug: 'society',
-  description: 'You want to help society.'
+  id          : 2,
+  name        : 'Society',
+  slug        : 'society',
+  description : 'You want to help society.'
 });
 
 test('it works for selecting unselected categories', function(assert) {

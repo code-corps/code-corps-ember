@@ -8,6 +8,6 @@ const {
 export default Component.extend({
   classNames: ['organization-settings-menu', 'settings-menu'],
 
-  credentials: service(),
-  session: service()
+  credentials : service(),
+  session     : service()
 });

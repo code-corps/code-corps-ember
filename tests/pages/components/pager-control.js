@@ -7,19 +7,19 @@ export default {
   scope: '.pager-control',
 
   nextPage: {
-    scope: '.next-page',
-    href: attribute('href')
+    scope : '.next-page',
+    href  : attribute('href')
   },
 
   pages: collection({
-    itemScope: '.page',
-    item: {
+    itemScope : '.page',
+    item      : {
       href: attribute('href')
     }
   }),
 
   previousPage: {
-    scope: '.previous-page',
-    href: attribute('href')
+    scope : '.previous-page',
+    href  : attribute('href')
   }
 };

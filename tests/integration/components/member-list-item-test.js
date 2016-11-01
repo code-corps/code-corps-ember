@@ -9,10 +9,10 @@ const {
 } = Ember;
 
 let user = {
-  name: 'Josh Smith',
-  username: 'joshsmith',
-  photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
-  userCategories: [
+  name           : 'Josh Smith',
+  username       : 'joshsmith',
+  photoThumbUrl  : 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
+  userCategories : [
     {
       category: {
         name: 'Technology'

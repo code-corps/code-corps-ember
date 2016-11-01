@@ -11,25 +11,25 @@ const {
 } = Ember;
 
 export default Component.extend({
-  active: false,
-  attributeBindings: ['style'],
-  classNames: ['image-drop'],
-  classNameBindings: [
+  active            : false,
+  attributeBindings : ['style'],
+  classNames        : ['image-drop'],
+  classNameBindings : [
     'active',
     'circle:is-circular',
     'isDraggingOnApp:is-dragging',
     'hasImage'
   ],
-  droppedImage: null,
-  helpText: 'Drop your image here.',
-  originalImage: null,
+  droppedImage  : null,
+  helpText      : 'Drop your image here.',
+  originalImage : null,
 
   appDragState: service('dragState'),
 
-  hasDroppedImage: notEmpty('droppedImage'),
-  hasImage: or('hasDroppedImage', 'hasOriginalImage'),
-  hasOriginalImage: notEmpty('originalImage'),
-  isDraggingOnApp: alias('appDragState.isDragging'),
+  hasDroppedImage  : notEmpty('droppedImage'),
+  hasImage         : or('hasDroppedImage', 'hasOriginalImage'),
+  hasOriginalImage : notEmpty('originalImage'),
+  isDraggingOnApp  : alias('appDragState.isDragging'),
 
   style: computed('droppedImage', 'originalImage', function() {
     let backgroundStyle = '';

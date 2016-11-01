@@ -316,8 +316,8 @@ test('A user can join the organization of the project', function(assert) {
 
     return {
       data: {
-        id: 1,
-        type: 'organization-membership',
+        id   : 1,
+        type : 'organization-membership',
         attributes,
         relationships
       }

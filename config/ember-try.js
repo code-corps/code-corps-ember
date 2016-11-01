@@ -1,15 +1,15 @@
 module.exports = {
-  command: "ember exam --split=3 --weighted --parallel",
-  scenarios: [
+  command   : 'ember exam --split=3 --weighted --parallel',
+  scenarios : [
     {
-      name: 'default',
-      bower: {
+      name  : 'default',
+      bower : {
         dependencies: { }
       }
     },
     {
-      name: 'ember-release',
-      bower: {
+      name  : 'ember-release',
+      bower : {
         dependencies: {
           'ember': 'components/ember#release'
         },
@@ -19,8 +19,8 @@ module.exports = {
       }
     },
     {
-      name: 'ember-beta',
-      bower: {
+      name  : 'ember-beta',
+      bower : {
         dependencies: {
           'ember': 'components/ember#beta'
         },
@@ -30,8 +30,8 @@ module.exports = {
       }
     },
     {
-      name: 'ember-canary',
-      bower: {
+      name  : 'ember-canary',
+      bower : {
         dependencies: {
           'ember': 'components/ember#canary'
         },

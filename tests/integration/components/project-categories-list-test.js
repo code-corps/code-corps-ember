@@ -11,16 +11,16 @@ moduleForComponent('project-categories-list', 'Integration | Component | project
 
 let categories = [
   {
-    id: 2,
-    name: 'Society'
+    id   : 2,
+    name : 'Society'
   },
   {
-    id: 1,
-    name: 'Zoology'
+    id   : 1,
+    name : 'Zoology'
   },
   {
-    id: 3,
-    name: 'Alphabets'
+    id   : 3,
+    name : 'Alphabets'
   }
 ];
 

@@ -98,10 +98,10 @@ export default Component.extend({
   _normalizeMeta(meta) {
     if (isPresent(meta)) {
       return {
-        currentPage: parseInt(meta.current_page, 10),
-        pageSize: parseInt(meta.page_size, 10),
-        totalPages: parseInt(meta.total_pages, 10),
-        totalRecords: parseInt(meta.total_records)
+        currentPage  : parseInt(meta.current_page, 10),
+        pageSize     : parseInt(meta.page_size, 10),
+        totalPages   : parseInt(meta.total_pages, 10),
+        totalRecords : parseInt(meta.total_records)
       };
     }
   }

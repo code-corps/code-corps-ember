@@ -13,14 +13,14 @@ export default Component.extend({
 
   ajax: service(),
 
-  canShowValidations: alias('isNotEmpty'),
-  isEmpty: lt('passwordLength', 1),
-  isInvalid: not('isValid'),
-  isNotEmpty: not('isEmpty'),
-  isOkay: alias('isValid'),
-  isValid: gte('passwordLength', 6),
-  passwordLength: alias('password.length'),
-  suggestions: alias('strength.feedback.suggestions'),
+  canShowValidations : alias('isNotEmpty'),
+  isEmpty            : lt('passwordLength', 1),
+  isInvalid          : not('isValid'),
+  isNotEmpty         : not('isEmpty'),
+  isOkay             : alias('isValid'),
+  isValid            : gte('passwordLength', 6),
+  passwordLength     : alias('password.length'),
+  suggestions        : alias('strength.feedback.suggestions'),
 
   password: computed('user.password', function() {
     return this.get('user.password') || '';

@@ -7,9 +7,9 @@ const {
 
 export default Route.extend({
   queryParams: {
-    page: { refreshModel: true, scope: 'controller' },
-    taskType: { refreshModel: true, scope: 'controller' },
-    status: { refreshModel: true, scope: 'controller' }
+    page     : { refreshModel: true, scope: 'controller' },
+    taskType : { refreshModel: true, scope: 'controller' },
+    status   : { refreshModel: true, scope: 'controller' }
   },
 
   model(params) {

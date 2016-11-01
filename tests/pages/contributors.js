@@ -9,13 +9,13 @@ import {
 
 function buildContributorsDefinitionForIndex(index) {
   return {
-    scope: `.contributors-list:eq(${index})`,
-    emptyMessageVisible: isVisible('.contributors-list-empty'),
-    members: collection({
-      itemScope: '.member-list-item',
-      item: {
-        approveMembership: clickable('button.default'),
-        denyMembership: clickable('button.danger')
+    scope               : `.contributors-list:eq(${index})`,
+    emptyMessageVisible : isVisible('.contributors-list-empty'),
+    members             : collection({
+      itemScope : '.member-list-item',
+      item      : {
+        approveMembership : clickable('button.default'),
+        denyMembership    : clickable('button.danger')
       }
     })
   };
@@ -24,17 +24,17 @@ function buildContributorsDefinitionForIndex(index) {
 export default create({
   visit: visitable('/:project_organization_slug/:project_slug/settings/contributors'),
 
-  pendingContributors: buildContributorsDefinitionForIndex(0),
-  owners: buildContributorsDefinitionForIndex(1),
-  admins: buildContributorsDefinitionForIndex(2),
-  others: buildContributorsDefinitionForIndex(3),
+  pendingContributors : buildContributorsDefinitionForIndex(0),
+  owners              : buildContributorsDefinitionForIndex(1),
+  admins              : buildContributorsDefinitionForIndex(2),
+  others              : buildContributorsDefinitionForIndex(3),
 
   projectMenu: {
-    scope: '.project-menu',
-    contributors: {
-      scope: '.contributors',
-      infoVisible: isVisible('.info'),
-      infoText: text('.info')
+    scope        : '.project-menu',
+    contributors : {
+      scope       : '.contributors',
+      infoVisible : isVisible('.info'),
+      infoText    : text('.info')
     }
   }
 });

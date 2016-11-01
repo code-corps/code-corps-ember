@@ -35,11 +35,11 @@ test('with several organizations renders all required elements', function(assert
   let mockOrganizations = [];
   for (let i = 1; i <= 3; i++) {
     mockOrganizations.push({
-      id: i,
-      name: `Organization ${i}`,
-      slug: `organization_${i}`,
-      description: `Organization ${i} description`,
-      iconThumbUrl: `/icon_${i}.png`
+      id           : i,
+      name         : `Organization ${i}`,
+      slug         : `organization_${i}`,
+      description  : `Organization ${i} description`,
+      iconThumbUrl : `/icon_${i}.png`
     });
   }
 

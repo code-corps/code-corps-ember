@@ -5,6 +5,6 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   slug: attr('string'),
 
-  organization: belongsTo('organization', { async: true }),
-  user: belongsTo('user', { async: true })
+  organization : belongsTo('organization', { async: true }),
+  user         : belongsTo('user', { async: true })
 });

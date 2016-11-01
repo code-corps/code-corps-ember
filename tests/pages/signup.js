@@ -9,10 +9,10 @@ export default create({
   visit: visitable('/signup'),
 
   form: {
-    scope: '.signup-form',
-    email: fillable('[name=email]'),
-    password: fillable('[name=password]'),
-    save: clickable('[name=signup]'),
-    username: fillable('[name=username]')
+    scope    : '.signup-form',
+    email    : fillable('[name=email]'),
+    password : fillable('[name=password]'),
+    save     : clickable('[name=signup]'),
+    username : fillable('[name=username]')
   }
 });

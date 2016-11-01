@@ -7,16 +7,16 @@ moduleFor('ability:task', 'Unit | Ability | task', { });
 
 test('it can edit task if user is the task author', function(assert) {
   let ability = this.subject({
-    model: Object.create({ user: Object.create({ id: 1 }) }),
-    currentUser: Object.create({ user: Object.create({ id: 1 }) })
+    model       : Object.create({ user: Object.create({ id: 1 }) }),
+    currentUser : Object.create({ user: Object.create({ id: 1 }) })
   });
   assert.ok(ability.get('canEdit'));
 });
 
 test('it cannot edit task if user is not the task author', function(assert) {
   let ability = this.subject({
-    model: Object.create({ user: Object.create({ id: 1 }) }),
-    currentUser: Object.create({ user: Object.create({ id: 2 }) })
+    model       : Object.create({ user: Object.create({ id: 1 }) }),
+    currentUser : Object.create({ user: Object.create({ id: 2 }) })
   });
   assert.notOk(ability.get('canEdit'));
 });

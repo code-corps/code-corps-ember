@@ -10,14 +10,14 @@ test('When unauthenticated, and project has no long description, it shows proper
   assert.expect(2);
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
-    longDescriptionBody: null,
-    longDescriptionMarkdown: null,
+    longDescriptionBody     : null,
+    longDescriptionMarkdown : null,
     organization
   });
 
   projectAboutPage.visit({
-    organization: organization.slug,
-    project: project.slug
+    organization : organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {
@@ -30,14 +30,14 @@ test('When unauthenticated, and project has long description, it shows the proje
   assert.expect(2);
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', {
-    longDescriptionBody: 'A body',
-    longDescriptionMarkdown: 'A body',
+    longDescriptionBody     : 'A body',
+    longDescriptionMarkdown : 'A body',
     organization
   });
 
   projectAboutPage.visit({
-    organization: organization.slug,
-    project: project.slug
+    organization : organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {
@@ -54,16 +54,16 @@ test('When authenticated as admin, and project has no long description, it allow
   server.create('organization-membership', { organization, member: user, role: 'admin' });
 
   let project = server.create('project', {
-    longDescriptionBody: null,
-    longDescriptionMarkdown: null,
+    longDescriptionBody     : null,
+    longDescriptionMarkdown : null,
     organization
   });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
-    project: project.slug
+    organization : organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {
@@ -87,16 +87,16 @@ test('When authenticated as admin, and project has long description, it allows e
   server.create('organization-membership', { organization, member: user, role: 'admin' });
 
   let project = server.create('project', {
-    longDescriptionBody: 'A body',
-    longDescriptionMarkdown: 'A body',
+    longDescriptionBody     : 'A body',
+    longDescriptionMarkdown : 'A body',
     organization
   });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
-    project: project.slug
+    organization : organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {

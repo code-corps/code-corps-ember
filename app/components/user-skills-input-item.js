@@ -8,14 +8,14 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNameBindings: ['hasSkill', 'selected:selected'],
-  classNames: ['skill-dropdown-item'],
-  tagName: ['li'],
+  classNameBindings : ['hasSkill', 'selected:selected'],
+  classNames        : ['skill-dropdown-item'],
+  tagName           : ['li'],
 
   userSkills: service(),
 
-  hasSkill: notEmpty('userSkill'),
-  selected: alias('skill.selected'),
+  hasSkill : notEmpty('userSkill'),
+  selected : alias('skill.selected'),
 
   userSkill: computed('skill', 'userSkills.userSkills', function() {
     let skill = this.get('skill');

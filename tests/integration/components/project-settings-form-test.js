@@ -10,8 +10,8 @@ moduleForComponent('project-settings-form', 'Integration | Component | project s
 });
 
 let project = {
-  title: 'Test Organization',
-  description: 'A test project'
+  title       : 'Test Organization',
+  description : 'A test project'
 };
 
 test('it renders', function(assert) {

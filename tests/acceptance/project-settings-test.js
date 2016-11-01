@@ -12,8 +12,8 @@ test('it requires authentication', function(assert) {
   let project = createProjectWithSluggedRoute();
 
   projectSettingsPage.visit({
-    organization: project.organization.slug,
-    project: project.slug
+    organization : project.organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {
@@ -29,16 +29,16 @@ test('it allows editing of project profile', function(assert) {
   let project = createProjectWithSluggedRoute();
 
   server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'admin'
+    member       : user,
+    organization : project.organization,
+    role         : 'admin'
   });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectSettingsPage.visit({
-    organization: project.organization.slug,
-    project: project.slug
+    organization : project.organization.slug,
+    project      : project.slug
   });
 
   andThen(() => {
@@ -76,16 +76,16 @@ test("it allows editing of project's image", function(assert) {
   let project = createProjectWithSluggedRoute();
 
   server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'admin'
+    member       : user,
+    organization : project.organization,
+    role         : 'admin'
   });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectSettingsPage.visit({
-    organization: project.organization.slug,
-    project: project.slug
+    organization : project.organization.slug,
+    project      : project.slug
   });
 
   let done = assert.async();

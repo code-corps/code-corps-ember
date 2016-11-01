@@ -21,9 +21,9 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['task-new-form'],
-  classNameBindings: ['task.taskType'],
-  tagName: 'form',
+  classNames        : ['task-new-form'],
+  classNameBindings : ['task.taskType'],
+  tagName           : 'form',
 
   /**
     @property credentials
@@ -38,9 +38,9 @@ export default Component.extend({
     @type Object
    */
   placeholders: {
-    task: 'How can you describe the steps to complete the task so anyone can work on it?',
-    issue: "What issue needs resolved? If it's a bug, how can anyone reproduce it?",
-    idea: "What's your idea? Be specific so people can give more accurate feedback."
+    task  : 'How can you describe the steps to complete the task so anyone can work on it?',
+    issue : "What issue needs resolved? If it's a bug, how can anyone reproduce it?",
+    idea  : "What's your idea? Be specific so people can give more accurate feedback."
   },
 
   /**

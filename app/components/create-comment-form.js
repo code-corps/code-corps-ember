@@ -21,8 +21,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['create-comment-form'],
-  tagName: 'form',
+  classNames : ['create-comment-form'],
+  tagName    : 'form',
 
   /**
     @property session

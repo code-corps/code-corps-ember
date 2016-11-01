@@ -14,9 +14,9 @@ test('it navigates through Stripes OAuth flow', function(assert) {
   let { organization } = project;
 
   server.create('organizationMembership', {
-    member: user,
+    member : user,
     organization,
-    role: 'admin'
+    role   : 'admin'
   });
 
   authenticateSession(this.application, { user_id: user.id });

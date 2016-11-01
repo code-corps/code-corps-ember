@@ -12,8 +12,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['task-title'],
-  classNameBindings: ['isEditing:editing'],
+  classNames        : ['task-title'],
+  classNameBindings : ['isEditing:editing'],
 
   /**
     @property currentUser

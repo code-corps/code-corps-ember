@@ -8,9 +8,9 @@ const {
 } = Ember;
 
 export default Component.extend(CanAnimateMixin, {
-  attributeBindings: ['style'],
-  classNames: ['landing-subsection'],
-  classNameBindings: ['animated:animated'],
+  attributeBindings : ['style'],
+  classNames        : ['landing-subsection'],
+  classNameBindings : ['animated:animated'],
 
   animated: computed('canAnimate', function() {
     let canAnimate = this.get('canAnimate');

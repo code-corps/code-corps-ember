@@ -6,9 +6,9 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['donation-container'],
-  donationAmount: 0,
-  projectTitle: null,
+  classNames     : ['donation-container'],
+  donationAmount : 0,
+  projectTitle   : null,
 
   canDonate: bool('projectTitle')
 });

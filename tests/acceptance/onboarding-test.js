@@ -10,19 +10,19 @@ test('A user can onboard as expected', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
   server.create('category');
   server.create('role', {
-    name: 'Backend Developer',
-    ability: 'Backend Development',
-    kind: 'technology'
+    name    : 'Backend Developer',
+    ability : 'Backend Development',
+    kind    : 'technology'
   });
   server.create('role', {
-    name: 'Marketer',
-    ability: 'Marketing',
-    kind: 'creative'
+    name    : 'Marketer',
+    ability : 'Marketing',
+    kind    : 'creative'
   });
   server.create('role', {
-    name: 'Donor',
-    ability: 'Donations',
-    kind: 'support'
+    name    : 'Donor',
+    ability : 'Donations',
+    kind    : 'support'
   });
   server.create('skill', {
     title: 'Ruby'

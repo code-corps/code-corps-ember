@@ -33,9 +33,9 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  attributeBindings: ['style'],
-  classNames: ['editor-with-preview'],
-  classNameBindings: ['mode'],
+  attributeBindings : ['style'],
+  classNames        : ['editor-with-preview'],
+  classNameBindings : ['mode'],
 
   /**
     The mode that the editor is in. (example: 'preview', 'editing')

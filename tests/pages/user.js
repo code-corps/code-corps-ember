@@ -11,11 +11,11 @@ export default create({
   visit: visitable(':username'),
 
   organizations: collection({
-    scope: '.user-organizations-list li',
-    itemScope: 'h3 a',
-    item: {
-      click: clickable(),
-      href: attribute('href')
+    scope     : '.user-organizations-list li',
+    itemScope : 'h3 a',
+    item      : {
+      click : clickable(),
+      href  : attribute('href')
     }
   }),
 

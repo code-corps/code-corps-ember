@@ -17,9 +17,9 @@ test('it renders the correct UI elements', function(assert) {
   assert.expect(3);
 
   this.set('project', {
-    iconThumbUrl: 'icon.png',
-    title: 'A project',
-    description: 'A description'
+    iconThumbUrl : 'icon.png',
+    title        : 'A project',
+    description  : 'A description'
   });
   this.render(hbs`{{project-item project=project}}`);
 

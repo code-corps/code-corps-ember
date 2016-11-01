@@ -17,9 +17,9 @@ const { Component } = Ember;
   @public
  */
 export default Component.extend({
-  classNames: ['user-menu', 'dropdown'],
-  classNameBindings: ['hidden:menu-hidden:menu-visible'],
-  hidden: true,
+  classNames        : ['user-menu', 'dropdown'],
+  classNameBindings : ['hidden:menu-hidden:menu-visible'],
+  hidden            : true,
 
   actions: {
     /**

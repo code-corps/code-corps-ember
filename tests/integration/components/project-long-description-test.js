@@ -19,13 +19,13 @@ let credentialsWithAdminMembership = {
 };
 
 let projectWithDescription = Object.create({
-  longDescriptionBody: 'A <strong>body</strong>',
-  longDescriptionMarkdown: 'A **body**'
+  longDescriptionBody     : 'A <strong>body</strong>',
+  longDescriptionMarkdown : 'A **body**'
 });
 
 let blankProject = Object.create({
-  longDescriptionBody: null,
-  longDescriptionMarkdown: null
+  longDescriptionBody     : null,
+  longDescriptionMarkdown : null
 });
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {

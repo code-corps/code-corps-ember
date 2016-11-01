@@ -6,8 +6,8 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 const { Object } = Ember;
 
 let skill = Object.create({
-  selected: true,
-  title: 'Ruby on Rails'
+  selected : true,
+  title    : 'Ruby on Rails'
 });
 
 moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {

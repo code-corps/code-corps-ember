@@ -7,8 +7,8 @@ export default {
   scope: '.project-list',
 
   items: collection({
-    itemScope: '.project-item',
-    item: {
+    itemScope : '.project-item',
+    item      : {
       href: attribute('href', 'a:eq(0)')
     }
   })

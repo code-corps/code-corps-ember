@@ -10,28 +10,28 @@ const {
 } = Ember;
 
 export default Component.extend({
-  cachedEmail: '',
-  canSubmit: false,
-  classNames: ['input-group'],
-  hasCheckedOnce: false,
-  isAvailableOnServer: false,
-  isChecking: false,
-  isValid: false,
-  timer: null,
+  cachedEmail         : '',
+  canSubmit           : false,
+  classNames          : ['input-group'],
+  hasCheckedOnce      : false,
+  isAvailableOnServer : false,
+  isChecking          : false,
+  isValid             : false,
+  timer               : null,
 
   ajax: service(),
 
-  canCheck: and('isNotEmpty', 'isNotSameEmail'),
-  canShowValidations: and('hasCheckedOnce', 'isNotChecking', 'isNotEmpty'),
-  email: alias('user.email'),
-  isAvailable: and('isAvailableOnServer', 'isNotEmpty'),
-  isEmpty: empty('email'),
-  isInvalid: not('isValid'),
-  isNotEmpty: not('isEmpty'),
-  isNotSameEmail: not('isSameEmail'),
-  isNotChecking: not('isChecking'),
-  isOkay: and('isAvailable', 'isValid'),
-  isUnavailable: not('isAvailable'),
+  canCheck           : and('isNotEmpty', 'isNotSameEmail'),
+  canShowValidations : and('hasCheckedOnce', 'isNotChecking', 'isNotEmpty'),
+  email              : alias('user.email'),
+  isAvailable        : and('isAvailableOnServer', 'isNotEmpty'),
+  isEmpty            : empty('email'),
+  isInvalid          : not('isValid'),
+  isNotEmpty         : not('isEmpty'),
+  isNotSameEmail     : not('isSameEmail'),
+  isNotChecking      : not('isChecking'),
+  isOkay             : and('isAvailable', 'isValid'),
+  isUnavailable      : not('isAvailable'),
 
   isSameEmail: computed('cachedEmail', 'email', function() {
     return this.get('cachedEmail') === this.get('email');
@@ -60,8 +60,8 @@ export default Component.extend({
 
   sendRequest(email) {
     return this.get('ajax').request('/users/email_available', {
-      method: 'GET',
-      data: {
+      method : 'GET',
+      data   : {
         email
       }
     });

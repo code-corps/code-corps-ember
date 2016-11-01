@@ -6,7 +6,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['credit-card-form'],
-  canDonate: true,
-  cannotDonate: not('canDonate')
+  classNames   : ['credit-card-form'],
+  canDonate    : true,
+  cannotDonate : not('canDonate')
 });

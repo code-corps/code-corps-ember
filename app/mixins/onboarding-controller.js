@@ -7,8 +7,8 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  currentUser: service(),
-  onboarding: service(),
+  currentUser : service(),
+  onboarding  : service(),
 
   user: computed.alias('currentUser.user'),
 

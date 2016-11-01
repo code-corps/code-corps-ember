@@ -18,11 +18,11 @@ test('it renders', function(assert) {
 });
 
 let user = {
-  firstName: 'Test',
-  lastName: 'User',
-  twitter: '@testuser',
-  website: 'example.com',
-  biography: 'A test user'
+  firstName : 'Test',
+  lastName  : 'User',
+  twitter   : '@testuser',
+  website   : 'example.com',
+  biography : 'A test user'
 };
 
 test('it renders form elements properly', function(assert) {

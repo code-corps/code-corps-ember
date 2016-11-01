@@ -7,8 +7,8 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['member-list-item'],
-  tagName: 'li',
+  classNames : ['member-list-item'],
+  tagName    : 'li',
 
   flashMessages: service(),
 
@@ -34,10 +34,10 @@ export default Component.extend({
     flashMessages.clearMessages();
     return flashMessages.add({
       message,
-      type: 'success',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
+      type    : 'success',
+      fixed   : true,
+      sticky  : false,
+      timeout : 5000
     });
   }
 });

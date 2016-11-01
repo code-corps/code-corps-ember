@@ -8,10 +8,10 @@ const {
 } = Ember;
 
 let mockTask = Object.create({
-  title: 'A task',
-  body: 'A <strong>body</strong>',
-  number: 12,
-  taskType: 'issue',
+  title    : 'A task',
+  body     : 'A <strong>body</strong>',
+  number   : 12,
+  taskType : 'issue',
   save() {
     return RSVP.resolve();
   }

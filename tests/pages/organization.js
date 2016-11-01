@@ -9,16 +9,16 @@ import {
 } from 'ember-cli-page-object';
 
 export default create({
-  visitIndex: visitable(':organization'),
-  visitSettingsProfile: visitable('organizations/:organization/settings/profile'),
+  visitIndex           : visitable(':organization'),
+  visitSettingsProfile : visitable('organizations/:organization/settings/profile'),
 
-  name: fillable('[name=name]'),
-  description: fillable('[name=description]'),
-  clickSave: clickable('.save'),
+  name        : fillable('[name=name]'),
+  description : fillable('[name=description]'),
+  clickSave   : clickable('.save'),
 
   successAlerts: collection({
-    scope: '.alert-success',
-    item: {
+    scope : '.alert-success',
+    item  : {
       scope: 'p'
     }
   }),
@@ -58,11 +58,11 @@ export default create({
   },
 
   projectListItems: collection({
-    scope: '.project-list .project-item',
-    itemScope: 'h4 a',
-    item: {
-      text: text(),
-      click: clickable()
+    scope     : '.project-list .project-item',
+    itemScope : 'h4 a',
+    item      : {
+      text  : text(),
+      click : clickable()
     }
   }),
 
