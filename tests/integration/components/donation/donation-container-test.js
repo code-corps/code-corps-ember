@@ -26,7 +26,7 @@ test('it renders donation amount and frequency', function(assert) {
 
 test('it renders donation amount and frequency', function(assert) {
   assert.expect(1);
-  this.set('amount', 100);
+  this.set('amount', 100); // in cents
 
   this.render(hbs`{{donation/donation-container donationAmount=amount}}`);
 

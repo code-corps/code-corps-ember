@@ -1,0 +1,25 @@
+.donation-goal-edit{
+  .amount-group {
+    background: $background-gray;
+    border: 1px solid;
+    border-color: $gray;
+    border-radius: 4px;
+    float: left;
+    margin: 0 0 10px 0;
+
+    .amount, .currency, .period {
+      display: inline-block;
+    }
+
+    .currency, .period {
+      padding: 0 10px;
+    }
+
+    .amount {
+      background: #FFF;
+      border-color: $gray;
+      border-width: 0 1px;
+      border-radius: 0;
+    }
+  }
+}
