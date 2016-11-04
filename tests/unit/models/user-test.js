@@ -1,15 +1,11 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 import { testForHasMany } from '../../helpers/relationship';
-import '../../helpers/has-attributes';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 moduleForModel('user', 'Unit | Model | user', {
-  // Specify the other units that are required for this test.
   needs: [
-    'model:organization',
     'model:organization-membership',
+    'model:stripe-subscription',
     'model:user-category',
     'model:user-role',
     'model:user-skill'
@@ -18,36 +14,17 @@ moduleForModel('user', 'Unit | Model | user', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 
-test('it has all of its attributes', function(assert) {
-  let model = this.store().modelFor('user');
-  let actualAttributes = get(model, 'attributes');
-
-  let expectedAttributes = [
-    'base64PhotoData',
-    'biography',
-    'email',
-    'firstName',
-    'insertedAt',
-    'lastName',
-    'name',
-    'password',
-    'photoLargeUrl',
-    'photoThumbUrl',
-    'state',
-    'stateTransition',
-    'twitter',
-    'username',
-    'website'
-  ];
-
-  assert.hasAttributes(actualAttributes, expectedAttributes);
-});
+testForAttributes('user', [
+  'base64PhotoData', 'biography', 'email', 'firstName', 'insertedAt',
+  'lastName', 'name', 'password', 'photoLargeUrl', 'photoThumbUrl',
+  'state', 'stateTransition', 'twitter', 'username', 'website'
+]);
 
 testForHasMany('user', 'organizationMemberships');
+testForHasMany('user', 'subscriptions');
 testForHasMany('user', 'userCategories');
 testForHasMany('user', 'userRoles');
 testForHasMany('user', 'userSkills');

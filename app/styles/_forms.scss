@@ -70,7 +70,6 @@ $outer-border-radius: 4px;
 .input-group-addon {
   padding: 6px 12px;
   font-size: $body-font-size-small;
-  font-weight: 700;
   line-height: 1;
   color: #333;
   text-align: center;
@@ -87,6 +86,12 @@ $outer-border-radius: 4px;
     border-bottom-right-radius: $inner-border-radius;
     border-top-right-radius: $inner-border-radius;
     border-right-width: 0;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $inner-border-radius;
+    border-top-left-radius: $inner-border-radius;
+    border-left-width: 0;
   }
 }
 

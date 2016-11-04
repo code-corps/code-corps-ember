@@ -30,6 +30,6 @@ test('it renders donation amount and frequency', function(assert) {
 
   this.render(hbs`{{donation/donation-container donationAmount=amount}}`);
 
-  let donationInfo = this.$().find('h4').eq(0);
+  let donationInfo = this.$().find('h3').eq(0);
   assert.equal(donationInfo.text().trim(), '$100.00');
 });

@@ -65,7 +65,7 @@ function generatePreviewMentions(schema, preview) {
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'user-categories', 'users'
+  'slugged-routes', 'stripe-subscriptions', 'user-categories', 'users'
 ];
 
 export default function() {
@@ -394,6 +394,12 @@ export default function() {
 
   // GET /skills/:id
   this.get('/skills/:id');
+
+  /**
+   * Stripe subscriptions
+   */
+
+  this.post('/stripe-subscriptions');
 
   /**
   * Task user mentions
