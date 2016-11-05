@@ -6,7 +6,6 @@ dependencies:
     - /home/ubuntu/nvm/versions/node/v4.5.0/bin
     - /home/ubuntu/nvm/versions/node/v4.5.0/lib/node_modules
     - node_modules
-    - bower_components
   override:
     - npm install -g bower
     - npm install
