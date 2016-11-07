@@ -30,3 +30,10 @@ test('formats empty values correctly', function(assert) {
   let result = formatCurrency([null]);
   assert.equal(result, '');
 });
+
+test('trims zeros away if specified', function(assert) {
+  assert.expect(1);
+
+  let result = formatCurrency([20.00], { trimZero: true });
+  assert.equal(result, '$20');
+});
