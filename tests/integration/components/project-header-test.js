@@ -1,21 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import startMirage from '../../helpers/setup-mirage-for-integration';
 
 moduleForComponent('project-header', 'Integration | Component | project header', {
-  integration: true,
-  setup() {
-    startMirage(this.container);
-  },
-  afterEach() {
-    server.shutdown();
-  }
+  integration: true
 });
 
 test('it displays the right title, icon, description', function(assert) {
   assert.expect(3);
 
-  let project = server.create('project');
+  let project = {
+    title: 'Test Project',
+    description: 'Test project description',
+    iconThumbUrl: 'icon.png'
+  };
   this.set('project', project);
 
   this.render(hbs`{{project-header project=project}}`);
