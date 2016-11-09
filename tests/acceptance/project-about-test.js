@@ -111,3 +111,35 @@ test('When authenticated as admin, and project has long description, it allows e
     assert.ok(projectAboutPage.projectLongDescription.editButton.isVisible, 'We can edit the description again');
   });
 });
+
+test('Allows donating to a project from the sidebar', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user');
+  let organization = createOrganizationWithSluggedRoute();
+
+  let project = server.create('project', {
+    longDescriptionBody: 'A body',
+    longDescriptionMarkdown: 'A body',
+    organization
+  });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectAboutPage.visit({
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    projectAboutPage.donationStatus.becomeADonor.clickButton();
+    projectAboutPage.donationStatus.createDonation.setTo15.clickButton();
+    projectAboutPage.donationStatus.createDonation.clickContinue();
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.donate', 'App transitioned to the donate route.');
+    let expectedURL = `/${organization.slug}/${project.slug}/donate?amount=15`;
+    assert.equal(currentURL(), expectedURL, 'URL contains amount as query parameter.');
+  });
+});

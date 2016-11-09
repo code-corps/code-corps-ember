@@ -1,3 +1,7 @@
 .project-main {
   @include span-columns(8);
 }
+
+.project-sidebar {
+  @include span-columns(4);
+}
