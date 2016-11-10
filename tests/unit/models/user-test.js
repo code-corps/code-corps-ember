@@ -5,6 +5,8 @@ import { testForHasMany } from '../../helpers/relationship';
 moduleForModel('user', 'Unit | Model | user', {
   needs: [
     'model:organization-membership',
+    'model:stripe-card',
+    'model:stripe-customer',
     'model:stripe-subscription',
     'model:user-category',
     'model:user-role',

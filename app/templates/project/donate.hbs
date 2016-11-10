@@ -1,2 +1,13 @@
-{{project-header project=model}}
-{{donation/donation-container donationAmount=amount projectTitle=model.title}}
+{{project-header project=project}}
+{{#donation/donation-container
+  addCard=(action 'addCard')
+  cards=user.stripeCards
+  donate=(action 'donate' amount)
+  donationAmount=amount
+  isAddingCard=isAddingCard
+  projectTitle=project.title
+}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
+{{/donation/donation-container}}

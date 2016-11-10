@@ -65,7 +65,8 @@ function generatePreviewMentions(schema, preview) {
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'stripe-subscriptions', 'user-categories', 'users'
+  'slugged-routes', 'stripe-cards', 'stripe-customers', 'stripe-subscriptions',
+  'user-categories', 'users'
 ];
 
 export default function() {
@@ -400,6 +401,18 @@ export default function() {
    */
 
   this.post('/stripe-subscriptions');
+
+  /**
+   * Stripe cards
+   */
+
+  this.post('/stripe-cards');
+
+    /**
+   * Stripe customers
+   */
+
+  this.post('/stripe-customers');
 
   /**
   * Task user mentions

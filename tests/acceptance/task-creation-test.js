@@ -149,6 +149,7 @@ test('When task creation fails due to validation, validation errors are displaye
     let taskCreationDone = assert.async();
     server.post('/tasks', function() {
       taskCreationDone();
+
       return new Mirage.Response(422, {}, {
         errors: [
           {

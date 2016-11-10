@@ -78,6 +78,8 @@ module.exports = function(environment) {
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
+
+    stripe: {}
   };
 
   if (environment === 'development') {
@@ -91,6 +93,8 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://localhost:4200';
 
     ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
 
     ENV['ember-cli-mirage'] = {
       enabled: false
@@ -157,6 +161,9 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = '';
 
     ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.LOG_STRIPE_SERVICE = true,
 
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'

@@ -182,11 +182,10 @@
 
 #{$all-buttons-hover}, .button:hover {
   cursor: pointer;
-  $darker-color: darken($primary-color, 5%);
-  background: $darker-color;
-  background-image: linear-gradient($default-color, $darker-color);
-  border-color: $darker-color;
-  @include transition(background 0.2s ease-in);
+
+  &.default, &.clear, &.success, &.danger {
+    @include transition(background 0.2s ease-in);
+  }
 
   &.default {
     $darker-color: darken($default-color, 5%);
@@ -229,7 +228,7 @@
   }
 
   &:disabled {
-    cursor: default;
+    cursor: not-allowed;
   }
 }
 
@@ -304,10 +303,6 @@ p {
     &:disabled {
       background: white;
     }
-  }
-
-  &:disabled {
-    cursor: not-allowed;
   }
 }
 

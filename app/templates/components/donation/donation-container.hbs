@@ -2,27 +2,38 @@
   <h3>{{format-currency donationAmount}}</h3>
   <div class="footnote additional-content">
     given each month
-    <a href="#">edit</a>
   </div>
 </div>
 
 <h3>Payment information</h3>
-<p>
-  {{#if projectTitle}}
-    Your payment method will be charged {{format-currency donationAmount}}
-    per month to support {{projectTitle}}.
-  {{else}}
-    No project selected.
-  {{/if}}
+<p class="payment-information">
+  Your payment method will be charged {{format-currency donationAmount}}
+  per month to support {{projectTitle}}.
 </p>
 
-{{donation/credit-card canDonate=canDonate}}
+{{#if canShowCardList}}
+  {{donation/card-list cards=cards selectedCard=defaultCard}}
+{{/if}}
 
-<footer>
-  <p class="additional-content">
-    Your donation will repeat automatically each month.
-    You can cancel or edit your donation at any time.
-    By making this donation, you are agreeing to our
-    {{link-to "Terms of use" "terms-of-use"}}.
-  </p>
-</footer>
+{{#if canAddCard}}
+  {{#donation/credit-card canSubmit=canSubmitAddCard submit=addCard canCancel=canShowCardList}}
+    {{!show errors}}
+    {{yield}}
+  {{/donation/credit-card}}
+{{/if}}
+
+{{#if canDonate}}
+  <button class="default donate" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
+
+  {{!show errors}}
+  {{yield}}
+
+  <footer>
+    <p class="additional-content">
+      Your donation will repeat automatically each month.
+      You can cancel or edit your donation at any time.
+      By making this donation, you are agreeing to our
+      {{link-to "Terms of use" "terms-of-use"}}.
+    </p>
+  </footer>
+{{/if}}
