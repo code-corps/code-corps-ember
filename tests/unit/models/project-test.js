@@ -15,7 +15,8 @@ moduleForModel('project', 'Unit | Model | project', {
     'model:organization-membership',
     'model:project-category',
     'model:project-skill',
-    'model:stripe-account',
+    'model:stripe-connect-account',
+    'model:stripe-plan',
     'model:task',
     'model:user'
   ]
@@ -26,8 +27,14 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('project', ['base64IconData', 'closedTasksCount', 'description', 'iconLargeUrl', 'iconThumbUrl', 'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount', 'slug', 'title']);
+testForAttributes('project', [
+  'base64IconData', 'closedTasksCount', 'description', 'iconLargeUrl', 'iconThumbUrl',
+  'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount', 'slug', 'title'
+]);
+
 testForBelongsTo('project', 'organization');
+testForBelongsTo('project', 'stripePlan');
+
 testForHasMany('project', 'tasks');
 testForHasMany('project', 'projectCategories');
 testForHasMany('project', 'projectSkills');

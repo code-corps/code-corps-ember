@@ -13,7 +13,7 @@ moduleForModel('organization', 'Unit | Model | organization', {
   needs: [
     'model:organization-membership',
     'model:project',
-    'model:stripe-account',
+    'model:stripe-connect-account',
     'model:user'
   ]
 });
@@ -39,7 +39,7 @@ test('it should have all of its attributes', function(assert) {
   assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
-testForBelongsTo('organization', 'stripeAccount');
+testForBelongsTo('organization', 'stripeConnectAccount');
 testForHasMany('organization', 'organizationMemberships');
 testForHasMany('organization', 'projects');
 
