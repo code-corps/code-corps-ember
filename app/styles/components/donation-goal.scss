@@ -3,23 +3,23 @@
   margin: 10px 0;
   padding: 5px 20px;
 
-  .amount, .edit {
+  .donation-goal__amount, .donation-goal--edit {
     display: inline-block;
   }
 
-  .amount {
+  .donation-goal__amount {
     font-size: $header-font-size-small;
     font-weight: 700;
     margin: 5px 10px 5px 0;
   }
 
-  .description {
+  .donation-goal__description {
     color: $light-text;
     font-size: $body-font-size-small;
     margin: 5px 0;
   }
 
-  .edit {
+  .donation-goal--edit {
     font-size: $body-font-size-small;
   }
 }
