@@ -1,20 +1,20 @@
 .donation-status {
-  .become-a-donor {
-    button {
+  .donation-status__become-a-donor {
+    .donation-status__become-a-donor__button {
       width: 100%;
     }
   }
 
-  .create-donation {
+  .donation-status__create-donation {
     display: flex;
     flex-direction: column;
 
-    .amounts {
+    .donation-status__create-donation__amounts {
       display: flex;
       flex-wrap: wrap;
     }
 
-    .preset-amount {
+    .donation-status__create-donation__preset-amount {
       flex: 2;
       flex-basis: 48%;
       margin-bottom: 5px;
@@ -28,16 +28,16 @@
       }
     }
 
-    .custom-amount {
+    .donation-status__create-donation__custom-amount {
       flex: 1;
     }
 
-    .continue {
+    .donation-status__create-donation__continue {
       flex: 1;
     }
   }
 
-  .show-donation {
+  .donation-status__show-donation {
 
   }
 }
