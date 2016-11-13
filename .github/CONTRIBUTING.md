@@ -6,6 +6,7 @@ Thanks for thinking about helping! How would you like to help?
 - [I want to improve the documentation.](#what-kind-of-documentation-are-you-writing)
 - [I want to fix a bug.](#how-to-fix-a-bug)
 - [I want to refactor some code.](#how-to-refactor-code)
+- [I want to update dependencies](#how-to-update-dependencies)
 - [I don't know how to help.](#what-if-i-dont-know-how-to-help)
 
 Also, check out our [workflow](#using-git-effectively) and [recommended tools](#recommended-tools).
@@ -94,6 +95,22 @@ Write your code that fixes the bug and makes it pass.
 Refactoring code shouldn't require any new tests, but you should [make sure the tests still pass](../docs/USAGE.md#running-tests).
 
 [Done with your refactoring?](#i-finished-my-changes)
+
+## How to update dependencies
+
+[Greenkeeper](https://greenkeeper.io) keeps track of dependencies for us and submits pull requests when a dependency is updated. To update a depencency, you will need to follow these steps:
+
+1. The pull request will contain useful information about what's changed, including breaking changes. You will also want to check the dependency's github and/or npm listing for changelog and recommended updating steps.
+
+2. Pull down the branch locally.
+
+3. Update the dependency and perform any steps the project suggests for updating. Sometimes this requires updating other dependencies, changing configuration code, or other tasks.
+
+4. Build, run, and verify that tests pass.
+
+5. Verify that everything looks good: Check pages and components that make use of the library and ensure they are still working as expected.
+
+At this point, follow the steps described in [I finished my changes](#i-finished-my-changes), but you won't need to open a pull request since one already exists. Mark the pull request as `needs code review`. 
 
 ## How to write new code
 
