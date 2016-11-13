@@ -2,6 +2,76 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const {
+  getOwner,
+  Object,
+  RSVP,
+  run
+} = Ember;
+
+let defaultRoleId = 2;
+
+let mockUserRolesService = {
+  findUserRole(role) {
+    if (role.id === mockUserRole.get('roleId')) {
+      return mockUserRole;
+    }
+  },
+  addRole(role) {
+    return new RSVP.Promise((fulfill) => {
+      run.next(() => {
+        mockUserRole.set('roleId', role.get('id'));
+        getOwner(this).lookup('service:user-roles').set('userRoles', [mockUserRole]);
+        fulfill();
+      });
+    });
+  },
+  removeRole() {
+    return new RSVP.Promise((fulfill, reject) => {
+      run.next(() => {
+        mockUserRole.set('roleId', null);
+        getOwner(this).lookup('service:user-roles').set('userRoles', []);
+        reject();
+      });
+    });
+  }
+};
+
+let mockUserRolesServiceForErrors = {
+  findUserRole(role) {
+    if (role.id === mockUserRole.get('roleId')) {
+      return mockUserRole;
+    }
+  },
+  addRole() {
+    return RSVP.reject();
+  },
+  removeRole() {
+    return RSVP.reject();
+  }
+};
+
+let mockUserRole = Object.create({
+  id: 1,
+  roleId: defaultRoleId,
+  userId: 1
+});
+
+let unselectedRole = Object.create({
+  id: 1,
+  name: 'Backend Developer',
+  ability: 'Backend Development',
+  kind: 'technology'
+});
+
+let selectedRole = Object.create({
+  id: 2,
+  name: 'Mobile Developer',
+  ability: 'Mobile Development',
+  kind: 'technology'
+});
 
 moduleForComponent('role-item', 'Integration | Component | role item', {
   integration: true,
@@ -10,73 +80,11 @@ moduleForComponent('role-item', 'Integration | Component | role item', {
   }
 });
 
-let defaultRoleId = 2;
-
-let mockUserRolesService = Ember.Service.extend({
-  findUserRole(role) {
-    if (role.id === mockUserRole.get('roleId')) {
-      return mockUserRole;
-    }
-  },
-  addRole(role) {
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
-        mockUserRole.set('roleId', role.get('id'));
-        this.container.lookup('service:user-roles').set('userRoles', [mockUserRole]);
-        fulfill();
-      });
-    });
-  },
-  removeRole() {
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
-        mockUserRole.set('roleId', null);
-        this.container.lookup('service:user-roles').set('userRoles', []);
-        reject();
-      });
-    });
-  },
-});
-
-let mockUserRolesServiceForErrors = Ember.Service.extend({
-  findUserRole(role) {
-    if (role.id === mockUserRole.get('roleId')) {
-      return mockUserRole;
-    }
-  },
-  addRole() {
-    return Ember.RSVP.reject();
-  },
-  removeRole() {
-    return Ember.RSVP.reject();
-  },
-});
-
-let mockUserRole = Ember.Object.create({
-  id: 1,
-  roleId: defaultRoleId,
-  userId: 1,
-});
-
-let unselectedRole = Ember.Object.create({
-  id: 1,
-  name: 'Backend Developer',
-  ability: 'Backend Development',
-  kind: 'technology',
-});
-
-let selectedRole = Ember.Object.create({
-  id: 2,
-  name: 'Mobile Developer',
-  ability: 'Mobile Development',
-  kind: 'technology',
-});
-
 test('it works for selecting unselected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -95,7 +103,7 @@ test('it works for removing selected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', selectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -114,10 +122,10 @@ test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', unselectedRole);
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -129,7 +137,6 @@ test('it creates a flash message on an error when adding', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
@@ -144,10 +151,10 @@ test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
   assert.expect(7);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', selectedRole);
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -159,7 +166,6 @@ test('it creates a flash message on an error when removing', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
@@ -174,7 +180,7 @@ test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
 
   this.render(hbs`{{role-item role=role}}`);
@@ -191,7 +197,7 @@ test('it sets and unsets loading state when adding', function(assert) {
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   assert.expect(3);
 
   this.set('role', selectedRole);

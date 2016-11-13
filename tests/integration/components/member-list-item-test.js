@@ -1,6 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const {
+  Object,
+  RSVP
+} = Ember;
 
 let user = {
   name: 'Josh Smith',
@@ -28,19 +34,19 @@ let user = {
       skill: {
         title: 'Ruby'
       }
-    },
+    }
   ]
 };
 
 function mockMembership(pending) {
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: pending,
     destroyRecord() {
-      return Ember.RSVP.resolve();
+      return RSVP.resolve();
     },
     save() {
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
   return membership;
 }
@@ -101,18 +107,18 @@ test('it does not render the buttons when not pending', function(assert) {
 test('it sends the approve action when clicking approve', function(assert) {
   assert.expect(7);
 
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: true,
     save() {
       assert.ok(true);
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
 
   this.set('membership', membership);
   this.set('user', user);
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -124,7 +130,6 @@ test('it sends the approve action when clicking approve', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
@@ -134,17 +139,19 @@ test('it sends the approve action when clicking approve', function(assert) {
 test('it sends the deny action when clicking deny', function(assert) {
   assert.expect(7);
 
-  window.confirm = function() { return true; };
+  window.confirm = function() {
+    return true;
+  };
 
-  let membership = Ember.Object.create({
+  let membership = Object.create({
     isPending: true,
     destroyRecord() {
       assert.ok(true);
-      return Ember.RSVP.resolve();
-    },
+      return RSVP.resolve();
+    }
   });
 
-  let mockFlashMessages = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     clearMessages() {
       assert.ok(true);
     },
@@ -156,7 +163,6 @@ test('it sends the deny action when clicking deny', function(assert) {
       assert.equal(object.timeout, 5000);
     }
   });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.set('membership', membership);
   this.set('user', user);

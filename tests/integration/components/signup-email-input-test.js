@@ -4,10 +4,15 @@ import Ember from 'ember';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import wait from 'ember-test-helpers/wait';
 
+const { run } = Ember;
+
 moduleForComponent('signup-email-input', 'Integration | Component | signup email input', {
   integration: true,
   setup() {
     startMirage(this.container);
+  },
+  afterEach() {
+    server.shutdown();
   }
 });
 
@@ -24,17 +29,17 @@ test('it shows suggestions when invalid', function(assert) {
   assert.expect(5);
 
   server.get('/users/email_available', () => {
-   return { valid: false, available: true };
+    return { valid: false, available: true };
   });
 
   this.on('emailValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
   this.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
 
-  this.set('user', { email: 'incomplete@'});
+  this.set('user', { email: 'incomplete@' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);
@@ -50,17 +55,17 @@ test('it shows suggestions when unavailable', function(assert) {
   assert.expect(5);
 
   server.get('/users/email_available', () => {
-   return { valid: true, available: false };
+    return { valid: true, available: false };
   });
 
   this.on('emailValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
   this.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
 
-  this.set('user', { email: 'taken@gmail.com'});
+  this.set('user', { email: 'taken@gmail.com' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);
@@ -76,17 +81,17 @@ test('it shows ok when valid and available', function(assert) {
   assert.expect(4);
 
   server.get('/users/email_available', () => {
-   return { valid: true, available: true };
+    return { valid: true, available: true };
   });
 
   this.on('emailValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, true);
     });
   });
   this.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
 
-  this.set('user', { email: 'available@gmail.com'});
+  this.set('user', { email: 'available@gmail.com' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), true);
@@ -101,18 +106,18 @@ test('it resets to invalid when deleted', function(assert) {
   assert.expect(4);
 
   server.get('/users/email_available', () => {
-   return { valid: true, available: true };
+    return { valid: true, available: true };
   });
 
   this.on('emailValidated', (result) => {
-    Ember.run.next(() => {
+    run.next(() => {
       assert.equal(result, false);
     });
   });
-  this.set('user', { email: 'available@gmail.com'});
+  this.set('user', { email: 'available@gmail.com' });
   this.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
 
-  this.set('user', { email: ''});
+  this.set('user', { email: '' });
 
   wait().then(() => {
     assert.equal(this.$('.suggestions p').hasClass('ok'), false);

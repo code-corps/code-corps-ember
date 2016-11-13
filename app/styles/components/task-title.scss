@@ -1,0 +1,22 @@
+.task-title {
+  @include clearfix;
+
+  h2 {
+    margin: 5px 150px 5px 0;
+  }
+
+  .title-actions {
+    float: right;
+  }
+
+  input {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .task-number {
+    color: $extra-light-text;
+    font-weight: 300;
+    margin-left: 10px;
+  }
+}

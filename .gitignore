@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/docs/yuidoc
 
 # dependencies
 /node_modules
@@ -13,7 +14,7 @@
 /connect.lock
 /coverage/*
 /libpeerconnection.log
-npm-debug.log
+npm-debug.log*
 testem.log
 
 .env
@@ -27,3 +28,6 @@ testem.log
 .*swp
 .*swo
 .idea
+.vscodeignore
+jsconfig.json
+/typings/*/*

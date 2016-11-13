@@ -1,0 +1,30 @@
+<div class="timeline-comment-wrapper task-body">
+  {{#link-to 'slugged-route' task.user.username}}
+    <img class="icon" src={{task.user.photoThumbUrl}} />
+  {{/link-to}}
+  <div class="comment-content">
+    {{#if isEditingBody}}
+      <div class="input-group">
+        {{editor-with-preview input=task.markdown isLoading=task.isSaving autofocus=true}}
+        {{#each task.errors.markdown as |error|}}
+          <p class="error">{{error.message}}</p>
+        {{/each}}
+      </div>
+      <div class="input-group">
+        <button {{action 'applyEditTask'}} class="default small right save">Save</button>
+        <button {{action 'cancelEditingTaskBody'}} class="clear small right cancel">Cancel</button>
+      </div>
+    {{else}}
+      <div class="comment-info">
+        {{#link-to 'slugged-route' task.user.username class="username"}}{{task.user.username}}{{/link-to}} posted {{moment-from-now task.insertedAt}}
+        {{#if canEdit}}
+          <a class="edit" {{action 'editTaskBody'}}>edit</a>
+        {{/if}}
+        {{#if task.containsCode}}
+          {{code-theme-selector}}
+        {{/if}}
+      </div>
+      <div class="comment-body">{{{taskBodyWithMentions}}}</div>
+    {{/if}}
+  </div>
+</div>

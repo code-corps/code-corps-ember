@@ -1,6 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const { Object } = Ember;
 
 moduleForComponent('organization-settings-menu', 'Integration | Component | organization settings menu', {
   integration: true
@@ -9,19 +12,14 @@ moduleForComponent('organization-settings-menu', 'Integration | Component | orga
 test('when authenticated and can manage organization, it renders properly', function(assert) {
   assert.expect(2);
 
-  let organization = Ember.Object.create({ id: 1 });
-  let membership = Ember.Object.create({
+  let organization = Object.create({ id: 1 });
+  let membership = Object.create({
     isAdmin: true,
-    organization: organization,
+    organization
   });
 
-  let mockSession = Ember.Service.extend({ isAuthenticated: true });
-  let mockCredentials = Ember.Service.extend({
-    currentUserMembership: membership
-  });
-
-  this.register('service:session', mockSession);
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'session', { isAuthenticated: true });
+  stubService(this, 'credentials', { currentUserMembership: membership });
 
   this.set('organization', organization);
 
@@ -34,14 +32,11 @@ test('when authenticated and can manage organization, it renders properly', func
 test('when authenticated and cannot manage organization, it renders properly', function(assert) {
   assert.expect(2);
 
-  let organization = Ember.Object.create({ id: 1 });
-  let membership = Ember.Object.create({ isAdmin: false, organization: organization });
+  let organization = Object.create({ id: 1 });
+  let membership = Object.create({ isAdmin: false, organization });
 
-  let mockSession = Ember.Service.extend({ isAuthenticated: true });
-  let mockCredentials = Ember.Service.extend({ currentUserMembership: membership });
-
-  this.register('service:session', mockSession);
-  this.register('service:credentials', mockCredentials);
+  stubService(this, 'session', { isAuthenticated: true });
+  stubService(this, 'credentials', { currentUserMembership: membership });
 
   this.set('organization', organization);
 
@@ -54,11 +49,9 @@ test('when authenticated and cannot manage organization, it renders properly', f
 test('when not authenticated, it renders properly', function(assert) {
   assert.expect(2);
 
-  let organization = Ember.Object.create({ id: 1 });
+  let organization = Object.create({ id: 1 });
 
-  let mockSession = Ember.Service.extend({ isAuthenticated: false });
-
-  this.register('service:session', mockSession);
+  stubService(this, 'session', { isAuthenticated: false });
 
   this.set('organization', organization);
 

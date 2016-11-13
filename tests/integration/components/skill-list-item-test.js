@@ -1,20 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-let userSkillsService = Ember.Service.extend({
-  hasSkill(skill) {
-    return skill;
-  },
-  findUserSkill(skill) {
-    return skill;
-  },
-});
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('skill-list-item', 'Integration | Component | skill list item', {
   integration: true,
   beforeEach() {
-    this.register('service:user-skills', userSkillsService);
+    stubService(this, 'user-skills', {
+      hasSkill(skill) {
+        return skill;
+      },
+      findUserSkill(skill) {
+        return skill;
+      }
+    });
   }
 });
 
@@ -37,7 +35,7 @@ test('it renders and sends an action when its hidden', function(assert) {
     </div>
   `);
 
-  assert.equal(this.$('li a').text().trim(), 'Ruby');
+  assert.equal(this.$('li').text().trim(), 'Ruby');
 });
 
 test('it renders and sends no action when not hidden', function(assert) {
@@ -55,5 +53,5 @@ test('it renders and sends no action when not hidden', function(assert) {
 
   this.render(hbs`{{skill-list-item skill=skill action='skillItemHidden'}}`);
 
-  assert.equal(this.$('li a').text().trim(), 'Ruby');
+  assert.equal(this.$('li').text().trim(), 'Ruby');
 });

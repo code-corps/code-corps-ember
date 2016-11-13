@@ -1,42 +1,50 @@
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
-const INIT_DELAY          = Ember.testing ? 0 : 1500;
-const LOADING_TOGGLE      = Ember.testing ? 0 : 700;
-const CONCURRENCY_TIMEOUT = Ember.testing ? 0 : 1500;
+const {
+  Component,
+  Object,
+  observer,
+  run: { later },
+  testing
+} = Ember;
 
-export default Ember.Component.extend({
+const INIT_DELAY          = testing ? 0 : 1500;
+const LOADING_TOGGLE      = testing ? 0 : 700;
+const CONCURRENCY_TIMEOUT = testing ? 0 : 1500;
+
+export default Component.extend({
   categories: [
-    Ember.Object.create({
-      description: "You want to improve government responsiveness.",
+    Object.create({
+      description: 'You want to improve government responsiveness.',
       isLoading: false,
-      name: "Government",
+      name: 'Government',
       selected: false,
-      slug: "government"
+      slug: 'government'
     }),
-    Ember.Object.create({
-      description: "You want to improve tools for advancing science.",
+    Object.create({
+      description: 'You want to improve tools for advancing science.',
       isLoading: false,
-      name: "Science",
+      name: 'Science',
       selected: false,
-      slug: "science"
+      slug: 'science'
     }),
-    Ember.Object.create({
-      description: "You want to improve software tools and infrastructure.",
+    Object.create({
+      description: 'You want to improve software tools and infrastructure.',
       isLoading: false,
-      name: "Technology",
+      name: 'Technology',
       selected: false,
-      slug: "technology"
-    }),
+      slug: 'technology'
+    })
   ],
   classNames: ['demo-categories'],
 
-  _animateItems: Ember.observer('animated', function() {
+  _animateItems: observer('animated', function() {
     if (this.get('animated')) {
       let categories = this.get('categories');
       let indexesToAnimate = [0, 2];
 
-      Ember.run.later(() => {
+      later(() => {
         indexesToAnimate.forEach((index) => {
           let category = categories[index];
           this.get('_animateItem').perform(category);
@@ -45,12 +53,12 @@ export default Ember.Component.extend({
     }
   }),
 
-  _animateItem: task(function * (category) {
+  _animateItem: task(function* (category) {
     category.set('selected', true);
     category.set('isLoading', true);
-    Ember.run.later(() => {
+    later(() => {
       category.set('isLoading', false);
     }, LOADING_TOGGLE);
     yield timeout(CONCURRENCY_TIMEOUT);
-  }).enqueue(),
+  }).enqueue()
 });

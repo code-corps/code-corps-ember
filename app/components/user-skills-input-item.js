@@ -1,16 +1,23 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, notEmpty },
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNameBindings: ['hasSkill', 'selected:selected'],
   classNames: ['skill-dropdown-item'],
   tagName: ['li'],
 
-  userSkills: Ember.inject.service(),
+  userSkills: service(),
 
-  hasSkill: Ember.computed.notEmpty('userSkill'),
-  selected: Ember.computed.alias('skill.selected'),
+  hasSkill: notEmpty('userSkill'),
+  selected: alias('skill.selected'),
 
-  userSkill: Ember.computed('skill', 'userSkills.userSkills', function() {
+  userSkill: computed('skill', 'userSkills.userSkills', function() {
     let skill = this.get('skill');
     let userSkills = this.get('userSkills');
     return userSkills.findUserSkill(skill);
@@ -23,5 +30,5 @@ export default Ember.Component.extend({
 
   mouseEnter() {
     this.sendAction('hover', this.get('skill'));
-  },
+  }
 });

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const {
-  Component,
+  Component
 } = Ember;
 
 /**
@@ -18,5 +18,5 @@ const {
   @extends Ember.Component
 */
 export default Component.extend({
-  classNames: ['progress-bar-container'],
+  classNames: ['progress-bar-container']
 });

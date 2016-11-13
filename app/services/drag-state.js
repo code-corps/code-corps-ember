@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+const { Service } = Ember;
+
+export default Service.extend({
   isDragging: false,
 
   dragging() {
@@ -9,5 +11,5 @@ export default Ember.Service.extend({
 
   leaving() {
     this.set('isDragging', false);
-  },
+  }
 });

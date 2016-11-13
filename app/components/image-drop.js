@@ -1,6 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  String: { htmlSafe },
+  computed,
+  computed: { alias, notEmpty, or },
+  inject: { service },
+  on,
+  run
+} = Ember;
+
+export default Component.extend({
   active: false,
   attributeBindings: ['style'],
   classNames: ['image-drop'],
@@ -8,21 +18,21 @@ export default Ember.Component.extend({
     'active',
     'circle:is-circular',
     'isDraggingOnApp:is-dragging',
-    'hasImage',
+    'hasImage'
   ],
   droppedImage: null,
-  helpText: "Drop your image here.",
+  helpText: 'Drop your image here.',
   originalImage: null,
 
-  appDragState: Ember.inject.service('dragState'),
+  appDragState: service('dragState'),
 
-  hasDroppedImage: Ember.computed.notEmpty('droppedImage'),
-  hasImage: Ember.computed.or('hasDroppedImage', 'hasOriginalImage'),
-  hasOriginalImage: Ember.computed.notEmpty('originalImage'),
-  isDraggingOnApp: Ember.computed.alias('appDragState.isDragging'),
+  hasDroppedImage: notEmpty('droppedImage'),
+  hasImage: or('hasDroppedImage', 'hasOriginalImage'),
+  hasOriginalImage: notEmpty('originalImage'),
+  isDraggingOnApp: alias('appDragState.isDragging'),
 
-  style: Ember.computed('droppedImage', 'originalImage', function() {
-    let backgroundStyle = "";
+  style: computed('droppedImage', 'originalImage', function() {
+    let backgroundStyle = '';
 
     if (this.get('droppedImage')) {
       backgroundStyle = `background-image: url(${this.get('droppedImage')});`;
@@ -30,28 +40,29 @@ export default Ember.Component.extend({
       backgroundStyle = `background-image: url(${this.get('originalImage')});`;
     }
 
-    return Ember.String.htmlSafe(backgroundStyle);
+    return htmlSafe(backgroundStyle);
   }),
 
-  setup: Ember.on('willInsertElement', function() {
-    const $input = this.$('input');
+  setup: on('willInsertElement', function() {
+    let $input = this.$('input');
     $input.on('change', (event) => {
       this.handleFileDrop(event.target.files[0]);
     });
   }),
 
   convertImgToBase64URL(url, callback, outputFormat) {
-    var img = new Image();
+    let img = new Image();
     img.crossOrigin = 'Anonymous';
-    img.onload = function(){
-        var canvas = document.createElement('CANVAS'),
-        ctx = canvas.getContext('2d'), dataURL;
-        canvas.height = this.height;
-        canvas.width = this.width;
-        ctx.drawImage(this, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        callback(dataURL);
-        canvas = null;
+    img.onload = function() {
+      let canvas = document.createElement('CANVAS');
+      let ctx = canvas.getContext('2d');
+      let dataURL;
+      canvas.height = this.height;
+      canvas.width = this.width;
+      ctx.drawImage(this, 0, 0);
+      dataURL = canvas.toDataURL(outputFormat);
+      callback(dataURL);
+      canvas = null;
     };
     img.src = url;
   },
@@ -92,15 +103,15 @@ export default Ember.Component.extend({
     }
 
     this.set('file', file);
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = (e) => {
-      var fileToUpload = e.target.result;
-      Ember.run(() => {
+      let fileToUpload = e.target.result;
+      run(() => {
         this.set('droppedImage', fileToUpload);
         this.dragEnded();
       });
     };
 
     reader.readAsDataURL(file);
-  },
+  }
 });

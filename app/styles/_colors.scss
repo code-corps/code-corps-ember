@@ -5,6 +5,7 @@ $green: #23871E;
 $dark-yellow: #f39c12;
 $dark-blue: #08A8FC;
 $light-green: #DFF0D8;
+$light-blue: #F6FCFF;
 
 // Defaults
 $primary-color: $dark-blue;
@@ -29,6 +30,7 @@ $primary-active: darken($primary-color, 5%);
 $border-default: $gray;
 $border-light: #EEE;
 $border-focus: #51A7E8;
+$border-light-blue: #3ABAFC;
 
 // Backgrounds
 $background-gray: #F3F3F3;
@@ -47,20 +49,20 @@ $warning-color: $dark-yellow;
 // Success
 $success-background: $green;
 
-// Post types
+// Task types
 $idea-color: $dark-yellow;
 $issue-color: $red;
 $progress-color: $green;
 $task-color: $dark-blue;
 
-$postTypeColors: (
+$taskTypeColors: (
   "idea": $idea-color,
   "issue": $issue-color,
   "progress": $progress-color,
   "task": $task-color,
 );
 
-$postTypeTextOnBackgroundColors: (
+$taskTypeTextOnBackgroundColors: (
   "idea": $dark-text,
   "issue": white,
   "progress": white,
@@ -75,7 +77,7 @@ $issue-background: $light-red-background;
 $progress-background: #EFFFEE;
 $task-background: $light-blue-background;
 
-$postTypeBackgrounds: (
+$taskTypeBackgrounds: (
   "idea": $idea-background,
   "issue": $issue-background,
   "progress": $progress-background,

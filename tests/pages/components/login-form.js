@@ -12,18 +12,18 @@ export default {
   submit:   clickable('#login'),
 
   errors:   collection({
-    itemScope: 'p.error',
+    itemScope: 'p.error'
   }),
 
   loginSuccessfully() {
     this
-      .username('josh@coderly.com')
+      .username('volunteers@codecorps.org')
       .password('password')
       .submit();
   },
   loginUnsuccessfully() {
     this
-      .username('josh@coderly.com')
+      .username('volunteers@codecorps.org')
       .password('wrongpassword')
       .submit();
   }

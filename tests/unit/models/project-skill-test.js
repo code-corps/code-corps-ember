@@ -1,4 +1,5 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForBelongsTo } from '../../helpers/relationship';
 
 moduleForModel('project-skill', 'Unit | Model | project skill', {
   // Specify the other units that are required for this test.
@@ -10,3 +11,6 @@ test('it exists', function(assert) {
   // let store = this.store();
   assert.ok(!!model);
 });
+
+testForBelongsTo('project-skill', 'project');
+testForBelongsTo('project-skill', 'skill');

@@ -1,0 +1,43 @@
+<h3>Add card information</h3>
+<div class="credit-card-form__icon-list">
+  <img src="assets/images/icons/visa.png" alt="visa">
+  <img src="assets/images/icons/american-express.png" alt="american-express">
+  <img src="assets/images/icons/mastercard.png" alt="mastercard">
+  <img src="assets/images/icons/discover.png" alt="discover">
+  <img src="assets/images/icons/jcb.png" alt="jcb">
+  <img src="assets/images/icons/diners-club.png" alt="diners-club">
+</div>
+<div class="input-group">
+  <label class="icon-label credit-card-label">
+    <span class="visually-hidden">Credit Card</span>
+    {{input
+      type="text"
+      class="icon-input"
+      disabled=cannotDonate
+      placeholder="Card number"}}
+  </label>
+</div>
+
+<div class="input-group">
+  <div class="row">
+    <label class="icon-label calendar-label">
+      <span class="visually-hidden">Expiration Date</span>
+      {{input
+        type="text"
+        class="icon-input"
+        disabled=cannotDonate
+        placeholder="MM / YY"}}
+    </label>
+
+    <label class="icon-label lock-label">
+      <span class="visually-hidden">CVC</span>
+      {{input
+        type="text"
+        class="icon-input"
+        disabled=cannotDonate
+        placeholder="CVC"}}
+    </label>
+  </div>
+</div>
+
+<button class="button default">Donate</button>

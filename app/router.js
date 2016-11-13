@@ -1,9 +1,17 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-const Router = Ember.Router.extend({
+const {
+  get,
+  inject: { service },
+  Router,
+  run
+} = Ember;
+
+let AppRouter = Router.extend({
   location: config.locationType,
-  metrics: Ember.inject.service(),
+  rootURL: config.rootURL,
+  metrics: service(),
 
   didTransition() {
     this._super(...arguments);
@@ -11,20 +19,26 @@ const Router = Ember.Router.extend({
   },
 
   _trackPage() {
-    Ember.run.scheduleOnce('afterRender', this, () => {
-      const page = document.location.pathname;
-      const title = this.getWithDefault('currentRouteName', 'unknown');
+    run.scheduleOnce('afterRender', this, () => {
+      let page = document.location.pathname;
+      let title = this.getWithDefault('currentRouteName', 'unknown');
 
-      Ember.get(this, 'metrics').trackPage({ page, title });
+      get(this, 'metrics').trackPage({ page, title });
     });
   }
 });
 
-Router.map(function() {
+AppRouter.map(function() {
   this.route('login');
 
+  this.route('oauth-stripe', {
+    path: '/oauth/stripe'
+  });
+
   this.route('organizations', function() {
-    this.route('slugged-route', { path: '/:slugged_route_slug' }, function() {
+    this.route('slugged-route', {
+      path: '/:slugged_route_slug'
+    }, function() {
       this.route('settings', function() {
         this.route('profile');
       });
@@ -34,17 +48,24 @@ Router.map(function() {
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
     this.route('settings', function() {
       this.route('contributors');
+      this.route('donations');
       this.route('profile');
     });
-    this.route('posts', function() {
+
+    this.route('tasks', function() {
       this.route('new');
-      this.route('post', { path: '/:number' });
+      this.route('task', { path: '/:number' });
     });
+    this.route('donate');
   });
 
-  this.route('projects', { path: '/:slugged_route_slug/projects'});
+  this.route('projects', {
+    path: '/:slugged_route_slug/projects'
+  });
 
-  this.route('projects-list', { path: '/projects'});
+  this.route('projects-list', {
+    path: '/projects'
+  });
 
   this.route('settings', function() {
     this.route('profile');
@@ -59,13 +80,17 @@ Router.map(function() {
     this.route('skills');
   });
 
-  this.route('slugged-route', { path: '/:slugged_route_slug' });
+  this.route('slugged-route', {
+    path: '/:slugged_route_slug'
+  });
+
   this.route('team');
   this.route('about');
 
   this.route('organization', function() {
-    this.route('settings', function() {});
+    this.route('settings', function() { });
   });
+  this.route('terms-of-use');
 });
 
-export default Router;
+export default AppRouter;

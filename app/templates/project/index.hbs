@@ -1,7 +1,12 @@
-{{title model.title " by " model.organization.name}}
+{{title project.title " by " project.organization.name}}
 
-{{project-details project=model expanded=true}}
-{{project-menu project=model}}
+{{project-details project=project expanded=true}}
+{{project-menu project=project}}
 <div class="project-main">
-  {{project-long-description project=model}}
+  {{project-long-description project=project}}
+</div>
+<div class="project-sidebar">
+  {{donations/donation-status
+    createDonation=(action 'saveSubscription')
+    subscription=subscription}}
 </div>

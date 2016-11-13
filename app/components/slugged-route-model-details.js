@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['slugged-route-model-details'],
+const { Component } = Ember;
+
+export default Component.extend({
+  classNames: ['slugged-route-model-details']
 });

@@ -1,0 +1,7 @@
+{{stripe-connect-button url=stripeAuth.url}}
+{{donation-goals
+  add=(action 'addDonationGoal')
+  cancel=(action 'cancelDonationGoal')
+  edit=(action 'editDonationGoal')
+  project=project
+  save=(action 'saveDonationGoal')}}

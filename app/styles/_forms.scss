@@ -42,12 +42,34 @@ $outer-border-radius: 4px;
       }
     }
   }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      width: 49%;
+      position: relative;
+    }
+  }
+
+  .icon-input {
+    padding-left: 35px;
+  }
+
+  .icon-label {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 8px;
+    }
+  }
 }
 
 .input-group-addon {
   padding: 6px 12px;
   font-size: $body-font-size-small;
-  font-weight: 700;
   line-height: 1;
   color: #333;
   text-align: center;
@@ -64,6 +86,12 @@ $outer-border-radius: 4px;
     border-bottom-right-radius: $inner-border-radius;
     border-top-right-radius: $inner-border-radius;
     border-right-width: 0;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $inner-border-radius;
+    border-top-left-radius: $inner-border-radius;
+    border-left-width: 0;
   }
 }
 
@@ -158,7 +186,7 @@ form {
   }
 }
 
-.post-type {
+.task-type {
   select {
     border: none;
     font-family: $body-font-family;

@@ -13,7 +13,6 @@ test('it renders', function(assert) {
   assert.equal(this.$('.organization-members').length, 1, 'The component\'s element is rendered');
 });
 
-
 test('it renders an item for each member in the list', function(assert) {
   assert.expect(2);
 
@@ -21,7 +20,7 @@ test('it renders an item for each member in the list', function(assert) {
   for (let i = 1; i <= 3; i++) {
     mockMembers.push({
       id: i,
-      photoThumbUrl: `image_${i}.png`,
+      photoThumbUrl: `image_${i}.png`
     });
   }
 

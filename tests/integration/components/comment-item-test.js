@@ -1,55 +1,62 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-let mockMentionFetcher = Ember.Service.extend({
-  fetchBodyWithMentions: Ember.RSVP.resolve,
-  prefetchBodyWithMentions: Ember.K
-});
+const {
+  K,
+  Object,
+  RSVP
+} = Ember;
 
-let mockStore = Ember.Service.extend({
-  query () {
-    return Ember.RSVP.resolve([]);
+let mockMentionFetcher = {
+  fetchBodyWithMentions: RSVP.resolve,
+  prefetchBodyWithMentions: K
+};
+
+let mockStore = {
+  query() {
+    return RSVP.resolve([]);
   }
-});
+};
 
-let mockCurrentUser = Ember.Service.extend({
+let mockCurrentUser = {
   user: {
     id: 1
   }
-});
+};
 
-let mockComment = Ember.Object.create({
+let mockComment = Object.create({
   body: 'A <strong>body</strong>',
   user: { id: 1 },
   save() {
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 
-// let mockCommentWithMentions = Ember.Object.create({
+// let mockCommentWithMentions = Object.create({
 //   body: '<p>Mentioning @user1 and @user2</p>',
 //   user: { id: 1 },
 //   save() {
-//     return Ember.RSVP.resolve();
+//     return RSVP.resolve();
 //   },
 //   commentUserMentions: [
-//     Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
+//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
 //   ]
 // });
 
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
   beforeEach() {
-    this.register('service:store', mockStore);
+    stubService(this, 'store', mockStore);
   }
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -61,7 +68,7 @@ test('it renders all required comment elements properly', function(assert) {
   assert.expect(4);
 
   let user = { id: 1, username: 'tester' };
-  let comment = Ember.Object.create({ id: 1, body: 'A <b>comment</b>', user: user, containsCode: true });
+  let comment = Object.create({ id: 1, body: 'A <b>comment</b>', user, containsCode: true });
 
   this.set('comment', comment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -75,8 +82,8 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  this.register('service:mention-fetcher', mockMentionFetcher);
-  this.register('service:current-user', mockCurrentUser);
+  stubService(this, 'mention-fetcher', mockMentionFetcher);
+  stubService(this, 'current-user', mockCurrentUser);
 
   this.set('comment', mockComment);
   this.render(hbs`{{comment-item comment=comment}}`);
@@ -94,11 +101,8 @@ test('it switches between editing and viewing mode', function(assert) {
 /*
 test('mentions are rendered on comment body in read-only mode', function(assert) {
   assert.expect(1);
-
   this.set('comment', mockCommentWithMentions);
-
   let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
-
   this.render(hbs`{{comment-item comment=comment}}`);
   assert.equal(this.$('.comment-item .comment-body').html(), expectedOutput, 'Mentions are rendered');
 });

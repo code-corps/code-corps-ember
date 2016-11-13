@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  inject: { service },
+  observer
+} = Ember;
+
 /**
   `error-wrapper` handles http response status code errors and other server
   level errors and displays an error page to the user.
@@ -7,18 +14,18 @@ import Ember from 'ember';
   ## default usage
 
   ```Handlebars
-  {{error-wrapper model=model}}
+  {{error-wrapper error=model}}
   ```
 
   @class error-wrapper
   @module Component
-  @extends Ember.Component
+  @extends Component
 */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['error-wrapper', 'center-pseudo'],
 
-  background: Ember.inject.service(),
+  background: service(),
 
   /**
     Returns a message based on the type of error thrown.
@@ -26,8 +33,8 @@ export default Ember.Component.extend({
     @property errorClass
     @type String
   */
-  errorClass: Ember.computed('is404', function() {
-    if(this.get('is404')) {
+  errorClass: computed('is404', function() {
+    if (this.get('is404')) {
       return 'warning';
     } else {
       return 'danger';
@@ -42,10 +49,10 @@ export default Ember.Component.extend({
   */
   // Map the HTTP status codes into an array or
   // an empty array if there are no such status codes
-  httpStatusCodes: Ember.computed('model', function() {
-    let model = this.get('model');
-    if (model && model.hasOwnProperty('errors')) {
-      let errors = model.errors;
+  httpStatusCodes: computed('error', function() {
+    let error = this.get('error');
+    if (error && error.hasOwnProperty('errors')) {
+      let { errors } = error;
       return errors.map(function(err) {
         return err.status;
       });
@@ -60,8 +67,8 @@ export default Ember.Component.extend({
     @property is404
     @type Boolean
   */
-  is404: Ember.computed('httpStatusCodes', function() {
-    return this.get('httpStatusCodes').contains(404);
+  is404: computed('httpStatusCodes', function() {
+    return this.get('httpStatusCodes').includes(404);
   }),
 
   /**
@@ -69,7 +76,7 @@ export default Ember.Component.extend({
 
     @method observeErrorClass
   */
-  observeErrorClass: Ember.observer('errorClass', function() {
+  observeErrorClass: observer('errorClass', function() {
     this.updateBackground();
   }),
 
@@ -99,5 +106,5 @@ export default Ember.Component.extend({
   updateBackground() {
     this.set('background.class', this.get('errorClass'));
     this.get('background').updateBackgroundClass();
-  },
+  }
 });

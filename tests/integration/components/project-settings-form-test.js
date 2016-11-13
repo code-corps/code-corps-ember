@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const { RSVP } = Ember;
 
 moduleForComponent('project-settings-form', 'Integration | Component | project settings form', {
   integration: true
@@ -8,7 +11,7 @@ moduleForComponent('project-settings-form', 'Integration | Component | project s
 
 let project = {
   title: 'Test Organization',
-  description: 'A test project',
+  description: 'A test project'
 };
 
 test('it renders', function(assert) {
@@ -37,18 +40,16 @@ test('it calls save on project when save button is clicked', function(assert) {
 
   project.save = function() {
     assert.ok(true, 'Save method was called on project');
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   };
 
   this.set('project', project);
 
-  const flashServiceStub = Ember.Service.extend({
+  stubService(this, 'flash-messages', {
     success() {
       assert.ok(true, 'Flash message service was called');
     }
   });
-
-  this.register('service:flash-messages', flashServiceStub);
 
   this.render(hbs`{{project-settings-form project=project}}`);
 

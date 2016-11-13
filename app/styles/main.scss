@@ -23,6 +23,17 @@ html, body {
   height: 100%;
 }
 
+.flexbox-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.flexbox-spacer {
+  flex: auto;
+}
+
 p {
   font-size: $body-font-size-normal;
 }
@@ -71,6 +82,11 @@ ul {
 
 .empty-state {
   color: $light-text;
+}
+
+.additional-content {
+  color: $light-text;
+  font-size: 12px;
 }
 
 .overflow-hidden {
@@ -133,5 +149,28 @@ p.subtext {
     @include sprite($curved-arrow);
 
     margin-top: 90px;
+  }
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.header-section {
+  margin: 20px 0;
+
+  h3 {
+    font-weight: 300;
+  }
+
+  p {
+    color: $light-text;
   }
 }

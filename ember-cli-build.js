@@ -33,6 +33,7 @@ module.exports = function(defaults) {
       // To see errors in Sentry, this is needed;
       // Our app is open source, so deal with it.
       enabled: true,
+      extensions: ['js'],
     },
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },

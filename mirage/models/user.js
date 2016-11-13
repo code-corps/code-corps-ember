@@ -1,10 +1,9 @@
 import { Model, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
-  organizations: hasMany({ inverse: 'members' }),
   organizationMemberships: hasMany({ inverse: 'member' }),
-
-  categories: hasMany(),
+  subscriptions: hasMany('stripe-subscription'),
   userCategories: hasMany(),
   userRoles: hasMany(),
+  UserSkills: hasMany()
 });

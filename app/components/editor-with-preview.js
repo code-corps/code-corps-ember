@@ -1,22 +1,22 @@
 import Ember from 'ember';
 import {
   equal,
-  or,
+  or
 } from 'ember-computed';
 
 const {
   Component,
   computed,
   get,
-  inject,
+  inject: { service },
   isEmpty,
+  run,
   set,
+  String
 } = Ember;
 
-const { service } = inject;
-
 /**
-  `editor-with-preview` composes the comment/post editor with the ability to
+  `editor-with-preview` composes the comment/task editor with the ability to
   preview the content.
 
   ## default usage
@@ -70,10 +70,10 @@ export default Component.extend({
   textareaFocused: false,
 
   /**
-    @property store
+    @property currentUser
     @type Ember.Service
    */
-  store: service(),
+  currentUser: service(),
 
   /**
     @property mentionFetcher
@@ -81,6 +81,11 @@ export default Component.extend({
    */
   mentionFetcher: service(),
 
+  /**
+    @property store
+    @type Ember.Service
+   */
+  store: service(),
 
   /**
     Returns if the editor is in editing mode.
@@ -113,11 +118,11 @@ export default Component.extend({
     @type String
    */
   style: computed('height', function() {
-    const height = get(this, 'height');
+    let height = get(this, 'height');
 
     if (height) {
-      const css = "min-height: " + height + ";";
-      return new Ember.Handlebars.SafeString(css);
+      let css = `min-height: ${height};`;
+      return String.htmlSafe(css);
     }
   }),
 
@@ -139,7 +144,7 @@ export default Component.extend({
    */
   didRender() {
     this._super(...arguments);
-    Ember.run.scheduleOnce('afterRender', this, '_attemptFocus');
+    run.scheduleOnce('afterRender', this, '_attemptFocus');
   },
 
   /**
@@ -156,7 +161,6 @@ export default Component.extend({
   },
 
   actions: {
-
     /**
       Action that sets the `textareaFocused` property to `false`.
 
@@ -196,7 +200,7 @@ export default Component.extend({
       set(this, 'mode', 'previewing');
       set(this, 'previewedOnce', true);
       this._fetchPreview();
-    },
+    }
   },
 
   _fetchPreview() {
@@ -209,7 +213,10 @@ export default Component.extend({
       set(this, 'preview', this.get('nothingToPreviewMessage'));
       set(this, 'fetchingPreview', false);
     } else {
-      let preview = get(this, 'store').createRecord('preview', { markdown: markdown });
+      let preview = get(this, 'store').createRecord('preview', {
+        markdown,
+        user: this.get('currentUser.user')
+      });
       preview.save().then((preview) => {
         this.get('mentionFetcher').fetchBodyWithMentions(preview, 'preview').then((body) => {
           set(this, 'preview', body);
@@ -237,5 +244,5 @@ export default Component.extend({
   _focusTextarea() {
     this.$('textarea').focus();
     set(this, 'textareaFocused', true);
-  },
+  }
 });

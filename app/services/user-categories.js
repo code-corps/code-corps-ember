@@ -1,13 +1,19 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+const {
+  computed,
+  inject: { service },
+  Service
+} = Ember;
 
-  isEmpty: Ember.computed.empty('userCategories'),
-  user: Ember.computed.alias('currentUser.user'),
+export default Service.extend({
+  currentUser: service(),
+  store: service(),
 
-  userCategories: Ember.computed('user.userCategories',
+  isEmpty: computed.empty('userCategories'),
+  user: computed.alias('currentUser.user'),
+
+  userCategories: computed('user.userCategories',
     'user.userCategories.@each.category',
     'user.userCategories.@each.user',
   function() {
@@ -17,13 +23,13 @@ export default Ember.Service.extend({
   addCategory(category) {
     let user = this.get('user');
     let userCategory = this.get('store').createRecord('user-category', {
-      user: user,
-      category: category
+      user,
+      category
     });
     return userCategory.save();
   },
 
-  findUserCategory: function(category) {
+  findUserCategory(category) {
     let userCategories = this.get('userCategories');
     if (userCategories) {
       let userCategory = userCategories.find((item) => {
@@ -40,5 +46,5 @@ export default Ember.Service.extend({
   removeCategory(category) {
     let userCategory = this.findUserCategory(category);
     return userCategory.destroyRecord();
-  },
+  }
 });

@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  inject: { service },
+  Mixin
+} = Ember;
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   currentUser: service(),
   onboarding: service(),
 
@@ -16,7 +19,7 @@ export default Ember.Mixin.create({
       this._abortAndFixHistory(transition);
     } else if (isOnboarding) {
       return this._super(...arguments);
-    } else if (user && routes.contains(target)) {
+    } else if (user && routes.includes(target)) {
       this._abortAndFixHistory(transition);
       this.transitionTo('projects-list');
     }
@@ -27,5 +30,5 @@ export default Ember.Mixin.create({
     if (window.history) {
       window.history.forward();
     }
-  },
+  }
 });

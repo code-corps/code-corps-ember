@@ -6,15 +6,10 @@ moduleForComponent('signup-form', 'Integration | Component | signup form', {
 });
 
 test('it renders', function(assert) {
-
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
-
   this.render(hbs`{{signup-form}}`);
 
   assert.equal(this.$('.signup-form').length, 1);
 });
-
 
 test('it renders required ui elements', function(assert) {
   this.render(hbs`{{signup-form}}`);

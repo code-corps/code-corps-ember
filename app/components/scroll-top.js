@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component } = Ember;
+
+export default Component.extend({
   click() {
-    window.scrollTo(0,0);
-  },
+    window.scrollTo(0, 0);
+  }
 });

@@ -1,18 +1,17 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('organization-settings', 'Integration | Component | organization settings', {
   integration: true
 });
 
-
 test('it renders properly', function(assert) {
   assert.expect(3);
 
-  this.register('service:store', Ember.Service.extend({}));
-  this.register('service:session', Ember.Service.extend({}));
-  this.register('service:credentials', Ember.Service.extend({}));
+  stubService(this, 'store');
+  stubService(this, 'session');
+  stubService(this, 'credentials');
 
   this.render(hbs`{{organization-settings}}`);
 

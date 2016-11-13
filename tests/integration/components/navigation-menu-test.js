@@ -1,9 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('navigation-menu', 'Integration | Component | navigation menu', {
-  integration: true,
+  integration: true
 });
 
 test('it renders elements for the default menu when logged out', function(assert) {
@@ -17,10 +17,7 @@ test('it renders elements for the default menu when logged out', function(assert
 });
 
 test('it renders elements for the default menu when logged in', function(assert) {
-  let mockSessionService = Ember.Service.extend({
-    isAuthenticated: true
-  });
-  this.register('service:session', mockSessionService);
+  stubService(this, 'session', { isAuthenticated: true });
 
   this.render(hbs`{{navigation-menu}}`);
 
@@ -32,16 +29,12 @@ test('it renders elements for the default menu when logged in', function(assert)
 });
 
 test('it renders elements for the onboarding menu', function(assert) {
-  let mockNavigationMenuService = Ember.Service.extend({
-    isOnboarding: true
-  });
-  this.register('service:navigation-menu', mockNavigationMenuService);
-  let mockOnboardingService = Ember.Service.extend({
+  stubService(this, 'navigation-menu', { isOnboarding: true });
+  stubService(this, 'onboarding', {
     currentStepNumber: 1,
     totalSteps: 3,
-    progressPercentage: 100,
+    progressPercentage: 100
   });
-  this.register('service:onboarding', mockOnboardingService);
 
   this.render(hbs`{{navigation-menu}}`);
 

@@ -1,6 +1,6 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  project: belongsTo(),
   category: belongsTo(),
+  project: belongsTo()
 });

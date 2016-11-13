@@ -5,12 +5,10 @@ const {
   Component,
   computed,
   get,
-  inject,
+  inject: { service },
   isEqual,
-  set,
+  set
 } = Ember;
-
-const { service } = inject;
 
 /**
   `comment-item` composes a comment
@@ -116,13 +114,13 @@ export default Component.extend({
         component.set('isEditing', false);
         this._fetchMentions(comment);
       }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.posts.post').set('error', error);
+          this.controllerFor('project.tasks.task').set('error', error);
         }
       });
-    },
+    }
   },
 
   /**
@@ -148,5 +146,5 @@ export default Component.extend({
   _prefetchMentions(comment) {
     let body = get(this, 'mentionFetcher').prefetchBodyWithMentions(comment, 'comment');
     set(this, 'commentBodyWithMentions', body);
-  },
+  }
 });

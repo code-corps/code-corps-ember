@@ -1,28 +1,35 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+const {
+  computed,
+  inject: { service },
+  RSVP,
+  Service
+} = Ember;
 
-  user: Ember.computed.alias('currentUser.user'),
+export default Service.extend({
+  currentUser: service(),
+  store: service(),
+
+  user: computed.alias('currentUser.user'),
 
   currentOrganization: null,
 
-  currentOrganizationMemberships: Ember.computed.alias('currentOrganization.organizationMemberships'),
+  currentOrganizationMemberships: computed.alias('currentOrganization.organizationMemberships'),
 
-  currentUserMembership: Ember.computed('currentOrganizationMemberships.isLoaded', 'user', function() {
+  currentUserMembership: computed('currentOrganizationMemberships.isLoaded', 'user', function() {
     let memberships = this.get('currentOrganizationMemberships');
     let membership = memberships.find((item) => this.findMembership(item));
     return membership;
   }),
 
-  currentUserMembershipPromise: Ember.computed('currentOrganizationMemberships', 'user', function() {
+  currentUserMembershipPromise: computed('currentOrganizationMemberships', 'user', function() {
     let memberships = this.get('currentOrganizationMemberships');
     let fulfilled = this.get('currentOrganizationMemberships.isFulfilled');
 
     if (fulfilled) {
       let membership = memberships.find((item) => this.findMembership(item));
-      return Ember.RSVP.resolve(membership);
+      return RSVP.resolve(membership);
     } else {
       return memberships.then((memberships) => {
         let membership = memberships.find((item) => this.findMembership(item));
@@ -31,7 +38,7 @@ export default Ember.Service.extend({
     }
   }),
 
-  findMembership: function(item) {
+  findMembership(item) {
     let itemMemberId = item.belongsTo('member').id();
     let itemOrganizationId = item.belongsTo('organization').id();
     let currentUserId = this.get('user.id');
@@ -44,9 +51,9 @@ export default Ember.Service.extend({
     return this.get('currentOrganizationMemberships').reload();
   },
 
-  userIsMemberInOrganization: Ember.computed.notEmpty('currentUserMembership'),
-  userCanJoinOrganization: Ember.computed.empty('currentUserMembership'),
+  userIsMemberInOrganization: computed.notEmpty('currentUserMembership'),
+  userCanJoinOrganization: computed.empty('currentUserMembership'),
 
-  userCanManageOrganization: Ember.computed.alias('currentUserMembership.isAtLeastAdmin'),
-  userMembershipIsPending: Ember.computed.alias('currentUserMembership.isPending'),
+  userCanManageOrganization: computed.alias('currentUserMembership.isAtLeastAdmin'),
+  userMembershipIsPending: computed.alias('currentUserMembership.isPending')
 });

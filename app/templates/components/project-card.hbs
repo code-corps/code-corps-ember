@@ -10,10 +10,10 @@
     {{/link-to}}
   </h4>
   <p class="organization">by {{project.organization.name}}</p>
-  {{project-categories-list categories=project.categories}}
+  {{project-categories-list categories=projectCategories}}
   <p class="description">
     {{project.description}}
   </p>
-  {{project-card-skills skills=project.skills}}
-  {{project-card-members members=project.organization.members}}
+  {{project-card-skills skills=projectSkills}}
+  {{project-card-members members=projectOrganizationMembers}}
 </div>

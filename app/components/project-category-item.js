@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  computed: { alias, notEmpty },
+  inject: { service }
+} = Ember;
+
 /**
   `project-category-item` represents a category with a project. When selected
   the user is taken to a list of projects using this category.
@@ -13,7 +20,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: ['li'],
 
   /**
@@ -22,7 +29,7 @@ export default Ember.Component.extend({
     @property selected
     @type Boolean
    */
-  selected: Ember.computed.notEmpty('userCategory'),
+  selected: notEmpty('userCategory'),
 
   /**
     A service that returns all userCategories.
@@ -30,7 +37,7 @@ export default Ember.Component.extend({
     @property userCategories
     @type Ember.Service
    */
-  userCategories: Ember.inject.service(),
+  userCategories: service(),
 
   /**
     The current user.
@@ -38,7 +45,7 @@ export default Ember.Component.extend({
     @property user
     @type DS.Model
    */
-  user: Ember.computed.alias('currentUser.user'),
+  user: alias('currentUser.user'),
 
   /**
     Categories that the user belongs to.
@@ -46,7 +53,7 @@ export default Ember.Component.extend({
     @property usersUserCategories
     @type Ember.Array
    */
-  usersUserCategories: Ember.computed.alias('user.userCategories'),
+  usersUserCategories: alias('user.userCategories'),
 
   /**
     Returns the category if it exists in the user's categories.
@@ -54,9 +61,9 @@ export default Ember.Component.extend({
     @property userCategory
     @type Ember.Object
    */
-  userCategory: Ember.computed('category', 'userCategories.userCategories.isFulfilled', function() {
+  userCategory: computed('category', 'userCategories.userCategories.isFulfilled', function() {
     let category = this.get('category');
     let userCategories = this.get('userCategories');
     return userCategories.findUserCategory(category);
-  }),
+  })
 });

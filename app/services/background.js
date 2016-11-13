@@ -1,17 +1,24 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  reset: function() {
-    Ember.$('html').removeClass('warning danger');
+const {
+  $,
+  computed,
+  run,
+  Service
+} = Ember;
+
+export default Service.extend({
+  reset() {
+    $('html').removeClass('warning danger');
   },
 
-  setBackgroundClass: Ember.computed(function() {
+  setBackgroundClass: computed(function() {
     return () => {
-      Ember.$('html').addClass(this.get('class'));
+      $('html').addClass(this.get('class'));
     };
   }),
 
-  updateBackgroundClass: function() {
-    Ember.run.once(this, this.get('setBackgroundClass'));
-  },
+  updateBackgroundClass() {
+    run.once(this, this.get('setBackgroundClass'));
+  }
 });

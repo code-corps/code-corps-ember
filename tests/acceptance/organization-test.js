@@ -1,89 +1,61 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import Ember from 'ember';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import organizationPage from '../pages/organization';
 
-let application;
+const {
+  run
+} = Ember;
 
-module('Acceptance: Organization', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Organization');
 
-test("it displays the organization's details", (assert) => {
+test("it displays the organization's details", function(assert) {
   assert.expect(7);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
+  let organization = server.create('organization', { description: 'Test description.' });
+  server.create('sluggedRoute', {
+    slug: organization.slug,
+    organization
   });
 
-  let organization = sluggedRoute.createOrganization({
-    name: 'Test Organization',
-    slug: 'test_organization',
-    description: 'Test organization description.'
-  });
-
-  sluggedRoute.save();
-
-  for (let i = 1; i <= 3; i++) {
-    server.schema.projects.create({ organization: organization });
-
-    server.schema.organizationMemberships.create({
-      member: server.schema.users.create(),
-      organization: organization
-    });
-  }
-
-  organization.save();
+  server.createList('project', 3, { organization });
+  server.createList('organizationMembership', 3, { organization });
 
   organizationPage.visitIndex({ organization: organization.slug });
   andThen(() => {
     assert.equal(organizationPage.orgHeader.isVisible, true, 'The organization header component renders');
     assert.equal(organizationPage.projectList.isVisible, true, 'The projects list component renders');
     assert.equal(organizationPage.orgMembersSection.isVisible, true, 'The organization members component renders');
-    assert.equal(organizationPage.orgTitle.text.trim(), organization.name, 'The organization title renders');
-    assert.equal(organizationPage.orgDescription.text.trim(), organization.description, 'The organization description renders');
+    assert.equal(organizationPage.orgTitle.text, organization.name, 'The organization title renders');
+    assert.equal(organizationPage.orgDescription.text, organization.description, 'The organization description renders');
     assert.equal(organizationPage.projectListItems().count, 3, 'The projects render');
     assert.equal(organizationPage.orgMembers().count, 3, 'The members render');
   });
 });
 
-test('an admin can navigate to settings', (assert) => {
+test('an admin can navigate to settings', function(assert) {
   assert.expect(3);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-
-  let organization = sluggedRoute.createOrganization({
-    name: 'Test Organization',
-    slug: 'test_organization',
-    description: 'Test organization description.'
-  });
-  sluggedRoute.save();
-
+  let organization = createOrganizationWithSluggedRoute();
   let user = server.create('user');
 
   server.create('organization-membership', {
     member: user,
-    organization: organization,
-    role: 'admin',
+    organization,
+    role: 'admin'
   });
 
   // we assume authenticate session here. specific behavior regarding authentication and
   // showing/hiding of links is handled in the organization-menu component integration test
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   organizationPage.visitIndex({ organization: organization.slug });
 
   andThen(() => {
     assert.ok(organizationPage.projectsMenuItemIsActive, 'The organization projects menu is active');
-    Ember.run.next(() => {
+    run.next(() => {
       organizationPage.clickSettingsMenuItem();
       andThen(() => {
         assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');
@@ -94,30 +66,17 @@ test('an admin can navigate to settings', (assert) => {
 
 });
 
-test('anyone can navigate to projects', (assert) => {
+test('anyone can navigate to projects', function(assert) {
   assert.expect(2);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({
-    slug: 'test_organization',
-  });
-
-  let organization = sluggedRoute.createOrganization({
-    name: 'Test Organization',
-    slug: 'test_organization',
-    description: 'Test organization description.'
-  });
-
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
-
-  organization.save();
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   // no need to create membership. even non-members should be able to visit
   // organization project list
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   organizationPage.visitIndex({ organization: organization.slug });
 

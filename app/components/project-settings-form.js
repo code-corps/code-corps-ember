@@ -1,17 +1,23 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['project-settings-form'],
 
-  flashMessages: Ember.inject.service(),
+  flashMessages: service(),
 
   actions: {
     save() {
-      const flashMessages = Ember.get(this, 'flashMessages');
+      let flashMessages = get(this, 'flashMessages');
 
-      this.get('project').save()
-        .then(function() {
-          flashMessages.success("Project updated successfully");
+      this.get('project').save().then(() => {
+        flashMessages.success('Project updated successfully');
       });
-    },
-  }});
+    }
+  }
+});

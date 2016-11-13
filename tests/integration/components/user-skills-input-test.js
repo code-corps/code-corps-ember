@@ -2,30 +2,37 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import jQuery from 'jquery';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-let mockStore = Ember.Service.extend({
-  query () {
-    return Ember.RSVP.resolve([
-      Ember.Object.create({ title: "Ruby" }),
-      Ember.Object.create({ title: "Ruby on Rails" }),
+const {
+  Object,
+  K,
+  RSVP
+} = Ember;
+
+let mockStore = {
+  query() {
+    return RSVP.resolve([
+      Object.create({ title: 'Ruby' }),
+      Object.create({ title: 'Ruby on Rails' })
     ]);
   }
-});
+};
 
-let mockUserSkillsService = Ember.Service.extend({
+let mockUserSkillsService = {
   findUserSkill() {
-    return Ember.K;
+    return K;
   },
   removeSkill() {
-    return Ember.K;
-  },
-});
+    return K;
+  }
+};
 
 moduleForComponent('user-skills-input', 'Integration | Component | user skills input', {
   integration: true,
   beforeEach() {
-    this.register('service:store', mockStore);
-    this.register('service:user-skills', mockUserSkillsService);
+    stubService(this, 'store', mockStore);
+    stubService(this, 'user-skills', mockUserSkillsService);
   }
 });
 
@@ -187,13 +194,10 @@ test('it selects the skill when clicking it', function(assert) {
 test('it does nothing when there are no results', function(assert) {
   assert.expect(1);
 
-  let emptyStore = Ember.Service.extend({
-    query () {
-      return Ember.RSVP.resolve([]);
-    }
-  });
-
-  this.register('service:store', emptyStore);
+  let query = function() {
+    return RSVP.resolve([]);
+  };
+  this.set('store.query', query);
 
   this.render(hbs`{{user-skills-input query=query}}`);
 

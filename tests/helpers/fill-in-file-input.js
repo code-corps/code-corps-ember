@@ -12,14 +12,14 @@ export default function fillInFileInput(selector, file) {
   let event = jQuery.Event('change', {
     target: {
       files: [{
-        name: name, type: type
+        name, type
       }]
     }
   });
 
   // Stub readAsDataURL function
   let stub = sinon.stub(FileReader.prototype, 'readAsDataURL', function() {
-    this.onload({ target: { result: content }});
+    this.onload({ target: { result: content } });
   });
 
   // Trigger event

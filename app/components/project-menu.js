@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  inject: { service }
+} = Ember;
+
 /**
   `project-menu` allows navigation within project functions. Users who
   manage an organization can also view contributors and project settings through
@@ -14,7 +19,7 @@ import Ember from 'ember';
   @extends Ember.Component
   @class project-menu
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['project-menu', 'horizontal-menu'],
   tagName: 'ul',
 
@@ -24,7 +29,7 @@ export default Ember.Component.extend({
     @property credentials
     @type Ember.Service
    */
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
   /**
     Service that provides user authentication information.
@@ -32,5 +37,5 @@ export default Ember.Component.extend({
     @property session
     @type Ember.Service
    */
-  session: Ember.inject.service(),
+  session: service()
 });

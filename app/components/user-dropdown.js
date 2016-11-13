@@ -1,17 +1,41 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
-  classNames: ['dropdown-menu', 'right'],
+const {
+  Component,
+  inject: { service }
+} = Ember;
 
-  session: Ember.inject.service(),
+/**
+  `user-dropdown` is the dropdown used for navigation within the main site
 
-  click: function() {
+  ```handlebars
+  {{user-dropdown user=model}}
+  ```
+
+  @class user-dropdown
+  @module Component
+  @extends Ember.Component
+ */
+export default Component.extend({
+  classNames: ['user-dropdown', 'dropdown-menu', 'right'],
+  /**
+    @property session
+    @type Ember.Service
+   */
+  session: service(),
+
+  click() {
     this.sendAction();
   },
 
   actions: {
-    invalidateSession: function() {
+    /**
+     Action to invalidate the user session
+
+     @method invalidateSession
+     */
+    invalidateSession() {
       this.get('session').invalidate();
-    },
-  },
+    }
+  }
 });
