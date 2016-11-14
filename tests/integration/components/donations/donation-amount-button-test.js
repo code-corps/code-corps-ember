@@ -11,14 +11,15 @@ const {
 
 let page = PageObject.create(donationAmountButtonComponent);
 
-function setHandler(context, { actionHandler = K } = {}) {
-  context.set('actionHandler', actionHandler);
+function setHandlers(context, { amountHandler = K, customAmountHandler = K } = {}) {
+  context.set('amountHandler', amountHandler);
+  context.set('customAmountHandler', customAmountHandler);
 }
 
 moduleForComponent('donations/donation-amount-button', 'Integration | Component | donations/donation amount button', {
   integration: true,
   beforeEach() {
-    setHandler(this);
+    setHandlers(this);
     page.setContext(this);
   },
   afterEach() {
@@ -26,23 +27,27 @@ moduleForComponent('donations/donation-amount-button', 'Integration | Component 
   }
 });
 
-test('it sends action with specified amount when clicked', function(assert) {
-  assert.expect(1);
+test('it sends actions when clicked', function(assert) {
+  assert.expect(2);
 
-  let actionHandler = function(amount) {
-    assert.equal(amount, 5, 'Proper amount was sent with action');
+  let amountHandler = function(amount) {
+    assert.equal(amount, 5, 'Proper amount was sent');
   };
 
-  setHandler(this, { actionHandler });
+  let customAmountHandler = function(customAmount) {
+    assert.equal(customAmount, null, 'A null custom amount was sent');
+  };
 
-  page.render(hbs`{{donations/donation-amount-button action=actionHandler presetAmount=5}}`)
-      .clickButton();
+  setHandlers(this, { amountHandler, customAmountHandler });
+
+  page.render(hbs`{{donations/donation-amount-button setAmount=amountHandler setCustomAmount=customAmountHandler presetAmount=5}}`);
+  page.clickButton();
 });
 
 test('it shows as active if button is selected', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-amount-button action=actionHandler presetAmount=5 selectedAmount=5}}`);
+  page.render(hbs`{{donations/donation-amount-button setAmount=actionHandler presetAmount=5 selectedAmount=5}}`);
 
   assert.ok(page.isActive, 'Button is rendered as active');
 });
@@ -50,7 +55,7 @@ test('it shows as active if button is selected', function(assert) {
 test('it shows as inactive if button is not selected', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-amount-button action=actionHandler presetAmount=5 selectedAmount=10}}`);
+  page.render(hbs`{{donations/donation-amount-button setAmount=actionHandler presetAmount=5 selectedAmount=10}}`);
 
   assert.ok(page.isInactive, 'Button is rendered as inActive');
 });

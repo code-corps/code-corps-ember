@@ -34,24 +34,10 @@
   }
 }
 
-.credit-card-label {
-  &:before {
-    @include sprite($credit-card);
-  }
-
-  .icon-input {
-    padding-left: 45px;
-  }
+select.month {
+  min-width: 50px;
 }
 
-.lock-label {
-  &:before {
-    @include sprite($lock);
-  }
-}
-
-.calendar-label {
-  &:before {
-    @include sprite($calendar);
-  }
+select.year {
+  min-width: 70px;
 }

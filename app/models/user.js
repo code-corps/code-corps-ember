@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { hasMany } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
 const { computed } = Ember;
@@ -28,6 +28,8 @@ export default Model.extend({
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
   userSkills: hasMany('user-skill', { async: true }),
+  stripeCards: hasMany('stripe-card', { async: true }),
+  stripeCustomer: belongsTo('stripe-customer', { async: true }),
 
   atUsername: computed('username', function() {
     return `@${this.get('username')}`;

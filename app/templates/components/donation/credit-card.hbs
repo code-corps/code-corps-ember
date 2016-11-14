@@ -1,4 +1,5 @@
 <h3>Add card information</h3>
+
 <div class="credit-card-form__icon-list">
   <img src="assets/images/icons/visa.png" alt="visa">
   <img src="assets/images/icons/american-express.png" alt="american-express">
@@ -7,37 +8,49 @@
   <img src="assets/images/icons/jcb.png" alt="jcb">
   <img src="assets/images/icons/diners-club.png" alt="diners-club">
 </div>
+
 <div class="input-group">
-  <label class="icon-label credit-card-label">
-    <span class="visually-hidden">Credit Card</span>
-    {{input
-      type="text"
-      class="icon-input"
-      disabled=cannotDonate
-      placeholder="Card number"}}
+  <label>
+    <span>Card number</span>
+    {{input name="card-number" type="text" value=cardNumber}}
   </label>
 </div>
 
 <div class="input-group">
   <div class="row">
-    <label class="icon-label calendar-label">
-      <span class="visually-hidden">Expiration Date</span>
-      {{input
-        type="text"
-        class="icon-input"
-        disabled=cannotDonate
-        placeholder="MM / YY"}}
+    <label>
+      <span>Expiration</span>
+      <select class="month" onchange={{action (mut month) value="target.value"}}>
+        {{#each months as |monthChoice|}}
+          <option value={{monthChoice}} selected={{eq month monthChoice}}>{{monthChoice}}</option>
+        {{/each}}
+      </select>
+      <select class="year" onchange={{action (mut year) value="target.value"}}>
+        {{#each years as |yearChoice|}}
+          <option value={{yearChoice}} selected={{eq year yearChoice}}>{{yearChoice}}</option>
+        {{/each}}
+      </select>
     </label>
 
-    <label class="icon-label lock-label">
-      <span class="visually-hidden">CVC</span>
-      {{input
-        type="text"
-        class="icon-input"
-        disabled=cannotDonate
-        placeholder="CVC"}}
+    <label>
+      <span>Security code</span>
+      {{input name="card-cvc" type="text" value=cvc}}
     </label>
   </div>
 </div>
 
-<button class="button default">Donate</button>
+<button
+  class="button {{unless preventSubmit "default"}} large"
+  disabled={{preventSubmit}}
+  {{action "submit"}}>
+  {{#if isSubmitting}}Adding...{{else}}Add Card{{/if}}
+</button>
+
+{{#if canCancel}}
+  <a {{action "cancel"}}>Cancel</a>
+{{/if}}
+
+{{#unless isSubmitting}}
+  {{!validation errors can be passed in from parent, using a block}}
+  {{yield}}
+{{/unless}}

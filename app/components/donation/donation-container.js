@@ -2,7 +2,10 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { bool }
+  computed,
+  computed: {
+    and, gt, not
+  }
 } = Ember;
 
 export default Component.extend({
@@ -10,5 +13,13 @@ export default Component.extend({
   donationAmount: 0,
   projectTitle: null,
 
-  canDonate: bool('projectTitle')
+  canAddCard: computed('hasCards', 'isAddingCard', function() {
+    let { hasCards, isAddingCard } = this.getProperties('hasCards', 'isAddingCard');
+    return hasCards ? isAddingCard : true;
+  }),
+  canDonate: and('hasCards', 'isNotAddingCard'),
+  canShowCardList: and('hasCards', 'isNotAddingCard'),
+  hasCards: gt('cards.length', 0),
+  hasNoCards: not('hasCards'),
+  isNotAddingCard: not('isAddingCard')
 });

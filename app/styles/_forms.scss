@@ -46,10 +46,14 @@ $outer-border-radius: 4px;
   .row {
     display: flex;
     justify-content: space-between;
+  }
 
-    label {
-      width: 49%;
-      position: relative;
+  label {
+    span {
+      display: block;
+      font-size: $body-font-size-small;
+      font-weight: 700;
+      margin-bottom: 3px;
     }
   }
 
@@ -186,14 +190,19 @@ form {
   }
 }
 
+select {
+  border: 1px solid $border-default;
+  font-family: $body-font-family;
+  font-size: $body-font-size-normal;
+  height: 41px;
+  padding: 0 16px;
+  cursor: pointer;
+}
+
 .task-type {
   select {
     border: none;
-    font-family: $body-font-family;
-    font-size: $body-font-size-normal;
     height: 34px;
-    padding: 0 16px;
-    cursor: pointer;
     width: 100px;
 
     &:focus {

@@ -39,22 +39,31 @@ test('it renders properly', function(assert) {
   assert.ok(page.rendersContinueButton, 'Continue button is rendered.');
 });
 
-test('preset amount buttons work', function(assert) {
-  assert.expect(4);
+test('preset amount buttons unset the input value', function(assert) {
+  assert.expect(1);
 
   page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
 
   page.setTo10.clickButton();
-  assert.equal(page.customAmountValue, 10, 'Button for preset amount of 10 was clicked, so proper value should be set.');
-  page.setTo15.clickButton();
-  assert.equal(page.customAmountValue, 15, 'Button for preset amount of 15 was clicked, so proper value should be set.');
-  page.setTo25.clickButton();
-  assert.equal(page.customAmountValue, 25, 'Button for preset amount of 25 was clicked, so proper value should be set.');
-  page.setTo50.clickButton();
-  assert.equal(page.customAmountValue, 50, 'Button for preset amount of 50 was clicked, so proper value should be set.');
+  assert.equal(page.customAmountValue, '', 'Button was clicked, so custom value should be unset.');
 });
 
-test('clicking "continue" calls action with amount as argument', function(assert) {
+test('clicking "continue" calls action with present amount as argument', function(assert) {
+  assert.expect(1);
+
+  function continueHandler(amount) {
+    assert.equal(amount, 15, 'Proper amount was sent via action.');
+  }
+
+  setHandler(this, continueHandler);
+
+  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+
+  page.setTo15.clickButton();
+  page.clickContinue();
+});
+
+test('clicking "continue" calls action with custom amount as argument', function(assert) {
   assert.expect(1);
 
   function continueHandler(amount) {
@@ -69,12 +78,11 @@ test('clicking "continue" calls action with amount as argument', function(assert
   page.clickContinue();
 });
 
-test('buttons activate properly when custom amount is set to preset value', function(assert) {
+test('buttons do not activate when custom amount is set to preset value', function(assert) {
   assert.expect(1);
 
   page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
 
-  page.customAmount(22);
-  page.customAmount(15);
-  assert.ok(page.setTo15.isActive, 'Proper button should be active.');
+  page.customAmount(50);
+  assert.notOk(page.setTo50.isActive, 'Related button should not be active.');
 });

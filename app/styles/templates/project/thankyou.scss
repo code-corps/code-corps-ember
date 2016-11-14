@@ -1,0 +1,14 @@
+.thankyou-container {
+  .icon, .header, .text, .project-link{
+    width: 100%;
+    text-align: center;
+  }
+
+  .icon img {
+    display: inline-block;
+  }
+
+  .text {
+    margin-bottom: 18px;
+  }
+}

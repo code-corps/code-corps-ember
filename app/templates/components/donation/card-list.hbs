@@ -1,0 +1,7 @@
+{{#each cards as |card|}}
+  {{donation/card-item
+    card=card
+    select=(action selectCard card)
+    selectedCard=selectedCard
+  }}
+{{/each}}

@@ -1,19 +1,21 @@
 import Ember from 'ember';
 
-const { Component, computed } = Ember;
+const { Component, computed, isEmpty } = Ember;
 
 export default Component.extend({
   classNames: ['preset-amount'],
   classNameBindings: ['presetAmount', 'selected:default:clear'],
   tagName: 'button',
 
-  selected: computed('presetAmount', 'selectedAmount', function() {
-    let { presetAmount, selectedAmount } = this.getProperties('presetAmount', 'selectedAmount');
-    return parseInt(presetAmount) === parseInt(selectedAmount);
+  selected: computed('customAmount', 'presetAmount', 'selectedAmount', function() {
+    let { customAmount, presetAmount, selectedAmount } = this.getProperties('customAmount', 'presetAmount', 'selectedAmount');
+    let amountInPresets = parseInt(presetAmount) === parseInt(selectedAmount);
+    return isEmpty(customAmount) ? amountInPresets : false;
   }),
 
   click() {
+    this.sendAction('setCustomAmount', null);
     let presetAmount = this.get('presetAmount');
-    this.sendAction('action', presetAmount);
+    this.sendAction('setAmount', presetAmount);
   }
 });
