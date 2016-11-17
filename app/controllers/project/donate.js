@@ -2,8 +2,9 @@ import Ember from 'ember';
 
 const {
   Controller,
-  computed: { alias },
-  inject: { service }
+  computed: { alias, bool, not },
+  inject: { service },
+  RSVP
 } = Ember;
 
 export default Controller.extend({
@@ -18,10 +19,13 @@ export default Controller.extend({
   project: alias('model'),
   user: alias('currentUser.user'),
 
+  stripeCustomerCreated: bool('currentUser.user.stripeCustomer.id'),
+  shouldCreateCustomer: not('stripeCustomerCreated'),
+
   actions: {
     addCard(cardParams) {
       return this._createCreditCardToken(cardParams)
-                 .then((tokenData) => this._createCustomerAndCard(tokenData))
+                 .then((stripeResponse) => this._createCardForCustomer(stripeResponse))
                  .then((stripeCard) => this._addCard(stripeCard))
                  .catch((reason) => this._handleError(reason))
                  .finally(() => this._updateAddingCardState());
@@ -37,6 +41,7 @@ export default Controller.extend({
     }
   },
 
+
   _createCreditCardToken(cardParams) {
     let stripeCard = this._tokenParams(cardParams);
     let stripe = this.get('stripe');
@@ -44,13 +49,23 @@ export default Controller.extend({
     return stripe.card.createToken(stripeCard);
   },
 
-  _createCustomerAndCard({ id, card }) {
-    // TODO: Conditional create here
-    return this._createstripePlatformCustomer(id)
-               .then((/* stripePlatformCustomer */) => this._createStripeCard(card));
+  _createCardForPlatformCustomer({ id, card }) {
+    return this._ensureStripeCustomer()
+               .then(() => this._createStripeCard(card));
   },
 
-  _createstripePlatformCustomer(/* token */) {
+  _ensureStripePlatformCustomer() {
+    console.log('_ensureStripePlatformCustomer', arguments);
+
+    if (this.get('shouldCreateCustomer')) {
+      return this._createStripePlatformCustomer();
+    } else {
+      return RSVP.resolve();
+    }
+  },
+
+  _createStripePlatformCustomer() {
+    console.log('_createStripePlatformCustomer', arguments);
     let { user, store } = this.getProperties('user', 'store');
     let email = user.get('email');
 
@@ -59,6 +74,7 @@ export default Controller.extend({
   },
 
   _createStripeCard(cardData) {
+    console.log('_createStripeCard', arguments);
     let user = this.get('user');
     let params = this._cardParams(cardData);
 
@@ -68,6 +84,7 @@ export default Controller.extend({
   },
 
   _addCard(stripeCard) {
+    console.log('_addCard', arguments);
     return this.get('user.stripeCards').pushObject(stripeCard);
   },
 
