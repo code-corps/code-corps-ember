@@ -23,6 +23,6 @@ export default Ability.extend({
   canCreateIdeaTask: true,
   canCreateTaskTask: alias('isAtLeastContributor'),
 
-  membership: alias('credentials.currentUserMembership'),
+  membership: alias('credentials.membership'),
   organization: alias('model')
 });

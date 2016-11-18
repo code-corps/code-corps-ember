@@ -54,17 +54,8 @@ export default Component.extend({
       @method joinProject
      */
     joinProject() {
-      let currentUser = this.get('currentUser.user');
-
-      this.get('project.organization').then((organization) => {
-        let membership = this.get('store').createRecord('organization-membership', {
-          member: currentUser,
-          organization,
-          role: 'pending'
-        });
-
-        return membership.save();
-      });
+      let organization = this.get('project.organization');
+      this.get('credentials').joinOrganization(organization);
     }
   }
 });

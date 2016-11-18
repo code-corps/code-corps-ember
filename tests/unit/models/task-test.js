@@ -29,7 +29,6 @@ test('it should have all of its attributes', function(assert) {
   let expectedAttributes = [
     'body',
     'insertedAt',
-    'likesCount',
     'markdown',
     'number',
     'status',

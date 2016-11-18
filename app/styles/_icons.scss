@@ -426,7 +426,7 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
     background-size: $roles-bgiSizeW $roles-bgiSizeH;
   }
 }
-$roles-spritePath: 'assets/images/icons/roles-sprite';
+$roles-spritePath: '/assets/images/icons/roles-sprite';
 $roles-spriteURL: $roles-spritePath + '.png';
 $roles-spritex2URL: $roles-spritePath + '@2x.png';
 $roles-bgiSizeW: 181px;
@@ -449,7 +449,7 @@ $support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;
   }
 }
 
-$about-spritePath: 'assets/images/icons/about-sprite';
+$about-spritePath: '/assets/images/icons/about-sprite';
 $about-spriteURL: $about-spritePath + '.png';
 $about-spritex2URL: $about-spritePath + '@2x.png';
 $about-bgiSizeW: 751px;

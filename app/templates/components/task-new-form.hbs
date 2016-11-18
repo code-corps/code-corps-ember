@@ -2,13 +2,13 @@
 <div class="task-new-form-body">
   <div class="input-group task-type {{task.taskType}}">
     <select autofocus="autofocus" tabindex="1" class={{task.taskType}} name="task-type" onchange={{action (mut task.taskType) value="target.value"}} value={{task.taskType}}>
-      {{#if (can "create task task in organization" organization membership=credentials.currentUserMembership)}}
+      {{#if (can "create task task in organization" organization membership=credentials.membership)}}
         <option value="task" selected={{eq task.taskType 'task'}}>Task</option>
       {{/if}}
-      {{#if (can "create issue task in organization" organization membership=credentials.currentUserMembership)}}
+      {{#if (can "create issue task in organization" organization membership=credentials.membership)}}
         <option value="issue" selected={{eq task.taskType 'issue'}}>Issue</option>
       {{/if}}
-      {{#if (can "create idea task in organization" organization membership=credentials.currentUserMembership)}}
+      {{#if (can "create idea task in organization" organization membership=credentials.membership)}}
         <option value="idea" selected={{eq task.taskType 'idea'}}>Idea</option>
       {{/if}}
     </select>

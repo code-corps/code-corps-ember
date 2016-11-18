@@ -16,7 +16,7 @@ export default Ability.extend({
   _credentials: service('credentials'),
 
   _isOwner: alias('_membership.isOwner'),
-  _membership: alias('_credentials.currentUserMembership'),
+  _membership: alias('_credentials.membership'),
 
   /**
    * An `ember-can` ability.

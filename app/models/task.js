@@ -6,7 +6,6 @@ import ContainsCodeMixin from '../mixins/contains-code';
 export default Model.extend(ContainsCodeMixin, {
   body: attr(),
   insertedAt: attr('date'),
-  likesCount: attr('number'),
   markdown: attr(),
   number: attr('number'),
   taskType: attr(),

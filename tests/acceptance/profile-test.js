@@ -1,7 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
-import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
+import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
 import userProfile from '../pages/user';
 
 moduleForAcceptance('Acceptance | Profile');
@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | Profile');
 test('it displays the user-details component with user details', function(assert) {
   assert.expect(5);
 
-  let user = createUserWithSluggedRoute();
+  let user = createUserWithSluggedRoute(server);
   let organization = server.create('organization');
   server.createList('organization-membership', 3, { member: user, organization });
 
@@ -27,7 +27,7 @@ test('it displays the user-details component with user details', function(assert
 test('the user can navigate to an organization from the organizations list', function(assert) {
   assert.expect(2);
 
-  let user = createUserWithSluggedRoute();
+  let user = createUserWithSluggedRoute(server);
   let organization = createOrganizationWithSluggedRoute();
 
   server.create('organization-membership', { member: user, organization });

@@ -1,7 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
-import createUserWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-user-with-slugged-route';
+import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
 import sluggedRoutePage from '../pages/slugged-route';
 
 moduleForAcceptance('Acceptance | Slugged Route');
@@ -9,7 +9,7 @@ moduleForAcceptance('Acceptance | Slugged Route');
 test('It renders user details when the sluggedRoute model is a user', function(assert) {
   assert.expect(1);
 
-  let user = createUserWithSluggedRoute();
+  let user = createUserWithSluggedRoute(server);
 
   sluggedRoutePage.visit({ slug: user.username });
 

@@ -23,7 +23,7 @@
 {{/if}}
 
 {{#if canDonate}}
-  <button class="default donate" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
+  <button class="default donate large" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
 
   {{!show errors}}
   {{yield}}

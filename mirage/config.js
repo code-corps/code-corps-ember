@@ -473,13 +473,16 @@ export default function() {
   */
 
   // POST /token
-  this.post('/token', (db, request) => {
+  this.post('/token', (schema, request) => {
     let json = JSON.parse(request.requestBody);
 
-    if (json.username === 'volunteers@codecorps.org' && json.password === 'password') {
+    let { models } = schema.users.where({ email: json.username, password: json.password });
+
+    if (models.length > 0) {
       return {
         // token encoded at https://jwt.io/
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ'
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ',
+        user_id: models[0].id
       };
     } else {
       let errorDetail = `Your password doesn't match the email ${json.username}.`;
@@ -501,6 +504,18 @@ export default function() {
   */
 
   this.get('/users', { coalesce: true });
+
+  this.post('/users', function(schema) {
+    let { email, password, username } = this.normalizedRequestAttrs();
+    let user = schema.create('user', {
+      email,
+      password,
+      state: 'signed_up',
+      username
+    });
+    schema.create('sluggedRoute', { slug: user.username, user });
+    return user;
+  });
 
   this.get('/users/:id');
 
@@ -535,13 +550,19 @@ export default function() {
   });
 
   // GET /users/email_available
-  this.get('/users/email_available', () => {
-    return { available: true, valid: true };
+  this.get('/users/email_available', (schema, request) => {
+    let { email } = request.queryParams;
+    let { models } = schema.users.where({ email });
+    let available = models.length === 0;
+    return { available, valid: true };
   });
 
   // GET /users/username_available
-  this.get('/users/username_available', () => {
-    return { available: true, valid: true };
+  this.get('/users/username_available', (schema, request) => {
+    let { username } = request.queryParams;
+    let { models } = schema.users.where({ username });
+    let available = models.length === 0;
+    return { available, valid: true };
   });
 
   /**

@@ -10,7 +10,7 @@ test('it allows managing donation goals if user is owner of project organization
 
   let ability = this.subject();
 
-  stubService(this, 'credentials', { currentUserMembership: { isOwner: true } });
+  stubService(this, 'credentials', { membership: { isOwner: true } });
 
   assert.ok(ability.get('canManageDonationGoals'));
 });
@@ -20,7 +20,7 @@ test('it allows managing donation goals if user is not owner of project organiza
 
   let ability = this.subject();
 
-  stubService(this, 'credentials', { currentUserMembership: { isOwner: false } });
+  stubService(this, 'credentials', { membership: { isOwner: false } });
 
   assert.notOk(ability.get('canManageDonationGoals'));
 });

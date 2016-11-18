@@ -15,16 +15,16 @@ export default {
     itemScope: 'p.error'
   }),
 
-  loginSuccessfully() {
+  loginSuccessfully(email, password) {
     this
-      .username('volunteers@codecorps.org')
-      .password('password')
+      .username(email)
+      .password(password)
       .submit();
   },
-  loginUnsuccessfully() {
+  loginUnsuccessfully(email, password) {
     this
-      .username('volunteers@codecorps.org')
-      .password('wrongpassword')
+      .username(email)
+      .password(password)
       .submit();
   }
 };

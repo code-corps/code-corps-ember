@@ -1,6 +1,6 @@
 <ul>
   {{#if session.isAuthenticated}}
-    {{#if (can "manage organization" project.organization membership=credentials.currentUserMembership) }}
+    {{#if (can "manage organization" project.organization membership=credentials.membership) }}
       <li>
         {{link-to "Basic settings" "project.settings.profile" project.slug}}
       </li>

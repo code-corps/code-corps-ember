@@ -24,8 +24,11 @@ test('Creating a task requires logging in', function(assert) {
   andThen(() => {
     assert.equal(currentRouteName(), 'login', 'Got redirected to login');
 
-    server.schema.users.create({ id: 1, email: 'volunteers@codecorps.org' });
-    loginPage.form.loginSuccessfully();
+    let email = 'test@test.com';
+    let password = 'password';
+    server.create('user', { email, password });
+
+    loginPage.form.loginSuccessfully(email, password);
   });
 
   andThen(() => {

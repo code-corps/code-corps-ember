@@ -19,7 +19,7 @@ test('when authenticated and can manage organization, it renders properly', func
   });
 
   stubService(this, 'session', { isAuthenticated: true });
-  stubService(this, 'credentials', { currentUserMembership: membership });
+  stubService(this, 'credentials', { membership });
 
   this.set('organization', organization);
 
@@ -36,7 +36,7 @@ test('when authenticated and cannot manage organization, it renders properly', f
   let membership = Object.create({ isAdmin: false, organization });
 
   stubService(this, 'session', { isAuthenticated: true });
-  stubService(this, 'credentials', { currentUserMembership: membership });
+  stubService(this, 'credentials', { membership });
 
   this.set('organization', organization);
 
