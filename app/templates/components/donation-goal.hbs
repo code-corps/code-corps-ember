@@ -1,5 +1,5 @@
-<h3 class="amount">{{format-currency donationGoal.amount}}</h3>
+<h3 class="donation-goal__amount">{{format-currency donationGoal.amount}}</h3>
 {{#if canEdit}}
-  <a class="edit" {{action edit}}>Edit</a>
+  <a class="donation-goal--edit" {{action edit}}>Edit</a>
 {{/if}}
-<p class="description">{{donationGoal.description}}</p>
+<p class="donation-goal__description">{{donationGoal.description}}</p>
