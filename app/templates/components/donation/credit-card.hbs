@@ -40,14 +40,16 @@
 </div>
 
 <button
-  class="button {{unless preventSubmit "default"}} large"
+  class="button {{unless preventSubmit "default"}} large submit-card"
   disabled={{preventSubmit}}
   {{action "submit"}}>
   {{#if isSubmitting}}Adding...{{else}}Add Card{{/if}}
 </button>
 
 {{#if canCancel}}
-  <a {{action "cancel"}}>Cancel</a>
+  <div class="cancel-add-card">
+    <a {{action "cancel"}}>Cancel</a>
+  </div>
 {{/if}}
 
 {{#unless isSubmitting}}
