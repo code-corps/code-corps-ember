@@ -18,6 +18,8 @@ export default Model.extend({
   stripeConnectAccount: belongsTo('stripe-connect-account', { async: true }),
 
   hasPendingMembers: computed.gt('pendingMembersCount', 0),
+  organizationMembers: computed.mapBy('organizationMemberships', 'member'),
   pendingMembersCount: computed.alias('pendingMemberships.length'),
-  pendingMemberships: computed.filterBy('organizationMemberships', 'isPending')
+  pendingMemberships: computed.filterBy('organizationMemberships', 'isPending'),
+  totalMembersCount: computed.alias('organizationMembers.length')
 });

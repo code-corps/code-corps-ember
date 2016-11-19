@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 const {
-  Component
+  Component,
+  computed
 } = Ember;
 
 /**
@@ -11,6 +12,7 @@ const {
  *
  * ```handlebars
  * {{donation-goal
+ *   amountDonated=1000
  *   canEdit=externalEditableFlag
  *   donationGoal=donationGoal
  *   edit=(action externalEditHandler donationGoal)}}
@@ -24,6 +26,7 @@ const {
  */
 export default Component.extend({
   classNames: ['donation-goal'],
+  classNameBindings: ['achieved', 'canEdit', 'current'],
 
   /**
    * Flag indicating if component should render the edit link. Should be set from outside
@@ -31,5 +34,8 @@ export default Component.extend({
    * @property canEdit
    * @type {Boolean}
    */
-  canEdit: false
+  canEdit: false,
+
+  achieved: computed.alias('donationGoal.achieved'),
+  current: computed.alias('donationGoal.current')
 });

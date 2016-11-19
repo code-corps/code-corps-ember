@@ -1,4 +1,6 @@
 .donation-progress {
+  margin-bottom: 20px;
+
   .information {
     display: flex;
     justify-content: space-between;
@@ -7,18 +9,26 @@
       text-align: right;
     }
 
-    .descriptive-text {
-      color: $gray;
+    .description {
+      color: $light-text;
+      font-size: $body-font-size-small;
     }
 
     .value {
-      font-size: $header-font-size-large;
+      font-size: $header-font-size-small;
       font-weight: 600;
     }
   }
 
   .progress-bar-container {
     height: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
+  }
+
+  p {
+    color: $light-text;
+    font-size: $body-font-size-normal;
+    line-height: 22px;
+    margin: 20px 0;
   }
 }

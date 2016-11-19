@@ -3,8 +3,9 @@ import { isVisible, text } from 'ember-cli-page-object';
 export default {
   scope: '.donation-progress',
 
-  amount: text('.amount .value'),
-  description: text('.description'),
-  percentage: text('.percentage .value'),
+  amountValue: text('.amount .value'),
+  goalDescription: text('p'),
+  percentageDescription: text('.percentage .description'),
+  percentageValue: text('.percentage .value'),
   rendersProgressBar: isVisible('.progress-bar')
 };

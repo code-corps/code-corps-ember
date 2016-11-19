@@ -12,13 +12,12 @@
     text-align: center;
 
     .long-description-inner {
-      @include span-columns(6);
-      @include shift(3);
     }
 
     ul {
       font-size: $body-font-size-small;
-      padding-left: 70px;
+      list-style-type: disc;
+      margin-left: 40px;
       text-align: left;
     }
 

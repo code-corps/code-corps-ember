@@ -28,16 +28,18 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('project', [
-  'base64IconData', 'closedTasksCount', 'description', 'iconLargeUrl', 'iconThumbUrl',
-  'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount', 'slug', 'title'
+  'base64IconData', 'closedTasksCount', 'description', 'iconLargeUrl',
+  'iconThumbUrl', 'longDescriptionBody', 'longDescriptionMarkdown',
+  'openTasksCount', 'slug', 'title', 'totalMonthlyDonated'
 ]);
 
 testForBelongsTo('project', 'organization');
 testForBelongsTo('project', 'stripeConnectPlan');
 
-testForHasMany('project', 'tasks');
+testForHasMany('project', 'donationGoals');
 testForHasMany('project', 'projectCategories');
 testForHasMany('project', 'projectSkills');
+testForHasMany('project', 'tasks');
 
 test('it should have open tasks', function(assert) {
   assert.expect(1);
@@ -62,4 +64,18 @@ test('it should have computed properties for its organization\'s members', funct
 
   assert.equal(project.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');
   assert.equal(project.get('hasPendingMembers'), true, 'hasPendingMembers should return true');
+});
+
+test('it should have computed properties for its current donation goal', function(assert) {
+  assert.expect(1);
+
+  let _this = this;
+  let project, currentDonationGoal;
+
+  run(function() {
+    currentDonationGoal = _this.store().createRecord('donation-goal', { project, current: true });
+    project = _this.subject({ donationGoals: [currentDonationGoal] });
+  });
+
+  assert.deepEqual(project.get('currentDonationGoal'), currentDonationGoal, 'It has the right current donation goal');
 });

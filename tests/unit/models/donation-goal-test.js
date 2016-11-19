@@ -11,5 +11,5 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('donation-goal', ['amount', 'current', 'description']);
+testForAttributes('donation-goal', ['achieved', 'amount', 'current', 'description']);
 testForBelongsTo('donation-goal', 'project');

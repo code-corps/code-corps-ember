@@ -110,10 +110,6 @@ textarea {
   min-height: 100px;
 }
 
-.form-container {
-  @include span-columns(8);
-}
-
 form {
   h2 {
     font-family: $body-font-family;

@@ -38,6 +38,24 @@
   }
 
   .show-donation {
+    background: $light-blue-background;
+    border-radius: 4px;
+    padding: 10px 15px;
 
+    .info {
+      display: flex;
+      font-weight: 700;
+      line-height: 30px;
+      vertical-align: middle;
+
+      &:before {
+        content: "";
+        $file: "/assets/images/icons/fireworks-small";
+        @include background-image-retina($file, "png", 30px, 30px);
+        height: 30px;
+        width: 30px;
+        margin: 0 15px 0 0;
+      }
+    }
   }
 }

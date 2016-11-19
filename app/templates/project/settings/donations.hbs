@@ -1,18 +1,30 @@
-{{#if stripeConnectAccount}}
-  {{donation-goals
-    add=(action 'addDonationGoal')
-    cancel=(action 'cancelDonationGoal')
-    edit=(action 'editDonationGoal')
-    project=project
-    save=(action 'saveDonationGoal')
-    activateDonations=(action 'activateDonations' project)}}
-{{else}}
-  {{#if stripeAuth}}
-    <div class="header-section">
-      <h3>Accept donations for {{project.title}}</h3>
-      {{stripe-connect-button url=stripeAuth.url}}
-      <p>To start accepting donations, you'll need to create a new Stripe account or connect with an existing Stripe account.</p>
-      <p>Click "Connect with Stripe" to get started. You'll be redirected to Stripe and return here to finish.</p>
-    </div>
+<div class="settings-main">
+  {{#if stripeConnectAccount}}
+    {{donation-goals
+      add=(action 'addDonationGoal')
+      cancel=(action 'cancelDonationGoal')
+      edit=(action 'editDonationGoal')
+      project=project
+      save=(action 'saveDonationGoal')
+      activateDonations=(action 'activateDonations' project)}}
+  {{else}}
+    {{#if stripeAuth}}
+      <div class="header-section">
+        <h3>Accept donations for {{project.title}}</h3>
+        {{stripe-connect-button url=stripeAuth.url}}
+        <p>To start accepting donations, you'll need to create a new Stripe account or connect with an existing Stripe account.</p>
+        <p>Click "Connect with Stripe" to get started. You'll be redirected to Stripe and return here to finish.</p>
+      </div>
+    {{/if}}
   {{/if}}
-{{/if}}
+</div>
+
+<div class="settings-sidebar">
+  {{#if project.donationGoals}}
+    <h3>Current goal</h3>
+    {{donations/donation-progress
+      amountDonated=project.totalMonthlyDonated
+      donationGoal=project.currentDonationGoal
+    }}
+  {{/if}}
+</div>

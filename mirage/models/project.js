@@ -1,6 +1,7 @@
 import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
+  currentDonationGoal: belongsTo('donation-goal'),
   donationGoals: hasMany(),
   organization: belongsTo(),
   tasks: hasMany(),
