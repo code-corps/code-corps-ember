@@ -25,7 +25,7 @@ export default Ability.extend({
     return taskUserId === currentUserId;
   }),
 
-  membership: alias('credentials.currentUserMembership'),
+  membership: alias('credentials.membership'),
   userIsAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
 
   canEdit: or('userIsAuthor', 'userIsAtLeastAdmin')

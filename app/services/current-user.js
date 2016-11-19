@@ -17,7 +17,7 @@ export default Service.extend({
     return new RSVP.Promise((resolve, reject) => {
       let userId = this.get('session.session.authenticated.user_id');
       if (!isEmpty(userId)) {
-        return this.get('store').findRecord('user', userId).then((user) => {
+        return get(this, 'store').findRecord('user', userId).then((user) => {
           this.set('user', user);
           this._identifyUser(user);
           resolve(user);

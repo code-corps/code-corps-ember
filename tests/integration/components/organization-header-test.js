@@ -9,7 +9,7 @@ moduleForComponent('organization-header', 'Integration | Component | organizatio
   integration: true,
   beforeEach() {
     stubService(this, 'credentials', {
-      currentUserMembership: Object.create({
+      membership: Object.create({
         member: user,
         organization,
         role: 'admin'

@@ -8,9 +8,11 @@
 
 ## Interacting with the app
 
-You'll generally interact with the app using `ember server`. If you are running the [Elixir API](https://github.com/code-corps/code-corps-api/) locally, running `ember server` will make requests to the API by default. 
+You can run the Ember app several different ways:
 
-If you aren't running the API locally, you can use our remote development enviornment by running `ember server --environment=remote-development`.
+- with our [Elixir API](https://github.com/code-corps/code-corps-api/) server by running `ember server` normally.
+- with an [`ember-cli-mirage`](http://www.ember-cli-mirage.com/) server by running `ember server --environment=mirage-development`.
+- with a remote development server by running `ember server --environment=remote-development`.
 
 Once the server has been started, you can visit your app at `http://localhost:4200`.
 
@@ -43,11 +45,11 @@ We also take advantage of [ember-try](https://github.com/ember-cli/ember-try), w
 * `ember try:one ember-beta` will run the tests using the current beta release of ember
 * `ember try:one ember-canary` will run the tests using the current canary release of ember
 * `ember try:each` will run all configurations in `config/ember-try.js`
-You'll notice that all of these will run using `ember exam`. 
+You'll notice that all of these will run using `ember exam`.
 
 ## Generating Documentation
 
-The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for documentation. 
+The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for documentation.
 
 When contributing to the documentation please follow our [style guide](docs/STYLEGUIDE.md) and [YUIDoc's syntax guidelines](http://yui.github.io/yuidoc/syntax/index.html).
 
@@ -63,7 +65,7 @@ The documentation will be generated in the `/docs` folder.
 Now that it has been generated, you can run the server to view it:
 
 ```shell
-yuidoc --server 
+yuidoc --server
 ```
 
 Then you can visit `localhost:3000` in your browser. YUIDoc defaults to port 3000. However, you can specify another port if that conflicts with something else via `yuidoc --server [another port here]`.

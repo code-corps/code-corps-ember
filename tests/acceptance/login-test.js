@@ -9,12 +9,15 @@ moduleForAcceptance('Acceptance | Login');
 test('Logging in', function(assert) {
   assert.expect(2);
 
-  server.create('user', { id: 1, state: 'selected_skills' });
+  let email = 'test@test.com';
+  let password = 'password';
+
+  server.create('user', { email, password, state: 'selected_skills' });
 
   loginPage.visit();
 
   andThen(() => {
-    loginPage.form.loginSuccessfully();
+    loginPage.form.loginSuccessfully(email, password);
   });
 
   andThen(() => {
@@ -24,7 +27,6 @@ test('Logging in', function(assert) {
 });
 
 test('Login failure', function(assert) {
-  // Mirage expects volunteers@codecorps.org as default email
   let ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
 
   assert.expect(2);
@@ -32,7 +34,7 @@ test('Login failure', function(assert) {
   loginPage.visit();
 
   andThen(() => {
-    loginPage.form.loginUnsuccessfully();
+    loginPage.form.loginUnsuccessfully('volunteers@codecorps.org', 'password');
   });
 
   andThen(() => {

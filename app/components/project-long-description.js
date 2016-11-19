@@ -35,10 +35,10 @@ export default Component.extend({
   /**
     Property that holds the edit mode status.
 
-    @property inEditMode
+    @property isEditing
     @type Boolean
    */
-  inEditMode: false,
+  isEditing: false,
 
   /**
     Property that holds whether the project has a description or not.
@@ -55,10 +55,10 @@ export default Component.extend({
     @property shouldDisplayEditor
     @type Boolean
    */
-  shouldDisplayEditor: or('inEditMode', 'descriptionIsBlank'),
+  shouldDisplayEditor: or('isEditing', 'descriptionIsBlank'),
 
   didReceiveAttrs() {
-    this._inferrIfAddingDescription();
+    this._inferIfNeedsDescription();
     return this._super(...arguments);
   },
 
@@ -90,20 +90,20 @@ export default Component.extend({
     save() {
       this.get('project').save().then(() => {
         this._enterReadMode();
-        this._inferrIfAddingDescription();
+        this._inferIfNeedsDescription();
       });
     }
   },
 
   _enterEditMode() {
-    this.set('inEditMode', true);
+    this.set('isEditing', true);
   },
 
   _enterReadMode() {
-    this.set('inEditMode', false);
+    this.set('isEditing', false);
   },
 
-  _inferrIfAddingDescription() {
+  _inferIfNeedsDescription() {
     if (isPresent(this.get('project.longDescriptionBody'))) {
       this.set('descriptionIsBlank', false);
     } else {

@@ -13,7 +13,7 @@ moduleForComponent('project-long-description', 'Integration | Component | projec
 });
 
 let credentialsWithAdminMembership = {
-  currentUserMembership: Object.create({
+  membership: Object.create({
     isAdmin: true
   })
 };

@@ -5,8 +5,13 @@ const {
   Component,
   Object,
   observer,
-  run: { later }
+  run: { later },
+  testing
 } = Ember;
+
+const INIT_DELAY          = testing ? 0 : 1500;
+const LOADING_TOGGLE      = testing ? 0 : 700;
+const CONCURRENCY_TIMEOUT = testing ? 0 : 1000;
 
 export default Component.extend({
   skills: [
@@ -63,7 +68,7 @@ export default Component.extend({
           let skill = skills[index];
           this.get('_animateItem').perform(skill);
         });
-      }, 1500);
+      }, INIT_DELAY);
     }
   }),
 
@@ -72,7 +77,7 @@ export default Component.extend({
     skill.set('isLoading', true);
     later(() => {
       skill.set('isLoading', false);
-    }, 700);
-    yield timeout(1000);
+    }, LOADING_TOGGLE);
+    yield timeout(CONCURRENCY_TIMEOUT);
   }).enqueue()
 });

@@ -11,7 +11,7 @@ moduleForComponent('task-new-form', 'Integration | Component | task new form', {
 
 test('it renders', function(assert) {
   assert.expect(1);
-  stubService(this, 'credentials', { currentUserMembership: null });
+  stubService(this, 'credentials', { membership: null });
   this.render(hbs`{{task-new-form}}`);
 
   assert.equal(this.$('.task-new-form').length, 1, 'The component\'s element renders');
@@ -19,7 +19,7 @@ test('it renders', function(assert) {
 
 test('it renders proper ui elements, properly bound', function(assert) {
   assert.expect(8);
-  stubService(this, 'credentials', { currentUserMembership: null });
+  stubService(this, 'credentials', { membership: null });
 
   let task = {
     title: 'A task',
@@ -45,7 +45,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
 test('it triggers an action when the task is saved', function(assert) {
   assert.expect(2);
-  stubService(this, 'credentials', { currentUserMembership: null });
+  stubService(this, 'credentials', { membership: null });
 
   let task = Object.create({ id: 1 });
 
@@ -64,7 +64,7 @@ test('it renders only idea and issue task type options if user is not at least a
   assert.expect(3);
 
   stubService(this, 'credentials', {
-    currentUserMembership: { isContributor: false, isAdmin: false, isOwner: false }
+    membership: { isContributor: false, isAdmin: false, isOwner: false }
   });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
@@ -78,7 +78,7 @@ test('it renders all task type options if user is at least contributor', functio
   assert.expect(3);
 
   stubService(this, 'credentials', {
-    currentUserMembership: { isContributor: true }
+    membership: { isContributor: true }
   });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);

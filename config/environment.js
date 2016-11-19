@@ -137,8 +137,22 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
 
     ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
   }
 
+  if (environment === 'mirage-development') {
+    ENV.API_BASE_URL = '';
+    ENV.WEB_BASE_URL = '';
+
+    ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
+  }
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';

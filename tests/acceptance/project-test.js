@@ -58,7 +58,7 @@ test('It renders all the required ui elements for task list', function(assert) {
     assert.equal(projectTasksIndexPage.projectTaskList.isVisible, true, 'project-task-list component is rendered');
     assert.equal(projectTasksIndexPage.projectTaskList.taskItems().count, 5, 'correct number of tasks is rendered');
 
-    let expectedHrefToFirstTask = `${tasksURL}/0`;
+    let expectedHrefToFirstTask = `${tasksURL}/1`;
 
     assert.equal(projectTasksIndexPage.projectTaskList.taskItems(0).href, expectedHrefToFirstTask, 'Link to specific task is properly rendered');
   });

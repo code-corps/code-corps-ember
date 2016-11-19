@@ -8,10 +8,10 @@ export default Factory.extend({
     return faker.lorem.paragraph();
   },
   iconThumbUrl() {
-    return faker.image.avatar();
+    return faker.image.imageUrl();
   },
   iconLargeUrl() {
-    return faker.image.avatar();
+    return faker.image.imageUrl();
   },
   slug() {
     if (this.name) {

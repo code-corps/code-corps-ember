@@ -14,7 +14,7 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
   beforeModel() {
     if (this.get('session.isAuthenticated')) {
       let organization = this.modelFor('project.organization');
-      return this.get('credentials.currentUserMembershipPromise').then((membership) => {
+      return this.get('credentials.membershipPromise').then((membership) => {
         if (this.cannot('manage organization', organization, { membership })) {
           return this.transitionTo('index');
         } else {

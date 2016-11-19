@@ -24,7 +24,7 @@ test('it cannot edit task if user is not the task author', function(assert) {
 test('it can edit task if user is at least admin in organization', function(assert) {
   let ability = this.subject({
     credentials: Object.create({
-      currentUserMembership: Object.create({ isAdmin: true })
+      membership: Object.create({ isAdmin: true })
     })
   });
   assert.ok(ability.get('canEdit'));
@@ -33,7 +33,7 @@ test('it can edit task if user is at least admin in organization', function(asse
 test('it cannot edit task if user is not at least admin in organization', function(assert) {
   let ability = this.subject({
     credentials: Object.create({
-      currentUserMembership: Object.create({ isAdmin: false })
+      membership: Object.create({ isAdmin: false })
     })
   });
   assert.notOk(ability.get('canEdit'));

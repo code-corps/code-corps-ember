@@ -12,10 +12,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
   credentials: service(),
   currentUser: service(),
 
-  ability: EmberCan.computed.ability('organization', 'currentUserMembership'),
+  ability: EmberCan.computed.ability('organization', 'membership'),
 
   canCreateTask: computed.alias('ability.canCreateTaskTask'),
-  currentUserMembership: computed.alias('credentials.currentUserMembership'),
+  membership: computed.alias('credentials.membership'),
 
   taskType: computed('canCreateTask', function() {
     return this.get('canCreateTask') ? 'task' : 'issue';
