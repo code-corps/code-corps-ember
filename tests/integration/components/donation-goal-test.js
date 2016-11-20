@@ -37,8 +37,8 @@ test('it displays the donation goal info', function(assert) {
 
   this.render(hbs`{{donation-goal donationGoal=donationGoal}}`);
 
-  assert.equal(this.$('.amount').text().trim(), '$500.00', 'Correct amount is rendered');
-  assert.equal(this.$('.description').text().trim(), 'A test goal', 'Correct description is rendered');
+  assert.equal(this.$('.donation-goal__amount').text().trim(), '$500.00', 'Correct amount is rendered');
+  assert.equal(this.$('.donation-goal__description').text().trim(), 'A test goal', 'Correct description is rendered');
 });
 
 test('it renders the edit link, if canEdit flag is set to true', function(assert) {
@@ -46,7 +46,7 @@ test('it renders the edit link, if canEdit flag is set to true', function(assert
 
   this.render(hbs`{{donation-goal canEdit=true edit=editHandler donationGoal=donationGoal}}`);
 
-  assert.equal(this.$('.edit').length, 1, 'Edit button is rendered');
+  assert.equal(this.$('.donation-goal--edit').length, 1, 'Edit button is rendered');
 });
 
 test('it does not render the edit link, if canEdit flag is set to false', function(assert) {
@@ -54,7 +54,7 @@ test('it does not render the edit link, if canEdit flag is set to false', functi
 
   this.render(hbs`{{donation-goal canEdit=false donationGoal=donationGoal}}`);
 
-  assert.equal(this.$('.edit').length, 0, 'Edit button is not rendered');
+  assert.equal(this.$('.donation-goal--edit').length, 0, 'Edit button is not rendered');
 });
 
 test('it sends the edit action when the edit link is clicked', function(assert) {
@@ -67,5 +67,5 @@ test('it sends the edit action when the edit link is clicked', function(assert) 
 
   this.render(hbs`{{donation-goal canEdit=true donationGoal=donationGoal edit=(action editHandler donationGoal)}}`);
 
-  this.$('.edit').click();
+  this.$('.donation-goal--edit').click();
 });
