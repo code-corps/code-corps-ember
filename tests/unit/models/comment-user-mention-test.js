@@ -1,8 +1,5 @@
 import { moduleForModel, test } from 'ember-qunit';
-import '../../helpers/has-attributes';
-import Ember from 'ember';
-
-const { get } = Ember;
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 
 moduleForModel('comment-user-mention', 'Unit | Model | comment user mention', {
   // Specify the other units that are required for this test.
@@ -14,18 +11,7 @@ moduleForModel('comment-user-mention', 'Unit | Model | comment user mention', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 
-test('it should have all of its attributes', function(assert) {
-  let model = this.store().modelFor('comment-user-mention');
-  let actualAttributes = get(model, 'attributes');
-
-  let expectedAttributes = [
-    'indices',
-    'username'
-  ];
-
-  assert.hasAttributes(actualAttributes, expectedAttributes);
-});
+testForAttributes('comment-user-mention', ['indices', 'username']);

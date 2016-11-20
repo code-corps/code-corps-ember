@@ -8,7 +8,6 @@ moduleForModel('user-role', 'Unit | Model | user role', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 

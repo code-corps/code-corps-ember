@@ -1,9 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
-import '../../helpers/has-attributes';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 moduleForModel('preview', 'Unit | Model | preview', {
   // Specify the other units that are required for this test.
@@ -15,21 +12,9 @@ moduleForModel('preview', 'Unit | Model | preview', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 
-test('it should have all of its attributes', function(assert) {
-  let model = this.store().modelFor('preview');
-  let actualAttributes = get(model, 'attributes');
-
-  let expectedAttributes = [
-    'body',
-    'markdown'
-  ];
-
-  assert.hasAttributes(actualAttributes, expectedAttributes);
-});
-
+testForAttributes('preview', ['body', 'markdown']);
 testForBelongsTo('preview', 'user');
 testForHasMany('preview', 'previewUserMentions');

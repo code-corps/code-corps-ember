@@ -1,5 +1,5 @@
 import { moduleForModel, test } from 'ember-qunit';
-import { testForHasMany } from '../../helpers/relationship';
+import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 import '../../helpers/has-attributes';
 import Ember from 'ember';
 
@@ -13,13 +13,13 @@ moduleForModel('organization', 'Unit | Model | organization', {
   needs: [
     'model:organization-membership',
     'model:project',
+    'model:stripe-account',
     'model:user'
   ]
 });
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 
@@ -39,6 +39,7 @@ test('it should have all of its attributes', function(assert) {
   assert.hasAttributes(actualAttributes, expectedAttributes);
 });
 
+testForBelongsTo('organization', 'stripeAccount');
 testForHasMany('organization', 'organizationMemberships');
 testForHasMany('organization', 'projects');
 

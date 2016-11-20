@@ -1,9 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
-import '../../helpers/has-attributes';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 moduleForModel('comment', 'Unit | Model | comment', {
   // Specify the other units that are required for this test.
@@ -20,19 +17,7 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-test('it has all of its attributes', function(assert) {
-  let model = this.store().modelFor('comment');
-  let actualAttributes = get(model, 'attributes');
-
-  let expectedAttributes = [
-    'body',
-    'insertedAt',
-    'markdown'
-  ];
-
-  assert.hasAttributes(actualAttributes, expectedAttributes);
-});
-
+testForAttributes('comment', ['body', 'insertedAt', 'markdown']);
 testForBelongsTo('comment', 'task');
 testForBelongsTo('comment', 'user');
 testForHasMany('comment', 'commentUserMentions');
