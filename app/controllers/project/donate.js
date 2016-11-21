@@ -24,10 +24,11 @@ export default Controller.extend({
 
   actions: {
     saveCard(cardParams) {
+      this._clearErrors();
+
       return this._createCreditCardToken(cardParams)
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._addCard(stripeCard))
-                 .then(() => this._clearErrors())
                  .catch((reason) => this._handleError(reason))
                  .finally(() => this._updateAddingCardState());
     },
@@ -42,7 +43,6 @@ export default Controller.extend({
     }
   },
 
-
   _createCreditCardToken(cardParams) {
     let stripeCard = this._tokenParams(cardParams);
     let stripe = this.get('stripe');
@@ -56,8 +56,6 @@ export default Controller.extend({
   },
 
   _ensureStripePlatformCustomer() {
-    console.log('_ensureStripePlatformCustomer', arguments);
-
     if (this.get('shouldCreateCustomer')) {
       return this._createStripePlatformCustomer();
     } else {
@@ -66,7 +64,6 @@ export default Controller.extend({
   },
 
   _createStripePlatformCustomer() {
-    console.log('_createStripePlatformCustomer', arguments);
     let { user, store } = this.getProperties('user', 'store');
     let email = user.get('email');
 
@@ -75,7 +72,6 @@ export default Controller.extend({
   },
 
   _createStripePlatformCard(stripeToken) {
-    console.log('_createStripePlatformCard', stripeToken);
     let user = this.get('user');
 
     return user.get('stripePlatformCards')
@@ -84,7 +80,6 @@ export default Controller.extend({
   },
 
   _addCard(stripeCard) {
-    console.log('_addCard', arguments);
     return this.get('user.stripePlatformCards').pushObject(stripeCard);
   },
 

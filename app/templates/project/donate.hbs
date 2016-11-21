@@ -1,11 +1,10 @@
 {{project-header project=project}}
 {{#donation/donation-container
-saveCard=(action 'saveCard')
   cards=user.stripePlatformCards
-  donate=(action 'donate' amount)
+  donate=(action 'donate')
   donationAmount=amount
-  isAddingCard=isAddingCard
   projectTitle=project.title
+  saveCard=(action 'saveCard')
 }}
   {{#if error}}
     {{error-formatter error=error}}

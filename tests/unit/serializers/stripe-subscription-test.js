@@ -1,11 +1,14 @@
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('stripe-subscription', 'Unit | Serializer | stripe subscription', {
-  // Specify the other units that are required for this test.
-  needs: ['serializer:stripe-subscription']
+  needs: [
+    'serializer:stripe-subscription',
+    'model:project',
+    'model:user',
+    'transform:dollar-cents'
+  ]
 });
 
-// Replace this with your real tests.
 test('it serializes records', function(assert) {
   let record = this.subject();
 
@@ -13,3 +16,6 @@ test('it serializes records', function(assert) {
 
   assert.ok(serializedRecord);
 });
+
+// TODO: If snapshot contians adapter options with "stripePlatformCardId",
+// serializeIntoHash should add that property into data.attributes

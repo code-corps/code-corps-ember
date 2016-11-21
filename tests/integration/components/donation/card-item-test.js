@@ -36,21 +36,6 @@ test('it renders proper information', function(assert) {
   assert.equal(page.cardDescription, 'Visa ending in 4242', 'Card description is correct');
 });
 
-test('it allows selection of card', function(assert) {
-  assert.expect(1);
-
-  function selectHandler() {
-    assert.ok(true, 'Action got called.');
-  }
-
-  this.set('card', { id: 1, brand: 'Visa', last4: 4242 });
-
-  setHandler(this, selectHandler);
-
-  page.render(hbs`{{donation/card-item card=card select=selectHandler}}`)
-      .clickCard();
-});
-
 test('it shows card as selected if selected', function(assert) {
   assert.expect(2);
 

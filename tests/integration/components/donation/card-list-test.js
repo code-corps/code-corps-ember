@@ -10,10 +10,10 @@ let page = PageObject.create(cardListComponent);
 
 const {
   Object,
-  RSVP
+  K
 } = Ember;
 
-let setHandlers = function(context, { selectCardHandler = RSVP } = {}) {
+let setHandlers = function(context, selectCardHandler = K) {
   context.set('selectCardHandler', selectCardHandler);
 };
 
@@ -36,7 +36,7 @@ test('it renders proper information', function(assert) {
     { id: 2, brand: 'Diners', last4: '9999' }
   ]);
 
-  page.render(hbs`{{donation/card-list cards=cards donate=donateHandler}}`);
+  page.render(hbs`{{donation/card-list cards=cards donate=donateHandler selectCard=selectCardHandler}}`);
 
   assert.equal(page.cards().count, 2, 'Renders correct number of cards.');
   assert.equal(page.cards(0).cardDescription, 'Visa ending in 4242', 'First card is rendered correctly.');
@@ -44,29 +44,22 @@ test('it renders proper information', function(assert) {
 });
 
 test('it allows user to select card', function(assert) {
-  assert.expect(4);
+  assert.expect(1);
 
   let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
   let diners = Object.create({ id: 2, brand: 'Diners', last4: '9999' });
+
   this.set('cards', [
     visa, diners
   ]);
-  this.set('selectedCard', visa);
 
   function selectCardHandler(card) {
-    assert.deepEqual(card, visa, 'Card was passed correctly.');
-    return RSVP.resolve();
+    assert.ok(card, visa, 'Card was passed correctly.');
   }
 
-  setHandlers(this, { selectCardHandler });
+  setHandlers(this, selectCardHandler);
 
-  page.render(hbs`{{donation/card-list cards=cards selectedCard=selectedCard}}`);
-
-  assert.ok(page.cards(0).isSelected, 'First card is selected.');
-  assert.notOk(page.cards(1).isSelected, 'Second card is not selected.');
+  page.render(hbs`{{donation/card-list cards=cards selectCard=selectCardHandler}}`);
 
   page.cards(1).clickCard();
-
-  assert.notOk(page.cards(0).isSelected, 'First card got unselected.');
-  assert.ok(page.cards(1).isSelected, 'Second card got selected.');
 });
