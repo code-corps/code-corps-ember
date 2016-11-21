@@ -29,7 +29,7 @@ export default Model.extend({
   userRoles: hasMany('user-role', { async: true }),
   userSkills: hasMany('user-skill', { async: true }),
   stripeCards: hasMany('stripe-card', { async: true }),
-  stripeCustomer: belongsTo('stripe-customer', { async: true }),
+  stripePlatformCustomer: belongsTo('stripe-platform-customer', { async: true }),
 
   atUsername: computed('username', function() {
     return `@${this.get('username')}`;

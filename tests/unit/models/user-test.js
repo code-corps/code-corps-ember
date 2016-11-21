@@ -6,7 +6,7 @@ moduleForModel('user', 'Unit | Model | user', {
   needs: [
     'model:organization-membership',
     'model:stripe-card',
-    'model:stripe-customer',
+    'model:stripe-platform-customer',
     'model:stripe-subscription',
     'model:user-category',
     'model:user-role',
