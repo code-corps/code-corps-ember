@@ -12,7 +12,9 @@
 </p>
 
 {{#if canShowCardList}}
-  {{donation/card-list cards=cards selectedCard=defaultCard}}
+    <h3>Select card</h3>
+    {{donation/card-list cards=cards selectedCard=defaultCard}}
+    <button class="button--small" {{action "submit"}}>Add Card</button>
 {{/if}}
 
 {{#if canAddCard}}

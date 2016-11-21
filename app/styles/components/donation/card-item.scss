@@ -1,0 +1,62 @@
+
+.card-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: .25em;
+    height: 2.5em;
+    margin-bottom: .6em;
+    padding: 0 1.15em;
+    input[type="radio"] {
+        margin-right: .7em;
+    }
+}
+
+.card-item--selected {
+    background-color: $light-blue;
+    border: 1px solid $dark-blue;
+}
+
+.card-brand--image {
+    background: url(/assets/images/icons/visa.png) no-repeat top center;
+    background-size: cover;
+    border-radius: .3em;
+    height: 1.5em;
+    margin-right: .7em;
+    overflow: hidden;
+    width: 2.5em;
+}
+
+.card-brand--text {
+    font-weight: bold;
+}
+
+.card-info {
+    display: flex;
+    flex: 1;
+    p {
+        margin: 0;
+    }
+}
+
+.card-expiry {
+
+}
+
+// will move this to _buttons.scss once finished styling
+.button--small {
+    background-color: white;
+    border: 1px solid $gray;
+    border-radius: .3em;
+    color: $dark-text;
+    font-size: $body-font-size-small;
+    height: 2.5em;
+    padding: 0;
+    // width is getting overwritten by .donation-container button
+    width: 8em !important;
+    margin-bottom: 1.4em;
+    &:hover {
+        background-color: rgba($gray, .1)
+    }
+}

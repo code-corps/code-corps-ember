@@ -1,5 +1,6 @@
 html {
   font-family: $body-font-family;
+  font-size: $body-font-size-normal;  
 
   &.danger {
     background: $danger-color;
