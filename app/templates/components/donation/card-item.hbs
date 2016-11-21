@@ -1,5 +1,22 @@
 {{#if card.isLoading}}
   Loading card...
 {{else}}
-  {{card.brand}} ending in {{card.last4}}
+  <div class="card-item__info">
+    <!-- <input type="radio" name="" checked> -->
+    {{#if (eq card.brand "American Express")}}
+      <div class="card-item__brand--amex"></div>
+    {{else if (eq card.brand "Diners Club")}}
+      <div class="card-item__brand--diners"></div>
+    {{else if (eq card.brand "Discover")}}
+      <div class="card-item__brand--discover"></div>
+    {{else if (eq card.brand "JCB")}}
+      <div class="card-item__brand--jcb"></div>
+    {{else if (eq card.brand "MasterCard")}}
+      <div class="card-item__brand--mastercard"></div>
+    {{else if (eq card.brand "Visa")}}
+      <div class="card-item__brand--visa"></div>
+    {{/if}}
+    <p><span class="card-item__brand">{{card.brand}}</span> ending in {{card.last4}}</p>
+  </div>
+  <span class="card-item__expiry">{{card.expMonth}}/{{card.expYear}}</span>
 {{/if}}
