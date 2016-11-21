@@ -25,9 +25,18 @@ export default Component.extend({
 
   showCardForm: or('hasNoCards', 'isAddingCard'),
 
+  init() {
+    this._super(...arguments);
+    this.set('selectedCard', this.get('cards.firstObject'));
+  },
+
   actions: {
     addCard() {
       this.set('isAddingCard', true);
+    },
+
+    selectCard(card) {
+      this.set('selectedCard', card);
     }
   }
 });

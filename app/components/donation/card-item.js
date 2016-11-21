@@ -13,9 +13,5 @@ export default Component.extend({
     return this.get('card.id') === this.get('selectedCard.id');
   }),
 
-  selectedCard: null,
-
-  click() {
-    this.get('select')();
-  }
+  selectedCard: null
 });

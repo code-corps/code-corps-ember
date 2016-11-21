@@ -11,7 +11,7 @@
   per month to support {{projectTitle}}.
 </p>
 
-{{donation/card-list cards=cards selectedCard=cards.firstObject}}
+{{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action 'selectCard')}}
 
 {{#if showCardForm}}
   {{#donation/credit-card canSubmit=canSubmitAddCard submit=saveCard canCancel=hasCards}}
@@ -19,7 +19,7 @@
     {{yield}}
   {{/donation/credit-card}}
 {{else}}
-  <button {{action 'addCard'}}>Add new card</button>
+  <button class="default" {{action 'addCard'}}>Add new card</button>
 {{/if}}
 
 {{#if canDonate}}

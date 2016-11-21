@@ -12,8 +12,4 @@ export default Component.extend({
   donationDisabled: alias('cardNotSelected'),
 
   selectedCard: null,
-
-  selectCard(card) {
-    this.set('selectedCard', card);
-  }
 });
