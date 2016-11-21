@@ -5,7 +5,7 @@ import { testForHasMany } from '../../helpers/relationship';
 moduleForModel('user', 'Unit | Model | user', {
   needs: [
     'model:organization-membership',
-    'model:stripe-card',
+    'model:stripe-platform-card',
     'model:stripe-platform-customer',
     'model:stripe-subscription',
     'model:user-category',
@@ -26,6 +26,7 @@ testForAttributes('user', [
 ]);
 
 testForHasMany('user', 'organizationMemberships');
+testForHasMany('user', 'stripePlatformCards');
 testForHasMany('user', 'subscriptions');
 testForHasMany('user', 'userCategories');
 testForHasMany('user', 'userRoles');

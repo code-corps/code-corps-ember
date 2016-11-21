@@ -19,14 +19,15 @@ export default Controller.extend({
   project: alias('model'),
   user: alias('currentUser.user'),
 
-  stripeCustomerCreated: bool('currentUser.user.stripeCustomer.id'),
+  stripeCustomerCreated: bool('currentUser.user.stripePlatformCustomer.id'),
   shouldCreateCustomer: not('stripeCustomerCreated'),
 
   actions: {
-    addCard(cardParams) {
+    saveCard(cardParams) {
       return this._createCreditCardToken(cardParams)
-                 .then((stripeResponse) => this._createCardForCustomer(stripeResponse))
+                 .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._addCard(stripeCard))
+                 .then(() => this._clearErrors())
                  .catch((reason) => this._handleError(reason))
                  .finally(() => this._updateAddingCardState());
     },
@@ -49,9 +50,9 @@ export default Controller.extend({
     return stripe.card.createToken(stripeCard);
   },
 
-  _createCardForPlatformCustomer({ id, card }) {
-    return this._ensureStripeCustomer()
-               .then(() => this._createStripeCard(card));
+  _createCardForPlatformCustomer({ id }) {
+    return this._ensureStripePlatformCustomer()
+               .then(() => this._createStripePlatformCard(id));
   },
 
   _ensureStripePlatformCustomer() {
@@ -73,26 +74,26 @@ export default Controller.extend({
                 .save();
   },
 
-  _createStripeCard(cardData) {
-    console.log('_createStripeCard', arguments);
+  _createStripePlatformCard(stripeToken) {
+    console.log('_createStripePlatformCard', stripeToken);
     let user = this.get('user');
-    let params = this._cardParams(cardData);
 
-    return user.get('stripeCards')
-               .createRecord(params)
+    return user.get('stripePlatformCards')
+               .createRecord({ stripeToken, user })
                .save();
   },
 
   _addCard(stripeCard) {
     console.log('_addCard', arguments);
-    return this.get('user.stripeCards').pushObject(stripeCard);
+    return this.get('user.stripePlatformCards').pushObject(stripeCard);
   },
 
   _createSubscription(amount, stripeCard) {
     let { project, store, user } = this.getProperties('project', 'store', 'user');
+    let adapterOptions = { stripePlatformCardId: stripeCard.get('id') };
     let subscription = store.createRecord('stripe-subscription', { amount, project, user, stripeCard });
 
-    return subscription.save();
+    return subscription.save({ adapterOptions });
   },
 
   _transitionToThankYou() {
@@ -117,8 +118,7 @@ export default Controller.extend({
     this.set('isAddingCard', false);
   },
 
-  _cardParams(params) {
-    let { last4, name, brand, country, exp_month, exp_year } = params;
-    return { brand, country, expMonth: exp_month, expYear: exp_year, last4, name };
+  _clearErrors() {
+    this.set('error', null);
   }
 });

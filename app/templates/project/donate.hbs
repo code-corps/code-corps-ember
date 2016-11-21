@@ -1,7 +1,7 @@
 {{project-header project=project}}
 {{#donation/donation-container
-  addCard=(action 'addCard')
-  cards=user.stripeCards
+saveCard=(action 'saveCard')
+  cards=user.stripePlatformCards
   donate=(action 'donate' amount)
   donationAmount=amount
   isAddingCard=isAddingCard

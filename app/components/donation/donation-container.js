@@ -4,7 +4,7 @@ const {
   Component,
   computed,
   computed: {
-    and, gt, not
+    and, gt, not, or
   }
 } = Ember;
 
@@ -18,8 +18,16 @@ export default Component.extend({
     return hasCards ? isAddingCard : true;
   }),
   canDonate: and('hasCards', 'isNotAddingCard'),
-  canShowCardList: and('hasCards', 'isNotAddingCard'),
+
   hasCards: gt('cards.length', 0),
   hasNoCards: not('hasCards'),
-  isNotAddingCard: not('isAddingCard')
+  isNotAddingCard: not('isAddingCard'),
+
+  showCardForm: or('hasNoCards', 'isAddingCard'),
+
+  actions: {
+    addCard() {
+      this.set('isAddingCard', true);
+    }
+  }
 });
