@@ -41,6 +41,8 @@ export default Component.extend({
     let handler = this._findHandler(errorResponse);
     if (handler) {
       return handler(errorResponse);
+    } else {
+      console.error(this.get('error'));
     }
   }),
 

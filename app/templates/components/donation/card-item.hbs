@@ -1,1 +1,5 @@
-{{card.brand}} ending in {{card.last4}}
+{{#if card.isLoading}}
+  Loading card...
+{{else}}
+  {{card.brand}} ending in {{card.last4}}
+{{/if}}

@@ -28,7 +28,7 @@ export default Model.extend({
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
   userSkills: hasMany('user-skill', { async: true }),
-  stripeCards: hasMany('stripe-card', { async: true }),
+  stripePlatformCards: hasMany('stripe-platform-card', { async: true }),
   stripePlatformCustomer: belongsTo('stripe-platform-customer', { async: true }),
 
   atUsername: computed('username', function() {

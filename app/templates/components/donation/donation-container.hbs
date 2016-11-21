@@ -11,19 +11,19 @@
   per month to support {{projectTitle}}.
 </p>
 
-{{#if canShowCardList}}
-  {{donation/card-list cards=cards selectedCard=defaultCard}}
-{{/if}}
 
-{{#if canAddCard}}
-  {{#donation/credit-card canSubmit=canSubmitAddCard submit=addCard canCancel=canShowCardList}}
+{{#if showCardForm}}
+  {{#donation/credit-card canSubmit=canSubmitAddCard submit=saveCard canCancel=hasCards}}
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}
+{{else}}
+  {{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action (mut selectedCard))}}
+  <button class="add-card default" {{action 'addCard'}}>Add new card</button>
 {{/if}}
 
 {{#if canDonate}}
-  <button class="default donate large" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
+  <button class="default donate large" {{action donate donationAmount selectedCard}} disabled={{donationDisabled}}>Donate</button>
 
   {{!show errors}}
   {{yield}}
