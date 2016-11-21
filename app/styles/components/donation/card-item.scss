@@ -1,12 +1,12 @@
 
 .card-item {
-    display: flex;
     align-items: center;
-    justify-content: space-between;
-
     border-radius: .25em;
+    display: flex;
     height: 2.5em;
+    justify-content: space-between;
     margin-bottom: .6em;
+    cursor: pointer;
     padding: 0 1.15em;
     input[type="radio"] {
         margin-right: .7em;
