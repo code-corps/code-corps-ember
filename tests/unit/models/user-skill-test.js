@@ -8,7 +8,6 @@ moduleForModel('user-skill', 'Unit | Model | user skill', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 

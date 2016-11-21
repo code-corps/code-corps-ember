@@ -1,9 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 import { testForHasMany } from '../../helpers/relationship';
-import '../../helpers/has-attributes';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 moduleForModel('category', 'Unit | Model | category', {
   // Specify the other units that are required for this test.
@@ -15,22 +12,9 @@ moduleForModel('category', 'Unit | Model | category', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
 
-test('it should have all its attributes', function(assert) {
-  let model = this.store().modelFor('category');
-  let actualAttributes = get(model, 'attributes');
-
-  let expectedAttributes = [
-    'description',
-    'name',
-    'slug'
-  ];
-
-  assert.hasAttributes(actualAttributes, expectedAttributes);
-});
-
+testForAttributes('category', ['description', 'name', 'slug']);
 testForHasMany('category', 'projectCategories');
 testForHasMany('category', 'userCategories');

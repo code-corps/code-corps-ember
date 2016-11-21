@@ -1,6 +1,6 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { hasMany } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
 const { computed } = Ember;
@@ -15,6 +15,7 @@ export default Model.extend({
 
   organizationMemberships: hasMany('organization-membership', { async: true }),
   projects: hasMany('project', { async: true }),
+  stripeAccount: belongsTo('stripe-account', { async: true }),
 
   hasPendingMembers: computed.gt('pendingMembersCount', 0),
   pendingMembersCount: computed.alias('pendingMemberships.length'),
