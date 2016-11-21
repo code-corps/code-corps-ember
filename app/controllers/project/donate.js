@@ -46,15 +46,15 @@ export default Controller.extend({
 
   _createCustomerAndCard({ id, card }) {
     // TODO: Conditional create here
-    return this._createStripeCustomer(id)
-               .then((/* stripeCustomer */) => this._createStripeCard(card));
+    return this._createstripePlatformCustomer(id)
+               .then((/* stripePlatformCustomer */) => this._createStripeCard(card));
   },
 
-  _createStripeCustomer(/* token */) {
+  _createstripePlatformCustomer(/* token */) {
     let { user, store } = this.getProperties('user', 'store');
     let email = user.get('email');
 
-    return store.createRecord('stripe-customer', { email, user })
+    return store.createRecord('stripe-platform-customer', { email, user })
                 .save();
   },
 

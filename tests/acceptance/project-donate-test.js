@@ -119,7 +119,7 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
   });
 
   andThen(() => {
-    let customer = server.schema.stripeCustomers.findBy({ email: user.email });
+    let customer = server.schema.stripePlatformCustomers.findBy({ email: user.email });
     assert.ok(customer, 'Customer was created with proper attributes.');
     assert.equal(customer.userId, user.id, 'Customer was assigned to current user');
 
