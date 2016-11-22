@@ -103,10 +103,10 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC('123');
-    projectDonatePage.creditCard.cardMonth('12');
-    projectDonatePage.creditCard.cardYear('2020');
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
   });
 
   andThen(() => {
@@ -155,10 +155,10 @@ test('Shows stripe errors when creating card token fails', function(assert) {
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC('123');
-    projectDonatePage.creditCard.cardMonth('12');
-    projectDonatePage.creditCard.cardYear('2020');
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
   });
 
   andThen(() => {
@@ -190,10 +190,10 @@ test('Shows validation errors when creating subscription fails', function(assert
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC('123');
-    projectDonatePage.creditCard.cardMonth('12');
-    projectDonatePage.creditCard.cardYear('2020');
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
   });
 
   andThen(() => {

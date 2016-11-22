@@ -52,13 +52,7 @@ export default Component.extend({
   }),
 
   init() {
-    let date = new Date();
-    let currentMonth = `0${date.getMonth() + 1}`.slice(-2);
-    this.set('month', currentMonth);
-    let currentYear = date.getFullYear();
-    this.set('year', currentYear);
-    let years = this.generateYears(currentYear);
-    this.set('years', years);
+    this.setFreshDate();
     this._super(...arguments);
   },
 
@@ -69,6 +63,22 @@ export default Component.extend({
       years.push(currentYear++);
     }
     return years;
+  },
+
+  setFreshDate() {
+    let date = new Date();
+    let currentMonth = `0${date.getMonth() + 1}`.slice(-2);
+    this.set('month', currentMonth);
+    let currentYear = date.getFullYear();
+    this.set('year', currentYear);
+    let years = this.generateYears(currentYear);
+    this.set('years', years);
+  },
+
+  clearForm() {
+    this.set('cvc', '');
+    this.set('cardNumber', '');
+    this.setFreshDate();
   },
 
   _afterSubmit() {
@@ -85,6 +95,13 @@ export default Component.extend({
       let onSubmit = this.get('submit');
 
       onSubmit(cardAttrs).finally(() => this._afterSubmit());
+    },
+
+    cancel() {
+      let cancelAddCard = this.get('cancelAddCard');
+
+      this.clearForm();
+      cancelAddCard();
     }
   }
 });

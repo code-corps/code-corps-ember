@@ -12,7 +12,11 @@
 </p>
 
 {{#if showCardForm}}
-  {{#donation/credit-card canSubmit=canSubmitAddCard submit=saveCard canCancel=hasCards}}
+  {{#donation/credit-card
+    canSubmit=canSubmitAddCard
+    submit=saveCard
+    canCancel=hasCards
+    cancelAddCard=cancelAddCard}}
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}

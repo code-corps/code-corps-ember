@@ -129,12 +129,11 @@ test('it handles adding a card correctly', function(assert) {
       cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
   `);
 
-  page.creditCard
-      .cardNumber(cardDetails.cardNumber)
-      .cardMonth(cardDetails.month)
-      .cardYear(cardDetails.year)
-      .cardCVC(cardDetails.cvc)
-      .clickSubmit();
+  page.creditCard.cardNumber.fillIn(cardDetails.cardNumber);
+  page.creditCard.cardMonth.selectOption(cardDetails.month);
+  page.creditCard.cardYear.selectOption(cardDetails.year);
+  page.creditCard.cardCVC.fillIn(cardDetails.cvc);
+  page.creditCard.clickSubmit();
 });
 
 test('it handles donating correctly', function(assert) {
