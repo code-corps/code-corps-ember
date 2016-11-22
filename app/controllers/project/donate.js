@@ -4,6 +4,7 @@ const {
   Controller,
   computed: { alias, bool, not },
   inject: { service },
+  set,
   RSVP
 } = Ember;
 
@@ -30,7 +31,7 @@ export default Controller.extend({
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._addCard(stripeCard))
                  .catch((reason) => this._handleError(reason))
-                 .finally(() => this._updateAddingCardState());
+                 .finally(() => this._updateAddingCardState(false));
     },
 
     donate(amount, stripeCard) {
@@ -40,6 +41,10 @@ export default Controller.extend({
       return this._createSubscription(amount, stripeCard)
                  .then(() => this._transitionToThankYou())
                  .catch((reason) => this._handleError(reason));
+    },
+
+    cancelAddCard() {
+      this._updateAddingCardState(false);
     }
   },
 
@@ -109,8 +114,8 @@ export default Controller.extend({
     };
   },
 
-  _updateAddingCardState() {
-    this.set('isAddingCard', false);
+  _updateAddingCardState(value) {
+    set(this, 'isAddingCard', value);
   },
 
   _clearErrors() {
