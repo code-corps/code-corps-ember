@@ -1,23 +1,23 @@
 .donation-progress {
-  .information {
+  .donation-progress__information {
     display: flex;
     justify-content: space-between;
 
-    .percentage {
+    .donation-progress__information__percentage {
       text-align: right;
     }
 
-    .descriptive-text {
+    .donation-progress__information__descriptive-text {
       color: $gray;
     }
 
-    .value {
+    .donation-progress__information__value {
       font-size: $header-font-size-large;
       font-weight: 600;
     }
   }
 
-  .progress-bar-container {
+  .donation-progress__progress-bar-container {
     height: 10px;
     margin-top: 10px;
   }

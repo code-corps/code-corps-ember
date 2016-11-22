@@ -2,28 +2,28 @@
   @include span-columns(5);
   @include shift(7/2);
 
-  .donation-amount {
+  .donation-container__donation-amount {
     background-color: $light-blue;
     border: 2px solid $border-light-blue;
     border-radius: 5px;
     margin: 20px 0;
     padding: 15px;
 
-    h3 {
+    .donation-container__donation-amount__h3 {
       margin: 0;
     }
 
-    .footnote {
+    .donation-container__donation-amount__footnote {
       display: flex;
       justify-content: space-between;
     }
   }
 
-  h3 {
+  .donation-container__h3 {
     margin-top: 35px;
   }
 
-  button {
+  .donation-container__button {
     width: 100%;
   }
 }
@@ -36,6 +36,16 @@
   .cancel-add-card {
     margin: 10px 0px;
     text-align: center;
+  }
+}
+
+.credit-card-label {
+  &:before {
+    @include sprite($credit-card);
+  }
+
+  .credit-card-label__icon-input {
+    padding-left: 45px;
   }
 }
 

@@ -60,7 +60,7 @@ test('it sends save action, with user input properties as argument, when save bu
 
   this.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
 
-  this.$('.amount').val(mockProperties.amount).change();
+  this.$('.donation-goal-edit__amount-group__amount').val(mockProperties.amount).change();
   this.$('.description').val(mockProperties.description).change();
   this.$('.save').click();
 });
