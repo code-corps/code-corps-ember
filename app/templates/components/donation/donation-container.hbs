@@ -12,14 +12,14 @@
 </p>
 
 {{#if showCardForm}}
-    <h3>Select card</h3>
   {{#donation/credit-card canSubmit=canSubmitAddCard submit=saveCard canCancel=hasCards}}
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}
 {{else}}
-  {{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action (mut selectedCard))}}
-  <button class="button--small" {{action 'addCard'}}>Add Card</button>
+    <h3>Select card</h3>
+    {{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action (mut selectedCard))}}
+    <button class="button--small" {{action 'addCard'}}>Add Card</button>
   <!-- <button class="add-card default" {{action 'addCard'}}>Add new card</button> -->
 {{/if}}
 
