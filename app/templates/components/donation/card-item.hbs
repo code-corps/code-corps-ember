@@ -1,6 +1,10 @@
-<div class="card-info">
-    <input type="radio" name="name" value="" checked>
-    <div class="card-brand--image"></div>
-    <p><span class="card-brand--text">{{card.brand}}</span> ending in {{card.last4}}</p>
-</div>
-<span class="card-expiry">{{card.expMonth}}/{{card.expYear}}</span>
+{{#if card.isLoading}}
+  Loading card...
+{{else}}
+    <div class="card-info">
+        <input type="radio" name="name" value="" checked>
+        <div class="card-brand--image"></div>
+        <p><span class="card-brand--text">{{card.brand}}</span> ending in {{card.last4}}</p>
+    </div>
+    <span class="card-expiry">{{card.expMonth}}/{{card.expYear}}</span>
+{{/if}}

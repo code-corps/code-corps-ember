@@ -10,5 +10,7 @@ export default Model.extend({
   last4: attr(),
   name: attr(),
 
+  stripeToken: attr(),
+
   user: belongsTo('user', { async: true })
 });

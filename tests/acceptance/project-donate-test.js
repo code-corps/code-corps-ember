@@ -124,7 +124,7 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
     assert.equal(customer.userId, user.id, 'Customer was assigned to current user');
 
     // we use attributes set in the mock stripe token response
-    let card = server.schema.stripeCards.findBy({ brand: 'Visa', last4: '4242', expMonth: 2, expYear: 2017 });
+    let card = server.schema.stripePlatformCards.findBy({ userId: user.id });
     assert.ok(card, 'Card was created with proper attributes.');
     assert.equal(card.userId, user.id, 'Card was assigned to current user');
 

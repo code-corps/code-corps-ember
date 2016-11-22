@@ -65,7 +65,7 @@ function generatePreviewMentions(schema, preview) {
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'stripe-accounts', 'stripe-cards', 'stripe-platform-customers', 'stripe-subscriptions',
+  'slugged-routes', 'stripe-accounts', 'stripe-platform-cards', 'stripe-platform-customers', 'stripe-subscriptions',
   'user-categories', 'users'
 ];
 
@@ -397,18 +397,18 @@ export default function() {
   this.get('/skills/:id');
 
   /**
-   * Stripe cards
+   * Stripe accounts
    */
 
   this.post('/stripe-accounts');
   this.get('/stripe-accounts/:id');
 
   /**
-   * Stripe cards
+   * Stripe platform cards
    */
 
-  this.post('/stripe-cards');
-  this.get('/stripe-cards/:id');
+  this.post('/stripe-platform-cards');
+  this.get('/stripe-platform-cards/:id');
 
   /**
    * Stripe customers
