@@ -28,27 +28,22 @@ moduleForComponent('donation/card-item', 'Integration | Component | donation/car
 
 test('it renders proper information', function(assert) {
   assert.expect(1);
-
-  this.set('card', { id: 1, brand: 'Visa', last4: 4242 });
-
+  this.set('card', { id: 1, brand: 'Visa', last4: '4242', expMonth: '01', expYear: '2022' });
   page.render(hbs`{{donation/card-item card=card select=selectHandler}}`);
-
-  assert.equal(page.cardDescription, 'Visa ending in 4242', 'Card description is correct');
+  assert.equal(page.cardDescription, 'Visa ending in 4242 01/2022', 'Card description is correct');
 });
 
 test('it shows card as selected if selected', function(assert) {
   assert.expect(2);
 
   let ourCard = { id: 1, brand: 'Visa', last4: 4242 };
-  let selectedCard = { id: 2, brand: 'Visa', last4: 4242 };
+  let selectedCard = { id: 2, brand: 'Mastercard', last4: 4444 };
+
   this.set('card', ourCard);
   this.set('selectedCard', selectedCard);
 
   page.render(hbs`{{donation/card-item card=card select=selectHandler selectedCard=selectedCard}}`);
-
   assert.notOk(page.isSelected, 'Card is not displaying as selected.');
-
   this.set('selectedCard', ourCard);
-
   assert.ok(page.isSelected, 'Card is displaying as selected.');
 });

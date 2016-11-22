@@ -5,5 +5,5 @@ export default {
 
   cardDescription: text(''),
   clickCard: clickable(''),
-  isSelected: hasClass('selected', '')
+  isSelected: hasClass('card-item--selected', '')
 };

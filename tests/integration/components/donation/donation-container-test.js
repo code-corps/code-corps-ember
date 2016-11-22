@@ -13,7 +13,7 @@ const {
 } = Ember;
 
 let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
-let diners = Object.create({ id: 2, brand: 'Diners', last4: '9999' });
+let mastercard = Object.create({ id: 2, brand: 'Mastercard', last4: '4444' });
 
 function setHandlers(context, { donateHandler = K, saveCardHandler = K } = {}) {
   context.set('donateHandler', donateHandler);
@@ -83,7 +83,7 @@ test('it hides the card list and shows the form when clicking the "add new" butt
 test('it allows selecting a card', function(assert) {
   assert.expect(4);
 
-  this.set('cards', [visa, diners]);
+  this.set('cards', [visa, mastercard]);
 
   page.render(hbs`
     {{donation/donation-container

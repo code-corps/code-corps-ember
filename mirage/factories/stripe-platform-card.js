@@ -1,8 +1,8 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
-  body: faker.list.random('Visa', 'MasterCard'),
+  brand: faker.list.cycle('Visa', 'MasterCard'),
   expMonth: '01',
   expYear: '2022',
-  last4: '4242'
+  last4: faker.list.cycle('4242', '4444')
 });

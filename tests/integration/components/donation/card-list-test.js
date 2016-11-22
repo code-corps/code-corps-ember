@@ -32,25 +32,25 @@ test('it renders proper information', function(assert) {
   assert.expect(3);
 
   this.set('cards', [
-    { id: 1, brand: 'Visa', last4: '4242' },
-    { id: 2, brand: 'Diners', last4: '9999' }
+    { id: 1, brand: 'Visa', last4: '4242', expMonth: '01', expYear: '2022' },
+    { id: 2, brand: 'Mastercard', last4: '4444', expMonth: '01', expYear: '2022' }
   ]);
 
   page.render(hbs`{{donation/card-list cards=cards donate=donateHandler selectCard=selectCardHandler}}`);
 
   assert.equal(page.cards().count, 2, 'Renders correct number of cards.');
-  assert.equal(page.cards(0).cardDescription, 'Visa ending in 4242', 'First card is rendered correctly.');
-  assert.equal(page.cards(1).cardDescription, 'Diners ending in 9999', 'Second card is rendered correctly.');
+  assert.equal(page.cards(0).cardDescription, 'Visa ending in 4242 01/2022', 'First card is rendered correctly.');
+  assert.equal(page.cards(1).cardDescription, 'Mastercard ending in 4444 01/2022', 'Second card is rendered correctly.');
 });
 
 test('it allows user to select card', function(assert) {
   assert.expect(1);
 
   let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
-  let diners = Object.create({ id: 2, brand: 'Diners', last4: '9999' });
+  let mastercard = Object.create({ id: 2, brand: 'Mastercard', last4: '4444' });
 
   this.set('cards', [
-    visa, diners
+    visa, mastercard
   ]);
 
   function selectCardHandler(card) {
