@@ -252,4 +252,6 @@ export default function(server) {
     let [category] = server.schema.categories.where({ name }).models;
     server.create('project-category', { category, project });
   });
+
+  server.createList('stripe-platform-card', 2, { user: owner });
 }
