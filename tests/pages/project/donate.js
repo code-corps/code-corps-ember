@@ -6,8 +6,8 @@ import errorFormatter from '../components/error-formatter';
 export default create({
   visit: visitable(':organization/:project/donate'),
 
-  clickDonate: clickable('button.donate'),
-  donateButtonIsDisabled: is(':disabled', 'button.donate'),
+  clickDonate: clickable('donation-container--donate'),
+  donateButtonIsDisabled: is(':disabled', 'donation-container--donate'),
 
   cardList,
   creditCard,

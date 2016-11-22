@@ -6,7 +6,7 @@
 </div>
 
 <h3>Payment information</h3>
-<p class="payment-information">
+<p class="donation-container--payment-information">
   Your payment method will be charged {{format-currency donationAmount}}
   per month to support {{projectTitle}}.
 </p>
@@ -23,7 +23,7 @@
 {{/if}}
 
 {{#if canDonate}}
-  <button class="default donate large" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
+  <button class="default donation-container--donate large" {{action (action donate selectedCard)}} disabled={{donationDisabled}}>Donate</button>
 
   {{!show errors}}
   {{yield}}

@@ -1,6 +1,6 @@
 .donation-status {
   .donation-status__become-a-donor {
-    .donation-status--become-a-donor__button {
+    .donation-status__become-a-donor--button {
       width: 100%;
     }
   }
@@ -35,9 +35,5 @@
     .donation-status__create-donation__continue {
       flex: 1;
     }
-  }
-
-  .donation-status__show-donation {
-
   }
 }

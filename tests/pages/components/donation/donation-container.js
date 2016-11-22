@@ -10,10 +10,10 @@ export default {
 
   cardFormIsVisible: isVisible('.credit-card-form'),
   cardListIsVisible: isVisible('.card-list'),
-  donationButtonIsVisible: isVisible('button.donate'),
+  donationButtonIsVisible: isVisible('.donation-container--donate'),
 
-  clickSubmit: clickable('button.donate'),
+  clickSubmit: clickable('.donation-container--donate'),
 
-  donationAmountText: text('.donation-amount'),
-  paymentInformationText: text('.payment-information')
+  donationAmountText: text('.donation-container__donation-amount'),
+  paymentInformationText: text('.donation-container--payment-information')
 };

@@ -3,10 +3,6 @@
     display: flex;
     justify-content: space-between;
 
-    .donation-progress__information__percentage {
-      text-align: right;
-    }
-
     .donation-progress__information__descriptive-text {
       color: $gray;
     }
@@ -14,6 +10,10 @@
     .donation-progress__information__value {
       font-size: $header-font-size-large;
       font-weight: 600;
+    }
+
+    .donation-progress__information__percentage {
+      text-align: right;
     }
   }
 

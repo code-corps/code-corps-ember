@@ -29,7 +29,7 @@ moduleForComponent('donations/create-donation', 'Integration | Component | donat
 test('it renders properly', function(assert) {
   assert.expect(6);
 
-  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+  page.render(hbs`{{donations/create-donation class="donation-status__create-donation" continue=continueHandler}}`);
 
   assert.ok(page.setTo10.isRendered, 'Button for preset amount of 10 is rendered.');
   assert.ok(page.setTo15.isRendered, 'Button for preset amount of 15 is rendered.');
@@ -42,7 +42,7 @@ test('it renders properly', function(assert) {
 test('preset amount buttons unset the input value', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+  page.render(hbs`{{donations/create-donation class="donation-status__create-donation" continue=continueHandler}}`);
 
   page.setTo10.clickButton();
   assert.equal(page.customAmountValue, '', 'Button was clicked, so custom value should be unset.');
@@ -57,7 +57,7 @@ test('clicking "continue" calls action with present amount as argument', functio
 
   setHandler(this, continueHandler);
 
-  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+  page.render(hbs`{{donations/create-donation class="donation-status__create-donation" continue=continueHandler}}`);
 
   page.setTo15.clickButton();
   page.clickContinue();
@@ -72,7 +72,7 @@ test('clicking "continue" calls action with custom amount as argument', function
 
   setHandler(this, continueHandler);
 
-  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+  page.render(hbs`{{donations/create-donation class="donation-status__create-donation" continue=continueHandler}}`);
 
   page.customAmount(22);
   page.clickContinue();
@@ -81,7 +81,7 @@ test('clicking "continue" calls action with custom amount as argument', function
 test('buttons do not activate when custom amount is set to preset value', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/create-donation continue=continueHandler}}`);
+  page.render(hbs`{{donations/create-donation class="donation-status__create-donation" continue=continueHandler}}`);
 
   page.customAmount(50);
   assert.notOk(page.setTo50.isActive, 'Related button should not be active.');

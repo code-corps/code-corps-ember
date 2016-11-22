@@ -29,7 +29,7 @@ moduleForComponent('donations/become-a-donor', 'Integration | Component | donati
 test('it renders button', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/become-a-donor becomeADonor=becomeADonorHandler}}`);
+  page.render(hbs`{{donations/become-a-donor class="donation-status__become-a-donor" becomeADonor=becomeADonorHandler}}`);
 
   assert.ok(page.rendersButton, 'The component button is rendered');
 });
@@ -43,7 +43,7 @@ test('it calls action when button is clicked', function(assert) {
 
   setHandler(this, becomeADonorHandler);
 
-  page.render(hbs`{{donations/become-a-donor becomeADonor=becomeADonorHandler}}`);
+  page.render(hbs`{{donations/become-a-donor class="donation-status__become-a-donor" becomeADonor=becomeADonorHandler}}`);
 
   page.clickButton();
 });
