@@ -64,8 +64,8 @@ function generatePreviewMentions(schema, preview) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
-  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'stripe-accounts', 'stripe-platform-cards', 'stripe-platform-customers', 'stripe-subscriptions',
+  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories', 'slugged-routes',
+  'stripe-connect-accounts', 'stripe-platform-cards', 'stripe-platform-customers', 'stripe-subscriptions', 'stripe-plans',
   'user-categories', 'users'
 ];
 
@@ -397,11 +397,17 @@ export default function() {
   this.get('/skills/:id');
 
   /**
-   * Stripe accounts
+   * Stripe connect accounts
    */
 
-  this.post('/stripe-accounts');
-  this.get('/stripe-accounts/:id');
+  this.post('/stripe-connect-accounts');
+  this.get('/stripe-connect-accounts/:id');
+
+  /**
+   * Stripe plans
+   */
+
+  this.post('/stripe-plans');
 
   /**
    * Stripe platform cards
@@ -491,7 +497,7 @@ export default function() {
     if (models.length > 0) {
       return {
         // token encoded at https://jwt.io/
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJqb3NoQGNvZGVybHkuY29tIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwfQ.QVDyAznECIWL6DjDs9iPezvMmoPuzDqAl4bQ6CY-fCQ',
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlcm5hbWUiOiJvd25lckBjb2RlY29ycHMub3JnIiwidXNlcl9pZCI6MSwiZXhwIjo3MjAwMDAwMH0.LxkkKMcQoccAA0pphgRfXPSLdyaCawlK1gB3yPCht2s',
         user_id: models[0].id
       };
     } else {

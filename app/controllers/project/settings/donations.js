@@ -1,9 +1,26 @@
 import Ember from 'ember';
 
-const { Controller } = Ember;
+const {
+  Controller,
+  inject: { service }
+} = Ember;
 
 export default Controller.extend({
+  store: service(),
+
   actions: {
+    /**
+     * Activates donations for a project by creating an associated stripe plan record
+     *
+     * @method addDonationGoal
+     * @param  {DS.Model} project A project record to activate donations for.
+     */
+    activateDonations(project) {
+      this.get('store')
+          .createRecord('stripe-plan', { project })
+          .save();
+    },
+
     /**
      * Action which calls to initialize a new donation goal record
      * for the current project.

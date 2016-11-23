@@ -152,6 +152,10 @@ module.exports = function(environment) {
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
+
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    };
   }
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';

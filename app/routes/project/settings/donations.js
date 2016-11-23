@@ -48,11 +48,19 @@ export default Route.extend(CanMixin, {
    */
   model() {
     let project = this.modelFor('project');
-    let stripeAuth = get(this, 'store').queryRecord('stripe-auth', { projectId: project.id });
-
-    // the project is not actually a promise, but an actual record instead.
-    // However, RSVP.hash knows how to deal with that.
-    return RSVP.hash({ project, stripeAuth });
+    // need to try and fetch an existing account
+    // TODO: We could consider just returning a hash of all 3 requests,
+    // but this way, we don't do a Stripe.Auth request if we already performed a connect
+    return get(project, 'organization.stripeConnectAccount').then((stripeConnectAccount) => {
+      if (stripeConnectAccount) {
+        // there is an existing account, no need to init the stripeAuth
+        return RSVP.hash({ project, stripeConnectAccount });
+      } else {
+        // there is no existing account. need to do stripeAuth and render connect button
+        let stripeAuth = get(this, 'store').queryRecord('stripe-auth', { projectId: project.id });
+        return RSVP.hash({ project, stripeAuth });
+      }
+    });
   },
 
   /**
@@ -68,11 +76,11 @@ export default Route.extend(CanMixin, {
    * @param  {DS.Model} modelHash.project    The currently loaded project
    * @param  {DS.Model} modelHash.stripeAuth The stripeAuth record, for the current project
    */
-  setupController(controller, { project, stripeAuth }) {
+  setupController(controller, { project, stripeAuth = null, stripeConnectAccount = null }) {
     if (project.get('donationGoals.length') == 0) {
       controller.send('addDonationGoal', project);
     }
 
-    controller.setProperties({ project, stripeAuth });
+    controller.setProperties({ project, stripeAuth, stripeConnectAccount });
   }
 });

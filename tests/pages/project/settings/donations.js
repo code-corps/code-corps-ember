@@ -32,7 +32,7 @@ export default create({
     href: attribute('href')
   },
 
+  clickActivateDonationGoals: clickable('.activate-donations'),
   clickAddNew: clickable('.add'),
-
   clickStripeConnectButton: clickable('.stripe-connect')
 });

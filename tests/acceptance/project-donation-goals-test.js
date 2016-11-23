@@ -39,6 +39,7 @@ test('it renders existing donation goals', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
   server.createList('donation-goal', 3, { project });
   server.createList('donation-goal', 2);
 
@@ -56,6 +57,7 @@ test('it sets up a new unsaved donation goal if there are no donation goals, whi
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 
@@ -83,6 +85,7 @@ test('it is possible to add a donation goal when donation goals already exists',
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -111,6 +114,7 @@ test('it allows editing of existing donation goals', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -139,6 +143,7 @@ test('cancelling edit of an unsaved new goal removes that goal from the list', f
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -162,6 +167,7 @@ test('cancelling edit of an unsaved existing goal keeps that goal in the list', 
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  organization.createStripeConnectAccount();
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -177,5 +183,28 @@ test('cancelling edit of an unsaved existing goal keeps that goal in the list', 
 
   andThen(() => {
     assert.equal(projectDonationGoalsPage.donationGoals().count, 1, 'Existing goal is still rendered.');
+  });
+});
+
+test('it allows activating donations for the project', function(assert) {
+  assert.expect(2);
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  organization.createStripeConnectAccount();
+  server.createList('donation-goal', 1, { project });
+
+  authenticateAsMemberOfRole(this.application, server, organization, 'owner');
+
+  projectDonationGoalsPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectDonationGoalsPage.clickActivateDonationGoals();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.stripePlans.all().models.length, 1, 'A single plan was created.');
+    let plan = server.schema.stripePlans.first();
+    assert.equal(plan.projectId, project.id, 'Project was correctly assigned to created plan.');
   });
 });
