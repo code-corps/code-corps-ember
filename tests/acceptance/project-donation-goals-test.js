@@ -203,8 +203,8 @@ test('it allows activating donations for the project', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(server.schema.stripePlans.all().models.length, 1, 'A single plan was created.');
-    let plan = server.schema.stripePlans.first();
+    assert.equal(server.schema.stripeConnectPlans.all().models.length, 1, 'A single plan was created.');
+    let plan = server.schema.stripeConnectPlans.first();
     assert.equal(plan.projectId, project.id, 'Project was correctly assigned to created plan.');
   });
 });

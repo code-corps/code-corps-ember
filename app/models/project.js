@@ -22,7 +22,7 @@ export default Model.extend({
   tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
-  stripePlan: belongsTo('stripe-plan', { async: true }),
+  stripeConnectPlan: belongsTo('stripe-connect-plan', { async: true }),
 
   hasOpenTasks: computed.gt('openTasksCount', 0),
   hasPendingMembers: computed.alias('organization.hasPendingMembers'),

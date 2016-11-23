@@ -269,3 +269,17 @@ test('it prevents activating donations if there are no persisted records', funct
 
   assert.equal(this.$('.activate-donations').length, 0, 'The "activate donations" button is not rendered');
 });
+
+test('it prevents activating donations if there is already a plan associated with a project', function(assert) {
+  assert.expect(1);
+
+  let mockGoals = [
+    Object.create({ isEditing: false, isNew: true })
+  ];
+
+  this.set('project', Object.create({ donationGoals: mockGoals, stripeConnectPlan: {} }));
+
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+
+  assert.equal(this.$('.activate-donations').length, 0, 'The "activate donations" button is not rendered');
+});

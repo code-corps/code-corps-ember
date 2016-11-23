@@ -65,7 +65,7 @@ function generatePreviewMentions(schema, preview) {
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories', 'slugged-routes',
-  'stripe-connect-accounts', 'stripe-platform-cards', 'stripe-platform-customers', 'stripe-subscriptions', 'stripe-plans',
+  'stripe-connect-accounts', 'stripe-platform-cards', 'stripe-platform-customers', 'stripe-subscriptions', 'stripe-connect-plans',
   'user-categories', 'users'
 ];
 
@@ -407,7 +407,8 @@ export default function() {
    * Stripe plans
    */
 
-  this.post('/stripe-plans');
+  this.post('/stripe-connect-plans');
+  this.get('/stripe-connect-plans/:id');
 
   /**
    * Stripe platform cards
