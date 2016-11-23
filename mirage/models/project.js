@@ -6,5 +6,5 @@ export default Model.extend({
   tasks: hasMany(),
   projectCategories: hasMany(),
   projectSkills: hasMany(),
-  stripePlan: belongsTo()
+  stripeConnectPlan: belongsTo()
 });

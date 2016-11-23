@@ -48,7 +48,7 @@ export default Component.extend({
    * @property canActivateDonations
    * @type {Boolean}
    */
-  canActivateDonations: computed.alias('hasExistingDonationGoals'),
+  canActivateDonations: computed.and('hasExistingDonationGoals', '_donationsInactive'),
 
   /**
    * Indicates if the user can cancel adding or editing a donation goal.
@@ -80,6 +80,8 @@ export default Component.extend({
   hasExistingDonationGoals: computed.notEmpty('_existingDonationGoals'),
 
   _currentlyEditingDonationGoals: computed.notEmpty('_editedDonationGoals'),
+  _donationsActive: computed.bool('project.stripeConnectPlan.id'),
+  _donationsInactive: computed.not('_donationsActive'),
   _editedDonationGoals: computed.filterBy('project.donationGoals', 'isEditing'),
   _existingDonationGoals: computed.setDiff('project.donationGoals', '_newDonationGoals'),
   _newDonationGoals: computed.filterBy('project.donationGoals', 'isNew')

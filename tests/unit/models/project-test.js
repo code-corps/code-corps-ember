@@ -16,7 +16,7 @@ moduleForModel('project', 'Unit | Model | project', {
     'model:project-category',
     'model:project-skill',
     'model:stripe-connect-account',
-    'model:stripe-plan',
+    'model:stripe-connect-plan',
     'model:task',
     'model:user'
   ]
@@ -33,7 +33,7 @@ testForAttributes('project', [
 ]);
 
 testForBelongsTo('project', 'organization');
-testForBelongsTo('project', 'stripePlan');
+testForBelongsTo('project', 'stripeConnectPlan');
 
 testForHasMany('project', 'tasks');
 testForHasMany('project', 'projectCategories');

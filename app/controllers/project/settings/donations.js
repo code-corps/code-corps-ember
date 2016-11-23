@@ -17,7 +17,7 @@ export default Controller.extend({
      */
     activateDonations(project) {
       this.get('store')
-          .createRecord('stripe-plan', { project })
+          .createRecord('stripe-connect-plan', { project })
           .save();
     },
 

@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from 'code-corps-ember/tests/helpers/relationship';
 
-moduleForModel('stripe-plan', 'Unit | Model | stripe plan', {
+moduleForModel('stripe-connect-plan', 'Unit | Model | stripe connect plan', {
   needs: ['model:project']
 });
 
@@ -10,4 +10,4 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForBelongsTo('stripe-plan', 'project');
+testForBelongsTo('stripe-connect-plan', 'project');
