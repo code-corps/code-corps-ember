@@ -1,6 +1,6 @@
 html {
   font-family: $body-font-family;
-  font-size: $body-font-size-normal;  
+  font-size: $body-font-size-normal;
 
   &.danger {
     background: $danger-color;
@@ -83,11 +83,6 @@ ul {
 
 .empty-state {
   color: $light-text;
-}
-
-.additional-content {
-  color: $light-text;
-  font-size: 12px;
 }
 
 .overflow-hidden {

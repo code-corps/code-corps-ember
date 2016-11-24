@@ -1,15 +1,15 @@
-<div class="donation-amount">
+<div class="donation-container__amount">
   <h3>{{format-currency donationAmount}}</h3>
-  <div class="footnote additional-content">
-    given each month
-  </div>
+  <footer>given each month</footer>
 </div>
 
-<h3>Payment information</h3>
-<p class="payment-information">
-  Your payment method will be charged {{format-currency donationAmount}}
-  per month to support {{projectTitle}}.
-</p>
+<div class="donation-container__information">
+    <h3>Payment information</h3>
+    <p>
+      Your payment method will be charged {{format-currency donationAmount}}
+      per month to support {{projectTitle}}.
+    </p>
+</div>
 
 {{#if showCardForm}}
   {{#donation/credit-card
@@ -21,25 +21,22 @@
     {{yield}}
   {{/donation/credit-card}}
 {{else}}
-    <h3>Select card</h3>
-    {{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action (mut selectedCard))}}
-    <!-- add-card class below should be updated to follow BEM -->
-    <button class="add-card button--small" {{action 'addCard'}}>Add Card</button>
-
+    {{donation/card-list
+        cards=cards
+        selectedCard=selectedCard
+        selectCard=(action (mut selectedCard))
+    }}
+    <button class="card-list__button--small" {{action 'addCard'}}>Add Card</button>
 {{/if}}
 
 {{#if canDonate}}
   <button class="default donate large" {{action donate donationAmount selectedCard}} disabled={{donationDisabled}}>Donate</button>
-
   {{!show errors}}
   {{yield}}
-
   <footer>
-    <p class="additional-content">
       Your donation will repeat automatically each month.
       You can cancel or edit your donation at any time.
       By making this donation, you are agreeing to our
       {{link-to "Terms of use" "terms-of-use"}}.
-    </p>
   </footer>
 {{/if}}

@@ -253,5 +253,5 @@ export default function(server) {
     server.create('project-category', { category, project });
   });
 
-  server.createList('stripe-platform-card', 2, { user: owner });
+  server.createList('stripe-platform-card', 6, { user: owner });
 }

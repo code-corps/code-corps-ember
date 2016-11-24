@@ -1,32 +1,34 @@
 .donation-container {
   @include span-columns(5);
   @include shift(7/2);
-
-  .donation-amount {
-    background-color: $light-blue;
-    border: 2px solid $border-light-blue;
-    border-radius: 5px;
-    margin: 20px 0;
-    padding: 15px;
-
-    h3 {
-      margin: 0;
-    }
-
-    .footnote {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-h3 {
+  h3 {
     margin-top: 35px;
     margin-top: 2.5em;
     font-weight: 600; //semi-bold
-}
-
+  }
   button {
     width: 100%;
+  }
+  footer {
+    color: $light-text;
+    font-size: $body-font-size-small;
+    margin-top: 1em;
+  }
+}
+
+.donation-container__amount {
+  background-color: $light-blue;
+  border: 2px solid $border-light-blue;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 15px;
+  h3 {
+    margin: 0;
+  }
+  footer {
+    color: $light-text;
+    font-size: $body-font-size-small;
+    margin: 0;
   }
 }
 
@@ -34,9 +36,8 @@ h3 {
   &__icon-list {
     margin-bottom: 15px;
   }
-
   .cancel-add-card {
-    margin: 10px 0px;
+    margin: 10px 0;
     text-align: center;
   }
 }

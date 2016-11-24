@@ -1,5 +1,6 @@
 .card-item {
     align-items: center;
+    border: 1px solid transparent;
     border-radius: .25em;
     display: flex;
     height: 2.5em;
@@ -10,6 +11,9 @@
     input[type="radio"] {
         margin-right: .7em;
     }
+    &:last-of-type {
+        margin-bottom: 1em;
+    }
 }
 
 .card-item--selected {
@@ -17,8 +21,7 @@
     border: 1px solid $dark-blue;
 }
 
-.card-brand--image {
-    background: url(/assets/images/icons/visa.png) no-repeat top center;
+.card-item__brand {
     background-size: cover;
     border-radius: .3em;
     height: 1.5em;
@@ -27,16 +30,50 @@
     width: 2.5em;
 }
 
-.card-brand--text {
-    font-weight: bold;
+.card-item__brand--amex {
+    background: url(/assets/images/icons/american-express.png) no-repeat top center;
+    @extend .card-item__brand;
 }
 
-.card-info {
+.card-item__brand--diners {
+    background: url(/assets/images/icons/diners-club.png) no-repeat top center;
+    @extend .card-item__brand;
+}
+
+.card-item__brand--discover {
+    background: url(/assets/images/icons/discover.png) no-repeat top center;
+    @extend .card-item__brand;
+}
+
+.card-item__brand--jcb {
+    background: url(/assets/images/icons/jcb.png) no-repeat top center;
+    @extend .card-item__brand;
+}
+
+.card-item__brand--mastercard {
+    background: url(/assets/images/icons/mastercard.png) no-repeat top center;
+    @extend .card-item__brand;
+}
+
+.card-item__brand--visa {
+    background: url(/assets/images/icons/visa.png) no-repeat top center;
+    @extend .card-item__brand;
+}
+
+.card-item__info {
     display: flex;
     flex: 1;
     p {
         margin: 0;
     }
+    span {
+        font-weight: bold;
+        margin: 0;
+    }
+}
+
+.card-item__expiry {
+
 }
 
 // will move this to _buttons.scss once finished styling
@@ -54,4 +91,8 @@
     &:hover {
         background-color: rgba($gray, .1)
     }
+}
+
+.card-list__button--small {
+    @extend .button--small;
 }

@@ -8,14 +8,14 @@ export default {
   cardList,
   creditCard,
 
-  addNewCardButtonIsVisible: isVisible('button.add-card'),
+  addNewCardButtonIsVisible: isVisible('button.card-list__button--small'),
   cardFormIsVisible: isVisible('.credit-card-form'),
   cardListIsVisible: isVisible('.card-list'),
   donationButtonIsVisible: isVisible('button.donate'),
 
-  clickAddCard: clickable('button.add-card'),
+  clickAddCard: clickable('button.card-list__button--small'),
   clickSubmit: clickable('button.donate'),
 
-  donationAmountText: text('.donation-amount'),
-  paymentInformationText: text('.payment-information')
+  donationAmountText: text('.donation-container__amount'),
+  paymentInformationText: text('.donation-container__information')
 };
