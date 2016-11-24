@@ -37,7 +37,7 @@
     "ember-cli-deploy-revision-data": "0.3.2",
     "ember-cli-deploy-s3": "0.4.0",
     "ember-cli-deploy-s3-index": "0.4.0",
-    "ember-cli-deploy-sentry": "0.4.0",
+    "ember-cli-deploy-sentry": "0.5.1",
     "ember-cli-deploy-slack": "0.1.0",
     "ember-cli-dotenv": "1.2.0",
     "ember-cli-es5-shim": "0.3.0",
