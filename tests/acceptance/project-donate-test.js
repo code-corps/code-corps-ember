@@ -114,7 +114,6 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
   });
 
   andThen(() => {
-    projectDonatePage.cardList.cards(0).clickCard();
     projectDonatePage.clickDonate();
   });
 
@@ -128,8 +127,8 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
     assert.ok(card, 'Card was created with proper attributes.');
     assert.equal(card.userId, user.id, 'Card was assigned to current user');
 
-    // amount is 1000, in cents
-    let subscription = server.schema.stripeSubscriptions.findBy({ amount: 1000 });
+    // quantity is 1000, in cents
+    let subscription = server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 });
     assert.ok(subscription, 'Subscription was created sucessfully.');
     assert.equal(subscription.userId, user.id, 'User was set to current user.');
     assert.equal(subscription.projectId, project.id, 'Project was set to current project.');
@@ -203,25 +202,24 @@ test('Shows validation errors when creating subscription fails', function(assert
   andThen(() => {
     let done = assert.async();
 
-    server.post('/stripe-subscriptions', function() {
+    server.post('/stripe-connect-subscriptions', function() {
       done();
       return new Mirage.Response(422, {}, {
         errors: [{
           id: 'VALIDATION_ERROR',
-          source: { pointer: 'data/attributes/amount' },
+          source: { pointer: 'data/attributes/quantity' },
           detail: 'is invalid',
           status: 422
         }]
       });
     });
-    projectDonatePage.cardList.cards(0).clickCard();
     projectDonatePage.clickDonate();
   });
 
   andThen(() => {
-    assert.notOk(server.schema.stripeSubscriptions.findBy({ amount: 1000 }), 'Subscription was not created.');
+    assert.notOk(server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 }), 'Subscription was not created.');
     assert.equal(currentRouteName(), 'project.donate');
     assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'Amount is invalid', 'Correct error is displayed.');
+    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'Quantity is invalid', 'Correct error is displayed.');
   });
 });

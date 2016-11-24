@@ -13,8 +13,9 @@ export default ApplicationSerializer.extend({
    */
   serializeIntoHash(payload, type, snapshot, options) {
     this._super(payload, type, snapshot, options);
-    if (snapshot.adapterOptions.stripePlatformCardId) {
-      payload.data.attributes.stripePlatformCardId = snapshot.adapterOptions.stripePlatformCardId;
-    }
+    // TODO: We should reconsider our subscription relationships and handle it that way.
+    // Right now, stripeConnectSubscription belongsTo user and stripeConnectPlan
+    // It should instead belong to user, and project
+    payload.data.attributes['project-id'] = snapshot.adapterOptions.projectId;
   }
 });

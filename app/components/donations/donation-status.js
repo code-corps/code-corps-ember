@@ -6,5 +6,5 @@ const {
 
 export default Component.extend({
   classNames: ['donation-status'],
-  processStarted: false
+  donationStatusExpanded: false
 });

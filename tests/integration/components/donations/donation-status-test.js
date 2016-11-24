@@ -37,7 +37,7 @@ test('it renders become-a-donor component initially', function(assert) {
 test('it renders create-donation if the process has started', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-status createDonation=createDonationHandler processStarted=true}}`);
+  page.render(hbs`{{donations/donation-status createDonation=createDonationHandler donationStatusExpanded=true}}`);
 
   assert.ok(page.rendersCreateDonation, 'create-donation subcomponent is rendered.');
 });
@@ -45,7 +45,7 @@ test('it renders create-donation if the process has started', function(assert) {
 test('it renders show-donation if a subscription record is present and assigned', function(assert) {
   assert.expect(2);
 
-  this.set('subscription', { amount: 1.500 });
+  this.set('subscription', { quantity: 1.50 });
   page.render(hbs`{{donations/donation-status subscription=subscription}}`);
 
   assert.ok(page.rendersShowDonation, 'show-donation subcomponent is rendered.');

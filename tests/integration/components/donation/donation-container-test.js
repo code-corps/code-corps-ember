@@ -13,7 +13,6 @@ const {
 } = Ember;
 
 let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
-let diners = Object.create({ id: 2, brand: 'Diners', last4: '9999' });
 
 function setHandlers(context, { donateHandler = K, saveCardHandler = K } = {}) {
   context.set('donateHandler', donateHandler);
@@ -31,70 +30,35 @@ moduleForComponent('donation/donation-container', 'Integration | Component | don
   }
 });
 
-test('it renders new card form when there are no cards to begin with', function(assert) {
-  assert.expect(3);
+test('it renders new card form when there is no card to begin with', function(assert) {
+  assert.expect(2);
 
   this.set('amount', 100);
   this.set('projectTitle', 'CodeCorps');
-  this.set('cards', []);
+  this.set('card', null);
 
   page.render(hbs`
     {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
   `);
 
-  assert.notOk(page.addNewCardButtonIsVisible, 'The button to show the card form is not visible.');
   assert.ok(page.cardFormIsVisible, 'The new card form is rendered automatically.');
-  assert.notOk(page.cardListIsVisible, 'The card list is not visible.');
+  assert.notOk(page.cards(0).isVisible, 'The card item is not visible.');
 });
 
-test('it renders the card list and the "add new" button when there are cards to begin with', function(assert) {
+test('it renders the card item and the "donate" button when a card exists', function(assert) {
   assert.expect(3);
 
-  this.set('cards', [visa]);
+  this.set('card', visa);
 
   page.render(hbs`
     {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
   `);
 
-  assert.ok(page.addNewCardButtonIsVisible, 'The button to show the card form is visible.');
   assert.notOk(page.cardFormIsVisible, 'Credit card form component is not rendered.');
-  assert.ok(page.cardListIsVisible, 'Credit card list is rendered.');
-});
-
-test('it hides the card list and shows the form when clicking the "add new" button', function(assert) {
-  assert.expect(3);
-
-  this.set('cards', [visa]);
-
-  page.render(hbs`
-    {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
-  `);
-
-  page.clickAddCard();
-
-  assert.notOk(page.addNewCardButtonIsVisible, 'The button to show the card form is not visible.');
-  assert.ok(page.cardFormIsVisible, 'The new card form is rendered automatically.');
-  assert.notOk(page.cardListIsVisible, 'The card list is not visible.');
-});
-
-test('it allows selecting a card', function(assert) {
-  assert.expect(4);
-
-  this.set('cards', [visa, diners]);
-
-  page.render(hbs`
-    {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
-  `);
-
-  assert.ok(page.cardList.cards(0).isSelected, 'First card is selected by default.');
-  assert.notOk(page.cardList.cards(1).isSelected, 'Second card is not selected.');
-  page.cardList.cards(1).clickCard();
-  assert.notOk(page.cardList.cards(0).isSelected, 'First card is not selected.');
-  assert.ok(page.cardList.cards(1).isSelected, 'Second card is selected.');
+  assert.ok(page.cards(0).isVisible, 'Credit card item is rendered.');
+  assert.ok(page.donationButtonIsVisible, 'Donation button is rendered.');
 });
 
 test('it handles adding a card correctly', function(assert) {
@@ -122,11 +86,11 @@ test('it handles adding a card correctly', function(assert) {
 
   setHandlers(this, { saveCardHandler });
 
-  this.set('cards', []);
+  this.set('card', null);
 
   page.render(hbs`
     {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
   `);
 
   page.creditCard.cardNumber.fillIn(cardDetails.cardNumber);
@@ -143,7 +107,7 @@ test('it handles donating correctly', function(assert) {
 
   this.set('amount', amount);
 
-  this.set('cards', [visa]);
+  this.set('card', visa);
 
   function donateHandler(amount, sentCard) {
     assert.equal(amount, amount, 'The proper amount is sent.');
@@ -154,7 +118,7 @@ test('it handles donating correctly', function(assert) {
 
   page.render(hbs`
     {{donation/donation-container
-      cards=cards donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
   `);
 
   page.clickSubmit();

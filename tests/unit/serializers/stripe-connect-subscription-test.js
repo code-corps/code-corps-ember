@@ -1,10 +1,11 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('stripe-subscription', 'Unit | Serializer | stripe subscription', {
+moduleForModel('stripe-connect-subscription', 'Unit | Serializer | stripe connect subscription', {
   needs: [
-    'serializer:stripe-subscription',
     'model:project',
+    'model:stripe-connect-plan',
     'model:user',
+    'serializer:stripe-connect-subscription',
     'transform:dollar-cents'
   ]
 });
