@@ -4,7 +4,7 @@ const {
   Component,
   computed,
   computed: {
-    and, gt, not, or
+    and, empty, not, or
   }
 } = Ember;
 
@@ -19,24 +19,15 @@ export default Component.extend({
   }),
   canDonate: and('hasCard', 'isNotAddingCard'),
 
-  hasCard: gt('cards.length', 0),
-  hasNoCard: not('hasCard'),
+  hasCard: not('hasNoCard'),
+  hasNoCard: empty('card'),
   isNotAddingCard: not('isAddingCard'),
 
   showCardForm: or('hasNoCard', 'isAddingCard'),
 
-  init() {
-    this._super(...arguments);
-    this.set('selectedCard', this.get('cards.firstObject'));
-  },
-
   actions: {
     addCard() {
       this.set('isAddingCard', true);
-    },
-
-    selectCard(card) {
-      this.set('selectedCard', card);
     }
   }
 });

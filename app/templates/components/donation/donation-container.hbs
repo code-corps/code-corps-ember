@@ -1,16 +1,15 @@
-<div class="donation-amount">
+<div class="donation-container__amount">
   <h3>{{format-currency donationAmount}}</h3>
-  <div class="footnote additional-content">
-    given each month
-  </div>
+  <footer>given each month</footer>
 </div>
 
-<h3>Payment information</h3>
-<p class="payment-information">
-  Your payment method will be charged {{format-currency donationAmount}}
-  per month to support {{projectTitle}}.
-</p>
-
+<div class="donation-container__information">
+  <h3>Payment information</h3>
+  <p>
+    Your payment method will be charged {{format-currency donationAmount}}
+    per month to support {{projectTitle}}.
+  </p>
+</div>
 
 {{#if card}}
   {{donation/card-item card=card}}
@@ -18,8 +17,9 @@
   {{#donation/credit-card
     canSubmit=canSubmitAddCard
     submit=saveCard
-    canCancel=hasCards
-    cancelAddCard=cancelAddCard}}
+    canCancel=hasCard
+    cancelAddCard=cancelAddCard
+  }}
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}
@@ -27,16 +27,12 @@
 
 {{#if card}}
   <button class="default donate large" {{action donate donationAmount card}} disabled={{donationDisabled}}>Donate</button>
-
   {{!show errors}}
   {{yield}}
-
   <footer>
-    <p class="additional-content">
-      Your donation will repeat automatically each month.
-      You can cancel or edit your donation at any time.
-      By making this donation, you are agreeing to our
-      {{link-to "Terms of use" "terms-of-use"}}.
-    </p>
+    Your donation will repeat automatically each month.
+    You can cancel or edit your donation at any time.
+    By making this donation, you are agreeing to our
+    {{link-to "Terms of use" "terms-of-use"}}.
   </footer>
 {{/if}}

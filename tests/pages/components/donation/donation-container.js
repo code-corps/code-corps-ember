@@ -18,8 +18,8 @@ export default {
 
   clickSubmit: clickable('button.donate'),
 
-  donationAmountText: text('.donation-amount'),
-  paymentInformationText: text('.payment-information'),
+  donationAmountText: text('.donation-container__amount'),
+  paymentInformationText: text('.donation-container__information'),
 
   cards: collection({
     itemScope: '.card-item',
