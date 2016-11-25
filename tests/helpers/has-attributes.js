@@ -11,6 +11,8 @@ import QUnit from 'qunit';
 function compareArrays(actualAttributes, expectedAttributes) {
   expectedAttributes.sort();
 
+  console.log(expectedAttributes, actualAttributes);
+
   return actualAttributes.sort().every(function(element, index) {
     return element === expectedAttributes[index];
   });

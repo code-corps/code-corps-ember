@@ -1,13 +1,13 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
-import { testForHasMany } from '../../helpers/relationship';
+import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 
 moduleForModel('user', 'Unit | Model | user', {
   needs: [
     'model:organization-membership',
+    'model:stripe-connect-subscription',
     'model:stripe-platform-card',
     'model:stripe-platform-customer',
-    'model:stripe-subscription',
     'model:user-category',
     'model:user-role',
     'model:user-skill'
@@ -25,9 +25,10 @@ testForAttributes('user', [
   'state', 'stateTransition', 'twitter', 'username', 'website'
 ]);
 
+testForBelongsTo('user', 'stripePlatformCard');
+
 testForHasMany('user', 'organizationMemberships');
-testForHasMany('user', 'stripePlatformCards');
-testForHasMany('user', 'subscriptions');
+testForHasMany('user', 'stripeConnectSubscriptions');
 testForHasMany('user', 'userCategories');
 testForHasMany('user', 'userRoles');
 testForHasMany('user', 'userSkills');

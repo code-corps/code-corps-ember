@@ -12,7 +12,9 @@
 </p>
 
 
-{{#if showCardForm}}
+{{#if card}}
+  {{donation/card-item card=card}}
+{{else}}
   {{#donation/credit-card
     canSubmit=canSubmitAddCard
     submit=saveCard
@@ -21,13 +23,10 @@
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}
-{{else}}
-  {{donation/card-list cards=cards selectedCard=selectedCard selectCard=(action (mut selectedCard))}}
-  <button class="add-card default" {{action 'addCard'}}>Add new card</button>
 {{/if}}
 
-{{#if canDonate}}
-  <button class="default donate large" {{action donate donationAmount selectedCard}} disabled={{donationDisabled}}>Donate</button>
+{{#if card}}
+  <button class="default donate large" {{action donate donationAmount card}} disabled={{donationDisabled}}>Donate</button>
 
   {{!show errors}}
   {{yield}}

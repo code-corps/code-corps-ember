@@ -26,8 +26,13 @@ export default Route.extend({
     let user = this.get('currentUser.user');
 
     if (user) {
-      return user.get('subscriptions').find((subscription) => {
-        subscription.belongsTo('project').id == project.get('id');
+      let subscriptions = user.get('stripeConnectSubscriptions');
+      let planId = project.belongsTo('stripeConnectPlan').id();
+      return RSVP.hash({ subscriptions, planId }).then(({ subscriptions, planId }) => {
+        let subscription = subscriptions.find((subscription) => {
+          return subscription.belongsTo('stripeConnectPlan').id() === planId;
+        });
+        return RSVP.resolve(subscription);
       });
     } else {
       return null;

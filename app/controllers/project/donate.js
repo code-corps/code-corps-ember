@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   Controller,
   computed: { alias, bool, not },
+  get,
   inject: { service },
   set,
   RSVP
@@ -29,7 +30,6 @@ export default Controller.extend({
 
       return this._createCreditCardToken(cardParams)
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
-                 .then((stripeCard) => this._addCard(stripeCard))
                  .catch((reason) => this._handleError(reason))
                  .finally(() => this._updateAddingCardState(false));
     },
@@ -50,7 +50,7 @@ export default Controller.extend({
 
   _createCreditCardToken(cardParams) {
     let stripeCard = this._tokenParams(cardParams);
-    let stripe = this.get('stripe');
+    let stripe = get(this, 'stripe');
 
     return stripe.card.createToken(stripeCard);
   },
@@ -61,7 +61,7 @@ export default Controller.extend({
   },
 
   _ensureStripePlatformCustomer() {
-    if (this.get('shouldCreateCustomer')) {
+    if (get(this, 'shouldCreateCustomer')) {
       return this._createStripePlatformCustomer();
     } else {
       return RSVP.resolve();
@@ -70,34 +70,32 @@ export default Controller.extend({
 
   _createStripePlatformCustomer() {
     let { user, store } = this.getProperties('user', 'store');
-    let email = user.get('email');
+    let email = get(user, 'email');
 
     return store.createRecord('stripe-platform-customer', { email, user })
                 .save();
   },
 
   _createStripePlatformCard(stripeToken) {
-    let user = this.get('user');
-
-    return user.get('stripePlatformCards')
-               .createRecord({ stripeToken, user })
-               .save();
+    let store = get(this, 'store');
+    let user = get(this, 'user');
+    let card = store.createRecord('stripe-platform-card', { stripeToken, user });
+    return card.save();
   },
 
-  _addCard(stripeCard) {
-    return this.get('user.stripePlatformCards').pushObject(stripeCard);
-  },
+  _createSubscription(quantity) {
+    let projectId = get(this, 'project.id');
+    let user = get(this, 'user');
+    let store = get(this, 'store');
 
-  _createSubscription(amount, stripeCard) {
-    let { project, store, user } = this.getProperties('project', 'store', 'user');
-    let adapterOptions = { stripePlatformCardId: stripeCard.get('id') };
-    let subscription = store.createRecord('stripe-subscription', { amount, project, user, stripeCard });
+    let subscription = store.createRecord('stripe-connect-subscription', { quantity, user });
+    let adapterOptions = { projectId };
 
     return subscription.save({ adapterOptions });
   },
 
   _transitionToThankYou() {
-    let project = this.get('project');
+    let project = get(this, 'project');
     return this.transitionToRoute('project.thankyou', project);
   },
 

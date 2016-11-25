@@ -1,7 +1,7 @@
 {{#if subscription}}
-  {{donations/show-donation amount=subscription.amount}}
-{{else if processStarted}}
+  {{donations/show-donation amount=subscription.quantity}}
+{{else if donationStatusExpanded}}
   {{donations/create-donation continue=(action createDonation)}}
 {{else}}
-  {{donations/become-a-donor becomeADonor=(action (mut processStarted) true)}}
+  {{donations/become-a-donor becomeADonor=(action (mut donationStatusExpanded) true)}}
 {{/if}}

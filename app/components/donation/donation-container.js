@@ -13,17 +13,17 @@ export default Component.extend({
   donationAmount: 0,
   projectTitle: null,
 
-  canAddCard: computed('hasCards', 'isAddingCard', function() {
-    let { hasCards, isAddingCard } = this.getProperties('hasCards', 'isAddingCard');
-    return hasCards ? isAddingCard : true;
+  canAddCard: computed('hasCard', 'isAddingCard', function() {
+    let { hasCard, isAddingCard } = this.getProperties('hasCard', 'isAddingCard');
+    return hasCard ? isAddingCard : true;
   }),
-  canDonate: and('hasCards', 'isNotAddingCard'),
+  canDonate: and('hasCard', 'isNotAddingCard'),
 
-  hasCards: gt('cards.length', 0),
-  hasNoCards: not('hasCards'),
+  hasCard: gt('cards.length', 0),
+  hasNoCard: not('hasCard'),
   isNotAddingCard: not('isAddingCard'),
 
-  showCardForm: or('hasNoCards', 'isAddingCard'),
+  showCardForm: or('hasNoCard', 'isAddingCard'),
 
   init() {
     this._super(...arguments);
