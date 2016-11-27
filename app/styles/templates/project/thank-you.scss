@@ -9,17 +9,27 @@
     }
   }
 
+  &__contributors {
+    @include span-columns(12);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1.4em 0;
+  }
+
   h3 {
     font-size: $header-font-size-large;
     font-weight: 600;
     margin: 10px 0;
   }
 
-  p {
-    margin-bottom: 1.4em;
-  }
-
   &__message {
     color: $text--light;
+
+    p {
+      margin-bottom: 1.4em;
+    }
   }
 }
