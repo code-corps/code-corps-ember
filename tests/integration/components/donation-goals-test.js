@@ -4,15 +4,16 @@ import Ember from 'ember';
 
 const {
   Object,
-  K
+  K,
+  set
 } = Ember;
 
 function setHandlers(context, { addHandler = K, activateDonationsHandler = K, cancelHandler = K, editHandler = K, saveHandler = K } = {}) {
-  context.set('addHandler', addHandler);
-  context.set('activateDonationsHandler', activateDonationsHandler);
-  context.set('cancelHandler', cancelHandler);
-  context.set('editHandler', editHandler);
-  context.set('saveHandler', saveHandler);
+  set(context, 'addHandler', addHandler);
+  set(context, 'activateDonationsHandler', activateDonationsHandler);
+  set(context, 'cancelHandler', cancelHandler);
+  set(context, 'editHandler', editHandler);
+  set(context, 'saveHandler', saveHandler);
 }
 
 moduleForComponent('donation-goals', 'Integration | Component | donation goals', {
@@ -22,16 +23,30 @@ moduleForComponent('donation-goals', 'Integration | Component | donation goals',
   }
 });
 
+test('it renders loading goals when not loaded', function(assert) {
+  assert.expect(1);
+
+  let mockGoals = [
+    Object.create({ isLoaded: false })
+  ];
+
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+
+  this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
+
+  assert.equal(this.$('.donation-goal-loading').length, 1, 'Renders correct number of donation-goal-loading elements');
+});
+
 test('it renders the correct number of subcomponents', function(assert) {
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({}),
-    Object.create({}),
-    Object.create({})
+    Object.create({ isLoaded: true }),
+    Object.create({ isLoaded: true }),
+    Object.create({ isLoaded: true })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
 
@@ -42,12 +57,12 @@ test('it renders the correct number of subcomponents in view or edit mode', func
   assert.expect(2);
 
   let mockGoals = [
-    Object.create({ isEditing: false }),
-    Object.create({ isEditing: true }),
-    Object.create({ isEditing: false })
+    Object.create({ isEditing: false, isLoaded: true  }),
+    Object.create({ isEditing: true, isLoaded: true  }),
+    Object.create({ isEditing: false, isLoaded: true  })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -59,10 +74,10 @@ test('it sends "cancel" action with donation goal as parameter when cancel butto
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: false })
+    Object.create({ isEditing: true, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   let cancelHandler =  function(donationGoal) {
     assert.deepEqual(mockGoals[0], donationGoal, 'Handler got called, with donation goal');
@@ -75,14 +90,14 @@ test('it sends "cancel" action with donation goal as parameter when cancel butto
   this.$('.cancel').click();
 });
 
-test('it sends "edit" action with donation goal as parameter when edit button is clicked', function(assert) {
+test('it sends "edit" action with donation goal as parameter when clicked', function(assert) {
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   let editHandler = function(donationGoal) {
     assert.deepEqual(mockGoals[0], donationGoal, 'Handler got called, with donation goal');
@@ -91,17 +106,17 @@ test('it sends "edit" action with donation goal as parameter when edit button is
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
 
-  this.$('.edit').click();
+  this.$('.donation-goal').click();
 });
 
 test('it sends "save" action with donation goal curried first, and values second when save button is clicked', function(assert) {
   assert.expect(2);
 
   let mockGoals = [
-    Object.create({ amount: 500, description: 'Lorem ipsum', isEditing: true, isNew: false })
+    Object.create({ amount: 500, description: 'Lorem ipsum', isEditing: true, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   let saveHandler = function(donationGoal, values) {
     assert.deepEqual(mockGoals[0], donationGoal, 'First parameter for handler is donation goal');
@@ -118,10 +133,10 @@ test('it does not allow cancelling an edited record if that record is the only o
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: true })
+    Object.create({ isEditing: true, isLoaded: true, isNew: true })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
 
@@ -132,10 +147,10 @@ test('it allows cancelling an edited record if that record is the only one and n
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: false })
+    Object.create({ isEditing: true, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler cancel=cancelHandler save=saveHandler edit=editHandler project=project}}`);
 
@@ -146,11 +161,11 @@ test('it allows cancelling an edited record if that record is new, but there are
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: true }),
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: true, isLoaded: true, isNew: true }),
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -161,11 +176,11 @@ test('it only allows editing a single record at a time', function(assert) {
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: false }),
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: true, isLoaded: true, isNew: false }),
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -176,10 +191,10 @@ test('it does not allow adding a record if a record is being edited', function(a
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: false })
+    Object.create({ isEditing: true, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -190,10 +205,10 @@ test('it does not allow adding a record if a record is being added', function(as
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isNew: true })
+    Object.create({ isEditing: true, isLoaded: true, isNew: true })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -204,10 +219,10 @@ test('it allows adding a record if no record is being added or edited', function
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
 
@@ -218,10 +233,10 @@ test('it calls provided "add" action with project as parameter when add button i
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   let addHandler = function(actualProject) {
     let expectedProject = this.get('project');
@@ -238,7 +253,7 @@ test('it allows activating donations if there are persisted records', function(a
   assert.expect(2);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: false })
+    Object.create({ isEditing: false, isLoaded: true, isNew: false })
   ];
 
   function activateDonationsHandler() {
@@ -247,7 +262,7 @@ test('it allows activating donations if there are persisted records', function(a
 
   setHandlers(this, { activateDonationsHandler });
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
 
@@ -260,10 +275,10 @@ test('it prevents activating donations if there are no persisted records', funct
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: true })
+    Object.create({ isEditing: false, isLoaded: true, isNew: true })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
   this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
@@ -274,10 +289,10 @@ test('it prevents activating donations if there is already a plan associated wit
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isNew: true })
+    Object.create({ isEditing: false, isLoaded: true, isNew: true })
   ];
 
-  this.set('project', Object.create({ donationGoals: mockGoals, stripeConnectPlan: {} }));
+  set(this, 'project', Object.create({ donationGoals: mockGoals, stripeConnectPlan: {} }));
 
   this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 

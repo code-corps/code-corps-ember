@@ -3,6 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
+  achieved: attr(),
   /**
    * Donation amount, in cents
    *
@@ -10,7 +11,7 @@ export default Model.extend({
    * @type { Number }
    */
   amount: attr('dollar-cents'),
-  current: attr('boolean'),
+  current: attr(),
   description: attr(),
 
   project: belongsTo('project', { async: true })

@@ -1,7 +1,15 @@
-.settings {
-  @include span-columns(9);
+.settings-menu {
+  @include span-columns(2.5);
 }
 
-.settings-menu {
-  @include span-columns(3);
+.settings {
+  @include span-columns(9.5);
+}
+
+.settings-main {
+  @include span-columns(8);
+}
+
+.settings-sidebar {
+  @include span-columns(4);
 }

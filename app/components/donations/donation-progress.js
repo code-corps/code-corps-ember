@@ -14,7 +14,8 @@ const {
  *
  * {{donations/donation-progress
  *   donationGoal=donationGoal
- *   amountDonated=amountDonated}}
+ *   amountDonated=amountDonated
+ * }}
  *
  * @class donation/donation-progress
  * @module  Component
@@ -28,6 +29,7 @@ export default Component.extend({
    * @property {Number} amountDonated
    */
   amountDonated: 0,
+
   /**
    * The total amount needed to donate towards the current donation goal.
    * Aliased from the donation goal assigned in the template.
@@ -37,12 +39,18 @@ export default Component.extend({
   amountNeeded: computed.alias('donationGoal.amount'),
 
   /**
+   * The description this donation goal
+   * @property {String} description
+   */
+  description: computed.alias('donationGoal.description'),
+
+  /**
    * A computed field. Uses fields `amountDonated` and `amountNeeded` to
    * compute a percentage.
    *
    * @return {String} The computed percentage, rounded to two decimals.
    */
-  percentage: computed('amountDonated', 'donationGoal.amount', function() {
+  percentage: computed('amountDonated', 'amountNeeded', function() {
     let { amountDonated, amountNeeded } = this.getProperties('amountDonated', 'amountNeeded');
     let percentage = amountDonated / amountNeeded * 100;
     return percentage.toFixed(2);

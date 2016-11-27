@@ -17,12 +17,11 @@ moduleForComponent('donations/show-donation', 'Integration | Component | donatio
 });
 
 test('it renders proper information', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
   this.set('amount', 22.500);
 
   page.render(hbs`{{donations/show-donation amount=amount}}`);
 
-  assert.ok(page.rendersIcon, 'Icon is rendered.');
   assert.equal(page.infoText, 'You pledged $22.50 each month.', 'Proper text is rendered.');
 });

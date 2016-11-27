@@ -2,10 +2,13 @@ import Ember from 'ember';
 
 const {
   Controller,
-  inject: { service }
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 export default Controller.extend({
+  projectDonationGoals: service(),
   store: service(),
 
   actions: {
@@ -16,7 +19,7 @@ export default Controller.extend({
      * @param  {DS.Model} project A project record to activate donations for.
      */
     activateDonations(project) {
-      this.get('store')
+      get(this, 'store')
           .createRecord('stripe-connect-plan', { project })
           .save();
     },
@@ -31,7 +34,8 @@ export default Controller.extend({
      * @param  {DS.Model} project A project record to initialize a new donation goal for.
      */
     addDonationGoal(project) {
-      project.get('donationGoals').createRecord().set('isEditing', true);
+      let donationGoal = get(project, 'donationGoals').createRecord();
+      this.send('editDonationGoal', donationGoal);
     },
 
     /**
@@ -45,9 +49,9 @@ export default Controller.extend({
      * @param  {DS.Model} donationGoal A donation goal record
      */
     cancelDonationGoal(donationGoal) {
-      donationGoal.set('isEditing', false);
+      set(donationGoal, 'isEditing', false);
 
-      if (donationGoal.get('isNew')) {
+      if (get(donationGoal, 'isNew')) {
         donationGoal.destroyRecord();
       }
     },
@@ -55,13 +59,16 @@ export default Controller.extend({
     /**
      * Action which switches a donation goal from view to edit mode.
      *
-     * Trigged when user clicks the edit link.
+     * Trigged when user clicks the donation goal or its edit link.
      *
      * @method editDonationGoal
      * @param  {DS.Model} donationGoal A donation goal record
+     * @param  {Boolean} canEdit Whether you can edit
      */
-    editDonationGoal(donationGoal) {
-      donationGoal.set('isEditing', true);
+    editDonationGoal(donationGoal, canEdit = true) {
+      if (canEdit) {
+        set(donationGoal, 'isEditing', true);
+      }
     },
 
     /**
@@ -76,8 +83,15 @@ export default Controller.extend({
      */
     saveDonationGoal(donationGoal, properties) {
       donationGoal.setProperties(properties);
+      console.log('set');
       donationGoal.save().then((donationGoal) => {
-        donationGoal.set('isEditing', false);
+        let projectDonationGoals = get(this, 'projectDonationGoals');
+        let project = get(this, 'project');
+        project.reload().then((project) => {
+          projectDonationGoals.reload(project).then(() => {
+            this.send('cancelDonationGoal', donationGoal);
+          });
+        });
       });
     }
   }

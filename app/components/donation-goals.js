@@ -2,7 +2,9 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed
+  computed: {
+    and, alias, bool, filterBy, not, notEmpty, setDiff, sort
+  }
 } = Ember;
 
 /**
@@ -28,6 +30,10 @@ const {
  */
 export default Component.extend({
   classNames: ['donation-goals'],
+  sorting: ['amount:desc'],
+
+  donationGoals: alias('project.donationGoals'),
+  sortedDonationGoals: sort('donationGoals', 'sorting'),
 
   /**
    * Indicates if the user can add a new donation goal.
@@ -38,7 +44,7 @@ export default Component.extend({
    * @property canAdd
    * @type {Boolean}
    */
-  canAdd: computed.not('_currentlyEditingDonationGoals'),
+  canAdd: not('_currentlyEditingDonationGoals'),
 
   /**
    * Indicates if the user can activate donations for this project.
@@ -48,7 +54,7 @@ export default Component.extend({
    * @property canActivateDonations
    * @type {Boolean}
    */
-  canActivateDonations: computed.and('hasExistingDonationGoals', '_donationsInactive'),
+  canActivateDonations: and('hasExistingDonationGoals', '_donationsInactive'),
 
   /**
    * Indicates if the user can cancel adding or editing a donation goal.
@@ -58,7 +64,7 @@ export default Component.extend({
    * @property canCancel
    * @type {Boolean}
    */
-  canCancel: computed.alias('hasExistingDonationGoals'),
+  canCancel: alias('hasExistingDonationGoals'),
 
   /**
    * Indicates if the user can start editing a donation goal.
@@ -69,20 +75,20 @@ export default Component.extend({
    * @property canEdit
    * @type {Boolean}
    */
-  canEdit: computed.not('_currentlyEditingDonationGoals'),
+  canEdit: not('_currentlyEditingDonationGoals'),
 
   /**
-   * Indicates if the user has existing donations goals for this project.
+   * Indicates if there are existing donations goals for this project.
    *
    * @property hasExistingDonationGoals
    * @type {Boolean}
    */
-  hasExistingDonationGoals: computed.notEmpty('_existingDonationGoals'),
+  hasExistingDonationGoals: notEmpty('_existingDonationGoals'),
 
-  _currentlyEditingDonationGoals: computed.notEmpty('_editedDonationGoals'),
-  _donationsActive: computed.bool('project.stripeConnectPlan.id'),
-  _donationsInactive: computed.not('_donationsActive'),
-  _editedDonationGoals: computed.filterBy('project.donationGoals', 'isEditing'),
-  _existingDonationGoals: computed.setDiff('project.donationGoals', '_newDonationGoals'),
-  _newDonationGoals: computed.filterBy('project.donationGoals', 'isNew')
+  _currentlyEditingDonationGoals: notEmpty('_editedDonationGoals'),
+  _donationsActive: bool('project.stripeConnectPlan.id'),
+  _donationsInactive: not('_donationsActive'),
+  _editedDonationGoals: filterBy('project.donationGoals', 'isEditing'),
+  _existingDonationGoals: setDiff('project.donationGoals', '_newDonationGoals'),
+  _newDonationGoals: filterBy('project.donationGoals', 'isNew')
 });

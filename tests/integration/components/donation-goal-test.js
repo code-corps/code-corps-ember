@@ -56,16 +56,3 @@ test('it does not render the edit link, if canEdit flag is set to false', functi
 
   assert.equal(this.$('.edit').length, 0, 'Edit button is not rendered');
 });
-
-test('it sends the edit action when the edit link is clicked', function(assert) {
-  assert.expect(1);
-
-  let editHandler = function(donationGoal) {
-    assert.deepEqual(mockGoal, donationGoal, 'Handler got called, with donation goal curried');
-  };
-  setHandler(this, editHandler);
-
-  this.render(hbs`{{donation-goal canEdit=true donationGoal=donationGoal edit=(action editHandler donationGoal)}}`);
-
-  this.$('.edit').click();
-});

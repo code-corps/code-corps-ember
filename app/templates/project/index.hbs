@@ -2,11 +2,25 @@
 
 {{project-details project=project expanded=true}}
 {{project-menu project=project}}
+
 <div class="project-main">
   {{project-long-description project=project}}
 </div>
+
 <div class="project-sidebar">
-  {{donations/donation-status
-    createDonation=(action 'saveSubscription')
-    subscription=subscription}}
+  <div class="project-sidebar__section">
+    <h3>Donations</h3>
+    {{donations/donation-progress
+      amountDonated=project.totalMonthlyDonated
+      donationGoal=project.currentDonationGoal
+    }}
+    {{donations/donation-status
+      createDonation=(action 'saveSubscription')
+      subscription=subscription
+    }}
+  </div>
+
+  <div class="project-sidebar__section">
+    {{organization-members count=project.organization.totalMembersCount members=project.organization.organizationMembers}}
+  </div>
 </div>

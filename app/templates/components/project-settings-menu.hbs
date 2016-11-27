@@ -2,10 +2,13 @@
   {{#if session.isAuthenticated}}
     {{#if (can "manage organization" project.organization membership=credentials.membership) }}
       <li>
-        {{link-to "Basic settings" "project.settings.profile" project.slug}}
+        {{link-to "Contributors" "project.settings.contributors" project.slug}}
       </li>
       <li>
-        {{link-to "Contributors" "project.settings.contributors" project.slug}}
+        {{link-to "Donations" "project.settings.donations" project.slug}}
+      </li>
+      <li>
+        {{link-to "Basic settings" "project.settings.profile" project.slug}}
       </li>
     {{/if}}
   {{/if}}
