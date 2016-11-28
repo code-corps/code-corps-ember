@@ -6,9 +6,12 @@ import {
   fillable,
   visitable
 } from 'ember-cli-page-object';
+import donationProgress from 'code-corps-ember/tests/pages/components/donations/donation-progress';
 
 export default create({
   visit: visitable(':organization/:project/settings/donations'),
+
+  donationProgress,
 
   donationGoals: collection({
     itemScope: '.donation-goals .donation-goal',

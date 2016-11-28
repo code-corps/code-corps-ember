@@ -9,6 +9,7 @@ export default Model.extend({
   base64IconData: attr(),
   closedTasksCount: attr('number'),
   description: attr(),
+  donationsActive: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),
   longDescriptionBody: attr(),

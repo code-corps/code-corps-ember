@@ -112,6 +112,29 @@ test('When authenticated as admin, and project has long description, it allows e
   });
 });
 
+test('Does not show donation progress sidebar if donations are not active', function(assert) {
+  assert.expect(1);
+
+  let user = server.create('user');
+  let organization = createOrganizationWithSluggedRoute();
+
+  let project = server.create('project', {
+    donationsActive: false,
+    organization
+  });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectAboutPage.visit({
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    assert.notOk(projectAboutPage.donationProgress.isVisible, 'The donation progress is not visible.');
+  });
+});
+
 test('Allows donating to a project from the sidebar', function(assert) {
   assert.expect(2);
 
@@ -119,6 +142,7 @@ test('Allows donating to a project from the sidebar', function(assert) {
   let organization = createOrganizationWithSluggedRoute();
 
   let project = server.create('project', {
+    donationsActive: true,
     longDescriptionBody: 'A body',
     longDescriptionMarkdown: 'A body',
     organization
