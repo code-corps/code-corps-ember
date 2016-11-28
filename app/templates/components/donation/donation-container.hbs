@@ -14,25 +14,21 @@
 {{#if card}}
   {{donation/card-item card=card}}
 {{else}}
-  {{#donation/credit-card
-    canSubmit=canSubmitAddCard
-    submit=saveCard
-    canCancel=hasCard
-    cancelAddCard=cancelAddCard
-  }}
+  {{#donation/credit-card isBusy=isBusy submit=(action saveAndDonate)}}
     {{!show errors}}
     {{yield}}
   {{/donation/credit-card}}
 {{/if}}
 
 {{#if card}}
-  <button class="default donate large" {{action donate donationAmount card}} disabled={{donationDisabled}}>Donate</button>
+  <button class="button {{unless isBusy "default"}} large donate" {{action donate}} disabled={{isBusy}}>Donate</button>
   {{!show errors}}
   {{yield}}
-  <footer>
-    Your donation will repeat automatically each month.
-    You can cancel or edit your donation at any time.
-    By making this donation, you are agreeing to our
-    {{link-to "Terms of use" "terms-of-use"}}.
-  </footer>
 {{/if}}
+
+<footer>
+  Your donation will repeat automatically each month.
+  You can cancel or edit your donation at any time.
+  By making this donation, you are agreeing to our
+  {{link-to "Terms of use" "terms-of-use"}}.
+</footer>

@@ -25,26 +25,26 @@ export default Controller.extend({
   shouldCreateCustomer: not('stripeCustomerCreated'),
 
   actions: {
-    saveCard(cardParams) {
+    saveAndDonate(amount, cardParams) {
       this._clearErrors();
+      this._updateIsLoading(true);
 
       return this._createCreditCardToken(cardParams)
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
+                 .then((stripeCard) => this._createSubscription(amount, stripeCard))
+                 .then(() => this._transitionToThankYou())
                  .catch((reason) => this._handleError(reason))
-                 .finally(() => this._updateAddingCardState(false));
+                 .finally(() => this._updateIsLoading(false));
     },
 
     donate(amount, stripeCard) {
-      // I don't think we need a token anymore once the card was created
-      // Should be enough to just pass in the selected stripe card. Stripe can use it
-      // via id, I think
+      this._clearErrors();
+      this._updateIsLoading(true);
+
       return this._createSubscription(amount, stripeCard)
                  .then(() => this._transitionToThankYou())
-                 .catch((reason) => this._handleError(reason));
-    },
-
-    cancelAddCard() {
-      this._updateAddingCardState(false);
+                 .catch((reason) => this._handleError(reason))
+                 .finally(() => this._updateIsLoading(false));
     }
   },
 
@@ -112,8 +112,8 @@ export default Controller.extend({
     };
   },
 
-  _updateAddingCardState(value) {
-    set(this, 'isAddingCard', value);
+  _updateIsLoading(value) {
+    set(this, 'isLoading', value);
   },
 
   _clearErrors() {

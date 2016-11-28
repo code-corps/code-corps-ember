@@ -14,9 +14,9 @@ const {
 
 let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
 
-function setHandlers(context, { donateHandler = K, saveCardHandler = K } = {}) {
+function setHandlers(context, { donateHandler = K, saveAndDonateHandler = K } = {}) {
   context.set('donateHandler', donateHandler);
-  context.set('saveCardHandler', saveCardHandler);
+  context.set('saveAndDonateHandler', saveAndDonateHandler);
 }
 
 moduleForComponent('donation/donation-container', 'Integration | Component | donation/donation container', {
@@ -39,7 +39,7 @@ test('it renders new card form when there is no card to begin with', function(as
 
   page.render(hbs`
     {{donation/donation-container
-      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   assert.ok(page.cardFormIsVisible, 'The new card form is rendered automatically.');
@@ -53,7 +53,7 @@ test('it renders the card item and the "donate" button when a card exists', func
 
   page.render(hbs`
     {{donation/donation-container
-      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   assert.notOk(page.cardFormIsVisible, 'Credit card form component is not rendered.');
@@ -79,18 +79,18 @@ test('it handles adding a card correctly', function(assert) {
     year: '2020'
   };
 
-  function saveCardHandler(actualProps) {
+  function saveAndDonateHandler(actualProps) {
     assert.deepEqual(actualProps, cardDetails, 'Card parameters were passed correctly.');
     return RSVP.resolve();
   }
 
-  setHandlers(this, { saveCardHandler });
+  setHandlers(this, { saveAndDonateHandler });
 
   this.set('card', null);
 
   page.render(hbs`
     {{donation/donation-container
-      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   page.creditCard.cardNumber.fillIn(cardDetails.cardNumber);
@@ -101,7 +101,7 @@ test('it handles adding a card correctly', function(assert) {
 });
 
 test('it handles donating correctly', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
   let amount = 100;
 
@@ -109,16 +109,15 @@ test('it handles donating correctly', function(assert) {
 
   this.set('card', visa);
 
-  function donateHandler(amount, sentCard) {
-    assert.equal(amount, amount, 'The proper amount is sent.');
-    assert.deepEqual(sentCard, visa, 'The proper card is sent.');
+  function donateHandler() {
+    assert.ok(true, 'Action was called.');
   }
 
   setHandlers(this, { donateHandler });
 
   page.render(hbs`
     {{donation/donation-container
-      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveCard=saveCardHandler }}
+      card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   page.clickSubmit();

@@ -40,19 +40,13 @@
 </div>
 
 <button
-  class="button {{unless preventSubmit "default"}} large submit-card"
-  disabled={{preventSubmit}}
+  class="button {{unless isBusyOrInvalid "default"}} large submit-card"
+  disabled={{isBusyOrInvalid}}
   {{action "submit"}}>
-  {{#if isSubmitting}}Adding...{{else}}Add Card{{/if}}
+  {{#if isBusy}}Processing...{{else}}Donate{{/if}}
 </button>
 
-{{#if canCancel}}
-  <div class="cancel-add-card">
-    <a {{action "cancel"}}>Cancel</a>
-  </div>
-{{/if}}
-
-{{#unless isSubmitting}}
+{{#unless isBusy}}
   {{!validation errors can be passed in from parent, using a block}}
   {{yield}}
 {{/unless}}

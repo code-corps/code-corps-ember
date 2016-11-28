@@ -23,9 +23,7 @@ export default Component.extend({
   cardInvalid: not('cardValid'),
   cardValid: and('isCardNumberValid', 'isCVCValid', 'isExpiryValid'),
 
-  preventSubmit: or('isSubmitting', 'cardInvalid'),
-
-  isSubmitting: false,
+  isBusyOrInvalid: or('isBusy', 'cardInvalid'),
 
   date: computed('month', 'year', function() {
     let month = this.get('month');
@@ -81,27 +79,13 @@ export default Component.extend({
     this.setFreshDate();
   },
 
-  _afterSubmit() {
-    if (this.get('isDestroyed')) {
-      return;
-    }
-    this.set('isSubmitting', false);
-  },
-
   actions: {
     submit() {
       this.set('isSubmitting', true);
       let cardAttrs = this.getProperties('cvc', 'cardNumber', 'year', 'month');
       let onSubmit = this.get('submit');
 
-      onSubmit(cardAttrs).finally(() => this._afterSubmit());
-    },
-
-    cancel() {
-      let cancelAddCard = this.get('cancelAddCard');
-
-      this.clearForm();
-      cancelAddCard();
+      onSubmit(cardAttrs);
     }
   }
 });
