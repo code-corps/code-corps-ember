@@ -8,17 +8,19 @@
 </div>
 
 <div class="project-sidebar">
-  <div class="project-sidebar__section">
-    <h3>Donations</h3>
-    {{donations/donation-progress
-      amountDonated=project.totalMonthlyDonated
-      donationGoal=project.currentDonationGoal
-    }}
-    {{donations/donation-status
-      createDonation=(action 'saveSubscription')
-      subscription=subscription
-    }}
-  </div>
+  {{#if project.donationsActive}}
+    <div class="project-sidebar__section">
+      <h3>Donations</h3>
+      {{donations/donation-progress
+        amountDonated=project.totalMonthlyDonated
+        donationGoal=project.currentDonationGoal
+      }}
+      {{donations/donation-status
+        createDonation=(action 'saveSubscription')
+        subscription=subscription
+      }}
+    </div>
+  {{/if}}
 
   <div class="project-sidebar__section">
     {{organization-members count=project.organization.totalMembersCount members=project.organization.organizationMembers}}
