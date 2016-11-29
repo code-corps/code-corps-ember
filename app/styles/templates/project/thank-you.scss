@@ -1,0 +1,29 @@
+.thank-you-container {
+  margin: 3em;
+  text-align: center;
+
+  &__project-icon {
+    $file: "/assets/images/icons/fireworks-large";
+    $height: 100px;
+    $width: 100px;
+    @include background-image-retina($file, "png", $height, $width);
+    display: block;
+    height: $height;
+    margin: 1.4em auto;
+    width: $width;
+  }
+
+  h3 {
+    font-size: $header-font-size-large;
+    font-weight: 600;
+    margin: 10px 0;
+  }
+
+  p {
+    margin-bottom: 1.4em;
+  }
+
+  &__message {
+    color: $light-text;
+  }
+}

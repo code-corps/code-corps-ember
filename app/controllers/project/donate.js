@@ -96,7 +96,7 @@ export default Controller.extend({
 
   _transitionToThankYou() {
     let project = get(this, 'project');
-    return this.transitionToRoute('project.thankyou', project);
+    return this.transitionToRoute('project.thank-you', project);
   },
 
   _handleError(error) {
