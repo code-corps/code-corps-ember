@@ -128,7 +128,7 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
     assert.ok(subscription, 'Subscription was created sucessfully.');
     assert.equal(subscription.userId, user.id, 'User was set to current user.');
     assert.equal(subscription.projectId, project.id, 'Project was set to current project.');
-    assert.equal(currentRouteName(), 'project.thankyou', 'User was redirected to the thank you route.');
+    assert.equal(currentRouteName(), 'project.thank-you', 'User was redirected to the thank you route.');
   });
 });
 
