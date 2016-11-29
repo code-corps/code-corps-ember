@@ -12,11 +12,12 @@
 <div class="input-group">
   <label>
     <span>Card number</span>
-    {{input name="card-number" type="text" value=cardNumber}}
+    {{input-credit-card-number name="card-number" number=cardNumber}}
   </label>
 </div>
 
 <div class="input-group">
+
   <div class="row">
     <label>
       <span>Expiration</span>
@@ -34,7 +35,7 @@
 
     <label>
       <span>Security code</span>
-      {{input name="card-cvc" type="text" value=cvc}}
+      {{input-credit-card-cvc name="card-cvc" cvc=cvc}}
     </label>
   </div>
 </div>
