@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, Object, String } = Ember;
+const { Component, computed, Object } = Ember;
 
 /**
   `error-formatter' returns a formatted error message. Place within an 'if'
@@ -54,46 +54,17 @@ export default Component.extend({
    * @return {Function}             Function which takes the error response and returns a list of messages
    */
   _findHandler(errorResponse) {
-    if (errorResponse.get('isAdapterError')) {
-      return this._findHandlerForAdapterError(errorResponse);
+    if (errorResponse.get('isFriendlyError')) {
+      return this._friendlyErrorMessages;
+    } else if (errorResponse.get('isAdapterError')) {
+      return this._adapterErrorMessages;
     } else if (errorResponse.get('error.type') === 'card_error') {
       return this._stripeCardErrorMessages;
     }
   },
 
-  /**
-   * If the error response is determined to be an adapter error, this
-   * function further determines the type of adapter error and returns
-   * the correct message formatter for it.
-   * @param  {Object} errorResponse The adapter error response received from the server
-   * @return {Function}             Function which takes the response and returns a list of messages
-   */
-  _findHandlerForAdapterError(errorResponse) {
-    let payloadContainsValidationErrors = errorResponse.errors.some((error) => error.status === 422);
-
-    if (payloadContainsValidationErrors) {
-      return this._validationErrorMessages;
-    } else {
-      return this._adapterErrorMessages;
-    }
-  },
-
-  /**
-   * Formats messages for a validation error response
-   * In most cases, we do not need this, since we do not render those elements outside
-   * a form. In some cases, however, we are creating a record in the background, so
-   * we are forced to render those errors separate from a form.
-   *
-   * @param  {Object} errorResponse The payload received from the server
-   * @return {Array}                An array of string messages
-   */
-  _validationErrorMessages(errorResponse) {
-    return (errorResponse.get('errors')).map((e) => {
-      let attributePathElements = e.source.pointer.split('/');
-      let unformattedAttributeName = attributePathElements[attributePathElements.length - 1];
-      let attributeName = String.capitalize(unformattedAttributeName);
-      return `${attributeName} ${e.detail}`;
-    });
+  _friendlyErrorMessages(errorResponse) {
+    return [errorResponse.get('message')];
   },
 
   /**

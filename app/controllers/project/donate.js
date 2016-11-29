@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import FriendlyError from 'code-corps-ember/utils/friendly-error';
 
 const {
   Controller,
@@ -8,6 +9,20 @@ const {
   set,
   RSVP
 } = Ember;
+
+const CUSTOMER_CREATION_ERROR = 'There was a problem in connecting your account with our payment processor. Please try again.';
+const CARD_CREATION_ERROR = 'There was a problem in using your payment information. Please try again.';
+const SUBSCRIPTION_CREATION_ERROR = 'There was a problem in setting up your monthly donation. Please try again.';
+
+function isValidationError(payload) {
+  if (!payload.isAdapterError) {
+    return false;
+  }
+
+  let errors = payload.errors || [];
+
+  return errors.some((e) => e.id == 'VALIDATION_ERROR');
+}
 
 export default Controller.extend({
   amount: null,
@@ -33,7 +48,7 @@ export default Controller.extend({
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._createSubscription(amount, stripeCard))
                  .then(() => this._transitionToThankYou())
-                 .catch((reason) => this._handleError(reason))
+                 .catch((response) => this._handleError(response))
                  .finally(() => this._updateIsLoading(false));
     },
 
@@ -43,17 +58,26 @@ export default Controller.extend({
 
       return this._createSubscription(amount, stripeCard)
                  .then(() => this._transitionToThankYou())
-                 .catch((reason) => this._handleError(reason))
                  .finally(() => this._updateIsLoading(false));
     }
   },
+
+  // credit card token
 
   _createCreditCardToken(cardParams) {
     let stripeCard = this._tokenParams(cardParams);
     let stripe = get(this, 'stripe');
 
-    return stripe.card.createToken(stripeCard);
+    return stripe.card.createToken(stripeCard)
+                      .then((stripeResponse) => RSVP.resolve(stripeResponse))
+                      .catch((reason) => this._handleCreditCardTokenError(reason));
   },
+
+  _handleCreditCardTokenError(response) {
+    return RSVP.reject(response);
+  },
+
+  // card and customer logic
 
   _createCardForPlatformCustomer({ id }) {
     return this._ensureStripePlatformCustomer()
@@ -68,20 +92,40 @@ export default Controller.extend({
     }
   },
 
+  // platform customer
+
   _createStripePlatformCustomer() {
     let { user, store } = this.getProperties('user', 'store');
     let email = get(user, 'email');
 
     return store.createRecord('stripe-platform-customer', { email, user })
-                .save();
+                .save()
+                .then((record) =>RSVP.resolve(record))
+                .catch((response) => this._handleCustomerCreationError(response));
   },
+
+  _handleCustomerCreationError() {
+    let friendlyError = new FriendlyError(CUSTOMER_CREATION_ERROR);
+    return RSVP.reject(friendlyError);
+  },
+
+  // platform card
 
   _createStripePlatformCard(stripeToken) {
     let store = get(this, 'store');
     let user = get(this, 'user');
     let card = store.createRecord('stripe-platform-card', { stripeToken, user });
-    return card.save();
+    return card.save()
+               .then((record) =>RSVP.resolve(record))
+               .catch((response) => this._handleCardCreationError(response));
   },
+
+  _handleCardCreationError() {
+    let friendlyError = new FriendlyError(CARD_CREATION_ERROR);
+    return RSVP.reject(friendlyError);
+  },
+
+  // subscription
 
   _createSubscription(quantity) {
     let projectId = get(this, 'project.id');
@@ -91,17 +135,37 @@ export default Controller.extend({
     let subscription = store.createRecord('stripe-connect-subscription', { quantity, user });
     let adapterOptions = { projectId };
 
-    return subscription.save({ adapterOptions });
+    return subscription.save({ adapterOptions })
+                       .then((record) =>RSVP.resolve(record))
+                       .catch((response) => this._handleSubscriptionCreationError(response));
   },
+
+  _handleSubscriptionCreationError(response) {
+    let friendlyError;
+
+    if (isValidationError(response)) {
+      friendlyError = new FriendlyError('The amount you\'ve set for your monthly donation is invalid.');
+    } else {
+      friendlyError = new FriendlyError(SUBSCRIPTION_CREATION_ERROR);
+    }
+
+    return RSVP.reject(friendlyError);
+  },
+
+  // transitioning
 
   _transitionToThankYou() {
     let project = get(this, 'project');
     return this.transitionToRoute('project.thank-you', project);
   },
 
+  // setting error property
+
   _handleError(error) {
     this.set('error', error);
   },
+
+  // helpers
 
   _tokenParams(cardParams) {
     return {
