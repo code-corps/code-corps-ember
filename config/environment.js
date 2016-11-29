@@ -157,11 +157,14 @@ module.exports = function(environment) {
       store: 'simple-auth-session-store:ephemeral'
     };
   }
+
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
+
+    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
   }
 
   if (environment === 'test') {
