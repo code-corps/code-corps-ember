@@ -13,9 +13,8 @@ export default Component.extend({
 
   actions: {
     save() {
-      let flashMessages = get(this, 'flashMessages');
       get(this, 'organization').save().then(() => {
-        flashMessages.success('Organization updated successfully');
+        get(this, 'flashMessages').clearMessages().success('Organization updated successfully');
       });
     }
   }

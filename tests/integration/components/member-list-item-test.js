@@ -1,9 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
 const {
+  getOwner,
   Object,
   RSVP
 } = Ember;
@@ -52,7 +53,10 @@ function mockMembership(pending) {
 }
 
 moduleForComponent('member-list-item', 'Integration | Component | member list item', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  }
 });
 
 test('it renders the basic information for the user', function(assert) {
@@ -105,7 +109,7 @@ test('it does not render the buttons when not pending', function(assert) {
 });
 
 test('it sends the approve action when clicking approve', function(assert) {
-  assert.expect(7);
+  assert.expect(4);
 
   let membership = Object.create({
     isPending: true,
@@ -118,26 +122,21 @@ test('it sends the approve action when clicking approve', function(assert) {
   this.set('membership', membership);
   this.set('user', user);
 
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf('Membership approved') !== -1);
-      assert.equal(object.type, 'success');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
-
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
   this.$('button.default').click();
+
+  assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'success' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf('Membership approved') !== -1, 'Message includes proper text');
 });
 
 test('it sends the deny action when clicking deny', function(assert) {
-  assert.expect(7);
+  assert.expect(4);
 
   window.confirm = function() {
     return true;
@@ -151,23 +150,18 @@ test('it sends the deny action when clicking deny', function(assert) {
     }
   });
 
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf('Membership denied') !== -1);
-      assert.equal(object.type, 'success');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
-
   this.set('membership', membership);
   this.set('user', user);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
   this.$('button.danger').click();
+
+  assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'success' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf('Membership denied') !== -1, 'Message includes proper text');
 });

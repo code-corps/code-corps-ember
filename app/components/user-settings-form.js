@@ -33,10 +33,8 @@ export default Component.extend({
       @method save
      */
     save() {
-      let flashMessages = get(this, 'flashMessages');
-
-      this.get('user').save().then(function() {
-        flashMessages.success('Profile updated successfully');
+      this.get('user').save().then(() => {
+        get(this, 'flashMessages').clearMessages().success('Profile updated successfully');
       });
     }
   }
