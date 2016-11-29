@@ -114,10 +114,6 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
   });
 
   andThen(() => {
-    projectDonatePage.clickDonate();
-  });
-
-  andThen(() => {
     let customer = server.schema.stripePlatformCustomers.findBy({ email: user.email });
     assert.ok(customer, 'Customer was created with proper attributes.');
     assert.equal(customer.userId, user.id, 'Customer was assigned to current user');
@@ -196,10 +192,6 @@ test('Shows validation errors when creating subscription fails', function(assert
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
-  });
-
-  andThen(() => {
     let done = assert.async();
 
     server.post('/stripe-connect-subscriptions', function() {
@@ -213,7 +205,10 @@ test('Shows validation errors when creating subscription fails', function(assert
         }]
       });
     });
-    projectDonatePage.clickDonate();
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.clickSubmit();
   });
 
   andThen(() => {
