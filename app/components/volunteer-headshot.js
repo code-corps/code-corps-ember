@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 const {
-  A,
   Component,
   computed,
   get
@@ -22,19 +21,19 @@ const {
 export default Component.extend({
 
   /**
-    An array of contributor roles.
+    A computed array of the volunteer's role names.
 
     @property roles
     @type Ember.Array
    */
-  roles: A([
-    'Developer',
-    'Ember Developer',
-    'UX Designer',
-    'Software Engineer',
-    'Project Coordinator',
-    'Designer & Developer'
-  ]),
+  roles: computed('volunteer.userRoles.@each.role', function() {
+    let userRoles = get(this, 'volunteer.userRoles');
+    let roleNames = userRoles.map((userRole) => {
+      return userRole.role.name;
+    });
+
+    return roleNames;
+  }),
 
   /**
     A randomly selected role from the `roles` property.

@@ -14,12 +14,27 @@ const roles = [
   'Designer & Developer'
 ];
 
+function generateUserRoles() {
+  let userRoles = [];
+
+  roles.forEach(function(roleName) {
+    userRoles.push({
+      role: {
+        name: roleName
+      }
+    });
+  });
+
+  return userRoles;
+}
+
 moduleForComponent('volunteer-headshot', 'Integration | Component | volunteer headshot', {
   integration: true,
   beforeEach() {
     this.set('user', {
       name: 'Test User',
-      photoThumbUrl: 'http://fillmurray.com/200/200'
+      photoThumbUrl: 'http://fillmurray.com/200/200',
+      userRoles: generateUserRoles()
     });
     page.setContext(this);
     page.render(hbs`{{volunteer-headshot volunteer=user}}`);
