@@ -1,5 +1,5 @@
 @mixin donation-goal-shared-style {
-  border: 1px solid $border-light;
+  border: 1px solid $gray--lightest;
   border-radius: 4px;
   margin: 10px 0;
   padding: 15px 20px;
@@ -12,8 +12,8 @@
 
   &:hover {
     &.can-edit {
-      background: $blue--light;
-      border-color: $border-light-blue;
+      background: $blue--lighter;
+      border-color: $blue--light;
       cursor: pointer;
     }
   }

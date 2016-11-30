@@ -40,7 +40,7 @@
   }
 
   &.is-dragging {
-    @include outside-border(2px, dashed, $border-default, 75px);
+    @include outside-border(2px, dashed, $gray, 75px);
     background: transparent !important;
 
     p {
@@ -49,7 +49,7 @@
   }
 
   &.active {
-    background: $blue--light !important;
+    background: $blue--lighter !important;
 
     &:before {
       border-color: $blue;

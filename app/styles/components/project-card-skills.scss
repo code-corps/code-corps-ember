@@ -11,7 +11,7 @@
     &::before, &::after {
       content: "";
       flex-grow: 1;
-      background: $border-light;
+      background: $gray--lightest;
       height: 1px;
       font-size: 0px;
       line-height: 0px;

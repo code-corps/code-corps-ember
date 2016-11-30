@@ -89,13 +89,13 @@
 
   &.clear {
     background: white;
-    border: 1px solid $border-default;
+    border: 1px solid $gray;
     color: $text--dark;
     font-weight: 300;
 
     &:focus {
       background: $clear-focus;
-      border-color: darken($border-default, 2%);
+      border-color: darken($gray, 2%);
     }
 
     @include primary-active;
@@ -212,7 +212,7 @@
   &.clear {
     background: $clear-hover;
     background-image: linear-gradient(white, $clear-hover);
-    border-color: $border-default;
+    border-color: $gray;
 
     &:disabled {
       background: white;

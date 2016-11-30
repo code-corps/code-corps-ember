@@ -56,7 +56,7 @@ a {
 }
 
 .error {
-  color: $error-text-color;
+  color: $red;
 }
 
 .left {
@@ -78,7 +78,7 @@ ul {
 }
 
 .border-gray-light {
-  border-color: $border-light;
+  border-color: $gray--lightest;
 }
 
 .empty-state {
@@ -131,7 +131,7 @@ p.subtext {
 .temporary-projects-notice {
   @include span-columns(4);
 
-  border: 1px dashed $border-light;
+  border: 1px dashed $gray--lightest;
   border-radius: 4px;
   color: $text--light;
   min-height: 390px;

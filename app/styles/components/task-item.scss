@@ -4,7 +4,7 @@
 
 .task-item {
   @include clearfix;
-  border-top: 1px solid $border-light;
+  border-top: 1px solid $gray--lightest;
   margin: 0;
   padding: 15px;
   text-align: left;
@@ -14,7 +14,7 @@
   }
 
   &:last-child {
-    border-bottom: 1px solid $border-light;
+    border-bottom: 1px solid $gray--lightest;
   }
 
   .task-icon {
@@ -40,27 +40,27 @@
       background-color: $task-background;
     }
     a:hover {
-      color: $task-color;
+      color: $blue;
     }
   }
 
   &.issue {
     @include taskItemIcon($issue);
     &:hover {
-      background-color: $issue-background;
+      background-color: $red--light;
     }
     a:hover {
-      color: $issue-color;
+      color: $red;
     }
   }
 
   &.idea {
     @include taskItemIcon($idea);
     &:hover {
-      background-color: $idea-background;
+      background-color: $yellow--light;
     }
     a:hover {
-      color: $idea-color;
+      color: $yellow;
     }
   }
 }

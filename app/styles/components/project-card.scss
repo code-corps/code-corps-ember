@@ -1,7 +1,7 @@
 .project-card {
   @include omega(3n);
   @include span-columns(4);
-  border: 1px solid $border-light;
+  border: 1px solid $gray--lightest;
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
