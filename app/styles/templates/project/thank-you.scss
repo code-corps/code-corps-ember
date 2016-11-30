@@ -3,14 +3,10 @@
   text-align: center;
 
   &__project-icon {
-    $file: "/assets/images/icons/fireworks-large";
-    $height: 100px;
-    $width: 100px;
-    @include background-image-retina($file, "png", $height, $width);
-    display: block;
-    height: $height;
     margin: 1.4em auto;
-    width: $width;
+    .animated-high-five {
+      margin: 0 auto;
+    }
   }
 
   h3 {
