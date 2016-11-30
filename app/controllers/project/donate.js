@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
+import { isValidationError } from 'code-corps-ember/utils/error-utils';
 
 const {
   Controller,
@@ -13,16 +14,6 @@ const {
 const CUSTOMER_CREATION_ERROR = 'There was a problem in connecting your account with our payment processor. Please try again.';
 const CARD_CREATION_ERROR = 'There was a problem in using your payment information. Please try again.';
 const SUBSCRIPTION_CREATION_ERROR = 'There was a problem in setting up your monthly donation. Please try again.';
-
-function isValidationError(payload) {
-  if (!payload.isAdapterError) {
-    return false;
-  }
-
-  let errors = payload.errors || [];
-
-  return errors.some((e) => e.id == 'VALIDATION_ERROR');
-}
 
 export default Controller.extend({
   amount: null,

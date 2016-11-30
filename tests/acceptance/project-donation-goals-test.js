@@ -4,6 +4,7 @@ import { authenticateAsMemberOfRole } from 'code-corps-ember/tests/helpers/authe
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectSettingsDonationsPage from '../pages/project/settings/donations';
+import Mirage from 'ember-cli-mirage';
 
 moduleForAcceptance('Acceptance | Project Donation Goals');
 
@@ -247,5 +248,83 @@ test('it does not show donation progress if donations are not active', function(
 
   andThen(() => {
     assert.notOk(projectSettingsDonationsPage.donationProgress.isVisible, 'It does not show donation progress.');
+  });
+});
+
+test('it renders validation errors', function(assert) {
+  assert.expect(3);
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  organization.createStripeConnectAccount();
+
+  authenticateAsMemberOfRole(this.application, server, organization, 'owner');
+
+  let done = assert.async();
+
+  server.post('donation-goals', function() {
+    done();
+    return new Mirage.Response(422, {}, {
+      errors: [{
+        id: 'VALIDATION_ERROR',
+        source: { pointer: 'data/attributes/amount' },
+        detail: 'Amount is required',
+        status: 422
+      }, {
+        id: 'VALIDATION_ERROR',
+        source: { pointer: 'data/attributes/description' },
+        detail: 'Description is required',
+        status: 422
+      }]
+    });
+  });
+
+  projectSettingsDonationsPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    form.clickSave();
+  });
+
+  andThen(() => {
+    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+
+    assert.equal(form.validationErrors().count, 2, 'Both validation errors are rendered.');
+    assert.equal(form.validationErrors(0).message, 'Amount is required');
+    assert.equal(form.validationErrors(1).message, 'Description is required');
+  });
+});
+
+test('it renders other errors', function(assert) {
+  assert.expect(1);
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  organization.createStripeConnectAccount();
+
+  authenticateAsMemberOfRole(this.application, server, organization, 'owner');
+
+  let done = assert.async();
+
+  server.post('donation-goals', function() {
+    done();
+    return new Mirage.Response(500, {}, {
+      errors: [{
+        id: 'INTERNAL SERVER ERROR',
+        title: 'Something went wrong',
+        detail: 'Something went wrong',
+        status: 500
+      }]
+    });
+  });
+
+  projectSettingsDonationsPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectSettingsDonationsPage.editedDonationGoals(0).clickSave();
+  });
+
+  andThen(() => {
+    assert.equal(projectSettingsDonationsPage.errorFormatter.errors().count, 1, 'The error is displayed');
   });
 });
