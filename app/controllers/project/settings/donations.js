@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import FriendlyError from 'code-corps-ember/utils/friendly-error';
+import { isValidationError } from 'code-corps-ember/utils/error-utils';
 
 const {
   Controller,
@@ -6,6 +8,8 @@ const {
   inject: { service },
   set
 } = Ember;
+
+const PROBLEM_SAVING_DONATION_GOAL = 'There was a problem saving your donation goal. Please try again.';
 
 export default Controller.extend({
   projectDonationGoals: service(),
@@ -20,8 +24,8 @@ export default Controller.extend({
      */
     activateDonations(project) {
       get(this, 'store')
-          .createRecord('stripe-connect-plan', { project })
-          .save();
+        .createRecord('stripe-connect-plan', { project })
+        .save();
     },
 
     /**
@@ -74,7 +78,7 @@ export default Controller.extend({
     /**
      * Action which commits changes to a donation goal.
      *
-     * Triggers when user clicks the save button while edditing or
+     * Triggers when user clicks the save button while editing or
      * adding a new donation goal.
      *
      * @method saveDonationGoal
@@ -83,16 +87,19 @@ export default Controller.extend({
      */
     saveDonationGoal(donationGoal, properties) {
       donationGoal.setProperties(properties);
-      console.log('set');
-      donationGoal.save().then((donationGoal) => {
-        let projectDonationGoals = get(this, 'projectDonationGoals');
-        let project = get(this, 'project');
-        project.reload().then((project) => {
-          projectDonationGoals.reload(project).then(() => {
-            this.send('cancelDonationGoal', donationGoal);
-          });
-        });
-      });
+      donationGoal.save()
+                  .then((donationGoal) => this._onDoneSaving(donationGoal))
+                  .catch((response) => this._onFailedSaving(response));
+    }
+  },
+
+  _onDoneSaving(donationGoal) {
+    set(donationGoal, 'isEditing', false);
+  },
+
+  _onFailedSaving(response) {
+    if (!isValidationError(response)) {
+      set(this, 'error', new FriendlyError(PROBLEM_SAVING_DONATION_GOAL));
     }
   }
 });

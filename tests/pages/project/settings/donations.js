@@ -4,9 +4,11 @@ import {
   collection,
   create,
   fillable,
+  text,
   visitable
 } from 'ember-cli-page-object';
 import donationProgress from 'code-corps-ember/tests/pages/components/donations/donation-progress';
+import errorFormatter from 'code-corps-ember/tests/pages/components/error-formatter';
 
 export default create({
   visit: visitable(':organization/:project/settings/donations'),
@@ -26,9 +28,17 @@ export default create({
       amount: fillable('input[name=amount]'),
       description: fillable('textarea[name=description]'),
       clickSave: clickable('.save'),
-      clickCancel: clickable('.cancel')
+      clickCancel: clickable('.cancel'),
+      validationErrors: collection({
+        itemScope: '.error',
+        item: {
+          message: text('')
+        }
+      })
     }
   }),
+
+  errorFormatter,
 
   stripeConnectButton: {
     scope: '.stripe-connect',
