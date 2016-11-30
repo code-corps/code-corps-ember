@@ -23,7 +23,7 @@
     }
 
     a {
-      color: $extra-light-text;
+      color: $text--lighter;
       font-weight: 300;
 
       &.active {
@@ -69,7 +69,7 @@
 }
 
 .filter {
-  color: $light-text;
+  color: $text--light;
   display: block;
   font-size: $body-font-size-small;
   line-height: 22px;
@@ -123,7 +123,7 @@
   margin: 10px 0;
 
   p {
-    color: $extra-light-text;
+    color: $text--lighter;
     float: left;
     font-size: $body-font-size-small;
     line-height: 27px;
@@ -152,11 +152,11 @@
     display: inline-block;
 
     &.all {
-      @include tagLink($extra-light-text);
+      @include tagLink($text--lighter);
     }
 
     &.task {
-      @include tagLink($dark-blue);
+      @include tagLink($blue);
     }
 
     &.issue {
@@ -164,7 +164,7 @@
     }
 
     &.idea {
-      @include tagLink($dark-yellow, $dark-text);
+      @include tagLink($yellow, $text--dark);
     }
   }
 

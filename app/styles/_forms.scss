@@ -169,7 +169,7 @@ form {
     li {
       margin-bottom: 2px;
       &.highlight {
-        color: $dark-blue;
+        color: $blue;
       }
     }
   }
@@ -217,7 +217,7 @@ select {
 
     &.idea {
       background: $idea-color;
-      color: $dark-text;
+      color: $text--dark;
     }
   }
 }

@@ -16,8 +16,8 @@
 @mixin primary-active {
   &.primary-active {
     &.active {
-      background: $primary-color;
-      border-color: $primary-color;
+      background: $blue;
+      border-color: $blue;
       color: white;
     }
   }
@@ -68,7 +68,7 @@
     &.on-solid {
       background: transparent;
       &:hover {
-        color: $primary-color;
+        color: $blue;
       }
     }
   }
@@ -76,7 +76,7 @@
   &.clear {
     background: white;
     border: 1px solid $border-default;
-    color: $dark-text;
+    color: $text--dark;
     font-weight: 300;
 
     &:focus {

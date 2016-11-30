@@ -1,5 +1,5 @@
 .pager-control {
-  color: $dark-text;
+  color: $text--dark;
   margin: 20px 0;
   text-align: center;
 
@@ -29,7 +29,7 @@
     a, .first, .last {
       border: 1px solid $border-default;
       border-radius: 0;
-      color: $dark-text;
+      color: $text--dark;
       float: left;
       margin-left: -1px;
       padding: 6px 12px;
@@ -37,13 +37,13 @@
       transition: none;
 
       &.active {
-        background: $primary-color;
-        border-color: $primary-color;
+        background: $blue;
+        border-color: $blue;
         color: white;
         z-index: 3;
         &:hover {
-          background: $primary-color;
-          border-color: $primary-color;
+          background: $blue;
+          border-color: $blue;
         }
       }
 
@@ -55,11 +55,11 @@
 
     .disabled {
       background-color: $clear-hover;
-      color: $extra-light-text;
+      color: $text--lighter;
       cursor: default;
       &:hover {
         background-color: $clear-hover;
-        color: $extra-light-text;
+        color: $text--lighter;
       }
     }
   }

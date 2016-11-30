@@ -14,7 +14,7 @@
 
   a {
     border-bottom: 3px solid transparent;
-    color: $extra-light-text;
+    color: $text--lighter;
     display: block;
     font-weight: 500;
     margin-bottom: -1px;
@@ -22,27 +22,27 @@
     text-decoration: none;
 
     &.active {
-      border-bottom-color: $primary-color;
-      color: $primary-color;
+      border-bottom-color: $blue;
+      color: $blue;
       font-weight: 700;
 
       span.info {
-        background: $dark-blue;
+        background: $blue;
       }
     }
 
     &:hover {
-      border-bottom-color: $primary-color;
-      color: $primary-color;
+      border-bottom-color: $blue;
+      color: $blue;
       transition: border-bottom-color ease 0.3s;
 
       span.info {
-        background: $dark-blue;
+        background: $blue;
       }
     }
 
     span.info {
-      background: $extra-light-text;
+      background: $text--lighter;
       border-radius: 4px;
       color: white;
       font-size: $body-font-size-small;

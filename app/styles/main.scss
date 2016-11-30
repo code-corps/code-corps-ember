@@ -82,7 +82,7 @@ ul {
 }
 
 .empty-state {
-  color: $light-text;
+  color: $text--light;
 }
 
 .overflow-hidden {
@@ -133,7 +133,7 @@ p.subtext {
 
   border: 1px dashed $border-light;
   border-radius: 4px;
-  color: $light-text;
+  color: $text--light;
   min-height: 390px;
   padding: 20px;
 
@@ -167,7 +167,7 @@ p.subtext {
   }
 
   p {
-    color: $light-text;
+    color: $text--light;
     line-height: 2em;
   }
 }

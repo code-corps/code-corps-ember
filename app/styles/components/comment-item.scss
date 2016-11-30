@@ -30,12 +30,12 @@
 .comment-info {
   position: relative;
   font-size: $body-font-size-small;
-  color: $light-text;
+  color: $text--light;
   line-height: 20px;
 
   a {
     &.username {
-      color: $light-text;
+      color: $text--light;
       font-weight: 600;
     }
 
@@ -75,7 +75,7 @@
   }
 
   a.username {
-    color: $dark-text;
+    color: $text--dark;
     font-weight: 600;
     &:hover {
       color: $link-color;

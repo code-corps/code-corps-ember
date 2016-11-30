@@ -10,7 +10,7 @@
     }
 
     .description {
-      color: $light-text;
+      color: $text--light;
       font-size: $body-font-size-small;
     }
 
@@ -26,7 +26,7 @@
   }
 
   p {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-normal;
     line-height: 22px;
     margin: 20px 0;

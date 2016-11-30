@@ -1,59 +1,115 @@
-// Colors
+//
+// GUIDELINES
+//
+
+// color variables should follow the same modular naming convention used when styling components
+// the root of the variable name is the name of the color (e.g. blue) followed by a modifier
+// --light --lighter, --dark, --darker
+// modifiers should only be used if a base color has been set
+// e.g. $red--darker only makes sense if $red already exists
+// hex codes should only be used on the original variable names
+// whenever a color is needed it should use a variable or a variation of it (e.g. darken($green, 5%))
+
+// This is a great guide about hex colors
+// https://www.smashingmagazine.com/2012/10/the-code-side-of-color/
+
+//
+// BASE COLORS
+//
+
+$blue: #08A8FC;
+$blue--light: #EDF9FF;
+$blue--lighter: #F6FCFF;
+$blue--dark: #1B9BE5;
+
 $gray: #CCC;
-$red: #c0392b;
+//$gray--dark: #666;
+//$gray--darker: #333;
+
+// we need a standard scale of grays between white and black
+// e.g. #FFF, #EEE, #DDD, #CCC, #BBB, #AAA, #999, #666, #333, #000
+// #F3F3F3
+// #E5E5E5
+// #FCFCFC
+
 $green: #23871E;
-$dark-yellow: #f39c12;
-$dark-blue: #08A8FC;
-$light-green: #DFF0D8;
-$light-blue: #F6FCFF;
+$green--light: #DFF0D8;
+$green--lighter: #EFFFEE;
 
-// Defaults
-$primary-color: $dark-blue;
+$red: #C0392B;
+$red--light: #FFE5E1;
 
-// Text
-$extra-light-text: #AAAAAA;
-$light-text: #666;
-$dark-text: #333;
+$yellow: #F39C12;
+$yellow--light: #FFF9DE;
 
-// Links
-$link-color: $dark-blue;
-$hidden-link-color: $dark-text;
-$link-hover-color: darken($dark-blue, 5%);
+//
+// TEXT
+//
 
-// Buttons
+// text colors should use gray variables
+$text--dark: #333;
+$text--light: #666;
+$text--lighter: #AAA;
+
+//
+// LINKS
+//
+$link-color: $blue;
+$hidden-link-color: $text--dark;
+$link-hover-color: $blue--dark;
+
+//
+// BUTTONS
+//
 $clear-hover: #E5E5E5;
 $clear-focus: #FCFCFC;
-$clear-active: $clear-hover;
-$primary-active: darken($primary-color, 5%);
+$clear-active: #E5E5E5;
+$primary-active: $blue--dark;
 
-// Borders
+//
+// BORDERS
+//
 $border-default: $gray;
 $border-light: #EEE;
 $border-focus: #51A7E8;
 $border-light-blue: #3ABAFC;
 
-// Backgrounds
+//
+// BACKGROUNDS
+//
 $background-gray: #F3F3F3;
-$code-background: #FBFBFB;
-$code-background-dark: #222;
 
-// Errors
+//
+// ERRORS
+//
 $error-text-color: $red;
 
-// Color Types
-$default-color: $primary-color;
-$success-color: $green;
+//
+// COLOR TYPES
+//
 $danger-color: $red;
-$warning-color: $dark-yellow;
+$default-color: $blue;
+$success-color: $green;
+$warning-color: $yellow;
 
-// Success
+//
+// SUCCESS
+//
 $success-background: $green;
 
-// Task types
-$idea-color: $dark-yellow;
+//
+// TASK TYPES
+//
+
+$idea-color: $yellow;
 $issue-color: $red;
 $progress-color: $green;
-$task-color: $dark-blue;
+$task-color: $blue;
+
+$idea-background: $yellow--light;
+$issue-background: $red--light;
+$progress-background: $green--light;
+$task-background: $blue--light;
 
 $taskTypeColors: (
   "idea": $idea-color,
@@ -63,19 +119,11 @@ $taskTypeColors: (
 );
 
 $taskTypeTextOnBackgroundColors: (
-  "idea": $dark-text,
+  "idea": $text--dark,
   "issue": white,
   "progress": white,
   "task": white,
 );
-
-$light-red-background: #FFE5E1;
-$light-blue-background: #EDF9FF;
-
-$idea-background: #FFF9DE;
-$issue-background: $light-red-background;
-$progress-background: #EFFFEE;
-$task-background: $light-blue-background;
 
 $taskTypeBackgrounds: (
   "idea": $idea-background,
@@ -84,16 +132,36 @@ $taskTypeBackgrounds: (
   "task": $task-background,
 );
 
-// Code
+//
+// CODE THEMES
+//
+
+// color variables for code themes need refactoring
+// same principle applies
+// code-light
+// code-dark
+// code-dark--blue, code-dark--green, etc.
+// code-dark__background
+
+//
+// DARK THEME
+//
+$code-dark-background: #222;
+
 $code-dark-blue: #6E9CBE;
 $code-dark-brown: #BC9458;
 $code-dark-dark-yellow: #FFC66D;
 $code-dark-green: #A5C261;
-$code-dark-light-yellow: #E8BF6A;
 $code-dark-light-purple: #D0D0FF;
+$code-dark-light-yellow: #E8BF6A;
 $code-dark-orange: #CC7833;
 $code-dark-red: #DA4939;
 $code-dark-white: #F8F8F2;
+
+//
+// LIGHT THEME
+//
+$code-light-background: #FBFBFB;
 
 $code-light-black: #222;
 $code-light-green: #229151;

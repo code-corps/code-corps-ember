@@ -10,14 +10,14 @@
     width: 100%;
   }
   footer {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-small;
     margin-top: 1em;
   }
 }
 
 .donation-container__amount {
-  background-color: $light-blue;
+  background-color: $blue--light;
   border: 2px solid $border-light-blue;
   border-radius: 5px;
   margin: 20px 0;
@@ -26,7 +26,7 @@
     margin: 0;
   }
   footer {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-small;
     margin: 0;
   }

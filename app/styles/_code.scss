@@ -1,24 +1,24 @@
 pre, code {
-  background: $code-background;
+  background: $code-light-background;
   border-radius: 4px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   font-size: $body-font-size-small;
 }
 
 .dark pre {
-  background: $code-background-dark;
+  background: $code-dark-background;
   color: $code-dark-white;
   code {
-    background: $code-background-dark;
+    background: $code-dark-background;
   }
 }
 
 pre {
-  background: $code-background;
+  background: $code-light-background;
   overflow: auto;
   padding: 10px;
   code {
-    background: $code-background;
+    background: $code-light-background;
     border-radius: 0;
     padding: 0;
   }

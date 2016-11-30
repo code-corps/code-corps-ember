@@ -12,7 +12,7 @@
 
   &:hover {
     &.can-edit {
-      background: $light-blue-background;
+      background: $blue--light;
       border-color: $border-light-blue;
       cursor: pointer;
     }
@@ -25,7 +25,7 @@
   }
 
   .description {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-normal;
     margin: 7px 0;
   }
@@ -42,12 +42,12 @@
   }
 
   .current {
-    color: $light-text;
+    color: $text--light;
     margin-bottom: 5px;
 
     strong {
       font-weight: 700;
-      color: $dark-text;
+      color: $text--dark;
     }
   }
 

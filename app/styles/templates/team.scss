@@ -4,14 +4,14 @@
   text-align: center;
 
   h2 {
-    color: $dark-text;
+    color: $text--dark;
     font-size: $header-font-size-large;
     font-weight: 500;
     margin: 10px 0;
   }
 
   h3 {
-    color: $extra-light-text;
+    color: $text--lighter;
     font-size: $header-font-size-small;
     font-weight: 300;
     margin: 10px 0;

@@ -23,12 +23,12 @@
 
       &.active {
         color: $link-color;
-        border-bottom-color: $dark-blue;
+        border-bottom-color: $blue;
       }
 
       &:hover {
         color: $link-color;
-        border-bottom-color: $dark-blue;
+        border-bottom-color: $blue;
         transition: border-bottom-color ease 0.3s;
       }
     }
@@ -45,7 +45,7 @@
   li a {
     display: block;
     padding: 15px 10px;
-    color: $dark-text;
+    color: $text--dark;
   }
 }
 

@@ -26,7 +26,7 @@
   }
 
   a {
-    color: $dark-text;
+    color: $text--dark;
     font-weight: 700;
 
     &:hover {
@@ -72,7 +72,7 @@
 
 .task-description {
   font-size: $body-font-size-small;
-  color: $light-text;
+  color: $text--light;
 }
 
 .main-description {
@@ -105,7 +105,7 @@
 .task-expertise {
   margin-top: 5px;
   font-size: $body-font-size-small;
-  color: $extra-light-text;
+  color: $text--lighter;
   &.beginner {
     @include taskExpertiseIcon($beginner);
   }
