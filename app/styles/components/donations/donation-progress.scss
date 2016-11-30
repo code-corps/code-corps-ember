@@ -15,20 +15,30 @@
     }
 
     .value {
-      font-size: $header-font-size-small;
-      font-weight: 600;
+      font-size: $header-font-size-large;
+      font-weight: 700;
     }
   }
 
   .progress-bar-container {
     height: 10px;
-    margin-top: 20px;
+    margin: 20px 0;
   }
 
-  p {
+  &__description-header {
+    color: $light-text;
+    font-size: $body-font-size-small;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__description {
+    border: 1px solid $border-light;
+    border-radius: 4px;
     color: $light-text;
     font-size: $body-font-size-normal;
     line-height: 22px;
-    margin: 20px 0;
+    margin: 10px 0;
+    padding: 10px;
   }
 }
