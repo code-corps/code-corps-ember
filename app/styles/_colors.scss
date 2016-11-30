@@ -12,6 +12,9 @@
 
 // This is a great guide about hex colors
 // https://www.smashingmagazine.com/2012/10/the-code-side-of-color/
+// we should perhaps consider switching from hex to rgba or hsla as they're easier to
+// understand and build varations of
+// https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 
 //
 // BASE COLORS
@@ -22,15 +25,16 @@ $blue--light: #EDF9FF;
 $blue--lighter: #F6FCFF;
 $blue--dark: #1B9BE5;
 
-$gray: #CCC;
-//$gray--dark: #666;
-//$gray--darker: #333;
+$gray: #AAA;
+$gray--dark: #999;
+$gray--darker: #666;
+$gray--darkest: #333;
+$gray--light: #BBB;
+$gray--lighter: #CCC;
+$gray--lightest: #DDD;
 
-// we need a standard scale of grays between white and black
-// e.g. #FFF, #EEE, #DDD, #CCC, #BBB, #AAA, #999, #666, #333, #000
-// #F3F3F3
-// #E5E5E5
-// #FCFCFC
+// these colors were used previously and removed for the sake of consistency:
+// #E5E5E5, #FCFCFC, #F3F3F3
 
 $green: #23871E;
 $green--light: #DFF0D8;
@@ -47,9 +51,11 @@ $yellow--light: #FFF9DE;
 //
 
 // text colors should use gray variables
-$text--dark: #333;
-$text--light: #666;
-$text--lighter: #AAA;
+
+//$text
+$text--dark: $gray--darkest;
+$text--light: $gray--darker; // this is the most common text color in the project
+$text--lighter: $gray;
 
 //
 // LINKS
@@ -133,36 +139,23 @@ $taskTypeBackgrounds: (
 );
 
 //
-// CODE THEMES
+// CODE DARK THEME
 //
-
-// color variables for code themes need refactoring
-// same principle applies
-// code-light
-// code-dark
-// code-dark--blue, code-dark--green, etc.
-// code-dark__background
-
-//
-// DARK THEME
-//
-$code-dark-background: #222;
-
-$code-dark-blue: #6E9CBE;
-$code-dark-brown: #BC9458;
-$code-dark-dark-yellow: #FFC66D;
-$code-dark-green: #A5C261;
-$code-dark-light-purple: #D0D0FF;
-$code-dark-light-yellow: #E8BF6A;
-$code-dark-orange: #CC7833;
-$code-dark-red: #DA4939;
-$code-dark-white: #F8F8F2;
+$code-theme--dark--black: #222;
+$code-theme--dark--blue: #6E9CBE;
+$code-theme--dark--brown: #BC9458;
+$code-theme--dark--green: #A5C261;
+$code-theme--dark--orange: #CC7833;
+$code-theme--dark--purple: #D0D0FF;
+$code-theme--dark--red: #DA4939;
+$code-theme--dark--white: #F8F8F2;
+$code-theme--dark--yellow: #FFC66D;
+$code-theme--dark--yellow--dark: #E8BF6A;
 
 //
-// LIGHT THEME
+// CODE LIGHT THEME
 //
-$code-light-background: #FBFBFB;
-
-$code-light-black: #222;
-$code-light-green: #229151;
-$code-light-orange: #B75F25;
+$code-theme--light--black: #222;
+$code-theme--light--gray: #FBFBFB;
+$code-theme--light--green: #229151;
+$code-theme--light--orange: #B75F25;
