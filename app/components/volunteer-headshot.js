@@ -19,33 +19,40 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
+  classNames: ['volunteer-headshot'],
 
   /**
     A computed array of the volunteer's role names.
 
-    @property roles
+    @property userRoles
     @type Ember.Array
    */
-  roles: computed('volunteer.userRoles.@each.role', function() {
-    let userRoles = get(this, 'volunteer.userRoles');
-    let roleNames = userRoles.map((userRole) => {
-      return userRole.role.name;
-    });
-
-    return roleNames;
-  }),
+  userRoles: computed('volunteer.userRoles',
+      'volunteer.userRoles.@each.role',
+      'volunteer.userRoles.@each.user',
+    function() {
+      return this.get('volunteer.userRoles');
+    }),
 
   /**
-    A randomly selected role from the `roles` property.
+    A randomly selected role from the `userRoles` property.
 
-    @property role
-    @type String
+    @property userRole
+    @type Ember.Model
    */
-  role: computed('roles', function() {
-    let roles = get(this, 'roles');
-    let randomIndex = Math.floor(Math.random() * roles.length);
+  userRole: computed('userRoles', function() {
+    let userRoles = get(this, 'userRoles');
+    let randomIndex = Math.floor(Math.random() * get(userRoles, 'length'));
 
-    return roles[randomIndex];
+    return userRoles.objectAt(randomIndex);
+  }),
+
+  volunteerName: computed('volunteer.name', 'volunteer.firstName', 'volunteer.lastName', function() {
+    let name = get(this, 'volunteer.name');
+    let firstName = get(this, 'volunteer.firstName');
+    let lastName = get(this, 'volunteer.lastName');
+
+    return name || `${firstName} ${lastName}`;
   }),
 
   /**
@@ -54,8 +61,8 @@ export default Component.extend({
     @property altText
     @type String
    */
-  altText: computed('volunteer.name', function() {
-    let name = get(this, 'volunteer.name');
+  altText: computed('volunteerName', function() {
+    let name = get(this, 'volunteerName');
 
     return `${name}\'s headshot`;
   })

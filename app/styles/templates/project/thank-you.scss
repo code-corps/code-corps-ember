@@ -9,6 +9,11 @@
     }
   }
 
+  &__contributors {
+    @include span-columns(12);
+    margin: 1.4em 0;
+  }
+
   h3 {
     font-size: $header-font-size-large;
     font-weight: 600;
