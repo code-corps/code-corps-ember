@@ -57,23 +57,6 @@ test('it sends submit with credit card fields when button is clicked', function(
   page.clickSubmit();
 });
 
-test('it renders button as disabled and "Processing" when busy', function(assert) {
-  assert.expect(2);
-
-  stubService(this, 'stripe', {
-    card: {
-      validateCardNumber: () => true,
-      validateCVC: () => true,
-      validateExpiry: () => true
-    }
-  });
-
-  page.render(hbs`{{donation/credit-card isBusy=true submit=submitHandler}}`);
-
-  assert.ok(page.submitDisabled, 'Submit button is disabled');
-  assert.equal(page.submitButtonText, 'Processing...', 'Submit button changed text');
-});
-
 test('it renders button as disabled and "Donate" when card is invalid', function(assert) {
   assert.expect(2);
 
