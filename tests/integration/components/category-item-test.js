@@ -3,6 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
 const {
   getOwner,
@@ -15,6 +16,7 @@ moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
     mockUserCategory.set('categoryId', defaultCategoryId);
+    getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
   }
 });
 
@@ -124,58 +126,50 @@ test('it works for removing selected categories', function(assert) {
 
 test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
-
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(unselectedCategory.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
 
   this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(unselectedCategory.name) !== -1, 'Message text includes the category name');
+
     done();
   });
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
-
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(selectedCategory.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
 
   this.render(hbs`{{category-item category=category}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(selectedCategory.name) !== -1, 'Message text includes the category name');
+
     done();
   });
 });

@@ -113,14 +113,7 @@ export default Component.extend({
    * @private
    */
   _flashError(message) {
-    let flashMessages = get(this, 'flashMessages');
-    flashMessages.clearMessages();
-    return flashMessages.add({
-      message,
-      type: 'danger',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
-    });
+    let options = { fixed: true, sticky: false, timeout: 5000 };
+    get(this, 'flashMessages').clearMessages().danger(message, options);
   }
 });

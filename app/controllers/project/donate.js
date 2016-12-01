@@ -14,6 +14,7 @@ const {
 const CUSTOMER_CREATION_ERROR = 'There was a problem in connecting your account with our payment processor. Please try again.';
 const CARD_CREATION_ERROR = 'There was a problem in using your payment information. Please try again.';
 const SUBSCRIPTION_CREATION_ERROR = 'There was a problem in setting up your monthly donation. Please try again.';
+const SUBSCRIPTION_VALIDATION_ERROR = "The amount you've set for your monthly donation is invalid.";
 
 export default Controller.extend({
   amount: null,
@@ -132,13 +133,8 @@ export default Controller.extend({
   },
 
   _handleSubscriptionCreationError(response) {
-    let friendlyError;
-
-    if (isValidationError(response)) {
-      friendlyError = new FriendlyError('The amount you\'ve set for your monthly donation is invalid.');
-    } else {
-      friendlyError = new FriendlyError(SUBSCRIPTION_CREATION_ERROR);
-    }
+    let message = isValidationError(response) ? SUBSCRIPTION_VALIDATION_ERROR : SUBSCRIPTION_CREATION_ERROR;
+    let friendlyError = new FriendlyError(message);
 
     return RSVP.reject(friendlyError);
   },

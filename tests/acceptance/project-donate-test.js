@@ -4,6 +4,7 @@ import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectDonatePage from '../pages/project/donate';
 
@@ -82,6 +83,31 @@ test('It requires authentication', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'login');
+  });
+});
+
+test('It redirects to project route if already a subscriber, with a flash', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { 'user_id': user.id });
+
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
+
+  let stripeConnectPlan = project.createStripeConnectPlan({ project });
+
+  server.create('stripeConnectSubscription', { stripeConnectPlan, user });
+
+  projectDonatePage.visit({
+    amount: 10,
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown.');
+    assert.equal(currentRouteName(), 'project.index', 'User was redirected to index');
   });
 });
 

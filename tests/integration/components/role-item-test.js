@@ -3,6 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
 const {
   getOwner,
@@ -77,6 +78,7 @@ moduleForComponent('role-item', 'Integration | Component | role item', {
   integration: true,
   beforeEach() {
     mockUserRole.set('roleId', defaultRoleId);
+    getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
   }
 });
 
@@ -120,58 +122,50 @@ test('it works for removing selected roles', function(assert) {
 
 test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
   stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', unselectedRole);
-
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(unselectedRole.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
 
   this.render(hbs`{{role-item role=role}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(unselectedRole.name) !== -1, 'Message text includes the role name');
+
     done();
   });
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
   stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', selectedRole);
-
-  stubService(this, 'flash-messages', {
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(selectedRole.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
 
   this.render(hbs`{{role-item role=role}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(selectedRole.name) !== -1, 'Message text includes the role name');
+
     done();
   });
 });

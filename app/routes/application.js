@@ -170,12 +170,6 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   actions: {
-    didTransition() {
-      // Clear flash messages on every transition
-      this.get('flashMessages').clearMessages();
-      return true; // Bubble the event
-    },
-
     willTransition(transition) {
       if (this._shouldTransitionToOnboardingRoute(transition)) {
         this._abortAndFixHistory(transition);

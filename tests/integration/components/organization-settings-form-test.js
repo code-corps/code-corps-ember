@@ -1,12 +1,15 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 
-const { RSVP } = Ember;
+const { getOwner, RSVP } = Ember;
 
 moduleForComponent('organization-settings-form', 'Integration | Component | organization settings form', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  }
 });
 
 let organization = {
@@ -45,13 +48,9 @@ test('it calls save on organization when save button is clicked', function(asser
 
   this.set('organization', organization);
 
-  stubService(this, 'flash-messages', {
-    success() {
-      assert.ok(true, 'Flash message service was called');
-    }
-  });
-
   this.render(hbs`{{organization-settings-form organization=organization}}`);
 
   this.$('.save').click();
+
+  assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown');
 });
