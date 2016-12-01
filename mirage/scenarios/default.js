@@ -182,10 +182,20 @@ export default function(server) {
     title: 'Code Corps'
   });
 
+  let stripeConnectPlan = server.create('stripe-connect-plan', {
+    project
+  });
+
   let owner = createUserWithSluggedRoute(server, {
     email: 'owner@codecorps.org',
     password: 'password',
     username: 'codecorps-owner'
+  });
+
+  server.create('stripe-connect-subscription', {
+    quantity: 1000,
+    stripeConnectPlan,
+    user: owner
   });
 
   server.create('organization-membership', {
