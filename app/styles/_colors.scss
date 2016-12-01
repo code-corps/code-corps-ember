@@ -1,24 +1,24 @@
+// COLORS
 //
-// GUIDELINES
-//
-
 // color variables should follow the same modular naming convention used when styling components
 // the root of the variable name is the name of the color (e.g. blue) followed by a modifier
 // --light --lighter, --lightest, --dark, --darker, --darkest
-
+//
 // modifiers should only be used if a base color has already been set
 // e.g. $red--darker only makes sense if $red already exists
-
+//
 // hex codes should only be used in the base color variables
 // whenever a color is needed it should use either an existing variable
 // or a variation of it using Sass color functions (e.g. darken($green, 5%))
-
+//
 // This is a great guide about hex colors
 // https://www.smashingmagazine.com/2012/10/the-code-side-of-color/
-
+//
 // we should perhaps consider switching from hex to rgba or hsla as they're easier to
 // understand and build varations of
 // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+//
+// Styleguide 1.0
 
 //
 // BASE COLORS
@@ -109,10 +109,10 @@ $progress-background: $green--light;
 $task-background: $blue--lighter;
 
 $taskTypeColors: (
-  "idea": $yellow,
-  "issue": $red,
-  "progress": $green,
-  "task": $blue,
+  "idea": $idea-color,
+  "issue": $issue-color,
+  "progress": $progress-color,
+  "task": $task-color,
 );
 
 $taskTypeTextOnBackgroundColors: (
@@ -123,10 +123,10 @@ $taskTypeTextOnBackgroundColors: (
 );
 
 $taskTypeBackgrounds: (
-  "idea": $yellow--light,
-  "issue": $red--light,
-  "progress": $green--light,
-  "task": $blue--lighter,
+  "idea": $idea-background,
+  "issue": $issue-background,
+  "progress": $progress-background,
+  "task": $task-background,
 );
 
 //

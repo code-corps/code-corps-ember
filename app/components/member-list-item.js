@@ -30,14 +30,7 @@ export default Component.extend({
   },
 
   _flashSuccess(message) {
-    let flashMessages = get(this, 'flashMessages');
-    flashMessages.clearMessages();
-    return flashMessages.add({
-      message,
-      type: 'success',
-      fixed: true,
-      sticky: false,
-      timeout: 5000
-    });
+    let options = { fixed: true, sticky: false, timeout: 5000 };
+    get(this, 'flashMessages').clearMessages().success(message, options);
   }
 });

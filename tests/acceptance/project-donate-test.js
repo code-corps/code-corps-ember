@@ -4,6 +4,7 @@ import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectDonatePage from '../pages/project/donate';
 
@@ -85,7 +86,32 @@ test('It requires authentication', function(assert) {
   });
 });
 
-test('Allows adding a card and donating (creating a subscription)', function(assert) {
+test('It redirects to project route if already a subscriber, with a flash', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { 'user_id': user.id });
+
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
+
+  let stripeConnectPlan = project.createStripeConnectPlan({ project });
+
+  server.create('stripeConnectSubscription', { stripeConnectPlan, user });
+
+  projectDonatePage.visit({
+    amount: 10,
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown.');
+    assert.equal(currentRouteName(), 'project.index', 'User was redirected to index');
+  });
+});
+
+test('Allows creating a card and donating (creating a subscription)', function(assert) {
   assert.expect(8);
 
   stubStripe(this, stripeMockSuccess);
@@ -132,7 +158,7 @@ test('Allows adding a card and donating (creating a subscription)', function(ass
   });
 });
 
-test('Shows stripe errors when creating card token fails', function(assert) {
+test('Shows stripe errors when creating a card token fails', function(assert) {
   assert.expect(3);
 
   stubStripe(this, stripeMockFailure);
@@ -167,7 +193,99 @@ test('Shows stripe errors when creating card token fails', function(assert) {
   });
 });
 
-test('Shows validation errors when creating subscription fails', function(assert) {
+test('Shows error indicating problem with stripe customer if that part of the process fails', function(assert) {
+  assert.expect(3);
+
+  stubStripe(this, stripeMockSuccess);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { 'user_id': user.id });
+
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
+
+  projectDonatePage.visit({
+    amount: 10,
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  server.post('/stripe-platform-customers', function() {
+    return new Mirage.Response(500, {}, {
+      errors: [{
+        id: 'INTERNAL_SERVER_ERROR',
+        title: 'Internal server error',
+        detail: 'is invalid',
+        status: 500
+      }]
+    });
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.donate');
+    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in connecting your account with our payment processor. Please try again.');
+  });
+});
+
+test('Shows error indicating problem with stripe card if that part of the process fails', function(assert) {
+  assert.expect(3);
+
+  stubStripe(this, stripeMockSuccess);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { 'user_id': user.id });
+
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
+
+  projectDonatePage.visit({
+    amount: 10,
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  server.post('/stripe-platform-cards', function() {
+    return new Mirage.Response(500, {}, {
+      errors: [{
+        id: 'INTERNAL_SERVER_ERROR',
+        title: 'Internal server error',
+        detail: 'is invalid',
+        status: 500
+      }]
+    });
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.donate');
+    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in using your payment information. Please try again.');
+  });
+});
+
+test('Shows subscription validation errors if that part of the process fails due to validation', function(assert) {
   assert.expect(4);
 
   stubStripe(this, stripeMockSuccess);
@@ -192,10 +310,7 @@ test('Shows validation errors when creating subscription fails', function(assert
   });
 
   andThen(() => {
-    let done = assert.async();
-
     server.post('/stripe-connect-subscriptions', function() {
-      done();
       return new Mirage.Response(422, {}, {
         errors: [{
           id: 'VALIDATION_ERROR',
@@ -215,6 +330,52 @@ test('Shows validation errors when creating subscription fails', function(assert
     assert.notOk(server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 }), 'Subscription was not created.');
     assert.equal(currentRouteName(), 'project.donate');
     assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'Quantity is invalid', 'Correct error is displayed.');
+    assert.equal(projectDonatePage.errorFormatter.errors(0).message, "The amount you've set for your monthly donation is invalid.", 'Correct error is displayed.');
+  });
+});
+
+test('Shows error indicating problem with creating subscription if that part of the process fails', function(assert) {
+  assert.expect(3);
+
+  stubStripe(this, stripeMockSuccess);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { 'user_id': user.id });
+
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
+
+  projectDonatePage.visit({
+    amount: 10,
+    organization: organization.slug,
+    project: project.slug
+  });
+
+  server.post('/stripe-connect-subscriptions', function() {
+    return new Mirage.Response(500, {}, {
+      errors: [{
+        id: 'INTERNAL_SERVER_ERROR',
+        title: 'Internal server error',
+        detail: 'is invalid',
+        status: 500
+      }]
+    });
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
+    projectDonatePage.creditCard.cardCVC.fillIn('123');
+    projectDonatePage.creditCard.cardMonth.selectOption('12');
+    projectDonatePage.creditCard.cardYear.selectOption('2020');
+  });
+
+  andThen(() => {
+    projectDonatePage.creditCard.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.donate');
+    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in setting up your monthly donation. Please try again.');
   });
 });

@@ -17,6 +17,9 @@
       </div>
     {{/if}}
   {{/if}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
 </div>
 
 <div class="settings-sidebar">
