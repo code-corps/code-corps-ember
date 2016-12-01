@@ -11,21 +11,27 @@
   </p>
 </div>
 
-{{#if card}}
-  {{donation/card-item card=card}}
+{{#if isBusy}}
+  <div class="loading-indicator">
+    <div class="spinner small"></div>
+    <div>Processing...</div>
+  </div>
 {{else}}
-  {{#donation/credit-card isBusy=isBusy submit=(action saveAndDonate)}}
+  {{#if card}}
+    {{donation/card-item card=card}}
+  {{else}}
+    {{#donation/credit-card isBusy=isBusy submit=(action saveAndDonate)}}
+      {{!show errors}}
+      {{yield}}
+    {{/donation/credit-card}}
+  {{/if}}
+
+  {{#if card}}
+    <button class="button {{unless isBusy "default"}} large donate" {{action donate}} disabled={{isBusy}}>Donate</button>
     {{!show errors}}
     {{yield}}
-  {{/donation/credit-card}}
+  {{/if}}
 {{/if}}
-
-{{#if card}}
-  <button class="button {{unless isBusy "default"}} large donate" {{action donate}} disabled={{isBusy}}>Donate</button>
-  {{!show errors}}
-  {{yield}}
-{{/if}}
-
 <footer>
   Your donation will repeat automatically each month.
   You can cancel or edit your donation at any time.

@@ -81,7 +81,6 @@ export default Component.extend({
 
   actions: {
     submit() {
-      this.set('isSubmitting', true);
       let cardAttrs = this.getProperties('cvc', 'cardNumber', 'year', 'month');
       let onSubmit = this.get('submit');
 
