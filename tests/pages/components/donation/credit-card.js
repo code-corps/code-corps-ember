@@ -3,8 +3,6 @@ import { clickable, fillable, is, isVisible, selectable, text, value } from 'emb
 export default {
   scope: '.credit-card-form',
 
-  isCancelVisible: isVisible('.cancel-add-card a'),
-
   cardCVC: {
     scope: '[name=card-cvc]',
     fillIn: fillable(),
@@ -32,6 +30,7 @@ export default {
   clickSubmit: clickable('button.submit-card'),
   clickCancel: clickable('div.cancel-add-card a'),
 
+  submitButtonIsVisible: isVisible('button.submit-card'),
   submitButtonText: text('button.submit-card'),
   submitDisabled: is(':disabled', 'button')
 };

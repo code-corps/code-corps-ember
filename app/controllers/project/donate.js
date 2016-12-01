@@ -18,7 +18,6 @@ const SUBSCRIPTION_VALIDATION_ERROR = "The amount you've set for your monthly do
 
 export default Controller.extend({
   amount: null,
-  isAddingCard: false,
   queryParams: ['amount'],
 
   currentUser: service(),
@@ -28,29 +27,29 @@ export default Controller.extend({
   project: alias('model'),
   user: alias('currentUser.user'),
 
-  stripeCustomerCreated: bool('currentUser.user.stripePlatformCustomer.id'),
+  stripeCustomerCreated: bool('user.stripePlatformCustomer.id'),
   shouldCreateCustomer: not('stripeCustomerCreated'),
 
   actions: {
     saveAndDonate(amount, cardParams) {
       this._clearErrors();
-      this._updateIsLoading(true);
+      this._updateisProcessing(true);
 
       return this._createCreditCardToken(cardParams)
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._createSubscription(amount, stripeCard))
                  .then(() => this._transitionToThankYou())
                  .catch((response) => this._handleError(response))
-                 .finally(() => this._updateIsLoading(false));
+                 .finally(() => this._updateisProcessing(false));
     },
 
     donate(amount, stripeCard) {
       this._clearErrors();
-      this._updateIsLoading(true);
+      this._updateisProcessing(true);
 
       return this._createSubscription(amount, stripeCard)
                  .then(() => this._transitionToThankYou())
-                 .finally(() => this._updateIsLoading(false));
+                 .finally(() => this._updateisProcessing(false));
     }
   },
 
@@ -163,8 +162,8 @@ export default Controller.extend({
     };
   },
 
-  _updateIsLoading(value) {
-    set(this, 'isLoading', value);
+  _updateisProcessing(value) {
+    set(this, 'isProcessing', value);
   },
 
   _clearErrors() {
