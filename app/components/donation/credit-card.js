@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { and, not, or },
+  computed: { and, not },
   inject: { service }
 } = Ember;
 
@@ -20,10 +20,8 @@ export default Component.extend({
    */
   stripe: service(),
 
-  cardInvalid: not('cardValid'),
   cardValid: and('isCardNumberValid', 'isCVCValid', 'isExpiryValid'),
-
-  isBusyOrInvalid: or('isBusy', 'cardInvalid'),
+  isInvalid: not('cardValid'),
 
   date: computed('month', 'year', function() {
     let month = this.get('month');

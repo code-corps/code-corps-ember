@@ -20,14 +20,14 @@
   {{#if card}}
     {{donation/card-item card=card}}
   {{else}}
-    {{#donation/credit-card isBusy=isBusy submit=(action saveAndDonate)}}
+    {{#donation/credit-card submit=(action saveAndDonate)}}
       {{!show errors}}
       {{yield}}
     {{/donation/credit-card}}
   {{/if}}
 
   {{#if card}}
-    <button class="button {{unless isBusy "default"}} large donate" {{action donate}} disabled={{isBusy}}>Donate</button>
+    <button class="button default large donate" {{action donate}}>Donate</button>
     {{!show errors}}
     {{yield}}
   {{/if}}

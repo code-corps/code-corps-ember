@@ -17,7 +17,6 @@
 </div>
 
 <div class="input-group">
-
   <div class="row">
     <label>
       <span>Expiration</span>
@@ -40,14 +39,11 @@
   </div>
 </div>
 
-<button
-  class="button {{unless isBusyOrInvalid "default"}} large submit-card"
-  disabled={{isBusyOrInvalid}}
-  {{action "submit"}}>
-  {{#if isBusy}}Processing...{{else}}Donate{{/if}}
+<button class="button {{unless isInvalid "default"}} large submit-card" disabled={{isInvalid}} {{action "submit"}}>
+  Donate
 </button>
 
-{{#unless isBusy}}
-  {{!validation errors can be passed in from parent, using a block}}
-  {{yield}}
-{{/unless}}
+
+{{!validation errors can be passed in from parent, using a block}}
+{{yield}}
+
