@@ -38,7 +38,7 @@ export default Controller.extend({
       return this._createCreditCardToken(cardParams)
                  .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
                  .then((stripeCard) => this._createSubscription(amount, stripeCard))
-                 .then(() => this._reloadAndTransitionToThankYou())
+                 .then(() => this._transitionToThankYou())
                  .catch((response) => this._handleError(response))
                  .finally(() => this._updateisProcessing(false));
     },
@@ -140,10 +140,9 @@ export default Controller.extend({
 
   // transitioning
 
-  _reloadAndTransitionToThankYou() {
-    return get(this, 'project').reload().then((project) => {
-      return this.transitionToRoute('project.thank-you', project);
-    });
+  _transitionToThankYou() {
+    let project = get(this, 'project');
+    return this.transitionToRoute('project.thank-you', project);
   },
 
   // setting error property

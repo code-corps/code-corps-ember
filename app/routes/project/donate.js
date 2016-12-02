@@ -15,11 +15,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
   userSubscriptions: service(),
 
   model() {
-    let project = this.modelFor('project');
-
-    return RSVP.hash({
-      project,
-      subscription: this.get('userSubscriptions').fetchForProject(project)
+    return this.modelFor('project').reload().then((project) => {
+      let subscription = this.get('userSubscriptions').fetchForProject(project);
+      return RSVP.hash({ project, subscription });
     });
   },
 

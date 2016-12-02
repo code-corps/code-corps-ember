@@ -112,7 +112,7 @@ test('It redirects to project route if already a subscriber, with a flash', func
 });
 
 test('Allows creating a card and donating (creating a subscription)', function(assert) {
-  assert.expect(9);
+  assert.expect(8);
 
   stubStripe(this, stripeMockSuccess);
 
@@ -136,10 +136,6 @@ test('Allows creating a card and donating (creating a subscription)', function(a
   });
 
   andThen(() => {
-    server.get('/projects/:id', function() {
-      assert.ok(true, 'Project got reloaded');
-      return project;
-    });
     projectDonatePage.creditCard.clickSubmit();
   });
 
