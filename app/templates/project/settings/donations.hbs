@@ -1,12 +1,23 @@
 <div class="settings-main">
   {{#if stripeConnectAccount}}
-    {{donation-goals
-      add=(action 'addDonationGoal')
-      cancel=(action 'cancelDonationGoal')
-      edit=(action 'editDonationGoal')
-      project=project
-      save=(action 'saveDonationGoal')
-      activateDonations=(action 'activateDonations' project)}}
+    {{#if stripeConnectAccount.chargesEnabled}}
+      {{donation-goals
+        add=(action 'addDonationGoal')
+        cancel=(action 'cancelDonationGoal')
+        edit=(action 'editDonationGoal')
+        project=project
+        save=(action 'saveDonationGoal')
+        activateDonations=(action 'activateDonations' project)}}
+    {{else}}
+      <h3>Awaiting Stripe verification...</h3>
+      <p>Your organization is now connected to stripe, but stripe still needs to verify your account</p>
+      <button
+        {{action 'reloadAccount'}}
+        class="{{unless stripeConnectAccount.isReloading "default"}} refresh"
+        disabled={{stripeConnectAccount.isReloading}}>
+        {{#if stripeConnectAccount.isReloading}}Refreshing...{{else}}Refresh status{{/if}}
+      </button>
+    {{/if}}
   {{else}}
     {{#if stripeAuth}}
       <div class="header-section">
