@@ -305,14 +305,11 @@ test('A user can join the organization of the project', function(assert) {
     joinButton.click();
   });
 
-  let done = assert.async();
-
   server.post('/organization-memberships', (db, request) => {
     let { attributes, relationships } = JSON.parse(request.requestBody).data;
     assert.equal(attributes.role, 'pending');
     assert.equal(relationships.member.data.id, user.id);
     assert.equal(relationships.organization.data.id, project.organization.id);
-    done();
 
     return {
       data: {
@@ -322,5 +319,11 @@ test('A user can join the organization of the project', function(assert) {
         relationships
       }
     };
+  });
+
+  andThen(() => {
+    let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
+    assert.equal(joinButton.text, 'Membership Pending', 'The button to join has changed to pending');
+    assert.ok(joinButton.disabled, 'Button should be disabled.');
   });
 });
