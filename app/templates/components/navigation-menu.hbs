@@ -1,18 +1,22 @@
+{{! make header element flex so we can remove floats .left .right }}
 <h1 class="site-logo left">
   {{#link-to 'index' class='logo'}}Code Corps{{/link-to}}
 </h1>
 {{#if navigationMenu.isDefault}}
+  {{! rename to BEM, remove float }}
   <ul class="header-nav main-nav left">
     <li>{{#link-to 'projects-list'}}Projects{{/link-to}}</li>
     <li><a href="https://blog.codecorps.org">Blog</a></li>
   </ul>
   {{#if session.isAuthenticated}}
+    {{! rename to BEM, remove float }}
     <ul class="header-nav right">
       <li class="user-menu-tab">
         {{user-menu user=currentUser.user}}
       </li>
     </ul>
   {{else}}
+    {{! rename to BEM, remove float }}
     <ul class="header-nav auth-nav right">
       <li>
         {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
@@ -24,6 +28,7 @@
   {{/if}}
 {{/if}}
 {{#if navigationMenu.isOnboarding}}
+  {{! rename to BEM, remove float }}
   <div class="onboarding-steps right">
     <p>Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</p>
   </div>

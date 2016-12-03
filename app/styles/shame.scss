@@ -1,0 +1,33 @@
+//
+// shame.css
+// http://csswizardry.com/2013/04/shame-css/
+//
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+// TODO: Remove when we add more projects
+.temporary-projects-notice {
+  @include span-columns(4);
+
+  border: 1px dashed $gray--lightest;
+  border-radius: 4px;
+  color: $text--light;
+  min-height: 390px;
+  padding: 20px;
+
+  p {
+    font-size: $body-font-size-small;
+  }
+
+  .curved-arrow-icon {
+    @include sprite($curved-arrow);
+
+    margin-top: 90px;
+  }
+}

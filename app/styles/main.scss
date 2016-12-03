@@ -26,17 +26,6 @@ html, body {
   height: 100%;
 }
 
-.flexbox-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
-
-.flexbox-spacer {
-  flex: auto;
-}
-
 p {
   font-size: $body-font-size-normal;
 }
@@ -52,21 +41,8 @@ a {
   }
 }
 
-.container {
-  @include outer-container(980px);
-  min-width: 980px;
-}
-
 .error {
   color: $red;
-}
-
-.left {
-  float: left;
-}
-
-.right {
-  float: right;
 }
 
 ul {
@@ -85,18 +61,6 @@ ul {
 
 .empty-state {
   color: $text--light;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.hidden {
-  visibility: hidden;
 }
 
 .close {
@@ -126,27 +90,6 @@ p.subtext {
 
   .empty-icon {
     margin: 0 auto;
-  }
-}
-
-// TODO: Remove when we add more projects
-.temporary-projects-notice {
-  @include span-columns(4);
-
-  border: 1px dashed $gray--lightest;
-  border-radius: 4px;
-  color: $text--light;
-  min-height: 390px;
-  padding: 20px;
-
-  p {
-    font-size: $body-font-size-small;
-  }
-
-  .curved-arrow-icon {
-    @include sprite($curved-arrow);
-
-    margin-top: 90px;
   }
 }
 
