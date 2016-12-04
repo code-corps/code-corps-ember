@@ -46,6 +46,17 @@ test('it renders the volunteer\'s name', function(assert) {
   assert.equal(page.name, this.get('user.name'));
 });
 
+test('it computes the name if it is not present', function(assert) {
+  let firstName = 'Split';
+  let lastName = 'Name';
+
+  this.set('user.name', null);
+  this.set('user.firstName', firstName);
+  this.set('user.lastName', lastName);
+
+  assert.equal(page.name, `${firstName} ${lastName}`);
+})
+
 test('it randomly selects one of the available roles', function(assert) {
   assert.expect(1);
   assert.ok(roles.includes(page.role));

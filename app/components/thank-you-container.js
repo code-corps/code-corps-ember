@@ -14,25 +14,34 @@ export default Component.extend({
   nonPendingMemberships: computed('organizationMemberships.[]', 'organizationMemberships.@each.role', function() {
     let memberships = get(this, 'organizationMemberships');
 
-    return memberships.filter((membership) => {
-      let isPending = get(membership, 'isPending');
-      let role = get(membership, 'role');
+    if (isPresent(memberships)) {
+      return memberships.filter((membership) => {
+        let isPending = get(membership, 'isPending');
+        let role = get(membership, 'role');
 
-      return isPresent(role) && !isPending;
-    })
+        return isPresent(role) && !isPending;
+      });
+    }
+
+    return [];
   }),
 
   contributors: computed('nonPendingMemberships', function() {
     let nonPendingMemberships = get(this, 'nonPendingMemberships');
-    let volunteers = nonPendingMemberships.map((orgMembership) => {
-      return get(orgMembership, 'member');
-    });
 
-    if (volunteers.length > 12) {
-      volunteers = this.randomSubset(volunteers, 12);
+    if (isPresent(nonPendingMemberships)) {
+      let volunteers = nonPendingMemberships.map((orgMembership) => {
+        return get(orgMembership, 'member');
+      });
+
+      if (volunteers.length > 12) {
+        volunteers = this.randomSubset(volunteers, 12);
+      }
+
+      return volunteers;
     }
 
-    return volunteers;
+    return [];
   }),
 
   /*
@@ -43,8 +52,7 @@ export default Component.extend({
   randomSubset(arr, size) {
     let shuffled = arr.slice(0);
     let i = arr.length;
-    let temp;
-    let index;
+    let temp, index;
 
     while (i--) {
       index = Math.floor((i + 1) * Math.random());

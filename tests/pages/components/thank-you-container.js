@@ -1,5 +1,6 @@
 import {
   clickable,
+  collection,
   text
 } from 'ember-cli-page-object';
 
@@ -12,5 +13,9 @@ export default {
 
   clickLink: clickable('a'),
 
-  thankYouText: text('[data-test-selector="thank you message"]')
+  thankYouText: text('[data-test-selector="thank you message"]'),
+
+  volunteers: collection({
+    scope: '[data-test-selector="volunteer headshot"]'
+  })
 };
