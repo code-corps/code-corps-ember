@@ -9,7 +9,9 @@ const {
 
 /**
   The `volunteer-headshot` component presents a thumbnail of a volunteer, their
-  name and a randomly selected role.
+  name and randomly selects one of their roles.
+
+  ## Default Usage
 
   ```handlebars
   {{volunteer-headshot volunteer=user}}
@@ -24,12 +26,12 @@ export default Component.extend({
   classNames: ['volunteer-headshot'],
 
   /**
-    A computed array of the volunteer's role names.
+    A computed array of the volunteer's user roles.
 
     @property userRoles
     @type Ember.Array
    */
-  userRoles: computed('volunteer.userRoles',
+  userRoles: computed('volunteer.userRoles.[]',
       'volunteer.userRoles.@each.role',
       'volunteer.userRoles.@each.user',
     function() {
@@ -52,6 +54,14 @@ export default Component.extend({
     }
   }),
 
+  /**
+    Returns the volunteer's name. If the `name` property is not defined, it
+    computes a name from the volunteer's `firstName` & `lastName`. If neither
+    are defined it returns an empty string.
+
+    @property volunteerName
+    @type String
+   */
   volunteerName: computed('volunteer.name', 'volunteer.firstName', 'volunteer.lastName', function() {
     let name = get(this, 'volunteer.name');
     let firstName = get(this, 'volunteer.firstName');
@@ -66,7 +76,13 @@ export default Component.extend({
     }
   }),
 
-  isVolunteerNameLoaded: computed.notEmpty('volunteerName'),
+  /**
+    Returns if the computed property `volunteerName` is present.
+
+    @property isVolunteerNamePresent
+    @type Boolean
+   */
+  isVolunteerNamePresent: computed.notEmpty('volunteerName'),
 
   /**
     A computed string for the volunteer's image headshot alt text.

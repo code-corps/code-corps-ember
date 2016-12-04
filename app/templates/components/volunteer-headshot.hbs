@@ -1,5 +1,5 @@
 <img class="volunteer-headshot__image icon large" src={{volunteer.photoThumbUrl}} alt={{altText}} />
-{{#if isVolunteerNameLoaded}}
+{{#if isVolunteerNamePresent}}
   <p class="volunteer-headshot__name" data-test-selector="volunteer name">{{volunteerName}}</p>
   {{#if userRole}}
     <p class="volunteer-headshot__role" data-test-selector="volunteer role">{{userRole.role.name}}</p>

@@ -7,10 +7,39 @@ const {
   isPresent
 } = Ember;
 
+/**
+  The `thank-you-container` component presents the main content for the
+  `thank-you` donations page. This includes an icon, thank you message and
+  a list of contributors.
+
+  ## Default Usage
+
+  ```handlebars
+  {{thank-you-container project=project}}
+  ```
+
+  @class thank-you-container
+  @module Component
+  @extends Ember.Component
+ */
 export default Component.extend({
   classNames: ['thank-you-container'],
 
+  /**
+    A computed alias for the project's organization members
+
+    @property organizationMemberships
+    @type Ember.Array
+   */
   organizationMemberships: computed.alias('project.organization.organizationMemberships'),
+
+  /**
+    Filters the array of `organizationMemberships` down to members who are not
+    pending acceptance.
+
+    @property nonPendingMemberships
+    @type Ember.Array
+   */
   nonPendingMemberships: computed('organizationMemberships.[]', 'organizationMemberships.@each.role', function() {
     let memberships = get(this, 'organizationMemberships');
 
@@ -26,7 +55,13 @@ export default Component.extend({
     return [];
   }),
 
-  contributors: computed('nonPendingMemberships', function() {
+  /**
+    Retuns a subset of at most 12 members from the `nonPendingMemberships` array.
+
+    @property volunteers
+    @type Ember.Array
+   */
+  volunteers: computed('nonPendingMemberships', function() {
     let nonPendingMemberships = get(this, 'nonPendingMemberships');
 
     if (isPresent(nonPendingMemberships)) {
