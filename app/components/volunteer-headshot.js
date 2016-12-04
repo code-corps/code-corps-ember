@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  get
+  get,
+  isPresent
 } = Ember;
 
 /**
@@ -42,9 +43,12 @@ export default Component.extend({
    */
   userRole: computed('userRoles', function() {
     let userRoles = get(this, 'userRoles');
-    let randomIndex = Math.floor(Math.random() * get(userRoles, 'length'));
 
-    return userRoles.objectAt(randomIndex);
+    if (isPresent(userRoles)) {
+      let randomIndex = Math.floor(Math.random() * get(userRoles, 'length'));
+
+      return userRoles.objectAt(randomIndex);
+    }
   }),
 
   volunteerName: computed('volunteer.name', 'volunteer.firstName', 'volunteer.lastName', function() {

@@ -1,3 +1,7 @@
-<img class="volunteer-headshot__image" src={{volunteer.photoThumbUrl}} alt={{altText}} />
+<img class="volunteer-headshot__image icon medium" src={{volunteer.photoThumbUrl}} alt={{altText}} />
 <p class="volunteer-headshot__name" data-test-selector="volunteer name">{{volunteerName}}</p>
-<p class="volunteer-headshot__role" data-test-selector="volunteer role">{{userRole.role.name}}</p>
+{{#if userRole}}
+  <p class="volunteer-headshot__role" data-test-selector="volunteer role">{{userRole.role.name}}</p>
+{{else}}
+  <p class="volunteer-headshot__role" data-test-selector="volunteer role">Volunteer</p>
+{{/if}}

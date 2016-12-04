@@ -20,11 +20,11 @@
     margin: 10px 0;
   }
 
-  p {
-    margin-bottom: 1.4em;
-  }
-
   &__message {
     color: $light-text;
+
+    p {
+      margin-bottom: 1.4em;
+    }
   }
 }
