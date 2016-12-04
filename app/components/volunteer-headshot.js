@@ -57,8 +57,16 @@ export default Component.extend({
     let firstName = get(this, 'volunteer.firstName');
     let lastName = get(this, 'volunteer.lastName');
 
-    return name || `${firstName} ${lastName}`;
+    if (isPresent(name)) {
+      return name;
+    } else if (isPresent(firstName) && isPresent(lastName)) {
+      return `${firstName} ${lastName}`;
+    } else {
+      return '';
+    }
   }),
+
+  isVolunteerNameLoaded: computed.notEmpty('volunteerName'),
 
   /**
     A computed string for the volunteer's image headshot alt text.
