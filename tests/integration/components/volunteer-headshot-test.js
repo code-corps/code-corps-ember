@@ -55,7 +55,7 @@ test('it computes the name if it is not present', function(assert) {
   this.set('user.lastName', lastName);
 
   assert.equal(page.name, `${firstName} ${lastName}`);
-})
+});
 
 test('it randomly selects one of the available roles', function(assert) {
   assert.expect(1);
