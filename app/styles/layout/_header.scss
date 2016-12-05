@@ -1,71 +1,68 @@
-.menu {
-  padding: 10px 0;
-
-  ul {
-    list-style-type: none;
-    @include clearfix;
-  }
-
-  a.active {
-    font-weight: 600;
-  }
+.site-header {
+  display: flex;
+  height: 5em;
+  padding: .7em 0;
 }
 
-.header-nav {
-	> li {
-		display: inline-block;
-		float: left;
-		font-size: $body-font-size-normal;
-	}
-
-	> li > a, .user-menu-select {
-		font-weight: 600;
-		border-bottom: 3px solid transparent;
-
-		&.active {
-			color: $link-color;
-			border-bottom-color: $blue;
-		}
-
-		&:hover {
-			color: $link-color;
-			border-bottom-color: $blue;
-			transition: border-bottom-color ease 0.3s;
-		}
-	}
-}
-
-.main-nav, .auth-nav {
-  font-family: $body-font-family;
-  font-style: normal;
-  font-size: $body-font-size-small;
-  font-weight: 500;
-  padding: 0 30px;
-
-  li a {
-    display: block;
-    padding: 15px 10px;
-    color: $text--dark;
-  }
-}
-
-.site-logo {
-  margin: 0;
+.header__logo {
   line-height: 50px;
+  margin: 0;
+  a {
+    @include sprite($logo);
+    display: inline-block;
+    text-indent: -9999px;
+  }
 }
 
-.logo {
-  @include sprite($logo);
-  display: inline-block;
-  text-indent: -9999px;
+.header__navigation {
+  &--main, &--auth {
+    padding: 0 30px;
+  }
 }
 
-.onboarding-progress {
-  float: right;
+.header__navigation {
+  &--main, &--auth {
+    li {
+      display: inline-block;
+      float: left;
+      font-size: $body-font-size-normal;
+    }
+  }
+}
+
+.header__navigation {
+  &--main, &--auth {
+    a {
+      border-bottom: 3px solid transparent;
+      color: $text--dark;
+      display: block;
+      font-weight: 600;
+      padding: 15px 10px;
+      &.active, &:hover {
+        border-bottom-color: $blue;
+        color: $link-color;
+      }
+      &:hover {
+        transition: border-bottom-color ease 0.3s;
+      }
+    }
+  }
+}
+
+.header__navigation--auth {
+  margin-left: auto;
+}
+
+.header__navigation--onboarding {
+  display: flex;
+  margin-left: auto;
+}
+
+.onboarding__progress {
   padding: 23px 0 22px 0;
   width: 180px;
 }
 
-.onboarding-steps {
+.onboarding__steps {
   padding: 0 30px;
 }

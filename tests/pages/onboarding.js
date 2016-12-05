@@ -28,17 +28,17 @@ export default create({
   },
 
   startButton: {
-    scope: '.start-actions button',
+    scope: '.start__footer button',
     isDisabled: attribute('disabled')
   },
 
   roles: collection({
-    itemScope: '.roles-column',
+    itemScope: '.expertise__column',
 
     item: {
       title: text('h3'),
       header: {
-        scope: '.roles-column-header',
+        scope: '.expertise__column-header',
         hasClass
       },
       button: {

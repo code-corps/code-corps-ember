@@ -83,14 +83,14 @@
 //
 // HELPERS
 //
-@import "base/_helpers.scss";
+@import "base/helpers.scss";
 
 //
 // LAYOUT
 //
+@import "layout/content";
 @import "layout/footer";
 @import "layout/header";
-
 
 //
 // COMPONENTS

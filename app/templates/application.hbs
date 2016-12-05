@@ -7,7 +7,9 @@ isn't this here mainly for updating a user's image? }}
     'navigation-menu' to 'site-header' }}
     {{navigation-menu}}
     {{flash-messages}}
-    <div class="main container {{codeTheme.className}}">
+    {{! is codeTheme.className needed this early in the DOM tree? }}
+    {{! add site-content--start if page is /hello }}
+    <div class="site-content container {{codeTheme.className}}">
       {{outlet}}
     </div>
     {{#unless isOnboarding}}

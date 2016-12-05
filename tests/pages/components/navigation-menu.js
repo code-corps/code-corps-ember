@@ -5,7 +5,7 @@ import {
 
 export default {
   logo: {
-    scope: '.site-logo a'
+    scope: '.header__logo a'
   },
   logIn: {
     scope: 'a.login'

@@ -1,35 +1,5 @@
 @charset 'utf-8';
 
-html {
-  font-family: $body-font-family;
-  font-size: $body-font-size-normal;
-
-  &.danger {
-    background: $danger-color;
-  }
-  &.warning {
-    background: $warning-color;
-  }
-}
-
-body {
-  margin: 0;
-  padding: 0 10px;
-
-  > .ember-view:first-of-type {
-    height: 100%;
-    position: relative
-  }
-}
-
-html, body {
-  height: 100%;
-}
-
-p {
-  font-size: $body-font-size-normal;
-}
-
 a {
   color: $link-color;
   text-decoration: none;
@@ -41,8 +11,32 @@ a {
   }
 }
 
-.error {
-  color: $red;
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0 10px;
+
+  > .ember-view:first-of-type {
+    height: 100%;
+    position: relative;
+  }
+}
+
+html {
+  font-family: $body-font-family;
+  font-size: $body-font-size-normal;
+  height: 100%;
+
+  &.danger {
+    background: $danger-color;
+  }
+  &.warning {
+    background: $warning-color;
+  }
+}
+
+p {
+  font-size: $body-font-size-normal;
 }
 
 ul {
@@ -51,68 +45,6 @@ ul {
   list-style-type: none;
 }
 
-.border-top {
-  border-top: 1px solid;
-}
-
-.border-gray-light {
-  border-color: $gray--lightest;
-}
-
-.empty-state {
-  color: $text--light;
-}
-
-.close {
-  font-size: $body-font-size-large;
-  font-weight: 900;
-  margin-right: 2px;
-}
-
-.spinner {
-  &.small {
-    $file: "/assets/images/icons/spinner-small";
-    @include background-image-retina($file, "gif", 24px, 24px);
-    height: 24px;
-    width: 24px;
-  }
-}
-
-p.subtext {
-  font-size: $body-font-size-small;
-}
-
-.empty {
-  background: $background-gray;
-  border-radius: 6px;
-  padding: 20px;
-  text-align: center;
-
-  .empty-icon {
-    margin: 0 auto;
-  }
-}
-
-.visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-.header-section {
-  margin: 20px 0;
-
-  h2 {
-    font-weight: 700;
-  }
-
-  p {
-    color: $text--light;
-    line-height: 2em;
-  }
+.error {
+  color: $red;
 }
