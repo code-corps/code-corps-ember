@@ -1,11 +1,12 @@
 .start__skills {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  justify-content: center;
 }
 
 .skills__list {
   text-align: center;
-  margin: auto;
   button {
     margin: 0 .5em 1em 0;
   }
