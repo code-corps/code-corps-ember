@@ -5,28 +5,14 @@ import volunteerHeadshot from '../../pages/components/volunteer-headshot';
 
 let page = PageObject.create(volunteerHeadshot);
 
-const roles = [
-  'Developer',
-  'Ember Developer',
-  'UX Designer',
-  'Software Engineer',
-  'Project Coordinator',
-  'Designer & Developer'
+const userRoles = [
+  { role: { name: 'Developer' } },
+  { role: { name: 'Ember Developer' } },
+  { role: { name: 'UX Designer' } },
+  { role: { name: 'Software Engineer' } },
+  { role: { name: 'Project Coordinator' } },
+  { role: { name: 'Designer & Developer' } }
 ];
-
-function generateUserRoles() {
-  let userRoles = [];
-
-  roles.forEach(function(roleName) {
-    userRoles.push({
-      role: {
-        name: roleName
-      }
-    });
-  });
-
-  return userRoles;
-}
 
 moduleForComponent('volunteer-headshot', 'Integration | Component | volunteer headshot', {
   integration: true,
@@ -34,7 +20,7 @@ moduleForComponent('volunteer-headshot', 'Integration | Component | volunteer he
     this.set('user', {
       name: 'Test User',
       photoThumbUrl: 'http://fillmurray.com/200/200',
-      userRoles: generateUserRoles()
+      userRoles
     });
     page.setContext(this);
     page.render(hbs`{{volunteer-headshot volunteer=user}}`);
@@ -59,6 +45,10 @@ test('it computes the name if it is not present', function(assert) {
 
 test('it randomly selects one of the available roles', function(assert) {
   assert.expect(1);
+
+  let roles = userRoles.map((userRole) => {
+    return userRole.role.name;
+  });
   assert.ok(roles.includes(page.role));
 });
 

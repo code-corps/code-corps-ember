@@ -62,7 +62,7 @@ export default Component.extend({
     @property volunteerName
     @type String
    */
-  volunteerName: computed('volunteer.name', 'volunteer.firstName', 'volunteer.lastName', function() {
+  volunteerName: computed('volunteer.{name,firstName,lastName}', function() {
     let name = get(this, 'volunteer.name');
     let firstName = get(this, 'volunteer.firstName');
     let lastName = get(this, 'volunteer.lastName');

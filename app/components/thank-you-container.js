@@ -7,6 +7,8 @@ const {
   isPresent
 } = Ember;
 
+const MAX_VOLUNTEERS = 12;
+
 /**
   The `thank-you-container` component presents the main content for the
   `thank-you` donations page. This includes an icon, thank you message and
@@ -56,7 +58,7 @@ export default Component.extend({
   }),
 
   /**
-    Retuns a subset of at most 12 members from the `nonPendingMemberships` array.
+    Retuns a subset of at most `MAX_VOLUNTEERS` members from the `nonPendingMemberships` array.
 
     @property volunteers
     @type Ember.Array
@@ -69,8 +71,8 @@ export default Component.extend({
         return get(orgMembership, 'member');
       });
 
-      if (volunteers.length > 12) {
-        volunteers = this.randomSubset(volunteers, 12);
+      if (volunteers.length > MAX_VOLUNTEERS) {
+        volunteers = this.randomSubset(volunteers, MAX_VOLUNTEERS);
       }
 
       return volunteers;
