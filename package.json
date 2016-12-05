@@ -75,7 +75,7 @@
     "ember-load-initializers": "^0.6.0",
     "ember-metrics": "0.7.0",
     "ember-modal-dialog": "0.8.8",
-    "ember-moment": "7.0.0-beta.3",
+    "ember-moment": "7.0.1",
     "ember-page-title": "^3.0.10",
     "ember-resolver": "^2.0.3",
     "ember-route-action-helper": "^2.0.0",
