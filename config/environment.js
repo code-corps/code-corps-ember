@@ -94,7 +94,7 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
-    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
 
     ENV['ember-cli-mirage'] = {
       enabled: false
@@ -138,7 +138,7 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
-    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.stripe.publishableKey = 'pk_test_WN9xr9Ly1m0D36bdPQCbAzMi';
   }
 
   if (environment === 'mirage-development') {
@@ -147,7 +147,7 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
-    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
 
     ENV['ember-cli-mirage'] = {
       enabled: true
@@ -164,7 +164,7 @@ module.exports = function(environment) {
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
 
-    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.stripe.publishableKey = 'pk_test_AjQ9D0wliXnWRXH9d14DIW2E';
   }
 
   if (environment === 'test') {
@@ -183,7 +183,7 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
-    ENV.stripe.publishableKey = 'pk_test_hiQ7tWKKdLSw8jJdE98NSW74';
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
     ENV.LOG_STRIPE_SERVICE = true,
 
     ENV['simple-auth'] = {
@@ -198,6 +198,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
     ENV.WEB_BASE_URL = 'http://www.codecorps.org';
+    ENV.stripe.publishableKey = 'pk_live_AieoBpMkVudxrwizI0yqwRF8';
   }
 
   ENV['ember-simple-auth-token'] = {
