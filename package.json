@@ -81,7 +81,7 @@
     "ember-route-action-helper": "^2.0.0",
     "ember-simple-auth": "1.1.0",
     "ember-simple-auth-token": "^1.2.0",
-    "ember-sinon": "0.5.1",
+    "ember-sinon": "0.6.0",
     "ember-stripe-service": "4.4.2",
     "ember-tether": "0.3.1",
     "ember-tooltips": "2.4.2",
