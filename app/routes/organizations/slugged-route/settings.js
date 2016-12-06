@@ -3,6 +3,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import { CanMixin } from 'ember-can';
 
 const {
+  get,
   Route,
   inject: { service }
 } = Ember;
@@ -13,7 +14,7 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
 
   beforeModel() {
     let organization = this.modelFor('organizations.slugged-route');
-    return this.get('credentials.membershipPromise').then((membership) => {
+    return get(this, 'credentials.membershipPromise').then((membership) => {
       if (this.cannot('manage organization', organization, { membership })) {
         return this.transitionTo('index');
       } else {

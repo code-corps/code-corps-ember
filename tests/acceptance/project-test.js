@@ -284,7 +284,7 @@ test('Paging and filtering uses query parameters', function(assert) {
 });
 
 test('A user can join the organization of the project', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
 
   let project = createProjectWithSluggedRoute();
   let projectURL = `/${project.organization.slug}/${project.slug}/`;
@@ -305,25 +305,9 @@ test('A user can join the organization of the project', function(assert) {
     joinButton.click();
   });
 
-  server.post('/organization-memberships', (db, request) => {
-    let { attributes, relationships } = JSON.parse(request.requestBody).data;
-    assert.equal(attributes.role, 'pending');
-    assert.equal(relationships.member.data.id, user.id);
-    assert.equal(relationships.organization.data.id, project.organization.id);
-
-    return {
-      data: {
-        id: 1,
-        type: 'organization-membership',
-        attributes,
-        relationships
-      }
-    };
-  });
-
   andThen(() => {
     let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
-    assert.equal(joinButton.text, 'Membership Pending', 'The button to join has changed to pending');
+    assert.equal(joinButton.text, 'Membership pending', 'The button to join has changed to pending');
     assert.ok(joinButton.disabled, 'Button should be disabled.');
   });
 });

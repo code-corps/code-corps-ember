@@ -13,7 +13,7 @@
   <div class="right">
     <p class="join-project">
     {{#if session.isAuthenticated}}
-      {{#if (can "join organization" project.organization membership=credentials.membership)}}
+      {{#if (can "join organization" project.organization)}}
         <button class="default small" {{action 'joinProject'}}>Join project</button>
       {{/if}}
       {{#if credentials.userMembershipIsPending}}
