@@ -1,56 +1,63 @@
 .flash {
   cursor: pointer;
+}
 
-  .alert {
-    .container {
-      position: relative;
-    }
+.alert {
+  .container {
+    position: relative;
+  }
 
-    &.alert-success .full-width-container,
-    &.alert-success .fixed-flash-inner {
-      background: $dark-blue;
-      color: white;
-    }
+  // regular flash message full-width-container, displayed full width
+  // almost on top of the page
+  .full-width-container {
+    margin: 0 -10px 10px;
+    padding: 5px 10px 5px 35px;
+  }
 
-    &.alert-danger .full-width-container,
-    &.alert-danger .fixed-flash-inner {
-      background: $red;
-      color: white;
-    }
+  // fixed positioned flash message container, displayed at the very top of the page
+  // as wide as the text, centered
+  .fixed-flash {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    text-align: center;
 
-    // regular flash message full-width-container, displayed full width
-    // almost on top of the page
-    .full-width-container {
-      margin: 0 -10px 10px;
-      padding: 5px 10px 5px 35px;
-    }
+    .fixed-flash-inner {
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-block;
+      padding: 5px 20px;
+      margin-top: 15px;
 
-    // fixed positioned flash message container, displayed at the very top of the page
-    // as wide as the text, centered
-    .fixed-flash {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      text-align: center;
+      @include fadeInDown(0.6s);
 
-      .fixed-flash-inner {
-        border-radius: 4px;
-        cursor: pointer;
-        display: inline-block;
-        padding: 5px 20px;
-        margin-top: 15px;
-
-        @include fadeInDown(0.6s);
-
-        p {
-          margin: 5px 0;
-        }
+      p {
+        margin: 5px 0;
       }
     }
   }
+}
 
-  .close {
-    left: -20px;
-    position: absolute;
-    top: -3px;
+// ember-cli-flash package doesn't currently support custom classes.
+// but they will in their 2.0.0 release. https://github.com/poteto/ember-cli-flash/issues/99
+// Once they do so, the following classes can be renamed after BEM standards  (ex: .alert--state-danger)
+.alert-success {
+  .full-width-container,
+  .fixed-flash-inner {
+    background: $dark-blue;
+    color: white;
   }
+}
+
+.alert-danger {
+  .full-width-container,
+  .fixed-flash-inner {
+    background: $red;
+    color: white;
+  }
+}
+
+.close {
+  left: -20px;
+  position: absolute;
+  top: -3px;
 }
