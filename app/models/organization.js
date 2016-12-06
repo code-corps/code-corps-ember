@@ -3,7 +3,11 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-const { computed } = Ember;
+const {
+  computed: {
+    alias, filterBy, gt, mapBy
+  }
+} = Ember;
 
 export default Model.extend({
   base64IconData: attr(),
@@ -17,9 +21,9 @@ export default Model.extend({
   projects: hasMany('project', { async: true }),
   stripeConnectAccount: belongsTo('stripe-connect-account', { async: true }),
 
-  hasPendingMembers: computed.gt('pendingMembersCount', 0),
-  organizationMembers: computed.mapBy('organizationMemberships', 'member'),
-  pendingMembersCount: computed.alias('pendingMemberships.length'),
-  pendingMemberships: computed.filterBy('organizationMemberships', 'isPending'),
-  totalMembersCount: computed.alias('organizationMembers.length')
+  hasPendingMembers: gt('pendingMembersCount', 0),
+  organizationMembers: mapBy('organizationMemberships', 'member'),
+  pendingMembersCount: alias('pendingMemberships.length'),
+  pendingMemberships: filterBy('organizationMemberships', 'isPending'),
+  totalMembersCount: alias('organizationMembers.length')
 });

@@ -1,6 +1,6 @@
 <ul>
   {{#if session.isAuthenticated}}
-    {{#if (can 'manage organization')}}
+    {{#if (can 'manage organization' organization)}}
       <li>
         {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}
           Organization Profile

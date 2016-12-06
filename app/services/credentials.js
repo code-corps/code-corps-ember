@@ -2,9 +2,14 @@ import Ember from 'ember';
 
 const {
   computed,
+  computed: {
+    alias, empty, notEmpty
+  },
+  get,
   inject: { service },
   RSVP,
-  Service
+  Service,
+  set
 } = Ember;
 
 export default Service.extend({
@@ -13,64 +18,67 @@ export default Service.extend({
   currentUser: service(),
   store: service(),
 
-  memberships: computed.alias('organization.organizationMemberships'),
-
-  membership: computed('memberships.@each.isNew', function() {
-    let memberships = this.get('_loadedMemberships');
-    if (memberships) {
-      return memberships.find((membership) => this.findMembership(membership));
-    }
-  }),
-
-  membershipPromise: computed('memberships', function() {
-    let memberships = this.get('memberships');
-    let fulfilled = this.get('memberships.isFulfilled');
-
-    if (fulfilled) {
-      let membership = memberships.find((membership) => this.findMembership(membership));
-      return RSVP.resolve(membership);
-    } else {
-      return memberships.then((memberships) => {
-        return memberships.find((membership) => this.findMembership(membership));
+  membership: computed('memberships', 'user', {
+    get() {
+      this.fetchMembership().then((membership) => {
+        set(this, 'membership', membership);
       });
+      return null;
+    },
+    set(k, val) {
+      return val;
     }
   }),
 
-  user: computed.alias('currentUser.user'),
-  userCanJoinOrganization: computed.empty('membership'),
-  userCanManageOrganization: computed.alias('membership.isAtLeastAdmin'),
-  userIsMemberInOrganization: computed.notEmpty('membership'),
-  userMembershipIsPending: computed.alias('membership.isPending'),
-
-  findMembership(membership) {
-    let membershipUserId = membership.belongsTo('member').id();
-    let membershipOrganizationId = membership.belongsTo('organization').id();
-    let userId = this.get('user.id');
-    let organizationId = this.get('organization.id');
-    return (membershipUserId === userId) && (membershipOrganizationId === organizationId);
+  // Memberships may not be loaded, so we need to wait for them to resolve
+  // Can be useful in routing when we need it loaded to prevent a transition
+  fetchMembership() {
+    return new RSVP.Promise((resolve) => {
+      let memberships = get(this, 'memberships');
+      let fulfilled = get(this, 'memberships.isFulfilled');
+      if (fulfilled) {
+        let membership = memberships.find((membership) => this._findMembership(membership));
+        resolve(membership);
+      } else {
+        memberships.then((memberships) => {
+          let membership = memberships.find((membership) => this._findMembership(membership));
+          resolve(membership);
+        });
+      }
+    });
   },
 
-  joinOrganization() {
-    let member = this.get('user');
-    let organization = this.get('organization');
+  memberships: alias('organization.organizationMemberships'),
 
-    let membership = this.get('store').createRecord('organization-membership', {
+  user: alias('currentUser.user'),
+  userCanJoinOrganization: empty('membership'),
+  userCanManageOrganization: alias('membership.isAtLeastAdmin'),
+  userIsMemberInOrganization: notEmpty('membership'),
+  userMembershipIsPending: alias('membership.isPending'),
+
+  joinOrganization() {
+    let member = get(this, 'user');
+    let membership = get(this, 'memberships').createRecord({
       member,
-      organization,
       role: 'pending'
     });
-
     return membership.save();
   },
 
-  refresh() {
-    return this.get('memberships').reload();
-  },
-
   setOrganization(organization) {
-    this.set('organization', organization);
-    return this.refresh();
+    set(this, 'organization', organization);
+    return this._refresh();
   },
 
-  _loadedMemberships: computed.filterBy('memberships', 'isNew', false)
+  _findMembership(membership) {
+    let membershipUserId = membership.belongsTo('member').id();
+    let membershipOrganizationId = membership.belongsTo('organization').id();
+    let userId = get(this, 'user.id');
+    let organizationId = get(this, 'organization.id');
+    return (membershipUserId === userId) && (membershipOrganizationId === organizationId);
+  },
+
+  _refresh() {
+    return get(this, 'memberships').reload();
+  }
 });
