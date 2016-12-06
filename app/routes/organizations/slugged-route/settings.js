@@ -14,7 +14,7 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
 
   beforeModel() {
     let organization = this.modelFor('organizations.slugged-route');
-    return get(this, 'credentials.membershipPromise').then((membership) => {
+    return get(this, 'credentials').fetchMembership().then((membership) => {
       if (this.cannot('manage organization', organization, { membership })) {
         return this.transitionTo('index');
       } else {

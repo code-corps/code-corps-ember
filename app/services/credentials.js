@@ -20,7 +20,7 @@ export default Service.extend({
 
   membership: computed('memberships', 'user', {
     get() {
-      get(this, 'membershipPromise').then((membership) => {
+      this.fetchMembership().then((membership) => {
         set(this, 'membership', membership);
       });
       return null;
@@ -32,18 +32,21 @@ export default Service.extend({
 
   // Memberships may not be loaded, so we need to wait for them to resolve
   // Can be useful in routing when we need it loaded to prevent a transition
-  membershipPromise: computed('memberships', 'user', function() {
-    let memberships = get(this, 'memberships');
-    let fulfilled = get(this, 'memberships.isFulfilled');
-    if (fulfilled) {
-      let membership = memberships.find((membership) => this._findMembership(membership));
-      return RSVP.resolve(membership);
-    } else {
-      return memberships.then((memberships) => {
-        return memberships.find((membership) => this._findMembership(membership));
-      });
-    }
-  }),
+  fetchMembership() {
+    return new RSVP.Promise((resolve) => {
+      let memberships = get(this, 'memberships');
+      let fulfilled = get(this, 'memberships.isFulfilled');
+      if (fulfilled) {
+        let membership = memberships.find((membership) => this._findMembership(membership));
+        resolve(membership);
+      } else {
+        memberships.then((memberships) => {
+          let membership = memberships.find((membership) => this._findMembership(membership));
+          resolve(membership);
+        });
+      }
+    });
+  },
 
   memberships: alias('organization.organizationMemberships'),
 
