@@ -10,7 +10,7 @@
         activateDonations=(action 'activateDonations' project)}}
     {{else}}
       <h3>Awaiting Stripe verification...</h3>
-      <p>Your organization is now connected to stripe, but stripe still needs to verify your account</p>
+      <p>Your organization is now connected to Stripe, but Stripe still needs to verify your account details.</p>
       <button
         {{action 'reloadAccount'}}
         class="{{unless stripeConnectAccount.isReloading "default"}} refresh"
