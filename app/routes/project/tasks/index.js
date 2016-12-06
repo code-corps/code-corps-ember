@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 const {
+  get,
   merge,
-  Route
+  Route,
+  RSVP
  } = Ember;
 
 export default Route.extend({
@@ -14,13 +16,17 @@ export default Route.extend({
 
   model(params) {
     let project = this.modelFor('project');
-    let fullParams = merge(params, { projectId: project.get('id') });
-    return this.get('store').query('task', fullParams);
+
+    let projectId = project.get('id');
+    let fullParams = merge(params, { projectId });
+
+    let tasks =  get(this, 'store').query('task', fullParams);
+
+    return RSVP.hash({ project, tasks });
   },
 
-  setupController(controller) {
-    controller.set('project', this.modelFor('project'));
-    this._super(...arguments);
+  setupController(controller, { project, tasks }) {
+    controller.setProperties({ project, tasks });
   },
 
   // there is a semi-known ember bug, where a query parameter with an initial value not set to null

@@ -10,15 +10,13 @@ export default Route.extend({
   userSubscriptions: service(),
 
   model() {
-    let project = this.modelFor('project');
-
-    return RSVP.hash({
-      project,
-      subscription: this.get('userSubscriptions').fetchForProject(project)
+    return this.modelFor('project').reload().then((project) => {
+      let subscription = this.get('userSubscriptions').fetchForProject(project);
+      return RSVP.hash({ project, subscription });
     });
   },
 
-  setupController(controller, models) {
-    controller.setProperties(models);
+  setupController(controller, { project, subscription }) {
+    controller.setProperties({ project, subscription });
   }
 });
