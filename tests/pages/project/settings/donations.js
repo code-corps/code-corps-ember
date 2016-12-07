@@ -47,5 +47,6 @@ export default create({
 
   clickActivateDonationGoals: clickable('.activate-donations'),
   clickAddNew: clickable('.add'),
+  clickRefreshAccount: clickable('.refresh'),
   clickStripeConnectButton: clickable('.stripe-connect')
 });

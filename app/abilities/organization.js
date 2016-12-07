@@ -9,19 +9,17 @@ const {
 export default Ability.extend({
   credentials: service(),
 
-  isAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
-  userCanJoinOrganization: empty('membership'),
-  userCanLeaveOrganization: or('membership.isContributor', 'membership.isAdmin'),
-  userIsMemberInOrganization: notEmpty('membership'),
-
-  isAtLeastContributor: or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
-
-  canJoin: alias('userCanJoinOrganization'),
-  canManage: alias('isAtLeastAdmin'),
-
   canCreateIssueTask: true,
   canCreateIdeaTask: true,
   canCreateTaskTask: alias('isAtLeastContributor'),
+  canJoin: alias('userCanJoinOrganization'),
+  canManage: alias('isAtLeastAdmin'),
+
+  isAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
+  isAtLeastContributor: or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
+  userCanJoinOrganization: empty('membership'),
+  userCanLeaveOrganization: or('membership.isContributor', 'membership.isAdmin'),
+  userIsMemberInOrganization: notEmpty('membership'),
 
   membership: alias('credentials.membership'),
   organization: alias('model')

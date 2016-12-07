@@ -1,13 +1,8 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import Ember from 'ember';
 import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import organizationPage from '../pages/organization';
-
-const {
-  run
-} = Ember;
 
 moduleForAcceptance('Acceptance | Organization');
 
@@ -55,15 +50,13 @@ test('an admin can navigate to settings', function(assert) {
 
   andThen(() => {
     assert.ok(organizationPage.projectsMenuItemIsActive, 'The organization projects menu is active');
-    run.next(() => {
-      organizationPage.clickSettingsMenuItem();
-      andThen(() => {
-        assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');
-        assert.equal(organizationPage.settingsForm.isVisible, true, 'The organization settings form renders');
-      });
-    });
+    organizationPage.clickSettingsMenuItem();
   });
 
+  andThen(() => {
+    assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');
+    assert.equal(organizationPage.settingsForm.isVisible, true, 'The organization settings form renders');
+  });
 });
 
 test('anyone can navigate to projects', function(assert) {

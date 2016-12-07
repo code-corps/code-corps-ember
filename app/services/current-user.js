@@ -5,7 +5,8 @@ const {
   inject: { service },
   isEmpty,
   RSVP,
-  Service
+  Service,
+  set
 } = Ember;
 
 export default Service.extend({
@@ -15,10 +16,10 @@ export default Service.extend({
 
   loadCurrentUser() {
     return new RSVP.Promise((resolve, reject) => {
-      let userId = this.get('session.session.authenticated.user_id');
+      let userId = get(this, 'session.session.authenticated.user_id');
       if (!isEmpty(userId)) {
         return get(this, 'store').findRecord('user', userId).then((user) => {
-          this.set('user', user);
+          set(this, 'user', user);
           this._identifyUser(user);
           resolve(user);
         }, reject);
@@ -31,14 +32,14 @@ export default Service.extend({
   _identifyUser(user) {
     // Segment
     get(this, 'metrics').identify({
-      distinctId: user.get('id'),
-      biography: user.get('biography'),
-      insertedAt: user.get('insertedAt'),
-      email: user.get('email'),
-      name: user.get('name'),
-      state: user.get('state'),
-      username: user.get('username'),
-      website: user.get('website')
+      distinctId: get(user, 'id'),
+      biography: get(user, 'biography'),
+      insertedAt: get(user, 'insertedAt'),
+      email: get(user, 'email'),
+      name: get(user, 'name'),
+      state: get(user, 'state'),
+      username: get(user, 'username'),
+      website: get(user, 'website')
     });
   }
 });

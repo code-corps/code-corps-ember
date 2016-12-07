@@ -4,7 +4,6 @@ const { Route } = Ember;
 
 export default Route.extend({
   model() {
-    let project = this.modelFor('project');
-    return project;
+    return this.modelFor('project').reload();
   }
 });

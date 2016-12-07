@@ -7,7 +7,8 @@ const {
   get,
   inject: { service },
   isPresent,
-  Route
+  Route,
+  set
 } = Ember;
 
 export default Route.extend(ApplicationRouteMixin, {
@@ -153,7 +154,7 @@ export default Route.extend(ApplicationRouteMixin, {
   beforeModel(transition) {
     return this._loadCurrentUser().then(() => {
       if (this._shouldTransitionToOnboardingRoute(transition)) {
-        return this.transitionTo(this.get('onboardingRoute'));
+        return this.transitionTo(get(this, 'onboardingRoute'));
       } else {
         return this._super(...arguments);
       }
@@ -195,31 +196,31 @@ export default Route.extend(ApplicationRouteMixin, {
   },
 
   _attemptTransition() {
-    if (this.get('isOnboarding')) {
-      this.transitionTo(this.get('onboardingRoute'));
+    if (get(this, 'isOnboarding')) {
+      this.transitionTo(get(this, 'onboardingRoute'));
     } else {
-      let attemptedTransition = this.get('session.attemptedTransition');
+      let attemptedTransition = get(this, 'session.attemptedTransition');
       if (isPresent(attemptedTransition)) {
         attemptedTransition.retry();
-        this.set('session.attemptedTransition', null);
+        set(this, 'session.attemptedTransition', null);
       } else {
         this.transitionTo('projects-list');
       }
     }
   },
 
-  _loadCurrentUser() {
-    return this.get('currentUser').loadCurrentUser();
+  _invalidateSession() {
+    get(this, 'session').invalidate();
   },
 
-  _invalidateSession() {
-    this.get('session').invalidate();
+  _loadCurrentUser() {
+    return get(this, 'currentUser').loadCurrentUser();
   },
 
   _shouldTransitionToOnboardingRoute(transition) {
-    let isOnboarding = this.get('isOnboarding');
+    let isOnboarding = get(this, 'isOnboarding');
 
-    let onboardingRoutes = this.get('onboarding.routes');
+    let onboardingRoutes = get(this, 'onboarding.routes');
     let targetRoute = transition.targetName;
     let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
 

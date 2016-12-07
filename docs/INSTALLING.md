@@ -68,6 +68,7 @@ npm ERR! and the repository exists.
 you will need to [associate your ssh key with github](https://help.github.com/articles/generating-an-ssh-key/)
 
 ## Verify it worked
+Run `ember server`
 
 Point your browser (or make a direct request) to `http://localhost:4200`. You should see the code corps website.
 

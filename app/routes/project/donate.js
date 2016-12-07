@@ -16,7 +16,6 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model() {
     let project = this.modelFor('project');
-
     return RSVP.hash({
       project,
       subscription: this.get('userSubscriptions').fetchForProject(project)

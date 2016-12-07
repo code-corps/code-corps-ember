@@ -23,7 +23,7 @@ export default Component.extend({
   cardInvalid: not('cardValid'),
   cardValid: and('isCardNumberValid', 'isCVCValid', 'isExpiryValid'),
 
-  isBusyOrInvalid: or('isBusy', 'cardInvalid'),
+  isProcessingOrInvalid: or('isProcessing', 'cardInvalid'),
 
   date: computed('month', 'year', function() {
     let month = this.get('month');
@@ -81,7 +81,6 @@ export default Component.extend({
 
   actions: {
     submit() {
-      this.set('isSubmitting', true);
       let cardAttrs = this.getProperties('cvc', 'cardNumber', 'year', 'month');
       let onSubmit = this.get('submit');
 

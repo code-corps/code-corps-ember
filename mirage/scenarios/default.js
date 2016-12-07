@@ -253,6 +253,12 @@ export default function(server) {
     server.create('project-category', { category, project });
   });
 
+  organization.createStripeConnectAccount();
+
+  project.createStripeConnectPlan();
+
+  server.create('stripe-platform-customer', { user: owner });
+
   server.create('stripe-platform-card', { user: owner });
 
   server.create('donation-goal', {
