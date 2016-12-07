@@ -93,7 +93,7 @@ AppRouter.map(function() {
   });
 
   this.route('privacy');
-  this.route('terms-of-use');
+  this.route('terms');
 });
 
 export default AppRouter;
