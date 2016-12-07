@@ -19,7 +19,7 @@ moduleForComponent('volunteer-headshot', 'Integration | Component | volunteer he
   beforeEach() {
     this.set('user', {
       name: 'Test User',
-      photoThumbUrl: 'http://fillmurray.com/200/200',
+      photoThumbUrl: '/assets/images/icons/test.png',
       userRoles
     });
     page.setContext(this);
@@ -54,7 +54,7 @@ test('it randomly selects one of the available roles', function(assert) {
 
 test('it sets the image alt text', function(assert) {
   assert.expect(1);
-  assert.equal(page.image.alt, `${this.get('user.name')}\'s headshot`);
+  assert.equal(page.image.alt, `${this.get('user.name')}`);
 });
 
 test('it sets the image src', function(assert) {

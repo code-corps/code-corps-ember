@@ -13,6 +13,7 @@ export default Model.extend({
 
   isAdmin: computed.equal('role', 'admin'),
   isContributor: computed.equal('role', 'contributor'),
+  isNotPending: computed.not('isPending'),
   isOwner: computed.equal('role', 'owner'),
   isPending: computed.equal('role', 'pending')
 });

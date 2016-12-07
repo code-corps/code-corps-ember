@@ -3,8 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  get,
-  isPresent
+  get
 } = Ember;
 
 const MAX_VOLUNTEERS = 12;
@@ -28,57 +27,35 @@ export default Component.extend({
   classNames: ['thank-you-container'],
 
   /**
-    A computed alias for the project's organization members
+    A computed alias for the project's approved memberships
 
-    @property organizationMemberships
+    @property approvedMemberships
     @type Ember.Array
    */
-  organizationMemberships: computed.alias('project.organization.organizationMemberships'),
+  approvedMemberships: computed.alias('project.organization.approvedMemberships'),
 
   /**
-    Filters the array of `organizationMemberships` down to members who are not
-    pending acceptance.
+    A computed array of approved members
 
-    @property nonPendingMemberships
+    @property approvedMembers
     @type Ember.Array
    */
-  nonPendingMemberships: computed('organizationMemberships.[]', 'organizationMemberships.@each.role', function() {
-    let memberships = get(this, 'organizationMemberships');
-
-    if (isPresent(memberships)) {
-      return memberships.filter((membership) => {
-        let isPending = get(membership, 'isPending');
-        let role = get(membership, 'role');
-
-        return isPresent(role) && !isPending;
-      });
-    }
-
-    return [];
-  }),
+  approvedMembers: computed.mapBy('approvedMemberships', 'member'),
 
   /**
-    Retuns a subset of at most `MAX_VOLUNTEERS` members from the `nonPendingMemberships` array.
+    Retuns a subset of at most `MAX_VOLUNTEERS` members from the `approvedMembers` array.
 
     @property volunteers
     @type Ember.Array
    */
-  volunteers: computed('nonPendingMemberships', function() {
-    let nonPendingMemberships = get(this, 'nonPendingMemberships');
+  volunteers: computed('approvedMembers', function() {
+    let approvedMembers = get(this, 'approvedMembers');
 
-    if (isPresent(nonPendingMemberships)) {
-      let volunteers = nonPendingMemberships.map((orgMembership) => {
-        return get(orgMembership, 'member');
-      });
-
-      if (volunteers.length > MAX_VOLUNTEERS) {
-        volunteers = this.randomSubset(volunteers, MAX_VOLUNTEERS);
-      }
-
-      return volunteers;
+    if (approvedMembers.length > MAX_VOLUNTEERS) {
+      approvedMembers = this.randomSubset(approvedMembers, MAX_VOLUNTEERS);
     }
 
-    return [];
+    return approvedMembers;
   }),
 
   /*

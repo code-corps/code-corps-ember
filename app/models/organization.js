@@ -21,6 +21,7 @@ export default Model.extend({
   projects: hasMany('project', { async: true }),
   stripeConnectAccount: belongsTo('stripe-connect-account', { async: true }),
 
+  approvedMemberships: filterBy('organizationMemberships', 'isNotPending'),
   hasPendingMembers: gt('pendingMembersCount', 0),
   organizationMembers: mapBy('organizationMemberships', 'member'),
   pendingMembersCount: alias('pendingMemberships.length'),

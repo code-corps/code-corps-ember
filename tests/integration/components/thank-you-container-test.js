@@ -21,7 +21,7 @@ function generateMemberships(size) {
       role: 'contributor',
       member: {
         name: members[Math.floor(Math.random() * members.length)],
-        photoThumbUrl: 'http://fillmurray.com/200/200',
+        photoThumbUrl: '/assets/images/icons/test.png',
         userRoles: [
           {
             name: 'Contributor'
@@ -41,7 +41,7 @@ moduleForComponent('thank-you-container', 'Integration | Component | thank-you c
       id: 42,
       title: 'A Test Project',
       organization: {
-        organizationMemberships: generateMemberships(14)
+        approvedMemberships: generateMemberships(14)
       }
     });
 

@@ -26,17 +26,12 @@ export default Component.extend({
   classNames: ['volunteer-headshot'],
 
   /**
-    A computed array of the volunteer's user roles.
+    A computed alias of the volunteer's user roles.
 
     @property userRoles
     @type Ember.Array
    */
-  userRoles: computed('volunteer.userRoles.[]',
-      'volunteer.userRoles.@each.role',
-      'volunteer.userRoles.@each.user',
-    function() {
-      return this.get('volunteer.userRoles');
-    }),
+  userRoles: computed.alias('volunteer.userRoles'),
 
   /**
     A randomly selected role from the `userRoles` property.
@@ -57,7 +52,7 @@ export default Component.extend({
   /**
     Returns the volunteer's name. If the `name` property is not defined, it
     computes a name from the volunteer's `firstName` & `lastName`. If neither
-    are defined it returns an empty string.
+    are defined it returns the volunteer's username.
 
     @property volunteerName
     @type String
@@ -66,33 +61,14 @@ export default Component.extend({
     let name = get(this, 'volunteer.name');
     let firstName = get(this, 'volunteer.firstName');
     let lastName = get(this, 'volunteer.lastName');
+    let userName = get(this, 'volunteer.userName');
 
     if (isPresent(name)) {
       return name;
     } else if (isPresent(firstName) && isPresent(lastName)) {
       return `${firstName} ${lastName}`;
     } else {
-      return '';
+      return userName;
     }
-  }),
-
-  /**
-    Returns if the computed property `volunteerName` is present.
-
-    @property isVolunteerNamePresent
-    @type Boolean
-   */
-  isVolunteerNamePresent: computed.notEmpty('volunteerName'),
-
-  /**
-    A computed string for the volunteer's image headshot alt text.
-
-    @property altText
-    @type String
-   */
-  altText: computed('volunteerName', function() {
-    let name = get(this, 'volunteerName');
-
-    return `${name}\'s headshot`;
   })
 });
