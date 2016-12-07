@@ -91,6 +91,8 @@ AppRouter.map(function() {
   this.route('organization', function() {
     this.route('settings', function() { });
   });
+
+  this.route('privacy');
   this.route('terms-of-use');
 });
 
