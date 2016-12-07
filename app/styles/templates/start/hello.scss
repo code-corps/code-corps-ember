@@ -3,6 +3,7 @@
   @include background-image-retina($file, "png", 410px, 396px);
   background-position: 100% 0;
   display: flex;
+  flex: 1;
   flex-flow: row wrap;
   padding-right: 50%;
   width: 100%;

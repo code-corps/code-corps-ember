@@ -23,6 +23,7 @@ export default create({
   lastName: fillable('[name="lastName"]'),
   lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
+
   footer: {
     scope: '.site-footer'
   },

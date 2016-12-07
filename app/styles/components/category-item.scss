@@ -1,18 +1,14 @@
 .category-item {
   @include omega(5n);
   @include span-columns(2.4);
-
-  text-align: center;
-
-  .category-icon {
-    margin: 10px auto;
+  button {
+    text-align: left;
+    width: 100%;
   }
-
   p {
     color: $text--light;
     font-size: $body-font-size-small;
     margin: 10px 0;
-
     &.selected {
       color: $default-color;
     }

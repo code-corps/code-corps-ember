@@ -66,17 +66,20 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/start/expertise');
-    assert.equal(onboardingPage.roles(0).title, 'Technology');
-    assert.ok(onboardingPage.roles(0).header.hasClass('technology'));
-    assert.equal(onboardingPage.roles(0).button.text, 'Backend Development');
-    assert.equal(onboardingPage.roles(1).title, 'Creative');
-    assert.ok(onboardingPage.roles(1).header.hasClass('creative'));
-    assert.equal(onboardingPage.roles(1).button.text, 'Marketing');
-    assert.equal(onboardingPage.roles(2).title, 'Support');
-    assert.ok(onboardingPage.roles(2).header.hasClass('support'));
-    assert.equal(onboardingPage.roles(2).button.text, 'Donations');
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
 
+    assert.equal(onboardingPage.roles(0).title, 'Technology');
+    assert.ok(onboardingPage.roles(0).header.hasClass('expertise__column--technology'));
+    assert.equal(onboardingPage.roles(0).button.text, 'Backend Development');
+
+    assert.equal(onboardingPage.roles(1).title, 'Creative');
+    assert.ok(onboardingPage.roles(1).header.hasClass('expertise__column--creative'));
+    assert.equal(onboardingPage.roles(1).button.text, 'Marketing');
+
+    assert.equal(onboardingPage.roles(2).title, 'Support');
+    assert.ok(onboardingPage.roles(2).header.hasClass('expertise__column--support'));
+    assert.equal(onboardingPage.roles(2).button.text, 'Donations');
+
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
     onboardingPage.roles(0).button.click();
   });
 

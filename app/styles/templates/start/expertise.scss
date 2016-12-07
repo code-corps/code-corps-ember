@@ -1,6 +1,7 @@
 .start__expertise {
   display: flex;
   flex: 1;
+  margin-bottom: 2em;
   justify-content: space-around;
   width: 100%;
 }
@@ -15,23 +16,37 @@
 }
 
 .expertise__column {
-  padding-top: 5em;
-}
-
-.expertise__column {
-  // text-align: center;
   &--creative {
-    padding-top: 5em;
-    @include rolesSprite($creative);
-    //margin-left: 5px;
+    &::before {
+      @include rolesSprite($creative);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;
+      width: 100%;
+    }
   }
   &--technology {
-    padding-top: 5em;
-    @include rolesSprite($technology);
+    &::before {
+      @include rolesSprite($technology);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;
+      top: 0;
+      width: 100%;
+    }
   }
   &--support {
-    padding-top: 5em;
-    @include rolesSprite($support);
+    &::before {
+      @include rolesSprite($support);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;      
+      top: 0;
+      width: 100%;
+    }
   }
 
   h3 {

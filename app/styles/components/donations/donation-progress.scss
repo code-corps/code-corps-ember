@@ -26,16 +26,16 @@
   }
 
   &__description-header {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-small;
     font-weight: 600;
     text-transform: uppercase;
   }
 
   &__description {
-    border: 1px solid $border-light;
+    border: 1px solid $gray--lightest;
     border-radius: 4px;
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-normal;
     line-height: 22px;
     margin: 10px 0;

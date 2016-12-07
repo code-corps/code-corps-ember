@@ -103,9 +103,9 @@ export default Controller.extend({
     let email = get(user, 'email');
 
     return store.createRecord('stripe-platform-customer', {
-        email,
-        user
-      })
+      email,
+      user
+    })
       .save()
       .then((record) => RSVP.resolve(record))
       .catch((response) => this._handleCustomerCreationError(response));
@@ -151,8 +151,8 @@ export default Controller.extend({
     };
 
     return subscription.save({
-        adapterOptions
-      })
+      adapterOptions
+    })
       .then((record) => RSVP.resolve(record))
       .catch((response) => this._handleSubscriptionCreationError(response));
   },

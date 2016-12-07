@@ -8,7 +8,6 @@
 .site-content--start {
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
-	height: calc(100vh - 5em);
+	min-height: calc(100vh - 5em);
   justify-content: center;
 }
