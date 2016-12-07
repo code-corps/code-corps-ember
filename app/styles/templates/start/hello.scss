@@ -1,54 +1,45 @@
-.form-area {
-  @include span-columns(6);
+.start__hello {
+  $file: "/assets/images/people-signup";
+  @include background-image-retina($file, "png", 410px, 396px);
+  background-position: 100% 0;
+  display: flex;
+  flex: 1;
+  flex-flow: row wrap;
+  padding-right: 50%;
+  width: 100%;
+}
 
-  margin: 30px 0;
-
+.hello__column {
+  width: 30%;
+  &:first-of-type {
+    width: 100%;
+  }
+  &:last-of-type {
+    padding-left: 5%;
+    width: 70%;
+  }
   h2 {
-    color: $dark-text;
+    color: $text--dark;
     font-size: $header-font-size-large;
     font-weight: 500;
     margin: 30px 0;
   }
-
   p {
-    color: $extra-light-text;
+    color: $text--lighter;
     font-size: $body-font-size-normal;
     font-weight: 300;
     line-height: 24px;
     margin: 10px 0;
   }
+
 }
 
-.form {
-  margin-top: 30px;
-
-  .photo {
-    float: left;
-    text-align: center;
-    width: 150px;
-  }
-
-  .name {
-    float: left;
-    padding: 0 20px;
-    width: 328px;
-  }
-
+.hello__column {
   .input-group input {
     width: 50%;
-
     &:first-child {
+      border-radius: 4px 0 0 4px;
       border-right: none;
     }
   }
-}
-
-.image-area {
-  @include span-columns(6);
-}
-
-.people-signup {
-  $file: "/assets/images/people-signup";
-  @include background-image-retina($file, "png", 410px, 396px);
-  float: right;
 }

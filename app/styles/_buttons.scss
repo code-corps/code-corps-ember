@@ -1,3 +1,15 @@
+//
+// BUTTONS
+//
+
+// GUIDELINES
+// In order to make the styles more readable nesting should be used only for pseudo classes
+// e.g. :active, :disabled, :hover, :visited
+
+//
+// MIXINS
+//
+
 @mixin taskTypeButtonColors($type) {
   $background: map-get($taskTypeColors, $type);
   $text: map-get($taskTypeTextOnBackgroundColors, $type);
@@ -16,28 +28,30 @@
 @mixin primary-active {
   &.primary-active {
     &.active {
-      background: $primary-color;
-      border-color: $primary-color;
+      background: $blue;
+      border-color: $blue;
       color: white;
     }
   }
 }
 
 @mixin focus($color) {
-  box-shadow: 0 0 0 1px #FFFFFF, 0 0 0 3px $color;
+  box-shadow: 0 0 0 1px white, 0 0 0 3px $color;
 }
 
+//
+
 #{$all-buttons}, .button {
-  color: white;
   border-radius: 4px;
   border-style: solid;
   border-width: 1px;
-  padding: 11px 14px;
+  color: white;
+  display: inline-block;
   font-family: $body-font-family;
   font-size: $body-font-size-normal;
   font-weight: 500;
+  padding: 11px 14px;
   text-decoration: none;
-  display: inline-block;
 
   &:focus {
     outline: none;
@@ -68,20 +82,20 @@
     &.on-solid {
       background: transparent;
       &:hover {
-        color: $primary-color;
+        color: $blue;
       }
     }
   }
 
   &.clear {
     background: white;
-    border: 1px solid $border-default;
-    color: $dark-text;
+    border: 1px solid $gray;
+    color: $text--dark;
     font-weight: 300;
 
     &:focus {
       background: $clear-focus;
-      border-color: darken($border-default, 2%);
+      border-color: darken($gray, 2%);
     }
 
     @include primary-active;
@@ -144,9 +158,9 @@
 
     &.button-spinner {
       display: inline-block;
+      height: 22px;
       margin: -4px 8px -2px -2px;
       vertical-align: middle;
-      height: 22px;
       width: 22px;
 
       @include fadeIn(0.6s);
@@ -198,7 +212,7 @@
   &.clear {
     background: $clear-hover;
     background-image: linear-gradient(white, $clear-hover);
-    border-color: $border-default;
+    border-color: $gray;
 
     &:disabled {
       background: white;
@@ -250,9 +264,9 @@
 .button-group {
   @include clearfix;
 
-  position: relative;
   display: inline-block;
   font-size: 0;
+  position: relative;
   vertical-align: middle;
 
   #{$all-buttons}, .button {

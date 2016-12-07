@@ -1,33 +1,39 @@
-<h1 class="site-logo left">
-  {{#link-to 'index' class='logo'}}Code Corps{{/link-to}}
+<h1 class="header__logo">
+  {{#link-to 'index' }}Code Corps{{/link-to}}
 </h1>
+
 {{#if navigationMenu.isDefault}}
-  <ul class="header-nav main-nav left">
+<nav class="header__navigation--main">
+  <ul>
     <li>{{#link-to 'projects-list'}}Projects{{/link-to}}</li>
     <li><a href="https://blog.codecorps.org">Blog</a></li>
   </ul>
-  {{#if session.isAuthenticated}}
-    <ul class="header-nav right">
-      <li class="user-menu-tab">
-        {{user-menu user=currentUser.user}}
-      </li>
-    </ul>
-  {{else}}
-    <ul class="header-nav auth-nav right">
-      <li>
-        {{#link-to 'signup' class="signup"}}Sign up{{/link-to}}
-      </li>
-      <li>
-        {{#link-to 'login' class="login"}}Sign in{{/link-to}}
-      </li>
-    </ul>
-  {{/if}}
+</nav>
+
+{{#if session.isAuthenticated}}
+<nav class="header__navigation--auth">
+  <ul>
+    <li class="user-menu-tab">{{user-menu user=currentUser.user}}</li>
+  </ul>
+</nav>
+
+{{else}}
+<nav class="header__navigation--auth">
+  <ul>
+    <li>{{#link-to 'signup' class="signup"}}Sign up{{/link-to}}</li>
+    <li>{{#link-to 'login' class="login"}}Sign in{{/link-to}}</li>
+  </ul>
+</nav>
+
 {{/if}}
+{{/if}}
+
 {{#if navigationMenu.isOnboarding}}
-  <div class="onboarding-steps right">
-    <p>Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</p>
-  </div>
-  <div class="onboarding-progress">
+<div class="header__navigation--onboarding">
+  <div class="onboarding__progress">
     {{progress-bar-container percentage=onboarding.progressPercentage}}
   </div>
+  <p class="onboarding__steps">Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</p>
+</div>
+
 {{/if}}

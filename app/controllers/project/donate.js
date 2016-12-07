@@ -1,12 +1,20 @@
 import Ember from 'ember';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
-import { isValidationError } from 'code-corps-ember/utils/error-utils';
+import {
+  isValidationError
+} from 'code-corps-ember/utils/error-utils';
 
 const {
   Controller,
-  computed: { alias, bool, not },
+  computed: {
+    alias,
+    bool,
+    not
+  },
   get,
-  inject: { service },
+  inject: {
+    service
+  },
   set,
   RSVP
 } = Ember;
@@ -36,11 +44,11 @@ export default Controller.extend({
       this._updateisProcessing(true);
 
       return this._createCreditCardToken(cardParams)
-                 .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
-                 .then((stripeCard) => this._createSubscription(amount, stripeCard))
-                 .then(() => this._transitionToThankYou())
-                 .catch((response) => this._handleError(response))
-                 .finally(() => this._updateisProcessing(false));
+        .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
+        .then((stripeCard) => this._createSubscription(amount, stripeCard))
+        .then(() => this._transitionToThankYou())
+        .catch((response) => this._handleError(response))
+        .finally(() => this._updateisProcessing(false));
     },
 
     donate(amount, stripeCard) {
@@ -48,8 +56,8 @@ export default Controller.extend({
       this._updateisProcessing(true);
 
       return this._createSubscription(amount, stripeCard)
-                 .then(() => this._transitionToThankYou())
-                 .finally(() => this._updateisProcessing(false));
+        .then(() => this._transitionToThankYou())
+        .finally(() => this._updateisProcessing(false));
     }
   },
 
@@ -60,8 +68,8 @@ export default Controller.extend({
     let stripe = get(this, 'stripe');
 
     return stripe.card.createToken(stripeCard)
-                      .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                      .catch((reason) => this._handleCreditCardTokenError(reason));
+      .then((stripeResponse) => RSVP.resolve(stripeResponse))
+      .catch((reason) => this._handleCreditCardTokenError(reason));
   },
 
   _handleCreditCardTokenError(response) {
@@ -70,9 +78,11 @@ export default Controller.extend({
 
   // card and customer logic
 
-  _createCardForPlatformCustomer({ id }) {
+  _createCardForPlatformCustomer({
+    id
+  }) {
     return this._ensureStripePlatformCustomer()
-               .then(() => this._createStripePlatformCard(id));
+      .then(() => this._createStripePlatformCard(id));
   },
 
   _ensureStripePlatformCustomer() {
@@ -86,13 +96,19 @@ export default Controller.extend({
   // platform customer
 
   _createStripePlatformCustomer() {
-    let { user, store } = this.getProperties('user', 'store');
+    let {
+      user,
+      store
+    } = this.getProperties('user', 'store');
     let email = get(user, 'email');
 
-    return store.createRecord('stripe-platform-customer', { email, user })
-                .save()
-                .then((record) =>RSVP.resolve(record))
-                .catch((response) => this._handleCustomerCreationError(response));
+    return store.createRecord('stripe-platform-customer', {
+      email,
+      user
+    })
+      .save()
+      .then((record) => RSVP.resolve(record))
+      .catch((response) => this._handleCustomerCreationError(response));
   },
 
   _handleCustomerCreationError() {
@@ -105,10 +121,13 @@ export default Controller.extend({
   _createStripePlatformCard(stripeToken) {
     let store = get(this, 'store');
     let user = get(this, 'user');
-    let card = store.createRecord('stripe-platform-card', { stripeToken, user });
+    let card = store.createRecord('stripe-platform-card', {
+      stripeToken,
+      user
+    });
     return card.save()
-               .then((record) =>RSVP.resolve(record))
-               .catch((response) => this._handleCardCreationError(response));
+      .then((record) => RSVP.resolve(record))
+      .catch((response) => this._handleCardCreationError(response));
   },
 
   _handleCardCreationError() {
@@ -123,12 +142,19 @@ export default Controller.extend({
     let user = get(this, 'user');
     let store = get(this, 'store');
 
-    let subscription = store.createRecord('stripe-connect-subscription', { quantity, user });
-    let adapterOptions = { projectId };
+    let subscription = store.createRecord('stripe-connect-subscription', {
+      quantity,
+      user
+    });
+    let adapterOptions = {
+      projectId
+    };
 
-    return subscription.save({ adapterOptions })
-                       .then((record) =>RSVP.resolve(record))
-                       .catch((response) => this._handleSubscriptionCreationError(response));
+    return subscription.save({
+      adapterOptions
+    })
+      .then((record) => RSVP.resolve(record))
+      .catch((response) => this._handleSubscriptionCreationError(response));
   },
 
   _handleSubscriptionCreationError(response) {

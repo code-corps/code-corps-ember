@@ -36,3 +36,15 @@
   padding: 5px;
   display: block;
 }
+
+.user-menu-select {
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  &.active, &:hover {
+    border-bottom-color: $blue;
+    color: $link-color;
+  }
+  &:hover {
+    transition: border-bottom-color ease 0.3s;
+  }
+}

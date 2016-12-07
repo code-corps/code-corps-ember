@@ -78,7 +78,7 @@ $outer-border-radius: 4px;
   color: #333;
   text-align: center;
   background-color: $background-gray;
-  border: 1px solid $border-default;
+  border: 1px solid $gray;
   border-radius: $outer-border-radius;
   display: table-cell;
   line-height: 6px;
@@ -169,7 +169,7 @@ form {
     li {
       margin-bottom: 2px;
       &.highlight {
-        color: $dark-blue;
+        color: $blue;
       }
     }
   }
@@ -187,7 +187,7 @@ form {
 }
 
 select {
-  border: 1px solid $border-default;
+  border: 1px solid $gray;
   font-family: $body-font-family;
   font-size: $body-font-size-normal;
   height: 41px;
@@ -206,18 +206,18 @@ select {
     }
 
     &.issue {
-      background: $issue-color;
+      background: $red;
       color: white;
     }
 
     &.task {
-      background: $task-color;
+      background: $blue;
       color: white;
     }
 
     &.idea {
-      background: $idea-color;
-      color: $dark-text;
+      background: $yellow;
+      color: $text--dark;
     }
   }
 }

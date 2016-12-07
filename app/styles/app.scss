@@ -1,3 +1,4 @@
+@import "normalize";
 @import "bourbon";
 @import "neat";
 
@@ -16,8 +17,8 @@
 @import "alerts";
 
 @import "main";
+@import "shame";
 
-@import "header";
 @import "settings";
 @import "pace";
 @import "code";
@@ -47,7 +48,6 @@
 @import "components/image-drop";
 @import "components/login-form";
 @import "components/member-list-item";
-@import "components/navigation-menu";
 @import "components/organization-header";
 @import "components/organization-members";
 @import "components/pager-control";
@@ -74,13 +74,31 @@
 @import "components/role-item";
 @import "components/settings-menu";
 @import "components/signup-form";
-@import "components/site-footer";
 @import "components/user-details";
 @import "components/user-menu";
 @import "components/user-organizations-list";
 @import "components/user-sidebar";
 @import "components/user-skills-input";
 
+//
+// HELPERS
+//
+@import "base/helpers.scss";
+
+//
+// LAYOUT
+//
+@import "layout/content";
+@import "layout/footer";
+@import "layout/header";
+
+//
+// COMPONENTS
+//
+
+//
+// TEMPLATES
+//
 @import "templates/about";
 @import "templates/oauth-stripe";
 @import "templates/project/index";

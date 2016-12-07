@@ -1,15 +1,23 @@
 {{title "Code Corps"}}
 
+{{! do we have to wrap the whole app with #drag-zone?
+isn't this here mainly for updating a user's image? }}
 {{#drag-zone}}
-  <div class="flexbox-container">
+    {{! it'd be nice for the sake of consistency to rename
+    'navigation-menu' to 'site-header' }}
     {{navigation-menu}}
     {{flash-messages}}
-    <div class="main container {{codeTheme.className}}">
+    {{#if isOnboarding}}
+    <div class="site-content--start container {{codeTheme.className}}">
       {{outlet}}
     </div>
-    <div class="flexbox-spacer"></div>
+    {{else}}
+    {{! is codeTheme.className needed this early in the DOM tree? }}
+    <div class="site-content container {{codeTheme.className}}">
+      {{outlet}}
+    </div>
+    {{/if }}
     {{#unless isOnboarding}}
       {{site-footer}}
     {{/unless}}
-  </div>
 {{/drag-zone}}

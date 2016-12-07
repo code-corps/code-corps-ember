@@ -23,22 +23,23 @@ export default create({
   lastName: fillable('[name="lastName"]'),
   lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
+
   footer: {
     scope: '.site-footer'
   },
 
   startButton: {
-    scope: '.start-actions button',
+    scope: '.start__footer button',
     isDisabled: attribute('disabled')
   },
 
   roles: collection({
-    itemScope: '.roles-column',
+    itemScope: '.expertise__column',
 
     item: {
       title: text('h3'),
       header: {
-        scope: '.roles-column-header',
+        scope: '.expertise__column-header',
         hasClass
       },
       button: {

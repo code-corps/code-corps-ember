@@ -1,0 +1,13 @@
+.site-content {
+	align-items: center;
+	display: flex;
+	flex: 1;
+  justify-content: center;
+}
+
+.site-content--start {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 5em);
+  justify-content: center;
+}

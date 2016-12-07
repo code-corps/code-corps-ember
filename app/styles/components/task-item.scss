@@ -4,7 +4,7 @@
 
 .task-item {
   @include clearfix;
-  border-top: 1px solid $border-light;
+  border-top: 1px solid $gray--lightest;
   margin: 0;
   padding: 15px;
   text-align: left;
@@ -14,7 +14,7 @@
   }
 
   &:last-child {
-    border-bottom: 1px solid $border-light;
+    border-bottom: 1px solid $gray--lightest;
   }
 
   .task-icon {
@@ -26,7 +26,7 @@
   }
 
   a {
-    color: $dark-text;
+    color: $text--dark;
     font-weight: 700;
 
     &:hover {
@@ -40,27 +40,27 @@
       background-color: $task-background;
     }
     a:hover {
-      color: $task-color;
+      color: $blue;
     }
   }
 
   &.issue {
     @include taskItemIcon($issue);
     &:hover {
-      background-color: $issue-background;
+      background-color: $red--light;
     }
     a:hover {
-      color: $issue-color;
+      color: $red;
     }
   }
 
   &.idea {
     @include taskItemIcon($idea);
     &:hover {
-      background-color: $idea-background;
+      background-color: $yellow--light;
     }
     a:hover {
-      color: $idea-color;
+      color: $yellow;
     }
   }
 }
@@ -72,7 +72,7 @@
 
 .task-description {
   font-size: $body-font-size-small;
-  color: $light-text;
+  color: $text--light;
 }
 
 .main-description {
@@ -105,7 +105,7 @@
 .task-expertise {
   margin-top: 5px;
   font-size: $body-font-size-small;
-  color: $extra-light-text;
+  color: $text--lighter;
   &.beginner {
     @include taskExpertiseIcon($beginner);
   }

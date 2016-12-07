@@ -2,19 +2,19 @@
   li {
     a {
       border-left: 1px solid transparent;
-      color: $extra-light-text;
+      color: $text--lighter;
       display: block;
       padding: 10px 15px;
 
       &:hover {
-        background: $light-blue-background;
-        border-color: $border-default;
-        color: $dark-blue;
+        background: $blue--lighter;
+        border-color: $gray;
+        color: $blue;
       }
 
       &.active {
-        border-color: $dark-blue;
-        color: $dark-blue;
+        border-color: $blue;
+        color: $blue;
       }
     }
   }

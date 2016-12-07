@@ -1,0 +1,75 @@
+//
+// shame.css
+// http://csswizardry.com/2013/04/shame-css/
+//
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+// TODO: Remove when we add more projects
+.temporary-projects-notice {
+  @include span-columns(4);
+
+  border: 1px dashed $gray--lightest;
+  border-radius: 4px;
+  color: $text--light;
+  min-height: 390px;
+  padding: 20px;
+
+  p {
+    font-size: $body-font-size-small;
+  }
+
+  .curved-arrow-icon {
+    @include sprite($curved-arrow);
+
+    margin-top: 90px;
+  }
+}
+
+// styles below are probably not necessary after refactoring
+.header-section {
+  margin: 20px 0;
+
+  h2 {
+    font-weight: 700;
+  }
+
+  p {
+    color: $text--light;
+    line-height: 2em;
+  }
+}
+
+// no templates are using the classes below
+
+.menu {
+  padding: 10px 0;
+  ul {
+    list-style-type: none;
+    @include clearfix;
+  }
+  a.active {
+    font-weight: 600;
+  }
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.subtext {
+  font-size: $body-font-size-small;
+}

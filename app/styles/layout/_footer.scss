@@ -1,0 +1,64 @@
+.site-footer {
+  padding: 1.4em 0;
+  h4 {
+    margin: 7px 0;
+  }
+}
+
+.footer-logo {
+  @include sprite($logo-small);
+  display: inline-block;
+  text-indent: -9999px;
+}
+
+.footer-columns {
+  > li {
+    float: left;
+
+    &:first-child {
+      width: 28%
+    }
+    width: 18%;
+  }
+}
+
+@mixin footer-icon {
+  content: "";
+  margin: 0 8px -3px 0;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.footer-links {
+  li {
+    display: block;
+    float: left;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  a {
+    font-size: $body-font-size-small;
+
+    &.facebook:before {
+      @include footer-icon;
+      @include sprite($fb-footer);
+    }
+
+    &.github:before {
+      @include footer-icon;
+      @include sprite($github-footer);
+    }
+
+    &.twitter:before {
+      @include footer-icon;
+      @include sprite($twitter-footer);
+    }
+
+    &.slack:before {
+      @include footer-icon;
+      @include sprite($slack-footer);
+    }
+  }
+}

@@ -19,7 +19,7 @@ const {
  * @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['categories-list'],
+  classNames: ['start__interests'],
 
   /**
    * An array of properties used to sort the list of categories.
