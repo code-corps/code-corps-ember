@@ -41,7 +41,7 @@ test('it allows refreshing account if account does not have charges enabled yet'
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let account = organization.createStripeConnectAccount({ chargesEnabled: false });
+  let account = organization.createStripeConnectAccount({ canAcceptDonations: false });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 
@@ -50,7 +50,7 @@ test('it allows refreshing account if account does not have charges enabled yet'
   andThen(() => {
     server.get('stripe-connect-accounts/:id', function() {
       assert.ok(true, 'Refresh was called');
-      account.chargesEnabled = true;
+      account.canAcceptDonations = true;
 
       return account;
     });
@@ -69,7 +69,7 @@ test('it renders existing donation goals', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 3, { project });
   server.createList('donation-goal', 2);
 
@@ -87,7 +87,7 @@ test('it sets up a new unsaved donation goal if there are no donation goals, whi
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 
@@ -115,7 +115,7 @@ test('it is possible to add a donation goal when donation goals already exists',
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -144,7 +144,7 @@ test('it allows editing of existing donation goals', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -173,7 +173,7 @@ test('cancelling edit of an unsaved new goal removes that goal from the list', f
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -197,7 +197,7 @@ test('cancelling edit of an unsaved existing goal keeps that goal in the list', 
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -221,7 +221,7 @@ test('it allows activating donations for the project', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -248,7 +248,7 @@ test('it shows donation progress if donations are active', function(assert) {
     organization
   });
 
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
   server.createList('donation-goal', 1, { project });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
@@ -268,7 +268,7 @@ test('it does not show donation progress if donations are not active', function(
     donationsActive: false,
     organization
   });
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 
@@ -284,7 +284,7 @@ test('it renders validation errors', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 
@@ -328,7 +328,7 @@ test('it renders other errors', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  organization.createStripeConnectAccount({ chargesEnabled: true });
+  organization.createStripeConnectAccount({ canAcceptDonations: true });
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 

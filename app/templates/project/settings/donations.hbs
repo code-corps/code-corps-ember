@@ -1,6 +1,6 @@
 <div class="settings-main">
   {{#if stripeConnectAccount}}
-    {{#if stripeConnectAccount.chargesEnabled}}
+    {{#if stripeConnectAccount.canAcceptDonations}}
       {{donation-goals
         add=(action 'addDonationGoal')
         cancel=(action 'cancelDonationGoal')
