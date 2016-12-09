@@ -1,0 +1,84 @@
+<div class="input-group">
+  <label for="recipient-type">Recipient Type</label>
+  <select onchange={{action (mut recipientType) value="target.value"}} name="recipient-type" value={{recipientType}}>
+    <option value="individual">Individual</option>
+    <option value="company">Business</option>
+  </select>
+</div>
+
+{{#if (eq recipientType 'company')}}
+  <div class="input-group">
+    <label for="business-type">Business Type</label>
+    <select onchange={{action (mut businessType) value="target.value"}} name="business-type" value={{businessType}}>
+      <option value="sole_prop">Sole Proprietorship</option>
+      <option value="corporation">Corporation</option>
+      <option value="non_profit">Nonprofit</option>
+      <option value="partnership">Partnership</option>
+      <option value="llc">LLC</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label for="business-name">Business Name</label>
+    {{input type="text" name="business-name" value=businessName}}
+  </div>
+  <div class="input-group">
+    <label for="business-ein">Business EIN</label>
+    {{input type="text" name="business-ein" value=businessEin}}
+  </div>
+{{/if}}
+
+
+{{!identity}}
+
+<div class="input-group">
+  <label for="first-name">First Name</label>
+  {{input type="text" name="first-name" value=firstName}}
+</div>
+<div class="input-group">
+  <label for="last-name">Last Name</label>
+  {{input type="text" name="last-name" value=lastName}}
+</div>
+<div class="input-group">
+  <label>
+    Birthday
+    {{pikaday-input format="MM/DD/YYYY" onSelection=(action 'setDob') value=dob}}
+  </label>
+</div>
+<div class="input-group">
+  <div class="input-group">
+    <label for="address-1">Address 1</label>
+    {{input type="text" name="address-1" value=address1}}
+  </div>
+  <div class="input-group">
+    <label for="address-2">Address 2</label>
+    {{input type="text" name="address-2" value=address2}}
+  </div>
+  <div class="input-group">
+    <label for="city">City</label>
+    {{input type="text" name="city" value=city}}
+  </div>
+  <div class="input-group">
+    <label for="state">State</label>
+    {{! TODO: Make a proper select dropdown}}
+    <select disabled=true value=state name="state">
+      <option value="CA">California</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label for="zip">ZIP</label>
+    {{input type="text" name="zip" value=zip}}
+  </div>
+  <div class="input-group">
+    <label for="country">Country</label>
+    {{! TODO: Make a proper select dropdown}}
+    <select disabled=true value=country name="country">
+      <option value="US">United States</option>
+    </select>
+  </div>
+</div>
+<div class="input-group">
+  <label for="ssn-last4">SSN Last 4</label>
+  {{input type="text" name="ssn-last4" value=ssnLast4}}
+</div>
+
+<input type="submit" {{action "submit"}} value="Submit information" />

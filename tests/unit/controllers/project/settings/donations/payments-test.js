@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('controller:project/settings/donations', 'Unit | Controller | project/settings/donations', {
+moduleFor('controller:project/settings/donations/payments', 'Unit | Controller | project/settings/donations/payments', {
   needs: ['service:metrics']
 });
 

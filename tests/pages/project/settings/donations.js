@@ -1,5 +1,4 @@
 import {
-  attribute,
   clickable,
   collection,
   create,
@@ -11,7 +10,7 @@ import donationProgress from 'code-corps-ember/tests/pages/components/donations/
 import errorFormatter from 'code-corps-ember/tests/pages/components/error-formatter';
 
 export default create({
-  visit: visitable(':organization/:project/settings/donations'),
+  visit: visitable(':organization/:project/settings/donations/goals'),
 
   donationProgress,
 
@@ -40,13 +39,6 @@ export default create({
 
   errorFormatter,
 
-  stripeConnectButton: {
-    scope: '.stripe-connect',
-    href: attribute('href')
-  },
-
   clickActivateDonationGoals: clickable('.activate-donations'),
-  clickAddNew: clickable('.add'),
-  clickRefreshAccount: clickable('.refresh'),
-  clickStripeConnectButton: clickable('.stripe-connect')
+  clickAddNew: clickable('.add')
 });
