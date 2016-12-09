@@ -1,0 +1,49 @@
+.task-card {
+  border: 1px solid $border-light;
+  border-radius: 0 0 4px 4px;
+  padding: 0.7em 1em;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+
+  li {
+    padding: 2px 0;
+  }
+}
+
+.task-card--task {
+  border-top: 2px solid $task-color;
+}
+
+.task-card--idea {
+  border-top: 2px solid $idea-color;
+}
+
+.task-card--issue {
+  border-top: 2px solid $issue-color;
+}
+
+.task-card__title {
+  font-weight: 600;
+}
+
+.task-card__number {
+  color: $extra-light-text;
+}
+
+.task-card__type--task {
+  @include taskBoardIcon($task);
+}
+
+.task-card__type--idea {
+  @include taskBoardIcon($idea);
+}
+
+.task-card__type--issue {
+  @include taskBoardIcon($issue);
+}
+
+.task-card__time {
+  color: $extra-light-text;
+  font-size: $body-font-size-small;
+}

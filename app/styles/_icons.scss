@@ -89,6 +89,16 @@ $taskTypeIconHovers: (
   }
 }
 
+@mixin taskBoardIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
 @mixin taskExpertiseIcon($icon) {
   &:before {
     @include sprite($icon);
