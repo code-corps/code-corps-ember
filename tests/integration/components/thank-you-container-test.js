@@ -14,9 +14,8 @@ const members = [
 
 function generateMemberships(size) {
   let memberships = [];
-  let i = 0;
 
-  for (; i < size; i++) {
+  for (let i = 0; i < size; i++) {
     memberships.push({
       role: 'contributor',
       member: {
