@@ -14,5 +14,5 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('stripe-connect-account', ['accessCode', 'businessName', 'businessUrl', 'chargesEnabled', 'displayName', 'email', 'idFromStripe', 'insertedAt', 'updatedAt']);
+testForAttributes('stripe-connect-account', ['accessCode', 'businessName', 'businessUrl', 'canAcceptDonations', 'chargesEnabled', 'displayName', 'email', 'idFromStripe', 'insertedAt', 'updatedAt']);
 testForBelongsTo('stripe-connect-account', 'organization');
