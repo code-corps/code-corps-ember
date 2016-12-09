@@ -91,7 +91,9 @@ AppRouter.map(function() {
   this.route('organization', function() {
     this.route('settings', function() { });
   });
-  this.route('terms-of-use');
+
+  this.route('privacy');
+  this.route('terms');
 });
 
 export default AppRouter;

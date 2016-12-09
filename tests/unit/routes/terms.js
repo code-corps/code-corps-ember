@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:terms-of-use', 'Unit | Route | terms of use', {
+moduleFor('route:terms', 'Unit | Route | terms', {
   needs: ['service:metrics']
 });
 
