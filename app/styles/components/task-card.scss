@@ -1,49 +1,66 @@
 .task-card {
   border: 1px solid $border-light;
   border-radius: 0 0 4px 4px;
-  padding: 0.7em 1em;
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
+  padding: 0.7em 1em;
 
-  li {
+  p {
+    margin: 0;
     padding: 2px 0;
   }
-}
 
-.task-card--task {
-  border-top: 2px solid $task-color;
-}
+  &__icon {
+    margin-right: 5px;
+  }
 
-.task-card--idea {
-  border-top: 2px solid $idea-color;
-}
+  &__meta {
+    display: flex;
+  }
 
-.task-card--issue {
-  border-top: 2px solid $issue-color;
-}
+  &__number {
+    color: $extra-light-text;
+  }
 
-.task-card__title {
-  font-weight: 600;
-}
+  &__time {
+    color: $extra-light-text;
+    font-size: $body-font-size-small;
+  }
 
-.task-card__number {
-  color: $extra-light-text;
-}
+  &__title {
+    font-weight: 600;
+    margin-right: 5px;
+  }
 
-.task-card__type--task {
-  @include taskBoardIcon($task);
-}
+  &--idea {
+    border-top: 2px solid $idea-color;
+    &:hover { background-color: $idea-background; }
+    .task-card__icon { @include taskBoardIcon($idea-small); }
+  }
 
-.task-card__type--idea {
-  @include taskBoardIcon($idea);
-}
+  &--issue {
+    border-top: 2px solid $issue-color;
+    &:hover { background-color: $issue-background; }
+    .task-card__icon { @include taskBoardIcon($issue-small); }
+  }
 
-.task-card__type--issue {
-  @include taskBoardIcon($issue);
-}
+  &--task {
+    border-top: 2px solid $task-color;
+    &:hover { background-color: $task-background; }
+    .task-card__icon { @include taskBoardIcon($task-small); }
+  }
 
-.task-card__time {
-  color: $extra-light-text;
-  font-size: $body-font-size-small;
+  a {
+    color: $dark-text;
+    font-weight: 700;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
