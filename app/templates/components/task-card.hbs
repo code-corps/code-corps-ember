@@ -1,10 +1,8 @@
-<div class="task-card task-card--in-progress task-card--task">
-  <p>
-    <span class="task-card__title">Add project roles on Ember</span>
-    <span class="task-card__number">#123</span>
-  </p>
-  <p class="task-card__meta">
-    <span class="task-card__icon" title="Task"></span>
-    <span class="task-card__time">2 days ago</span>
-  </p>
-</div>
+<p>
+  <span class="task-card__title" data-test-selector="task title">{{task.title}}</span>
+  <span class="task-card__number" data-test-selector="task number">#{{task.number}}</span>
+</p>
+<p class="task-card__meta">
+  <span class="task-card__icon"></span>
+  <span class="task-card__time" data-test-selector="task time">{{moment-from-now task.insertedAt}}</span>
+</p>
