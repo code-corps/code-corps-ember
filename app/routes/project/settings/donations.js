@@ -44,21 +44,14 @@ export default Route.extend(CanMixin, {
    * Returns a promise hash, meaning hooks that follow the model hook will wait until
    * all promises in the hash resolve
    *
-   * @return {RSVP.hash} A promise hash consisting of a project and a stripeAuth record, once resolved
+   * @return {RSVP.hash} A promise hash consisting of a project, once resolved
    */
   model() {
     let project = this.modelFor('project');
     // need to try and fetch an existing account
-    // TODO: We could consider just returning a hash of all 3 requests,
-    // but this way, we don't do a Stripe.Auth request if we already performed a connect
     return get(project, 'organization.stripeConnectAccount').then((stripeConnectAccount) => {
       if (stripeConnectAccount) {
-        // there is an existing account, no need to init the stripeAuth
         return RSVP.hash({ project, stripeConnectAccount });
-      } else {
-        // there is no existing account. need to do stripeAuth and render connect button
-        let stripeAuth = get(this, 'store').queryRecord('stripe-auth', { projectId: project.id });
-        return RSVP.hash({ project, stripeAuth });
       }
     });
   },
@@ -66,7 +59,7 @@ export default Route.extend(CanMixin, {
   /**
    * An Ember.Route hook
    *
-   * Assingns the project and stripeAuth models as
+   * Assigns the project and stripeConnectAccount models as
    * controller properties.
    *
    * If the project has no donation goals, initializes a new record.
@@ -74,13 +67,12 @@ export default Route.extend(CanMixin, {
    * @method setupController
    * @param  {Ember.Controller} controller
    * @param  {DS.Model} modelHash.project    The currently loaded project
-   * @param  {DS.Model} modelHash.stripeAuth The stripeAuth record, for the current project
    */
-  setupController(controller, { project, stripeAuth = null, stripeConnectAccount = null }) {
+  setupController(controller, { project, stripeConnectAccount = null }) {
     if (project.get('donationGoals.length') == 0) {
       controller.send('addDonationGoal', project);
     }
 
-    controller.setProperties({ project, stripeAuth, stripeConnectAccount });
+    controller.setProperties({ project, stripeConnectAccount });
   }
 });
