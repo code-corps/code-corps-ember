@@ -7,16 +7,13 @@
   height: 2.5em;
   justify-content: space-between;
   margin-bottom: .6em;
-  padding: 0 1.15em;
+  padding: 1.5em 1.15em;
 }
 
 .card-item__brand {
-  background-size: cover;
-  border-radius: .3em;
-  height: 1.5em;
+  height: 30px;
   margin-right: .7em;
-  overflow: hidden;
-  width: 2.5em;
+  width: 50px;
 }
 
 .card-item__brand--amex {
@@ -53,6 +50,7 @@
   display: flex;
   flex: 1;
   p {
+    line-height: 30px;
     margin: 0;
   }
   span {
