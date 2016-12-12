@@ -18,15 +18,6 @@
         {{#if stripeConnectAccount.isReloading}}Refreshing...{{else}}Refresh status{{/if}}
       </button>
     {{/if}}
-  {{else}}
-    {{#if stripeAuth}}
-      <div class="header-section">
-        <h3>Accept donations for {{project.title}}</h3>
-        {{stripe-connect-button url=stripeAuth.url}}
-        <p>To start accepting donations, you'll need to create a new Stripe account or connect with an existing Stripe account.</p>
-        <p>Click "Connect with Stripe" to get started. You'll be redirected to Stripe and return here to finish.</p>
-      </div>
-    {{/if}}
   {{/if}}
   {{#if error}}
     {{error-formatter error=error}}

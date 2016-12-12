@@ -253,11 +253,6 @@ export default function() {
   this.get('/projects/:id');
 
   // GET project/:id/tasks
-  this.get('/projects/:projectId/stripe-auth', (schema) => {
-    return schema.create('stripeAuth', { url: '/oauth/stripe' });
-  });
-
-  // GET project/:id/tasks
   this.get('/projects/:projectId/tasks', (schema, request) => {
     let { projectId } = request.params;
     let taskType = request.queryParams.task_type;
