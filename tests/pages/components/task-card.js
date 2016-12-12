@@ -1,6 +1,5 @@
 import {
-  hasClass,
-  text
+  hasClass
 } from 'ember-cli-page-object';
 
 export default {

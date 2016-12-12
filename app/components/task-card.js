@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
 const {
+  Component,
   computed,
   computed: { alias },
   get
 } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-card'],
   classNameBindings: ['taskTypeClass'],
   tagName: 'div',
