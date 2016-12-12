@@ -38,7 +38,7 @@ test('it renders all the required elements', function(assert) {
 test('it renders the idea styles', function(assert) {
   assert.expect(1);
 
-  let task = { taskType: 'idea'};
+  let task = { taskType: 'idea' };
   this.set('task', task);
   this.render(hbs`{{task-card task=task}}`);
 
@@ -48,7 +48,7 @@ test('it renders the idea styles', function(assert) {
 test('it renders the issue styles', function(assert) {
   assert.expect(1);
 
-  let task = { taskType: 'issue'};
+  let task = { taskType: 'issue' };
   this.set('task', task);
   this.render(hbs`{{task-card task=task}}`);
 
