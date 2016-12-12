@@ -8,6 +8,7 @@ moduleForModel('task', 'Unit | Model | task', {
     'model:comment',
     'model:comment-user-mention',
     'model:project',
+    'model:task-list',
     'model:task-user-mention',
     'model:user'
   ]
@@ -18,8 +19,9 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['body', 'insertedAt', 'markdown', 'number', 'status', 'taskType', 'title']);
+testForAttributes('task', ['body', 'insertedAt', 'markdown', 'number', 'order', 'position', 'status', 'taskType', 'title']);
 testForBelongsTo('task', 'project');
+testForBelongsTo('task', 'taskList');
 testForBelongsTo('task', 'user');
 testForHasMany('task', 'comments');
 testForHasMany('task', 'commentUserMentions');
