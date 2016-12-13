@@ -68,6 +68,7 @@
     "ember-data": "^2.9.0",
     "ember-deferred-content": "0.2.0",
     "ember-disable-proxy-controllers": "^1.0.1",
+    "ember-dragula": "1.9.3",
     "ember-exam": "0.6.0",
     "ember-export-application-global": "^1.0.5",
     "ember-keyboard": "^2.1.9",

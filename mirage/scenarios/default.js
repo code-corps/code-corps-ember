@@ -236,25 +236,25 @@ export default function(server) {
     username: 'random'
   });
 
-  let inboxTaskList = server.create('taskList', {
+  let inboxTaskList = server.create('task-list', {
     name: 'Inbox',
     position: 0,
     project
   });
 
-  let backlogTaskList = server.create('taskList', {
+  let backlogTaskList = server.create('task-list', {
     name: 'Backlog',
     position: 1,
     project
   });
 
-  let inProgressTaskList = server.create('taskList', {
+  let inProgressTaskList = server.create('task-list', {
     name: 'In Progress',
     position: 2,
     project
   });
 
-  let doneTaskList = server.create('taskList', {
+  let doneTaskList = server.create('task-list', {
     name: 'Done',
     position: 3,
     project
