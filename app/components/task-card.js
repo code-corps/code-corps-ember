@@ -15,5 +15,9 @@ export default Component.extend({
   taskTypeClass: computed('taskType', function() {
     return `task-card--${get(this, 'taskType')}`;
   }),
-  taskType: alias('task.taskType')
+  taskType: alias('task.taskType'),
+
+  drop() {
+    console.log('hello');
+  }
 });

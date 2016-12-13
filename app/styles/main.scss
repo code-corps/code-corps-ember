@@ -185,3 +185,34 @@ p.subtext {
   margin: auto;
   max-width: 600px;
 }
+
+.task-board-container {
+  display: flex;
+  flex-grow: 1;
+  position: relative;;
+}
+
+.task-board {
+  user-select: none;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.task-list {
+  position: relative;
+  height: 100%;
+  width: 280px;
+  margin-right: 10px;
+  border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  padding: 10px 7px;
+  background: #FAFAFA;
+  float: left;
+}
