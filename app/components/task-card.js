@@ -8,9 +8,13 @@ const {
 } = Ember;
 
 export default Component.extend({
+  attributeBindings: ['data-model-id', 'data-model-type'],
   classNames: ['task-card'],
   classNameBindings: ['taskTypeClass'],
   tagName: 'div',
+
+  'data-model-id': alias('task.id'),
+  'data-model-type': 'task',
 
   taskTypeClass: computed('taskType', function() {
     return `task-card--${get(this, 'taskType')}`;

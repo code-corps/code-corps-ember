@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import moment from 'moment';
 
-const { Controller } = Ember;
+const {
+  $,
+  Controller,
+  Object
+} = Ember;
 
 export default Controller.extend({
   typedStrings: [
@@ -19,41 +23,58 @@ export default Controller.extend({
     'families.',
     'government.'
   ],
-  tasks: [
-    Ember.Object.create({
-      insertedAt: moment().subtract(10, 'weeks'),
-      number: 1,
-      taskType: 'idea',
-      title: 'Implement drag and drop'
+  taskLists: [
+    Object.create({
+      id: 1,
+      tasks: [
+        Object.create({
+          id: 1,
+          insertedAt: moment().subtract(10, 'weeks'),
+          number: 1,
+          order: 2,
+          taskType: 'idea',
+          title: 'Implement drag and drop'
+        }),
+        Object.create({
+          id: 2,
+          insertedAt: moment().subtract(1, 'days'),
+          number: 2,
+          order: 1,
+          taskType: 'issue',
+          title: 'Fix the way we handle positioning'
+        })
+      ]
     }),
-    Ember.Object.create({
-      insertedAt: moment().subtract(1, 'days'),
-      number: 2,
-      taskType: 'issue',
-      title: 'Fix the way we handle positioning'
-    })
-  ],
-  otherTasks: [
-    Ember.Object.create({
-      insertedAt: moment().subtract(3, 'days'),
-      number: 3,
-      taskType: 'task',
-      title: 'Figure out the best Ember library for drag and drop'
+    Object.create({
+      id: 2,
+      tasks: [
+        Object.create({
+          id: 3,
+          insertedAt: moment().subtract(3, 'days'),
+          number: 3,
+          order: 1,
+          taskType: 'task',
+          title: 'Figure out the best Ember library for drag and drop'
+        })
+      ],
     })
   ],
   dragulaconfig: {
     options: {
-        copy: false,
-        revertOnSpill: false,
-        removeOnSpill: false
-        // Other options from the dragula source page.
+      copy: false,
+      revertOnSpill: false,
+      removeOnSpill: false
+      // Other options from the dragula source page.
     },
     enabledEvents: ['drag', 'drop']
   },
 
   actions: {
-    onDrop(el, target, source, sibling) {
-      console.log(el, target, source, sibling);
+    onDrop(el, target) {
+      let listId = target.dataset.modelId;
+      let position = $(el).index();
+      let taskId = el.dataset.modelId;
+      console.log(taskId, position, listId);
     }
   }
 });

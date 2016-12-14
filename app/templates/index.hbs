@@ -1,15 +1,8 @@
 <div class="task-board-container">
   {{#ember-dragula config=dragulaconfig class="task-board" drop="onDrop"}}
-    {{#ember-dragula-container class="task-list"}}
-      {{#each tasks as |task|}}
-        {{task-card task=task}}
-      {{/each}}
-    {{/ember-dragula-container}}
-    {{#ember-dragula-container class="task-list"}}
-      {{#each otherTasks as |task|}}
-        {{task-card task=task}}
-      {{/each}}
-    {{/ember-dragula-container}}
+    {{#each taskLists as |taskList|}}
+      {{task-list class="task-list" taskList=taskList}}
+    {{/each}}
   {{/ember-dragula}}
 </div>
 {{!-- <div class="landing">
