@@ -1,4 +1,11 @@
-<div class="landing">
+<div class="task-board-container">
+  {{#ember-dragula config=dragulaconfig class="task-board" drop="onDrop"}}
+    {{#each taskLists as |taskList|}}
+      {{task-list class="task-list" taskList=taskList}}
+    {{/each}}
+  {{/ember-dragula}}
+</div>
+{{!-- <div class="landing">
   <div class="landing-section">
     <h2>Build a better future.</h2>
     <h3>Contribute to software projects for {{typed-string strings=typedStrings typeSpeed=70 backDelay=1500 loop=true loopCount=false}}</h3>
@@ -29,4 +36,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}

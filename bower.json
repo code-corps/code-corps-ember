@@ -11,7 +11,8 @@
     "typed.js": "^1.1.1",
     "bourbon": "^4.2.7",
     "neat": "^1.8.0",
-    "raven-js": "~3.3"
+    "raven-js": "~3.3",
+    "dragula": "^3.5.4"
   },
   "resolutions": {
     "route-recognizer": "^0.2.7"
