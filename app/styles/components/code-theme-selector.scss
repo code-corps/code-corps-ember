@@ -3,11 +3,11 @@
   height: 19px;
   width: 24px;
 
-  &.code--theme-dark {
+  &.code-theme--dark {
     @include sprite($dark-theme);
   }
 
-  &.code--theme-light {
+  &.code-theme--light {
     @include sprite($light-theme);
   }
 }

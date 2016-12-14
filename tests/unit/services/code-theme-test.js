@@ -14,7 +14,7 @@ test('it is light by default', function(assert) {
   let service = this.subject();
   assert.equal(service.get('isLight'), true);
   assert.equal(service.get('isDark'), false);
-  assert.equal(service.get('className'), 'code--theme-light');
+  assert.equal(service.get('className'), 'code-theme--light');
 });
 
 test('it changes to dark when toggled', function(assert) {
@@ -22,5 +22,5 @@ test('it changes to dark when toggled', function(assert) {
   service.toggle();
   assert.equal(service.get('isLight'), false);
   assert.equal(service.get('isDark'), true);
-  assert.equal(service.get('className'), 'code--theme-dark');
+  assert.equal(service.get('className'), 'code-theme--dark');
 });
