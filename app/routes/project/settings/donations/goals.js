@@ -2,9 +2,7 @@ import Ember from 'ember';
 import { CanMixin } from 'ember-can';
 
 const {
-  get,
-  Route,
-  RSVP
+  Route
 } = Ember;
 
 /**
@@ -41,38 +39,31 @@ export default Route.extend(CanMixin, {
   /**
    * An Ember.Route hook
    *
-   * Returns a promise hash, meaning hooks that follow the model hook will wait until
-   * all promises in the hash resolve
+   * Returns a promise, meaning hooks that follow the model hook will wait until
+   * it resolves
    *
-   * @return {RSVP.hash} A promise hash consisting of a project, once resolved
+   * @return {RSVP.Promise} A promise for reloading the project route model
    */
   model() {
-    let project = this.modelFor('project');
-    // need to try and fetch an existing account
-    return get(project, 'organization.stripeConnectAccount').then((stripeConnectAccount) => {
-      if (stripeConnectAccount) {
-        return RSVP.hash({ project, stripeConnectAccount });
-      }
-    });
+    return this.modelFor('project');
   },
 
   /**
    * An Ember.Route hook
    *
-   * Assigns the project and stripeConnectAccount models as
-   * controller properties.
+   * Assingns the project property as model
    *
    * If the project has no donation goals, initializes a new record.
    *
    * @method setupController
    * @param  {Ember.Controller} controller
-   * @param  {DS.Model} modelHash.project    The currently loaded project
+   * @param  {DS.Model} project The currently loaded project
    */
-  setupController(controller, { project, stripeConnectAccount = null }) {
+  setupController(controller, project) {
     if (project.get('donationGoals.length') == 0) {
       controller.send('addDonationGoal', project);
     }
 
-    controller.setProperties({ project, stripeConnectAccount });
+    controller.setProperties({ project });
   }
 });

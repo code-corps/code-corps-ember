@@ -48,7 +48,10 @@ AppRouter.map(function() {
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
     this.route('settings', function() {
       this.route('contributors');
-      this.route('donations');
+      this.route('donations', function() {
+        this.route('goals');
+        this.route('payments');
+      });
       this.route('profile');
     });
 

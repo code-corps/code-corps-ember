@@ -1,0 +1,22 @@
+<div class="settings-main">
+  {{donation-goals
+    add=(action 'addDonationGoal')
+    cancel=(action 'cancelDonationGoal')
+    edit=(action 'editDonationGoal')
+    project=project
+    save=(action 'saveDonationGoal')
+    activateDonations=(action 'activateDonations' project)}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
+</div>
+
+<div class="settings-sidebar">
+  {{#if project.donationsActive}}
+    <h3>Current goal</h3>
+    {{donations/donation-progress
+      amountDonated=project.totalMonthlyDonated
+      donationGoal=project.currentDonationGoal
+    }}
+  {{/if}}
+</div>

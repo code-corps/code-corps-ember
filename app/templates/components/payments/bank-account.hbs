@@ -1,0 +1,12 @@
+<div class="input-group">
+  <label for="routing-number">Routing Number</label>
+  {{input type="text" name="routing-number" value=routingNumber}}
+</div>
+<div class="input-group">
+  <label for="account-number">Account Number</label>
+  {{input type="text" name="account-number" value=accountNumber}}
+</div>
+
+<button {{action (action bankAccountInformationSubmitted (hash accountNumber=accountNumber routingNumber=routingNumber))}}>
+  Submit
+</button>

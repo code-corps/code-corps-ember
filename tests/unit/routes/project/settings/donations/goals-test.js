@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:project/settings/donations', 'Unit | Route | project/settings/donations', {
+moduleFor('route:project/settings/donations/goals', 'Unit | Route | project/settings/donations/goals', {
   needs: ['service:metrics']
 });
 

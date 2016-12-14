@@ -1,0 +1,18 @@
+<h3>Create a Stripe account for {{organizationName}}</h3>
+
+{{!
+  TODO:
+  Account setup should decide if it should render the "form"
+  for each section, or just a generic "section-done" component.
+
+  Possibly, even, the payments controller should decide and then
+  pass in flags to the account setup, but that might be overkill.
+}}
+{{payments/contact-info email=email}}
+
+{{payments/funds-recipient
+  fundsRecipient=fundsRecipient
+  recipientInformationSubmitted=(action onRecipientInformationSubmitted email)}}
+
+{{payments/bank-account
+  bankAccountInformationSubmitted=(action onBankAccountInformationSubmitted)}}
