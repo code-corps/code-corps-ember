@@ -1,0 +1,16 @@
+.task-board-container {
+  display: flex;
+  flex-grow: 1;
+  position: relative;;
+}
+
+.task-board {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+
+  margin-bottom: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  user-select: none;
+}
