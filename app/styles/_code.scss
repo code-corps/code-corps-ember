@@ -19,7 +19,7 @@ code {
   padding: 4px 4px 2px 4px;
 }
 
-.code--theme-dark {
+.code-theme--dark {
   pre, code {
     background: $code-background-dark;
     color: $code-dark-white;
@@ -90,7 +90,7 @@ code {
   .highlight .w { color: #bbbbbb; } /* Text.Whitespace */
 }
 
-.code--theme-light {
+.code-theme--light {
   .highlight .bp { color: #999999; } /* Name.Builtin.Pseudo */
   .highlight .c1 { color: #999988; } /* Comment.Single */
   .highlight .c { color: #999988; } /* Comment */

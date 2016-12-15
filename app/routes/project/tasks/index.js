@@ -2,12 +2,15 @@ import Ember from 'ember';
 
 const {
   get,
+  inject: { service },
   merge,
   Route,
   RSVP
  } = Ember;
 
 export default Route.extend({
+  projectTaskBoard: service(),
+
   queryParams: {
     page: { refreshModel: true, scope: 'controller' },
     taskType: { refreshModel: true, scope: 'controller' },
@@ -37,6 +40,20 @@ export default Route.extend({
       return null;
     } else {
       return this._super(value, urlKey, defaultValueType);
+    }
+  },
+
+  actions: {
+    didTransition() {
+      this._super(...arguments);
+      get(this, 'projectTaskBoard').activate();
+      return true;
+    },
+
+    willTransition() {
+      this._super(...arguments);
+      get(this, 'projectTaskBoard').deactivate();
+      return true;
     }
   }
 });

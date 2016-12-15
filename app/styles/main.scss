@@ -55,6 +55,14 @@ a {
   min-width: 980px;
 }
 
+.main.container {
+  &.for-project-tasks {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+}
+
 .error {
   color: $error-text-color;
 }

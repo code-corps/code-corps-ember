@@ -12,9 +12,9 @@ export default Service.extend({
 
   className: computed('isLight', 'isDark', function() {
     if (this.get('isLight')) {
-      return 'code--theme-light';
+      return 'code-theme--light';
     } else if (this.get('isDark')) {
-      return 'code--theme-dark';
+      return 'code-theme--dark';
     }
   }),
 

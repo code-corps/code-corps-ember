@@ -11,6 +11,18 @@ import projectTaskList from '../../components/project-task-list';
 export default create({
   visit: visitable(':organization/:project/tasks'),
 
+  flexboxSpacer: {
+    scope: '.flexbox-spacer'
+  },
+
+  footer: {
+    scope: '.site-footer'
+  },
+
+  mainContainer: {
+    scope: '.main.container.for-project-tasks'
+  },
+
   clickNewTask: clickable('.new-task'),
   clickPreviewTask: clickable('.preview'),
 

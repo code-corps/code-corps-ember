@@ -4,12 +4,14 @@
   <div class="flexbox-container">
     {{navigation-menu}}
     {{flash-messages}}
-    <div class="main container {{codeTheme.className}}">
+    <div class="main container {{codeTheme.className}} {{projectTaskBoard.className}}">
       {{outlet}}
     </div>
-    <div class="flexbox-spacer"></div>
-    {{#unless isOnboarding}}
+    {{#if shouldShowSpacer}}
+      <div class="flexbox-spacer"></div>
+    {{/if}}
+    {{#if shouldShowFooter}}
       {{site-footer}}
-    {{/unless}}
+    {{/if}}
   </div>
 {{/drag-zone}}

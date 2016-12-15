@@ -21,6 +21,21 @@ test('It renders navigation properly', function(assert) {
   });
 });
 
+test('The footer and spacer are hidden, the main container is set up for project tasks', function(assert) {
+  assert.expect(4);
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(function() {
+    assert.equal(currentRouteName(), 'project.tasks.index');
+    assert.notOk(projectTasksIndexPage.flexboxSpacer.isVisible, 'The flexbox spacer is hidden');
+    assert.notOk(projectTasksIndexPage.footer.isVisible, 'The footer is hidden');
+    assert.ok(projectTasksIndexPage.mainContainer.isVisible, 'The main container is set up for project tasks');
+  });
+});
+
 test('Navigation works', function(assert) {
   assert.expect(6);
 
