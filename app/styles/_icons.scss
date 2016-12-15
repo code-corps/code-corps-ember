@@ -2,7 +2,7 @@
   width: nth( $spriteVals, 1 );
   height: nth( $spriteVals, 2 );
   background-repeat: no-repeat;
-  $url: nth($spriteVals,3);
+  $url: nth($spriteVals, 3);
   background-image: url($url);
   background-position: nth( $spriteVals, 4 ) nth( $spriteVals, 5 );
   @media only screen and ( -webkit-min-device-pixel-ratio: 2 ), only screen and ( min-device-pixel-ratio: 2 ) {

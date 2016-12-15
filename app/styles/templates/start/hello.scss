@@ -1,6 +1,10 @@
+.hello-container {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
 .form-area {
   @include span-columns(6);
-
   margin: 30px 0;
 
   h2 {
@@ -17,7 +21,14 @@
     line-height: 24px;
     margin: 10px 0;
   }
+  @include media($sm-screen) {
+    @include span-columns(12);
+    margin-top: 0;
+    padding: 0 10%;
+    text-align: center;
+  }
 }
+
 
 .form {
   margin-top: 30px;
@@ -34,6 +45,13 @@
     width: 328px;
   }
 
+  @include media($sm-screen) {
+    .photo, .name {
+      float: none;
+      margin: 0 auto;
+    }
+  }
+
   .input-group input {
     width: 50%;
 
@@ -45,10 +63,20 @@
 
 .image-area {
   @include span-columns(6);
+  @include media($sm-screen) {
+    @include span-columns(12);
+  }
 }
 
 .people-signup {
   $file: "/assets/images/people-signup";
   @include background-image-retina($file, "png", 410px, 396px);
   float: right;
+  @include media($sm-screen) {
+    background-position: -2px -236px;
+    width: 410px;
+    height: 160px; 
+    float: none;
+    margin: 0 auto;
+  }
 }

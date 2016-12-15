@@ -58,3 +58,10 @@
 .onboarding-steps {
   padding: 0 30px;
 }
+
+@include media($xs-screen) {
+  .site-logo {
+    display: block;
+    float: none;
+  }
+}

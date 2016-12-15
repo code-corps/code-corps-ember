@@ -5,6 +5,13 @@
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
+  @include media($sm-screen) {
+    @include omega(0);
+    @include span-columns(6);
+  }
+  @include media($xs-screen) {
+    @include span-columns(12);
+  }
 
   .icon-container {
     text-align: center;

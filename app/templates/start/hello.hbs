@@ -1,22 +1,24 @@
-<div class="form-area">
-  <h2>Hey, thanks for joining!</h2>
-  <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
-  <div class="form">
-    <div class="photo">
-      {{image-drop originalImage=model.photoLargeUrl droppedImage=model.base64PhotoData circle=true hoverText="Change your profile photo."}}
-      <p>Click to add photo</p>
-    </div>
-    <div class="name">
-      <p>Let’s get to know you by putting a face to a name.</p>
-      <div class="input-group">
-        {{input type="text" name="firstName" value=model.firstName placeholder="First name" autofocus=true enter='attemptToContinue' }}
-        {{input type="text" name="lastName" value=model.lastName placeholder="Last name" enter='attemptToContinue' }}
+<div class="hello-container">
+  <div class="form-area">
+    <h2>Hey, thanks for joining!</h2>
+    <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
+    <div class="form">
+      <div class="photo">
+        {{image-drop originalImage=model.photoLargeUrl droppedImage=model.base64PhotoData circle=true hoverText="Change your profile photo."}}
+        <p>Click to add photo</p>
+      </div>
+      <div class="name">
+        <p>Let’s get to know you by putting a face to a name.</p>
+        <div class="input-group">
+          {{input type="text" name="firstName" value=model.firstName placeholder="First name" autofocus=true enter='attemptToContinue' }}
+          {{input type="text" name="lastName" value=model.lastName placeholder="Last name" enter='attemptToContinue' }}
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="image-area">
-  <div class="people-signup"></div>
+  <div class="image-area">
+    <div class="people-signup"></div>
+  </div>
 </div>
 
 <div class="start-actions">

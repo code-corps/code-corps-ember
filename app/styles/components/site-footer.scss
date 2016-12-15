@@ -11,16 +11,31 @@
   @include sprite($logo-small);
   display: inline-block;
   text-indent: -9999px;
+  @include media($xs-screen) {
+    margin-bottom: 10px;
+  }
 }
 
 .footer-columns {
+  .footer-title {
+    @include media($xs-screen) {
+      display: none;
+    }
+  }
   > li {
     float: left;
 
     &:first-child {
-      width: 28%
+      width: 28%;
+      @include media($xs-screen) {
+        width: 100%;
+      }
     }
     width: 18%;
+    @include media($xs-screen) {
+      text-align: center;
+      width: 100%;
+    }
   }
 }
 

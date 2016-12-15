@@ -132,6 +132,14 @@ form {
   left: 394px;
   position: absolute;
   width: 250px;
+  @include media($sm-screen) {
+    display: block;
+    clear: both;
+    left: 0;
+    position: relative;
+    top: 2px;
+    width: 100%;
+  }
 
   p {
     font-size: $body-font-size-small;
@@ -164,6 +172,10 @@ form {
 
     ul {
       padding-left: 36px;
+      @include media($sm-screen) {
+        margin-bottom: 0;
+        padding-top: 7px;
+      }
     }
 
     li {

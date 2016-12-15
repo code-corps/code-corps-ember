@@ -52,7 +52,6 @@ a {
 
 .container {
   @include outer-container(980px);
-  min-width: 980px;
 }
 
 .main.container {

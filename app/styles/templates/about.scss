@@ -27,11 +27,20 @@
   ul {
     @include span-columns(8);
     @include shift(2);
+    @include media($sm-screen) {
+      @include shift(0);
+      @include span-columns(12);
+      text-align: justify;
+    }
   }
 
   li.step {
-    @include span-columns(6);
+    @include span-columns(4 of 8);
     @include omega(2n);
+    @include media($xs-screen) {
+      @include omega(0);
+      @include span-columns(12 of 12);
+    }
   }
 }
 

@@ -5,12 +5,18 @@
 .roles-column {
   @include span-columns(4);
   text-align: center;
+  @include media($xs-screen) {
+    @include span-columns(12);
+  }
 
   h3 {
     color: $dark-text;
     font-size: $header-font-size-medium;
     font-weight: 300;
     margin: 20px 0;
+    @include media($sm-screen) {
+      margin-top: 10px;
+    }
   }
 }
 

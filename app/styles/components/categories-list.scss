@@ -1,4 +1,11 @@
 .categories-list {
   @include span-columns(12);
+  margin: 0;
+  padding-left: 2%;
+  @include media($sm-screen) {
+    padding-left: 3%;
+  }
+  @include media($xs-screen) {
+    padding-left: 0;
+  }
 }
-
