@@ -10,20 +10,15 @@ export default Component.extend({
 
   init() {
     this.setProperties(get(this, 'fundsRecipient'));
+    set(this, 'dobDay', 1);
+    set(this, 'dobMonth', 1);
+    set(this, 'dobYear', 2016);
     this._super(...arguments);
   },
 
   actions: {
     setBusinessType(value) {
       set(this, 'businessType', value);
-    },
-
-    setDob(value) {
-      let dobDay = value.getDay() + 1;
-      let dobMonth = value.getMonth() + 1;
-      let dobYear = value.getFullYear();
-
-      this.setProperties({ dobDay, dobMonth, dobYear });
     },
 
     setRecipientType(value) {
