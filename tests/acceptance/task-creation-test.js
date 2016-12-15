@@ -107,7 +107,7 @@ test('Task preview works during creation', function(assert) {
 
   andThen(() => {
     projectTasksIndexPage.taskMarkdown(markdown);
-    projectTasksIndexPage.clickPreviewTask();
+    projectTasksNewPage.clickPreviewTask();
 
     andThen(() => {
       assert.equal(projectTasksIndexPage.previewBody.text, expectedBody, 'The mentions render');

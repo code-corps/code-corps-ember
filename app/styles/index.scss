@@ -85,11 +85,6 @@
   }
 }
 
-.demo-tasks {
-  @include shift(2);
-  @include span-columns(8);
-}
-
 .typed-cursor {
   opacity: 1;
   -webkit-animation: blink 0.7s infinite;
