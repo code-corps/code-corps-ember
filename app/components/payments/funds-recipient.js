@@ -13,6 +13,7 @@ export default Component.extend({
     set(this, 'dobDay', 1);
     set(this, 'dobMonth', 1);
     set(this, 'dobYear', 2016);
+    set(this, 'country', 'US');
     this._super(...arguments);
   },
 
@@ -33,7 +34,6 @@ export default Component.extend({
         'dobDay', 'dobMonth', 'dobYear',
         'address1', 'address2', 'city', 'state', 'country', 'zip'
       );
-
       this.sendAction('recipientInformationSubmitted', fundsRecipient);
     }
   }

@@ -1,0 +1,5 @@
+{{#x-select value=country as |xs| }}
+  {{#each countryOptions as |countryOption|}}
+    {{#xs.option value=countryOption.id}}{{countryOption.name}}{{/xs.option}}
+  {{/each}}
+{{/x-select}}
