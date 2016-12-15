@@ -21,6 +21,7 @@ export default Model.extend({
 
   donationGoals: hasMany('donation-goal', { async: true }),
   organization: belongsTo('organization', { async: true }),
+  taskLists: hasMany('task-list', { async: true }),
   tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),

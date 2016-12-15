@@ -63,7 +63,7 @@ function generatePreviewMentions(schema, preview) {
 
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
-  'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations',
+  'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations', 'task-lists',
   'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories', 'slugged-routes',
   'stripe-connect-accounts', 'stripe-connect-subscriptions', 'stripe-connect-plans',
   'stripe-platform-cards', 'stripe-platform-customers',
@@ -428,6 +428,16 @@ export default function() {
   this.get('/stripe-connect-subscriptions/:id');
 
   /**
+  * Task lists
+  */
+
+  // GET /task-lists
+  this.get('/task-lists', { coalesce: true });
+
+  // GET /task-lists/:id
+  this.get('/task-lists/:id');
+
+  /**
   * Task user mentions
   */
 
@@ -476,6 +486,7 @@ export default function() {
     task.attrs = attrs;
 
     task.taskUserMentions.models.forEach((mention) => mention.destroy());
+    task.order = (task.position || 0) * 100;
     task.save();
 
     return task;

@@ -236,9 +236,45 @@ export default function(server) {
     username: 'random'
   });
 
-  server.createList('task', 10, { project, taskType: 'idea', user: owner });
-  server.createList('task', 10, { project, taskType: 'issue', user: owner });
-  server.createList('task', 10, { project, taskType: 'task', user: owner });
+  let inboxTaskList = server.create('taskList', {
+    name: 'Inbox',
+    position: 0,
+    project
+  });
+
+  let backlogTaskList = server.create('taskList', {
+    name: 'Backlog',
+    position: 1,
+    project
+  });
+
+  let inProgressTaskList = server.create('taskList', {
+    name: 'In Progress',
+    position: 2,
+    project
+  });
+
+  let doneTaskList = server.create('taskList', {
+    name: 'Done',
+    position: 3,
+    project
+  });
+
+  server.createList('task', 2, { project, taskList: inboxTaskList, taskType: 'idea', user: owner });
+  server.createList('task', 1, { project, taskList: inboxTaskList, taskType: 'issue', user: owner });
+  server.createList('task', 1, { project, taskList: inboxTaskList, taskType: 'task', user: owner });
+
+  server.createList('task', 1, { project, taskList: backlogTaskList, taskType: 'idea', user: owner });
+  server.createList('task', 1, { project, taskList: backlogTaskList, taskType: 'issue', user: owner });
+  server.createList('task', 2, { project, taskList: backlogTaskList, taskType: 'task', user: owner });
+
+  server.createList('task', 1, { project, taskList: inProgressTaskList, taskType: 'idea', user: owner });
+  server.createList('task', 3, { project, taskList: inProgressTaskList, taskType: 'issue', user: owner });
+  server.createList('task', 2, { project, taskList: inProgressTaskList, taskType: 'task', user: owner });
+
+  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'idea', user: owner });
+  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'issue', user: owner });
+  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'task', user: owner });
 
   let skillTitles = ['CSS', 'Ember.js', 'HTML'];
 

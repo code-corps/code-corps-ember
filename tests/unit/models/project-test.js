@@ -18,6 +18,7 @@ moduleForModel('project', 'Unit | Model | project', {
     'model:stripe-connect-account',
     'model:stripe-connect-plan',
     'model:task',
+    'model:task-list',
     'model:user'
   ]
 });
@@ -40,6 +41,7 @@ testForBelongsTo('project', 'stripeConnectPlan');
 testForHasMany('project', 'donationGoals');
 testForHasMany('project', 'projectCategories');
 testForHasMany('project', 'projectSkills');
+testForHasMany('project', 'taskLists');
 testForHasMany('project', 'tasks');
 
 test('it should have open tasks', function(assert) {
