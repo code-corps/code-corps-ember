@@ -1,5 +1,6 @@
 {{payments/account-setup
-  organizationName=project.organization.name
   email=user.email
+  onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
   onRecipientInformationSubmitted=(action 'onRecipientInformationSubmitted' project.organization)
-  onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')}}
+  organizationName=project.organization.name
+}}

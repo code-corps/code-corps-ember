@@ -29,7 +29,6 @@
   {{input type="text" name="last-name" value=lastName}}
 </div>
 <div class="input-group">
-  {{dobMonth}} {{dobDay}} {{dobYear}}
   {{select/birth-date day=dobDay month=dobMonth year=dobYear}}
 </div>
 <div class="input-group">
@@ -52,7 +51,7 @@
     </select>
   </div>
   <div class="input-group">
-    <label for="zip">ZIP</label>
+    <label for="zip">Postal Code</label>
     {{input type="text" name="zip" value=zip}}
   </div>
   <div class="input-group">
@@ -67,4 +66,4 @@
   {{input type="text" name="ssn-last4" value=ssnLast4}}
 </div>
 
-<input type="submit" {{action "submit"}} value="Submit information" />
+<input class="default" type="submit" {{action "submit"}} value="Submit information" />
