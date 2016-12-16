@@ -56,7 +56,6 @@
 @import "components/task-details";
 @import "components/task-header";
 @import "components/task-board";
-@import "components/task-item";
 @import "components/task-status";
 @import "components/task-new-form";
 @import "components/task-title";
@@ -71,7 +70,6 @@
 @import "components/project-list";
 @import "components/project-long-description";
 @import "components/project-menu";
-@import "components/project-task-list";
 @import "components/role-item";
 @import "components/settings-menu";
 @import "components/signup-form";
@@ -84,6 +82,7 @@
 
 @import "templates/about";
 @import "templates/project/index";
+@import "templates/project/tasks/index";
 @import "templates/project/thank-you";
 @import "templates/project/settings/contributors";
 @import "templates/start/expertise";
