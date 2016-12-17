@@ -1,0 +1,24 @@
+.loading-bar {
+  background: $dark-blue;
+  display: none;
+  height: 2px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  transform: translateX(-100%);
+  z-index: 800;
+
+  &.is-loading {
+    display: block;
+
+    -webkit-animation: moveRight 1s ease-in-out infinite;
+    -moz-animation: moveRight 1s ease-in-out infinite;
+    -ms-animation: moveRight 1s ease-in-out infinite;
+    -o-animation: moveRight 1s ease-in-out infinite;
+    animation: moveRight 1s ease-in-out infinite;
+
+    -webkit-animation-delay: .4s;
+    -moz-animation-delay: .4s;
+    -o-animation-delay: .4s;
+    animation-delay: .4s;
+  }
+}

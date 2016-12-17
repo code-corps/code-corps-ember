@@ -60,16 +60,6 @@ module.exports = function(environment) {
       allowEmpty: true // default: false
     },
 
-    pace: {
-      // addon-specific options to configure theme
-      theme: 'minimal',
-      color: 'blue',
-      restartOnRequestAfter: 500,
-      ajax: {
-        ignoreURLs: ['intercom', 'segment', 'sentry']
-      }
-    },
-
     pageTitle: {
       prepend: true,
       separator: " — "
