@@ -26,8 +26,8 @@ test('when authenticated and can manage organization, it renders properly', func
   assert.equal(this.$('.project-settings-menu').length, 1, 'The component itself renders');
   assert.equal(this.$('.project-settings-menu li').length, 4, 'The list items render');
   assert.equal(this.$('li a:contains("Contributors")').length, 1, 'The contributors link renders');
-  assert.equal(this.$('li a:contains("Donations")').length, 1, 'The donations link renders');
-  assert.equal(this.$('li a:contains("Payments")').length, 1, 'The payments link renders');
+  assert.equal(this.$('li a:contains("Donation goals")').length, 1, 'The donation goals link renders');
+  assert.equal(this.$('li a:contains("Payment settings")').length, 1, 'The payment settings link renders');
   assert.equal(this.$('li a:contains("Basic settings")').length, 1, 'The basic settings link renders');
 });
 

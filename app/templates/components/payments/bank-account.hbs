@@ -1,12 +1,30 @@
-<div class="input-group">
-  <label for="routing-number">Routing Number</label>
-  {{input type="text" name="routing-number" value=routingNumber}}
-</div>
-<div class="input-group">
-  <label for="account-number">Account Number</label>
-  {{input type="text" name="account-number" value=accountNumber}}
-</div>
+<aside>
+  <h1>Bank Account</h1>
+</aside>
 
-<button {{action (action bankAccountInformationSubmitted (hash accountNumber=accountNumber routingNumber=routingNumber))}}>
-  Submit
-</button>
+{{#if (eq status 'required')}}
+  <section>
+    <div class="bank-account__routing">
+      <label for="routing-number">Routing Number</label>
+      {{input disabled=isBusy type="text" name="routing-number" value=routingNumber}}
+    </div>
+    <div class="bank-account__account">
+      <label for="account-number">Account Number</label>
+      {{input disabled=isBusy type="text" name="account-number" value=accountNumber}}
+    </div>
+    <button {{action submit (hash accountNumber=accountNumber routingNumber=routingNumber)}} disabled={{isBusy}} class="default">Submit</button>
+  </section>
+{{/if}}
+
+{{#if (eq status 'verified')}}
+  <section>
+    <div class="bank-account__routing">
+      <label>Routing Number</label>
+      <p>{{account.bankAccountRoutingNumber}}</p>
+    </div>
+    <div class="bank-account__account">
+      <label>Account Number</label>
+      <p>{{account.bankAccountLast4}}</p>
+    </div>
+  </section>
+{{/if}}

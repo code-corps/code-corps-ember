@@ -71,10 +71,11 @@ $taskTypeTextOnBackgroundColors: (
 
 $light-red-background: #FFE5E1;
 $light-blue-background: #EDF9FF;
+$light-green-background: #EFFFEE;
 
 $idea-background: #FFF9DE;
 $issue-background: $light-red-background;
-$progress-background: #EFFFEE;
+$progress-background: $light-green-background;
 $task-background: $light-blue-background;
 
 $taskTypeBackgrounds: (
