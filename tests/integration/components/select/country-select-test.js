@@ -17,7 +17,7 @@ moduleForComponent('select/country-select', 'Integration | Component | select/co
     page.setContext(this);
   },
   afterEach() {
-    page.setContext(this);
+    page.removeContext();
   }
 });
 
