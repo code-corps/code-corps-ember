@@ -1,65 +1,37 @@
-<div class="input-group">
-  <label for="recipient-type">Recipient Type</label>
-  <select onchange={{action (mut recipientType) value="target.value"}} name="recipient-type" value={{recipientType}}>
-    <option value="individual">Individual</option>
-    <option value="company">Business</option>
-  </select>
-</div>
+<aside>
+  {{#if (eq status 'verified')}}
+    <span></span>
+  {{/if}}
+  <h1>Funds Recipient</h1>
+</aside>
 
-{{#if (eq recipientType 'company')}}
-  <div class="input-group">
-    <label for="business-name">Business Name</label>
-    {{input type="text" name="business-name" value=businessName}}
-  </div>
-  <div class="input-group">
-    <label for="business-ein">Business EIN</label>
-    {{input type="text" name="business-ein" value=businessEin}}
-  </div>
+{{#if (eq status 'required')}}
+  <section class="details-form">
+    TODO: details-form-component goes here
+  </section>
 {{/if}}
 
+{{#if (eq status 'verifying')}}
+  <section class="verification-document">
+    TODO: verification-document component goes here
+  </section>
+  <section class="personal-id-number">
+    TODO: personal-id-number component goes here
+  </section>
+{{/if}}
 
-{{!identity}}
+{{#if (eq status 'verified')}}
+  <section>
+    <div class="funds-recipient__individual-name">
+      <label>Name</label>
+      <p>{{account.individualName}}</p>
+    </div>
 
-<div class="input-group">
-  <label for="first-name">First Name</label>
-  {{input type="text" name="first-name" value=firstName}}
-</div>
-<div class="input-group">
-  <label for="last-name">Last Name</label>
-  {{input type="text" name="last-name" value=lastName}}
-</div>
-<div class="input-group">
-  {{select/birth-date day=dobDay month=dobMonth year=dobYear}}
-</div>
-<div class="input-group">
-  <div class="input-group">
-    <label for="address-1">Address 1</label>
-    {{input type="text" name="address-1" value=address1}}
-  </div>
-  <div class="input-group">
-    <label for="address-2">Address 2</label>
-    {{input type="text" name="address-2" value=address2}}
-  </div>
-  <div class="input-group">
-    <label for="city">City</label>
-    {{input type="text" name="city" value=city}}
-  </div>
-  <div class="input-group">
-    <label for="state">State</label>
-    {{select/state-select state=state}}
-  </div>
-  <div class="input-group">
-    <label for="zip">Postal Code</label>
-    {{input type="text" name="zip" value=zip}}
-  </div>
-  <div class="input-group">
-    <label for="country">Country</label>
-    {{select/country-select country=country}}
-  </div>
-</div>
-<div class="input-group">
-  <label for="ssn-last4">SSN Last 4</label>
-  {{input type="text" name="ssn-last4" value=ssnLast4}}
-</div>
-
-<input class="default" type="submit" {{action "submit"}} value="Submit information" />
+    {{#if (eq account.recipientType 'business')}}
+      <div class="funds-recipient__business-name">
+        <label>Business Name</label>
+        <p>{{account.businessName}}</p>
+      </div>
+    {{/if}}
+  </section>
+{{/if}}
