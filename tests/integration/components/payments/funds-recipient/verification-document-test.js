@@ -41,7 +41,6 @@ test('it renders file upload subcomponent if status is "required"', function(ass
   assert.expect(1);
 
   this.set('stripeConnectAccount', { verificationDocumentStatus: 'required' });
-
   renderPage();
 
   assert.ok(page.rendersFileUpload, 'File upload subcomponent is rendered');
