@@ -3,7 +3,10 @@
 {{payments/contact-info email=email}}
 
 {{payments/funds-recipient
-  fundsRecipient=fundsRecipient
-  recipientInformationSubmitted=(action onRecipientInformationSubmitted email)}}
+  account=account
+  isBusy=isBusy
+  onRecipientDetailsSubmitted=(action onRecipientDetailsSubmitted)
+  onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
+  onPersonalIdNumberSubmitted=(action onPersonalIdNumberSubmitted)}}
 
 {{payments/bank-account account=account isBusy=isBusy submit=(action onBankAccountInformationSubmitted)}}

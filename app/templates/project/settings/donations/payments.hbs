@@ -1,8 +1,11 @@
 {{payments/account-setup
-  account=project.organization.stripeConnectAccount
+  account=stripeConnectAccount
+  email=user.email
   isBusy=isBusy
   onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
-  onRecipientInformationSubmitted=(action 'onRecipientInformationSubmitted' project.organization)
+  onPersonalIdNumberSubmitted=(action 'onPersonalIdNumberSubmitted')
+  onRecipientDetailsSubmitted=(action 'onRecipientDetailsSubmitted')
+  onVerificationDocumentSubmitted=(action 'onVerificationDocumentSubmitted')
   organizationName=project.organization.name
 }}
 {{#if error}}

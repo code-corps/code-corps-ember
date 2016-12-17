@@ -12,13 +12,32 @@ const {
 let page = PageObject.create(accountSetupComponent);
 
 function setHandlers(context, {
-  onRecipientInformationSubmittedHandler = K,
-  onBankAccountInformationSubmittedHandler = K
+  onRecipientDetailsSubmitted = K,
+  onVerificationDocumentSubmitted = K,
+  onPersonalIdNumberSubmitted = K,
+  onBankAccountInformationSubmitted = K
 } = {}) {
   context.setProperties({
-    onRecipientInformationSubmittedHandler,
-    onBankAccountInformationSubmittedHandler
+    onRecipientDetailsSubmitted,
+    onVerificationDocumentSubmitted,
+    onPersonalIdNumberSubmitted,
+    onBankAccountInformationSubmitted
   });
+}
+
+function renderPage() {
+  page.render(hbs`
+    {{payments/account-setup
+      account=account
+      email=email
+      isBusy=isBusy
+      onRecipientDetailsSubmitted=onRecipientDetailsSubmitted
+      onVerificationDocumentSubmitted=onVerificationDocumentSubmitted
+      onPersonalIdNumberSubmitted=onPersonalIdNumberSubmitted
+      onBankAccountInformationSubmitted=onBankAccountInformationSubmitted
+      organizationName=project.organization.name
+    }}
+  `);
 }
 
 moduleForComponent('payments/account-setup', 'Integration | Component | payments/account setup', {
@@ -32,37 +51,13 @@ moduleForComponent('payments/account-setup', 'Integration | Component | payments
   }
 });
 
-test('it renders', function(assert) {
-  page.render(hbs`
-    {{payments/account-setup
-      onRecipientInformationSubmitted=onRecipientInformationSubmittedHandler
-      onBankAccountInformationSubmitted=onBankAccountInformationSubmittedHandler}}
-  `);
-  assert.equal(this.$('.account-setup').length, 1, 'Component renders');
+test('it renders all subcomponents', function(assert) {
+  assert.expect(2);
+  renderPage();
+
+  assert.ok(page.rendersFundsRecipient, 'Funds recipient subpcomponent is rendered.');
+  assert.ok(page.rendersBankAccount, 'Bank account subcomponent is rendered.');
 });
 
 // TODO: Write tests, remove 'it renders' test
-//
-// test('it renders correctly for individual', function(assert) {
-//   assert.expect(0);
 
-//   page.render(hbs`{{payments/account-setup accountInformationSubmitted=submitHandler}}`);
-// });
-
-// test('it renders correctly for business', function(assert) {
-//   assert.expect(0);
-
-//   page.render(hbs`{{payments/account-setup accountInformationSubmitted=submitHandler}}`);
-// });
-
-// test('it submits correctly for individual', function(assert) {
-//   assert.expect(0);
-
-//   page.render(hbs`{{payments/account-setup accountInformationSubmitted=submitHandler}}`);
-// });
-
-// test('it submits correctly for business', function(assert) {
-//   assert.expect(0);
-
-//   page.render(hbs`{{payments/account-setup accountInformationSubmitted=submitHandler}}`);
-// });
