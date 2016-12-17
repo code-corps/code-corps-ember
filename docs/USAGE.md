@@ -12,6 +12,8 @@
 
 You can run the Ember app several different ways.
 
+_Note: We expect the default port of `4200`, which is required to serve up fingerprinted assets with our `ember-cli-build.js`._
+
 ### With a fake API
 
 Don't want to worry about setting up an API? This is best for work that's happening without needing a backend.
