@@ -1,0 +1,55 @@
+//
+// ACCOUNT SETUP SECTIONS
+//
+.account-setup__section {
+  align-items: center;
+  background-color: #FCFCFC;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  display: flex;
+  min-height: 4em;
+  padding: 1.5em;
+
+  aside {
+    @include span-columns(3);
+    align-self: baseline;
+  }
+
+  h1 {
+    font-size: 1.1em;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .3em;
+  }
+
+  section {
+    @include span-columns(9);
+  }
+}
+
+//
+// STATES
+//
+.account-setup__section--required {
+  @include outer-container;
+}
+
+.account-setup__section--verified {
+  background-color: $light-green-background;
+  border-color: $green;
+
+  aside h1:before {
+    content: "";
+    display: block;
+    float: left;
+    height: 20px;
+    margin: 0 10px 0 0;
+    width: 24px;
+    @include sprite($tick-green-large);
+  }
+}

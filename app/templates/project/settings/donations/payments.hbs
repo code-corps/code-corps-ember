@@ -1,6 +1,10 @@
 {{payments/account-setup
-  email=user.email
+  account=project.organization.stripeConnectAccount
+  isBusy=isBusy
   onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
   onRecipientInformationSubmitted=(action 'onRecipientInformationSubmitted' project.organization)
   organizationName=project.organization.name
 }}
+{{#if error}}
+  {{error-formatter error=error}}
+{{/if}}
