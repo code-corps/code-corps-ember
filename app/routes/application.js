@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import ENV from 'code-corps-ember/config/environment';
+import LoadingBar from 'code-corps-ember/mixins/loading-bar';
 
 const {
   computed,
@@ -11,7 +12,7 @@ const {
   set
 } = Ember;
 
-export default Route.extend(ApplicationRouteMixin, {
+export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   currentUser: service(),
   flashMessages: service(),
   metrics: service(),

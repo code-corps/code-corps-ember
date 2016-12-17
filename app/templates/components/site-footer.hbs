@@ -1,7 +1,9 @@
 <div class="container">
   <ul class="footer-columns">
     <li>
-      {{#link-to 'index' class='footer-logo'}}Code Corps{{/link-to}}
+      {{#scroll-top}}
+        {{#link-to 'index' class='footer-logo'}}Code Corps{{/link-to}}
+      {{/scroll-top}}
     </li>
     <li>
       <h4>Code Corps</h4>
@@ -25,10 +27,14 @@
           <a href="mailto:team@codecorps.org">team@codecorps.org</a>
         </li>
         <li>
-          {{link-to 'Terms of Use' 'terms'}}
+          {{#scroll-top}}
+            {{link-to 'Terms of Use' 'terms'}}
+          {{/scroll-top}}
         </li>
         <li>
-          {{link-to 'Privacy Policy' 'privacy'}}
+          {{#scroll-top}}
+            {{link-to 'Privacy Policy' 'privacy'}}
+          {{/scroll-top}}
         </li>
       </ul>
     </li>
