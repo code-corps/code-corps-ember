@@ -400,6 +400,12 @@ export default function() {
   this.get('/stripe-connect-accounts/:id');
 
   /**
+   * Stripe file uploads
+   */
+
+  this.post('/stripe-file-uploads');
+
+  /**
    * Stripe plans
    */
 
