@@ -1,0 +1,5 @@
+{{#x-select value=state as |xs| }}
+  {{#each stateOptions as |stateOption|}}
+    {{#xs.option value=stateOption.id}}{{stateOption.name}}{{/xs.option}}
+  {{/each}}
+{{/x-select}}
