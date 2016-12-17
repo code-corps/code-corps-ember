@@ -1,0 +1,4 @@
+<div class="task-list__name" data-test-selector="task-list name">{{taskList.name}}</div>
+{{#each orderedTasks as |task|}}
+  {{task-card task=task}}
+{{/each}}

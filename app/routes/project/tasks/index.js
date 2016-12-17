@@ -13,6 +13,10 @@ export default Route.extend({
     return this.modelFor('project');
   },
 
+  setupController(controller, project) {
+    controller.setProperties({ project });
+  },
+
   actions: {
     didTransition() {
       this._super(...arguments);
