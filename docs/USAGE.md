@@ -1,28 +1,68 @@
 # Usage
 
-- [How do I interact with the app?](#interacting-with-the-app)
-- [How do I stop and start the server?](#stopping-and-starting-the-server)
+- [How should I run the app?](#running-the-app)
+  - [With a fake API](#with-a-fake-api)
+  - [With a local API](#with-a-local-api)
+  - [With a remote API](#with-a-remote-api)
 - [How do I run tests?](#running-tests)
 - [How do I rebuild Ember?](#rebuilding-ember)
 - [How do I generate and serve documentation?](#generating-documentation)
 
 ## Interacting with the app
 
-You can run the Ember app several different ways:
+You can run the Ember app several different ways.
 
-- with our [Elixir API](https://github.com/code-corps/code-corps-api/) server by running `ember server` normally.
-- with an [`ember-cli-mirage`](http://www.ember-cli-mirage.com/) server by running `ember server --environment=mirage-development`.
-- with a remote development server by running `ember server --environment=remote-development`.
+_Note: We expect the default port of `4200`, which is required to serve up fingerprinted assets with our `ember-cli-build.js`._
+
+### With a fake API
+
+Don't want to worry about setting up an API? This is best for work that's happening without needing a backend.
+
+You can use our [`ember-cli-mirage`](http://www.ember-cli-mirage.com/) server by running:
+
+```shell
+ember server --environment=mirage-development
+```
+
+(Be careful about copying and pasting this line, as on some machines the `--` might get converted into a `–`).
+
+The data in the application will be generated for you using the file `mirage/scenarios/default.js`. This includes several different accounts for you to login. We recommend that you read a bit more about Mirage to familiarize yourself with how it works.
+
+### With a local API
+
+Want to work directly with a Code Corps API running on your machine?
+
+You can work with our [Elixir API](https://github.com/code-corps/code-corps-api/) server by running
+
+```shell
+ember server
+```
+
+Doing so will try to connect to the API under the port settings found under the API's documentation.
+
+### With a remote API
+
+Want to work with an environment that's similar to staging?
+
+You can use our remote development server by running:
+
+```shell
+ember server --environment=remote-development
+```
+
+(Be careful about copying and pasting this line, as on some machines the `--` might get converted into a `–`).
+
+### Viewing the Ember app
 
 Once the server has been started, you can visit your app at `http://localhost:4200`.
 
 Note that Ember is able to live-reload as changes are made to the codebase. Ember-CLI will build those changes and apply them. No need to stop and start the server for every change!
 
-## Stopping and starting the server
+### Stopping the app
 
-Need to stop the server? `Ctrl+C` will do the trick.
+Need to stop the Ember server? `Ctrl+C` will do the trick.
 
-To start the server again run `ember server`.
+To start the server again run `ember server`, with whichever environment flag you prefer.
 
 ## Rebuilding Ember
 
