@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const {
-  Component
+  Component, computed, get
 } = Ember;
 
 export default Component.extend({
@@ -11,5 +11,10 @@ export default Component.extend({
     @property model
     @type StripeConnectAccount
   */
-  model: null
+  model: null,
+
+  isPending: computed('model', 'model.pending_requirement', function() {
+    let status = get(this, 'model.personal_id_number_status');
+    debugger; return status === 'pending_requirement';
+  })
 });
