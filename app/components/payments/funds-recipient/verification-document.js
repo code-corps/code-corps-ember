@@ -5,7 +5,8 @@ const {
 } = Ember;
 
 export default Component.extend({
-  // tagName: 'funds-recipient classNames: ['funds-recipient'],
+  tagName: 'form',
+  classNames: ['funds-recipient'],
 
   /*
     @property model
@@ -13,8 +14,14 @@ export default Component.extend({
   */
   model: null,
 
+  /*
+    Does the model have a pending status for personal id number?
+
+    @property isPending
+    @type Boolean
+  */
   isPending: computed('model', 'model.pending_requirement', function() {
     let status = get(this, 'model.personal_id_number_status');
-    debugger; return status === 'pending_requirement';
+    return status === 'pending_requirement';
   })
 });

@@ -41,7 +41,9 @@ test('when personal_id_number_status is pending_requirement nothing renders',
   `);
 
   // Nothing is rendered
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('form').text().trim(), '', 'inner text is empty');
+  assert.equal(this.$('form input[type="file"]').length, 0, 'no file input');
+  assert.equal(this.$('form button[type="submit"]').length, 0, 'no submit button');
 });
 
 
