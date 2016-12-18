@@ -16,11 +16,10 @@ export default Controller.extend({
   },
 
   actions: {
-    onDrop(el, target) {
-      let listId = target.dataset.modelId;
-      let position = $(el).index();
-      let taskId = el.dataset.modelId;
-      console.log(taskId, position, listId);
-    }
+    // onDrop(el, target) {
+      // let listId = target.dataset.modelId;
+      // let position = $(el).index();
+      // let taskId = el.dataset.modelId;
+    // }
   }
 });

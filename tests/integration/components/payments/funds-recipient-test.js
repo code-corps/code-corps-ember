@@ -17,13 +17,14 @@ function setHandlers(context, { detailsHandler = K, documentHandler = K, idHandl
 }
 
 function renderPage() {
-  page.render(
-    hbs`{{payments/funds-recipient
-          account=account
-          onRecipientDetailsSubmitted=detailsHandler
-          onVerificationDocumentSubmitted=documentHandler
-          onPersonalIdNumberSubmitted=idHandler}}`
-  );
+  page.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 }
 
 moduleForComponent('payments/funds-recipient', 'Integration | Component | payments/funds recipient', {
@@ -40,8 +41,8 @@ moduleForComponent('payments/funds-recipient', 'Integration | Component | paymen
 test('it renders correctly when "pending"', function(assert) {
   assert.expect(1);
 
-  let account = { recipientStatus: 'pending_requirement' };
-  this.set('account', account);
+  let stripeConnectAccount = { recipientStatus: 'pending_requirement' };
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
@@ -51,8 +52,8 @@ test('it renders correctly when "pending"', function(assert) {
 test('it renders correctly when "required"', function(assert) {
   assert.expect(2);
 
-  let account = { recipientStatus: 'required' };
-  this.set('account', account);
+  let stripeConnectAccount = { recipientStatus: 'required' };
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
@@ -63,8 +64,8 @@ test('it renders correctly when "required"', function(assert) {
 test('it renders correctly when "verifying"', function(assert) {
   assert.expect(3);
 
-  let account = { recipientStatus: 'verifying' };
-  this.set('account', account);
+  let stripeConnectAccount = { recipientStatus: 'verifying' };
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
@@ -76,11 +77,11 @@ test('it renders correctly when "verifying"', function(assert) {
 test('it renders correctly when "verified"', function(assert) {
   assert.expect(2);
 
-  let account = {
+  let stripeConnectAccount = {
     recipientStatus: 'verified',
     individualName: 'Joe Individual'
   };
-  this.set('account', account);
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
@@ -91,13 +92,13 @@ test('it renders correctly when "verified"', function(assert) {
 test('it renders correctly when "verified" for business', function(assert) {
   assert.expect(3);
 
-  let account = {
+  let stripeConnectAccount = {
     recipientStatus: 'verified',
     individualName: 'Joe Individual',
     businessName: 'Company Inc.',
     recipientType: 'business'
   };
-  this.set('account', account);
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
@@ -110,8 +111,8 @@ test('it renders correctly when "verified" for business', function(assert) {
 // test('it passes out submit action from details subcomponent', function(assert) {
 //   assert.expect(1);
 
-//   let account = { recipientStatus: 'required' };
-//   this.set('account', account);
+//   let stripeConnectAccount = { recipientStatus: 'required' };
+//   this.set('stripeConnectAccount', stripeConnectAccount);
 
 //   renderPage();
 // });
@@ -119,8 +120,8 @@ test('it renders correctly when "verified" for business', function(assert) {
 // test('it passes out submit action from document upload subcomponent', function(assert) {
 //   assert.expect(1);
 
-//   let account = { recipientStatus: 'verifying' };
-//   this.set('account', account);
+//   let stripeConnectAccount = { recipientStatus: 'verifying' };
+//   this.set('stripeConnectAccount', stripeConnectAccount);
 
 //   renderPage();
 // });
@@ -128,8 +129,8 @@ test('it renders correctly when "verified" for business', function(assert) {
 // test('it passes out submit action from personal id number subcomponent', function(assert) {
 //   assert.expect(1);
 
-//   let account = { recipientStatus: 'verifying' };
-//   this.set('account', account);
+//   let stripeConnectAccount = { recipientStatus: 'verifying' };
+//   this.set('stripeConnectAccount', stripeConnectAccount);
 
 //   renderPage();
 // });

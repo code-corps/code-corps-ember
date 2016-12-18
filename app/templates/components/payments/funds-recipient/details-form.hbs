@@ -1,0 +1,94 @@
+<div class="input-group details-form__recipient-type">
+  <p>Tell us whether a person or an organization will be running this project. Once your turn on donations, you cannot change your information.</p>
+  {{#radio-button class="details-form__recipient-type" value="individual" groupValue=recipientType}}
+    Individual
+  {{/radio-button}}
+  {{#radio-button class="details-form__recipient-type" value="business" groupValue=recipientType}}
+    Legal entity (company or organization)
+  {{/radio-button}}
+</div>
+
+{{#if (eq recipientType 'business')}}
+  <div class="input-section">
+    <div class="input-section__label">Legal entity</div>
+    <div class="input-section__content">
+      <div class="input-group">
+        <label for="business-name">Business name</label>
+        {{input type="text" name="business-name" value=businessName}}
+      </div>
+      <div class="input-group">
+        <label for="business-ein">Business EIN</label>
+        {{input type="text" name="business-ein" value=businessEin}}
+      </div>
+    </div>
+  </div>
+{{/if}}
+
+<label>Identity verification</label>
+<p>Please verify your identity with your legal first and last name. If you're running your project as an organization, only a legal representative of the organization should complete this verification.</p>
+
+<div class="input-section">
+  <div class="input-section__label">Your name</div>
+  <div class="input-section__content">
+    <div class="input-group">
+      <label for="first-name">First Name</label>
+      {{input type="text" name="first-name" value=firstName}}
+    </div>
+    <div class="input-group">
+      <label for="last-name">Last Name</label>
+      {{input type="text" name="last-name" value=lastName}}
+    </div>
+  </div>
+</div>
+
+<div class="input-section">
+  <div class="input-section__label">Birthdate</div>
+  <div class="input-section__content">
+    <div class="input-group">
+      {{select/birth-date day=dobDay month=dobMonth year=dobYear}}
+    </div>
+  </div>
+</div>
+
+<div class="input-section">
+  <div class="input-section__label">Address</div>
+  <div class="input-section__content">
+    <div class="input-group">
+      <label for="address-1">Address</label>
+      {{input type="text" name="address-1" value=address1}}
+    </div>
+    <div class="input-group">
+      <label for="address-2">Address (cont)</label>
+      {{input type="text" name="address-2" value=address2}}
+    </div>
+    <div class="input-group">
+      <label for="city">City</label>
+      {{input type="text" name="city" value=city}}
+    </div>
+    <div class="input-line">
+      <div class="input-group input--state">
+        <label for="state">State</label>
+        {{select/state-select state=state}}
+      </div>
+      <div class="input-group input--zipcode">
+        <label for="zip">Postal Code</label>
+        {{input type="text" name="zip" value=zip}}
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="country">Country</label>
+      {{select/country-select country=country}}
+    </div>
+  </div>
+</div>
+
+<div class="input-section">
+  <div class="input-section__label">SSN Last 4</div>
+  <div class="input-section__content">
+    <div class="input-group">
+      {{input type="text" name="ssn-last4" value=ssnLast4}}
+    </div>
+  </div>
+</div>
+
+<input class="default" type="submit" {{action "submit"}} value="Save information" />

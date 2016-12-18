@@ -12,11 +12,30 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('stripe-connect-account', [
-  'email', 'recipientType', 'firstName', 'lastName', 'dobDay', 'dobMonth', 'dobYear',
-  'address1', 'address2', 'city', 'country', 'state', 'zip', 'ssnLast4',
-  'businessEin', 'businessName', 'businessType',
-  'canAcceptDonations', 'chargesEnabled',
-  'displayName', 'idFromStripe',
-  'insertedAt', 'updatedAt'
+  'address1',
+  'address2',
+  'businessEin',
+  'businessName',
+  'businessType',
+  'canAcceptDonations',
+  'chargesEnabled',
+  'city',
+  'country',
+  'displayName',
+  'dobDay',
+  'dobMonth',
+  'dobYear',
+  'email',
+  'firstName',
+  'idFromStripe',
+  'insertedAt',
+  'lastName',
+  'recipientStatus',
+  'recipientType',
+  'ssnLast4',
+  'state',
+  'updatedAt',
+  'verificationFieldsNeeded',
+  'zip'
 ]);
 testForBelongsTo('stripe-connect-account', 'organization');

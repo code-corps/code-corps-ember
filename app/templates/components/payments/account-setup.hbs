@@ -1,12 +1,15 @@
 <h3>Create a Stripe account for {{organizationName}}</h3>
 
-{{payments/contact-info email=email}}
-
 {{payments/funds-recipient
-  account=account
   isBusy=isBusy
   onRecipientDetailsSubmitted=(action onRecipientDetailsSubmitted)
   onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
-  onPersonalIdNumberSubmitted=(action onPersonalIdNumberSubmitted)}}
+  onPersonalIdNumberSubmitted=(action onPersonalIdNumberSubmitted)
+  stripeConnectAccount=stripeConnectAccount
+}}
 
-{{payments/bank-account account=account isBusy=isBusy submit=(action onBankAccountInformationSubmitted)}}
+{{payments/bank-account
+  isBusy=isBusy
+  stripeConnectAccount=stripeConnectAccount
+  submit=(action onBankAccountInformationSubmitted)
+}}

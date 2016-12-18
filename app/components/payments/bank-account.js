@@ -13,7 +13,7 @@ export default Component.extend({
   accountNumber: '000123456789',
   routingNumber: '110000000',
 
-  status: computed.alias('account.bankAccountStatus'),
+  status: computed.alias('stripeConnectAccount.bankAccountStatus'),
 
   statusClass: computed('status', function() {
     return `account-setup__section--${get(this, 'status')}`;
