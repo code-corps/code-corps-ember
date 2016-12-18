@@ -34,7 +34,6 @@ test('when personal_id_number_status is pending_requirement nothing renders',
     personal_id_number_status: 'pending_requirement'}
   );
   this.set('model', model);
-  // Handle any actions with this.on('myAction', function(val) { ... });
 
   this.render(hbs`
     {{payments/funds-recipient/verification-document model=model}}
@@ -42,18 +41,25 @@ test('when personal_id_number_status is pending_requirement nothing renders',
 
   // Nothing is rendered
   assert.equal(this.$('form').text().trim(), '', 'inner text is empty');
-  assert.equal(this.$('form input[type="file"]').length, 0, 'no file input');
+  assert.equal(this.$('form input').length, 0, 'no input');
   assert.equal(this.$('form button[type="submit"]').length, 0, 'no submit button');
 });
 
+test('when personal_id_number_status is required, can submit an id number',
+  function(assert) {
 
-  /*
+  let model = Ember.Object.create({
+    personal_id_number_status: 'required'}
+  );
+  this.set('model', model);
+
   this.render(hbs`
-    {{#payments/funds-recipient/verification-document}}
-      template block text
-    {{/payments/funds-recipient/verification-document}}
+    {{payments/funds-recipient/verification-document model=model}}
   `);
-  assert.equal(this.$().text().trim(), 'template block text');
-  */
 
+  assert.notEqual(this.$('form').text().trim(), '', 'inner text is not empty');
+  assert.equal(this.$('form input').length, 1, 'shows an input');
+  assert.equal(this.$('form button[type="submit"]').length, 1, 'shows submit button');
+});
+// this.on('myAction', function(val) { ... });
 
