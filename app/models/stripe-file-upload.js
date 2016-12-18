@@ -12,7 +12,7 @@ export default Model.extend({
   url: attr(),
 
   // Virtual attribute, for upload
-  field: attr(),
+  verificationDocumentId: attr(),
 
   stripeConnectAccount: belongsTo('stripe-connect-account', { async: true })
 });

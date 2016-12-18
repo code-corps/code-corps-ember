@@ -12,7 +12,7 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('stripe-file-upload', [
-  'created', 'field', 'idFromStripe', 'insertedAt', 'purpose', 'size', 'type',
-  'url'
+  'created', 'idFromStripe', 'insertedAt', 'purpose', 'size', 'type', 'url',
+  'verificationDocumentId'
 ]);
 testForBelongsTo('stripe-file-upload', 'stripeConnectAccount');
