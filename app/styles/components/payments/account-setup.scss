@@ -48,9 +48,7 @@
     content: "";
     display: block;
     float: left;
-    height: 20px;
     margin: 0 10px 0 0;
-    width: 24px;
     @include sprite($tick-green-large);
   }
 }
