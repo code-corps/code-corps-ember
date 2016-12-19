@@ -2,8 +2,10 @@
   {{#if isVerifying}}
     <p>Please be patient while we verify your ID number.</p>
   {{else}}
-    <label for="personal_id_number">personal ID number</label>
-    <input type="text" name="personal_id_number" />
-    <button type="submit">Submit</button>
+    {{#unless isVerified}}
+      <label for="personal_id_number">personal ID number</label>
+      <input type="text" name="personal_id_number" />
+      <button type="submit">Submit</button>
+    {{/unless}}
   {{/if}}
 {{/unless}}

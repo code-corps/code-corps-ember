@@ -76,5 +76,19 @@ test('when personal_id_number_status is verifying, a message is shown', function
   assert.equal(this.$('form input').length, 0, 'no input');
   assert.equal(this.$('form button[type="submit"]').length, 0, 'no submit button');
 });
-// this.on('myAction', function(val) { ... });
 
+test('when personal_id_number_status is verified, nothing is shown', function(assert) {
+  let model = Ember.Object.create({
+    personal_id_number_status: 'verified'}
+  );
+  this.set('model', model);
+
+  this.render(hbs`
+    {{payments/funds-recipient/verification-document model=model}}
+  `);
+
+  assert.equal(this.$('form').text().trim(), '', 'inner text is empty');
+  assert.equal(this.$('form input').length, 0, 'no input');
+  assert.equal(this.$('form button[type="submit"]').length, 0, 'no submit button');
+});
+// this.on('myAction', function(val) { ... });

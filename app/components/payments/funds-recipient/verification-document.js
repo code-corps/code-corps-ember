@@ -33,5 +33,15 @@ export default Component.extend({
   isVerifying: computed('model', 'model.pending_requirement', function() {
     let status = get(this, 'model.personal_id_number_status');
     return status === 'verifying';
+  }),
+  /*
+    Does the model have a verified status for personal id number?
+
+    @property isVerified
+    @type Boolean
+  */
+  isVerified: computed('model', 'model.pending_requirement', function() {
+    let status = get(this, 'model.personal_id_number_status');
+    return status === 'verified';
   })
 });
