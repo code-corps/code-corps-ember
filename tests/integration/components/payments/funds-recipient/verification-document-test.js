@@ -31,8 +31,8 @@ test('when personal_id_number_status is pending_requirement nothing renders',
   function(assert) {
 
   let model = Ember.Object.create({
-    personal_id_number_status: 'pending_requirement'}
-  );
+    personal_id_number_status: 'pending_requirement'
+  });
   this.set('model', model);
 
   this.render(hbs`
@@ -49,8 +49,8 @@ test('when personal_id_number_status is required, can submit an id number',
   function(assert) {
 
   let model = Ember.Object.create({
-    personal_id_number_status: 'required'}
-  );
+    personal_id_number_status: 'required'
+  });
   this.set('model', model);
 
   this.render(hbs`
@@ -64,8 +64,8 @@ test('when personal_id_number_status is required, can submit an id number',
 
 test('when personal_id_number_status is verifying, a message is shown', function(assert) {
   let model = Ember.Object.create({
-    personal_id_number_status: 'verifying'}
-  );
+    personal_id_number_status: 'verifying'
+  });
   this.set('model', model);
 
   this.render(hbs`
@@ -79,8 +79,8 @@ test('when personal_id_number_status is verifying, a message is shown', function
 
 test('when personal_id_number_status is verified, nothing is shown', function(assert) {
   let model = Ember.Object.create({
-    personal_id_number_status: 'verified'}
-  );
+    personal_id_number_status: 'verified'
+  });
   this.set('model', model);
 
   this.render(hbs`
@@ -91,4 +91,29 @@ test('when personal_id_number_status is verified, nothing is shown', function(as
   assert.equal(this.$('form input').length, 0, 'no input');
   assert.equal(this.$('form button[type="submit"]').length, 0, 'no submit button');
 });
-// this.on('myAction', function(val) { ... });
+
+test('sends an action on submit with personal id number value', function(assert) {
+  let done = assert.async();
+
+  let model = Ember.Object.create({
+    personal_id_number_status: 'required'
+  });
+  this.set('model', model);
+  this.set('onSubmit', (id) => {
+    assert.equal(id, idValue, `${idValue} sent via action`);
+    done();
+    return Ember.RSVP.Promise.resolve(null);
+  });
+
+  this.render(hbs`
+    {{payments/funds-recipient/verification-document model=model onSubmit=(action onSubmit)}}
+  `);
+
+  let idValue = 'PII_0123456_My-ID';
+  let inputEl = this.$('input')[0];
+  inputEl.value = idValue;
+  let submitEl = this.$('form button[type="submit"]');
+
+  assert.equal(this.$('form input').val(), idValue, `input value is ${idValue}`);
+  submitEl.trigger('click');
+});

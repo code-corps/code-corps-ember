@@ -1,12 +1,23 @@
 import Ember from 'ember';
 
 const {
-  Component, computed, get
+  Component, computed, get, set
 } = Ember;
 
 export default Component.extend({
   tagName: 'form',
   classNames: ['funds-recipient'],
+
+  submit() {
+    let action = get(this, 'onSubmit');
+    if (typeof action === 'function') {
+      let personalIDNumber = this.element.querySelector('input').value;
+      let promise = action(personalIDNumber);
+      set(this, 'promise', promise);
+    }
+    // no bubbling…
+    return false;
+  },
 
   /*
     @property model
