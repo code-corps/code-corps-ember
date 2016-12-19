@@ -5,12 +5,22 @@ import PageObject from 'ember-cli-page-object';
 
 import bankAccountComponent from '../../../pages/components/payments/bank-account';
 
-const { K } = Ember;
+const { K, set } = Ember;
 
 let page = PageObject.create(bankAccountComponent);
 
 function setHandler(context, submitHandler = K) {
   context.set('submitHandler', submitHandler);
+}
+
+function renderPage() {
+  page.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
 }
 
 moduleForComponent('payments/bank-account', 'Integration | Component | payments/bank account', {
@@ -27,20 +37,22 @@ moduleForComponent('payments/bank-account', 'Integration | Component | payments/
 test('it renders correctly for "pending" status', function(assert) {
   assert.expect(1);
 
-  let account = { bankAccountStatus: 'pending_requirement' };
-  this.set('account', account);
+  let stripeConnectAccount = { bankAccountStatus: 'pending_requirement' };
+  set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  page.render(hbs`{{payments/bank-account account=account submit=submitHandler}}`);
+  renderPage();
+
   assert.ok(page.rendersPending, 'Component is rendered in pending status.');
 });
 
 test('it renders correctly for "required" status', function(assert) {
   assert.expect(4);
 
-  let account = { bankAccountStatus: 'required' };
-  this.set('account', account);
+  let stripeConnectAccount = { bankAccountStatus: 'required' };
+  set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  page.render(hbs`{{payments/bank-account account=account submit=submitHandler}}`);
+  renderPage();
+
   assert.ok(page.rendersRequired, 'Component is rendered in required mode.');
   assert.ok(page.rendersAccountNumberField, 'Component renders the account number field.');
   assert.ok(page.rendersRoutingNumberField, 'Component renders the routing number field.');
@@ -50,10 +62,11 @@ test('it renders correctly for "required" status', function(assert) {
 test('it renders correctly for "verified" status', function(assert) {
   assert.expect(3);
 
-  let account = { bankAccountLast4: 4321, bankAccountRoutingNumber: 123456, bankAccountStatus: 'verified' };
-  this.set('account', account);
+  let stripeConnectAccount = { bankAccountLast4: 4321, bankAccountRoutingNumber: 123456, bankAccountStatus: 'verified' };
+  set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  page.render(hbs`{{payments/bank-account account=account submit=submitHandler}}`);
+  renderPage();
+
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.equal(page.accountLast4Text, 4321, 'Component renders last 4 digits of account number.');
   assert.equal(page.routingNumberText, 123456, 'Component renders routing number.');
@@ -62,8 +75,8 @@ test('it renders correctly for "verified" status', function(assert) {
 test('it sends properties with submit action', function(assert) {
   assert.expect(1);
 
-  let account = { bankAccountStatus: 'required' };
-  this.set('account', account);
+  let stripeConnectAccount = { bankAccountStatus: 'required' };
+  set(this, 'stripeConnectAccount', stripeConnectAccount);
 
   let input = {
     routingNumber: '123456',
@@ -74,8 +87,8 @@ test('it sends properties with submit action', function(assert) {
     assert.deepEqual(output, input, 'Correct parameters were sent out with action.');
   });
 
-  page.render(hbs`{{payments/bank-account account=account submit=submitHandler}}`)
-      .accountNumber(input.accountNumber)
+  renderPage();
+  page.accountNumber(input.accountNumber)
       .routingNumber(input.routingNumber)
       .clickSubmit();
 });
@@ -83,10 +96,11 @@ test('it sends properties with submit action', function(assert) {
 test('it disables controls when busy', function(assert) {
   assert.expect(3);
 
-  let account = { bankAccountStatus: 'required' };
-  this.set('account', account);
+  let stripeConnectAccount = { bankAccountStatus: 'required' };
+  set(this, 'isBusy', true);
+  set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  page.render(hbs`{{payments/bank-account account=account isBusy=true submit=submitHandler}}`);
+  renderPage();
 
   assert.ok(page.accountNumberFieldIsDisabled, 'Account number field is disabled when busy.');
   assert.ok(page.routingNumberFieldIsDisabled, 'Routing number field is disabled when buys.');

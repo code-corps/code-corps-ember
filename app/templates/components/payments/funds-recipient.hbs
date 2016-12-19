@@ -1,14 +1,12 @@
 <aside>
-  {{#if (eq status 'verified')}}
-    <span></span>
-  {{/if}}
   <h1>Funds Recipient</h1>
 </aside>
 
-{{#if (eq status 'required')}}
-  <section class="details-form">
-    TODO: details-form-component goes here
-  </section>
+{{#if (or (eq status 'required') (eq status 'errored'))}}
+  {{payments/funds-recipient/details-form
+    onSubmit=(action onRecipientDetailsSubmitted)
+    stripeConnectAccount=stripeConnectAccount
+  }}
 {{/if}}
 
 {{#if (eq status 'verifying')}}
@@ -24,13 +22,13 @@
   <section>
     <div class="funds-recipient__individual-name">
       <label>Name</label>
-      <p>{{account.individualName}}</p>
+      <p>{{stripeConnectAccount.individualName}}</p>
     </div>
 
-    {{#if (eq account.recipientType 'business')}}
+    {{#if (eq stripeConnectAccount.recipientType 'business')}}
       <div class="funds-recipient__business-name">
         <label>Business Name</label>
-        <p>{{account.businessName}}</p>
+        <p>{{stripeConnectAccount.businessName}}</p>
       </div>
     {{/if}}
   </section>

@@ -9,6 +9,7 @@
   display: flex;
   min-height: 4em;
   padding: 1.5em;
+  margin-bottom: 15px;
 
   aside {
     @include span-columns(3);

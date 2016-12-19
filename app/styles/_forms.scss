@@ -11,7 +11,7 @@ $outer-border-radius: 4px;
   width: 100%;
 
   #{$all-text-inputs} {
-    border-radius: $inner-border-radius;
+    border-radius: $outer-border-radius;
     float: left;
     max-width: 100%;
     width: 100%;

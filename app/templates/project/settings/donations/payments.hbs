@@ -1,5 +1,4 @@
 {{payments/account-setup
-  account=stripeConnectAccount
   email=user.email
   isBusy=isBusy
   onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
@@ -7,7 +6,9 @@
   onRecipientDetailsSubmitted=(action 'onRecipientDetailsSubmitted')
   onVerificationDocumentSubmitted=(action 'onVerificationDocumentSubmitted')
   organizationName=project.organization.name
+  stripeConnectAccount=project.organization.stripeConnectAccount
 }}
+
 {{#if error}}
   {{error-formatter error=error}}
 {{/if}}
