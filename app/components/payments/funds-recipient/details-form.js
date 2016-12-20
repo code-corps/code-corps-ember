@@ -27,7 +27,7 @@ export default Component.extend({
   isIndividual: equal('recipientType', 'individual'),
 
   init() {
-    let recipientType = get(this, 'account.recipientType') || 'individual';
+    let recipientType = get(this, 'stripeConnnectAccount.recipientType') || 'individual';
     set(this, 'recipientType', recipientType);
     this._super(...arguments);
   },

@@ -18,6 +18,7 @@ export default Model.extend({
   dobYear: attr(),
   email: attr(),
   firstName: attr(),
+  identityDocumentId: attr(),
   idFromStripe: attr(),
   insertedAt: attr(),
   lastName: attr(),
@@ -26,6 +27,7 @@ export default Model.extend({
   ssnLast4: attr(),
   state: attr(),
   updatedAt: attr(),
+  verificationDocumentStatus: attr(),
   verificationFieldsNeeded: attr(),
   zip: attr(),
 
