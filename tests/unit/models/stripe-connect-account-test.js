@@ -27,6 +27,7 @@ testForAttributes('stripe-connect-account', [
   'dobYear',
   'email',
   'firstName',
+  'identityDocumentId',
   'idFromStripe',
   'insertedAt',
   'lastName',
@@ -35,6 +36,7 @@ testForAttributes('stripe-connect-account', [
   'ssnLast4',
   'state',
   'updatedAt',
+  'verificationDocumentStatus',
   'verificationFieldsNeeded',
   'zip'
 ]);

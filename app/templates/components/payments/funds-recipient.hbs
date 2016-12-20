@@ -10,9 +10,10 @@
 {{/if}}
 
 {{#if (eq status 'verifying')}}
-  <section class="verification-document">
-    TODO: verification-document component goes here
-  </section>
+  {{payments/funds-recipient/verification-document
+    isBusy=isBusy
+    onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
+    stripeConnectAccount=stripeConnectAccount}}
   <section class="personal-id-number">
     TODO: personal-id-number component goes here
   </section>
