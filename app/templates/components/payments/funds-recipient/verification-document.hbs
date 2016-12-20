@@ -1,0 +1,11 @@
+{{#unless isPending}}
+  {{#if isVerifying}}
+    <p>Please be patient while we verify your ID number.</p>
+  {{else}}
+    {{#unless isVerified}}
+      <label for="personal_id_number">Personal ID Number</label>:
+      <input type="text" name="personal_id_number" />
+      <button type="submit">Submit</button>
+    {{/unless}}
+  {{/if}}
+{{/unless}}
