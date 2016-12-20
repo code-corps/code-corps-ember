@@ -21,6 +21,7 @@ const INDIVIDUAL_PROPERTIES = [
 
 export default Component.extend({
   classNames: ['details-form'],
+  tagName: 'section',
 
   isBusiness: equal('recipientType', 'business'),
   isIndividual: equal('recipientType', 'individual'),

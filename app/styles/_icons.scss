@@ -59,7 +59,7 @@ $calendar: 20px 20px $spriteURL -42px -268px $spritex2URL;
 $task-small: 16px 16px $spriteURL 0px -288px $spritex2URL;
 $issue-small: 16px 16px $spriteURL -16px -288px $spritex2URL;
 $idea-small: 16px 16px $spriteURL -32px -288px $spritex2URL;
-$tick-green-large: 20px 20px $spriteURL 0px -304px $spritex2URL;
+$tick-green-large: 20px 24px $spriteURL 0px -304px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
