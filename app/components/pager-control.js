@@ -119,6 +119,13 @@ export default Component.extend({
         lower: 1,
         upper: totalPages
       };
+    } else if (this.get('onLastPage')) {
+      let currentPage = this.get('currentPage');
+
+      return {
+        lower: currentPage - (pagesToShow - 1),
+        upper: currentPage
+      };
     } else {
       let centerPage = this.get('centerPage');
       let range = Math.floor(pagesToShow / 2);
