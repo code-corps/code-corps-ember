@@ -7,7 +7,7 @@ const {
 
 export default EmberDragulaContainer.extend({
   attributeBindings: ['data-model-id', 'data-model-type'],
-  classNames: ['task-list'],
+  classNames: ['task-list-cards'],
   sorting: ['order:asc'],
 
   orderedTasks: sort('taskList.tasks', 'sorting'),

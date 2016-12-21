@@ -37,6 +37,29 @@
     margin-right: 5px;
   }
 
+  &--can-reposition {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &--is-loading {
+    border-top: 2px solid $gray;
+    div {
+      background: $background-gray;
+      height: 20px;
+      margin-bottom: 5px;
+
+      &.long {
+        width: 100%;
+      }
+
+      &.short {
+        width: 50%;
+      }
+    }
+  }
+
   &--idea {
     border-top: 2px solid $idea-color;
     &:hover { background-color: $idea-background; }
@@ -55,6 +78,20 @@
     .task-card__icon { @include taskBoardIcon($task-small); }
   }
 
+  &.gu-mirror {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    opacity: 1.0;
+    transform: rotate(5deg);
+    -ms-transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    &.task-card--idea { background-color: $idea-background; }
+    &.task-card--issue { background-color: $issue-background; }
+    &.task-card--task { background-color: $task-background; }
+    box-shadow: -2px 2px 6px #CCC;
+  }
+
   a {
     color: $dark-text;
     font-weight: 700;
@@ -62,9 +99,5 @@
     &:hover {
       color: $link-hover-color;
     }
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 }
