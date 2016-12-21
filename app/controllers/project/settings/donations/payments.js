@@ -5,14 +5,15 @@ const {
   Controller,
   get,
   inject: { service },
-  merge,
   RSVP,
-  set
+  set,
+  setProperties
 } = Ember;
 
 const ACCOUNT_ADDING_ERROR = 'There was a problem submitting your bank account information.';
 const ACCOUNT_TOKEN_CREATION_ERROR = 'There was a problem in using your bank account information. Please check your input and try again.';
-const STRIPE_ACCOUNT_CREATION_ERROR = 'There was a problem with your account information. Please check your input and try again.';
+const STRIPE_ACCOUNT_CREATION_ERROR = 'There was a problem with creating your account. Please check your input and try again.';
+const STRIPE_RECIPIENT_DETAILS_UPDATE_ERROR = 'There was a problem with your account information. Please check your input and try again.';
 const VERIFICATION_DOCUMENT_ERROR = 'There was a problem in attaching the verification document to your stripe account';
 
 export default Controller.extend({
@@ -21,18 +22,22 @@ export default Controller.extend({
   stripe: service(),
 
   actions: {
+    onCreateStripeConnectAccount(country) {
+      set(this, 'isBusy', true);
+
+      get(this, 'project.organization')
+        .then((organization) => this._createStripeAccount(organization, country))
+        .catch((reason) => this._handleError(reason))
+        .finally(() => set(this, 'isBusy', false));
+    },
+
     onRecipientDetailsSubmitted(recipientInformation) {
       set(this, 'isBusy', true);
 
-      let promises = {
-        organization: get(this, 'project.organization'),
-        email: get(this, 'currentUser.user.email')
-      };
-
-      RSVP.hash(promises)
-          .then(({ organization, email }) => this._createStripeAccount(recipientInformation, organization, email))
-          .catch((reason) => this._handleError(reason))
-          .finally(() => set(this, 'isBusy', false));
+      get(this, 'stripeConnectAccount')
+        .then((stripeConnectAccount) => this._updateRecipientDetails(stripeConnectAccount, recipientInformation))
+        .catch((reason) => this._handleError(reason))
+        .finally(() => set(this, 'isBusy', false));
     },
 
     onBankAccountInformationSubmitted({ accountNumber, routingNumber }) {
@@ -63,20 +68,34 @@ export default Controller.extend({
     }
   },
 
-  // creating a stripe account
+  // creating account
 
-  _createStripeAccount(recipientInformation, organization, email) {
-    let accountParams = merge(recipientInformation, { organization, email });
-
+  _createStripeAccount(organization, country) {
     return get(this, 'store')
-      .createRecord('stripe-connect-account', accountParams)
-      .save()
-      .then((account) => RSVP.resolve(account))
-      .catch((reason) => this._handleStripeAccountCreationError(reason));
+            .createRecord('stripe-connect-account', { organization, country })
+            .save()
+            .then((account) => RSVP.resolve(account))
+            .catch((reason) => this._handleAccountCreationError(reason));
   },
 
-  _handleStripeAccountCreationError() {
+  _handleAccountCreationError() {
     let friendlyError = new FriendlyError(STRIPE_ACCOUNT_CREATION_ERROR);
+    return RSVP.reject(friendlyError);
+  },
+
+  // udating recipient info
+
+  _updateRecipientDetails(stripeConnectAccount, recipientDetails) {
+    setProperties(stripeConnectAccount, recipientDetails);
+
+    return stripeConnectAccount
+            .save()
+            .then((account) => RSVP.resolve(account))
+            .catch((reason) => this._handleRecipientDetailsUpdateError(reason));
+  },
+
+  _handleRecipientDetailsUpdateError() {
+    let friendlyError = new FriendlyError(STRIPE_RECIPIENT_DETAILS_UPDATE_ERROR);
     return RSVP.reject(friendlyError);
   },
 
