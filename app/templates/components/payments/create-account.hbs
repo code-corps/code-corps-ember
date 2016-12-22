@@ -1,0 +1,13 @@
+<div class="input-section">
+  <div class="input-section__content">
+    <div class="input-group">
+      <label for="country">Country</label>
+      {{select/country-select country=country}}
+    </div>
+  </div>
+  <div class="input-group">
+    <button class="default" {{action onCreateStripeConnectAccount country}} disabled={{isBusy}}>
+      Create Account
+    </button>
+  </div>
+</div>

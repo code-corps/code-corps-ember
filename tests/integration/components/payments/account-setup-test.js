@@ -12,12 +12,14 @@ const {
 let page = PageObject.create(accountSetupComponent);
 
 function setHandlers(context, {
+  onCreateStripeConnectAccount = K,
   onRecipientDetailsSubmitted = K,
   onVerificationDocumentSubmitted = K,
   onPersonalIdNumberSubmitted = K,
   onBankAccountInformationSubmitted = K
 } = {}) {
   context.setProperties({
+    onCreateStripeConnectAccount,
     onRecipientDetailsSubmitted,
     onVerificationDocumentSubmitted,
     onPersonalIdNumberSubmitted,
@@ -31,6 +33,7 @@ function renderPage() {
       account=account
       email=email
       isBusy=isBusy
+      onCreateStripeConnectAccount=onCreateStripeConnectAccount
       onRecipientDetailsSubmitted=onRecipientDetailsSubmitted
       onVerificationDocumentSubmitted=onVerificationDocumentSubmitted
       onPersonalIdNumberSubmitted=onPersonalIdNumberSubmitted
