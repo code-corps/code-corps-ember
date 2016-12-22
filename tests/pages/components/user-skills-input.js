@@ -1,24 +1,66 @@
 import {
-  clickable,
-  collection,
-  fillable,
-  text,
-  triggerable
+  collection, fillable, isVisible, isHidden, triggerable, value
 } from 'ember-cli-page-object';
+import userSkillsInputItem from './user-skills-input-item';
 
 export default {
   scope: '.user-skills-input',
 
   fillIn: fillable('input'),
   focus: triggerable('focus', 'input'),
+  inputValue: value('input'),
+  dropdownMenuVisible: isVisible('.dropdown-menu'),
+  dropdownMenuItemsHidden: isHidden('.dropdown-menu li'),
 
-  dropdown: collection({
-    scope: '.dropdown-menu',
-    itemScope: 'li',
+  mousedownDropdownItem: triggerable('mousedown', '.dropdown-menu li'),
+  mouseenterDropdownFirstItem: triggerable('mouseenter', '.dropdown-menu li:eq(1)'),
 
-    item: {
-      text: text(),
-      click: clickable()
+  keydown: triggerable('keydown', 'input'),
+
+  pressCommaKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 188,
+      which   : 188
     }
+  }),
+
+  pressDownKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 40,
+      which   : 40
+    }
+  }),
+
+  pressEnterKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 13,
+      which   : 13
+    }
+  }),
+
+  pressEscKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 27,
+      which   : 27
+    }
+  }),
+
+  pressRKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 82,
+      which   : 82
+    }
+  }),
+
+  pressUpKey: triggerable('keydown', 'input', {
+    eventProperties: {
+      keyCode : 38,
+      which   : 38
+    }
+  }),
+
+  inputItems: collection({
+    item: userSkillsInputItem,
+    itemScope: userSkillsInputItem.scope
   })
 };
