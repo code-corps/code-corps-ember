@@ -1,36 +1,40 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import userOrganizationList from '../../pages/components/user-organizations-list';
+import Ember from 'ember';
+
+const { set } = Ember;
+let page = PageObject.create(userOrganizationList);
 
 moduleForComponent('user-organizations-list', 'Integration | Component | user organizations list', {
-  integration: true
-});
-
-test('it renders', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{user-organizations-list}}`);
-
-  assert.equal(this.$('.user-organizations-list').length, 1, 'Component\'s element is rendered');
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('with no organizations renders all required elements', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   // No organizations
-  this.set('organizations', []);
+  set(this, 'organizations', []);
 
-  this.set('user', {
+  set(this, 'user', {
     username: 'JoshSmith'
   });
 
-  this.render(hbs`{{user-organizations-list user=user organizations=organizations}}`);
+  page.render(hbs`{{user-organizations-list user=user organizations=organizations}}`);
 
-  assert.equal(this.$('.user-organizations-list').length, 1, 'Component\'s element is rendered');
-  assert.equal(this.$('h2').text(), 'Organizations', 'The header renders');
-  assert.equal(this.$('.empty-state strong').text(), 'JoshSmith', 'Component\'s element is rendered');
+  assert.equal(page.header, 'Organizations', 'The header renders');
+  assert.equal(page.emptyState, 'JoshSmith', 'Component\'s element is rendered');
 });
 
 test('with several organizations renders all required elements', function(assert) {
-  assert.expect(6);
+  assert.expect(5);
 
   let mockOrganizations = [];
   for (let i = 1; i <= 3; i++) {
@@ -43,18 +47,17 @@ test('with several organizations renders all required elements', function(assert
     });
   }
 
-  this.set('organizations', mockOrganizations);
+  set(this, 'organizations', mockOrganizations);
 
-  this.set('user', {
+  set(this, 'user', {
     username: 'JoshSmith'
   });
 
-  this.render(hbs`{{user-organizations-list user=user organizations=organizations}}`);
+  page.render(hbs`{{user-organizations-list user=user organizations=organizations}}`);
 
-  assert.equal(this.$('.user-organizations-list').length, 1, 'Component\'s element is rendered');
-  assert.equal(this.$('h2').text(), 'Organizations', 'The header renders');
-  assert.equal(this.$('li').length, 3, 'All organization items render');
-  assert.equal(this.$('li:first h3').text().trim(), 'Organization 1', 'The organization header renders');
-  assert.equal(this.$('li:first p').text().trim(), 'Organization 1 description', 'The organization description renders');
-  assert.equal(this.$('li:first img').attr('src'), '/icon_1.png', 'The organization image renders');
+  assert.equal(page.header, 'Organizations', 'The header renders');
+  assert.equal(page.listItemCount, 3, 'All organization items render');
+  assert.equal(page.organizationTitle, 'Organization 1', 'The organization title renders');
+  assert.equal(page.organizationDescription, 'Organization 1 description', 'The organization description renders');
+  assert.ok(page.organizationIconSrc.indexOf('icon_1.png') > -1, 'The organization icon renders');
 });
