@@ -1,7 +1,7 @@
 machine:
   node:
     version: 4.5.0
-  environment:  
+  environment:
     YARN_VERSION: 0.18.1
     PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 dependencies:
@@ -17,9 +17,12 @@ dependencies:
     - /home/ubuntu/nvm/versions/node/v4.5.0/lib/node_modules
   override:
     - yarn global add bower
-    - yarn
+    - yarn install
     - bower install
     - npm rebuild node-sass
+test:
+  override:
+    - yarn test
 deployment:
   production:
     branch: master
