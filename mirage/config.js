@@ -1,4 +1,9 @@
 import Mirage from 'ember-cli-mirage';
+import Ember from 'ember';
+
+const {
+  isEmpty
+} = Ember;
 
 function generateCommentMentions(schema, comment) {
   let body = comment.body || '';
@@ -71,6 +76,9 @@ const routes = [
 ];
 
 export default function() {
+  this.passthrough('https://api.stripe.com/**');
+  this.passthrough('https://uploads.stripe.com/**');
+
   /**
   * Categories
   */
@@ -396,8 +404,45 @@ export default function() {
    * Stripe connect accounts
    */
 
-  this.post('/stripe-connect-accounts');
+  this.post('/stripe-connect-accounts', function(schema) {
+    let { country } = this.normalizedRequestAttrs();
+    let stripeConnectAccount = schema.create('stripeConnectAccount', {
+      country,
+      recipientStatus: 'required'
+    });
+    return stripeConnectAccount;
+  });
+
   this.get('/stripe-connect-accounts/:id');
+
+  this.patch('/stripe-connect-accounts/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+
+    if (!isEmpty(attrs.legalEntityAddressCity)) {
+      attrs.recipientStatus = 'verifying';
+      attrs.personalIdNumberStatus = 'required';
+    }
+
+    if (!isEmpty(attrs.legalEntityPersonalIdNumber)) {
+      attrs.personalIdNumberStatus = 'verified';
+      attrs.verificationDocumentStatus = 'required';
+    }
+
+    if (!isEmpty(attrs.legalEntityVerificationDocument)) {
+      attrs.recipientStatus = 'verified';
+      attrs.verificationDocumentStatus = 'verified';
+      attrs.bankAccountStatus = 'required';
+    }
+
+    if (!isEmpty(attrs.externalAccount)) {
+      attrs.bankAccountStatus = 'verified';
+    }
+
+    let stripeConnectAccount = schema.stripeConnectAccounts.find(attrs.id);
+    stripeConnectAccount.attrs = attrs;
+    stripeConnectAccount.save();
+    return stripeConnectAccount;
+  });
 
   /**
    * Stripe plans

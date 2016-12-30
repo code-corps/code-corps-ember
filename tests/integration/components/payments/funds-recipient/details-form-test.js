@@ -1,6 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
+import Ember from 'ember';
+
+const {
+  get,
+  Object
+} = Ember;
 
 import detailsFormComponent from 'code-corps-ember/tests/pages/components/payments/funds-recipient/details-form';
 
@@ -8,7 +14,7 @@ let page = PageObject.create(detailsFormComponent);
 
 function renderPage() {
   page.render(
-    hbs`{{payments/funds-recipient/details-form account=account onSubmit=onSubmit}}`
+    hbs`{{payments/funds-recipient/details-form stripeConnectAccount=stripeConnectAccount onSubmit=onSubmit}}`
   );
 }
 
@@ -22,92 +28,98 @@ moduleForComponent('payments/funds-recipient/details-form', 'Integration | Compo
   }
 });
 
-test('it sends out correct properties when submitting in business mode', function(assert) {
+test('it keeps the business properties when submitting in business mode', function(assert) {
   assert.expect(1);
 
-  let expectedProperties = {
-    businessName: 'Test Business',
-    businessEin: '1234',
-    recipientType: 'business',
-    firstName: 'Joe',
-    lastName: 'Regular',
-    dobDay: 6,
-    dobMonth: 12,
-    dobYear: 1986,
-    address1: 'Some street 42',
-    address2: 'PO 21',
-    city: 'Town',
-    state: 'AL',
-    zip: '11111',
-    country: 'US',
-    ssnLast4: '5555'
-  };
-
-  this.set('onSubmit', (properties) => {
-    assert.deepEqual(properties, expectedProperties, 'Correct properties were submitted');
+  let account = Object.create({
+    legalEntityType: 'business',
+    legalEntityBusinessName: 'Test Business',
+    legalEntityBusinessTaxId: '1234',
+    legalEntityFirstName: 'Joe',
+    legalEntityLastName: 'Regular',
+    legalEntityDobDay: 6,
+    legalEntityDobMonth: 12,
+    legalEntityDobYear: 1986,
+    legalEntityAddressLine1: 'Some street 42',
+    legalEntityAddressLine2: 'PO 21',
+    legalEntityAddressCity: 'Town',
+    legalEntityAddressState: 'AL',
+    legalEntityAddressPostalCode: '11111',
+    legalEntityAddressCountry: 'US',
+    legalEntitySsnLast4: '5555'
   });
+
+  this.set('onSubmit', () => {
+    assert.equal(get(account, 'legalEntityBusinessName'), 'Test Business');
+  });
+
+  this.set('stripeConnectAccount', account);
 
   renderPage();
 
   page.selectBusiness()
-      .businessName(expectedProperties.businessName)
-      .businessEin(expectedProperties.businessEin)
-      .firstName(expectedProperties.firstName)
-      .lastName(expectedProperties.lastName)
-      .address1(expectedProperties.address1)
-      .address2(expectedProperties.address2)
-      .city(expectedProperties.city)
-      .zip(expectedProperties.zip)
-      .ssnLast4(expectedProperties.ssnLast4);
+      .legalEntityBusinessName(account.legalEntityBusinessName)
+      .legalEntityBusinessTaxId(account.legalEntityBusinessTaxId)
+      .legalEntityFirstName(account.legalEntityFirstName)
+      .legalEntityLastName(account.legalEntityLastName)
+      .legalEntityAddressLine1(account.legalEntityAddressLine1)
+      .legalEntityAddressLine2(account.legalEntityAddressLine2)
+      .legalEntityAddressCity(account.legalEntityAddressCity)
+      .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
+      .legalEntitySsnLast4(account.legalEntitySsnLast4);
 
-  page.state.fillIn(expectedProperties.state);
-  page.country.fillIn(expectedProperties.country);
-  page.birthDate.day.fillIn(expectedProperties.dobDay);
-  page.birthDate.month.fillIn(expectedProperties.dobMonth);
-  page.birthDate.year.fillIn(expectedProperties.dobYear);
+  page.state.fillIn(account.legalEntityAddressState);
+  page.country.fillIn(account.legalEntityAddressCountry);
+  page.birthDate.day.fillIn(account.legalEntityDobDay);
+  page.birthDate.month.fillIn(account.legalEntityDobMonth);
+  page.birthDate.year.fillIn(account.legalEntityDobYear);
 
   page.clickSubmit();
 });
 
-test('it sends out correct properties when submitting in individual mode', function(assert) {
+test('it unsets the business properties when submitting in individual mode', function(assert) {
   assert.expect(1);
 
-  let expectedProperties = {
-    recipientType: 'individual',
-    firstName: 'Joe',
-    lastName: 'Regular',
-    dobDay: 6,
-    dobMonth: 12,
-    dobYear: 1986,
-    address1: 'Some street 42',
-    address2: 'PO 21',
-    city: 'Town',
-    state: 'AL',
-    zip: '11111',
-    country: 'US',
-    ssnLast4: '5555'
-  };
-
-  this.set('onSubmit', (properties) => {
-    assert.deepEqual(properties, expectedProperties, 'Correct properties were submitted');
+  let account = Object.create({
+    legalEntityType: 'individual',
+    legalEntityBusinessName: 'Test Business',
+    legalEntityBusinessTaxId: '1234',
+    legalEntityFirstName: 'Joe',
+    legalEntityLastName: 'Regular',
+    legalEntityDobDay: 6,
+    legalEntityDobMonth: 12,
+    legalEntityDobYear: 1986,
+    legalEntityAddressLine1: 'Some street 42',
+    legalEntityAddressLine2: 'PO 21',
+    legalEntityAddressCity: 'Town',
+    legalEntityAddressState: 'AL',
+    legalEntityAddressPostalCode: '11111',
+    legalEntityAddressCountry: 'US',
+    legalEntitySsnLast4: '5555'
   });
+
+  this.set('onSubmit', () => {
+    assert.equal(get(account, 'legalEntityBusinessName'), null);
+  });
+
+  this.set('stripeConnectAccount', account);
 
   renderPage();
 
   page.selectIndividual()
-      .firstName(expectedProperties.firstName)
-      .lastName(expectedProperties.lastName)
-      .address1(expectedProperties.address1)
-      .address2(expectedProperties.address2)
-      .city(expectedProperties.city)
-      .zip(expectedProperties.zip)
-      .ssnLast4(expectedProperties.ssnLast4);
+      .legalEntityFirstName(account.legalEntityFirstName)
+      .legalEntityLastName(account.legalEntityLastName)
+      .legalEntityAddressLine1(account.legalEntityAddressLine1)
+      .legalEntityAddressLine2(account.legalEntityAddressLine2)
+      .legalEntityAddressCity(account.legalEntityAddressCity)
+      .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
+      .legalEntitySsnLast4(account.legalEntitySsnLast4);
 
-  page.state.fillIn(expectedProperties.state);
-  page.country.fillIn(expectedProperties.country);
-  page.birthDate.day.fillIn(expectedProperties.dobDay);
-  page.birthDate.month.fillIn(expectedProperties.dobMonth);
-  page.birthDate.year.fillIn(expectedProperties.dobYear);
+  page.state.fillIn(account.legalEntityAddressState);
+  page.country.fillIn(account.legalEntityAddressCountry);
+  page.birthDate.day.fillIn(account.legalEntityDobDay);
+  page.birthDate.month.fillIn(account.legalEntityDobMonth);
+  page.birthDate.year.fillIn(account.legalEntityDobYear);
 
   page.clickSubmit();
 });

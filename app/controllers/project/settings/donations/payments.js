@@ -2,24 +2,27 @@ import Ember from 'ember';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
 
 const {
+  computed: { alias },
   Controller,
   get,
   inject: { service },
   RSVP,
-  set,
-  setProperties
+  set
 } = Ember;
 
 const ACCOUNT_CREATION_ERROR = 'There was a problem with creating your account. Please check your input and try again.';
 const ACCOUNT_UPDATE_ERROR = 'There was a problem with your account information. Please check your input and try again.';
 const BANK_ACCOUNT_TOKEN_CREATION_ERROR = 'There was a problem in using your bank account information. Please check your input and try again.';
 const BANK_ACCOUNT_ADDING_ERROR = 'There was a problem submitting your bank account information.';
+const PERSONAL_ID_NUMBER_TOKEN_CREATION_ERROR = 'There was a problem in using your personal ID number. Please check your input and try again.';
 const VERIFICATION_DOCUMENT_ERROR = 'There was a problem with attaching your document. Please try again.';
 
 export default Controller.extend({
   currentUser: service(),
   store: service(),
   stripe: service(),
+
+  stripeConnectAccount: alias('project.organization.stripeConnectAccount'),
 
   actions: {
     onCreateStripeConnectAccount(country) {
@@ -31,11 +34,11 @@ export default Controller.extend({
         .finally(() => set(this, 'isBusy', false));
     },
 
-    onRecipientDetailsSubmitted(recipientInformation) {
+    onRecipientDetailsSubmitted() {
       set(this, 'isBusy', true);
 
       get(this, 'stripeConnectAccount')
-        .then((stripeConnectAccount) => this._updateRecipientDetails(stripeConnectAccount, recipientInformation))
+        .then((stripeConnectAccount) => this._updateRecipientDetails(stripeConnectAccount))
         .catch((reason) => this._handleError(reason))
         .finally(() => set(this, 'isBusy', false));
     },
@@ -63,13 +66,18 @@ export default Controller.extend({
         .finally(() => set(this, 'isBusy', false));
     },
 
-    onPersonalIdNumberSubmitted(personalIdNumber) {
+    onLegalEntityPersonalIdNumberSubmitted(legalEntityPersonalIdNumber) {
       set(this, 'isBusy', true);
 
-      get(this, 'stripeConnectAccount')
-        .then((account) => this._assignPersonalIdNumber(account, personalIdNumber))
-        .catch((response) => this._handleError(response))
-        .finally(() => set(this, 'isBusy', false));
+      let promises = {
+        tokenData: this._createPersonalIdNumberToken(legalEntityPersonalIdNumber),
+        stripeConnectAccount: get(this, 'stripeConnectAccount')
+      };
+
+      RSVP.hash(promises)
+          .then(({ tokenData, stripeConnectAccount }) => this._assignLegalEntityPersonalIdNumber(tokenData, stripeConnectAccount))
+          .catch((response) => this._handleError(response))
+          .finally(() => set(this, 'isBusy', false));
     }
   },
 
@@ -85,9 +93,7 @@ export default Controller.extend({
 
   // udating recipient info
 
-  _updateRecipientDetails(stripeConnectAccount, recipientDetails) {
-    setProperties(stripeConnectAccount, recipientDetails);
-
+  _updateRecipientDetails(stripeConnectAccount) {
     return stripeConnectAccount
       .save()
       .then(RSVP.resolve)
@@ -97,7 +103,7 @@ export default Controller.extend({
   // uploading and assigning an id verification document
 
   _assignIdentityVerificationDocument(stripeConnectAccount, stripeFileUploadId) {
-    set(stripeConnectAccount, 'identityDocumentId', stripeFileUploadId);
+    set(stripeConnectAccount, 'legalEntityVerificationDocument', stripeFileUploadId);
 
     return stripeConnectAccount
       .save()
@@ -107,13 +113,21 @@ export default Controller.extend({
 
   // assigning a personal id number
 
-  _assignPersonalIdNumber(stripeConnectAccount, personalIdNumber) {
-    set(stripeConnectAccount, 'personalIdNumber', personalIdNumber);
+  _assignLegalEntityPersonalIdNumber(tokenData, stripeConnectAccount) {
+    set(stripeConnectAccount, 'legalEntityPersonalIdNumber', tokenData.id);
 
     return stripeConnectAccount
       .save()
       .then(RSVP.resolve)
       .catch(() => this._wrapError(ACCOUNT_UPDATE_ERROR));
+  },
+
+  _createPersonalIdNumberToken(personalIdNumber) {
+    let stripe = get(this, 'stripe');
+
+    return stripe.piiData.createToken({ personalIdNumber })
+                 .then((stripeResponse) => RSVP.resolve(stripeResponse))
+                 .catch(() => this._wrapError(PERSONAL_ID_NUMBER_TOKEN_CREATION_ERROR));
   },
 
   // bank account - token step
@@ -123,8 +137,8 @@ export default Controller.extend({
     let params = this._bankAccountTokenParams(accountNumber, routingNumber);
 
     return stripe.bankAccount.createToken(params)
-                      .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                      .catch(() => this._wrapError(BANK_ACCOUNT_TOKEN_CREATION_ERROR));
+                 .then((stripeResponse) => RSVP.resolve(stripeResponse))
+                 .catch(() => this._wrapError(BANK_ACCOUNT_TOKEN_CREATION_ERROR));
   },
 
   _bankAccountTokenParams(accountNumber, routingNumber) {

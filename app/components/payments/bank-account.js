@@ -10,8 +10,8 @@ export default Component.extend({
   classNameBindings: ['statusClass'],
   classNames: ['bank-account', 'account-setup__section'],
 
-  accountNumber: '000123456789',
-  routingNumber: '110000000',
+  accountNumber: null,
+  routingNumber: null,
 
   status: computed.alias('stripeConnectAccount.bankAccountStatus'),
 

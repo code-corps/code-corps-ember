@@ -289,13 +289,6 @@ export default function(server) {
     server.create('project-category', { category, project });
   });
 
-  let stripeConnectAccount = server.create('stripe-connect-account', {
-    organization,
-    recipientStatus: 'required'
-  });
-  organization.stripeConnectAccount = stripeConnectAccount;
-  organization.save();
-
   project.createStripeConnectPlan();
 
   server.create('stripe-platform-customer', { user: owner });
