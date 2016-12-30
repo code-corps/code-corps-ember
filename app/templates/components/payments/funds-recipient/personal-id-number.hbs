@@ -1,0 +1,16 @@
+{{#if (eq status 'required')}}
+  <div class="input-section">
+    <div class="input-section__label">We need your full personal ID number</div>
+    <div class="input-section__content">
+      <div class="input-group">
+        <label for="personal-id-number">Personal ID Number</label>
+        {{input type="text" name="personal-id-number" value=personalIdNumber disabled=isBusy}}
+      </div>
+    </div>
+  </div>
+  <button {{action submit personalIdNumber}} disabled={{isBusy}} class="default">Submit</button>
+{{/if}}
+
+{{#if (eq status 'verifying')}}
+  We're verifying your ID number
+{{/if}}

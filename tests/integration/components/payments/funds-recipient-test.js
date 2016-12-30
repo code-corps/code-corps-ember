@@ -7,10 +7,7 @@ import fundsRecipientComponent from '../../../pages/components/payments/funds-re
 
 let page = PageObject.create(fundsRecipientComponent);
 
-const {
-  setProperties,
-  K
-} = Ember;
+const { setProperties, K } = Ember;
 
 function setHandlers(context, { detailsHandler = K, documentHandler = K, idHandler = K }) {
   setProperties(context, { detailsHandler, documentHandler, idHandler });
@@ -61,7 +58,7 @@ test('it renders correctly when "required"', function(assert) {
   assert.ok(page.rendersDetailsForm, 'Component renders the details form subcomponent.');
 });
 
-test('it renders correctly when "verifying"', function(assert) {
+test('it renders correctly when "verifying" and document status "required"', function(assert) {
   assert.expect(3);
 
   let stripeConnectAccount = { recipientStatus: 'verifying' };
@@ -107,30 +104,52 @@ test('it renders correctly when "verified" for business', function(assert) {
   assert.ok(page.businessNameText, 'Company Inc.', 'Component renders the name of the registered business.');
 });
 
-// TODO: These need to be implemented once subcomponents are done and pass out actions
-// test('it passes out submit action from details subcomponent', function(assert) {
-//   assert.expect(1);
+test('it passes out submit action from details subcomponent', function(assert) {
+  assert.expect(1);
 
-//   let stripeConnectAccount = { recipientStatus: 'required' };
-//   this.set('stripeConnectAccount', stripeConnectAccount);
+  let stripeConnectAccount = { recipientStatus: 'required' };
+  this.set('stripeConnectAccount', stripeConnectAccount);
 
-//   renderPage();
-// });
+  function detailsHandler() {
+    assert.ok(true, 'Action got called');
+  }
+  setHandlers(this, { detailsHandler });
+
+  renderPage();
+
+  page.detailsForm.clickSubmit();
+});
+
+// TODO: Get this working
 
 // test('it passes out submit action from document upload subcomponent', function(assert) {
 //   assert.expect(1);
 
-//   let stripeConnectAccount = { recipientStatus: 'verifying' };
+//   let stripeConnectAccount = { recipientStatus: 'verifying', verificationDocumentStatus: 'required' };
 //   this.set('stripeConnectAccount', stripeConnectAccount);
 
-//   renderPage();
-// });
-
-// test('it passes out submit action from personal id number subcomponent', function(assert) {
-//   assert.expect(1);
-
-//   let stripeConnectAccount = { recipientStatus: 'verifying' };
-//   this.set('stripeConnectAccount', stripeConnectAccount);
+//   function documentHandler() {
+//     assert.ok(true, 'Action got called');
+//   };
+//   setHandlers(this, { documentHandler });
 
 //   renderPage();
+
+//   page.verificationDocument.pickFile(this);
 // });
+
+test('it passes out submit action from personal id number subcomponent', function(assert) {
+  assert.expect(1);
+
+  let stripeConnectAccount = { recipientStatus: 'verifying', personalIdNumberStatus: 'required' };
+  this.set('stripeConnectAccount', stripeConnectAccount);
+
+  function idHandler() {
+    assert.ok(true, 'Action got called');
+  }
+  setHandlers(this, { idHandler });
+
+  renderPage();
+
+  page.personalIdNumber.clickSubmit();
+});

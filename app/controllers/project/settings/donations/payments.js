@@ -10,11 +10,11 @@ const {
   setProperties
 } = Ember;
 
-const ACCOUNT_ADDING_ERROR = 'There was a problem submitting your bank account information.';
-const ACCOUNT_TOKEN_CREATION_ERROR = 'There was a problem in using your bank account information. Please check your input and try again.';
-const STRIPE_ACCOUNT_CREATION_ERROR = 'There was a problem with creating your account. Please check your input and try again.';
-const STRIPE_RECIPIENT_DETAILS_UPDATE_ERROR = 'There was a problem with your account information. Please check your input and try again.';
-const VERIFICATION_DOCUMENT_ERROR = 'There was a problem in attaching the verification document to your stripe account';
+const ACCOUNT_CREATION_ERROR = 'There was a problem with creating your account. Please check your input and try again.';
+const ACCOUNT_UPDATE_ERROR = 'There was a problem with your account information. Please check your input and try again.';
+const BANK_ACCOUNT_TOKEN_CREATION_ERROR = 'There was a problem in using your bank account information. Please check your input and try again.';
+const BANK_ACCOUNT_ADDING_ERROR = 'There was a problem submitting your bank account information.';
+const VERIFICATION_DOCUMENT_ERROR = 'There was a problem with attaching your document. Please try again.';
 
 export default Controller.extend({
   currentUser: service(),
@@ -63,8 +63,13 @@ export default Controller.extend({
         .finally(() => set(this, 'isBusy', false));
     },
 
-    onPersonalIdNumberSubmitted() {
-      console.log(arguments);
+    onPersonalIdNumberSubmitted(personalIdNumber) {
+      set(this, 'isBusy', true);
+
+      get(this, 'stripeConnectAccount')
+        .then((account) => this._assignPersonalIdNumber(account, personalIdNumber))
+        .catch((response) => this._handleError(response))
+        .finally(() => set(this, 'isBusy', false));
     }
   },
 
@@ -72,15 +77,10 @@ export default Controller.extend({
 
   _createStripeAccount(organization, country) {
     return get(this, 'store')
-            .createRecord('stripe-connect-account', { organization, country })
-            .save()
-            .then((account) => RSVP.resolve(account))
-            .catch((reason) => this._handleAccountCreationError(reason));
-  },
-
-  _handleAccountCreationError() {
-    let friendlyError = new FriendlyError(STRIPE_ACCOUNT_CREATION_ERROR);
-    return RSVP.reject(friendlyError);
+      .createRecord('stripe-connect-account', { organization, country })
+      .save()
+      .then(RSVP.resolve)
+      .catch(() => this._wrapError(ACCOUNT_CREATION_ERROR));
   },
 
   // udating recipient info
@@ -89,29 +89,31 @@ export default Controller.extend({
     setProperties(stripeConnectAccount, recipientDetails);
 
     return stripeConnectAccount
-            .save()
-            .then((account) => RSVP.resolve(account))
-            .catch((reason) => this._handleRecipientDetailsUpdateError(reason));
-  },
-
-  _handleRecipientDetailsUpdateError() {
-    let friendlyError = new FriendlyError(STRIPE_RECIPIENT_DETAILS_UPDATE_ERROR);
-    return RSVP.reject(friendlyError);
+      .save()
+      .then(RSVP.resolve)
+      .catch(() => this._handleRecipientDetailsUpdateError(ACCOUNT_UPDATE_ERROR));
   },
 
   // uploading and assigning an id verification document
 
-  _assignIdentityVerificationDocument(account, stripeFileUploadId) {
-    set(account, 'identityDocumentId', stripeFileUploadId);
+  _assignIdentityVerificationDocument(stripeConnectAccount, stripeFileUploadId) {
+    set(stripeConnectAccount, 'identityDocumentId', stripeFileUploadId);
 
-    return account.save()
-                  .then((account) => RSVP.resolve(account))
-                  .catch((reason) => this._handleIdentityVerificationDocumentError(reason));
+    return stripeConnectAccount
+      .save()
+      .then(RSVP.resolve)
+      .catch(() => this._wrapError(VERIFICATION_DOCUMENT_ERROR));
   },
 
-  _handleIdentityVerificationDocumentError() {
-    let friendlyError = new FriendlyError(VERIFICATION_DOCUMENT_ERROR);
-    return RSVP.reject(friendlyError);
+  // assigning a personal id number
+
+  _assignPersonalIdNumber(stripeConnectAccount, personalIdNumber) {
+    set(stripeConnectAccount, 'personalIdNumber', personalIdNumber);
+
+    return stripeConnectAccount
+      .save()
+      .then(RSVP.resolve)
+      .catch(() => this._wrapError(ACCOUNT_UPDATE_ERROR));
   },
 
   // bank account - token step
@@ -122,7 +124,7 @@ export default Controller.extend({
 
     return stripe.bankAccount.createToken(params)
                       .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                      .catch((reason) => this._handleBankAccountTokenError(reason));
+                      .catch(() => this._wrapError(BANK_ACCOUNT_TOKEN_CREATION_ERROR));
   },
 
   _bankAccountTokenParams(accountNumber, routingNumber) {
@@ -135,23 +137,21 @@ export default Controller.extend({
     };
   },
 
-  _handleBankAccountTokenError() {
-    let friendlyError = new FriendlyError(ACCOUNT_TOKEN_CREATION_ERROR);
-    return RSVP.reject(friendlyError);
-  },
-
   // bank account - updating connect account record step
 
   _addBankAccount(tokenData, stripeConnectAccount) {
     set(stripeConnectAccount, 'externalAccount', tokenData.id);
 
-    return stripeConnectAccount.save()
-            .then((stripeConnectAccount) => RSVP.resolve(stripeConnectAccount))
-            .catch((reason) => this._handleAddBankAccountError(reason));
+    return stripeConnectAccount
+      .save()
+      .then(RSVP.resolve)
+      .catch(() => this._wrapError(BANK_ACCOUNT_ADDING_ERROR));
   },
 
-  _handleAddBankAccountError() {
-    let friendlyError = new FriendlyError(ACCOUNT_ADDING_ERROR);
+  // friendly error wrapping
+
+  _wrapError(message) {
+    let friendlyError = new FriendlyError(message);
     return RSVP.reject(friendlyError);
   },
 

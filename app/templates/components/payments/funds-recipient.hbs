@@ -14,9 +14,10 @@
     isBusy=isBusy
     onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
     stripeConnectAccount=stripeConnectAccount}}
-  <section class="personal-id-number">
-    TODO: personal-id-number component goes here
-  </section>
+  {{payments/funds-recipient/personal-id-number
+    isBusy=isBusy
+    stripeConnectAccount=stripeConnectAccount
+    submit=(action onPersonalIdNumberSubmitted)}}
 {{/if}}
 
 {{#if (eq status 'verified')}}

@@ -5,6 +5,7 @@ const {
   computed,
   get,
   set
+
 } = Ember;
 
 const VALIDATION_ERROR = 'The file you selected is invalid. Only .jpg and .png images of up to 8mb in size are supported.';
