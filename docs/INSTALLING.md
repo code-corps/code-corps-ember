@@ -2,7 +2,7 @@
 
 ### Requirements
 
-You will need to install the following: 
+You will need to install the following:
 
 - [Node.js/npm](https://docs.npmjs.com/getting-started/installing-node) we use the LTS branch
 - bower: `npm install -g bower`
@@ -47,6 +47,14 @@ Go to the `code-corps-ember` directory and run:
 
 ```shell
 npm install
+```
+or if you use [yarn](https://yarnpkg.com )
+```shell
+yarn
+```
+
+and
+```shell
 bower install
 ```
 
