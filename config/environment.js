@@ -79,7 +79,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.API_BASE_URL = 'http://api.lvh.me:49235';
+    ENV.API_BASE_URL = 'http://api.lvh.me:4000';
     ENV.WEB_BASE_URL = 'http://localhost:4200';
 
     ENV.sentry.development = true;
@@ -97,10 +97,10 @@ module.exports = function(environment) {
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
-      // Allow data (ajax/websocket) from api.lvh.me:49235
+      // Allow data (ajax/websocket) from api.lvh.me:4000
       'connect-src': [
         "'self'",
-        "http://api.lvh.me:49235"
+        "http://api.lvh.me:4000"
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
