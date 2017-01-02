@@ -28,11 +28,24 @@ moduleForComponent('payments/create-account', 'Integration | Component | payment
   }
 });
 
-test('it sends properties with submit action', function(assert) {
-  assert.expect(1);
+test('it renders "Terms of Service" acceptance info', function(assert) {
+  assert.expect(2);
 
-  setHandler(this, (country) => {
-    assert.equal(country, 'US', 'Correct parameter was sent out with action.');
+  renderPage();
+
+  // This is some pretty specific testing we have here, but I think, for legal purposes, it makes sense for tests to ensure
+  // no one clears the element containing this text by accident.
+  let legalText = 'By registering your account, you agree to our Terms of Use and the Stripe Connected Account Agreement.';
+  assert.ok(page.text.indexOf(legalText) > -1, 'The wording for the legal text is present');
+  assert.ok(page.rendersStripeLegal, 'The link to Stripe legal information is rendered');
+});
+
+test('it sends properties with submit action', function(assert) {
+  assert.expect(2);
+
+  setHandler(this, (properties) => {
+    assert.equal(properties.country, 'US', 'Correct parameter was sent out with action.');
+    assert.ok(properties.tosAcceptanceDate, 'The ToS acceptance date was sent with action');
   });
 
   renderPage();

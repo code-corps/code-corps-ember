@@ -6,7 +6,8 @@
     </div>
   </div>
   <div class="input-group">
-    <button class="default" {{action onCreateStripeConnectAccount country}} disabled={{isBusy}}>
+    <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
+    <button class="default" {{action 'submit'}} disabled={{isBusy}}>
       Create Account
     </button>
   </div>

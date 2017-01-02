@@ -65,6 +65,7 @@ testForAttributes('stripe-connect-account', [
   'supportEmail',
   'supportPhone',
   'supportUrl',
+  'tosAcceptanceDate',
   'transfersEnabled',
   'updatedAt',
   'verificationDisabledReason',
