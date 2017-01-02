@@ -56,6 +56,7 @@ export default Model.extend({
   supportEmail: attr(),
   supportPhone: attr(),
   supportUrl: attr(),
+  tosAcceptanceDate: attr(),
   transfersEnabled: attr(),
   updatedAt: attr(),
   verificationDisabledReason: attr(),

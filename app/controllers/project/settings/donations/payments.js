@@ -6,6 +6,7 @@ const {
   Controller,
   get,
   inject: { service },
+  merge,
   RSVP,
   set
 } = Ember;
@@ -25,11 +26,11 @@ export default Controller.extend({
   stripeConnectAccount: alias('project.organization.stripeConnectAccount'),
 
   actions: {
-    onCreateStripeConnectAccount(country) {
+    onCreateStripeConnectAccount(properties) {
       set(this, 'isBusy', true);
 
       get(this, 'project.organization')
-        .then((organization) => this._createStripeAccount(organization, country))
+        .then((organization) => this._createStripeAccount(organization, properties))
         .catch((reason) => this._handleError(reason))
         .finally(() => set(this, 'isBusy', false));
     },
@@ -83,9 +84,11 @@ export default Controller.extend({
 
   // creating account
 
-  _createStripeAccount(organization, country) {
+  _createStripeAccount(organization, properties) {
+    let accountProperties = merge(properties, { organization });
+
     return get(this, 'store')
-      .createRecord('stripe-connect-account', { organization, country })
+      .createRecord('stripe-connect-account', accountProperties)
       .save()
       .then(RSVP.resolve)
       .catch(() => this._wrapError(ACCOUNT_CREATION_ERROR));
