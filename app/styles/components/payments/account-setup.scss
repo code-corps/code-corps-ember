@@ -44,6 +44,10 @@
   background-color: $light-green-background;
   border-color: $green;
 
+  p {
+    color: $green;
+  }
+
   aside h1:before {
     content: "";
     display: block;

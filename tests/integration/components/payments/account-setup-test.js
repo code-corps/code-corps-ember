@@ -15,14 +15,14 @@ function setHandlers(context, {
   onCreateStripeConnectAccount = K,
   onRecipientDetailsSubmitted = K,
   onVerificationDocumentSubmitted = K,
-  onPersonalIdNumberSubmitted = K,
+  onLegalEntityPersonalIdNumberSubmitted = K,
   onBankAccountInformationSubmitted = K
 } = {}) {
   context.setProperties({
     onCreateStripeConnectAccount,
     onRecipientDetailsSubmitted,
     onVerificationDocumentSubmitted,
-    onPersonalIdNumberSubmitted,
+    onLegalEntityPersonalIdNumberSubmitted,
     onBankAccountInformationSubmitted
   });
 }
@@ -36,7 +36,7 @@ function renderPage() {
       onCreateStripeConnectAccount=onCreateStripeConnectAccount
       onRecipientDetailsSubmitted=onRecipientDetailsSubmitted
       onVerificationDocumentSubmitted=onVerificationDocumentSubmitted
-      onPersonalIdNumberSubmitted=onPersonalIdNumberSubmitted
+      onLegalEntityPersonalIdNumberSubmitted=onLegalEntityPersonalIdNumberSubmitted
       onBankAccountInformationSubmitted=onBankAccountInformationSubmitted
       organizationName=project.organization.name
     }}

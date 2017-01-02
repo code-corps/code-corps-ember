@@ -1,55 +1,40 @@
 import Ember from 'ember';
 
 const {
-  assign,
   Component,
   computed: { equal },
   get,
-  getProperties,
   set
 } = Ember;
-
-const BUSINESS_PROPERTIES = ['businessName', 'businessEin'];
-
-const INDIVIDUAL_PROPERTIES = [
-  'recipientType',
-  'firstName', 'lastName',
-  'dobDay', 'dobMonth', 'dobYear',
-  'address1', 'address2', 'city', 'state', 'zip', 'country',
-  'ssnLast4'
-];
 
 export default Component.extend({
   classNames: ['details-form'],
   tagName: 'section',
 
-  isBusiness: equal('recipientType', 'business'),
-  isIndividual: equal('recipientType', 'individual'),
+  isBusiness: equal('stripeConnectAccount.legalEntityType', 'business'),
+  isIndividual: equal('stripeConnectAccount.legalEntityType', 'individual'),
 
   init() {
-    let recipientType = get(this, 'stripeConnnectAccount.recipientType') || 'individual';
-    set(this, 'recipientType', recipientType);
     this._super(...arguments);
+    let stripeConnectAccount = get(this, 'stripeConnectAccount');
+    if (get(stripeConnectAccount, 'legalEntityType') === null) {
+      set(this, 'stripeConnectAccount.legalEntityType', 'individual');
+    }
   },
 
   actions: {
     submit() {
-      let details = this._collectIndividualProperties();
+      let stripeConnectAccount = get(this, 'stripeConnectAccount');
 
-      if (get(this, 'isBusiness')) {
-        assign(details, this._collectBusinessProperties());
+      if (get(this, 'isIndividual')) {
+        stripeConnectAccount.setProperties({
+          legalEntityBusinessName: null,
+          legalEntityBusinessTaxId: null
+        });
       }
 
       let onSubmit = get(this, 'onSubmit');
-      onSubmit(details);
+      onSubmit();
     }
-  },
-
-  _collectBusinessProperties() {
-    return getProperties(this, ...BUSINESS_PROPERTIES);
-  },
-
-  _collectIndividualProperties() {
-    return getProperties(this, ...INDIVIDUAL_PROPERTIES);
   }
 });

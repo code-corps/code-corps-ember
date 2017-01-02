@@ -19,7 +19,7 @@ function renderPage() {
       stripeConnectAccount=stripeConnectAccount
       onRecipientDetailsSubmitted=detailsHandler
       onVerificationDocumentSubmitted=documentHandler
-      onPersonalIdNumberSubmitted=idHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
     }}
   `);
 }
@@ -68,7 +68,7 @@ test('it renders correctly when "verifying" and document status "required"', fun
 
   assert.ok(page.rendersVerifying, 'Component is rendered in verifying mode.');
   assert.ok(page.rendersVerificationDocument, 'Component renders the verification document subcomponent.');
-  assert.ok(page.rendersPersonalIdNumber, 'Component renders the personal id number subcomponent.');
+  assert.ok(page.renderslegalEntityPersonalIdNumber, 'Component renders the personal id number subcomponent.');
 });
 
 test('it renders correctly when "verified"', function(assert) {
@@ -76,7 +76,8 @@ test('it renders correctly when "verified"', function(assert) {
 
   let stripeConnectAccount = {
     recipientStatus: 'verified',
-    individualName: 'Joe Individual'
+    legalEntityFirstName: 'Joe',
+    legalEntityLastName: 'Individual'
   };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
@@ -91,9 +92,10 @@ test('it renders correctly when "verified" for business', function(assert) {
 
   let stripeConnectAccount = {
     recipientStatus: 'verified',
-    individualName: 'Joe Individual',
-    businessName: 'Company Inc.',
-    recipientType: 'business'
+    legalEntityFirstName: 'Joe',
+    legalEntityLastName: 'Individual',
+    legalEntityBusinessName: 'Company Inc.',
+    legalEntityType: 'business'
   };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
@@ -101,7 +103,7 @@ test('it renders correctly when "verified" for business', function(assert) {
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.ok(page.individualNameText, 'Joe Individual', 'Component renders the name of the registered individual.');
-  assert.ok(page.businessNameText, 'Company Inc.', 'Component renders the name of the registered business.');
+  assert.ok(page.legalEntityBusinessNameText, 'Company Inc.', 'Component renders the name of the registered business.');
 });
 
 test('it passes out submit action from details subcomponent', function(assert) {
@@ -151,5 +153,5 @@ test('it passes out submit action from personal id number subcomponent', functio
 
   renderPage();
 
-  page.personalIdNumber.clickSubmit();
+  page.legalEntityPersonalIdNumber.clickSubmit();
 });

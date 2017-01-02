@@ -1,10 +1,11 @@
 {{#if (eq status 'required')}}
   {{#if isBusy}}
-    Processing...
+    <p>Processing...</p>
   {{else if isUploading}}
     {{progressMessage}}
   {{else}}
-    <div>we need you to upload a scan of your ID (form + submit)</div>
+    <p>We need you to upload a copy of your personal ID to verify your identity.</p>
+    <p>Please upload either a PNG or JPG image. Your file should be less than 8MB.</p>
     <div>
       {{payments/funds-recipient/identity-document-file-upload
         isBusy=isBusy
@@ -20,6 +21,7 @@
     {{/if}}
   {{/if}}
 {{/if}}
+
 {{#if (eq status 'verifying')}}
-  Please be patient while we review the document you provided.
+  <p>Please be patient while we review the document you provided.</p>
 {{/if}}

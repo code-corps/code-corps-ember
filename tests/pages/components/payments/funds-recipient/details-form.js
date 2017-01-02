@@ -9,22 +9,22 @@ export default {
   selectIndividual: clickable('input[value="individual"]'),
   selectBusiness: clickable('input[value="business"]'),
 
-  businessName: fillable('input[name=business-name]'),
-  businessEin: fillable('input[name=business-ein]'),
+  legalEntityBusinessName: fillable('input[name=legal-entity-business-name]'),
+  legalEntityBusinessTaxId: fillable('input[name=legal-entity-business-tax-id]'),
 
-  firstName: fillable('input[name=first-name]'),
-  lastName: fillable('input[name=last-name]'),
+  legalEntityFirstName: fillable('input[name=legal-entity-first-name]'),
+  legalEntityLastName: fillable('input[name=legal-entity-last-name]'),
 
   birthDate,
 
-  address1: fillable('input[name=address-1]'),
-  address2: fillable('input[name=address-2]'),
-  city: fillable('input[name=city]'),
+  legalEntityAddressLine1: fillable('input[name=legal-entity-address-1]'),
+  legalEntityAddressLine2: fillable('input[name=legal-entity-address-2]'),
+  legalEntityAddressCity: fillable('input[name=legal-entity-address-city]'),
   state,
-  zip: fillable('input[name=zip]'),
+  legalEntityAddressPostalCode: fillable('input[name=legal-entity-address-postal-code]'),
   country,
 
-  ssnLast4: fillable('input[name=ssn-last4]'),
+  legalEntitySsnLast4: fillable('input[name=legal-entity-ssn-last-4]'),
 
   clickSubmit: clickable('input[type=submit]')
 };

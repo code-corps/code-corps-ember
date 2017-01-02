@@ -13,24 +13,27 @@
   {{payments/funds-recipient/verification-document
     isBusy=isBusy
     onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
-    stripeConnectAccount=stripeConnectAccount}}
+    stripeConnectAccount=stripeConnectAccount
+  }}
+
   {{payments/funds-recipient/personal-id-number
     isBusy=isBusy
     stripeConnectAccount=stripeConnectAccount
-    submit=(action onPersonalIdNumberSubmitted)}}
+    submit=(action onLegalEntityPersonalIdNumberSubmitted)
+  }}
 {{/if}}
 
 {{#if (eq status 'verified')}}
   <section>
     <div class="funds-recipient__individual-name">
       <label>Name</label>
-      <p>{{stripeConnectAccount.individualName}}</p>
+      <p>{{stripeConnectAccount.legalEntityFirstName}} {{stripeConnectAccount.legalEntityLastName}}</p>
     </div>
 
-    {{#if (eq stripeConnectAccount.recipientType 'business')}}
+    {{#if (eq stripeConnectAccount.legalEntityType 'business')}}
       <div class="funds-recipient__business-name">
         <label>Business Name</label>
-        <p>{{stripeConnectAccount.businessName}}</p>
+        <p>{{stripeConnectAccount.legalEntityBusinessName}}</p>
       </div>
     {{/if}}
   </section>
