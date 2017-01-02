@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   computed: { alias, notEmpty },
+  get,
   inject: { service }
 } = Ember;
 
@@ -18,17 +19,17 @@ export default Component.extend({
   selected: alias('skill.selected'),
 
   userSkill: computed('skill', 'userSkills.userSkills', function() {
-    let skill = this.get('skill');
-    let userSkills = this.get('userSkills');
+    let skill = get(this, 'skill');
+    let userSkills = get(this, 'userSkills');
     return userSkills.findUserSkill(skill);
   }),
 
   mouseDown() {
-    this.sendAction('hover', this.get('skill'));
+    this.sendAction('hover', get(this, 'skill'));
     this.sendAction('selectSkill');
   },
 
   mouseEnter() {
-    this.sendAction('hover', this.get('skill'));
+    this.sendAction('hover', get(this, 'skill'));
   }
 });
