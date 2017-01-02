@@ -76,7 +76,7 @@
     "ember-metrics": "0.7.0",
     "ember-modal-dialog": "0.8.8",
     "ember-moment": "7.2.0",
-    "ember-page-title": "^3.0.10",
+    "ember-page-title": "^3.1.2",
     "ember-radio-button": "^1.0.7",
     "ember-resolver": "^2.0.3",
     "ember-route-action-helper": "^2.0.0",
@@ -91,7 +91,6 @@
     "ember-uploader": "1.2.2",
     "emberx-select": "2.2.3",
     "eslint-plugin-ember-suave": "^1.0.0",
-    "loader.js": "^4.0.10",
-    "phantomjs": "^1.9.20"
+    "loader.js": "^4.0.10"
   }
 }
