@@ -27,25 +27,25 @@ export default Controller.extend({
 
   actions: {
     onCreateStripeConnectAccount(properties) {
-      set(this, 'isBusy', true);
+      this._startAction();
 
       get(this, 'project.organization')
         .then((organization) => this._createStripeAccount(organization, properties))
         .catch((reason) => this._handleError(reason))
-        .finally(() => set(this, 'isBusy', false));
+        .finally(() => this._endAction());
     },
 
     onRecipientDetailsSubmitted() {
-      set(this, 'isBusy', true);
+      this._startAction();
 
       get(this, 'stripeConnectAccount')
         .then((stripeConnectAccount) => this._updateRecipientDetails(stripeConnectAccount))
         .catch((reason) => this._handleError(reason))
-        .finally(() => set(this, 'isBusy', false));
+        .finally(() => this._endAction());
     },
 
     onBankAccountInformationSubmitted({ accountNumber, routingNumber }) {
-      set(this, 'isBusy', true);
+      this._startAction();
 
       let promises = {
         tokenData: this._createAccountToken(accountNumber, routingNumber),
@@ -55,20 +55,20 @@ export default Controller.extend({
       RSVP.hash(promises)
           .then(({ tokenData, stripeConnectAccount }) => this._addBankAccount(tokenData, stripeConnectAccount))
           .catch((response) => this._handleError(response))
-          .finally(() => set(this, 'isBusy', false));
+          .finally(() => this._endAction());
     },
 
     onVerificationDocumentSubmitted(stripeFileUploadId) {
-      set(this, 'isBusy', true);
+      this._startAction();
 
       get(this, 'stripeConnectAccount')
         .then((account) => this._assignIdentityVerificationDocument(account, stripeFileUploadId))
         .catch((response) => this._handleError(response))
-        .finally(() => set(this, 'isBusy', false));
+        .finally(() => this._endAction());
     },
 
     onLegalEntityPersonalIdNumberSubmitted(legalEntityPersonalIdNumber) {
-      set(this, 'isBusy', true);
+      this._startAction();
 
       let promises = {
         tokenData: this._createPersonalIdNumberToken(legalEntityPersonalIdNumber),
@@ -78,7 +78,7 @@ export default Controller.extend({
       RSVP.hash(promises)
           .then(({ tokenData, stripeConnectAccount }) => this._assignLegalEntityPersonalIdNumber(tokenData, stripeConnectAccount))
           .catch((response) => this._handleError(response))
-          .finally(() => set(this, 'isBusy', false));
+          .finally(() => this._endAction());
     }
   },
 
@@ -100,7 +100,7 @@ export default Controller.extend({
     return stripeConnectAccount
       .save()
       .then(RSVP.resolve)
-      .catch(() => this._handleRecipientDetailsUpdateError(ACCOUNT_UPDATE_ERROR));
+      .catch(() => this._wrapError(ACCOUNT_UPDATE_ERROR));
   },
 
   // uploading and assigning an id verification document
@@ -176,5 +176,14 @@ export default Controller.extend({
 
   _handleError(error) {
     set(this, 'error', error);
+  },
+
+  _startAction() {
+    set(this, 'isBusy', true);
+    set(this, 'error', null);
+  },
+
+  _endAction() {
+    set(this, 'isBusy', false);
   }
 });
