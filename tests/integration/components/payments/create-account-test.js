@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
+import moment from 'moment';
 
 import createAccountComponent from '../../../pages/components/payments/create-account';
 
@@ -41,11 +42,17 @@ test('it renders "Terms of Service" acceptance info', function(assert) {
 });
 
 test('it sends properties with submit action', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   setHandler(this, (properties) => {
+    let timestamp = properties.tosAcceptanceDate;
+    let time = moment.unix(timestamp);
+    let now = moment.utc();
+    let diff = time.diff(now, 'seconds');
+
     assert.equal(properties.country, 'US', 'Correct parameter was sent out with action.');
     assert.ok(properties.tosAcceptanceDate, 'The ToS acceptance date was sent with action');
+    assert.equal(diff, 0, 'The timestamp uses seconds and not milliseconds');
   });
 
   renderPage();

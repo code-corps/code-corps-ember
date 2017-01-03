@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 const { Component, get } = Ember;
 
@@ -8,7 +9,7 @@ export default Component.extend({
   actions: {
     submit() {
       let country = get(this, 'country');
-      let tosAcceptanceDate = Date.now();
+      let tosAcceptanceDate = parseInt(moment.utc().format('X'));
 
       let onSubmit = get(this, 'onCreateStripeConnectAccount');
       onSubmit({ country, tosAcceptanceDate });
