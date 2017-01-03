@@ -68,7 +68,7 @@ test('it renders correctly when "verifying" and document status "required"', fun
 
   assert.ok(page.rendersVerifying, 'Component is rendered in verifying mode.');
   assert.ok(page.rendersVerificationDocument, 'Component renders the verification document subcomponent.');
-  assert.ok(page.renderslegalEntityPersonalIdNumber, 'Component renders the personal id number subcomponent.');
+  assert.ok(page.rendersLegalEntityPersonalIdNumber, 'Component renders the personal id number subcomponent.');
 });
 
 test('it renders correctly when "verified"', function(assert) {

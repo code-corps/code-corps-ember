@@ -13,8 +13,11 @@ export default {
   rendersVerified: hasClass('account-setup__section--verified'),
 
   rendersDetailsForm: isVisible('.details-form'),
+  rendersDetailsFormRequired: isVisible('.details-form button'),
   rendersVerificationDocument: isVisible('.verification-document'),
-  renderslegalEntityPersonalIdNumber: isVisible('.personal-id-number'),
+  rendersVerificationDocumentRequired: isVisible('.verification-document input[type=file]'),
+  rendersLegalEntityPersonalIdNumber: isVisible('.personal-id-number'),
+  rendersLegalEntityPersonalIdNumberRequired: isVisible('.personal-id-number button'),
 
   individualNameText: text('.funds-recipient__individual-name p'),
   legalEntityBusinessNameText: text('.funds-recipient__business-name p'),
