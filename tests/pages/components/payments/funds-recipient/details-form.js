@@ -26,5 +26,5 @@ export default {
 
   legalEntitySsnLast4: fillable('input[name=legal-entity-ssn-last-4]'),
 
-  clickSubmit: clickable('input[type=submit]')
+  clickSubmit: clickable('button')
 };
