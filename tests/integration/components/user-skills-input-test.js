@@ -6,7 +6,6 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
   Object,
-  K,
   RSVP
 } = Ember;
 
@@ -21,10 +20,10 @@ let mockStore = {
 
 let mockUserSkillsService = {
   findUserSkill() {
-    return K;
+    return true;
   },
   removeSkill() {
-    return K;
+    return true;
   }
 };
 

@@ -89,6 +89,7 @@
     "ember-truth-helpers": "1.3.0",
     "ember-typed": "0.1.3",
     "ember-uploader": "1.2.2",
+    "ember-watson": "0.8.5",
     "emberx-select": "2.2.3",
     "eslint-plugin-ember-suave": "^1.0.0",
     "loader.js": "^4.0.10"

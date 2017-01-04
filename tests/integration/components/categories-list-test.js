@@ -1,12 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 
 import categoriesListComponent from '../../pages/components/categories-list';
-
-const { K } = Ember;
 
 let page = PageObject.create(categoriesListComponent);
 
@@ -23,7 +20,7 @@ moduleForComponent('categories-list', 'Integration | Component | categories list
 test('it renders the categories and sorts them by name', function(assert) {
   assert.expect(4);
 
-  stubService(this, 'user-categories', { findUserCategory: K });
+  stubService(this, 'user-categories', { findUserCategory() {} });
 
   let categories = [
     {

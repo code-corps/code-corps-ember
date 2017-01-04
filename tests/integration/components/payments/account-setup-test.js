@@ -1,22 +1,17 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 
 import accountSetupComponent from '../../../pages/components/payments/account-setup';
 
-const {
-  K
-} = Ember;
-
 let page = PageObject.create(accountSetupComponent);
 
 function setHandlers(context, {
-  onCreateStripeConnectAccount = K,
-  onRecipientDetailsSubmitted = K,
-  onVerificationDocumentSubmitted = K,
-  onLegalEntityPersonalIdNumberSubmitted = K,
-  onBankAccountInformationSubmitted = K
+  onCreateStripeConnectAccount = function() {},
+  onRecipientDetailsSubmitted = function() {},
+  onVerificationDocumentSubmitted = function() {},
+  onLegalEntityPersonalIdNumberSubmitted = function() {},
+  onBankAccountInformationSubmitted = function() {}
 } = {}) {
   context.setProperties({
     onCreateStripeConnectAccount,

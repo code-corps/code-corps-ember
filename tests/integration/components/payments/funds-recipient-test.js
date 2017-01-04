@@ -7,9 +7,11 @@ import fundsRecipientComponent from '../../../pages/components/payments/funds-re
 
 let page = PageObject.create(fundsRecipientComponent);
 
-const { setProperties, K } = Ember;
+const {
+  setProperties
+} = Ember;
 
-function setHandlers(context, { detailsHandler = K, documentHandler = K, idHandler = K }) {
+function setHandlers(context, { detailsHandler = function() {}, documentHandler = function() {}, idHandler = function() {} }) {
   setProperties(context, { detailsHandler, documentHandler, idHandler });
 }
 

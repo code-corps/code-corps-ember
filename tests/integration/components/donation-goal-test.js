@@ -3,8 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
 const {
-  Object,
-  K
+  Object
 } = Ember;
 
 let mockGoal = Object.create({
@@ -12,7 +11,7 @@ let mockGoal = Object.create({
   description: 'A test goal'
 });
 
-function setHandler(context, editHandler = K) {
+function setHandler(context, editHandler = function() {}) {
   context.set('editHandler', editHandler);
 }
 

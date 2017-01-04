@@ -4,14 +4,13 @@ import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
-  K,
   Object,
   RSVP
 } = Ember;
 
 let mockMentionFetcher = {
   fetchBodyWithMentions: RSVP.resolve,
-  prefetchBodyWithMentions: K
+  prefetchBodyWithMentions() {}
 };
 
 let mockCurrentUser = {
