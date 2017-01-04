@@ -7,7 +7,7 @@ export default {
   scope: '.details-form',
 
   selectIndividual: clickable('input[value="individual"]'),
-  selectBusiness: clickable('input[value="business"]'),
+  selectCompany: clickable('input[value="company"]'),
 
   legalEntityBusinessName: fillable('input[name=legal-entity-business-name]'),
   legalEntityBusinessTaxId: fillable('input[name=legal-entity-business-tax-id]'),

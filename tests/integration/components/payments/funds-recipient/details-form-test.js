@@ -57,7 +57,7 @@ test('it keeps the business properties when submitting in business mode', functi
 
   renderPage();
 
-  page.selectBusiness()
+  page.selectCompany()
       .legalEntityBusinessName(account.legalEntityBusinessName)
       .legalEntityBusinessTaxId(account.legalEntityBusinessTaxId)
       .legalEntityFirstName(account.legalEntityFirstName)

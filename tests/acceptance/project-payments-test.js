@@ -77,7 +77,7 @@ test('The full setup works properly', function(assert) {
     let { detailsForm } = page.accountSetup.fundsRecipient;
 
     detailsForm
-      .selectBusiness()
+      .selectCompany()
       .legalEntityBusinessName('Some Business Inc.')
       .legalEntityBusinessTaxId('TAX-123')
       .legalEntityFirstName('John')

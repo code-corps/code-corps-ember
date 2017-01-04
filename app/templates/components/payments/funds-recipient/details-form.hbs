@@ -3,12 +3,12 @@
   {{#radio-button class="details-form__recipient-type" value="individual" groupValue=stripeConnectAccount.legalEntityType}}
     Individual
   {{/radio-button}}
-  {{#radio-button class="details-form__recipient-type" value="business" groupValue=stripeConnectAccount.legalEntityType}}
+  {{#radio-button class="details-form__recipient-type" value="company" groupValue=stripeConnectAccount.legalEntityType}}
     Legal entity (company or organization)
   {{/radio-button}}
 </div>
 
-{{#if (eq stripeConnectAccount.legalEntityType 'business')}}
+{{#if (eq stripeConnectAccount.legalEntityType 'company')}}
   <div class="input-section">
     <div class="input-section__label">Legal entity</div>
     <div class="input-section__content">
@@ -91,4 +91,4 @@
   </div>
 </div>
 
-<button {{action "submit"}}>Save information</button>
+<button class="button default" {{action "submit"}}>Save information</button>
