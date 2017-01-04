@@ -5,6 +5,8 @@ import {
 export default {
   scope: '.task-card',
 
+  canReposition: hasClass('task-card--can-reposition'),
+
   isIdea: hasClass('task-card--idea'),
   isIssue: hasClass('task-card--issue'),
   isTask: hasClass('task-card--task'),

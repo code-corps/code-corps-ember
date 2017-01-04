@@ -38,3 +38,29 @@ test('it cannot edit task if user is not at least admin in organization', functi
   });
   assert.notOk(ability.get('canEdit'));
 });
+
+test('it can reposition task if user is at least a contributor in organization', function(assert) {
+  let ability = this.subject({
+    credentials: Object.create({
+      membership: Object.create({ isAdmin: true })
+    })
+  });
+  assert.ok(ability.get('canReposition'));
+});
+
+test('it cannot reposition task if user is not at least a contributor in organization', function(assert) {
+  let ability = this.subject({
+    credentials: Object.create({
+      membership: Object.create({ isAdmin: false })
+    })
+  });
+  assert.notOk(ability.get('canReposition'));
+});
+
+test('it can reposition task if user is the task author', function(assert) {
+  let ability = this.subject({
+    model: Object.create({ user: Object.create({ id: 1 }) }),
+    currentUser: Object.create({ user: Object.create({ id: 1 }) })
+  });
+  assert.ok(ability.get('canReposition'));
+});

@@ -10,7 +10,7 @@
 }
 
 .animated-high-five {
-  $file: "assets/images/icons/emoji-1f64c-sprite";
+  $file: "/assets/images/icons/emoji-1f64c-sprite";
   @include background-image-retina($file, "png", 500px, 100px);
   cursor: pointer;
   width: 100px;

@@ -27,6 +27,8 @@ export default Ability.extend({
 
   membership: alias('credentials.membership'),
   userIsAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
+  userIsAtLeastContributor: or('membership.isContributor', 'userIsAtLeastAdmin'),
 
-  canEdit: or('userIsAuthor', 'userIsAtLeastAdmin')
+  canEdit: or('userIsAuthor', 'userIsAtLeastAdmin'),
+  canReposition: or('userIsAuthor', 'userIsAtLeastContributor')
 });

@@ -4,10 +4,13 @@
   </div>
 </div>
 <div class="task-board-container">
-  {{#ember-dragula config=dragulaconfig class="task-board" drop="onDrop"}}
-    {{#each project.taskLists as |taskList|}}
+  {{#ember-dragula class="task-board" drop="onDrop" config=dragulaconfig as |drake|}}
+    {{#each orderedTaskLists as |taskList|}}
       <div class="task-list-container">
-        {{task-list class="task-list" taskList=taskList}}
+        <div class="task-list">
+          <div class="task-list__name" data-test-selector="task-list name">{{taskList.name}}</div>
+          {{task-list-cards drake=drake taskList=taskList}}
+        </div>
       </div>
     {{/each}}
   {{/ember-dragula}}
