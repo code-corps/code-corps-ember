@@ -11,7 +11,6 @@ export default Component.extend({
   classNames: ['details-form'],
   tagName: 'section',
 
-  isBusiness: equal('stripeConnectAccount.legalEntityType', 'business'),
   isIndividual: equal('stripeConnectAccount.legalEntityType', 'individual'),
 
   init() {
