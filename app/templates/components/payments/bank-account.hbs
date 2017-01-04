@@ -18,6 +18,10 @@
 
 {{#if (eq status 'verified')}}
   <section>
+    <div class="bank-account__bank-name">
+      <label>Bank Name</label>
+      <p>{{stripeConnectAccount.bankAccountBankName}}</p>
+    </div>
     <div class="bank-account__routing">
       <label>Routing Number</label>
       <p>{{stripeConnectAccount.bankAccountRoutingNumber}}</p>

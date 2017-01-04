@@ -4,6 +4,9 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   bankAccountStatus: attr(),
+  bankAccountBankName: attr(),
+  bankAccountLast4: attr(),
+  bankAccountRoutingNumber: attr(),
   businessName: attr(),
   businessUrl: attr(),
   canAcceptDonations: attr(),
