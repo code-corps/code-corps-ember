@@ -54,22 +54,28 @@ test('it renders correctly for "required" status', function(assert) {
   renderPage();
 
   assert.ok(page.rendersRequired, 'Component is rendered in required mode.');
-  assert.ok(page.rendersAccountNumberField, 'Component renders the account number field.');
-  assert.ok(page.rendersRoutingNumberField, 'Component renders the routing number field.');
-  assert.ok(page.rendersSubmitButton, 'Component renders the submit button.');
+  assert.ok(page.rendersAccountNumberField, 'Renders the account number field.');
+  assert.ok(page.rendersRoutingNumberField, 'Renders the routing number field.');
+  assert.ok(page.rendersSubmitButton, 'Renders the submit button.');
 });
 
 test('it renders correctly for "verified" status', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
-  let stripeConnectAccount = { bankAccountLast4: 4321, bankAccountRoutingNumber: 123456, bankAccountStatus: 'verified' };
+  let stripeConnectAccount = {
+    bankAccountBankName: 'Wells Fargo',
+    bankAccountLast4: 4321,
+    bankAccountRoutingNumber: 123456,
+    bankAccountStatus: 'verified'
+  };
   set(this, 'stripeConnectAccount', stripeConnectAccount);
 
   renderPage();
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
-  assert.equal(page.accountLast4Text, 4321, 'Component renders last 4 digits of account number.');
-  assert.equal(page.routingNumberText, 123456, 'Component renders routing number.');
+  assert.equal(page.bankNameText, 'Wells Fargo', 'Renders bank account name.');
+  assert.equal(page.accountLast4Text, 4321, 'Renders last 4 digits of account number.');
+  assert.equal(page.routingNumberText, 123456, 'Renders routing number.');
 });
 
 test('it sends properties with submit action', function(assert) {

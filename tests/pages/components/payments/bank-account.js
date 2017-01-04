@@ -12,6 +12,7 @@ export default {
   rendersSubmitButton:isVisible('button'),
 
   accountLast4Text: text('.bank-account__account p'),
+  bankNameText: text('.bank-account__bank-name p'),
   routingNumberText: text('.bank-account__routing p'),
 
   accountNumber: fillable('[name=account-number]'),

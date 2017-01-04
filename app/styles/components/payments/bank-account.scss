@@ -5,6 +5,10 @@
 	@extend .input-group;
 }
 
+.bank-account__bank-name {
+	@extend .input-group;
+}
+
 .bank-account__routing {
 	@extend .input-group;
 }
