@@ -6,10 +6,11 @@ export default ApplicationSerializer.extend({
     if (snapshot.record.get('isNew')) {
       this._super(snapshot, json, key, attribute);
     } else {
-      // for updating existing records, we have 2 cases
+      // for updating existing records, we have 4 cases
       // 1. we're editing the title. In that case, we only push the title
       // 2. we're opening/closing the task. We only push the status
-      // 3. We're outright editing the task body - we only send markdown
+      // 3. we're changing the position. We only push the position
+      // 4. We're outright editing the task body - we only send markdown
       if (snapshot.changedAttributes().title) {
         if (attribute.name === 'title') {
           this._super(snapshot, json, key, attribute);
@@ -18,6 +19,8 @@ export default ApplicationSerializer.extend({
         if (attribute.name === 'status') {
           this._super(snapshot, json, key, attribute);
         }
+      } else if (attribute.name === 'position') {
+        this._super(snapshot, json, key, attribute);
       } else {
         if (attribute.name === 'markdown') {
           this._super(snapshot, json, key, attribute);

@@ -3,7 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-const { computed, get } = Ember;
+const { computed, computed: { alias, filterBy, gt }, get } = Ember;
 
 export default Model.extend({
   base64IconData: attr(),
@@ -30,9 +30,13 @@ export default Model.extend({
   currentDonationGoal: computed('_currentGoals', function() {
     return get(this, '_currentGoals.firstObject');
   }),
-  hasOpenTasks: computed.gt('openTasksCount', 0),
-  hasPendingMembers: computed.alias('organization.hasPendingMembers'),
-  pendingMembersCount: computed.alias('organization.pendingMembersCount'),
+  hasOpenTasks: gt('openTasksCount', 0),
+  hasPendingMembers: alias('organization.hasPendingMembers'),
+  inboxTaskList: computed('_inboxTaskListAsArray', function() {
+    return get(this, '_inboxTaskListAsArray.firstObject');
+  }),
+  pendingMembersCount: alias('organization.pendingMembersCount'),
 
-  _currentGoals: computed.filterBy('donationGoals', 'current', true)
+  _currentGoals: filterBy('donationGoals', 'current', true),
+  _inboxTaskListAsArray: filterBy('taskLists', 'inbox', true)
 });

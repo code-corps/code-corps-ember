@@ -37,11 +37,13 @@ test('Creating a task requires logging in', function(assert) {
 });
 
 test('A task can be successfully created', function(assert) {
-  assert.expect(9);
+  assert.expect(10);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
+  let taskList = project.createTaskList({ inbox: true });
+
   authenticateSession(this.application, { user_id: user.id });
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
@@ -66,6 +68,7 @@ test('A task can be successfully created', function(assert) {
 
     assert.equal(task.userId, user.id, 'The correct user was assigned');
     assert.equal(task.projectId, project.id, 'The correct project was assigned');
+    assert.equal(task.taskListId, taskList.id, 'The correct task list was assigned');
 
     assert.equal(currentRouteName(), 'project.tasks.task', 'We got redirected to the task route');
   });

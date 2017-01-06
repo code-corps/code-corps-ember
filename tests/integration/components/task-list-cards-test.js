@@ -10,17 +10,17 @@ let page = PageObject.create(taskListCardsPage);
 
 let taskList = {
   name: 'a beautiful test task-list-cards',
-  tasks: [
-    {
-      title: 'test task 1',
-      number: 1,
-      order: 2,
-      taskType: 'task'
-    },
+  orderedTasks: [
     {
       title: 'test task 2',
       number: 2,
       order: 1,
+      taskType: 'task'
+    },
+    {
+      title: 'test task 1',
+      number: 1,
+      order: 2,
       taskType: 'task'
     }
   ]

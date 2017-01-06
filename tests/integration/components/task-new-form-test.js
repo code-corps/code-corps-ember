@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const { Object } = Ember;
+const { Object, set } = Ember;
 
 moduleForComponent('task-new-form', 'Integration | Component | task new form', {
   integration: true
@@ -29,8 +29,8 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
   let placeholder = 'Test placeholder';
 
-  this.set('task', task);
-  this.set('placeholder', placeholder);
+  set(this, 'task', task);
+  set(this, 'placeholder', placeholder);
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 
   assert.equal(this.$('[name=title]').val(), 'A task', 'Title is properly bound and rendered');
@@ -44,15 +44,17 @@ test('it renders proper ui elements, properly bound', function(assert) {
 });
 
 test('it triggers an action when the task is saved', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
   stubService(this, 'credentials', { membership: null });
 
-  let task = Object.create({ id: 1 });
+  let taskList = Object.create({ id: 1, inbox: true, name: 'Inbox' });
+  let task = Object.create({ id: 1, taskList });
 
-  this.set('task', task);
+  set(this, 'task', task);
   this.on('saveTask', (task) => {
     assert.ok(true, 'Action has been called');
     assert.equal(task.id, 1, 'Task parameter has been passed in');
+    assert.equal(task.taskList, taskList, 'Task list has been passed in');
   });
 
   this.render(hbs`{{task-new-form task=task saveTask='saveTask'}}`);

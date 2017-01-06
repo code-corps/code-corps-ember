@@ -2,6 +2,12 @@ import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
+import Ember from 'ember';
+
+const {
+  computed: { sort }
+} = Ember;
+
 /**
   Task-list is a collection of categorized tasks that belong to a project.
 
@@ -10,6 +16,14 @@ import { belongsTo, hasMany } from 'ember-data/relationships';
   @extends Ember.Model
  */
 export default Model.extend({
+
+  /**
+    Indicates whether this is the inbox list to receive new tasks.
+
+    @attribute inbox
+    @type boolean
+   */
+  inbox: attr(),
 
   /**
     Task-lists name
@@ -51,5 +65,7 @@ export default Model.extend({
     @attribute tasks
     @type Ember.computed
    */
-  tasks: hasMany('task', { async: true })
+  tasks: hasMany('task', { async: true }),
+  sorting: ['order:asc'],
+  orderedTasks: sort('tasks', 'sorting')
 });
