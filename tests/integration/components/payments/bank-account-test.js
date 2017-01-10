@@ -5,11 +5,13 @@ import PageObject from 'ember-cli-page-object';
 
 import bankAccountComponent from '../../../pages/components/payments/bank-account';
 
-const { K, set } = Ember;
+const {
+  set
+} = Ember;
 
 let page = PageObject.create(bankAccountComponent);
 
-function setHandler(context, submitHandler = K) {
+function setHandler(context, submitHandler = function() {}) {
   context.set('submitHandler', submitHandler);
 }
 

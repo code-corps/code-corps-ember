@@ -1,5 +1,4 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
@@ -8,9 +7,7 @@ import creditCardComponent from '../../../pages/components/donation/credit-card'
 
 let page = PageObject.create(creditCardComponent);
 
-const { K } = Ember;
-
-let setHandler = function(context, handlerName, handler = K) {
+let setHandler = function(context, handlerName, handler = function() {}) {
   context.set(handlerName, handler);
 };
 

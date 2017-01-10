@@ -1,17 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 
 import donationStatusComponent from '../../../pages/components/donations/donation-status';
 
-const {
-  K
-} = Ember;
-
 let page = PageObject.create(donationStatusComponent);
 
-function setHandler(context, createDonationHandler = K) {
+function setHandler(context, createDonationHandler = function() {}) {
   context.set('createDonationHandler', createDonationHandler);
 }
 

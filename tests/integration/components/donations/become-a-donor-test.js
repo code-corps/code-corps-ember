@@ -1,17 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 
 import becomeADonorComponent from '../../../pages/components/donations/become-a-donor';
 
-const {
-  K
-} = Ember;
-
 let page = PageObject.create(becomeADonorComponent);
 
-function setHandler(context, becomeADonorHandler = K) {
+function setHandler(context, becomeADonorHandler = function() {}) {
   context.set('becomeADonorHandler', becomeADonorHandler);
 }
 

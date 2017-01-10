@@ -4,13 +4,12 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 
 const {
-  Object,
-  K
+  Object
 } = Ember;
 
 let mockGoal = Object.create({ amount: 20, description: 'Some description' });
 
-function setHandlers(context, { saveHandler = K, cancelHandler = K } = {}) {
+function setHandlers(context, { saveHandler = function() {}, cancelHandler = function() {} } = {}) {
   context.set('saveHandler', saveHandler);
   context.set('cancelHandler', cancelHandler);
 }

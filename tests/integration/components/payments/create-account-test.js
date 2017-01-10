@@ -6,11 +6,13 @@ import moment from 'moment';
 
 import createAccountComponent from '../../../pages/components/payments/create-account';
 
-const { K, set } = Ember;
+const {
+  set
+} = Ember;
 
 let page = PageObject.create(createAccountComponent);
 
-function setHandler(context, submitHandler = K) {
+function setHandler(context, submitHandler = function() {}) {
   context.set('submitHandler', submitHandler);
 }
 

@@ -1,17 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 
 import donationAmountButtonComponent from '../../../pages/components/donations/donation-amount-button';
 
-const {
-  K
-} = Ember;
-
 let page = PageObject.create(donationAmountButtonComponent);
 
-function setHandlers(context, { amountHandler = K, customAmountHandler = K } = {}) {
+function setHandlers(context, { amountHandler = function() {}, customAmountHandler = function() {} } = {}) {
   context.set('amountHandler', amountHandler);
   context.set('customAmountHandler', customAmountHandler);
 }

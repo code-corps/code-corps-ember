@@ -4,11 +4,10 @@ import Ember from 'ember';
 
 const {
   Object,
-  K,
   set
 } = Ember;
 
-function setHandlers(context, { addHandler = K, activateDonationsHandler = K, cancelHandler = K, editHandler = K, saveHandler = K } = {}) {
+function setHandlers(context, { addHandler = function() {}, activateDonationsHandler = function() {}, cancelHandler = function() {}, editHandler = function() {}, saveHandler = function() {} } = {}) {
   set(context, 'addHandler', addHandler);
   set(context, 'activateDonationsHandler', activateDonationsHandler);
   set(context, 'cancelHandler', cancelHandler);

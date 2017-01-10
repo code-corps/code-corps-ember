@@ -8,11 +8,10 @@ import legalEntityPersonalIdNumberComponent from 'code-corps-ember/tests/pages/c
 let page = PageObject.create(legalEntityPersonalIdNumberComponent);
 
 const {
-  set,
-  K
+  set
 } = Ember;
 
-function setHandler(context, submitHandler = K) {
+function setHandler(context, submitHandler = function() {}) {
   set(context, 'submitHandler', submitHandler);
 }
 

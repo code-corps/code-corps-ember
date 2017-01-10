@@ -8,13 +8,16 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 let page = PageObject.create(donationContainerComponent);
 
 const {
-  K,
   RSVP
 } = Ember;
 
 let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
 
-function setHandlers(context, { donateHandler = K, saveAndDonateHandler = K } = {}) {
+function K() {
+  return true;
+}
+
+function setHandlers(context, { donateHandler = function() {}, saveAndDonateHandler = function() {} } = {}) {
   context.set('donateHandler', donateHandler);
   context.set('saveAndDonateHandler', saveAndDonateHandler);
 }
