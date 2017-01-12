@@ -1,3 +1,6 @@
 {{#each orderedTasks as |task|}}
-  {{task-card task=task}}
+  {{task-card
+    clickedTask=clickedTask
+    task=task
+  }}
 {{/each}}

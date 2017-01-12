@@ -28,6 +28,14 @@ export default Route.extend({
       this._super(...arguments);
       get(this, 'projectTaskBoard').deactivate();
       return true;
+    },
+
+    transitionToTask(task) {
+      let project = get(task, 'project');
+      let organizationSlug = get(project, 'organization.slug');
+      let projectSlug = get(project, 'slug');
+      let taskNumber = get(task, 'number');
+      this.transitionTo('project.tasks.task', organizationSlug, projectSlug, taskNumber);
     }
   }
 });
