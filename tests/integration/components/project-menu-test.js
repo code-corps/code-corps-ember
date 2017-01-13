@@ -69,19 +69,20 @@ test('when authenticated, and user cannot manage organization, it renders proper
 });
 
 test('when authenticated, and user can manage organization, it renders properly', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   stubService(this, 'session', { isAuthenticated: true });
   this.register('ability:organization', Ability.extend({ canManage: true }));
 
   this.render(hbs`{{project-menu}}`);
 
-  assert.equal(this.$('.project-menu li a').length, 5, 'The correct number of links render');
+  assert.equal(this.$('.project-menu li a').length, 6, 'The correct number of links render');
   assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 1, 'The contributors link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Settings")').length, 1, 'The settings link is rendered');
   assert.equal(this.$('.project-menu li a:contains("Donations")').length, 1, 'The donations link is rendered');
+  assert.equal(this.$('.project-menu li a:contains("Payments")').length, 1, 'The payments link is rendered');
 });
 
 test('when authenticated, and user can manage organization, and project has pending members', function(assert) {
