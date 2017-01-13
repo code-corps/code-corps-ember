@@ -34,5 +34,13 @@ export default Component.extend({
   taskType: alias('task.taskType'),
   taskTypeClass: computed('taskType', function() {
     return `task-card--${get(this, 'taskType')}`;
-  })
+  }),
+
+  click() {
+    let isLoading = get(this, 'isLoading');
+    let task = get(this, 'task');
+    if (!isLoading) {
+      this.sendAction('clickedTask', task);
+    }
+  }
 });

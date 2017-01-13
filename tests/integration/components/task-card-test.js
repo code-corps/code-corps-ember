@@ -74,3 +74,38 @@ test('it cannot reposition if it does not have the ability', function(assert) {
 
   assert.notOk(page.canReposition, 'Cannot reposition');
 });
+
+test('it sends action if clicked and not loading', function(assert) {
+  assert.expect(1);
+
+  let task = {
+    isLoading: false,
+    number: 1
+  };
+
+  this.set('clickedTask', function(clickedTask) {
+    assert.deepEqual(clickedTask, task);
+  });
+  this.set('task', task);
+
+  this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
+  page.click();
+});
+
+test('it does not send action if clicked and loading', function(assert) {
+  assert.expect(1);
+
+  let task = {
+    isLoading: true,
+    number: 1
+  };
+
+  this.set('clickedTask', function() {
+    assert.notOk();
+  });
+  this.set('task', task);
+
+  this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
+  page.click();
+  assert.ok(true);
+});
