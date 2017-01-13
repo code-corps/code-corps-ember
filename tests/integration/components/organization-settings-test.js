@@ -7,7 +7,7 @@ moduleForComponent('organization-settings', 'Integration | Component | organizat
 });
 
 test('it renders properly', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   stubService(this, 'store');
   stubService(this, 'session');
@@ -17,5 +17,4 @@ test('it renders properly', function(assert) {
 
   assert.equal(this.$('.organization-header').length, 1, 'The header renders');
   assert.equal(this.$('.organization-menu').length, 1, 'The menu renders');
-  assert.equal(this.$('.organization-settings-menu').length, 1, 'The settings menu renders');
 });
