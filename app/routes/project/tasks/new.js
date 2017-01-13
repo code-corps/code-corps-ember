@@ -4,8 +4,10 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 const {
   computed,
+  get,
+  inject: { service },
   Route,
-  inject: { service }
+  RSVP
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
@@ -18,20 +20,25 @@ export default Route.extend(AuthenticatedRouteMixin, {
   membership: computed.alias('credentials.membership'),
 
   taskType: computed('canCreateTask', function() {
-    return this.get('canCreateTask') ? 'task' : 'issue';
+    return get(this, 'canCreateTask') ? 'task' : 'issue';
   }),
 
   model() {
-    return this.modelFor('project');
+    return this.modelFor('project').reload().then((project) => {
+      let taskLists = project.get('taskLists');
+      return RSVP.hash({ project, taskLists });
+    });
   },
 
-  setupController(controller, model) {
+  setupController(controller, { project }) {
     let newTask = this.store.createRecord('task', {
-      project: model,
-      user: this.get('currentUser.user'),
-      taskType: this.get('taskType')
+      project,
+      taskList: get(project, 'inboxTaskList'),
+      taskType: get(this, 'taskType'),
+      user: get(this, 'currentUser.user')
     });
-    controller.set('task', newTask);
+    // controller.set('task', newTask);
+    controller.setProperties({ project, task: newTask });
   },
 
   actions: {

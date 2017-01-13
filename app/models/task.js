@@ -78,7 +78,7 @@ export default Model.extend(ContainsCodeMixin, {
   title: attr(),
 
   /**
-    Position is a virtual (write-only) attribute used to compute the `order` of the task
+    Position is a virtual (write-only) attribute used to compute the `order` of the task by the server.
 
     @attribute position
     @virtual

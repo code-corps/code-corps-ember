@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
+  get,
   inject: { service }
 } = Ember;
 
@@ -51,9 +52,9 @@ export default Component.extend({
     @type String
    */
   placeholder: computed('task.taskType', function() {
-    let taskType = this.get('task.taskType');
+    let taskType = get(this, 'task.taskType');
     if (taskType) {
-      return this.get('placeholders.$(taskType)');
+      return get(this, 'placeholders.$(taskType)');
     }
   }),
 
@@ -66,7 +67,7 @@ export default Component.extend({
       @method submit
      */
     submit() {
-      let task = this.get('task');
+      let task = get(this, 'task');
       this.sendAction('saveTask', task);
     }
   }

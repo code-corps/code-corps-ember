@@ -15,6 +15,6 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task-list', ['name', 'order', 'position']);
+testForAttributes('task-list', ['inbox', 'name', 'order', 'position']);
 testForBelongsTo('task-list', 'project');
 testForHasMany('task-list', 'tasks');
