@@ -93,5 +93,8 @@
     "emberx-select": "2.2.3",
     "eslint-plugin-ember-suave": "^1.0.0",
     "loader.js": "^4.0.10"
+  },
+  "dependencies": {
+    "node-sass": "latest"
   }
 }

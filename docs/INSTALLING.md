@@ -2,7 +2,7 @@
 
 ### Requirements
 
-You will need to install the following: 
+You will need to install the following:
 
 - [Node.js/npm](https://docs.npmjs.com/getting-started/installing-node) we use the LTS branch
 - bower: `npm install -g bower`
@@ -43,10 +43,23 @@ package.json         # → Npm configuration and dependency list
 
 > Note: We bind to ports 4200 for Ember and 49152 for livereloading. Make sure you aren't running anything else on these ports.
 
-Go to the `code-corps-ember` directory and run:
+Go to the `code-corps-ember` directory.
+
+If you use [`yarn`](https://yarnpkg.com), run:
+
+```shell
+yarn
+```
+
+If you use `npm`, run:
 
 ```shell
 npm install
+```
+
+Then run:
+
+```shell
 bower install
 ```
 
