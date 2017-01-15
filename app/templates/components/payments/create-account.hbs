@@ -1,14 +1,19 @@
-<div class="input-section">
-  <div class="input-section__content">
-    <div class="input-group">
+<aside>
+  <h1>Create Stripe Account</h1>
+</aside>
+
+{{#if (eq status 'required')}}
+  <section>
+    <div class="create-account__country">
       <label for="country">Country</label>
       {{select/country-select country=country}}
     </div>
-  </div>
-  <div class="input-group">
-    <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
-    <button class="default" {{action 'submit'}} disabled={{isBusy}}>
-      Create Account
-    </button>
-  </div>
-</div>
+
+    <div>
+      <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
+      <button class="default" {{action 'submit'}} disabled={{isBusy}}>
+        Create Account
+      </button>
+    </div>
+  </section>
+{{/if}}

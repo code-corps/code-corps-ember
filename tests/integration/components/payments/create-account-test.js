@@ -17,7 +17,13 @@ function setHandler(context, submitHandler = function() {}) {
 }
 
 function renderPage() {
-  page.render(hbs`{{payments/create-account isBusy=isBusy onCreateStripeConnectAccount=submitHandler}}`);
+  page.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
 }
 
 moduleForComponent('payments/create-account', 'Integration | Component | payments/create account', {
@@ -29,6 +35,24 @@ moduleForComponent('payments/create-account', 'Integration | Component | payment
   afterEach() {
     page.removeContext();
   }
+});
+
+test('it renders correctly when there is no stripeConnectAccount', function(assert) {
+  assert.expect(3);
+  set(this, 'stripeConnectAccount', null);
+  renderPage();
+  assert.ok(page.rendersHeader, 'Renders header');
+  assert.ok(page.hasRequiredStatus, 'Is required');
+  assert.ok(page.rendersSection, 'Renders section');
+});
+
+test('it renders correctly when there is a stripeConnectAccount', function(assert) {
+  assert.expect(3);
+  set(this, 'stripeConnectAccount', { id: 1 });
+  renderPage();
+  assert.ok(page.rendersHeader, 'Renders header');
+  assert.ok(page.hasVerifiedStatus, 'Is verified');
+  assert.notOk(page.rendersSection, 'Does not render section');
 });
 
 test('it renders "Terms of Service" acceptance info', function(assert) {
