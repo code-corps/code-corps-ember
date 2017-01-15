@@ -27,6 +27,18 @@
   box-shadow: 0 0 0 1px #FFFFFF, 0 0 0 3px $color;
 }
 
+@mixin colorButton($color) {
+  background: $color;
+  border: 1px solid $color;
+  &.on-solid {
+    border: 1px solid white;
+    &:hover {
+      border: 1px solid white;
+      color: white;
+    }
+  }
+}
+
 #{$all-buttons}, .button {
   color: white;
   border-radius: 4px;
@@ -54,25 +66,6 @@
     padding: 15px 40px;
   }
 
-  &.on-solid {
-    background: transparent;
-    border-color: white;
-    &:hover {
-      background: white;
-    }
-  }
-
-  &.default {
-    background: $default-color;
-    border: 1px solid $default-color;
-    &.on-solid {
-      background: transparent;
-      &:hover {
-        color: $primary-color;
-      }
-    }
-  }
-
   &.clear {
     background: white;
     border: 1px solid $border-default;
@@ -87,34 +80,20 @@
     @include primary-active;
   }
 
+  &.default {
+    @include colorButton($default-color);
+  }
+
   &.success {
-    background: $success-color;
-    border: 1px solid $success-color;
-    &.on-solid {
-      background: transparent;
-      &:hover {
-        color: $success-color;
-      }
-    }
+    @include colorButton($success-color);
   }
 
   &.danger {
-    background: $danger-color;
-    border: 1px solid $danger-color;
-    &:focus { @include focus($danger-color); }
-    &.on-solid {
-      &:hover {
-        color: $danger-color;
-      }
-    }
+    @include colorButton($danger-color);
   }
 
   &.warning {
-    &.on-solid {
-      &:hover {
-        color: $warning-color;
-      }
-    }
+    @include colorButton($warning-color);
   }
 
   &.has-error {
@@ -180,6 +159,14 @@
   &.idea { @include taskTypeButtonColors('idea'); }
 }
 
+@mixin hoverButton($color) {
+  $darker-color: darken($color, 5%);
+  background: $darker-color;
+  background-image: linear-gradient($color, $darker-color);
+  border-color: $darker-color;
+  color: white;
+}
+
 #{$all-buttons-hover}, .button:hover {
   cursor: pointer;
 
@@ -188,11 +175,7 @@
   }
 
   &.default {
-    $darker-color: darken($default-color, 5%);
-    background: $darker-color;
-    background-image: linear-gradient($default-color, $darker-color);
-    border-color: $darker-color;
-    color: white;
+    @include hoverButton($default-color);
   }
 
   &.clear {
@@ -205,20 +188,16 @@
     }
   }
 
-  &.success {
-    $darker-color: darken($success-color, 5%);
-    background: $darker-color;
-    background-image: linear-gradient($success-color, $darker-color);
-    border-color: $darker-color;
-    color: white;
+  &.danger {
+    @include hoverButton($danger-color);
   }
 
-  &.danger {
-    $darker-color: darken($danger-color, 5%);
-    background: $darker-color;
-    background-image: linear-gradient($danger-color, $darker-color);
-    border-color: $darker-color;
-    color: white;
+  &.success {
+    @include hoverButton($success-color);
+  }
+
+  &.warning {
+    @include hoverButton($warning-color);
   }
 
   &.can-delete {
