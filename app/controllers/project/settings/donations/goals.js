@@ -75,10 +75,6 @@ export default Controller.extend({
       }
     },
 
-    reloadAccount() {
-      get(this, 'stripeConnectAccount').reload();
-    },
-
     /**
      * Action which commits changes to a donation goal.
      *

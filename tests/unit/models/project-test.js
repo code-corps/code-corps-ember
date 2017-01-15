@@ -29,10 +29,10 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('project', [
-  'base64IconData', 'closedTasksCount', 'description', 'donationsActive',
-  'iconLargeUrl', 'iconThumbUrl', 'longDescriptionBody',
-  'longDescriptionMarkdown', 'openTasksCount', 'slug', 'title',
-  'totalMonthlyDonated'
+  'base64IconData', 'canActivateDonations', 'closedTasksCount',
+  'description', 'donationsActive', 'iconLargeUrl', 'iconThumbUrl',
+  'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount',
+  'slug', 'title', 'totalMonthlyDonated'
 ]);
 
 testForBelongsTo('project', 'organization');

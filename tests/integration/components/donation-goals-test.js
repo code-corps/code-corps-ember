@@ -248,12 +248,8 @@ test('it calls provided "add" action with project as parameter when add button i
   this.$('.add').click();
 });
 
-test('it allows activating donations if there are persisted records', function(assert) {
+test('it allows activating donations if canActivateDonations is true', function(assert) {
   assert.expect(2);
-
-  let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
-  ];
 
   function activateDonationsHandler() {
     assert.ok(true, 'Action was called when button was clicked');
@@ -261,7 +257,7 @@ test('it allows activating donations if there are persisted records', function(a
 
   setHandlers(this, { activateDonationsHandler });
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ canActivateDonations: true }));
 
   this.render(hbs`{{donation-goals activateDonations=activateDonationsHandler add=addHandler edit=editHandler project=project}}`);
 
@@ -270,14 +266,10 @@ test('it allows activating donations if there are persisted records', function(a
   this.$('.activate-donations').click();
 });
 
-test('it prevents activating donations if there are no persisted records', function(assert) {
+test('it prevents activating donations if canActivateDonations is false', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true, isNew: true })
-  ];
-
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', Object.create({ canActivateDonations: false }));
 
   this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
