@@ -19,6 +19,8 @@ export default {
   rendersFundsRecipientVerified: isVisible('.funds-recipient.account-setup__section--verified'),
   rendersFundsRecipientVerifying: isVisible('.funds-recipient.account-setup__section--verifying'),
 
+  rendersLinkToDonationGoals: isVisible('a.activate-donations'),
+
   createAccount,
   bankAccount,
   contactInfo,

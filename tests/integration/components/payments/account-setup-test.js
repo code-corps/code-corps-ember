@@ -32,6 +32,7 @@ function renderPage() {
       onRecipientDetailsSubmitted=onRecipientDetailsSubmitted
       onVerificationDocumentSubmitted=onVerificationDocumentSubmitted
       organizationName=project.organization.name
+      project=project
       stripeConnectAccount=stripeConnectAccount
     }}
   `);
@@ -180,4 +181,14 @@ test('it works properly when account is fully verified', function(assert) {
 
   assert.ok(page.rendersFundsRecipientVerified, 'Funds recipient component is rendered in verified state.');
   assert.ok(page.rendersBankAccountVerified, 'Bank account component is rendered in verified state.');
+});
+
+test('it renders a link to set up donation goals when possible', function(assert) {
+  assert.expect(1);
+
+  this.set('project', { canActivateDonations: true });
+
+  renderPage();
+
+  assert.ok(page.rendersLinkToDonationGoals, 'Renders link to donation goals.');
 });

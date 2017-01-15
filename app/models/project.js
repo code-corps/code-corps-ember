@@ -7,6 +7,7 @@ const { computed, computed: { alias, filterBy, gt }, get } = Ember;
 
 export default Model.extend({
   base64IconData: attr(),
+  canActivateDonations: attr(),
   closedTasksCount: attr('number'),
   description: attr(),
   donationsActive: attr(),

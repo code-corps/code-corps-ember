@@ -186,7 +186,8 @@ test('it allows activating donations for the project', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  server.createList('donation-goal', 1, { project });
+  project.attrs.canActivateDonations = true;
+  project.save();
 
   authenticateAsMemberOfRole(this.application, server, organization, 'owner');
 

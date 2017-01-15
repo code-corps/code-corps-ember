@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed: {
-    and, alias, bool, filterBy, not, notEmpty, setDiff, sort
+    alias, filterBy, not, notEmpty, setDiff, sort
   }
 } = Ember;
 
@@ -49,12 +49,10 @@ export default Component.extend({
   /**
    * Indicates if the user can activate donations for this project.
    *
-   * This is possible if at least one donation goal has been added.
-   *
    * @property canActivateDonations
    * @type {Boolean}
    */
-  canActivateDonations: and('hasExistingDonationGoals', '_donationsInactive'),
+  canActivateDonations: alias('project.canActivateDonations'),
 
   /**
    * Indicates if the user can cancel adding or editing a donation goal.
@@ -86,8 +84,6 @@ export default Component.extend({
   hasExistingDonationGoals: notEmpty('_existingDonationGoals'),
 
   _currentlyEditingDonationGoals: notEmpty('_editedDonationGoals'),
-  _donationsActive: bool('project.stripeConnectPlan.id'),
-  _donationsInactive: not('_donationsActive'),
   _editedDonationGoals: filterBy('project.donationGoals', 'isEditing'),
   _existingDonationGoals: setDiff('project.donationGoals', '_newDonationGoals'),
   _newDonationGoals: filterBy('project.donationGoals', 'isNew')
