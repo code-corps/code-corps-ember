@@ -5,13 +5,18 @@
     edit=(action 'editDonationGoal')
     project=project
     save=(action 'saveDonationGoal')
-    activateDonations=(action 'activateDonations' project)}}
+  }}
   {{#if error}}
     {{error-formatter error=error}}
   {{/if}}
 </div>
 
 <div class="settings-sidebar">
+  {{donation-goals-activation
+    activateDonations=(action 'activateDonations' project)
+    canActivateDonations=project.canActivateDonations
+  }}
+
   {{#if project.donationsActive}}
     <h3>Current goal</h3>
     {{donations/donation-progress

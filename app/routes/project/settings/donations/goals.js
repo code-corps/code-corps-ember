@@ -45,7 +45,7 @@ export default Route.extend(CanMixin, {
    * @return {RSVP.Promise} A promise for reloading the project route model
    */
   model() {
-    return this.modelFor('project');
+    return this.modelFor('project').reload();
   },
 
   /**

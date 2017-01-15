@@ -25,7 +25,8 @@ export default Controller.extend({
     activateDonations(project) {
       get(this, 'store')
         .createRecord('stripe-connect-plan', { project })
-        .save();
+        .save()
+        .then(() => this._reloadProject());
     },
 
     /**
@@ -94,6 +95,7 @@ export default Controller.extend({
   },
 
   _onDoneSaving(donationGoal) {
+    this._reloadProject();
     set(donationGoal, 'isEditing', false);
   },
 
@@ -101,5 +103,9 @@ export default Controller.extend({
     if (!isValidationError(response)) {
       set(this, 'error', new FriendlyError(PROBLEM_SAVING_DONATION_GOAL));
     }
+  },
+
+  _reloadProject() {
+    get(this, 'project').reload();
   }
 });

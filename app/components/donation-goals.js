@@ -47,14 +47,6 @@ export default Component.extend({
   canAdd: not('_currentlyEditingDonationGoals'),
 
   /**
-   * Indicates if the user can activate donations for this project.
-   *
-   * @property canActivateDonations
-   * @type {Boolean}
-   */
-  canActivateDonations: alias('project.canActivateDonations'),
-
-  /**
    * Indicates if the user can cancel adding or editing a donation goal.
    *
    * This is possible if there is already a saved donation goal present.
