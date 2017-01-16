@@ -12,7 +12,7 @@ export default Component.extend({
   classNameBindings: ['statusClass'],
   classNames: ['create-account', 'account-setup__section'],
 
-  status: computed('stripeConnectAccount', function() {
+  status: computed('stripeConnectAccount.id', function() {
     let accountId = get(this, 'stripeConnectAccount.id');
     return isEmpty(accountId) ? 'required' : 'verified';
   }),
