@@ -36,7 +36,7 @@ test('it redirects to project list page if user is not allowed to setup the acco
 });
 
 test('The full setup works properly', function(assert) {
-  assert.expect(10);
+  assert.expect(12);
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
@@ -47,6 +47,7 @@ test('The full setup works properly', function(assert) {
 
   andThen(() => {
     assert.ok(page.accountSetup.rendersCreateAccount, 'There is no stripe connect account, so the create account form is rendered');
+    assert.ok(page.accountSetup.createAccount.hasRequiredStatus, 'Create account has required status');
 
     // need to mock changes in account setup status for which the API is in charge of
     server.post('stripe-connect-accounts', function(schema) {
@@ -59,6 +60,7 @@ test('The full setup works properly', function(assert) {
   });
 
   andThen(() => {
+    assert.ok(page.accountSetup.createAccount.hasVerifiedStatus, 'Create account has verified status');
     assert.ok(page.accountSetup.rendersFundsRecipient, 'There is now a stripe connect account, so we render funds recipient');
     assert.ok(page.accountSetup.fundsRecipient.rendersDetailsForm, 'The details form part of the UI is rendered');
 
