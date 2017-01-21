@@ -52,7 +52,7 @@
     "ember-cli-mirage": "^0.2.4",
     "ember-cli-moment-shim": "3.0.0",
     "ember-cli-neat": "0.0.5",
-    "ember-cli-page-object": "1.7.0",
+    "ember-cli-page-object": "1.8.0",
     "ember-cli-password-strength": "0.2.1",
     "ember-cli-qunit": "3.0.4",
     "ember-cli-release": "^0.2.9",
