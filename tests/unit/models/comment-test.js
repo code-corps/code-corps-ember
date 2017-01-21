@@ -1,11 +1,13 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
+import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 
 moduleForModel('comment', 'Unit | Model | comment', {
   // Specify the other units that are required for this test.
   needs: [
+    'model:comment-user-mention',
     'model:task',
-    'model:user',
-    'model:comment-user-mention'
+    'model:user'
   ]
 });
 
@@ -14,6 +16,11 @@ test('it exists', function(assert) {
   // let store = this.store();
   assert.ok(!!model);
 });
+
+testForAttributes('comment', ['body', 'insertedAt', 'markdown']);
+testForBelongsTo('comment', 'task');
+testForBelongsTo('comment', 'user');
+testForHasMany('comment', 'commentUserMentions');
 
 test('it correctly identifies code in the body', function(assert) {
   assert.expect(1);

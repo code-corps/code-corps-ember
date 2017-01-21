@@ -1,37 +1,38 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-let userSkillsService = Ember.Service.extend({
-  hasSkill(queriedSkill) {
-    return queriedSkill === skills[1];
-  },
-  findUserSkill(queriedSkill) {
-    if (queriedSkill === skills[1]) {
-      return queriedSkill;
-    }
-  }
-});
+const { Object } = Ember;
 
 let skills = [
-  Ember.Object.create({
-    title: "Rails"
+  Object.create({
+    title: 'Rails'
   }),
-  Ember.Object.create({
-    title: "HTML"
+  Object.create({
+    title: 'HTML'
   }),
-  Ember.Object.create({
-    title: "Ruby"
+  Object.create({
+    title: 'Ruby'
   }),
-  Ember.Object.create({
-    title: "Ember.js"
-  }),
+  Object.create({
+    title: 'Ember.js'
+  })
 ];
 
 moduleForComponent('skill-list-items', 'Integration | Component | skill list items', {
   integration: true,
   beforeEach() {
-    this.register('service:user-skills', userSkillsService);
+    stubService(this, 'user-skills', {
+      hasSkill(queriedSkill) {
+        return queriedSkill === skills[1];
+      },
+      findUserSkill(queriedSkill) {
+        if (queriedSkill === skills[1]) {
+          return queriedSkill;
+        }
+      }
+    });
   }
 });
 

@@ -1,0 +1,19 @@
+<div>
+  {{#x-select value=month as |xs|}}
+    {{#each monthOptions as |monthOption|}}
+      {{#xs.option value=monthOption.number}}{{monthOption.text}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+
+  {{#x-select value=day as |xs|}}
+    {{#each dayOptions as |dayOption|}}
+      {{#xs.option value=dayOption}}{{dayOption}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+
+  {{#x-select value=year as |xs|}}
+    {{#each yearOptions as |yearOption|}}
+      {{#xs.option value=yearOption}}{{yearOption}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+</div>

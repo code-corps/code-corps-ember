@@ -10,6 +10,10 @@ module.exports = function(environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        // Date: false
       }
     },
 
@@ -56,16 +60,6 @@ module.exports = function(environment) {
       allowEmpty: true // default: false
     },
 
-    pace: {
-      // addon-specific options to configure theme
-      theme: 'minimal',
-      color: 'blue',
-      restartOnRequestAfter: 500,
-      ajax: {
-        ignoreURLs: ['intercom', 'segment', 'sentry']
-      }
-    },
-
     pageTitle: {
       prepend: true,
       separator: " — "
@@ -74,6 +68,8 @@ module.exports = function(environment) {
     sentry: {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
+
+    stripe: {}
   };
 
   if (environment === 'development') {
@@ -83,10 +79,12 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.API_BASE_URL = 'http://api.lvh.me:49235';
+    ENV.API_BASE_URL = 'http://api.lvh.me:4000';
     ENV.WEB_BASE_URL = 'http://localhost:4200';
 
     ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
 
     ENV['ember-cli-mirage'] = {
       enabled: false
@@ -99,10 +97,10 @@ module.exports = function(environment) {
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
-      // Allow data (ajax/websocket) from api.lvh.me:49235
+      // Allow data (ajax/websocket) from api.lvh.me:4000
       'connect-src': [
         "'self'",
-        "http://api.lvh.me:49235"
+        "http://api.lvh.me:4000"
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
@@ -129,6 +127,25 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
 
     ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_WN9xr9Ly1m0D36bdPQCbAzMi';
+  }
+
+  if (environment === 'mirage-development') {
+    ENV.API_BASE_URL = '';
+    ENV.WEB_BASE_URL = '';
+
+    ENV.sentry.development = true;
+
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
+
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
+
+    ENV['simple-auth'] = {
+      store: 'simple-auth-session-store:ephemeral'
+    };
   }
 
   if (environment === 'staging') {
@@ -136,6 +153,8 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
 
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
+
+    ENV.stripe.publishableKey = 'pk_test_AjQ9D0wliXnWRXH9d14DIW2E';
   }
 
   if (environment === 'test') {
@@ -154,6 +173,8 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
+    ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
+
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'
     };
@@ -166,13 +187,13 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
     ENV.WEB_BASE_URL = 'http://www.codecorps.org';
+    ENV.stripe.publishableKey = 'pk_live_AieoBpMkVudxrwizI0yqwRF8';
   }
 
   ENV['ember-simple-auth-token'] = {
     serverTokenEndpoint: ENV.API_BASE_URL + '/token',
     serverTokenRefreshEndpoint: ENV.API_BASE_URL + '/token/refresh',
-    refreshLeeway: 3000, // 5 minutes before expiry
-    timeFactor: 1000,
+    refreshLeeway: 300, // 5 minutes before expiry
   };
 
   return ENV;

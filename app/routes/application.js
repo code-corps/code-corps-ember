@@ -1,17 +1,25 @@
 import Ember from 'ember';
 import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import ENV from 'code-corps-ember/config/environment';
+import LoadingBar from 'code-corps-ember/mixins/loading-bar';
 
-const { service } = Ember.inject;
+const {
+  computed,
+  get,
+  inject: { service },
+  isPresent,
+  Route,
+  set
+} = Ember;
 
-export default Ember.Route.extend(ApplicationRouteMixin, {
+export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   currentUser: service(),
   flashMessages: service(),
   metrics: service(),
   onboarding: service(),
 
-  isOnboarding: Ember.computed.alias('onboarding.isOnboarding'),
-  onboardingRoute: Ember.computed.alias('onboarding.currentRoute'),
+  isOnboarding: computed.alias('onboarding.isOnboarding'),
+  onboardingRoute: computed.alias('onboarding.currentRoute'),
 
   headTags: [
     {
@@ -20,7 +28,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         rel: 'canonical',
         content: ENV.WEB_BASE_URL
-      },
+      }
     },
     {
       type: 'meta',
@@ -28,7 +36,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'description',
         content: 'Contribute to software projects for social good. Give your time or money to help build software to better the arts, education, government, science, and more.'
-      },
+      }
     },
     {
       type: 'meta',
@@ -36,7 +44,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:description',
         content: 'Contribute to software projects for social good. Give your time or money to help build software to better the arts, education, government, science, and more.'
-      },
+      }
     },
     {
       type: 'meta',
@@ -44,7 +52,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:image',
         content: 'https://d3pgew4wbk2vb1.cloudfront.net/images/universal-card.png'
-      },
+      }
     },
     {
       type: 'meta',
@@ -52,7 +60,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:site_name',
         content: 'Code Corps'
-      },
+      }
     },
     {
       type: 'meta',
@@ -60,7 +68,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:title',
         content: 'Code Corps | Build a better future.'
-      },
+      }
     },
     {
       type: 'meta',
@@ -68,7 +76,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:type',
         content: 'website'
-      },
+      }
     },
     {
       type: 'meta',
@@ -76,7 +84,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         property: 'og:url',
         content: ENV.WEB_BASE_URL
-      },
+      }
     },
     {
       type: 'meta',
@@ -84,7 +92,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:card',
         content: 'summary_large_image'
-      },
+      }
     },
     {
       type: 'meta',
@@ -92,7 +100,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:creator',
         content: '@thecodecorps'
-      },
+      }
     },
     {
       type: 'meta',
@@ -100,7 +108,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:creator:id',
         content: '4608917052'
-      },
+      }
     },
     {
       type: 'meta',
@@ -108,7 +116,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:description',
         content: 'Contribute to software projects for social good. Give your time or money to help build software to better the arts, education, government, science, and more.'
-      },
+      }
     },
     {
       type: 'meta',
@@ -116,7 +124,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:image',
         content: 'https://d3pgew4wbk2vb1.cloudfront.net/images/universal-card.png'
-      },
+      }
     },
     {
       type: 'meta',
@@ -124,7 +132,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:site',
         content: '@thecodecorps'
-      },
+      }
     },
     {
       type: 'meta',
@@ -132,7 +140,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:site:id',
         content: '4608917052'
-      },
+      }
     },
     {
       type: 'meta',
@@ -140,14 +148,14 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
       attrs: {
         name: 'twitter:title',
         content: 'Code Corps | Build a better future.'
-      },
-    },
+      }
+    }
   ],
 
   beforeModel(transition) {
     return this._loadCurrentUser().then(() => {
       if (this._shouldTransitionToOnboardingRoute(transition)) {
-        return this.transitionTo(this.get('onboardingRoute'));
+        return this.transitionTo(get(this, 'onboardingRoute'));
       } else {
         return this._super(...arguments);
       }
@@ -164,12 +172,6 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   actions: {
-    didTransition: function() {
-      // Clear flash messages on every transition
-      this.get('flashMessages').clearMessages();
-      return true; // Bubble the event
-    },
-
     willTransition(transition) {
       if (this._shouldTransitionToOnboardingRoute(transition)) {
         this._abortAndFixHistory(transition);
@@ -184,7 +186,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
     error(e) {
       console.error(e);
       this.intermediateTransitionTo('application_error', e);
-    },
+    }
   },
 
   _abortAndFixHistory(transition) {
@@ -195,31 +197,31 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   _attemptTransition() {
-    if (this.get('isOnboarding')) {
-      this.transitionTo(this.get('onboardingRoute'));
+    if (get(this, 'isOnboarding')) {
+      this.transitionTo(get(this, 'onboardingRoute'));
     } else {
-      let attemptedTransition = this.get('session.attemptedTransition');
-      if (Ember.isPresent(attemptedTransition)) {
+      let attemptedTransition = get(this, 'session.attemptedTransition');
+      if (isPresent(attemptedTransition)) {
         attemptedTransition.retry();
-        this.set('session.attemptedTransition', null);
+        set(this, 'session.attemptedTransition', null);
       } else {
         this.transitionTo('projects-list');
       }
     }
   },
 
-  _loadCurrentUser() {
-    return this.get('currentUser').loadCurrentUser();
+  _invalidateSession() {
+    get(this, 'session').invalidate();
   },
 
-  _invalidateSession() {
-    this.get('session').invalidate();
+  _loadCurrentUser() {
+    return get(this, 'currentUser').loadCurrentUser();
   },
 
   _shouldTransitionToOnboardingRoute(transition) {
-    let isOnboarding = this.get('isOnboarding');
+    let isOnboarding = get(this, 'isOnboarding');
 
-    let onboardingRoutes = this.get('onboarding.routes');
+    let onboardingRoutes = get(this, 'onboarding.routes');
     let targetRoute = transition.targetName;
     let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
 
@@ -227,7 +229,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
   },
 
   _trackAuthentication() {
-    Ember.get(this, 'metrics').trackEvent({
+    get(this, 'metrics').trackEvent({
       event: 'Signed In'
     });
   }

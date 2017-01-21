@@ -1,18 +1,26 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+
+import categoriesListComponent from '../../pages/components/categories-list';
+
+let page = PageObject.create(categoriesListComponent);
 
 moduleForComponent('categories-list', 'Integration | Component | categories list', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders the categories and sorts them by name', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
 
-  let mockUserCategoriesService = Ember.Service.extend({
-    findUserCategory: Ember.K,
-  });
-  this.register('service:user-categories', mockUserCategoriesService);
+  stubService(this, 'user-categories', { findUserCategory() {} });
 
   let categories = [
     {
@@ -26,15 +34,14 @@ test('it renders the categories and sorts them by name', function(assert) {
     {
       id: 3,
       name: 'Alphabets'
-    },
+    }
   ];
 
   this.set('categories', categories);
-  this.render(hbs`{{categories-list categories=categories}}`);
+  page.render(hbs`{{categories-list categories=categories}}`);
 
-  assert.equal(this.$('.categories-list').length, 1);
-  assert.equal(this.$('.category-item').length, 3);
-  assert.equal(this.$('.category-item:eq(0)').text().trim(), 'Alphabets');
-  assert.equal(this.$('.category-item:eq(1)').text().trim(), 'Society');
-  assert.equal(this.$('.category-item:eq(2)').text().trim(), 'Zoology');
+  assert.equal(page.items().count, 3);
+  assert.equal(page.items(0).name, 'Alphabets');
+  assert.equal(page.items(1).name, 'Society');
+  assert.equal(page.items(2).name, 'Zoology');
 });

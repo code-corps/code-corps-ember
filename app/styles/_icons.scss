@@ -15,7 +15,7 @@ $spritePath: '/assets/images/icons/sprite';
 $spriteURL: $spritePath + '.png';
 $spritex2URL: $spritePath + '@2x.png';
 $sprite-bgiSizeW: 230px;
-$sprite-bgiSizeH: 248px;
+$sprite-bgiSizeH: 324px;
 $logo: 230px 50px $spriteURL 0px 0px $spritex2URL;
 $logo-small: 161px 35px $spriteURL 0px -50px $spritex2URL;
 $location: 16px 16px $spriteURL 0px -85px $spritex2URL;
@@ -24,12 +24,10 @@ $link: 16px 16px $spriteURL -32px -85px $spritex2URL;
 $beginner: 16px 16px $spriteURL 0px -101px $spritex2URL;
 $intermediate: 16px 16px $spriteURL -16px -101px $spritex2URL;
 $expert: 16px 16px $spriteURL -32px -101px $spritex2URL;
-$idea-hover: 24px 24px $spriteURL -120px -109px $spritex2URL;
+$idea-hover: 24px 24px $spriteURL -96px -109px $spritex2URL;
 $task-hover: 24px 24px $spriteURL -48px -109px $spritex2URL;
-$idea: 24px 24px $spriteURL -120px -85px $spritex2URL;
-$progress-hover: 24px 24px $spriteURL -96px -109px $spritex2URL;
+$idea: 24px 24px $spriteURL -96px -85px $spritex2URL;
 $issue-hover: 24px 24px $spriteURL -72px -109px $spritex2URL;
-$progress: 24px 24px $spriteURL -96px -85px $spritex2URL;
 $issue: 24px 24px $spriteURL -72px -85px $spritex2URL;
 $task: 24px 24px $spriteURL -48px -85px $spritex2URL;
 $light-theme: 24px 19px $spriteURL 0px -117px $spritex2URL;
@@ -55,6 +53,13 @@ $closed: 20px 20px $spriteURL 0px -228px $spritex2URL;
 $open: 20px 20px $spriteURL -20px -228px $spritex2URL;
 $closed-white: 20px 20px $spriteURL -40px -228px $spritex2URL;
 $open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
+$credit-card: 27px 20px $spriteURL 0px -268px $spritex2URL;
+$lock: 14px 20px $spriteURL -28px -268px $spritex2URL;
+$calendar: 20px 20px $spriteURL -42px -268px $spritex2URL;
+$task-small: 16px 16px $spriteURL 0px -288px $spritex2URL;
+$issue-small: 16px 16px $spriteURL -16px -288px $spritex2URL;
+$idea-small: 16px 16px $spriteURL -32px -288px $spritex2URL;
+$tick-green-large: 24px 20px $spriteURL 0px -304px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
@@ -67,14 +72,12 @@ $open-white: 20px 20px $spriteURL -60px -228px $spritex2URL;
 $taskTypeIcons: (
   "idea": $idea,
   "issue": $issue,
-  "progress": $progress,
   "task": $task,
 );
 
 $taskTypeIconHovers: (
   "idea": $idea-hover,
   "issue": $issue-hover,
-  "progress": $progress-hover,
   "task": $task-hover,
 );
 
@@ -83,6 +86,16 @@ $taskTypeIconHovers: (
     @include sprite($icon);
     content: "";
     display: inline-block;
+  }
+}
+
+@mixin taskBoardIcon($icon) {
+  &:before {
+    @include sprite($icon);
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -423,7 +436,7 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
     background-size: $roles-bgiSizeW $roles-bgiSizeH;
   }
 }
-$roles-spritePath: 'assets/images/icons/roles-sprite';
+$roles-spritePath: '/assets/images/icons/roles-sprite';
 $roles-spriteURL: $roles-spritePath + '.png';
 $roles-spritex2URL: $roles-spritePath + '@2x.png';
 $roles-bgiSizeW: 181px;
@@ -446,7 +459,7 @@ $support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;
   }
 }
 
-$about-spritePath: 'assets/images/icons/about-sprite';
+$about-spritePath: '/assets/images/icons/about-sprite';
 $about-spriteURL: $about-spritePath + '.png';
 $about-spritex2URL: $about-spritePath + '@2x.png';
 $about-bgiSizeW: 751px;

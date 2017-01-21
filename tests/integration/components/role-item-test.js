@@ -2,27 +2,27 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
-const { getOwner } = Ember;
-
-moduleForComponent('role-item', 'Integration | Component | role item', {
-  integration: true,
-  beforeEach() {
-    mockUserRole.set('roleId', defaultRoleId);
-  }
-});
+const {
+  getOwner,
+  Object,
+  RSVP,
+  run
+} = Ember;
 
 let defaultRoleId = 2;
 
-let mockUserRolesService = Ember.Service.extend({
+let mockUserRolesService = {
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
     }
   },
   addRole(role) {
-    return new Ember.RSVP.Promise((fulfill) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill) => {
+      run.next(() => {
         mockUserRole.set('roleId', role.get('id'));
         getOwner(this).lookup('service:user-roles').set('userRoles', [mockUserRole]);
         fulfill();
@@ -30,55 +30,63 @@ let mockUserRolesService = Ember.Service.extend({
     });
   },
   removeRole() {
-    return new Ember.RSVP.Promise((fulfill, reject) => {
-      Ember.run.next(() => {
+    return new RSVP.Promise((fulfill, reject) => {
+      run.next(() => {
         mockUserRole.set('roleId', null);
         getOwner(this).lookup('service:user-roles').set('userRoles', []);
         reject();
       });
     });
-  },
-});
+  }
+};
 
-let mockUserRolesServiceForErrors = Ember.Service.extend({
+let mockUserRolesServiceForErrors = {
   findUserRole(role) {
     if (role.id === mockUserRole.get('roleId')) {
       return mockUserRole;
     }
   },
   addRole() {
-    return Ember.RSVP.reject();
+    return RSVP.reject();
   },
   removeRole() {
-    return Ember.RSVP.reject();
-  },
-});
+    return RSVP.reject();
+  }
+};
 
-let mockUserRole = Ember.Object.create({
+let mockUserRole = Object.create({
   id: 1,
   roleId: defaultRoleId,
-  userId: 1,
+  userId: 1
 });
 
-let unselectedRole = Ember.Object.create({
+let unselectedRole = Object.create({
   id: 1,
   name: 'Backend Developer',
   ability: 'Backend Development',
-  kind: 'technology',
+  kind: 'technology'
 });
 
-let selectedRole = Ember.Object.create({
+let selectedRole = Object.create({
   id: 2,
   name: 'Mobile Developer',
   ability: 'Mobile Development',
-  kind: 'technology',
+  kind: 'technology'
+});
+
+moduleForComponent('role-item', 'Integration | Component | role item', {
+  integration: true,
+  beforeEach() {
+    mockUserRole.set('roleId', defaultRoleId);
+    getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
+  }
 });
 
 test('it works for selecting unselected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -97,7 +105,7 @@ test('it works for removing selected roles', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', selectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
@@ -114,60 +122,50 @@ test('it works for removing selected roles', function(assert) {
 
 test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', unselectedRole);
-
-  let mockFlashMessages = Ember.Service.extend({
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(unselectedRole.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(unselectedRole.name) !== -1, 'Message text includes the role name');
+
     done();
   });
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
-  assert.expect(7);
+  assert.expect(4);
 
-  this.register('service:user-roles', mockUserRolesServiceForErrors);
+  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
   this.set('role', selectedRole);
-
-  let mockFlashMessages = Ember.Service.extend({
-    clearMessages() {
-      assert.ok(true);
-    },
-    add(object) {
-      assert.ok(object.message.indexOf(selectedRole.name) !== -1);
-      assert.equal(object.type, 'danger');
-      assert.equal(object.fixed, true);
-      assert.equal(object.sticky, false);
-      assert.equal(object.timeout, 5000);
-    }
-  });
-  this.register('service:flash-messages', mockFlashMessages);
 
   this.render(hbs`{{role-item role=role}}`);
 
   this.$('button').click();
   wait().then(() => {
     assert.notOk(this.$('span').hasClass('button-spinner'));
+
+    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+
+    let flash = getFlashMessageAt(0, this);
+    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+    assert.ok(flash.message.indexOf(selectedRole.name) !== -1, 'Message text includes the role name');
+
     done();
   });
 });
@@ -176,7 +174,7 @@ test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
   assert.expect(3);
 
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   this.set('role', unselectedRole);
 
   this.render(hbs`{{role-item role=role}}`);
@@ -193,7 +191,7 @@ test('it sets and unsets loading state when adding', function(assert) {
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  this.register('service:user-roles', mockUserRolesService);
+  stubService(this, 'user-roles', mockUserRolesService);
   assert.expect(3);
 
   this.set('role', selectedRole);

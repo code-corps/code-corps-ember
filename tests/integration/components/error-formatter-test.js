@@ -1,40 +1,72 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import PageObject from 'ember-cli-page-object';
+
+import errorFormatterComponent from '../../pages/components/error-formatter';
+
+import { AdapterError } from 'ember-data/adapters/errors';
+import FriendlyError from 'code-corps-ember/utils/friendly-error';
+
+let page = PageObject.create(errorFormatterComponent);
 
 moduleForComponent('error-formatter', 'Integration | Component | error formatter', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
-test('it renders', function(assert) {
-  assert.expect(1);
+const mockStripeError = {
+  error: {
+    type: 'card_error',
+    code: 'invalid_expiry_year',
+    message: "Your card's expiration year is invalid.",
+    param: 'exp_year'
+  }
+};
 
-  this.render(hbs`{{error-formatter}}`);
-  assert.equal(this.$('.error-formatter').length, 1, "The component's element renders");
-});
-
-let mockResponseWithMultipleErrors = Ember.Object.create({
-  errors: [
-    { title: 'First', detail: 'error' },
-    { title: 'Second', detail: 'error' },
-  ]
-});
-
-test('it displays a message for each error in the response', function (assert) {
+test('it formats adapter error properly', function(assert) {
   assert.expect(3);
 
-  this.set('error', mockResponseWithMultipleErrors);
-  this.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(this.$('.error-formatter .error').length, 2, 'Each error message is rendered');
-  assert.equal(this.$('.error-formatter .error:eq(0)').text().trim(), 'First: error', 'First message is rendered');
-  assert.equal(this.$('.error-formatter .error:eq(1)').text().trim(), 'Second: error', 'Second message is rendered');
+  let adapterError = new AdapterError([
+    { id: 'INTERNAL_SERVER_ERROR', title: 'First', detail: 'error' },
+    { id: 'INTERNAL_SERVER_ERROR', title: 'Second', detail: 'error' }
+  ]);
+
+  this.set('error', adapterError);
+  page.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors().count, 2, 'Each error message is rendered');
+  assert.equal(page.errors(0).text, 'First: error', 'First message is rendered');
+  assert.equal(page.errors(1).text, 'Second: error', 'Second message is rendered');
 });
 
-test('it displays a default message if there are no errors in the response', function (assert) {
+test('it formats friendly errors properly', function(assert) {
+  assert.expect(2);
+
+  let friendlyError = new FriendlyError('A friendly error');
+
+  this.set('error', friendlyError);
+  page.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors().count, 1, 'Error message is rendered');
+  assert.equal(page.errors(0).text, 'A friendly error', 'Message text is rendered');
+});
+
+test('it formats stripe card error properly', function(assert) {
+  assert.expect(1);
+
+  this.set('error', mockStripeError);
+  page.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors(0).text, mockStripeError.error.message, 'Message is rendered');
+});
+
+test('it displays a default message if the error structure is not supported', function(assert) {
   assert.expect(2);
 
   this.set('error', {});
-  this.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(this.$('.error-formatter .error').length, 1, 'Each error message is rendered');
-  assert.equal(this.$('.error-formatter .error:eq(0)').text().trim(), 'An unexpected error has occured', 'Default message is rendered');
+  page.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors().count, 1, 'Each error message is rendered');
+  assert.equal(page.errors(0).text, 'An unexpected error has occured', 'Default message is rendered');
 });

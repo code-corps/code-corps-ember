@@ -12,6 +12,6 @@ test('visiting /team', function(assert) {
     assert.equal(teamPage.company.header, 'Our Team');
     assert.equal(teamPage.company.items().count, 2);
     assert.equal(teamPage.contributors.header, 'Our Contributors');
-    assert.equal(teamPage.contributors.items().count, 28);
+    assert.equal(teamPage.contributors.items().count, 29);
   });
 });

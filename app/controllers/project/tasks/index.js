@@ -1,110 +1,123 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
-  page: 1,
-  taskStatus: 'open',
-  taskType: null,
-  types: [
-    Ember.Object.create({
-      name: "Tasks",
-      param: "task",
-      slug: "tasks",
-      selected: false,
-    }),
-    Ember.Object.create({
-      name: "Issues",
-      param: "issue",
-      slug: "issues",
-      selected: false,
-    }),
-    Ember.Object.create({
-      name: "Ideas",
-      param: "idea",
-      slug: "ideas",
-      selected: false,
-    }),
-  ],
+const {
+  computed: { sort },
+  Controller,
+  get,
+  inject: { service },
+  RSVP,
+  setProperties
+} = Ember;
 
-  status: Ember.computed.alias('taskStatus'),
+export default Controller.extend({
+  sorting: ['order:asc'],
 
-  isFilteringClosedTasks: Ember.computed.equal('status', 'closed'),
-  isFilteringOpenTasks: Ember.computed.equal('status', 'open'),
-  isFilteredByType: Ember.computed.notEmpty('taskTypes'),
-  isFiltered: Ember.computed.or('isFilteredByType'),
+  store: service(),
 
-  taskTypes: Ember.computed('taskType', function() {
-    var taskTypes;
-    let array = this.get('taskType');
+  orderedTaskLists: sort('project.taskLists', 'sorting'),
 
-    if (array) {
-      taskTypes = array.split(',');
-    } else {
-      taskTypes = [];
-    }
-
-    return taskTypes;
-  }),
-
-  selectedTypes: Ember.computed('types', 'taskTypes', function() {
-    let types = this.get('types');
-    types.forEach((type) => {
-      let taskTypes = this.get('taskTypes');
-
-      if(taskTypes.includes(type.get('param'))) {
-        type.set('selected', true);
-      } else {
-        type.set('selected', false);
-      }
-      return type;
-    });
-    return types;
-  }),
-
-  resetPage() {
-    this.set('page', 1);
+  dragulaconfig: {
+    options: {
+      moves(el) {
+        return el.dataset.canReposition == 'true';
+      },
+      copy: false,
+      revertOnSpill: false,
+      removeOnSpill: false
+      // Other options from the dragula source page.
+    },
+    enabledEvents: ['drag', 'drop']
   },
 
   actions: {
-    filterByType(type) {
-      let taskTypes = this.get('taskTypes');
-      let typeParam = type.get('param');
+    onDrop(droppedTaskEl, listDropTargetEl, source, siblingTaskEl) {
+      // Get the necessary attributes from the dropped card and drop target
+      let listId = listDropTargetEl.dataset.modelId;
+      let position = $(droppedTaskEl).index();
+      let taskId = droppedTaskEl.dataset.modelId;
 
-      if(taskTypes.includes(typeParam)) {
-        taskTypes.removeObject(typeParam);
+      let store = get(this, 'store');
+      let taskList = store.findRecord('taskList', listId);
+      let task = store.findRecord('task', taskId);
+
+      if (siblingTaskEl) {
+        let siblingTaskId = siblingTaskEl.dataset.modelId;
+        this._moveTaskAboveTask(taskList, task, siblingTaskId, position, droppedTaskEl);
       } else {
-        taskTypes.pushObject(typeParam);
+        this._moveTaskMaybeBelowTask(taskList, task, position, droppedTaskEl);
       }
+    }
+  },
 
-      if(Ember.isEmpty(taskTypes)) {
-        this.set('taskType', null);
-      } else {
-        let types = taskTypes.join(',');
-        this.set('taskType', types);
+  _isFloat(n) {
+    return Number(n) === n && n % 1 !== 0;
+  },
+
+  _moveTaskAboveTask(taskList, task, siblingTaskId, position, droppedTaskEl) {
+    let store = get(this, 'store');
+    let siblingTask = store.findRecord('task', siblingTaskId);
+
+    RSVP.hash({
+      siblingTask,
+      task,
+      taskList
+    }).then(({ siblingTask, task, taskList }) => {
+      let originalListId = get(task, 'taskList.id');
+      let newListId = get(taskList, 'id');
+      if (originalListId !== newListId) {
+        droppedTaskEl.remove();
       }
+      let siblingOrder = get(siblingTask, 'order');
+      let order = this._newOrder(siblingOrder, -1);
+      this._saveTask(task, order, position, taskList);
+    });
+  },
 
-      this.resetPage();
-    },
-
-    removeTypeFilter(type) {
-      let taskTypes = this.get('taskTypes');
-      let typeParam = type.get('param');
-
-      if(taskTypes.includes(typeParam)) {
-        taskTypes.removeObject(typeParam);
+  _moveTaskMaybeBelowTask(taskList, task, position, droppedTaskEl) {
+    RSVP.hash({
+      task,
+      taskList
+    }).then(({ task, taskList }) => {
+      let originalListId = get(task, 'taskList.id');
+      let newListId = get(taskList, 'id');
+      let tempOrder = 0;
+      let lastTask = get(taskList, 'orderedTasks.lastObject');
+      if (lastTask) {
+        tempOrder = get(lastTask, 'order');
       }
-
-      if(Ember.isEmpty(taskTypes)) {
-        this.set('taskType', null);
-      } else {
-        let types = taskTypes.join(',');
-        this.set('taskType', types);
+      let order = this._newOrder(tempOrder, 1);
+      if (originalListId !== newListId) {
+        droppedTaskEl.remove();
       }
+      this._saveTask(task, order, position, taskList);
+    });
+  },
 
-      this.resetPage();
-    },
+  _newOrder(number, sign) {
+    let decimal = this._isFloat(number) ? this._toFraction(number) : 0.5;
+    if (sign === -1) {
+      return number - decimal;
+    } else if (sign === 1) {
+      return number + decimal;
+    }
+  },
 
-    filterByStatus(status) {
-      this.set('taskStatus', status);
-    },
+  _saveTask(task, order, position, taskList) {
+    let tasks = get(taskList, 'tasks');
+    setProperties(task, { order, position });
+
+    // We do pushObject because sorting does not work correctly unless
+    // the task is pushed onto the task list array.
+    tasks.pushObject(task);
+    task.save();
+    // TODO: If save() fails then we have a task pushed onto a task
+    // list that is not actually in that task list
+    // We should consider error handling here
+  },
+
+  _toFraction(number) {
+    let numberString = number.toString();
+    let [, decimalPortion] = numberString.split('.');
+    return Number(decimalPortion);
   }
 });

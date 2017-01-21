@@ -1,24 +1,14 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import onboardingPage from '../pages/onboarding';
-import indexPage from '../pages/index';
+import onboardingPage from 'code-corps-ember/tests/pages/onboarding';
+import indexPage from 'code-corps-ember/tests/pages/index';
 
-let application;
+moduleForAcceptance('Acceptance | Onboarding');
 
-module('Acceptance: Onboarding', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('A user can onboard as expected', (assert) => {
-    let user = server.create('user', { username: 'test_user', state: 'signed_up' });
-    server.create('category');
+test('A user can onboard as expected', function(assert) {
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+  server.create('category');
   server.create('role', {
     name: 'Backend Developer',
     ability: 'Backend Development',
@@ -38,7 +28,7 @@ test('A user can onboard as expected', (assert) => {
     title: 'Ruby'
   });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -140,10 +130,10 @@ test('A user can onboard as expected', (assert) => {
   });
 });
 
-test('A user cannot navigate away from the onboarding', (assert) => {
+test('A user cannot navigate away from the onboarding', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -157,7 +147,7 @@ test('A user cannot navigate away from the onboarding', (assert) => {
   });
 });
 
-test('A user cannot navigate to onboarding when signed out', (assert) => {
+test('A user cannot navigate to onboarding when signed out', function(assert) {
   assert.expect(4);
 
   // TODO: Make this work with currentURL(), doesn't work with it right now
@@ -176,10 +166,10 @@ test('A user cannot navigate to onboarding when signed out', (assert) => {
   });
 });
 
-test('A user can submit name by hitting enter key on firstName input field', (assert) => {
+test('A user can submit name by hitting enter key on firstName input field', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -200,10 +190,10 @@ test('A user can submit name by hitting enter key on firstName input field', (as
   });
 });
 
-test('A user can submit name by hitting enter key on lastName input field', (assert) => {
+test('A user can submit name by hitting enter key on lastName input field', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -224,10 +214,10 @@ test('A user can submit name by hitting enter key on lastName input field', (ass
   });
 });
 
-test('A user cannot submit name by hitting enter key if firstName input field is blank', (assert) => {
+test('A user cannot submit name by hitting enter key if firstName input field is blank', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -247,10 +237,10 @@ test('A user cannot submit name by hitting enter key if firstName input field is
   });
 });
 
-test('A user cannot submit name by hitting enter key if lastName input field is blank', (assert) => {
+test('A user cannot submit name by hitting enter key if lastName input field is blank', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 
@@ -270,10 +260,10 @@ test('A user cannot submit name by hitting enter key if lastName input field is 
   });
 });
 
-test('The footer is hidden when onboarding', (assert) => {
+test('The footer is hidden when onboarding', function(assert) {
   let user = server.create('user', { username: 'test_user', state: 'signed_up' });
 
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();
 

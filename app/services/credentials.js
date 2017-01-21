@@ -1,52 +1,84 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
-  currentUser: Ember.inject.service(),
-  store: Ember.inject.service(),
+const {
+  computed,
+  computed: {
+    alias, empty, notEmpty
+  },
+  get,
+  inject: { service },
+  RSVP,
+  Service,
+  set
+} = Ember;
 
-  user: Ember.computed.alias('currentUser.user'),
+export default Service.extend({
+  organization: null,
 
-  currentOrganization: null,
+  currentUser: service(),
+  store: service(),
 
-  currentOrganizationMemberships: Ember.computed.alias('currentOrganization.organizationMemberships'),
-
-  currentUserMembership: Ember.computed('currentOrganizationMemberships.isLoaded', 'user', function() {
-    let memberships = this.get('currentOrganizationMemberships');
-    let membership = memberships.find((item) => this.findMembership(item));
-    return membership;
-  }),
-
-  currentUserMembershipPromise: Ember.computed('currentOrganizationMemberships', 'user', function() {
-    let memberships = this.get('currentOrganizationMemberships');
-    let fulfilled = this.get('currentOrganizationMemberships.isFulfilled');
-
-    if (fulfilled) {
-      let membership = memberships.find((item) => this.findMembership(item));
-      return Ember.RSVP.resolve(membership);
-    } else {
-      return memberships.then((memberships) => {
-        let membership = memberships.find((item) => this.findMembership(item));
-        return membership;
+  membership: computed('memberships', 'user', {
+    get() {
+      this.fetchMembership().then((membership) => {
+        set(this, 'membership', membership);
       });
+      return null;
+    },
+    set(k, val) {
+      return val;
     }
   }),
 
-  findMembership: function(item) {
-    let itemMemberId = item.belongsTo('member').id();
-    let itemOrganizationId = item.belongsTo('organization').id();
-    let currentUserId = this.get('user.id');
-    let organizationId = this.get('currentOrganization.id');
-    return (itemMemberId === currentUserId) && (itemOrganizationId === organizationId);
+  // Memberships may not be loaded, so we need to wait for them to resolve
+  // Can be useful in routing when we need it loaded to prevent a transition
+  fetchMembership() {
+    return new RSVP.Promise((resolve) => {
+      let memberships = get(this, 'memberships');
+      let fulfilled = get(this, 'memberships.isFulfilled');
+      if (fulfilled) {
+        let membership = memberships.find((membership) => this._findMembership(membership));
+        resolve(membership);
+      } else {
+        memberships.then((memberships) => {
+          let membership = memberships.find((membership) => this._findMembership(membership));
+          resolve(membership);
+        });
+      }
+    });
+  },
+
+  memberships: alias('organization.organizationMemberships'),
+
+  user: alias('currentUser.user'),
+  userCanJoinOrganization: empty('membership'),
+  userCanManageOrganization: alias('membership.isAtLeastAdmin'),
+  userIsMemberInOrganization: notEmpty('membership'),
+  userMembershipIsPending: alias('membership.isPending'),
+
+  joinOrganization() {
+    let member = get(this, 'user');
+    let membership = get(this, 'memberships').createRecord({
+      member,
+      role: 'pending'
+    });
+    return membership.save();
   },
 
   setOrganization(organization) {
-    this.set('currentOrganization', organization);
-    return this.get('currentOrganizationMemberships').reload();
+    set(this, 'organization', organization);
+    return this._refresh();
   },
 
-  userIsMemberInOrganization: Ember.computed.notEmpty('currentUserMembership'),
-  userCanJoinOrganization: Ember.computed.empty('currentUserMembership'),
+  _findMembership(membership) {
+    let membershipUserId = membership.belongsTo('member').id();
+    let membershipOrganizationId = membership.belongsTo('organization').id();
+    let userId = get(this, 'user.id');
+    let organizationId = get(this, 'organization.id');
+    return (membershipUserId === userId) && (membershipOrganizationId === organizationId);
+  },
 
-  userCanManageOrganization: Ember.computed.alias('currentUserMembership.isAtLeastAdmin'),
-  userMembershipIsPending: Ember.computed.alias('currentUserMembership.isPending'),
+  _refresh() {
+    return get(this, 'memberships').reload();
+  }
 });

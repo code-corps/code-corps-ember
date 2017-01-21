@@ -1,164 +1,126 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
+import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
+import taskPage from '../pages/project/tasks/task';
 
-let application;
+moduleForAcceptance('Acceptance | Task Editing');
 
-module('Acceptance: Task Editing', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('Task editing requires logging in', (assert) => {
+test('Task editing requires logging in', function(assert) {
   assert.expect(4);
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
-
-  andThen(() => {
-    assert.equal(find('.task-body .edit').length, 0, 'Body edit button is not rendered');
-    assert.equal(find('.task-title .edit').length, 0, 'Title edit button is not rendered');
-
-    authenticateSession(application, { user_id: user.id });
-    visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
   });
 
   andThen(() => {
-    assert.equal(find('.task-body .edit').length, 1, 'Body edit button is rendered after authenticating');
-    assert.equal(find('.task-title .edit').length, 1, 'Title edit button is rendered after authenticating');
+    assert.notOk(taskPage.taskBody.editButton.isVisible, 'Body edit button is not rendered');
+    assert.notOk(taskPage.taskTitle.editButton.isVisible, 'Title edit button is not rendered');
+
+    authenticateSession(this.application, { user_id: user.id });
+    taskPage.visit({
+      organization: organization.slug,
+      project: project.slug,
+      number: task.number
+    });
+  });
+
+  andThen(() => {
+    assert.ok(taskPage.taskBody.editButton.isVisible, 'Body edit button is rendered after authenticating');
+    assert.ok(taskPage.taskTitle.editButton.isVisible, 'Title edit button is rendered after authenticating');
   });
 });
 
-test('A task body can be edited on its own', (assert) => {
+test('A task body can be edited on its own', function(assert) {
   assert.expect(3);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
-
-  andThen(() => {
-    click('.task-body .edit');
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
   });
 
   andThen(() => {
-    fillIn('textarea[name=markdown]', 'Some type of markdown');
-    click('.preview');
+    taskPage.taskBody.editButton.click();
   });
 
   andThen(() => {
-    assert.equal(find('.body-preview').html(), '<p>Some type of markdown</p>', 'The preview renders');
-    click('.save');
+    taskPage.editor.fillInMarkdown('Some type of markdown');
+    taskPage.editor.previewButton.click();
   });
 
   andThen(() => {
-    assert.equal(find('.task-body .edit').length, 1, 'Succesful save of body switches away from edit mode');
-    assert.equal(find('.task-body .comment-body').html(), '<p>Some type of markdown</p>', 'The new task body is rendered');
+    assert.equal(taskPage.editor.bodyPreview.text, 'Some type of markdown', 'The preview renders');
+    taskPage.clickSave();
+  });
+
+  andThen(() => {
+    assert.ok(taskPage.taskBody.editButton.isVisible, 'Succesful save of body switches away from edit mode');
+    assert.equal(taskPage.taskBody.commentBody.text, 'Some type of markdown', 'The new task body is rendered');
   });
 });
 
-test('A task title can be edited on its own', (assert) => {
+test('A task title can be edited on its own', function(assert) {
   assert.expect(4);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
-  // server.create uses factories. server.schema.<obj>.create does not
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  // need to assign polymorphic properties explicitly
-  // TODO: see if it's possible to override models so we can do this in server.create
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
-
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
   task.user = user;
   task.save();
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
-
-  andThen(() => {
-    click('.task-title .edit');
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
   });
 
   andThen(() => {
-    assert.equal(find('.task-title input[name=title]').val(), 'Test title', 'The original title is correct');
-    fillIn('.task-title input[name=title]', 'Edited title');
-    click('.task-title .save');
+    taskPage.taskTitle.editButton.click();
   });
 
   andThen(() => {
-    assert.equal(find('.task-title .edit').length, 1, 'Sucessful save of title switches away from edit mode');
-    assert.equal(find('.task-title .title').text().trim(), 'Edited title #1', 'The new title is rendered');
+    assert.equal(taskPage.taskTitle.inputValue, 'Test title', 'The original title is correct');
+    taskPage.taskTitle.fillInTitle('Edited title');
+    taskPage.taskTitle.saveButton.click();
+  });
+
+  andThen(() => {
+    assert.ok(taskPage.taskTitle.editButton.isVisible, 'Sucessful save of title switches away from edit mode');
+    assert.equal(taskPage.taskTitle.title.text, 'Edited title #1', 'The new title is rendered');
     assert.equal(server.schema.tasks.find(task.id).title, 'Edited title', 'The title was updated in the database');
   });
 });
 
 // NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
 /*
-test('Mentions are rendered during editing in preview mode', (assert) => {
+test('Mentions are rendered during editing in preview mode', function(assert) {
   assert.expect(1);
 
-  let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
-
-  let organization = server.schema.organizations.create({ slug: 'test_organization' });
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_organization' });
-  let projectId = server.create('project').id;
-
-  sluggedRoute.organization = organization;
-  sluggedRoute.save();
-
-  let project = server.schema.projects.find(projectId);
-  project.organization = organization;
-  project.save();
+  let project = createProjectWithSluggedRoute();
+  let organization = project.organization;
 
   let task = project.createTask({
     title: "Test title",
@@ -174,7 +136,11 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
   let markdown = `Mentioning @${user1.username} and @${user2.username}`;
   let expectedBody = `<p>Mentioning <a href="/${user1.username}" class="username">@${user1.username}</a> and <a href="/${user2.username}" class="username">@${user2.username}</a></p>`;
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
+  });
 
   andThen(() => {
     click('.task-body .edit');
@@ -191,36 +157,37 @@ test('Mentions are rendered during editing in preview mode', (assert) => {
 });
 */
 
-test('A task can be opened or closed by the author', (assert) => {
+test('A task can be opened or closed by the author', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    user: user,
-    project: project
+    user,
+    project
   });
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
+  });
 
   andThen(() => {
-    click('.task-status-button [name=close]');
+    taskPage.taskStatusButton.close.click();
   });
 
   andThen(() => {
     task.reload();
     assert.equal(task.status, 'closed');
-    click('.task-status-button [name=open]');
+    taskPage.taskStatusButton.open.click();
   });
 
   andThen(() => {
@@ -229,37 +196,38 @@ test('A task can be opened or closed by the author', (assert) => {
   });
 });
 
-test('A task can be opened or closed by the organization admin', (assert) => {
+test('A task can be opened or closed by the organization admin', function(assert) {
   assert.expect(2);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    project: project
+    project
   });
 
-  server.schema.create('organization-membership', { organization: organization, member:  user, role: 'admin' });
+  server.schema.create('organization-membership', { organization, member:  user, role: 'admin' });
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
+  });
 
   andThen(() => {
-    click('.task-status-button [name=close]');
+    taskPage.taskStatusButton.close.click();
   });
 
   andThen(() => {
     task.reload();
     assert.equal(task.status, 'closed');
-    click('.task-status-button [name=open]');
+    taskPage.taskStatusButton.open.click();
   });
 
   andThen(() => {
@@ -268,28 +236,29 @@ test('A task can be opened or closed by the organization admin', (assert) => {
   });
 });
 
-test('A task cannot be opened or closed by someone else', (assert) => {
+test('A task cannot be opened or closed by someone else', function(assert) {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
-  let sluggedRoute = server.create('slugged-route', { slug: 'test' });
-  let organization = sluggedRoute.createOrganization({ slug: 'test' });
-  sluggedRoute.save();
-
-  let project = server.create('project', { organization: organization });
+  let organization = createOrganizationWithSluggedRoute();
+  let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
-    project: project
+    project
   });
 
-  visit(`/${organization.slug}/${project.slug}/tasks/${task.number}`);
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
+  });
 
   andThen(() => {
-    assert.equal(find('.task-status-button [name=close]').length, 0, 'The close button is not rendered');
+    assert.notOk(taskPage.taskStatusButton.close.isVisible, 'The close button is not rendered');
   });
 });

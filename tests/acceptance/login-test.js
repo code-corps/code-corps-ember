@@ -1,30 +1,23 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import loginPage from '../pages/login';
 import signupPage from '../pages/signup';
 
-let application;
-
-module('Acceptance: Login', {
-  beforeEach: () => {
-    application = startApp();
-  },
-  afterEach: () => {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Login');
 
 test('Logging in', function(assert) {
   assert.expect(2);
 
-  server.create('user', { id: 1, state: 'selected_skills' });
+  let email = 'test@test.com';
+  let password = 'password';
+
+  server.create('user', { email, password, state: 'selected_skills' });
 
   loginPage.visit();
 
   andThen(() => {
-    loginPage.form.loginSuccessfully();
+    loginPage.form.loginSuccessfully(email, password);
   });
 
   andThen(() => {
@@ -34,15 +27,14 @@ test('Logging in', function(assert) {
 });
 
 test('Login failure', function(assert) {
-  // Mirage expects volunteers@codecorps.org as default email
-  const ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
+  let ERROR_TEXT = "Your password doesn't match the email volunteers@codecorps.org.";
 
   assert.expect(2);
 
   loginPage.visit();
 
   andThen(() => {
-    loginPage.form.loginUnsuccessfully();
+    loginPage.form.loginUnsuccessfully('volunteers@codecorps.org', 'password');
   });
 
   andThen(() => {
@@ -55,7 +47,7 @@ test('When authenticated, redirects from login', function(assert) {
   assert.expect(1);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   loginPage.visit();
 
@@ -68,7 +60,7 @@ test('When authenticated, redirects from signup', function(assert) {
   assert.expect(1);
 
   let user = server.create('user');
-  authenticateSession(application, { user_id: user.id });
+  authenticateSession(this.application, { user_id: user.id });
 
   signupPage.visit();
 

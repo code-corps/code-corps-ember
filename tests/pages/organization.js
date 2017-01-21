@@ -24,9 +24,9 @@ export default create({
   }),
 
   clickSettingsMenuItem: clickable('.organization-menu li a:contains("Settings")'),
-  
+
   projectsMenuItemIsActive: hasClass('active', '.organization-menu li a:contains("Projects")'),
-  
+
   settingsMenuItemIsActive: hasClass('active', '.organization-menu li a:contains("Settings")'),
 
   orgHeader: {

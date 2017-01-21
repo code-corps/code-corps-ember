@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { Component, computed, Object } = Ember;
+
 /**
   `error-formatter' returns a formatted error message. Place within an 'if'
   block to return only when there really is an error.
@@ -17,7 +19,7 @@ import Ember from 'ember';
   @extends Ember.Component
  */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['error-formatter'],
 
   /**
@@ -34,9 +36,58 @@ export default Ember.Component.extend({
     @property messages
     @type String
    */
-  messages: Ember.computed('error.errors', function() {
-    return (this.get('error.errors') || []).map((e) => {
-      return `${e.title}: ${e.detail}`;
-    });
+  messages: computed('error', function() {
+    let errorResponse = Object.create(this.get('error'));
+    let handler = this._findHandler(errorResponse);
+    if (handler) {
+      return handler(errorResponse);
+    } else {
+      console.error(this.get('error'));
+    }
   }),
+
+  /**
+   * Determines the type of error from an error response and returns
+   * the correct messsage formatter function for it.
+   *
+   * @param  {Object} errorResponse The error response received from the server
+   * @return {Function}             Function which takes the error response and returns a list of messages
+   */
+  _findHandler(errorResponse) {
+    if (errorResponse.get('isFriendlyError')) {
+      return this._friendlyErrorMessages;
+    } else if (errorResponse.get('isAdapterError')) {
+      return this._adapterErrorMessages;
+    } else if (errorResponse.get('error.type') === 'card_error') {
+      return this._stripeCardErrorMessages;
+    }
+  },
+
+  _friendlyErrorMessages(errorResponse) {
+    return [errorResponse.get('message')];
+  },
+
+  /**
+   * Formats messages for an adapter error response.
+   * An adapter error response contains an array of errors with a
+   * `title` and a `detail` property, but in most cases, that array only contains
+   * one error.
+   * @param  {Object} errorResponse Response received from the server
+   * @return {Array}                Array of message strings
+   */
+  _adapterErrorMessages(errorResponse) {
+    return (errorResponse.get('errors')).map((e) => `${e.title}: ${e.detail}`);
+  },
+
+  /**
+   * Formats messages for a stripe card error response.
+   *
+   * The response contains an `error` object, for which the relevant key is
+   * the `message` property.
+   * @param  {Object} errorResponse Error response received from the stripe service
+   * @return {Array}                An array of string messages, containing single string
+   */
+  _stripeCardErrorMessages(errorResponse) {
+    return [errorResponse.get('error.message')];
+  }
 });

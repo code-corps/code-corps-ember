@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed: { or },
+  inject: { service },
+  isPresent
+} = Ember;
+
 /**
   `project-long-description` displays and allows editing of the long
   description for the project.
@@ -14,7 +21,7 @@ import Ember from 'ember';
   @class project-long-description
  */
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['project-long-description'],
 
   /**
@@ -23,15 +30,15 @@ export default Ember.Component.extend({
     @property credentials
     @type Ember.Service
    */
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
   /**
     Property that holds the edit mode status.
 
-    @property inEditMode
+    @property isEditing
     @type Boolean
    */
-  inEditMode: false,
+  isEditing: false,
 
   /**
     Property that holds whether the project has a description or not.
@@ -48,10 +55,10 @@ export default Ember.Component.extend({
     @property shouldDisplayEditor
     @type Boolean
    */
-  shouldDisplayEditor: Ember.computed.or('inEditMode', 'descriptionIsBlank'),
+  shouldDisplayEditor: or('isEditing', 'descriptionIsBlank'),
 
   didReceiveAttrs() {
-    this._inferrIfAddingDescription();
+    this._inferIfNeedsDescription();
     return this._super(...arguments);
   },
 
@@ -83,21 +90,21 @@ export default Ember.Component.extend({
     save() {
       this.get('project').save().then(() => {
         this._enterReadMode();
-        this._inferrIfAddingDescription();
+        this._inferIfNeedsDescription();
       });
     }
   },
 
   _enterEditMode() {
-    this.set('inEditMode', true);
+    this.set('isEditing', true);
   },
 
   _enterReadMode() {
-    this.set('inEditMode', false);
+    this.set('isEditing', false);
   },
 
-  _inferrIfAddingDescription() {
-    if (Ember.isPresent(this.get('project.longDescriptionBody'))) {
+  _inferIfNeedsDescription() {
+    if (isPresent(this.get('project.longDescriptionBody'))) {
       this.set('descriptionIsBlank', false);
     } else {
       this.set('descriptionIsBlank', true);

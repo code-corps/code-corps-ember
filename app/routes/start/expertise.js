@@ -1,8 +1,13 @@
 import Ember from 'ember';
 import OnboardingRouteMixin from '../../mixins/onboarding-route';
 
-export default Ember.Route.extend(OnboardingRouteMixin, {
-  currentUser: Ember.inject.service(),
+const {
+  Route,
+  inject: { service }
+} = Ember;
+
+export default Route.extend(OnboardingRouteMixin, {
+  currentUser: service(),
 
   beforeModel() {
     this._super(...arguments);
@@ -12,5 +17,5 @@ export default Ember.Route.extend(OnboardingRouteMixin, {
 
   model() {
     return this.store.findAll('role');
-  },
+  }
 });

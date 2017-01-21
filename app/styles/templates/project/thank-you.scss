@@ -1,0 +1,25 @@
+.thank-you-container {
+  margin: 3em;
+  text-align: center;
+
+  &__project-icon {
+    margin: 1.4em auto;
+    .animated-high-five {
+      margin: 0 auto;
+    }
+  }
+
+  h3 {
+    font-size: $header-font-size-large;
+    font-weight: 600;
+    margin: 10px 0;
+  }
+
+  p {
+    margin-bottom: 1.4em;
+  }
+
+  &__message {
+    color: $light-text;
+  }
+}

@@ -1,6 +1,11 @@
 import { moduleFor, test } from 'ember-qunit';
 import Ember from 'ember';
 
+const {
+  Object,
+  RSVP
+} = Ember;
+
 moduleFor('service:current-user', 'Unit | Service | current user', {
   // Specify the other units that are required for this test.
   needs: ['service:session']
@@ -26,7 +31,7 @@ test('it sets the user when there is a user', function(assert) {
     },
     store: {
       findRecord() {
-        return Ember.RSVP.resolve(Ember.Object.create({ id: 1 }));
+        return RSVP.resolve(Object.create({ id: 1 }));
       }
     },
     session: {
@@ -50,8 +55,8 @@ test('it rejects when the user is not returned from the store', function(assert)
   assert.expect(1);
   let service = this.subject({
     store: {
-      find: function() {
-        return Ember.RSVP.reject();
+      find() {
+        return RSVP.reject();
       }
     },
     session: {

@@ -1,0 +1,58 @@
+<h3>Add card information</h3>
+
+<div class="credit-card-form__icon-list">
+  <img src="/assets/images/icons/visa.png" alt="visa">
+  <img src="/assets/images/icons/american-express.png" alt="american-express">
+  <img src="/assets/images/icons/mastercard.png" alt="mastercard">
+  <img src="/assets/images/icons/discover.png" alt="discover">
+  <img src="/assets/images/icons/jcb.png" alt="jcb">
+  <img src="/assets/images/icons/diners-club.png" alt="diners-club">
+</div>
+
+<div class="input-group">
+  <label>
+    <span>Card number</span>
+    {{input-credit-card-number name="card-number" number=cardNumber}}
+  </label>
+</div>
+
+<div class="input-group">
+
+  <div class="row">
+    <label>
+      <span>Expiration</span>
+      <select class="month" onchange={{action (mut month) value="target.value"}}>
+        {{#each months as |monthChoice|}}
+          <option value={{monthChoice}} selected={{eq month monthChoice}}>{{monthChoice}}</option>
+        {{/each}}
+      </select>
+      <select class="year" onchange={{action (mut year) value="target.value"}}>
+        {{#each years as |yearChoice|}}
+          <option value={{yearChoice}} selected={{eq year yearChoice}}>{{yearChoice}}</option>
+        {{/each}}
+      </select>
+    </label>
+
+    <label>
+      <span>Security code</span>
+      {{input-credit-card-cvc name="card-cvc" cvc=cvc}}
+    </label>
+  </div>
+</div>
+
+<button
+  {{action "submit"}}
+  class="button {{unless isProcessingOrInvalid "default"}} large submit-card"
+  disabled={{isProcessingOrInvalid}}>
+
+  {{#if isProcessing}}
+    Processing...
+  {{else}}
+    Donate
+  {{/if}}
+</button>
+
+{{#unless isProcessing}}
+  {{!validation errors can be passed in from parent, using a block}}
+  {{yield}}
+{{/unless}}

@@ -1,9 +1,15 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
+
+const { getOwner, RSVP } = Ember;
 
 moduleForComponent('user-settings-form', 'Integration | Component | user settings form', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  }
 });
 
 test('it renders', function(assert) {
@@ -19,7 +25,7 @@ let user = {
   lastName: 'User',
   twitter: '@testuser',
   website: 'example.com',
-  biography: 'A test user',
+  biography: 'A test user'
 };
 
 test('it renders form elements properly', function(assert) {
@@ -43,21 +49,14 @@ test('it calls save on user when save button is clicked', function(assert) {
 
   user.save = function() {
     assert.ok(true, 'Save method was called on user');
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   };
 
   this.set('user', user);
 
-  const flashServiceStub = Ember.Service.extend({
-    success() {
-      assert.ok(true, 'Flash message service was called');
-    }
-  });
-
-  this.register('service:flash-messages', flashServiceStub);
-
-
   this.render(hbs`{{user-settings-form user=user}}`);
 
   this.$('.save').click();
+
+  assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown');
 });

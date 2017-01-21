@@ -1,14 +1,20 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed: { mapBy },
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNames: ['organization-profile'],
 
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
-  organizationMembers: Ember.computed.mapBy('organization.organizationMemberships', 'member'),
+  organizationMembers: mapBy('organization.organizationMemberships', 'member'),
 
   didReceiveAttrs() {
     this._super(...arguments);
     this.get('credentials').set('currentOrganization', this.get('organization'));
-  },
+  }
 });

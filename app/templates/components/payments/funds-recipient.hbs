@@ -1,0 +1,40 @@
+<aside>
+  <h1>Funds Recipient</h1>
+</aside>
+
+{{#if (or (eq status 'required') (eq status 'errored'))}}
+  {{payments/funds-recipient/details-form
+    onSubmit=(action onRecipientDetailsSubmitted)
+    stripeConnectAccount=stripeConnectAccount
+  }}
+{{/if}}
+
+{{#if (eq status 'verifying')}}
+  {{payments/funds-recipient/verification-document
+    isBusy=isBusy
+    onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
+    stripeConnectAccount=stripeConnectAccount
+  }}
+
+  {{payments/funds-recipient/personal-id-number
+    isBusy=isBusy
+    stripeConnectAccount=stripeConnectAccount
+    submit=(action onLegalEntityPersonalIdNumberSubmitted)
+  }}
+{{/if}}
+
+{{#if (eq status 'verified')}}
+  <section>
+    <div class="funds-recipient__individual-name">
+      <label>Name</label>
+      <p>{{stripeConnectAccount.legalEntityFirstName}} {{stripeConnectAccount.legalEntityLastName}}</p>
+    </div>
+
+    {{#if (eq stripeConnectAccount.legalEntityType 'business')}}
+      <div class="funds-recipient__business-name">
+        <label>Business Name</label>
+        <p>{{stripeConnectAccount.legalEntityBusinessName}}</p>
+      </div>
+    {{/if}}
+  </section>
+{{/if}}

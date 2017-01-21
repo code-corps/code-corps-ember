@@ -1,69 +1,44 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
+import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
+import userProfile from '../pages/user';
 
-let application;
+moduleForAcceptance('Acceptance | Profile');
 
-module('Acceptance: Profile', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('it displays the user-details component with user details', (assert) => {
+test('it displays the user-details component with user details', function(assert) {
   assert.expect(5);
 
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: 'test_user' });
+  let user = createUserWithSluggedRoute(server);
+  let organization = server.create('organization');
+  server.createList('organization-membership', 3, { member: user, organization });
 
-  let user = sluggedRoute.createUser({
-    username: 'test_user',
-    slug: 'test_user',
-    twitter: 'test_twitter',
-    website: 'test.com',
-  });
+  userProfile.visit({ username: user.username });
 
-  sluggedRoute.save();
-
-  for(let i = 1; i <= 3; i++) {
-    server.create('organization-membership', {
-      member: user,
-      organization: server.create('organization')
-    });
-  }
-
-  visit(user.username);
   andThen(() => {
-    assert.equal(find('.user-details').length, 1);
-    assert.equal(find('.user-details .twitter').text().trim(), '@test_twitter', "The user's twitter renders");
-    assert.equal(find('.user-details .twitter a').attr('href'), 'https://twitter.com/test_twitter', "The user's twitter URL renders");
-    assert.equal(find('.website').text().trim(), 'test.com', "The user's website renders");
-    assert.equal(find('.user-organization-item').length, 3, "The user's organizations are rendered");
+    assert.equal(userProfile.userDetails.isVisible, true, 'The user details component renders');
+    assert.equal(userProfile.userDetails.twitter.text, `@${user.twitter}`, "The user's twitter renders");
+    assert.equal(userProfile.userDetails.twitter.link.href, `https://twitter.com/${user.twitter}`, "The user's twitter URL renders");
+    assert.equal(userProfile.userDetails.website.text, user.website, "The user's website renders");
+    assert.equal(userProfile.organizations().count, 3, "The user's organizations are rendered");
   });
 });
 
-test('the user can navigate to an organization from the organizations list', (assert) => {
+test('the user can navigate to an organization from the organizations list', function(assert) {
   assert.expect(2);
 
-  let userRoute = server.create('slugged-route', { slug: 'andor_drakon' });
-  let user = userRoute.createUser({ username: 'andor_drakon' });
-  userRoute.save();
+  let user = createUserWithSluggedRoute(server);
+  let organization = createOrganizationWithSluggedRoute();
 
-  let organizationRoute = server.create('slugged-route', { slug: 'chaos_inc' });
-  let organization = organizationRoute.createOrganization({ title: 'Chaos Inc.', slug: 'chaos_inc' });
-  organizationRoute.save();
+  server.create('organization-membership', { member: user, organization });
 
-  server.create('organization-membership', { member: user, organization: organization });
-
-  visit(user.username);
+  userProfile.visit({ username: user.username });
 
   let href = `/${organization.slug}`;
 
   andThen(() => {
-    assert.equal(find('.user-organization-item:eq(0) a').attr('href'), href, 'The link is rendered');
-    click('.user-organization-item:eq(0) a');
+    assert.equal(userProfile.organizations(0).href, href, 'The link is rendered');
+    userProfile.organizations(0).click();
   });
 
   andThen(() => {

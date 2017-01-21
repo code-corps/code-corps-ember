@@ -28,7 +28,7 @@ test('it renders the correct control elements', function(assert) {
   assert.equal(this.$('.page:last').text().trim(), '5', 'Last rendered page button is page 5');
 });
 
-test('If there is less than 5 pages of records in total, it only renders buttons for those pages', function (assert) {
+test('If there is less than 5 pages of records in total, it only renders buttons for those pages', function(assert) {
   this.set('options', {
     pageSize: 5,
     totalRecords: 7,
@@ -93,4 +93,22 @@ test('If we are currently on the last page, the next page button does not render
   this.render(hbs`{{pager-control options=options}}`);
 
   assert.equal(this.$('.next-page').length, 0, 'The button does not render');
+});
+
+test('If we are on the last page, and the pagesToShow are less than or equal to the totalPages', function(assert) {
+  this.set('options', {
+    pageSize: 5,
+    totalRecords: 7,
+    currentPage: 7,
+    totalPages: 7
+  });
+
+  this.render(hbs`{{pager-control options=options}}`);
+
+  assert.equal(this.$('.next-page').length, 0, 'The next page button does not render');
+  assert.equal(this.$('.previous-page').length, 1, 'It renders the previous page button');
+
+  assert.equal(this.$('.page').length, 5, 'Total pages is > 5 (pagesToShow), so all 5 page buttons are rendered');
+  assert.equal(this.$('.page:first').text().trim(), '3', 'First rendered page button is page 3');
+  assert.equal(this.$('.page:last').text().trim(), '7', 'Last rendered page button is that of the last possible page (7)');
 });

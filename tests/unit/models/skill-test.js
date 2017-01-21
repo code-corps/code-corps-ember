@@ -1,4 +1,5 @@
 import { moduleForModel, test } from 'ember-qunit';
+import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 
 moduleForModel('skill', 'Unit | Model | skill', {
   // Specify the other units that are required for this test.
@@ -7,6 +8,7 @@ moduleForModel('skill', 'Unit | Model | skill', {
 
 test('it exists', function(assert) {
   let model = this.subject();
-  // let store = this.store();
   assert.ok(!!model);
 });
+
+testForAttributes('skill', ['description', 'matched', 'title']);

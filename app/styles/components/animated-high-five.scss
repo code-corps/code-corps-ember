@@ -1,0 +1,38 @@
+@keyframes emptyAnimation {}
+
+@-webkit-keyframes pulsate {
+  25% {transform: scale(1.3, 1.3);}
+  100% {transform: scale(1.0, 1.0);}
+}
+
+@-webkit-keyframes reset {
+  100% {transform: scale(1.0, 1.0);}
+}
+
+.animated-high-five {
+  $file: "/assets/images/icons/emoji-1f64c-sprite";
+  @include background-image-retina($file, "png", 500px, 100px);
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+
+  &.tone-1f3fb { background-position: -400px 0; }
+  &.tone-1f3fc { background-position: -300px 0; }
+  &.tone-1f3fd { background-position: -200px 0; }
+  &.tone-1f3fe { background-position: -100px 0; }
+  &.tone-1f3ff { background-position: 0 0; }
+
+  &.initial-animation {
+    animation: pulsate 0.5s ease-out;
+    animation-delay: 0.75s;
+  }
+
+  &.follow-on-animation {
+    animation: pulsate 0.5s ease-out;
+    animation-delay: 0;
+  }
+
+  &.reset {
+    animation: emptyAnimation;
+  }
+}

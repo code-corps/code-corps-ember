@@ -1,18 +1,25 @@
 import Ember from 'ember';
 
-const { inject: { service }, RSVP } = Ember;
+const {
+  get,
+  inject: { service },
+  isEmpty,
+  RSVP,
+  Service,
+  set
+} = Ember;
 
-export default Ember.Service.extend({
+export default Service.extend({
   metrics: service(),
   session: service(),
   store: service(),
 
   loadCurrentUser() {
     return new RSVP.Promise((resolve, reject) => {
-      const userId = this.get('session.session.authenticated.user_id');
-      if (!Ember.isEmpty(userId)) {
-        return this.get('store').findRecord('user', userId).then((user) => {
-          this.set('user', user);
+      let userId = get(this, 'session.session.authenticated.user_id');
+      if (!isEmpty(userId)) {
+        return get(this, 'store').findRecord('user', userId).then((user) => {
+          set(this, 'user', user);
           this._identifyUser(user);
           resolve(user);
         }, reject);
@@ -24,15 +31,15 @@ export default Ember.Service.extend({
 
   _identifyUser(user) {
     // Segment
-    Ember.get(this, 'metrics').identify({
-      distinctId: user.get('id'),
-      biography: user.get('biography'),
-      insertedAt: user.get('insertedAt'),
-      email: user.get('email'),
-      name: user.get('name'),
-      state: user.get('state'),
-      username: user.get('username'),
-      website: user.get('website'),
+    get(this, 'metrics').identify({
+      distinctId: get(user, 'id'),
+      biography: get(user, 'biography'),
+      insertedAt: get(user, 'insertedAt'),
+      email: get(user, 'email'),
+      name: get(user, 'name'),
+      state: get(user, 'state'),
+      username: get(user, 'username'),
+      website: get(user, 'website')
     });
-  },
+  }
 });

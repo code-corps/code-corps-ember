@@ -48,7 +48,6 @@ module.exports = function(deployTarget) {
       sentryOrganizationSlug: process.env.STAGING_SENTRY_ORGANIZATION_SLUG,
       sentryProjectSlug: process.env.STAGING_SENTRY_PROJECT_SLUG,
       sentryApiKey: process.env.STAGING_SENTRY_API_KEY,
-      sentryBearerApiKey: process.env.STAGING_SENTRY_API_KEY,
     }
   }
 
@@ -65,7 +64,6 @@ module.exports = function(deployTarget) {
       sentryOrganizationSlug: process.env.PRODUCTION_SENTRY_ORGANIZATION_SLUG,
       sentryProjectSlug: process.env.PRODUCTION_SENTRY_PROJECT_SLUG,
       sentryApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
-      sentryBearerApiKey: process.env.PRODUCTION_SENTRY_API_KEY,
     }
   }
 

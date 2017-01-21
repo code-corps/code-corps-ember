@@ -1,17 +1,17 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+const { Object, set } = Ember;
 
 moduleForComponent('task-new-form', 'Integration | Component | task new form', {
-  integration: true,
-  beforeEach() {
-    this.register('service:credentials', Ember.Service.extend({ currentUserMembership: null }));
-  }
+  integration: true
 });
 
 test('it renders', function(assert) {
   assert.expect(1);
-
+  stubService(this, 'credentials', { membership: null });
   this.render(hbs`{{task-new-form}}`);
 
   assert.equal(this.$('.task-new-form').length, 1, 'The component\'s element renders');
@@ -19,6 +19,7 @@ test('it renders', function(assert) {
 
 test('it renders proper ui elements, properly bound', function(assert) {
   assert.expect(8);
+  stubService(this, 'credentials', { membership: null });
 
   let task = {
     title: 'A task',
@@ -26,10 +27,10 @@ test('it renders proper ui elements, properly bound', function(assert) {
     taskType: 'idea'
   };
 
-  let placeholder = "Test placeholder";
+  let placeholder = 'Test placeholder';
 
-  this.set('task', task);
-  this.set('placeholder', placeholder);
+  set(this, 'task', task);
+  set(this, 'placeholder', placeholder);
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 
   assert.equal(this.$('[name=title]').val(), 'A task', 'Title is properly bound and rendered');
@@ -43,14 +44,17 @@ test('it renders proper ui elements, properly bound', function(assert) {
 });
 
 test('it triggers an action when the task is saved', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
+  stubService(this, 'credentials', { membership: null });
 
-  let task = Ember.Object.create({ id: 1 });
+  let taskList = Object.create({ id: 1, inbox: true, name: 'Inbox' });
+  let task = Object.create({ id: 1, taskList });
 
-  this.set('task', task);
+  set(this, 'task', task);
   this.on('saveTask', (task) => {
     assert.ok(true, 'Action has been called');
     assert.equal(task.id, 1, 'Task parameter has been passed in');
+    assert.equal(task.taskList, taskList, 'Task list has been passed in');
   });
 
   this.render(hbs`{{task-new-form task=task saveTask='saveTask'}}`);
@@ -61,9 +65,9 @@ test('it triggers an action when the task is saved', function(assert) {
 test('it renders only idea and issue task type options if user is not at least a contributor to the organization', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Ember.Service.extend({
-    currentUserMembership: { isContributor: false, isAdmin: false, isOwner: false }
-  }));
+  stubService(this, 'credentials', {
+    membership: { isContributor: false, isAdmin: false, isOwner: false }
+  });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 
@@ -75,9 +79,9 @@ test('it renders only idea and issue task type options if user is not at least a
 test('it renders all task type options if user is at least contributor', function(assert) {
   assert.expect(3);
 
-  this.register('service:credentials', Ember.Service.extend({
-    currentUserMembership: { isContributor: true }
-  }));
+  stubService(this, 'credentials', {
+    membership: { isContributor: true }
+  });
 
   this.render(hbs`{{task-new-form task=task placeholder=placeholder}}`);
 

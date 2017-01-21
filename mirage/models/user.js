@@ -1,8 +1,11 @@
-import { Model, hasMany } from 'ember-cli-mirage';
+import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
   organizationMemberships: hasMany({ inverse: 'member' }),
+  stripePlatformCard: belongsTo('stripe-platform-card'),
+  stripePlatformCustomer: belongsTo('stripe-platform-customer'),
+  stripeConnectSubscriptions: hasMany('stripe-connect-subscription'),
   userCategories: hasMany(),
   userRoles: hasMany(),
-  UserSkills: hasMany(),
+  userSkills: hasMany()
 });

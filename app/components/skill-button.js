@@ -1,11 +1,17 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   isHovering: false,
 
-  userSkills: Ember.inject.service(),
+  userSkills: service(),
 
-  spanClass: Ember.computed('isLoading', 'isHovering', function() {
+  spanClass: computed('isLoading', 'isHovering', function() {
     if (this.get('isLoading')) {
       return 'button-spinner';
     } else if (this.get('isHovering')) {
@@ -27,6 +33,6 @@ export default Ember.Component.extend({
     removeSkill(skill) {
       let userSkills = this.get('userSkills');
       userSkills.removeSkill(skill);
-    },
-  },
+    }
+  }
 });

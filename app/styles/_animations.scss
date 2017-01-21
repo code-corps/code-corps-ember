@@ -199,3 +199,45 @@
   from { left: -100%; }
   to   { left: 45%; }
 }
+
+@mixin translateX($val) {
+  -webkit-transform: translateX($val);
+  -moz-transform: translateX($val);
+  -o-transform: translateX($val);
+  transform: translateX($val);
+}
+
+@keyframes moveRight {
+  0% { @include translateX(-100%); }
+  40% { @include translateX(0%); }
+  60% { @include translateX(0%); }
+  100% { @include translateX(100%); }
+}
+
+@-moz-keyframes moveRight {
+  0% { @include translateX(-100%); }
+  40% { @include translateX(0%); }
+  60% { @include translateX(0%); }
+  100% { @include translateX(100%); }
+}
+
+@-o-keyframes moveRight {
+  0% { @include translateX(-100%); }
+  40% { @include translateX(0%); }
+  60% { @include translateX(0%); }
+  100% { @include translateX(100%); }
+}
+
+@-webkit-keyframes moveRight {
+  0% { @include translateX(-100%); }
+  40% { @include translateX(0%); }
+  60% { @include translateX(0%); }
+  100% { @include translateX(100%); }
+}
+
+@-ms-keyframes moveRight {
+  0% { @include translateX(-100%); }
+  40% { @include translateX(0%); }
+  60% { @include translateX(0%); }
+  100% { @include translateX(100%); }
+}

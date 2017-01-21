@@ -1,25 +1,34 @@
 import Ember from 'ember';
 import { Ability } from 'ember-can';
 
+const {
+  computed,
+  computed: { alias, or },
+  inject: { service },
+  isEmpty
+} = Ember;
+
 export default Ability.extend({
-  credentials: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+  credentials: service(),
+  currentUser: service(),
 
-  task: Ember.computed.alias('model'),
+  task: alias('model'),
 
-  userIsAuthor: Ember.computed('task', 'currentUser.user', function() {
+  userIsAuthor: computed('task', 'currentUser.user', function() {
     let taskUserId = this.get('task.user.id');
     let currentUserId = this.get('currentUser.user.id');
 
-    if (Ember.isEmpty(taskUserId) || Ember.isEmpty(currentUserId)) {
+    if (isEmpty(taskUserId) || isEmpty(currentUserId)) {
       return false;
     }
 
     return taskUserId === currentUserId;
   }),
 
-  membership: Ember.computed.alias('credentials.currentUserMembership'),
-  userIsAtLeastAdmin: Ember.computed.or('membership.isAdmin', 'membership.isOwner'),
+  membership: alias('credentials.membership'),
+  userIsAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
+  userIsAtLeastContributor: or('membership.isContributor', 'userIsAtLeastAdmin'),
 
-  canEdit: Ember.computed.or('userIsAuthor', 'userIsAtLeastAdmin')
+  canEdit: or('userIsAuthor', 'userIsAtLeastAdmin'),
+  canReposition: or('userIsAuthor', 'userIsAtLeastContributor')
 });

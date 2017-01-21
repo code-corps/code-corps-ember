@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  Component,
+  inject: { service }
+} = Ember;
 
 /**
   `navigation-menu` composes the top navigation-menu.
@@ -15,7 +18,7 @@ const { service } = Ember.inject;
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['menu', 'container'],
 
   /**
@@ -40,5 +43,5 @@ export default Ember.Component.extend({
     @property session
     @type Ember.Service
    */
-  session: service(),
+  session: service()
 });

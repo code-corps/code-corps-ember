@@ -1,7 +1,9 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { hasMany } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
+
+const { computed } = Ember;
 
 export default Model.extend({
   base64PhotoData: attr(),
@@ -22,15 +24,20 @@ export default Model.extend({
   stateTransition: attr(),
 
   organizationMemberships: hasMany('organization-membership', { async: true }),
+
+  stripeConnectSubscriptions: hasMany('stripe-connect-subscription', { async: true }),
+  stripePlatformCard: belongsTo('stripe-platform-card', { async: true }),
+  stripePlatformCustomer: belongsTo('stripe-platform-customer', { async: true }),
+
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
   userSkills: hasMany('user-skill', { async: true }),
 
-  atUsername: Ember.computed('username', function() {
+  atUsername: computed('username', function() {
     return `@${this.get('username')}`;
   }),
 
-  twitterUrl: Ember.computed('twitter', function() {
+  twitterUrl: computed('twitter', function() {
     return `https://twitter.com/${this.get('twitter')}`;
-  }),
+  })
 });

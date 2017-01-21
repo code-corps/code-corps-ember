@@ -3,11 +3,9 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject,
-  set,
+  inject: { service },
+  set
 } = Ember;
-
-const { service } = inject;
 
 /**
   `login-form` composes the login form, and makes the required calls to
@@ -32,6 +30,8 @@ export default Component.extend({
    */
   session: service(),
 
+  isLoading: false,
+
   actions: {
 
     /**
@@ -41,12 +41,14 @@ export default Component.extend({
       @method authenticate
      */
     authenticate() {
+      set(this, 'isLoading', true);
+
       let credentials = this.getProperties('identification', 'password');
 
       get(this, 'session').authenticate('authenticator:jwt', credentials).catch((reason) => {
-        console.log(reason);
+        set(this, 'isLoading', false);
         set(this, 'errors', reason.error || reason);
       });
-    },
-  },
+    }
+  }
 });

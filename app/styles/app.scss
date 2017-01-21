@@ -19,7 +19,6 @@
 
 @import "header";
 @import "settings";
-@import "pace";
 @import "code";
 
 @import "dropdown-menu";
@@ -29,25 +28,38 @@
 @import "task-new";
 @import "start";
 
+@import "components/animated-high-five";
 @import "components/categories-list";
 @import "components/category-item";
 @import "components/code-theme-selector";
 @import "components/comment-item";
 @import "components/create-comment-form";
+@import "components/donation/card-item";
+@import "components/donations/donation-progress";
+@import "components/donations/donation-status";
+@import "components/donation-goal";
+@import "components/donation-goal-edit";
+@import "components/donation-payment";
 @import "components/drag-zone";
 @import "components/editor-with-preview";
 @import "components/error-wrapper";
 @import "components/image-drop";
+@import "components/loading-bar";
 @import "components/login-form";
 @import "components/member-list-item";
 @import "components/navigation-menu";
 @import "components/organization-header";
 @import "components/organization-members";
+@import "components/payments/account-setup";
+@import "components/payments/funds-recipient/details-form";
+@import "components/payments/bank-account";
 @import "components/pager-control";
+@import "components/task-card";
 @import "components/task-comment-list";
 @import "components/task-details";
 @import "components/task-header";
-@import "components/task-item";
+@import "components/task-board";
+@import "components/task-list-cards";
 @import "components/task-status";
 @import "components/task-new-form";
 @import "components/task-title";
@@ -57,11 +69,11 @@
 @import "components/project-card";
 @import "components/project-card-skills";
 @import "components/project-card-members";
+@import "components/project-header";
 @import "components/project-item";
 @import "components/project-list";
 @import "components/project-long-description";
 @import "components/project-menu";
-@import "components/project-task-list";
 @import "components/role-item";
 @import "components/settings-menu";
 @import "components/signup-form";
@@ -74,6 +86,8 @@
 
 @import "templates/about";
 @import "templates/project/index";
+@import "templates/project/tasks/index";
+@import "templates/project/thank-you";
 @import "templates/project/settings/contributors";
 @import "templates/start/expertise";
 @import "templates/start/hello";

@@ -1,0 +1,19 @@
+<div class="amounts">
+{{#each presetAmounts as |presetAmount|}}
+  {{donations/donation-amount-button
+    customAmount=customAmount
+    presetAmount=presetAmount
+    selectedAmount=amount
+    setCustomAmount=(action (mut customAmount))
+    setAmount=(action (mut amount))
+  }}
+{{/each}}
+</div>
+<div class="custom-amount">
+  <div class="input-group">
+    <span class="input-group-addon currency">$</span>
+    {{input class="amount" name="amount" type="number" min=0 placeholder="Custom amount" step=1 value=customAmount}}
+    <span class="input-group-addon period">per month</span>
+  </div>
+</div>
+<button class="continue default large" disabled={{continueDisabled}} {{action continue selectedAmount}}>Continue</button>

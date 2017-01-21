@@ -1,0 +1,42 @@
+<div class="header-section">
+  {{#if hasExistingDonationGoals}}
+    <h3>Goals</h3>
+  {{else}}
+    <h3>Add your goals</h3>
+    <p>Before you can start taking donations, you'll need to add at least one monthly fundraising goal.</p>
+  {{/if}}
+  <p>Your fundraising goals are milestones that will help you do more with your project. Think about things like paying for operating costs or hiring people.</p>
+  <p>Help your donors understand how far their money can go.</p>
+</div>
+
+{{#each sortedDonationGoals as |donationGoal|}}
+  {{#if donationGoal.isLoaded}}
+    {{#if donationGoal.isEditing}}
+      {{donation-goal-edit
+        canCancel=canCancel
+        cancel=(action cancel donationGoal)
+        donationGoal=donationGoal
+        save=(action save donationGoal)
+      }}
+    {{else}}
+      {{donation-goal
+        amountDonated=project.totalMonthlyDonated
+        canEdit=canEdit
+        click=(action edit donationGoal canEdit)
+        donationGoal=donationGoal
+        edit=(action edit donationGoal canEdit)
+      }}
+    {{/if}}
+  {{else}}
+    <div class="donation-goal-loading">
+      <div class="amount"></div>
+      <div class="description"></div>
+    </div>
+  {{/if}}
+{{/each}}
+
+{{#if canAdd}}
+  <p>
+    <button class="clear add" {{action add project}}>Add Goal</button>
+  </p>
+{{/if}}

@@ -1,0 +1,22 @@
+.task-list {
+  border: 1px solid #DDD; // need a new border color, slightly lighter?
+  background-color: #FAFAFA;
+  border-radius: 4px;
+  height: 100%;
+  width: 280px;
+  overflow-y: scroll;
+  margin-right: 7px;
+  padding: 8px 10px;
+  white-space: normal;
+}
+
+.task-list {
+  &__name {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}
+
+.task-list-cards {
+  height: 100%;
+}

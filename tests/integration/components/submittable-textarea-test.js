@@ -1,21 +1,13 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import { triggerKeyDown, initialize } from 'ember-keyboard';
 
 moduleForComponent('submittable-textarea', 'Integration | Component | submittable textarea', {
-  integration: true
-});
+  integration: true,
 
-let pressCtrlEnter = Ember.$.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
-});
-
-let pressCmdEnter = Ember.$.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  metaKey: true
+  beforeEach() {
+    initialize();
+  }
 });
 
 // This test is necessary because a new line after yield in the file will
@@ -34,7 +26,7 @@ test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {
   });
   this.render(hbs`{{submittable-textarea modifiedSubmit="modifiedSubmit"}}`);
 
-  this.$('textarea').trigger(pressCtrlEnter);
+  triggerKeyDown('ctrl+Enter', this.$('textarea'));
   assert.equal(this.$('textarea').val().trim(), '');
 });
 
@@ -46,6 +38,6 @@ test('it sends the modifiedSubmit action with cmd+enter', function(assert) {
   });
   this.render(hbs`{{submittable-textarea modifiedSubmit="modifiedSubmit"}}`);
 
-  this.$('textarea').trigger(pressCmdEnter);
+  triggerKeyDown('cmd+Enter', this.$('textarea'));
   assert.equal(this.$('textarea').val().trim(), '');
 });

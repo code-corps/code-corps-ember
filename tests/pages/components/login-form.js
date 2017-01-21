@@ -12,19 +12,19 @@ export default {
   submit:   clickable('#login'),
 
   errors:   collection({
-    itemScope: 'p.error',
+    itemScope: 'p.error'
   }),
 
-  loginSuccessfully() {
+  loginSuccessfully(email, password) {
     this
-      .username('volunteers@codecorps.org')
-      .password('password')
+      .username(email)
+      .password(password)
       .submit();
   },
-  loginUnsuccessfully() {
+  loginUnsuccessfully(email, password) {
     this
-      .username('volunteers@codecorps.org')
-      .password('wrongpassword')
+      .username(email)
+      .password(password)
       .submit();
   }
 };

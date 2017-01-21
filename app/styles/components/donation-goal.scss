@@ -1,0 +1,83 @@
+@mixin donation-goal-shared-style {
+  border: 1px solid $border-light;
+  border-radius: 4px;
+  margin: 10px 0;
+  padding: 15px 20px;
+}
+
+.donation-goal {
+  @include donation-goal-shared-style;
+
+  position: relative;
+
+  &:hover {
+    &.can-edit {
+      background: $light-blue-background;
+      border-color: $border-light-blue;
+      cursor: pointer;
+    }
+  }
+
+  .amount {
+    font-size: $header-font-size-small;
+    font-weight: 700;
+    margin: 0 10px 0 0;
+  }
+
+  .description {
+    color: $light-text;
+    font-size: $body-font-size-normal;
+    margin: 7px 0;
+  }
+
+  .edit {
+    font-size: $body-font-size-small;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .current {
+    color: $light-text;
+    margin-bottom: 5px;
+
+    strong {
+      font-weight: 700;
+      color: $dark-text;
+    }
+  }
+
+  .current--percentage {
+    margin-left: 20px;
+  }
+
+  .current--description {
+    font-size: $body-font-size-small;
+  }
+}
+
+.donation-goal-loading {
+  @include donation-goal-shared-style;
+
+  .amount, .description {
+    background: $background-gray;
+  }
+
+  .amount {
+    height: 20px;
+    min-width: 100px;
+    width: 20%;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    height: 20px;
+    min-width: 250px;
+    width: 50%;
+    margin-bottom: 5px;
+  }
+}

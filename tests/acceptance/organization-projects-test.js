@@ -1,41 +1,23 @@
-import Ember from "ember";
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import organizationProjects from '../pages/organization-projects';
+import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 
-let application;
+moduleForAcceptance('Acceptance | Organization projects');
 
-module('Acceptance: Organization projects', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('It renders all the required ui elements', (assert) => {
+test('It renders all the required ui elements', function(assert) {
   assert.expect(3);
 
-  let slug = 'test_organization';
-  let sluggedRoute = server.schema.sluggedRoutes.create({ slug: slug });
-  let organization = sluggedRoute.createOrganization({ slug: slug });
-  sluggedRoute.save();
-  for (let i = 0; i < 5; i++) {
-    organization.createProject({
-      slug: `test_project_${i}`,
-      title: `Test project ${i}`
-    });
-  }
-  organization.save();
+  let organization = createOrganizationWithSluggedRoute();
+  let projects = server.createList('project', 5, { organization });
 
-  organizationProjects.visit({ slug });
+  organizationProjects.visit({ slug: organization.slug });
 
   andThen(function() {
     assert.ok(organizationProjects.project.isVisible, 'project-list component is rendered');
     assert.equal(organizationProjects.project.items().count, 5, 'correct number of project-items is rendered');
 
     let firstProjectHref = organizationProjects.project.items(0).href;
-    assert.ok(firstProjectHref.indexOf(`/${slug}/test_project_0`) > -1, 'The link to a project is properly rendered');
+    assert.ok(firstProjectHref.indexOf(`/${organization.slug}/${projects[0].slug}`) > -1, 'The link to a project is properly rendered');
   });
 });

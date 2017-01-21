@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  get,
+  inject: { service }
+} = Ember;
+
 /**
   The task-new-form component is used for creating new tasks. It includes the
   task type, title, editor and preview
@@ -14,7 +21,7 @@ import Ember from 'ember';
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-new-form'],
   classNameBindings: ['task.taskType'],
   tagName: 'form',
@@ -23,7 +30,7 @@ export default Ember.Component.extend({
     @property credentials
     @type Ember.Service
    */
-  credentials: Ember.inject.service(),
+  credentials: service(),
 
   /**
     Holds the placeholder messages for each task type: task, issue, idea.
@@ -32,9 +39,9 @@ export default Ember.Component.extend({
     @type Object
    */
   placeholders: {
-    task: "How can you describe the steps to complete the task so anyone can work on it?",
+    task: 'How can you describe the steps to complete the task so anyone can work on it?',
     issue: "What issue needs resolved? If it's a bug, how can anyone reproduce it?",
-    idea: "What's your idea? Be specific so people can give more accurate feedback.",
+    idea: "What's your idea? Be specific so people can give more accurate feedback."
   },
 
   /**
@@ -44,10 +51,10 @@ export default Ember.Component.extend({
     @property placeholder
     @type String
    */
-  placeholder: Ember.computed('task.taskType', function() {
-    let taskType = this.get('task.taskType');
+  placeholder: computed('task.taskType', function() {
+    let taskType = get(this, 'task.taskType');
     if (taskType) {
-      return this.get(`placeholders.$(taskType)`);
+      return get(this, 'placeholders.$(taskType)');
     }
   }),
 
@@ -60,8 +67,8 @@ export default Ember.Component.extend({
       @method submit
      */
     submit() {
-      let task = this.get('task');
+      let task = get(this, 'task');
       this.sendAction('saveTask', task);
-    },
-  },
+    }
+  }
 });

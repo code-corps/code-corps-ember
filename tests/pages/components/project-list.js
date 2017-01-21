@@ -1,6 +1,6 @@
 import {
   attribute,
-  collection,
+  collection
 } from 'ember-cli-page-object';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   items: collection({
     itemScope: '.project-item',
     item: {
-      href: attribute('href', 'a:eq(0)'),
+      href: attribute('href', 'a:eq(0)')
     }
   })
 };

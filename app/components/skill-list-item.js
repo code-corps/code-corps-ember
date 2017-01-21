@@ -1,15 +1,22 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, notEmpty },
+  inject: { service }
+} = Ember;
+
+export default Component.extend({
   classNameBindings: ['matched'],
   tagName: 'li',
 
-  matched: Ember.computed.notEmpty('userSkill'),
-  userSkills: Ember.inject.service(),
-  user: Ember.computed.alias('currentUser.user'),
-  usersUserSkills: Ember.computed.alias('user.userSkills'),
+  matched: notEmpty('userSkill'),
+  userSkills: service(),
+  user: alias('currentUser.user'),
+  usersUserSkills: alias('user.userSkills'),
 
-  userSkill: Ember.computed('skill', 'userSkills.userSkills.isFulfilled', function() {
+  userSkill: computed('skill', 'userSkills.userSkills.isFulfilled', function() {
     let skill = this.get('skill');
     let userSkills = this.get('userSkills');
     let result = userSkills.findUserSkill(skill);
@@ -24,5 +31,5 @@ export default Ember.Component.extend({
     if (elementBottom > parentBottom) {
       this.sendAction();
     }
-  },
+  }
 });

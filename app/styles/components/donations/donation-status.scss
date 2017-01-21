@@ -1,0 +1,61 @@
+.donation-status {
+  .become-a-donor {
+    button {
+      width: 100%;
+    }
+  }
+
+  .create-donation {
+    display: flex;
+    flex-direction: column;
+
+    .amounts {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .preset-amount {
+      flex: 2;
+      flex-basis: 48%;
+      margin-bottom: 5px;
+
+      &:nth-child(even) {
+        margin-left: 2px;
+      }
+
+      &:nth-child(odd) {
+        margin-right: 2px;
+      }
+    }
+
+    .custom-amount {
+      flex: 1;
+    }
+
+    .continue {
+      flex: 1;
+    }
+  }
+
+  .show-donation {
+    background: $light-blue-background;
+    border-radius: 4px;
+    padding: 10px 15px;
+
+    .info {
+      display: flex;
+      font-weight: 700;
+      line-height: 30px;
+      vertical-align: middle;
+
+      &:before {
+        content: "";
+        $file: "/assets/images/icons/fireworks-small";
+        @include background-image-retina($file, "png", 30px, 30px);
+        height: 30px;
+        width: 30px;
+        margin: 0 15px 0 0;
+      }
+    }
+  }
+}

@@ -1,17 +1,41 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  get,
+  inject: { service }
+} = Ember;
+
+/**
+  `user-settings-form` composes the form for changing a user's settings
+
+  ```handlebars
+  {{user-settings-form user=model}}
+  ```
+
+  @class user-settings-form
+  @module Component
+  @extends Ember.Component
+ */
+export default Component.extend({
   classNames: ['user-settings-form'],
 
-  flashMessages: Ember.inject.service(),
+  /**
+    @property flashMessages
+    @type Ember.Service
+   */
+  flashMessages: service(),
 
   actions: {
-    save() {
-      const flashMessages = Ember.get(this, 'flashMessages');
+    /**
+      Action to save the user's settings.
 
-      this.get('user').save().then(function() {
-        flashMessages.success("Profile updated successfully");
+      @method save
+     */
+    save() {
+      this.get('user').save().then(() => {
+        get(this, 'flashMessages').clearMessages().success('Profile updated successfully');
       });
-    },
+    }
   }
 });

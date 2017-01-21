@@ -1,0 +1,25 @@
+{{payments/create-account
+  isBusy=isBusy
+  onCreateStripeConnectAccount=(action onCreateStripeConnectAccount)
+  stripeConnectAccount=stripeConnectAccount
+}}
+
+{{payments/funds-recipient
+  isBusy=isBusy
+  onLegalEntityPersonalIdNumberSubmitted=(action onLegalEntityPersonalIdNumberSubmitted)
+  onRecipientDetailsSubmitted=(action onRecipientDetailsSubmitted)
+  onVerificationDocumentSubmitted=(action onVerificationDocumentSubmitted)
+  stripeConnectAccount=stripeConnectAccount
+}}
+
+{{payments/bank-account
+  isBusy=isBusy
+  stripeConnectAccount=stripeConnectAccount
+  submit=(action onBankAccountInformationSubmitted)
+}}
+
+{{payments/donation-goals
+  donationsActive=project.donationsActive
+  project=project
+  transfersEnabled=stripeConnectAccount.transfersEnabled
+}}

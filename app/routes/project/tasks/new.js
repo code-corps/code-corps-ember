@@ -1,31 +1,44 @@
-import { computed } from 'ember-can';
+import EmberCan from 'ember-can';
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend(AuthenticatedRouteMixin, {
-  credentials: Ember.inject.service(),
-  currentUser: Ember.inject.service(),
+const {
+  computed,
+  get,
+  inject: { service },
+  Route,
+  RSVP
+} = Ember;
 
-  ability: computed.ability('organization', 'currentUserMembership'),
+export default Route.extend(AuthenticatedRouteMixin, {
+  credentials: service(),
+  currentUser: service(),
 
-  canCreateTask: Ember.computed.alias('ability.canCreateTaskTask'),
-  currentUserMembership: Ember.computed.alias('credentials.currentUserMembership'),
+  ability: EmberCan.computed.ability('organization', 'membership'),
 
-  taskType: Ember.computed('canCreateTask', function() {
-    return this.get('canCreateTask') ? 'task' : 'issue';
+  canCreateTask: computed.alias('ability.canCreateTaskTask'),
+  membership: computed.alias('credentials.membership'),
+
+  taskType: computed('canCreateTask', function() {
+    return get(this, 'canCreateTask') ? 'task' : 'issue';
   }),
 
   model() {
-    return this.modelFor('project');
+    return this.modelFor('project').reload().then((project) => {
+      let taskLists = project.get('taskLists');
+      return RSVP.hash({ project, taskLists });
+    });
   },
 
-  setupController(controller, model) {
+  setupController(controller, { project }) {
     let newTask = this.store.createRecord('task', {
-      project: model,
-      user: this.get('currentUser.user'),
-      taskType: this.get('taskType'),
+      project,
+      taskList: get(project, 'inboxTaskList'),
+      taskType: get(this, 'taskType'),
+      user: get(this, 'currentUser.user')
     });
-    controller.set('task', newTask);
+    // controller.set('task', newTask);
+    controller.setProperties({ project, task: newTask });
   },
 
   actions: {
@@ -33,12 +46,12 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       task.save().then((task) => {
         this.transitionTo('project.tasks.task', task.get('number'));
       }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
           this.controllerFor('project.tasks.new').set('error', error);
         }
       });
-    },
-  },
+    }
+  }
 });

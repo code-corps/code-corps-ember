@@ -21,8 +21,8 @@ test('it renders all elements', function(assert) {
   assert.equal(this.$('ul.footer-columns > li:eq(1) li:eq(1)').text().trim(), 'Team');
 
   assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(0)').text().trim(), 'team@codecorps.org');
-  // assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(1)').text().trim(), 'Terms of Use');
-  // assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(2)').text().trim(), 'Privacy Policy');
+  assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(1)').text().trim(), 'Terms of Use');
+  assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(2)').text().trim(), 'Privacy Policy');
 
   assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(0) a').attr('href'), 'mailto:team@codecorps.org');
 

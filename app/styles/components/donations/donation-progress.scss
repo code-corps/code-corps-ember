@@ -1,0 +1,44 @@
+.donation-progress {
+  margin-bottom: 20px;
+
+  .information {
+    display: flex;
+    justify-content: space-between;
+
+    .percentage {
+      text-align: right;
+    }
+
+    .description {
+      color: $light-text;
+      font-size: $body-font-size-small;
+    }
+
+    .value {
+      font-size: $header-font-size-large;
+      font-weight: 700;
+    }
+  }
+
+  .progress-bar-container {
+    height: 10px;
+    margin: 20px 0;
+  }
+
+  &__description-header {
+    color: $light-text;
+    font-size: $body-font-size-small;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__description {
+    border: 1px solid $border-light;
+    border-radius: 4px;
+    color: $light-text;
+    font-size: $body-font-size-normal;
+    line-height: 22px;
+    margin: 10px 0;
+    padding: 10px;
+  }
+}

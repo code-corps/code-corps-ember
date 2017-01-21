@@ -1,48 +1,47 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-  currentUser: Ember.inject.service(),
+const {
+  Route,
+  inject: { service }
+} = Ember;
+
+export default Route.extend({
+  currentUser: service(),
 
   model(params) {
     let projectId = this.modelFor('project').id;
-    let queryParams = {
-      projectId: projectId,
-      number: params.number
-    };
+    let { number } = params;
 
-    let userId = this.get('currentUser.user.id');
-
-    return Ember.RSVP.hash({
-      task: this.store.queryRecord('task', queryParams),
-      user: Ember.isPresent(userId) ? this.store.find('user', userId) : null
-    }).then((result) => {
-      return Ember.RSVP.hash({
-        task: result.task,
-        comment: this.store.createRecord('comment', { task: result.task, user: result.user }),
-        comments: this.store.query('comment', { taskId: result.task.id })
-      });
-    });
+    return this.store.queryRecord('task', { projectId, number });
   },
 
-  setupController(controller, models) {
-    this._super(controller, models);
-    controller.set('task', models.task);
-    controller.set('newComment', models.comment);
-    controller.set('comments', models.comments);
+  setupController(controller, task) {
+    let user = this.get('currentUser.user');
+    let newComment = this.store.createRecord('comment', { user });
+    controller.setProperties({ newComment, task });
   },
 
   actions: {
-    saveComment(comment) {
-      let route = this;
-      comment.save().then(() => {
-        route.refresh();
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
+    save(task) {
+      return task.save().catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 
         if (!payloadContainsValidationErrors) {
           this.controllerFor('project.tasks.task').set('error', error);
         }
       });
     },
-  },
+
+    saveComment(comment) {
+      let task = this.get('controller.task');
+      comment.set('task', task);
+      comment.save().catch((error) => {
+        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
+
+        if (!payloadContainsValidationErrors) {
+          this.controllerFor('project.tasks.task').set('error', error);
+        }
+      });
+    }
+  }
 });

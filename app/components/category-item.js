@@ -5,12 +5,9 @@ const {
   Component,
   computed,
   get,
-  inject,
-  set,
+  inject: { service },
+  set
 } = Ember;
-
-const { service } = inject;
-
 
 /**
  * `category-item` composes a category's icon, and description.
@@ -105,7 +102,7 @@ export default Component.extend({
       }).finally(() => {
         set(this, 'isLoading', false);
       });
-    },
+    }
   },
 
   /**
@@ -116,14 +113,7 @@ export default Component.extend({
    * @private
    */
   _flashError(message) {
-    let flashMessages = get(this, 'flashMessages');
-    flashMessages.clearMessages();
-    return flashMessages.add({
-      message: message,
-      type: 'danger',
-      fixed: true,
-      sticky: false,
-      timeout: 5000,
-    });
-  },
+    let options = { fixed: true, sticky: false, timeout: 5000 };
+    get(this, 'flashMessages').clearMessages().danger(message, options);
+  }
 });

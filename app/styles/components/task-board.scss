@@ -1,0 +1,18 @@
+.task-board-container {
+  display: flex;
+  flex-grow: 1;
+  flex: auto;
+  overflow-x: scroll;
+  position: relative;;
+}
+
+.task-board {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  user-select: none;
+  white-space: nowrap;
+}

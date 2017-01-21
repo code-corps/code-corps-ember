@@ -1,5 +1,6 @@
 html {
   font-family: $body-font-family;
+  font-size: $body-font-size-normal;
 
   &.danger {
     background: $danger-color;
@@ -54,6 +55,14 @@ a {
   min-width: 980px;
 }
 
+.main.container {
+  &.for-project-tasks {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+}
+
 .error {
   color: $error-text-color;
 }
@@ -70,6 +79,15 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+
+  &.bulleted {
+    list-style-type: disc;
+    margin-left: 30px;
+
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
 }
 
 .border-top {
@@ -145,4 +163,33 @@ p.subtext {
 
     margin-top: 90px;
   }
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.header-section {
+  margin: 20px 0;
+
+  h2 {
+    font-weight: 700;
+  }
+
+  p {
+    color: $light-text;
+    line-height: 2em;
+  }
+}
+
+.legal {
+  margin: auto;
+  max-width: 600px;
 }

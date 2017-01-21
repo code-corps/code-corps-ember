@@ -1,8 +1,0 @@
-<div class="dropdown-header">
-  <p>Filter by {{field}} <a class="right close" {{action "hide"}}>&times;</a></p>
-</div>
-{{#each selectedFilters as |filter|}}
-<li>
-  <a class="filter {{field}} {{filter.slug}} {{if filter.selected "selected"}}" {{action "filterBy" filter}}>{{filter.name}}</a>
-</li>
-{{/each}}

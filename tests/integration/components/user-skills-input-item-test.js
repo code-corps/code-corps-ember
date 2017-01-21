@@ -1,60 +1,83 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import userSkillsInputItemComponent from '../../pages/components/user-skills-input-item';
 
-let userSkillsService = Ember.Service.extend({
-  findUserSkill(queriedSkill) {
-    if (queriedSkill === skill) {
-      return skill;
-    }
-  }
-});
+const { Object, set } = Ember;
 
-let skill = Ember.Object.create({
+let page = PageObject.create(userSkillsInputItemComponent);
+
+let skill = Object.create({
   selected: true,
-  title: "Ruby on Rails"
+  title: 'Ruby on Rails'
 });
 
 moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {
   integration: true,
   beforeEach() {
-    this.register('service:user-skills', userSkillsService);
+    stubService(this, 'user-skills', {
+      findUserSkill(queriedSkill) {
+        if (queriedSkill === skill) {
+          return skill;
+        }
+      }
+    });
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
-let query = "ru on r";
+let query = 'ru on r';
 
 test('it renders as selected with the highlighted string', function(assert) {
-  this.set('skill', skill);
-  this.set('query', query);
+  assert.expect(4);
 
-  this.render(hbs`{{user-skills-input-item skill=skill query=query}}`);
+  set(this, 'skill', skill);
+  set(this, 'query', query);
 
-  assert.equal(this.$('li').hasClass('selected'), true);
+  page.render(hbs`
+    {{user-skills-input-item
+      query=query
+      skill=skill
+    }}
+  `);
 
-  let html = '<strong>Ru</strong>by <strong>on</strong> <strong>R</strong>ails';
-  assert.equal(this.$('a').html().trim(), html);
+  assert.equal(page.listItemIsSelected, true);
+
+  assert.equal(page.highlightedStrings(0).text, 'Ru');
+  assert.equal(page.highlightedStrings(1).text, 'on');
+  assert.equal(page.highlightedStrings(2).text, 'R');
 });
 
 test('it sends the hover action on mouseEnter', function(assert) {
   assert.expect(1);
 
-  this.set('skill', skill);
-  this.set('query', query);
+  set(this, 'skill', skill);
+  set(this, 'query', query);
 
   this.on('hover', (hoveredSkill) => {
     assert.deepEqual(skill, hoveredSkill);
   });
-  this.render(hbs`{{user-skills-input-item skill=skill query=query hover="hover"}}`);
+  page.render(hbs`
+    {{user-skills-input-item
+      hover="hover"
+      query=query
+      skill=skill
+    }}
+  `);
 
-  this.$('li').trigger('mouseenter');
+  page.mouseenter();
 });
 
 test('it sends the hover and selectSkill actions on mousedown', function(assert) {
   assert.expect(2);
 
-  this.set('skill', skill);
-  this.set('query', query);
+  set(this, 'skill', skill);
+  set(this, 'query', query);
 
   this.on('hover', (hoveredSkill) => {
     assert.deepEqual(skill, hoveredSkill);
@@ -62,7 +85,14 @@ test('it sends the hover and selectSkill actions on mousedown', function(assert)
   this.on('selectSkill', () => {
     assert.ok(true);
   });
-  this.render(hbs`{{user-skills-input-item skill=skill query=query hover="hover" selectSkill="selectSkill"}}`);
+  page.render(hbs`
+    {{user-skills-input-item
+      hover="hover"
+      query=query
+      selectSkill="selectSkill"
+      skill=skill
+    }}
+  `);
 
-  this.$('li').trigger('mousedown');
+  page.mousedown();
 });

@@ -1,17 +1,31 @@
 machine:
   node:
-    version: 4.5.0
+    version: 6.9.4
+  environment:
+    YARN_VERSION: 0.18.1
+    PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
 dependencies:
+  pre:
+    - |
+      if [[ ! -e ~/.yarn/bin/yarn || $(yarn --version) != "${YARN_VERSION}" ]]; then
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+      fi
   cache_directories:
-    - /home/ubuntu/nvm/versions/node/v4.5.0/bin
-    - /home/ubuntu/nvm/versions/node/v4.5.0/lib/node_modules
-    - node_modules
-    - bower_components
+    - ~/.yarn
+    - ~/.cache/yarn
+    - /home/ubuntu/nvm/versions/node/v6.9.4/bin
+    - /home/ubuntu/nvm/versions/node/v6.9.4/lib/node_modules
   override:
-    - npm install -g bower
-    - npm install
+    - yarn global add bower
+    - yarn add node-sass
+    - yarn install
     - bower install
-    - npm rebuild node-sass
+
+test:
+  override:
+    - yarn test
+
 deployment:
   production:
     branch: master

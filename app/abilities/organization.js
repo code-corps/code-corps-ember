@@ -1,18 +1,26 @@
 import Ember from 'ember';
 import { Ability } from 'ember-can';
 
+const {
+  computed: { alias, empty, notEmpty, or },
+  inject: { service }
+} = Ember;
+
 export default Ability.extend({
-  isAtLeastAdmin: Ember.computed.or('membership.isAdmin', 'membership.isOwner'),
-  userCanJoinOrganization: Ember.computed.empty('membership'),
-  userCanLeaveOrganization: Ember.computed.or('membership.isContributor', 'membership.isAdmin'),
-  userIsMemberInOrganization: Ember.computed.notEmpty('membership'),
-
-  isAtLeastContributor: Ember.computed.or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
-
-  canJoin: Ember.computed.alias('userCanJoinOrganization'),
-  canManage: Ember.computed.alias('isAtLeastAdmin'),
+  credentials: service(),
 
   canCreateIssueTask: true,
   canCreateIdeaTask: true,
-  canCreateTaskTask: Ember.computed.alias('isAtLeastContributor')
+  canCreateTaskTask: alias('isAtLeastContributor'),
+  canJoin: alias('userCanJoinOrganization'),
+  canManage: alias('isAtLeastAdmin'),
+
+  isAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
+  isAtLeastContributor: or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
+  userCanJoinOrganization: empty('membership'),
+  userCanLeaveOrganization: or('membership.isContributor', 'membership.isAdmin'),
+  userIsMemberInOrganization: notEmpty('membership'),
+
+  membership: alias('credentials.membership'),
+  organization: alias('model')
 });

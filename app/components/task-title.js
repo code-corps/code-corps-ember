@@ -1,11 +1,17 @@
 import Ember from 'ember';
 
+const {
+  Component,
+  computed,
+  inject: { service }
+} = Ember;
+
 /**
   @class task-title
   @module Component
   @extends Ember.Component
  */
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['task-title'],
   classNameBindings: ['isEditing:editing'],
 
@@ -13,7 +19,7 @@ export default Ember.Component.extend({
     @property currentUser
     @type Ember.Service
    */
-  currentUser: Ember.inject.service(),
+  currentUser: service(),
 
   /**
     Returns whether or not the current user can edit the current task.
@@ -21,7 +27,7 @@ export default Ember.Component.extend({
     @property canEdit
     @type Boolean
    */
-  canEdit: Ember.computed.alias('currentUserIsTaskAuthor'),
+  canEdit: computed.alias('currentUserIsTaskAuthor'),
 
   /**
     Returns the current user's ID.
@@ -29,7 +35,7 @@ export default Ember.Component.extend({
     @property currentUserId
     @type Number
    */
-  currentUserId: Ember.computed.alias('currentUser.user.id'),
+  currentUserId: computed.alias('currentUser.user.id'),
 
   /**
     Returns the task author's ID.
@@ -37,7 +43,7 @@ export default Ember.Component.extend({
     @property taskAuthorId
     @type Number
    */
-  taskAuthorId: Ember.computed.alias('task.user.id'),
+  taskAuthorId: computed.alias('task.user.id'),
 
   /**
     Consumes `currentUserId` and `taskAuthorId` and returns if the current user
@@ -46,7 +52,7 @@ export default Ember.Component.extend({
     @property currentUserIsTaskAuthor
     @type Boolean
    */
-  currentUserIsTaskAuthor: Ember.computed('currentUserId', 'taskAuthorId', function() {
+  currentUserIsTaskAuthor: computed('currentUserId', 'taskAuthorId', function() {
     let userId = parseInt(this.get('currentUserId'), 10);
     let authorId = parseInt(this.get('taskAuthorId'), 10);
     return userId === authorId;
@@ -55,7 +61,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     this.setProperties({
-      isEditing: false,
+      isEditing: false
     });
   },
 
@@ -87,21 +93,15 @@ export default Ember.Component.extend({
 
       @method save
      */
-    save() {
+    applyEdit() {
       let component = this;
       let task = this.get('task');
       let newTitle = this.get('newTitle');
 
       task.set('title', newTitle);
-      task.save().then(() => {
+      this.get('saveTask')(task).then(() => {
         component.set('isEditing', false);
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422 );
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
       });
-    },
-  },
+    }
+  }
 });

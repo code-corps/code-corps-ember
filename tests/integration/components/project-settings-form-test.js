@@ -1,14 +1,20 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
+
+const { getOwner, RSVP } = Ember;
 
 moduleForComponent('project-settings-form', 'Integration | Component | project settings form', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+  }
 });
 
 let project = {
   title: 'Test Organization',
-  description: 'A test project',
+  description: 'A test project'
 };
 
 test('it renders', function(assert) {
@@ -37,20 +43,14 @@ test('it calls save on project when save button is clicked', function(assert) {
 
   project.save = function() {
     assert.ok(true, 'Save method was called on project');
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   };
 
   this.set('project', project);
 
-  const flashServiceStub = Ember.Service.extend({
-    success() {
-      assert.ok(true, 'Flash message service was called');
-    }
-  });
-
-  this.register('service:flash-messages', flashServiceStub);
-
   this.render(hbs`{{project-settings-form project=project}}`);
 
   this.$('.save').click();
+
+  assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown');
 });

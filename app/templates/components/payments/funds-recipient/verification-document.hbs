@@ -1,0 +1,27 @@
+{{#if (eq status 'required')}}
+  {{#if isBusy}}
+    <p>Processing...</p>
+  {{else if isUploading}}
+    {{progressMessage}}
+  {{else}}
+    <p>We need you to upload a copy of your personal ID to verify your identity.</p>
+    <p>Please upload either a PNG or JPG image. Your file should be less than 8MB.</p>
+    <div>
+      {{payments/funds-recipient/identity-document-file-upload
+        isBusy=isBusy
+        stripeConnectAccount=stripeConnectAccount
+        uploadStarted=(action onUploadStarted)
+        uploadProgress=(action onUploadProgress)
+        uploadDone=(action onUploadDone)
+        uploadError=(action onUploadError)
+        validationError=(action onValidationError)}}
+    </div>
+    {{#if error}}
+      <div class="error">{{error}}</div>
+    {{/if}}
+  {{/if}}
+{{/if}}
+
+{{#if (eq status 'verifying')}}
+  <p>Please be patient while we review the document you provided.</p>
+{{/if}}

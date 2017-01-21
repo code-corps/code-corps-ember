@@ -1,22 +1,16 @@
 import Ember from 'ember';
+import { keyDown as keyDownEvent } from 'ember-keyboard';
 
-export default Ember.TextArea.extend({
-  keyDown: function(event) {
-    if (this._isValidCombination(event)) {
-      event.preventDefault();
-      this.sendAction('modifiedSubmit');
-    }
+const { TextArea, on } = Ember;
+
+export default TextArea.extend({
+  init() {
+    this._super(...arguments);
+    this.set('keyboardActivated', true);
   },
 
-  _hasCorrectModifier: function(event) {
-    return event.ctrlKey || event.metaKey;
-  },
-
-  _isCorrectKeyCode: function(keyCode) {
-    return keyCode === 13;
-  },
-
-  _isValidCombination: function(event) {
-    return this._hasCorrectModifier(event) && this._isCorrectKeyCode(event.keyCode);
-  }
+  customSubmit: on(keyDownEvent('cmd+Enter'), keyDownEvent('ctrl+Enter'), function(e) {
+    e.preventDefault();
+    this.sendAction('modifiedSubmit');
+  })
 });

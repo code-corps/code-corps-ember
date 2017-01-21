@@ -1,13 +1,24 @@
 import Ember from 'ember';
 
-const { service } = Ember.inject;
+const {
+  computed,
+  Controller,
+  inject: { service }
+} = Ember;
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   codeTheme: service(),
   onboarding: service(),
+  projectTaskBoard: service(),
   session: service(),
 
-  isOnboarding: Ember.computed.alias('onboarding.isOnboarding'),
+  isNotOnboarding: computed.not('isOnboarding'),
+  isNotViewingProjectTaskBoard: computed.not('isViewingProjectTaskBoard'),
+  isOnboarding: computed.alias('onboarding.isOnboarding'),
+  isViewingProjectTaskBoard: computed.alias('projectTaskBoard.isViewing'),
+
+  shouldShowFooter: computed.and('isNotOnboarding', 'isNotViewingProjectTaskBoard'),
+  shouldShowSpacer: computed.alias('isNotViewingProjectTaskBoard'),
 
   actions: {
     invalidateSession() {

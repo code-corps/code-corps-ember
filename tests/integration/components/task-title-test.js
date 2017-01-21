@@ -1,37 +1,41 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-let mockCurrentUser = Ember.Service.extend({
+const {
+  Object,
+  RSVP
+} = Ember;
+
+let mockCurrentUser = {
   user: {
     id: 1
   }
-});
+};
 
-let mockDifferentUser = Ember.Service.extend({
+let mockDifferentUser = {
   user: {
     id: 2
   }
-});
+};
 
-let mockTask = Ember.Object.create({
+let mockTask = Object.create({
   title: 'Original title',
   body: 'A <strong>body</strong>',
   number: 12,
   taskType: 'issue',
   user: {
-    id: 1,
+    id: 1
   },
   save() {
     this.set('title', this.get('title'));
-    return Ember.RSVP.resolve();
+    return RSVP.resolve();
   }
 });
 
 moduleForComponent('task-title', 'Integration | Component | task title', {
-  integration: true,
-  beforeEach() {
-  }
+  integration: true
 });
 
 test('it renders', function(assert) {
@@ -41,18 +45,17 @@ test('it renders', function(assert) {
 });
 
 test('it is not editable if not the right user', function(assert) {
-  this.register('service:current-user', mockDifferentUser);
+  stubService(this, 'current-user', mockDifferentUser);
 
   assert.expect(1);
   this.render(hbs`{{task-title}}`);
   assert.equal(this.$('.task-title .edit').length, 0);
 });
 
-
 test('it switches between edit and view mode', function(assert) {
   assert.expect(8);
 
-  this.register('service:current-user', mockCurrentUser);
+  stubService(this, 'current-user', mockCurrentUser);
 
   this.set('task', mockTask);
   this.render(hbs`{{task-title task=task}}`);
@@ -72,10 +75,13 @@ test('it switches between edit and view mode', function(assert) {
 test('it saves', function(assert) {
   assert.expect(2);
 
-  this.register('service:current-user', mockCurrentUser);
+  stubService(this, 'current-user', mockCurrentUser);
 
   this.set('task', mockTask);
-  this.render(hbs`{{task-title task=task}}`);
+  this.on('applyEdit', () => {
+    return RSVP.resolve();
+  });
+  this.render(hbs`{{task-title task=task saveTask=(action "applyEdit")}}`);
 
   assert.equal(this.$('.task-title .title').text().trim(), 'Original title #12', 'The original title is right');
 
@@ -85,14 +91,3 @@ test('it saves', function(assert) {
 
   assert.equal(this.$('.task-title .title').text().trim(), 'Edited title #12', 'The tile title is saved');
 });
-
-// test('it resets the input element when editing is cancelled and then restarted', function(assert) {
-//   assert.expect(1);
-//   this.set('task', mockTask);
-//   this.render(hbs`{{task-title task=task}}`);
-//   this.$('.task-title .edit').click();
-//   this.$('.task-title input[name=title]').val('Edited title').trigger('change');
-//   this.$('.task-title .cancel').click();
-//   this.$('.task-title .edit').click();
-//   assert.equal(this.$('.task-title input[name=title]').val(), 'Original title', 'Input is back to the original value');
-// });

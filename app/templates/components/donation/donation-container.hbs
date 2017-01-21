@@ -1,0 +1,44 @@
+<div class="donation-container__amount">
+  <h3>{{format-currency donationAmount}}</h3>
+  <footer>given each month</footer>
+</div>
+
+<div class="donation-container__information">
+  <h3>Payment information</h3>
+  <p>
+    Your payment method will be charged {{format-currency donationAmount}}
+    per month to support {{projectTitle}}.
+  </p>
+</div>
+
+{{#if shouldShowNewForm}}
+  {{#donation/credit-card isProcessing=isProcessing submit=(action saveAndDonate)}}
+    {{!show errors}}
+    {{yield}}
+  {{/donation/credit-card}}
+{{else}}
+  {{donation/card-item card=card}}
+  <button
+    {{action donate}}
+    class="button {{unless isProcessing "default"}} large donate"
+    disabled={{isProcessing}}
+    data-test-selector="donate button">
+
+    {{#if isProcessing}}
+      Processing...
+    {{else}}
+      Donate
+    {{/if}}
+  </button>
+
+  {{!show errors}}
+  {{yield}}
+{{/if}}
+
+<footer>
+  Your donation will repeat automatically each month.
+  You can cancel your donation at any time.
+  By making this donation, you agree to our
+  {{link-to "Terms of Use" "terms"}}.
+  Code Corps does not issue refunds on behalf of projects.
+</footer>

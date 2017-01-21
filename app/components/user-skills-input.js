@@ -1,6 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  computed: { alias, and, equal, not, notEmpty },
+  inject: { service },
+  isEmpty,
+  run: { once },
+  observer
+} = Ember;
+
+export default Component.extend({
   classNames: ['user-skills-input'],
   cursorAt: 0,
   cursorWas: 0,
@@ -9,17 +19,17 @@ export default Ember.Component.extend({
   limit: 5,
   results: [],
 
-  store: Ember.inject.service(),
-  userSkills: Ember.inject.service(),
+  store: service(),
+  userSkills: service(),
 
-  canShow: Ember.computed.and('hasResults', 'notHidden'),
-  hasResults: Ember.computed.notEmpty('results'),
-  notHidden: Ember.computed.not('hidden'),
-  numberOfResults: Ember.computed.alias('results.length'),
-  queryString: Ember.computed.alias('query'),
+  canShow: and('hasResults', 'notHidden'),
+  hasResults: notEmpty('results'),
+  notHidden: not('hidden'),
+  numberOfResults: alias('results.length'),
+  queryString: alias('query'),
 
-  queryStringChanged: Ember.observer('queryString', function() {
-    Ember.run.once(this, '_search');
+  queryStringChanged: observer('queryString', function() {
+    once(this, '_search');
   }),
 
   keyDown(e) {
@@ -50,13 +60,13 @@ export default Ember.Component.extend({
     }
   },
 
-  _isCommaKey: Ember.computed.equal('keyCode', 188),
-  _isDownKey: Ember.computed.equal('keyCode', 40),
-  _isEnterKey: Ember.computed.equal('keyCode', 13),
-  _isEscKey: Ember.computed.equal('keyCode', 27),
-  _isUpKey: Ember.computed.equal('keyCode', 38),
-  _isNewQuery: Ember.computed.not('_sameQuery'),
-  _sameQuery: Ember.computed('queryString', 'lastQuery', function() {
+  _isCommaKey: equal('keyCode', 188),
+  _isDownKey: equal('keyCode', 40),
+  _isEnterKey: equal('keyCode', 13),
+  _isEscKey: equal('keyCode', 27),
+  _isUpKey: equal('keyCode', 38),
+  _isNewQuery: not('_sameQuery'),
+  _sameQuery: computed('queryString', 'lastQuery', function() {
     return this.get('queryString') === this.get('lastQuery');
   }),
 
@@ -82,7 +92,7 @@ export default Ember.Component.extend({
 
     selectSkill() {
       this._selectSkill();
-    },
+    }
   },
 
   _reset() {
@@ -96,11 +106,11 @@ export default Ember.Component.extend({
     let queryString = this.get('queryString');
     let store = this.get('store');
 
-    if (Ember.isEmpty(queryString)) {
+    if (isEmpty(queryString)) {
       this.set('results', []);
     } else if (this.get('_isNewQuery')) {
       this.set('lastQuery', queryString);
-      store.query('skill', { query: queryString, limit: limit }).then((skills) => {
+      store.query('skill', { query: queryString, limit }).then((skills) => {
         this.set('results', skills);
         this.set('cursorAt', 0);
         this._updateSelected();
@@ -119,7 +129,7 @@ export default Ember.Component.extend({
 
       this._reset();
 
-      if (Ember.isEmpty(foundSkill)) {
+      if (isEmpty(foundSkill)) {
         userSkills.addSkill(skill);
       } else {
         userSkills.removeSkill(skill);
@@ -156,5 +166,5 @@ export default Ember.Component.extend({
         item.set('selected', false);
       }
     });
-  },
+  }
 });

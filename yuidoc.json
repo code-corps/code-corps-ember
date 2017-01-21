@@ -6,7 +6,7 @@
     "exclude": "vendor",
     "linkNatives": true,
     "lint": false,
-    "outdir": "docs",
+    "outdir": "docs/yuidoc",
     "parseOnly": false,
     "paths": [
       "app"
