@@ -91,8 +91,8 @@ test('it sends properties with submit action', function(assert) {
     accountNumber: '654321'
   };
 
-  setHandler(this, (output) => {
-    assert.deepEqual(output, input, 'Correct parameters were sent out with action.');
+  setHandler(this, ({ accountNumber, routingNumber }) => {
+    assert.deepEqual({ accountNumber, routingNumber }, input, 'Correct parameters were sent out with action.');
   });
 
   renderPage();

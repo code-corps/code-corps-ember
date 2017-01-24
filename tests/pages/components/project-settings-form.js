@@ -19,7 +19,7 @@ export default {
     scope: '.image-drop',
 
     dropFile(content) {
-      fillInFileInput(`${this.scope} input`, { name: 'file.png', content });
+      fillInFileInput(`${this.scope} input[type=file]`, { name: 'file.png', content });
     },
 
     backgroundImageData() {

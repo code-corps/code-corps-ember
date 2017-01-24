@@ -4,12 +4,14 @@ import Ember from 'ember';
 import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
 const {
+  get,
   getOwner,
   Object,
-  RSVP
+  RSVP,
+  set
 } = Ember;
 
-let user = {
+let user = Object.create({
   name: 'Josh Smith',
   username: 'joshsmith',
   photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
@@ -37,7 +39,7 @@ let user = {
       }
     }
   ]
-};
+});
 
 function mockMembership(pending) {
   let membership = Object.create({
@@ -60,7 +62,7 @@ moduleForComponent('member-list-item', 'Integration | Component | member list it
 });
 
 test('it renders the basic information for the user', function(assert) {
-  this.set('user', user);
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item user=user}}`);
 
@@ -76,19 +78,19 @@ test('it renders the basic information for the user', function(assert) {
 });
 
 test('it renders the username in the name if name is empty', function(assert) {
-  user.name = '';
-  this.set('user', user);
+  set(user, 'name', '');
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item user=user}}`);
 
-  assert.equal(this.$('p.name').text().trim(), user.username);
+  assert.equal(this.$('p.name').text().trim(), get(user, 'username'));
 });
 
 test('it renders the buttons when pending', function(assert) {
   let membership = mockMembership(true); // pending
 
-  this.set('membership', membership);
-  this.set('user', user);
+  set(this, 'membership', membership);
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
@@ -100,8 +102,8 @@ test('it renders the buttons when pending', function(assert) {
 test('it does not render the buttons when not pending', function(assert) {
   let membership = mockMembership(false); // pending
 
-  this.set('membership', membership);
-  this.set('user', user);
+  set(this, 'membership', membership);
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
@@ -119,8 +121,8 @@ test('it sends the approve action when clicking approve', function(assert) {
     }
   });
 
-  this.set('membership', membership);
-  this.set('user', user);
+  set(this, 'membership', membership);
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
@@ -150,8 +152,8 @@ test('it sends the deny action when clicking deny', function(assert) {
     }
   });
 
-  this.set('membership', membership);
-  this.set('user', user);
+  set(this, 'membership', membership);
+  set(this, 'user', user);
 
   this.render(hbs`{{member-list-item membership=membership user=user}}`);
 
