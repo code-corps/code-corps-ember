@@ -2,7 +2,10 @@ import Ember from 'ember';
 import moment from 'moment';
 
 const {
-  Component
+  Component,
+  get,
+  getProperties,
+  set
  } = Ember;
 
 export default Component.extend({
@@ -34,5 +37,14 @@ export default Component.extend({
       }
       return results;
     }).apply(this);
-  }.property()
+  }.property(),
+
+  update(property, value) {
+    set(this, property, value);
+    let { selectedDay, selectedMonth, selectedYear }
+      = getProperties(this, 'selectedDay', 'selectedMonth', 'selectedYear');
+
+    let onChange = get(this, 'onChange');
+    onChange(selectedDay, selectedMonth, selectedYear);
+  }
 });

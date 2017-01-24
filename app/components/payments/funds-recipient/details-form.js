@@ -35,5 +35,11 @@ export default Component.extend({
       let onSubmit = get(this, 'onSubmit');
       onSubmit();
     }
+  },
+
+  onBirthDateChanged(day, month, year) {
+    set(this, 'stripeConnectAccount.legalEntityDobDay', day);
+    set(this, 'stripeConnectAccount.legalEntityDobMonth', month);
+    set(this, 'stripeConnectAccount.legalEntityDobYear', year);
   }
 });
