@@ -4,10 +4,12 @@ const {
   Component,
   computed,
   computed: { alias, and, equal, not, notEmpty },
+  get,
   inject: { service },
   isEmpty,
+  observer,
   run: { once },
-  observer
+  set
 } = Ember;
 
 export default Component.extend({
@@ -33,30 +35,30 @@ export default Component.extend({
   }),
 
   keyDown(e) {
-    this.set('keyCode', e.keyCode);
+    set(this, 'keyCode', e.keyCode);
 
-    let cursorAt = this.get('cursorAt');
-    let isCommaKey = this.get('_isCommaKey');
-    let isDownKey = this.get('_isDownKey');
-    let isEnterKey = this.get('_isEnterKey');
-    let isEscKey = this.get('_isEscKey');
-    let isUpKey = this.get('_isUpKey');
+    let cursorAt = get(this, 'cursorAt');
+    let isCommaKey = get(this, '_isCommaKey');
+    let isDownKey = get(this, '_isDownKey');
+    let isEnterKey = get(this, '_isEnterKey');
+    let isEscKey = get(this, '_isEscKey');
+    let isUpKey = get(this, '_isUpKey');
 
     if (isDownKey) {
       e.preventDefault();
       this._setPosition(++cursorAt);
-      this.set('hidden', false);
+      set(this, 'hidden', false);
     } else if (isUpKey) {
       e.preventDefault();
       this._setPosition(--cursorAt);
-      this.set('hidden', false);
+      set(this, 'hidden', false);
     } else if (isCommaKey || isEnterKey) {
       e.preventDefault();
       this._selectSkill();
     } else if (isEscKey) {
-      this.set('hidden', true);
+      set(this, 'hidden', true);
     } else {
-      this.set('hidden', false);
+      set(this, 'hidden', false);
     }
   },
 
@@ -67,25 +69,25 @@ export default Component.extend({
   _isUpKey: equal('keyCode', 38),
   _isNewQuery: not('_sameQuery'),
   _sameQuery: computed('queryString', 'lastQuery', function() {
-    return this.get('queryString') === this.get('lastQuery');
+    return get(this, 'queryString') === get(this, 'lastQuery');
   }),
 
   actions: {
     blur() {
-      this.set('hidden', true);
+      set(this, 'hidden', true);
     },
 
     focus() {
-      this.set('hidden', false);
+      set(this, 'hidden', false);
     },
 
     hoverSkill(skill) {
-      this.get('results').forEach((item, index) => {
+      get(this, 'results').forEach((item, index) => {
         if (item === skill) {
-          this.set('cursorAt', index);
-          item.set('selected', true);
+          set(this, 'cursorAt', index);
+          set(item, 'selected', true);
         } else {
-          item.set('selected', false);
+          set(item, 'selected', false);
         }
       });
     },
@@ -96,34 +98,34 @@ export default Component.extend({
   },
 
   _reset() {
-    this.set('results', []);
-    this.set('queryString', '');
+    set(this, 'results', []);
+    set(this, 'queryString', '');
     this.$('input').focus();
   },
 
   _search() {
-    let limit = this.get('limit');
-    let queryString = this.get('queryString');
-    let store = this.get('store');
+    let limit = get(this, 'limit');
+    let queryString = get(this, 'queryString');
+    let store = get(this, 'store');
 
     if (isEmpty(queryString)) {
-      this.set('results', []);
-    } else if (this.get('_isNewQuery')) {
-      this.set('lastQuery', queryString);
+      set(this, 'results', []);
+    } else if (get(this, '_isNewQuery')) {
+      set(this, 'lastQuery', queryString);
       store.query('skill', { query: queryString, limit }).then((skills) => {
-        this.set('results', skills);
-        this.set('cursorAt', 0);
+        set(this, 'results', skills);
+        set(this, 'cursorAt', 0);
         this._updateSelected();
       });
     }
   },
 
   _selectSkill() {
-    if (this.get('hasResults')) {
-      let cursorAt = this.get('cursorAt');
-      let results = this.get('results');
+    if (get(this, 'hasResults')) {
+      let cursorAt = get(this, 'cursorAt');
+      let results = get(this, 'results');
       let skill = results.objectAt(cursorAt);
-      let userSkills = this.get('userSkills');
+      let userSkills = get(this, 'userSkills');
 
       let foundSkill = userSkills.findUserSkill(skill);
 
@@ -138,18 +140,18 @@ export default Component.extend({
   },
 
   _setPosition(position) {
-    let numberOfResults = this.get('numberOfResults');
+    let numberOfResults = get(this, 'numberOfResults');
     let numberOfResultsIndexed = numberOfResults - 1;
 
-    this.set('cursorWas', this.get('cursorAt'));
+    set(this, 'cursorWas', get(this, 'cursorAt'));
 
     if (numberOfResults > 0) {
       if (position < 0) {
-        this.set('cursorAt', numberOfResultsIndexed);
+        set(this, 'cursorAt', numberOfResultsIndexed);
       } else if (position > numberOfResultsIndexed) {
-        this.set('cursorAt', 0);
+        set(this, 'cursorAt', 0);
       } else {
-        this.set('cursorAt', position);
+        set(this, 'cursorAt', position);
       }
     }
 
@@ -157,13 +159,13 @@ export default Component.extend({
   },
 
   _updateSelected() {
-    let cursorAt = this.get('cursorAt');
+    let cursorAt = get(this, 'cursorAt');
 
-    this.get('results').forEach((item, index) => {
+    get(this, 'results').forEach((item, index) => {
       if (index === cursorAt) {
-        item.set('selected', true);
+        set(item, 'selected', true);
       } else {
-        item.set('selected', false);
+        set(item, 'selected', false);
       }
     });
   }
