@@ -75,7 +75,7 @@ test('it handles a dropped image file', function(assert) {
   this.$('.image-drop').trigger('dragover');
   assert.equal(this.$('.image-drop').hasClass('active'), true);
 
-  fillInFileInput('input', { name: fileName, content: droppedImageString });
+  fillInFileInput('.image-drop input[type=file]', { name: fileName, content: droppedImageString });
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${droppedImageString})`;

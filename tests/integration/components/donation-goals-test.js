@@ -116,9 +116,9 @@ test('it sends "save" action with donation goal curried first, and values second
 
   set(this, 'project', Object.create({ donationGoals: mockGoals }));
 
-  let saveHandler = function(donationGoal, values) {
+  let saveHandler = function(donationGoal, { amount, description }) {
     assert.deepEqual(mockGoals[0], donationGoal, 'First parameter for handler is donation goal');
-    assert.deepEqual(values, { amount: 500, description: 'Lorem ipsum' }, 'Second parameter for handler are provided values');
+    assert.deepEqual({ amount, description }, { amount: 500, description: 'Lorem ipsum' }, 'Second parameter for handler are provided values');
   };
   setHandlers(this, { saveHandler });
 

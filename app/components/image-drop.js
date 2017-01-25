@@ -6,8 +6,8 @@ const {
   computed,
   computed: { alias, notEmpty, or },
   inject: { service },
-  on,
-  run
+  run,
+  set
 } = Ember;
 
 export default Component.extend({
@@ -43,14 +43,41 @@ export default Component.extend({
     return htmlSafe(backgroundStyle);
   }),
 
-  setup: on('willInsertElement', function() {
-    let $input = this.$('input');
-    $input.on('change', (event) => {
-      this.handleFileDrop(event.target.files[0]);
-    });
-  }),
+  dragEnded() {
+    this.dragLeave();
+    this.get('appDragState').leaving();
+  },
 
-  convertImgToBase64URL(url, callback, outputFormat) {
+  dragLeave() {
+    set(this, 'active', false);
+  },
+
+  dragOver() {
+    set(this, 'active', true);
+  },
+
+  drop(event) {
+    event.preventDefault();
+
+    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      return this._handleFileDrop(event.dataTransfer.files[0]);
+    }
+
+    let imageUrl = event.dataTransfer.getData('URL');
+    if (!imageUrl) {
+      return;
+    }
+
+    this._convertImgToBase64URL(imageUrl, (base64) => {
+      set(this, 'droppedImage', base64);
+    });
+  },
+
+  fileInputChange(files) {
+    this._handleFileDrop(files[0]);
+  },
+
+  _convertImgToBase64URL(url, callback, outputFormat) {
     let img = new Image();
     img.crossOrigin = 'Anonymous';
     img.onload = function() {
@@ -67,47 +94,17 @@ export default Component.extend({
     img.src = url;
   },
 
-  dragEnded() {
-    this.dragLeave();
-    this.get('appDragState').leaving();
-  },
-
-  dragLeave() {
-    this.set('active', false);
-  },
-
-  dragOver() {
-    this.set('active', true);
-  },
-
-  drop(event) {
-    event.preventDefault();
-
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      return this.handleFileDrop(event.dataTransfer.files[0]);
-    }
-
-    let imageUrl = event.dataTransfer.getData('URL');
-    if (!imageUrl) {
-      return;
-    }
-
-    this.convertImgToBase64URL(imageUrl, (base64) => {
-      this.set('droppedImage', base64);
-    });
-  },
-
-  handleFileDrop(file) {
+  _handleFileDrop(file) {
     if (file == null) {
       return;
     }
 
-    this.set('file', file);
+    set(this, 'file', file);
     let reader = new FileReader();
     reader.onload = (e) => {
       let fileToUpload = e.target.result;
       run(() => {
-        this.set('droppedImage', fileToUpload);
+        set(this, 'droppedImage', fileToUpload);
         this.dragEnded();
       });
     };

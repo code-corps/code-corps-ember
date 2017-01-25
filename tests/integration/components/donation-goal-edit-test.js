@@ -50,8 +50,8 @@ test('it sends save action, with user input properties as argument, when save bu
   assert.expect(2);
 
   let mockProperties = { amount: '10', description: 'Updated description' };
-  let saveHandler = function(sumbittedGoal, submitedProperties) {
-    assert.deepEqual(submitedProperties, mockProperties, 'submitted values are passed to external action');
+  let saveHandler = function(sumbittedGoal, { amount, description }) {
+    assert.deepEqual({ amount, description }, mockProperties, 'submitted values are passed to external action');
     assert.deepEqual(sumbittedGoal, mockGoal, 'donation goal is curried unchanged');
   };
 
