@@ -4,7 +4,8 @@ const {
   Component,
   computed: { equal },
   get,
-  set
+  set,
+  setProperties
 } = Ember;
 
 export default Component.extend({
@@ -15,10 +16,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let stripeConnectAccount = get(this, 'stripeConnectAccount');
-    if (get(stripeConnectAccount, 'legalEntityType') === null) {
-      set(this, 'stripeConnectAccount.legalEntityType', 'individual');
-    }
+    this._setDefaults();
   },
 
   actions: {
@@ -37,9 +35,25 @@ export default Component.extend({
     }
   },
 
-  onBirthDateChanged(day, month, year) {
-    set(this, 'stripeConnectAccount.legalEntityDobDay', day);
-    set(this, 'stripeConnectAccount.legalEntityDobMonth', month);
-    set(this, 'stripeConnectAccount.legalEntityDobYear', year);
+  _setDefaults() {
+    let stripeConnectAccount = get(this, 'stripeConnectAccount');
+
+    if (get(stripeConnectAccount, 'legalEntityType') === null) {
+      set(stripeConnectAccount, 'legalEntityType', 'individual');
+    }
+
+    if (get(stripeConnectAccount, 'legalEntityAddressState') == null) {
+      set(stripeConnectAccount, 'legalEntityAddressState', 'CA');
+    }
+
+    if (get(stripeConnectAccount, 'legalEntityAddressCountry') == null) {
+      set(stripeConnectAccount, 'legalEntityAddressCountry', 'US');
+    }
+
+    let legalEntityDobDay = get(stripeConnectAccount, 'legalEntityDobDay') || 1;
+    let legalEntityDobMonth = get(stripeConnectAccount, 'legalEntityDobMonth') || 1;
+    let legalEntityDobYear = get(stripeConnectAccount, 'legalEntityDobYear') || new Date().getUTCFullYear() - 13;
+
+    setProperties(stripeConnectAccount, { legalEntityDobDay, legalEntityDobMonth, legalEntityDobYear });
   }
 });
