@@ -6,6 +6,7 @@ const {
   Controller,
   computed: { alias, bool, not },
   get,
+  getProperties,
   inject: { service },
   set,
   RSVP
@@ -119,16 +120,12 @@ export default Controller.extend({
   // subscription
 
   _createSubscription(quantity) {
-    let projectId = get(this, 'project.id');
-    let user = get(this, 'user');
-    let store = get(this, 'store');
+    let { project, store, user } = getProperties(this, 'project', 'store', 'user');
 
-    let subscription = store.createRecord('stripe-connect-subscription', { quantity, user });
-    let adapterOptions = { projectId };
-
-    return subscription.save({ adapterOptions })
-                       .then((record) =>RSVP.resolve(record))
-                       .catch((response) => this._handleSubscriptionCreationError(response));
+    return store.createRecord('stripe-connect-subscription', { project, quantity, user })
+                .save()
+                .then((record) =>RSVP.resolve(record))
+                .catch((response) => this._handleSubscriptionCreationError(response));
   },
 
   _handleSubscriptionCreationError(response) {

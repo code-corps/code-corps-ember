@@ -4,7 +4,7 @@ import { testForBelongsTo } from 'code-corps-ember/tests/helpers/relationship';
 
 moduleForModel('stripe-connect-subscription', 'Unit | Model | stripe connect subscription', {
   needs: [
-    'model:stripe-connect-plan',
+    'model:project',
     'model:user'
   ]
 });
@@ -14,7 +14,7 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('stripe-connect-subscription', ['projectId', 'quantity']);
+testForAttributes('stripe-connect-subscription', ['quantity']);
 
-testForBelongsTo('stripe-connect-subscription', 'stripeConnectPlan');
+testForBelongsTo('stripe-connect-subscription', 'project');
 testForBelongsTo('stripe-connect-subscription', 'user');

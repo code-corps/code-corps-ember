@@ -95,9 +95,9 @@ test('It redirects to project route if already a subscriber, with a flash', func
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', { organization });
 
-  let stripeConnectPlan = project.createStripeConnectPlan({ project });
+  project.createStripeConnectPlan({ project });
 
-  server.create('stripeConnectSubscription', { stripeConnectPlan, user });
+  server.create('stripeConnectSubscription', { project, user });
 
   projectDonatePage.visit({
     amount: 10,
@@ -121,6 +121,7 @@ test('Allows creating a card and donating (creating a subscription)', function(a
 
   let organization = createOrganizationWithSluggedRoute();
   let project = server.create('project', { organization });
+  project.createStripeConnectPlan();
 
   projectDonatePage.visit({
     amount: 10,
@@ -153,7 +154,7 @@ test('Allows creating a card and donating (creating a subscription)', function(a
     let subscription = server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 });
     assert.ok(subscription, 'Subscription was created sucessfully.');
     assert.equal(subscription.userId, user.id, 'User was set to current user.');
-    assert.equal(subscription.projectId, project.id, 'Project was set to current project.');
+    assert.equal(subscription.projectId, project.id, 'Project was set.');
     assert.equal(currentRouteName(), 'project.thank-you', 'User was redirected to the thank you route.');
   });
 });

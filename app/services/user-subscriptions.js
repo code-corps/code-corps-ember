@@ -17,11 +17,9 @@ export default Service.extend({
     let user = this.get('user');
 
     if (user) {
-      let subscriptions = user.get('stripeConnectSubscriptions');
-      let planId = project.belongsTo('stripeConnectPlan').id();
-      return RSVP.hash({ subscriptions, planId }).then(({ subscriptions, planId }) => {
+      return user.get('stripeConnectSubscriptions').then((subscriptions) => {
         let subscription = subscriptions.find((subscription) => {
-          return subscription.belongsTo('stripeConnectPlan').id() === planId;
+          return subscription.belongsTo('project').id() === project.id;
         });
         return RSVP.resolve(subscription);
       });
