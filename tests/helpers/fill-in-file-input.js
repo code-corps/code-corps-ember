@@ -10,12 +10,10 @@ export default function fillInFileInput(selector, file) {
 
   // Create a custom event for change and inject target
   let event = jQuery.Event('change', {
-    target: {
-      files: [{
-        name, type
-      }]
-    }
+    target: { files: [{ name, type }] }
   });
+
+  console.log(event);
 
   // Stub readAsDataURL function
   let stub = sinon.stub(FileReader.prototype, 'readAsDataURL', function() {

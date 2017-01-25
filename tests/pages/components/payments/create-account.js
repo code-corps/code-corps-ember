@@ -1,9 +1,12 @@
 import { clickable, hasClass, is, isVisible } from 'ember-cli-page-object';
+import country from 'code-corps-ember/tests/pages/components/select/country-select';
 
 export default {
   scope: '.create-account',
 
   clickSubmit: clickable('button'),
+
+  countrySelect: country,
 
   countrySelectIsDisabled: is(':disabled', 'select'),
 

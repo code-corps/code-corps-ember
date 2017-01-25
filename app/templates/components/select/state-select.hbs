@@ -1,4 +1,4 @@
-{{#x-select value=state as |xs| }}
+{{#x-select value=state on-change=(action onChange) as |xs| }}
   {{#each stateOptions as |stateOption|}}
     {{#xs.option value=stateOption.id}}{{stateOption.name}}{{/xs.option}}
   {{/each}}

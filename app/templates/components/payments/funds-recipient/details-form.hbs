@@ -45,7 +45,12 @@
   <div class="input-section__label">Birthdate</div>
   <div class="input-section__content">
     <div class="input-group">
-      {{select/birth-date day=stripeConnectAccount.legalEntityDobDay month=stripeConnectAccount.legalEntityDobMonth year=stripeConnectAccount.legalEntityDobYear}}
+      {{select/birth-date
+        day=stripeConnectAccount.legalEntityDobDay
+        month=stripeConnectAccount.legalEntityDobMonth
+        year=stripeConnectAccount.legalEntityDobYear
+        onChange=(action onBirthDateChanged)
+      }}
     </div>
   </div>
 </div>
@@ -63,12 +68,18 @@
     </div>
     <div class="input-group">
       <label for="city">City</label>
-      {{input type="text" name="legal-entity-address-city" value=stripeConnectAccount.legalEntityAddressCity}}
+      {{input type="text"
+        name="legal-entity-address-city"
+        value=stripeConnectAccount.legalEntityAddressCity
+      }}
     </div>
     <div class="input-line">
       <div class="input-group input--state">
         <label for="legal-entity-address-state">State</label>
-        {{select/state-select state=stripeConnectAccount.legalEntityAddressState}}
+        {{select/state-select
+          state=stripeConnectAccount.legalEntityAddressState
+          onChange=(action (mut stripeConnectAccount.legalEntityAddressState))
+        }}
       </div>
       <div class="input-group input--zipcode">
         <label for="zip">Postal Code</label>
@@ -77,7 +88,10 @@
     </div>
     <div class="input-group">
       <label for="country">Country</label>
-      {{select/country-select country=stripeConnectAccount.legalEntityAddressCountry}}
+      {{select/country-select
+        country=stripeConnectAccount.legalEntityAddressCountry
+        onChange=(action (mut stripeConnectAccount.legalEntityAddressCountry))
+      }}
     </div>
   </div>
 </div>

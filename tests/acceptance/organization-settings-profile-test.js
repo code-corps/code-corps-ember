@@ -79,7 +79,7 @@ test("it allows editing of organization's image", function(assert) {
   organizationPage.visitSettingsProfile({ organization: organization.slug });
 
   andThen(() => {
-    fillInFileInput('.image-drop input', { name: fileName, content: droppedImageString });
+    fillInFileInput('.image-drop input[type=file]', { name: fileName, content: droppedImageString });
     organizationPage.clickSave();
   });
 

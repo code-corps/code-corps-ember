@@ -64,7 +64,7 @@ export default Component.extend({
   },
 
   _friendlyErrorMessages(errorResponse) {
-    return [errorResponse.get('message')];
+    return (errorResponse.get('errors')).map((e) => `${e.detail}`);
   },
 
   /**

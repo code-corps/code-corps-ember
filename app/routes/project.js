@@ -23,13 +23,9 @@ export default Route.extend({
   },
 
   serialize(model) {
-    if (model) {
-      return {
-        slugged_route_slug: model.get('organization.slug'),
-        project_slug: model.get('slug')
-      };
-    } else {
-      return this._super(...arguments);
-    }
+    return {
+      slugged_route_slug: model.get('organization.slug'),
+      project_slug: model.get('slug')
+    };
   }
 });
