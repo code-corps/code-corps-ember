@@ -82,6 +82,7 @@ test('it sends properties with submit action', function(assert) {
   });
 
   renderPage();
+  page.countrySelect.country.fillIn('US');
   page.clickSubmit();
 });
 
