@@ -27,7 +27,7 @@ test:
   override:
     - yarn test
     - ember coverage-merge
-    - ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info
+    - COVERAGE=true ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info
 
 deployment:
   production:
