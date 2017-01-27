@@ -1,5 +1,5 @@
 <div class="task-new-main">
-  {{task-new-form task=task taskList=project.inboxTaskList saveTask='saveTask'}}
+  {{task-new-form task=task saveTask='saveTask'}}
   {{#if error}}
     {{error-formatter error=error}}
   {{/if}}

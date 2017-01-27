@@ -7,7 +7,9 @@ const {
   get,
   inject: { service },
   Route,
-  RSVP
+  RSVP,
+  set,
+  setProperties
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
@@ -15,43 +17,34 @@ export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
 
   ability: EmberCan.computed.ability('organization', 'membership'),
-
-  canCreateTask: computed.alias('ability.canCreateTaskTask'),
   membership: computed.alias('credentials.membership'),
 
-  taskType: computed('canCreateTask', function() {
-    return get(this, 'canCreateTask') ? 'task' : 'issue';
-  }),
-
   model() {
-    return this.modelFor('project').reload().then((project) => {
-      let taskLists = project.get('taskLists');
-      return RSVP.hash({ project, taskLists });
-    });
+    let project = this.modelFor('project').reload();
+    let taskType = this._getTaskType();
+    let user = get(this, 'currentUser.user');
+
+    return RSVP.hash({ project, taskType, user });
   },
 
-  setupController(controller, { project }) {
-    let newTask = this.store.createRecord('task', {
-      project,
-      taskList: get(project, 'inboxTaskList'),
-      taskType: get(this, 'taskType'),
-      user: get(this, 'currentUser.user')
-    });
-    // controller.set('task', newTask);
-    controller.setProperties({ project, task: newTask });
+  setupController(controller, { project, taskType, user }) {
+    let store = get(this, 'store');
+    let task = store.createRecord('task', { project, taskType, user });
+
+    setProperties(controller, { project, task });
   },
 
   actions: {
-    saveTask(task) {
-      task.save().then((task) => {
-        this.transitionTo('project.tasks.task', task.get('number'));
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
+    async saveTask(task) {
+      let controller = this.controllerFor('project.tasks.new');
+      let project = get(controller, 'project');
+      let inboxTaskList = await this._getInboxTaskList(project);
 
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.new').set('error', error);
-        }
-      });
+      set(task, 'taskList', inboxTaskList);
+
+      return task.save()
+                 .then((task) => this._transitionToTask(task))
+                 .catch((payload) => this._handleTaskSaveError(controller, payload));
     },
 
     willTransition(transition) {
@@ -67,5 +60,31 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       }
     }
+  },
+
+  async _getTaskType() {
+    let canCreateTask = await get(this, 'ability.canCreateTaskTask');
+    return canCreateTask ? 'task' : 'issue';
+  },
+
+  async _getInboxTaskList(project) {
+    let taskLists = await get(project, 'taskLists');
+    let inboxes = taskLists.filterBy('inbox', true);
+
+    return get(inboxes, 'firstObject');
+  },
+
+  _handleTaskSaveError(controller, payload) {
+    if (!this._payloadContainsValidationErrors(payload)) {
+      set(controller, 'error', payload);
+    }
+  },
+
+  _payloadContainsValidationErrors(payload) {
+    return payload.errors.some((error) => error.status === 422);
+  },
+
+  _transitionToTask(task) {
+    this.transitionTo('project.tasks.task', get(task, 'number'));
   }
 });

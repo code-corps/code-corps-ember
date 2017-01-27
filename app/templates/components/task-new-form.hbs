@@ -23,7 +23,12 @@
     {{/each}}
   </div>
   <div class="input-group">
-    {{editor-with-preview tabindex="3" input=task.markdown isLoading=task.isSaving placeholder=placeholder}}
+    {{editor-with-preview
+      tabindex="3"
+      input=task.markdown
+      isLoading=task.isSaving
+      placeholder=placeholder
+    }}
     {{#each task.errors.markdown as |error|}}
       <p class="error">{{error.message}}</p>
     {{/each}}
