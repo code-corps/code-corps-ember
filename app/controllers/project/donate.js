@@ -148,7 +148,7 @@ export default Controller.extend({
   // setting error property
 
   _handleError(error) {
-    this.set('error', error);
+    set(this, 'error', error);
   },
 
   // helpers
@@ -167,6 +167,6 @@ export default Controller.extend({
   },
 
   _clearErrors() {
-    this.set('error', null);
+    set(this, 'error', null);
   }
 });

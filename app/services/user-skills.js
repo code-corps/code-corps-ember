@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   isEmpty,
   Service
@@ -18,12 +19,12 @@ export default Service.extend({
     'user.userSkills.@each.skill',
     'user.userSkills.@each.user',
   function() {
-    return this.get('user.userSkills');
+    return get(this, 'user.userSkills');
   }),
 
   addSkill(skill) {
-    let user = this.get('user');
-    let userSkill = this.get('store').createRecord('user-skill', {
+    let user = get(this, 'user');
+    let userSkill = get(this, 'store').createRecord('user-skill', {
       user,
       skill
     });
@@ -31,11 +32,11 @@ export default Service.extend({
   },
 
   hasSkill(skill) {
-    let userSkills = this.get('userSkills');
+    let userSkills = get(this, 'userSkills');
     if (userSkills) {
       let matchedSkill = userSkills.find(function(item) {
         let itemSkillId = item.belongsTo('skill').id();
-        let skillId = skill.get('id');
+        let skillId = get(skill, 'id');
         return (itemSkillId === skillId);
       }.bind(this));
       return !isEmpty(matchedSkill);
@@ -43,13 +44,13 @@ export default Service.extend({
   },
 
   findUserSkill(skill) {
-    let userSkills = this.get('userSkills');
+    let userSkills = get(this, 'userSkills');
     if (userSkills) {
       let userSkill = userSkills.find((item) => {
         let itemUserId = item.belongsTo('user').id();
         let itemSkillId = item.belongsTo('skill').id();
-        let userId = this.get('user.id');
-        let skillId = skill.get('id');
+        let userId = get(this, 'user.id');
+        let skillId = get(skill, 'id');
         return (itemUserId === userId) && (itemSkillId === skillId);
       });
       return userSkill;

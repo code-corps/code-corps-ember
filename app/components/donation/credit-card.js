@@ -4,7 +4,9 @@ const {
   Component,
   computed,
   computed: { and, not, or },
-  inject: { service }
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 export default Component.extend({
@@ -26,26 +28,26 @@ export default Component.extend({
   isProcessingOrInvalid: or('isProcessing', 'cardInvalid'),
 
   date: computed('month', 'year', function() {
-    let month = this.get('month');
-    let year = this.get('year');
+    let month = get(this, 'month');
+    let year = get(this, 'year');
     return `${month} ${year}`;
   }),
 
   isCardNumberValid: computed('cardNumber', function() {
-    let stripe = this.get('stripe');
-    let cardNumber = this.get('cardNumber');
+    let stripe = get(this, 'stripe');
+    let cardNumber = get(this, 'cardNumber');
     return stripe.card.validateCardNumber(cardNumber);
   }),
 
   isCVCValid: computed('cvc', function() {
-    let stripe = this.get('stripe');
-    let cvc = this.get('cvc');
+    let stripe = get(this, 'stripe');
+    let cvc = get(this, 'cvc');
     return stripe.card.validateCVC(cvc);
   }),
 
   isExpiryValid: computed('date', function() {
-    let stripe = this.get('stripe');
-    let date = this.get('date');
+    let stripe = get(this, 'stripe');
+    let date = get(this, 'date');
     return stripe.card.validateExpiry(date);
   }),
 
@@ -66,23 +68,23 @@ export default Component.extend({
   setFreshDate() {
     let date = new Date();
     let currentMonth = `0${date.getMonth() + 1}`.slice(-2);
-    this.set('month', currentMonth);
+    set(this, 'month', currentMonth);
     let currentYear = date.getFullYear();
-    this.set('year', currentYear);
+    set(this, 'year', currentYear);
     let years = this.generateYears(currentYear);
-    this.set('years', years);
+    set(this, 'years', years);
   },
 
   clearForm() {
-    this.set('cvc', '');
-    this.set('cardNumber', '');
+    set(this, 'cvc', '');
+    set(this, 'cardNumber', '');
     this.setFreshDate();
   },
 
   actions: {
     submit() {
       let cardAttrs = this.getProperties('cvc', 'cardNumber', 'year', 'month');
-      let onSubmit = this.get('submit');
+      let onSubmit = get(this, 'submit');
 
       onSubmit(cardAttrs);
     }

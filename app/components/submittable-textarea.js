@@ -1,12 +1,12 @@
 import Ember from 'ember';
 import { keyDown as keyDownEvent } from 'ember-keyboard';
 
-const { TextArea, on } = Ember;
+const { on, TextArea, set } = Ember;
 
 export default TextArea.extend({
   init() {
     this._super(...arguments);
-    this.set('keyboardActivated', true);
+    set(this, 'keyboardActivated', true);
   },
 
   customSubmit: on(keyDownEvent('cmd+Enter'), keyDownEvent('ctrl+Enter'), function(e) {

@@ -2,7 +2,8 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed
+  computed,
+  get
 } = Ember;
 
 export default Component.extend({
@@ -10,16 +11,16 @@ export default Component.extend({
   tagName: 'option',
 
   label: computed('optionLabelPath', 'item', function() {
-    let label = this.get('optionLabelPath');
+    let label = get(this, 'optionLabelPath');
     return label && this.get(`item.${label}`);
   }),
 
   selected: computed('item', 'selectedItem', function() {
-    return this.get('item') === this.get('selectedItem');
+    return get(this, 'item') === get(this, 'selectedItem');
   }),
 
   value: computed('optionValuePath', 'item', function() {
-    let value = this.get('optionValuePath');
+    let value = get(this, 'optionValuePath');
     return value && this.get(`item.${value}`);
   })
 });

@@ -4,7 +4,9 @@ const {
   Component,
   computed: {
     and, empty, or
-  }
+  },
+  get,
+  set
 } = Ember;
 
 export default Component.extend({
@@ -26,6 +28,6 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('wasNewCard', this.get('isNewCard'));
+    set(this, 'wasNewCard', get(this, 'isNewCard'));
   }
 });

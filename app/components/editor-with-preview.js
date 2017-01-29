@@ -206,19 +206,19 @@ export default Component.extend({
   _fetchPreview() {
     set(this, 'fetchingPreview', true);
 
-    let markdown = this.get('input');
+    let markdown = get(this, 'input');
     set(this, 'preview', '');
 
     if (isEmpty(markdown)) {
-      set(this, 'preview', this.get('nothingToPreviewMessage'));
+      set(this, 'preview', get(this, 'nothingToPreviewMessage'));
       set(this, 'fetchingPreview', false);
     } else {
       let preview = get(this, 'store').createRecord('preview', {
         markdown,
-        user: this.get('currentUser.user')
+        user: get(this, 'currentUser.user')
       });
       preview.save().then((preview) => {
-        this.get('mentionFetcher').fetchBodyWithMentions(preview, 'preview').then((body) => {
+        get(this, 'mentionFetcher').fetchBodyWithMentions(preview, 'preview').then((body) => {
           set(this, 'preview', body);
           set(this, 'fetchingPreview', false);
         });

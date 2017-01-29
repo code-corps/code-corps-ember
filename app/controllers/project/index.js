@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   Controller,
   computed,
+  get,
   inject: { service }
 } = Ember;
 
@@ -14,7 +15,7 @@ export default Controller.extend({
 
   actions: {
     saveSubscription(amount) {
-      let project = this.get('project');
+      let project = get(this, 'project');
       let queryParams = { amount };
       this.transitionToRoute('project.donate', project, { queryParams });
     }

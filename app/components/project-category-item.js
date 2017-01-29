@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   computed: { alias, notEmpty },
+  get,
   inject: { service }
 } = Ember;
 
@@ -62,8 +63,8 @@ export default Component.extend({
     @type Ember.Object
    */
   userCategory: computed('category', 'userCategories.userCategories.isFulfilled', function() {
-    let category = this.get('category');
-    let userCategories = this.get('userCategories');
+    let category = get(this, 'category');
+    let userCategories = get(this, 'userCategories');
     return userCategories.findUserCategory(category);
   })
 });

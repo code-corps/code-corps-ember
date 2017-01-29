@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component } = Ember;
+const { Component, set } = Ember;
 
 export default Component.extend({
   classNames: ['select-dropdown'],
@@ -8,7 +8,7 @@ export default Component.extend({
 
   actions: {
     selectItem(item) {
-      this.set('selectedItem', item);
+      set(this, 'selectedItem', item);
     }
   }
 });

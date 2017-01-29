@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   Service
 } = Ember;
 
@@ -11,9 +12,9 @@ export default Service.extend({
   isDark: computed.not('isLight'),
 
   className: computed('isLight', 'isDark', function() {
-    if (this.get('isLight')) {
+    if (get(this, 'isLight')) {
       return 'code-theme--light';
-    } else if (this.get('isDark')) {
+    } else if (get(this, 'isDark')) {
       return 'code-theme--dark';
     }
   }),

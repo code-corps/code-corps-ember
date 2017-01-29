@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { CanMixin } from 'ember-can';
 
 const {
+  get,
   Route
 } = Ember;
 
@@ -60,7 +61,7 @@ export default Route.extend(CanMixin, {
    * @param  {DS.Model} project The currently loaded project
    */
   setupController(controller, project) {
-    if (project.get('donationGoals.length') == 0) {
+    if (get(project, 'donationGoals.length') == 0) {
       controller.send('addDonationGoal', project);
     }
 

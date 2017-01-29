@@ -4,6 +4,7 @@ import { Ability } from 'ember-can';
 const {
   computed,
   computed: { alias, or },
+  get,
   inject: { service },
   isEmpty
 } = Ember;
@@ -15,8 +16,8 @@ export default Ability.extend({
   task: alias('model'),
 
   userIsAuthor: computed('task', 'currentUser.user', function() {
-    let taskUserId = this.get('task.user.id');
-    let currentUserId = this.get('currentUser.user.id');
+    let taskUserId = get(this, 'task.user.id');
+    let currentUserId = get(this, 'currentUser.user.id');
 
     if (isEmpty(taskUserId) || isEmpty(currentUserId)) {
       return false;

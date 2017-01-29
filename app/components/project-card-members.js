@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias }
+  computed: { alias },
+  get
 } = Ember;
 
 const VISIBLE_MEMBERS_COUNT = 8;
@@ -34,7 +35,7 @@ export default Component.extend({
     @type Number
   */
   visibleMembers: computed('members', function() {
-    return this.get('members').slice(0, VISIBLE_MEMBERS_COUNT);
+    return get(this, 'members').slice(0, VISIBLE_MEMBERS_COUNT);
   }),
 
   /**
@@ -52,7 +53,7 @@ export default Component.extend({
     @type Number
   */
   hiddenMembersCount: computed('totalMembersCount', function() {
-    return this.get('totalMembersCount') -  VISIBLE_MEMBERS_COUNT;
+    return get(this, 'totalMembersCount') -  VISIBLE_MEMBERS_COUNT;
   }),
 
   /**
@@ -62,6 +63,6 @@ export default Component.extend({
     @type Boolean
   */
   hiddenMembersExist: computed('hiddenMembersCount', function() {
-    return this.get('hiddenMembersCount') > 0;
+    return get(this, 'hiddenMembersCount') > 0;
   })
 });

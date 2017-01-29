@@ -5,6 +5,7 @@ const {
   String: { htmlSafe },
   computed,
   computed: { alias, notEmpty, or },
+  get,
   inject: { service },
   run,
   set
@@ -34,10 +35,10 @@ export default Component.extend({
   style: computed('droppedImage', 'originalImage', function() {
     let backgroundStyle = '';
 
-    if (this.get('droppedImage')) {
-      backgroundStyle = `background-image: url(${this.get('droppedImage')});`;
-    } else if (this.get('originalImage')) {
-      backgroundStyle = `background-image: url(${this.get('originalImage')});`;
+    if (get(this, 'droppedImage')) {
+      backgroundStyle = `background-image: url(${get(this, 'droppedImage')});`;
+    } else if (get(this, 'originalImage')) {
+      backgroundStyle = `background-image: url(${get(this, 'originalImage')});`;
     }
 
     return htmlSafe(backgroundStyle);
@@ -45,7 +46,7 @@ export default Component.extend({
 
   dragEnded() {
     this.dragLeave();
-    this.get('appDragState').leaving();
+    get(this, 'appDragState').leaving();
   },
 
   dragLeave() {

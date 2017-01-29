@@ -2,21 +2,22 @@ import Ember from 'ember';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
 const {
-  Route,
+  get,
   inject: { service },
+  Route,
   set
 } = Ember;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
   model() {
-    return this.get('store').createRecord('user');
+    return get(this, 'store').createRecord('user');
   },
 
   session: service(),
 
   actions: {
     signIn(credentials) {
-      this.get('session').authenticate('authenticator:jwt', credentials);
+      get(this, 'session').authenticate('authenticator:jwt', credentials);
     },
 
     handleErrors(error) {

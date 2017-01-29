@@ -3,9 +3,11 @@ import { task, timeout } from 'ember-concurrency';
 
 const {
   Component,
+  get,
   Object,
   observer,
   run: { later },
+  set,
   testing
 } = Ember;
 
@@ -59,24 +61,24 @@ export default Component.extend({
   classNames: ['demo-skills'],
 
   _animateItems: observer('animated', function() {
-    if (this.get('animated')) {
-      let skills = this.get('skills');
+    if (get(this, 'animated')) {
+      let skills = get(this, 'skills');
       let indexesToAnimate = [2, 3, 5, 6, 8, 9];
 
       later(() => {
         indexesToAnimate.forEach((index) => {
           let skill = skills[index];
-          this.get('_animateItem').perform(skill);
+          get(this, '_animateItem').perform(skill);
         });
       }, INIT_DELAY);
     }
   }),
 
   _animateItem: task(function* (skill) {
-    skill.set('selected', true);
-    skill.set('isLoading', true);
+    set(skill, 'selected', true);
+    set(skill, 'isLoading', true);
     later(() => {
-      skill.set('isLoading', false);
+      set(skill, 'isLoading', false);
     }, LOADING_TOGGLE);
     yield timeout(CONCURRENCY_TIMEOUT);
   }).enqueue()

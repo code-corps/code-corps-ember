@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   $,
   computed,
+  get,
   run,
   Service
 } = Ember;
@@ -14,11 +15,11 @@ export default Service.extend({
 
   setBackgroundClass: computed(function() {
     return () => {
-      $('html').addClass(this.get('class'));
+      $('html').addClass(get(this, 'class'));
     };
   }),
 
   updateBackgroundClass() {
-    run.once(this, this.get('setBackgroundClass'));
+    run.once(this, get(this, 'setBackgroundClass'));
   }
 });

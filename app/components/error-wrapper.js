@@ -3,8 +3,10 @@ import Ember from 'ember';
 const {
   Component,
   computed,
+  get,
   inject: { service },
-  observer
+  observer,
+  set
 } = Ember;
 
 /**
@@ -34,7 +36,7 @@ export default Component.extend({
     @type String
   */
   errorClass: computed('is404', function() {
-    if (this.get('is404')) {
+    if (get(this, 'is404')) {
       return 'warning';
     } else {
       return 'danger';
@@ -50,7 +52,7 @@ export default Component.extend({
   // Map the HTTP status codes into an array or
   // an empty array if there are no such status codes
   httpStatusCodes: computed('error', function() {
-    let error = this.get('error');
+    let error = get(this, 'error');
     if (error && error.hasOwnProperty('errors')) {
       let { errors } = error;
       return errors.map(function(err) {
@@ -68,7 +70,7 @@ export default Component.extend({
     @type Boolean
   */
   is404: computed('httpStatusCodes', function() {
-    return this.get('httpStatusCodes').includes(404);
+    return get(this, 'httpStatusCodes').includes(404);
   }),
 
   /**
@@ -95,7 +97,7 @@ export default Component.extend({
     @method willDestroyElement
   */
   willDestroyElement() {
-    this.get('background').reset();
+    get(this, 'background').reset();
   },
 
   /**
@@ -104,7 +106,7 @@ export default Component.extend({
     @method updateBackground
   */
   updateBackground() {
-    this.set('background.class', this.get('errorClass'));
-    this.get('background').updateBackgroundClass();
+    set(this, 'background.class', get(this, 'errorClass'));
+    get(this, 'background').updateBackgroundClass();
   }
 });

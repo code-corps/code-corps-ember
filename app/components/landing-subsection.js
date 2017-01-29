@@ -3,8 +3,10 @@ import CanAnimateMixin from 'code-corps-ember/mixins/can-animate';
 
 const {
   Component,
-  String: { htmlSafe },
-  computed
+  computed,
+  get,
+  set,
+  String: { htmlSafe }
 } = Ember;
 
 export default Component.extend(CanAnimateMixin, {
@@ -13,15 +15,15 @@ export default Component.extend(CanAnimateMixin, {
   classNameBindings: ['animated:animated'],
 
   animated: computed('canAnimate', function() {
-    let canAnimate = this.get('canAnimate');
+    let canAnimate = get(this, 'canAnimate');
     if (canAnimate) {
-      this.set('_hasAnimated', true);
+      set(this, '_hasAnimated', true);
     }
-    return this.get('_hasAnimated');
+    return get(this, '_hasAnimated');
   }),
 
   style: computed('minHeight', function() {
-    let css = `min-height: ${this.get('minHeight')  }px;`;
+    let css = `min-height: ${get(this, 'minHeight')}px;`;
     return htmlSafe(css);
   })
 });

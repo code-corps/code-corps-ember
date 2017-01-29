@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   computed: { mapBy },
-  inject: { service }
+  inject: { service },
+  get
 } = Ember;
 
 export default Component.extend({
@@ -15,6 +16,6 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.get('credentials').set('currentOrganization', this.get('organization'));
+    get(this, 'credentials').set('currentOrganization', get(this, 'organization'));
   }
 });

@@ -25,7 +25,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model() {
     return this.modelFor('project').reload().then((project) => {
-      let taskLists = project.get('taskLists');
+      let taskLists = get(project, 'taskLists');
       return RSVP.hash({ project, taskLists });
     });
   },
@@ -37,14 +37,14 @@ export default Route.extend(AuthenticatedRouteMixin, {
       taskType: get(this, 'taskType'),
       user: get(this, 'currentUser.user')
     });
-    // controller.set('task', newTask);
+    // set(controller, 'task', newTask);
     controller.setProperties({ project, task: newTask });
   },
 
   actions: {
     saveTask(task) {
       task.save().then((task) => {
-        this.transitionTo('project.tasks.task', task.get('number'));
+        this.transitionTo('project.tasks.task', get(task, 'number'));
       }).catch((error) => {
         let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 

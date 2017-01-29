@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 const {
+  get,
+  inject: { service },
   Route,
-  inject: { service }
+  set
 } = Ember;
 
 export default Route.extend({
@@ -16,7 +18,7 @@ export default Route.extend({
   },
 
   setupController(controller, task) {
-    let user = this.get('currentUser.user');
+    let user = get(this, 'currentUser.user');
     let newComment = this.store.createRecord('comment', { user });
     controller.setProperties({ newComment, task });
   },
@@ -33,8 +35,8 @@ export default Route.extend({
     },
 
     saveComment(comment) {
-      let task = this.get('controller.task');
-      comment.set('task', task);
+      let task = get(this, 'controller.task');
+      set(comment, 'task', task);
       comment.save().catch((error) => {
         let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
 

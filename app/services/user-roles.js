@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   Service
 } = Ember;
@@ -17,12 +18,12 @@ export default Service.extend({
     'user.userRoles.@each.role',
     'user.userRoles.@each.user',
   function() {
-    return this.get('user.userRoles');
+    return get(this, 'user.userRoles');
   }),
 
   addRole(role) {
-    let user = this.get('user');
-    let userRole = this.get('store').createRecord('user-role', {
+    let user = get(this, 'user');
+    let userRole = get(this, 'store').createRecord('user-role', {
       user,
       role
     });
@@ -30,12 +31,12 @@ export default Service.extend({
   },
 
   findUserRole(role) {
-    let userRoles = this.get('userRoles');
+    let userRoles = get(this, 'userRoles');
     let userRole = userRoles.find((item) => {
       let itemUserId = item.belongsTo('user').id();
       let itemRoleId = item.belongsTo('role').id();
-      let userId = this.get('user.id');
-      let roleId = role.get('id');
+      let userId = get(this, 'user.id');
+      let roleId = get(role, 'id');
       return (itemUserId === userId) && (itemRoleId === roleId);
     });
     return userRole;

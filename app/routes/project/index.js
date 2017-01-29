@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const {
+  get,
   inject: { service },
   Route,
   RSVP
@@ -11,7 +12,7 @@ export default Route.extend({
 
   model() {
     return this.modelFor('project').reload().then((project) => {
-      let subscription = this.get('userSubscriptions').fetchForProject(project);
+      let subscription = get(this, 'userSubscriptions').fetchForProject(project);
       return RSVP.hash({ project, subscription });
     });
   },

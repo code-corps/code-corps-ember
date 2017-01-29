@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   Service
 } = Ember;
@@ -17,12 +18,12 @@ export default Service.extend({
     'user.userCategories.@each.category',
     'user.userCategories.@each.user',
   function() {
-    return this.get('user.userCategories');
+    return get(this, 'user.userCategories');
   }),
 
   addCategory(category) {
-    let user = this.get('user');
-    let userCategory = this.get('store').createRecord('user-category', {
+    let user = get(this, 'user');
+    let userCategory = get(this, 'store').createRecord('user-category', {
       user,
       category
     });
@@ -30,13 +31,13 @@ export default Service.extend({
   },
 
   findUserCategory(category) {
-    let userCategories = this.get('userCategories');
+    let userCategories = get(this, 'userCategories');
     if (userCategories) {
       let userCategory = userCategories.find((item) => {
         let itemUserId = item.belongsTo('user').id();
         let itemCategoryId = item.belongsTo('category').id();
-        let userId = this.get('user.id');
-        let categoryId = category.get('id');
+        let userId = get(this, 'user.id');
+        let categoryId = get(category, 'id');
         return (itemUserId === userId) && (itemCategoryId === categoryId);
       });
       return userCategory;

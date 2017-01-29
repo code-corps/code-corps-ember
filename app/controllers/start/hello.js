@@ -3,7 +3,8 @@ import OnboardingControllerMixin from '../../mixins/onboarding-controller';
 
 const {
   computed,
-  Controller
+  Controller,
+  get
 } = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
@@ -19,7 +20,7 @@ export default Controller.extend(OnboardingControllerMixin, {
     * @method attemptToContinue
     */
     attemptToContinue() {
-      let usersNameIsEmpty = this.get('usersNameIsEmpty');
+      let usersNameIsEmpty = get(this, 'usersNameIsEmpty');
       if (!usersNameIsEmpty) {
         this.send('continue');
       }

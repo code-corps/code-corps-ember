@@ -2,14 +2,15 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed
+  computed,
+  get
 } = Ember;
 
 export default Component.extend({
   tagName: 'li',
 
   src: computed('imageSlug', function() {
-    let imageSlug = this.get('imageSlug');
+    let imageSlug = get(this, 'imageSlug');
     return `https://d3pgew4wbk2vb1.cloudfront.net/images/team/${imageSlug}.png`;
   })
 });

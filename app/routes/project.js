@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 const {
-  Route,
-  inject: { service }
+  get,
+  inject: { service },
+  Route
 } = Ember;
 
 export default Route.extend({
@@ -16,16 +17,16 @@ export default Route.extend({
   credentials: service(),
 
   afterModel(model) {
-    return model.get('organization').then((organization) => {
-      this.get('credentials').setOrganization(organization);
+    return get(model, 'organization').then((organization) => {
+      get(this, 'credentials').setOrganization(organization);
       return this._super(...arguments);
     });
   },
 
   serialize(model) {
     return {
-      slugged_route_slug: model.get('organization.slug'),
-      project_slug: model.get('slug')
+      slugged_route_slug: get(model, 'organization.slug'),
+      project_slug: get(model, 'slug')
     };
   }
 });

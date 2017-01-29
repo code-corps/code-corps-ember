@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, Object } = Ember;
+const { Component, computed, get, Object } = Ember;
 
 /**
   `error-formatter' returns a formatted error message. Place within an 'if'
@@ -37,12 +37,12 @@ export default Component.extend({
     @type String
    */
   messages: computed('error', function() {
-    let errorResponse = Object.create(this.get('error'));
+    let errorResponse = Object.create(get(this, 'error'));
     let handler = this._findHandler(errorResponse);
     if (handler) {
       return handler(errorResponse);
     } else {
-      console.error(this.get('error'));
+      console.error(get(this, 'error'));
     }
   }),
 
@@ -54,17 +54,17 @@ export default Component.extend({
    * @return {Function}             Function which takes the error response and returns a list of messages
    */
   _findHandler(errorResponse) {
-    if (errorResponse.get('isFriendlyError')) {
+    if (get(errorResponse, 'isFriendlyError')) {
       return this._friendlyErrorMessages;
-    } else if (errorResponse.get('isAdapterError')) {
+    } else if (get(errorResponse, 'isAdapterError')) {
       return this._adapterErrorMessages;
-    } else if (errorResponse.get('error.type') === 'card_error') {
+    } else if (get(errorResponse, 'error.type') === 'card_error') {
       return this._stripeCardErrorMessages;
     }
   },
 
   _friendlyErrorMessages(errorResponse) {
-    return (errorResponse.get('errors')).map((e) => `${e.detail}`);
+    return (get(errorResponse, 'errors')).map((e) => `${e.detail}`);
   },
 
   /**
@@ -76,7 +76,7 @@ export default Component.extend({
    * @return {Array}                Array of message strings
    */
   _adapterErrorMessages(errorResponse) {
-    return (errorResponse.get('errors')).map((e) => `${e.title}: ${e.detail}`);
+    return (get(errorResponse, 'errors')).map((e) => `${e.title}: ${e.detail}`);
   },
 
   /**
@@ -88,6 +88,6 @@ export default Component.extend({
    * @return {Array}                An array of string messages, containing single string
    */
   _stripeCardErrorMessages(errorResponse) {
-    return [errorResponse.get('error.message')];
+    return [get(errorResponse, 'error.message')];
   }
 });

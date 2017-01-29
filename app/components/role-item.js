@@ -5,7 +5,8 @@ const {
   computed,
   computed: { notEmpty },
   get,
-  inject: { service }
+  inject: { service },
+  set
 } = Ember;
 
 export default Component.extend({
@@ -19,31 +20,31 @@ export default Component.extend({
   selected: notEmpty('userRole'),
 
   userRole: computed('role', 'userRoles.userRoles', function() {
-    let role = this.get('role');
-    let userRoles = this.get('userRoles');
+    let role = get(this, 'role');
+    let userRoles = get(this, 'userRoles');
     return userRoles.findUserRole(role);
   }),
 
   actions: {
     addRole(role) {
-      this.set('isLoading', true);
-      let userRoles = this.get('userRoles');
+      set(this, 'isLoading', true);
+      let userRoles = get(this, 'userRoles');
       return userRoles.addRole(role).catch(() => {
-        let message = `An error occurred trying to add ${role.get('name')}.`;
+        let message = `An error occurred trying to add ${get(role, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
-        this.set('isLoading', false);
+        set(this, 'isLoading', false);
       });
     },
 
     removeRole(role) {
-      this.set('isLoading', true);
-      let userRoles = this.get('userRoles');
+      set(this, 'isLoading', true);
+      let userRoles = get(this, 'userRoles');
       return userRoles.removeRole(role).catch(() => {
-        let message = `An error occurred trying to remove ${role.get('name')}.`;
+        let message = `An error occurred trying to remove ${get(role, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
-        this.set('isLoading', false);
+        set(this, 'isLoading', false);
       });
     }
   },

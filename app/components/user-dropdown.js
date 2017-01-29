@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  get,
   inject: { service }
 } = Ember;
 
@@ -35,7 +36,7 @@ export default Component.extend({
      @method invalidateSession
      */
     invalidateSession() {
-      this.get('session').invalidate();
+      get(this, 'session').invalidate();
     }
   }
 });

@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   Mixin
 } = Ember;
 
@@ -30,7 +31,7 @@ export default Mixin.create({
    * @type Boolean
    */
   containsCode: computed('body', function() {
-    let body = this.get('body');
+    let body = get(this, 'body');
     if (body) {
       return body.indexOf('<code>') !== -1;
     }

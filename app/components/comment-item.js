@@ -111,7 +111,7 @@ export default Component.extend({
       let comment = get(this, 'comment');
 
       comment.save().then((comment) => {
-        component.set('isEditing', false);
+        set(component, 'isEditing', false);
         this._fetchMentions(comment);
       }).catch((error) => {
         let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);

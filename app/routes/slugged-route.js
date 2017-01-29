@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
 const {
+  get,
+  inject: { service },
   Route,
-  RSVP,
-  inject: { service }
+  RSVP
 } = Ember;
 
 export default Route.extend({
@@ -16,9 +17,9 @@ export default Route.extend({
   },
 
   afterModel(sluggedRoute) {
-    return sluggedRoute.get('organization').then((organization) => {
+    return get(sluggedRoute, 'organization').then((organization) => {
       if (organization) {
-        return this.get('credentials').setOrganization(organization);
+        return get(this, 'credentials').setOrganization(organization);
       } else {
         return RSVP.resolve();
       }

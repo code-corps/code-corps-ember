@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Route } = Ember;
+const { Route, set } = Ember;
 
 export default Route.extend({
   model(params) {
@@ -10,6 +10,6 @@ export default Route.extend({
   },
 
   setupController(controller, model) {
-    controller.set('projects', model);
+    set(controller, 'projects', model);
   }
 });

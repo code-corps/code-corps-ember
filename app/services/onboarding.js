@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   Service
 } = Ember;
@@ -42,8 +43,8 @@ export default Service.extend({
   ],
 
   _currentStep: computed('currentUser.user.state', function() {
-    let state = this.get('currentUser.user.state');
-    let steps = this.get('_steps');
+    let state = get(this, 'currentUser.user.state');
+    let steps = get(this, '_steps');
     return steps.find((step) => {
       return step.state === state;
     });
@@ -62,6 +63,6 @@ export default Service.extend({
   routes: computed.mapBy('_steps', 'currentRoute'),
 
   progressPercentage: computed('currentStepNumber', 'totalSteps', function() {
-    return (this.get('currentStepNumber') / this.get('totalSteps')) * 100;
+    return (get(this, 'currentStepNumber') / get(this, 'totalSteps')) * 100;
   })
 });

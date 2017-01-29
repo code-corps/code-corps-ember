@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   RSVP,
   Service
@@ -14,10 +15,10 @@ export default Service.extend({
   user: computed.alias('currentUser.user'),
 
   fetchForProject(project) {
-    let user = this.get('user');
+    let user = get(this, 'user');
 
     if (user) {
-      let subscriptions = user.get('stripeConnectSubscriptions');
+      let subscriptions = get(user, 'stripeConnectSubscriptions');
       let planId = project.belongsTo('stripeConnectPlan').id();
       return RSVP.hash({ subscriptions, planId }).then(({ subscriptions, planId }) => {
         let subscription = subscriptions.find((subscription) => {

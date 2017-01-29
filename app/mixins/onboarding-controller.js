@@ -2,8 +2,10 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
-  Mixin
+  Mixin,
+  set
 } = Ember;
 
 export default Mixin.create({
@@ -14,11 +16,11 @@ export default Mixin.create({
 
   actions: {
     continue() {
-      let user = this.get('user');
-      let onboarding = this.get('onboarding');
-      let nextStateTransition = onboarding.get('nextStateTransition');
-      let nextRoute = onboarding.get('nextRoute');
-      user.set('stateTransition', nextStateTransition);
+      let user = get(this, 'user');
+      let onboarding = get(this, 'onboarding');
+      let nextStateTransition = get(onboarding, 'nextStateTransition');
+      let nextRoute = get(onboarding, 'nextRoute');
+      set(user, 'stateTransition', nextStateTransition);
       user.save().then(() => {
         this.transitionToRoute(nextRoute);
       });

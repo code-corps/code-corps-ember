@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  get,
   inject: { service }
 } = Ember;
 
@@ -54,8 +55,8 @@ export default Component.extend({
       @method joinProject
      */
     joinProject() {
-      let organization = this.get('project.organization');
-      this.get('credentials').joinOrganization(organization);
+      let organization = get(this, 'project.organization');
+      get(this, 'credentials').joinOrganization(organization);
     }
   }
 });

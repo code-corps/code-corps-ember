@@ -3,7 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 import Ember from 'ember';
 
-const { computed } = Ember;
+const { computed, get } = Ember;
 
 export default Model.extend({
   base64PhotoData: attr(),
@@ -34,10 +34,10 @@ export default Model.extend({
   userSkills: hasMany('user-skill', { async: true }),
 
   atUsername: computed('username', function() {
-    return `@${this.get('username')}`;
+    return `@${get(this, 'username')}`;
   }),
 
   twitterUrl: computed('twitter', function() {
-    return `https://twitter.com/${this.get('twitter')}`;
+    return `https://twitter.com/${get(this, 'twitter')}`;
   })
 });

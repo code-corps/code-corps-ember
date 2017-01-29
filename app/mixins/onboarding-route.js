@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const {
+  get,
   inject: { service },
   Mixin
 } = Ember;
@@ -10,11 +11,11 @@ export default Mixin.create({
   onboarding: service(),
 
   beforeModel(transition) {
-    let isOnboarding = this.get('onboarding.isOnboarding');
-    let expectedOnboardingRoute = this.get('onboarding.currentRoute');
-    let routes = this.get('onboarding.routes');
+    let isOnboarding = get(this, 'onboarding.isOnboarding');
+    let expectedOnboardingRoute = get(this, 'onboarding.currentRoute');
+    let routes = get(this, 'onboarding.routes');
     let target = transition.targetName;
-    let user = this.get('currentUser.user');
+    let user = get(this, 'currentUser.user');
     if (isOnboarding && target !== expectedOnboardingRoute) {
       this._abortAndFixHistory(transition);
     } else if (isOnboarding) {

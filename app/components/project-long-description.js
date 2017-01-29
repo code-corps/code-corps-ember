@@ -3,8 +3,10 @@ import Ember from 'ember';
 const {
   Component,
   computed: { or },
+  get,
   inject: { service },
-  isPresent
+  isPresent,
+  set
 } = Ember;
 
 /**
@@ -88,7 +90,7 @@ export default Component.extend({
       @method save
      */
     save() {
-      this.get('project').save().then(() => {
+      get(this, 'project').save().then(() => {
         this._enterReadMode();
         this._inferIfNeedsDescription();
       });
@@ -96,18 +98,18 @@ export default Component.extend({
   },
 
   _enterEditMode() {
-    this.set('isEditing', true);
+    set(this, 'isEditing', true);
   },
 
   _enterReadMode() {
-    this.set('isEditing', false);
+    set(this, 'isEditing', false);
   },
 
   _inferIfNeedsDescription() {
-    if (isPresent(this.get('project.longDescriptionBody'))) {
-      this.set('descriptionIsBlank', false);
+    if (isPresent(get(this, 'project.longDescriptionBody'))) {
+      set(this, 'descriptionIsBlank', false);
     } else {
-      this.set('descriptionIsBlank', true);
+      set(this, 'descriptionIsBlank', true);
     }
   }
 });

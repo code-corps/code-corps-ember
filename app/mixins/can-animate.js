@@ -3,8 +3,10 @@ import Ember from 'ember';
 const {
   $,
   computed,
+  get,
   Mixin,
-  run
+  run,
+  set
 } = Ember;
 
 export default Mixin.create({
@@ -15,8 +17,8 @@ export default Mixin.create({
 
   canAnimate: computed('boundingClientRect', 'windowHeight', function() {
     let rect, windowHeight;
-    rect = this.get('boundingClientRect');
-    windowHeight = this.get('windowHeight');
+    rect = get(this, 'boundingClientRect');
+    windowHeight = get(this, 'windowHeight');
     return (
       rect.top <= windowHeight - 150
     );
@@ -25,19 +27,19 @@ export default Mixin.create({
   _updateBoundingClientRect() {
     let el;
     el = this.$()[0];
-    this.set('boundingClientRect', el.getBoundingClientRect());
+    set(this, 'boundingClientRect', el.getBoundingClientRect());
   },
 
   _setup: (function() {
     return run.scheduleOnce('afterRender', this, function() {
       this._updateBoundingClientRect();
-      this.set('windowHeight', window.innerHeight || document.documentElement.clientHeight);
-      this.set('windowWidth', window.innerWidth || document.documentElement.clientWidth);
+      set(this, 'windowHeight', window.innerHeight || document.documentElement.clientHeight);
+      set(this, 'windowWidth', window.innerWidth || document.documentElement.clientWidth);
     });
   }).on('didInsertElement'),
 
   _scrollHandler() {
-    return run.debounce(this, '_updateBoundingClientRect', this.get('scrollTimeout'));
+    return run.debounce(this, '_updateBoundingClientRect', get(this, 'scrollTimeout'));
   },
 
   _bindScroll: (function() {

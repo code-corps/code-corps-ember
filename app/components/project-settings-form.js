@@ -13,7 +13,7 @@ export default Component.extend({
 
   actions: {
     save() {
-      this.get('project').save().then(() => {
+      get(this, 'project').save().then(() => {
         get(this, 'flashMessages').clearMessages().success('Project updated successfully');
       });
     }

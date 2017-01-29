@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   computed: { alias, notEmpty },
+  get,
   inject: { service }
 } = Ember;
 
@@ -17,8 +18,8 @@ export default Component.extend({
   usersUserSkills: alias('user.userSkills'),
 
   userSkill: computed('skill', 'userSkills.userSkills.isFulfilled', function() {
-    let skill = this.get('skill');
-    let userSkills = this.get('userSkills');
+    let skill = get(this, 'skill');
+    let userSkills = get(this, 'userSkills');
     let result = userSkills.findUserSkill(skill);
     return result;
   }),

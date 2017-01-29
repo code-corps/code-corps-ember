@@ -5,6 +5,7 @@ import Ember from 'ember';
 // this service just returns the unmodified body
 
 const {
+  get,
   inject: { service },
   RSVP,
   Service
@@ -14,7 +15,7 @@ export default Service.extend({
   store: service(),
 
   prefetchBodyWithMentions(record/* , type*/) {
-    let body = record.get('body');
+    let body = get(record, 'body');
 
     return body;
 
@@ -27,17 +28,17 @@ export default Service.extend({
 
   fetchBodyWithMentions(record/* , type*/) {
     /*
-    let store = this.get('store');
+    let store = get(this, 'store');
     let mentionType = `${type}-user-mention`;
     let keyForParentId = `${type}_id`;
     let queryParams = {};
     queryParams[keyForParentId] = record.id;
 
     return store.query(mentionType, queryParams).then((mentions) => {
-      return parse(record.get('body'), mentions);
+      return parse(get(record, 'body'), mentions);
     });
     */
 
-    return RSVP.resolve(record.get('body'));
+    return RSVP.resolve(get(record, 'body'));
   }
 });

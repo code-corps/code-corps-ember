@@ -33,7 +33,7 @@ export default Component.extend({
       @method save
      */
     save() {
-      this.get('user').save().then(() => {
+      get(this, 'user').save().then(() => {
         get(this, 'flashMessages').clearMessages().success('Profile updated successfully');
       });
     }

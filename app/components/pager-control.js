@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias, equal, gt }
+  computed: { alias, equal, gt },
+  get
 } = Ember;
 
 /**
@@ -111,23 +112,23 @@ export default Component.extend({
     @type Object
   */
   bounds: computed('centerPage', 'pagesToShow', 'totalPages', function() {
-    let pagesToShow = this.get('pagesToShow');
-    let totalPages = this.get('totalPages');
+    let pagesToShow = get(this, 'pagesToShow');
+    let totalPages = get(this, 'totalPages');
 
     if (totalPages < pagesToShow) {
       return {
         lower: 1,
         upper: totalPages
       };
-    } else if (this.get('onLastPage')) {
-      let currentPage = this.get('currentPage');
+    } else if (get(this, 'onLastPage')) {
+      let currentPage = get(this, 'currentPage');
 
       return {
         lower: currentPage - (pagesToShow - 1),
         upper: currentPage
       };
     } else {
-      let centerPage = this.get('centerPage');
+      let centerPage = get(this, 'centerPage');
       let range = Math.floor(pagesToShow / 2);
       let pagesToShowIsEven = pagesToShow % 2 === 0;
 
@@ -145,8 +146,8 @@ export default Component.extend({
     @type Number
   */
   centerPage: computed('currentPage', 'pagesToShow', function() {
-    let currentPage = this.get('currentPage');
-    let pagesToShow = this.get('pagesToShow');
+    let currentPage = get(this, 'currentPage');
+    let pagesToShow = get(this, 'pagesToShow');
 
     let minCenterPage = Math.ceil(pagesToShow / 2);
     return (currentPage >= minCenterPage) ? currentPage : minCenterPage;
@@ -159,7 +160,7 @@ export default Component.extend({
     @type Number
   */
   nextPage: computed('currentPage', function() {
-    return this.get('currentPage') + 1;
+    return get(this, 'currentPage') + 1;
   }),
 
   /**
@@ -169,7 +170,7 @@ export default Component.extend({
     @type Boolean
   */
   onLastPage: computed('currentPage', 'totalPages', 'hasOnePage', function() {
-    return this.get('currentPage') === this.get('totalPages') || this.get('hasOnePage');
+    return get(this, 'currentPage') === get(this, 'totalPages') || get(this, 'hasOnePage');
   }),
 
   /**
@@ -179,7 +180,7 @@ export default Component.extend({
     @type Array
   */
   pages: computed('bounds', function() {
-    let bounds = this.get('bounds');
+    let bounds = get(this, 'bounds');
 
     let pages = [];
     for (let i = bounds.lower; i <= bounds.upper; i++) {
@@ -196,6 +197,6 @@ export default Component.extend({
     @type Number
   */
   previousPage: computed('currentPage', function() {
-    return this.get('currentPage') - 1;
+    return get(this, 'currentPage') - 1;
   })
 });

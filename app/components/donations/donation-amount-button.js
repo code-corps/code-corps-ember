@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, computed, isEmpty } = Ember;
+const { Component, computed, get, isEmpty } = Ember;
 
 export default Component.extend({
   classNames: ['preset-amount'],
@@ -15,7 +15,7 @@ export default Component.extend({
 
   click() {
     this.sendAction('setCustomAmount', null);
-    let presetAmount = this.get('presetAmount');
+    let presetAmount = get(this, 'presetAmount');
     this.sendAction('setAmount', presetAmount);
   }
 });
