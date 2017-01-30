@@ -1,17 +1,17 @@
 <div>
-  {{#x-select value=month on-change=(action update 'selectedMonth') as |xs|}}
+  {{#x-select value=month action=(action update 'month') as |xs|}}
     {{#each monthOptions as |monthOption|}}
       {{#xs.option value=monthOption.number}}{{monthOption.text}}{{/xs.option}}
     {{/each}}
   {{/x-select}}
 
-  {{#x-select value=day on-change=(action update 'selectedDay') as |xs|}}
+  {{#x-select value=day action=(action update 'day') as |xs|}}
     {{#each dayOptions as |dayOption|}}
       {{#xs.option value=dayOption}}{{dayOption}}{{/xs.option}}
     {{/each}}
   {{/x-select}}
 
-  {{#x-select value=year  on-change=(action update 'selectedYear') as |xs|}}
+  {{#x-select value=year  action=(action update 'year') as |xs|}}
     {{#each yearOptions as |yearOption|}}
       {{#xs.option value=yearOption}}{{yearOption}}{{/xs.option}}
     {{/each}}

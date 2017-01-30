@@ -4,7 +4,9 @@ const {
   Component,
   computed: { equal },
   get,
-  set
+  isEmpty,
+  set,
+  setProperties
 } = Ember;
 
 export default Component.extend({
@@ -15,10 +17,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let stripeConnectAccount = get(this, 'stripeConnectAccount');
-    if (get(stripeConnectAccount, 'legalEntityType') === null) {
-      set(this, 'stripeConnectAccount.legalEntityType', 'individual');
-    }
+    this._setDefaults();
   },
 
   actions: {
@@ -26,7 +25,7 @@ export default Component.extend({
       let stripeConnectAccount = get(this, 'stripeConnectAccount');
 
       if (get(this, 'isIndividual')) {
-        stripeConnectAccount.setProperties({
+        setProperties(stripeConnectAccount, {
           legalEntityBusinessName: null,
           legalEntityBusinessTaxId: null
         });
@@ -37,9 +36,25 @@ export default Component.extend({
     }
   },
 
-  onBirthDateChanged(day, month, year) {
-    set(this, 'stripeConnectAccount.legalEntityDobDay', day);
-    set(this, 'stripeConnectAccount.legalEntityDobMonth', month);
-    set(this, 'stripeConnectAccount.legalEntityDobYear', year);
+  _setDefaults() {
+    let stripeConnectAccount = get(this, 'stripeConnectAccount');
+
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityType'))) {
+      set(stripeConnectAccount, 'legalEntityType', 'individual');
+    }
+
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityAddressState'))) {
+      set(stripeConnectAccount, 'legalEntityAddressState', 'CA');
+    }
+
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityAddressCountry'))) {
+      set(stripeConnectAccount, 'legalEntityAddressCountry', 'US');
+    }
+
+    let legalEntityDobDay = get(stripeConnectAccount, 'legalEntityDobDay') || 1;
+    let legalEntityDobMonth = get(stripeConnectAccount, 'legalEntityDobMonth') || 1;
+    let legalEntityDobYear = get(stripeConnectAccount, 'legalEntityDobYear') || new Date().getUTCFullYear();
+
+    setProperties(stripeConnectAccount, { legalEntityDobDay, legalEntityDobMonth, legalEntityDobYear });
   }
 });
