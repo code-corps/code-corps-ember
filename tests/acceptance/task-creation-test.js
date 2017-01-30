@@ -6,6 +6,7 @@ import Mirage from 'ember-cli-mirage';
 import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 import projectTasksNewPage from '../pages/project/tasks/new';
+import sinon from 'sinon';
 
 moduleForAcceptance('Acceptance | Task Creation');
 
@@ -226,5 +227,72 @@ test('When task creation fails due to non-validation issues, the error is displa
   andThen(() => {
     assert.equal(projectTasksNewPage.errors().count, 1);
     assert.equal(projectTasksNewPage.errors().contains('An unknown error: Something happened', 'The error is messaged'), true);
+  });
+});
+
+test('Navigating away from task route destroys task with prompt', function(assert) {
+  assert.expect(3);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  let stub = sinon.stub(window, 'confirm', () => {
+    assert.ok(true, 'Confirmation prompt was called.');
+    return true;
+  });
+
+  andThen(() => {
+    projectTasksNewPage.projectMenu.tasksLink.click();
+  });
+
+  andThen(() => {
+    assert.equal(
+      projectTasksIndexPage.taskBoard.taskLists(0).taskCards().count,
+      0,
+      'The task was removed from the list.'
+    );
+    assert.equal(currentRouteName(), 'project.tasks.index', 'Navigation was successful.');
+    stub.restore();
+  });
+});
+
+test('Navigation is aborted if user answers negatively to prompt', function(assert) {
+  assert.expect(2);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  let stub = sinon.stub(window, 'confirm', () => {
+    assert.ok(true, 'Confirmation prompt was called.');
+    return false;
+  });
+
+  andThen(() => {
+    projectTasksNewPage.projectMenu.tasksLink.click();
+  });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.tasks.new', 'Navigation was aborted.');
+    stub.restore();
   });
 });

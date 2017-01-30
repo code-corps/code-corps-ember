@@ -52,6 +52,20 @@ export default Route.extend(AuthenticatedRouteMixin, {
           this.controllerFor('project.tasks.new').set('error', error);
         }
       });
+    },
+
+    willTransition(transition) {
+      let task = get(this, 'controller.task');
+
+      // prompt to confirm if the user did not save
+      if (get(task, ('isNew'))) {
+        let confirmed = window.confirm('You will lose any unsaved information if you leave this page. Are you sure?');
+        if (confirmed) {
+          task.destroyRecord();
+        } else {
+          transition.abort();
+        }
+      }
     }
   }
 });
