@@ -405,12 +405,9 @@ export default function() {
    */
 
   this.post('/stripe-connect-accounts', function(schema) {
-    let { country } = this.normalizedRequestAttrs();
-    let stripeConnectAccount = schema.create('stripeConnectAccount', {
-      country,
-      recipientStatus: 'required'
-    });
-    return stripeConnectAccount;
+    let attrs = this.normalizedRequestAttrs();
+    attrs.recipientStatus = 'required';
+    return schema.create('stripeConnectAccount', attrs);
   });
 
   this.get('/stripe-connect-accounts/:id');

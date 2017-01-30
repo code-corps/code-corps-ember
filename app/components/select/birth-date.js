@@ -30,7 +30,7 @@ export default Component.extend({
 
   yearOptions: computed(function() {
     let thisYear = moment().year();
-    return range(thisYear - 120, thisYear - 13).reverse();
+    return range(thisYear - 120, thisYear).reverse();
   }),
 
   update(property, value) {

@@ -4,6 +4,7 @@ const {
   Component,
   computed: { equal },
   get,
+  isEmpty,
   set,
   setProperties
 } = Ember;
@@ -24,7 +25,7 @@ export default Component.extend({
       let stripeConnectAccount = get(this, 'stripeConnectAccount');
 
       if (get(this, 'isIndividual')) {
-        stripeConnectAccount.setProperties({
+        setProperties(stripeConnectAccount, {
           legalEntityBusinessName: null,
           legalEntityBusinessTaxId: null
         });
@@ -38,21 +39,21 @@ export default Component.extend({
   _setDefaults() {
     let stripeConnectAccount = get(this, 'stripeConnectAccount');
 
-    if (get(stripeConnectAccount, 'legalEntityType') === null) {
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityType'))) {
       set(stripeConnectAccount, 'legalEntityType', 'individual');
     }
 
-    if (get(stripeConnectAccount, 'legalEntityAddressState') == null) {
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityAddressState'))) {
       set(stripeConnectAccount, 'legalEntityAddressState', 'CA');
     }
 
-    if (get(stripeConnectAccount, 'legalEntityAddressCountry') == null) {
+    if (isEmpty(get(stripeConnectAccount, 'legalEntityAddressCountry'))) {
       set(stripeConnectAccount, 'legalEntityAddressCountry', 'US');
     }
 
     let legalEntityDobDay = get(stripeConnectAccount, 'legalEntityDobDay') || 1;
     let legalEntityDobMonth = get(stripeConnectAccount, 'legalEntityDobMonth') || 1;
-    let legalEntityDobYear = get(stripeConnectAccount, 'legalEntityDobYear') || new Date().getUTCFullYear() - 13;
+    let legalEntityDobYear = get(stripeConnectAccount, 'legalEntityDobYear') || new Date().getUTCFullYear();
 
     setProperties(stripeConnectAccount, { legalEntityDobDay, legalEntityDobMonth, legalEntityDobYear });
   }
