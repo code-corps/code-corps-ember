@@ -25,6 +25,7 @@ export default Component.extend({
   dayOptions: computed('selectedMoment', function() {
     let selectedMoment = get(this, 'selectedMoment');
     let maxDay = selectedMoment.daysInMonth();
+
     return range(1, maxDay);
   }),
 

@@ -7,6 +7,7 @@
 - [How do I run tests?](#running-tests)
 - [How do I rebuild Ember?](#rebuilding-ember)
 - [How do I generate and serve documentation?](#generating-documentation)
+- [Do I need special environment variables?](#environment)
 
 ## Interacting with the app
 
@@ -109,3 +110,21 @@ yuidoc --server
 ```
 
 Then you can visit `localhost:3000` in your browser. YUIDoc defaults to port 3000. However, you can specify another port if that conflicts with something else via `yuidoc --server [another port here]`.
+
+### Environment
+
+When contributing to the app, you will not have access to secure environment variables required to work on aspects of the app locally. Unfortunately, for security reasons, we cannot provide you with sandboxed keys for doing this on your own.
+
+You can see some of these variables in `environment.js`.
+
+Without too much effort, you should be able to set up keys on your own for the following portions of the app:
+
+- [Donations and Stripe](#donations-and-stripe)
+
+#### Donations and Stripe
+
+If you're testing anything with donations locally, you'll need a Stripe account.
+
+You can register for a Stripe account here: [https://dashboard.stripe.com/register](https://dashboard.stripe.com/register)
+
+In your `environment.js` you should have an `ENV.stripe.publishableKey` variable. You should change this to your own variable when developing locally, and then remove your change before pushing to GitHub.
