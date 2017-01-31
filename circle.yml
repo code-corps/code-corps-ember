@@ -27,7 +27,7 @@ test:
   override:
     - yarn test
     - ember coverage-merge
-    - if [ ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
+    - if [ ! ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
 
 deployment:
   production:
