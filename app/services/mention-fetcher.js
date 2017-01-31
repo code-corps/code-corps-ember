@@ -5,6 +5,7 @@ import Ember from 'ember';
 // this service just returns the unmodified body
 
 const {
+  get,
   inject: { service },
   RSVP,
   Service
@@ -14,9 +15,7 @@ export default Service.extend({
   store: service(),
 
   prefetchBodyWithMentions(record/* , type*/) {
-    let body = record.get('body');
-
-    return body;
+    return get(record, 'body');
 
     /*
     let relationshipType = `${type}UserMentions`;
@@ -38,6 +37,6 @@ export default Service.extend({
     });
     */
 
-    return RSVP.resolve(record.get('body'));
+    return RSVP.resolve(get(record, 'body'));
   }
 });

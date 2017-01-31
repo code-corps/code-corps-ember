@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject: { service }
+  inject: { service },
+  set
 } = Ember;
 
 /**
@@ -13,7 +14,7 @@ const {
   ## default usage
 
   ```handlebars
-  {{create-comment-form comment=comment saveComment='saveCommentAction'}}
+  {{create-comment-form comment=comment save=(action 'saveComment')}}
   ```
 
   @class create-comment-form
@@ -25,22 +26,20 @@ export default Component.extend({
   tagName: 'form',
 
   /**
-    @property session
-    @type Ember.Service
+   * The injected services/session service. Used to determine if there is a
+   * signed in user.
+   *
+   * @property session
+   * @type Ember.Service
    */
   session: service(),
 
-  actions: {
-
-    /**
-      Action that sends the given `saveComment` action with the comment.
-
-      @method saveComment
-     */
-    saveComment() {
-      let comment = get(this, 'comment');
-
-      this.sendAction('saveComment', comment);
-    }
+  /**
+   * didReceiveAttrs - Component lifecycle hook
+   *
+   * We use it to set the initial value of the markdown edit field.
+   */
+  didReceiveAttrs() {
+    set(this, 'markdown', get(this, 'comment.markdown'));
   }
 });

@@ -56,19 +56,5 @@ export default Component.extend({
     if (taskType) {
       return get(this, 'placeholders.$(taskType)');
     }
-  }),
-
-  actions: {
-
-    /**
-      Action that is fired on form submit. Sends the `saveTask` action that
-      was passed into the component.
-
-      @method submit
-     */
-    submit() {
-      let task = get(this, 'task');
-      this.sendAction('saveTask', task);
-    }
-  }
+  })
 });

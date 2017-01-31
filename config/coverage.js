@@ -1,3 +1,4 @@
 module.exports = {
-  parallel: true
+  parallel: true,
+  useBabelInstrumenter: true
 }

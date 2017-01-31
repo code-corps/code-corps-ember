@@ -2,107 +2,95 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import commentItemComponent from 'code-corps-ember/tests/pages/components/comment-item';
+
+let page = PageObject.create(commentItemComponent);
 
 const {
   Object,
-  RSVP
+  RSVP,
+  run,
+  set,
+  setProperties
 } = Ember;
 
-let mockMentionFetcher = {
-  fetchBodyWithMentions: RSVP.resolve,
-  prefetchBodyWithMentions() {}
-};
-
-let mockStore = {
-  query() {
-    return RSVP.resolve([]);
-  }
-};
-
-let mockCurrentUser = {
-  user: {
-    id: 1
-  }
-};
-
-let mockComment = Object.create({
-  body: 'A <strong>body</strong>',
-  user: { id: 1 },
-  save() {
-    return RSVP.resolve();
-  }
-});
-
-// let mockCommentWithMentions = Object.create({
-//   body: '<p>Mentioning @user1 and @user2</p>',
-//   user: { id: 1 },
-//   save() {
-//     return RSVP.resolve();
-//   },
-//   commentUserMentions: [
-//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
-//   ]
-// });
+function renderPage() {
+  page.render(hbs`{{comment-item comment=comment}}`);
+}
 
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'store', mockStore);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  stubService(this, 'mention-fetcher', mockMentionFetcher);
-
-  this.set('comment', mockComment);
-  this.render(hbs`{{comment-item comment=comment}}`);
-
-  assert.equal(this .$('.comment-item').length, 1, 'Component\' element is rendered');
-});
-
 test('it renders all required comment elements properly', function(assert) {
-  assert.expect(4);
+  assert.expect(6);
 
-  let user = { id: 1, username: 'tester' };
-  let comment = Object.create({ id: 1, body: 'A <b>comment</b>', user, containsCode: true });
+  let comment = Object.create({
+    isLoaded: false
+  });
 
-  this.set('comment', comment);
-  this.render(hbs`{{comment-item comment=comment}}`);
+  set(this, 'comment', comment);
 
-  assert.equal(this.$('.comment-item .comment-body').html(), 'A <b>comment</b>', 'The comment\'s body is rendered');
-  assert.equal(this.$('.comment-item .comment-body b').length, 1, 'The comment\'s body is rendered unescaped');
-  assert.equal(this.$('.comment-item .username').text().trim(), 'tester');
-  assert.equal(this.$('.comment-item .code-theme-selector').length, 1);
+  renderPage();
+
+  assert.equal(page.commentBody.text, '', 'The body is not initially rendered, since the comment has not loaded');
+  assert.equal(page.username, '', 'The username of the comment author is not rendered, since the comment is not loaded yet');
+  assert.notOk(page.codeThemeSelectorVisible, 'The code theme selector is hidden, since the comment is not loaded yet.');
+
+  // this will trigger some promise resolving, so we wrap it in a loop
+  run(this, () => {
+    setProperties(comment, {
+      body: 'A <b>comment</b>',
+      containsCode: true,
+      isLoaded: true,
+      user: { username: 'tester' }
+    });
+  });
+
+  assert.equal(page.commentBody.text, 'A comment', 'The body is now rendered.');
+  assert.equal(page.username, 'tester', 'The username of the comment author is now rendered.');
+  assert.ok(page.codeThemeSelectorVisible, 'The code theme selector is visible, since the comment is marked as containing code.');
 });
 
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  stubService(this, 'mention-fetcher', mockMentionFetcher);
-  stubService(this, 'current-user', mockCurrentUser);
+  let user = Object.create({ id: 1 });
+  stubService(this, 'current-user', { user });
 
-  this.set('comment', mockComment);
-  this.render(hbs`{{comment-item comment=comment}}`);
+  let comment = {
+    user,
+    save() {
+      return RSVP.resolve();
+    },
+    rollbackAttributes() {}
+  };
 
-  this.$('.edit').click();
-  assert.equal(this.$('.comment-item.editing').length, 1, 'Component switched the UI to editing mode');
-  this.$('.cancel').click();
-  assert.equal(this.$('.comment-item.editing').length, 0, 'Component switched back the UI to view mode on cancel');
-  this.$('.edit').click();
-  this.$('.save').click();
-  assert.equal(this.$('.comment-item.editing').length, 0, 'Component switched back the UI to view mode on save');
+  set(this, 'comment', comment);
+  renderPage();
+
+  page.clickEdit();
+
+  assert.ok(page.editor.isVisible, 'Component switched the UI to editing mode.');
+
+  page.clickCancel();
+
+  assert.notOk(page.editor.isVisible, 'Component switched back the UI to view mode on cancel.');
+
+  page.clickEdit();
+
+  // there will be some promise resolving, so we need a run loop
+  run(this, () => {
+    page.clickSave();
+  });
+
+  assert.notOk(page.editor.isVisible, 'Component switched back to view mode.');
 });
 
-// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/*
-test('mentions are rendered on comment body in read-only mode', function(assert) {
-  assert.expect(1);
-  this.set('comment', mockCommentWithMentions);
-  let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
-  this.render(hbs`{{comment-item comment=comment}}`);
-  assert.equal(this.$('.comment-item .comment-body').html(), expectedOutput, 'Mentions are rendered');
-});
-*/
