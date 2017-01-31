@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias, and, equal, not, notEmpty },
+  computed: { alias, and, not, notEmpty },
   get,
   inject: { service },
   isEmpty,
@@ -29,47 +29,13 @@ export default Component.extend({
   notHidden: not('hidden'),
   numberOfResults: alias('results.length'),
   queryString: alias('query'),
-
   queryStringChanged: observer('queryString', function() {
     once(this, '_search');
   }),
 
-  keyDown(e) {
-    set(this, 'keyCode', e.keyCode);
-
-    let cursorAt = get(this, 'cursorAt');
-    let isCommaKey = get(this, '_isCommaKey');
-    let isDownKey = get(this, '_isDownKey');
-    let isEnterKey = get(this, '_isEnterKey');
-    let isEscKey = get(this, '_isEscKey');
-    let isUpKey = get(this, '_isUpKey');
-
-    if (isDownKey) {
-      e.preventDefault();
-      this._setPosition(++cursorAt);
-      set(this, 'hidden', false);
-    } else if (isUpKey) {
-      e.preventDefault();
-      this._setPosition(--cursorAt);
-      set(this, 'hidden', false);
-    } else if (isCommaKey || isEnterKey) {
-      e.preventDefault();
-      this._selectSkill();
-    } else if (isEscKey) {
-      set(this, 'hidden', true);
-    } else {
-      set(this, 'hidden', false);
-    }
-  },
-
-  _isCommaKey: equal('keyCode', 188),
-  _isDownKey: equal('keyCode', 40),
-  _isEnterKey: equal('keyCode', 13),
-  _isEscKey: equal('keyCode', 27),
-  _isUpKey: equal('keyCode', 38),
   _isNewQuery: not('_sameQuery'),
   _sameQuery: computed('queryString', 'lastQuery', function() {
-    return get(this, 'queryString') === get(this, 'lastQuery');
+    return this.get('queryString') === this.get('lastQuery');
   }),
 
   actions: {
@@ -94,6 +60,35 @@ export default Component.extend({
 
     selectSkill() {
       this._selectSkill();
+    },
+
+    getKeyDown(key) {
+      let cursorAt;
+      switch (key) {
+        case 'ArrowDown':
+          cursorAt = this.get('cursorAt');
+          this._setPosition(++cursorAt);
+          this.set('hidden', false);
+          break;
+        case 'ArrowUp':
+          cursorAt = this.get('cursorAt');
+          this._setPosition(--cursorAt);
+          this.set('hidden', false);
+          break;
+        case 'Comma':
+        case 'Enter':
+          this._selectSkill();
+          break;
+        case 'Escape':
+          this.set('results', []);
+          this.set('hidden', true);
+          break;
+        default:
+          // Any other alphanumeric character
+          if (/^Key\w(?!.)/.test(key)) {
+            this.set('hidden', false);
+          }
+      }
     }
   },
 
