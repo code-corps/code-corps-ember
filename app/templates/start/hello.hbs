@@ -3,7 +3,14 @@
   <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
   <div class="form">
     <div class="photo">
-      {{image-drop originalImage=model.photoLargeUrl droppedImage=model.base64PhotoData circle=true hoverText="Change your profile photo."}}
+      {{image-drop
+        circle=true
+        hoverText="Change your profile photo."
+        onDone=(action uploadDone)
+        onError=(action uploadErrored)
+        onStart=(action uploadStarted)
+        originalImage=model.photoLargeUrl
+      }}
       <p>Click to add photo</p>
     </div>
     <div class="name">

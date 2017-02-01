@@ -44,7 +44,11 @@
   }
 
   &.is-dragging {
-    @include outside-border(2px, dashed, $border-default, 75px);
+    @include outside-border(2px, dashed, $border-default);
+
+    &.is-circular {
+      @include outside-border(2px, default, $border-default, 75px);
+    }
 
     background: transparent !important;
 

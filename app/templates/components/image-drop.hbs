@@ -5,4 +5,12 @@
 <div class="text">
   <p class="help-text">{{helpText}}</p>
 </div>
-<input type="file" onchange={{action fileInputChange value="target.files"}}>
+<input type="file" onchange={{action filesDidChange value="target.files"}}>
+{{!-- {{image-upload
+  fileInputChange=(action fileInputChange)
+  files=files
+  uploadStarted=(action onUploadStarted)
+  uploadProgress=(action onUploadProgress)
+  uploadDone=(action onUploadDone)
+  uploadError=(action onUploadError)
+}} --}}

@@ -1,17 +1,27 @@
 import Ember from 'ember';
+import EmberUploader from 'ember-uploader';
+import ENV from 'code-corps-ember/config/environment';
 
 const {
   Component,
-  String: { htmlSafe },
   computed,
   computed: { alias, notEmpty, or },
+  get,
+  getProperties,
   inject: { service },
+  isEmpty,
   run,
-  set
+  set,
+  String: { htmlSafe }
 } = Ember;
+
+const { Uploader } = EmberUploader;
 
 export default Component.extend({
   active: false,
+  additionalUploadData: {
+    upload_preset: `${ENV.cloudinary.uploadPreset}`
+  },
   attributeBindings: ['style'],
   classNames: ['image-drop'],
   classNameBindings: [
@@ -21,8 +31,11 @@ export default Component.extend({
     'hasImage'
   ],
   droppedImage: null,
+  files: null,
   helpText: 'Drop your image here.',
   originalImage: null,
+  multiple: false,
+  url: `https://api.cloudinary.com/v1_1/${ENV.cloudinary.cloud}/image/upload`,
 
   appDragState: service('dragState'),
 
@@ -33,11 +46,12 @@ export default Component.extend({
 
   style: computed('droppedImage', 'originalImage', function() {
     let backgroundStyle = '';
+    let { droppedImage, originalImage } = getProperties(this, 'droppedImage', 'originalImage');
 
-    if (this.get('droppedImage')) {
-      backgroundStyle = `background-image: url(${this.get('droppedImage')});`;
-    } else if (this.get('originalImage')) {
-      backgroundStyle = `background-image: url(${this.get('originalImage')});`;
+    if (droppedImage) {
+      backgroundStyle = `background-image: url(${droppedImage});`;
+    } else if (originalImage) {
+      backgroundStyle = `background-image: url(${originalImage});`;
     }
 
     return htmlSafe(backgroundStyle);
@@ -45,7 +59,7 @@ export default Component.extend({
 
   dragEnded() {
     this.dragLeave();
-    this.get('appDragState').leaving();
+    get(this, 'appDragState').leaving();
   },
 
   dragLeave() {
@@ -58,12 +72,12 @@ export default Component.extend({
 
   drop(event) {
     event.preventDefault();
-
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      return this._handleFileDrop(event.dataTransfer.files[0]);
+    let { dataTransfer: { files, getData } } = event;
+    if (files && files.length > 0) {
+      return this._handleFileDrop(files[0]);
     }
 
-    let imageUrl = event.dataTransfer.getData('URL');
+    let imageUrl = getData('URL');
     if (!imageUrl) {
       return;
     }
@@ -73,8 +87,16 @@ export default Component.extend({
     });
   },
 
-  fileInputChange(files) {
-    this._handleFileDrop(files[0]);
+  /**
+   * Triggers when the file selection for the rendered file input changes
+   * @param {[File]} files An array of files selected by the user.
+   * Since the `multiple` setting is set to false, only 1 file
+   * is in the array.
+   */
+  filesDidChange(files) {
+    if (!isEmpty(files)) {
+      this._handleFileDrop(files[0]);
+    }
   },
 
   _convertImgToBase64URL(url, callback, outputFormat) {
@@ -106,9 +128,39 @@ export default Component.extend({
       run(() => {
         set(this, 'droppedImage', fileToUpload);
         this.dragEnded();
+        this._performUpload(file);
       });
     };
 
     reader.readAsDataURL(file);
+  },
+
+  _handleUploadStarted() {
+    this.sendAction('onStart');
+  },
+
+  _handleUploadDone({ public_id }) {
+    this.sendAction('onDone', public_id);
+  },
+
+  _handleUploadError(reason) {
+    if (get(this, 'isDestroyed')) {
+      return;
+    }
+    set(this, 'droppedImage', null);
+    this.sendAction('onError', reason);
+  },
+
+  _performUpload(file) {
+    this._handleUploadStarted();
+
+    let params = getProperties(this, 'url');
+    let uploader = Uploader.create(params);
+
+    let additionalUploadData = get(this, 'additionalUploadData');
+
+    uploader.upload(file, additionalUploadData)
+            .then((event) => this._handleUploadDone(event))
+            .catch((reason) => this._handleUploadError(reason));
   }
 });
