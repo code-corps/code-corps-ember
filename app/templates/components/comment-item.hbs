@@ -1,5 +1,9 @@
 {{#link-to 'slugged-route' comment.user.username}}
-  <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{#if comment.user.isLoaded}}
+    <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{else}}
+    <div class="icon"></div>
+  {{/if}}
 {{/link-to}}
 <div class="comment-content">
 {{#if isEditing}}

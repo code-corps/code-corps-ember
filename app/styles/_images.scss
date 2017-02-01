@@ -1,4 +1,13 @@
+img {
+  border-style: none;
+}
+
+img[src=""] {
+  visibility: hidden;
+}
+
 .icon {
+  background: $background-gray;
   width: 50px;
   height: 50px;
   border-radius: 4px;

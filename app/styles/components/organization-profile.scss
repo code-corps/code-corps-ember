@@ -1,0 +1,19 @@
+.organization-main {
+  @include span-columns(8);
+}
+
+.organization-sidebar {
+  @include span-columns(4);
+
+  .organization-sidebar__section {
+    margin: 40px 0;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+  }
+
+  h3 {
+    margin: 20px 0;
+  }
+}

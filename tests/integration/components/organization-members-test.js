@@ -20,6 +20,7 @@ test('it renders an item for each member in the list', function(assert) {
   for (let i = 1; i <= 3; i++) {
     mockMembers.push({
       id: i,
+      isLoaded: true,
       photoThumbUrl: `image_${i}.png`
     });
   }
@@ -29,4 +30,21 @@ test('it renders an item for each member in the list', function(assert) {
 
   assert.equal(this.$('li').length, 3, 'The correct number of members are rendered');
   assert.equal(this.$('li:eq(0) img').attr('src'), 'image_1.png', 'The correct photo renders');
+});
+
+test('it renders loading items differently', function(assert) {
+  assert.expect(2);
+
+  let mockMembers = [
+    {
+      isLoaded: false,
+      photoThumbUrl: 'image.png'
+    }
+  ];
+
+  this.set('members', mockMembers);
+  this.render(hbs`{{organization-members members=members}}`);
+
+  assert.equal(this.$('li:eq(0) img').length, 0, 'The photo does not render');
+  assert.equal(this.$('li:eq(0) div.icon').length, 1, 'The placeholder renders');
 });
