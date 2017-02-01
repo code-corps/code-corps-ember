@@ -3,42 +3,48 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import mockRouting from '../../helpers/mock-routing';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+
+import createCommentForm from 'code-corps-ember/tests/pages/components/create-comment-form';
+
+let page = PageObject.create(createCommentForm);
 
 const {
-  $,
+  set,
   Object
 } = Ember;
 
 let mockSession = { isAuthenticated: true };
 
-let pressCtrlEnter = $.Event('keydown', {
-  keyCode: 13,
-  which: 13,
-  ctrlKey: true
-});
+function renderPage() {
+  page.render(hbs`{{create-comment-form comment=comment save=saveHandler}}`);
+}
+
+function setHandler(context, saveHandler = function() {}) {
+  set(context, 'saveHandler', saveHandler);
+}
 
 moduleForComponent('create-comment-form', 'Integration | Component | create comment form', {
   integration: true,
   setup() {
     mockRouting(this);
+  },
+  beforeEach() {
+    setHandler(this);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{create-comment-form}}`);
-  assert.equal(this.$('form.create-comment-form').length, 1, 'The component\'s element is rendered');
-});
-
-test('it yelds to content', function(assert) {
+test('it yields to content', function(assert) {
   assert.expect(1);
 
   stubService(this, 'session', mockSession);
 
-  this.render(hbs`{{#create-comment-form}}Random content{{/create-comment-form}}`);
-  let componentTextContent = this.$('form.create-comment-form').text().trim();
-  assert.ok(componentTextContent.indexOf('Random content') > -1, 'The provided content is yielded to');
+  page.render(hbs`{{#create-comment-form comment=comment save=saveHandler}}Random content{{/create-comment-form}}`);
+  assert.ok(page.contains('Random content'), 'The provided content is yielded to');
 });
 
 test('it renders the proper elements', function(assert) {
@@ -46,11 +52,11 @@ test('it renders the proper elements', function(assert) {
 
   stubService(this, 'session', mockSession);
 
-  this.set('comment', {});
+  set(this, 'comment', {});
 
-  this.render(hbs`{{create-comment-form comment=comment}}`);
-  assert.equal(this.$('.create-comment-form [name=markdown]').length, 1, 'The markdown input is rendered');
-  assert.equal(this.$('.create-comment-form [name=save]').length, 1, 'The save button is rendered');
+  renderPage();
+  assert.ok(page.rendersMarkdown, 'The markdown input is rendered');
+  assert.ok(page.rendersSaveButton, 'The save button is rendered');
 });
 
 test('it calls action when user clicks submit', function(assert) {
@@ -58,35 +64,20 @@ test('it calls action when user clicks submit', function(assert) {
 
   stubService(this, 'session', mockSession);
 
-  this.set('comment', Object.create({ markdown: 'Test markdown' }));
-  this.on('saveComment', (comment) => {
-    assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
+  set(this, 'comment', Object.create({ markdown: 'Test markdown' }));
+  setHandler(this, (markdown) => {
+    assert.equal(markdown, 'Test markdown', 'Action was called with proper parameter');
   });
 
-  this.render(hbs`{{create-comment-form comment=comment saveComment='saveComment'}}`);
-  this.$('[name=save]').click();
-});
-
-test('it calls action when user hits ctrl+enter', function(assert) {
-  assert.expect(1);
-
-  stubService(this, 'session', mockSession);
-
-  this.set('comment', Object.create({ markdown: 'Test markdown' }));
-  this.on('saveComment', (comment) => {
-    assert.equal(comment.markdown, 'Test markdown', 'Action was called with proper parameter');
-  });
-
-  this.render(hbs`{{create-comment-form comment=comment saveComment='saveComment'}}`);
-  this.$('textarea').trigger(pressCtrlEnter);
+  renderPage();
+  page.clickSave();
 });
 
 test('it renders a sign up button and sign in link when not authenticated', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
-  this.render(hbs`{{create-comment-form}}`);
+  renderPage();
 
-  assert.equal(this.$('.comment-signup p').text().trim(), 'Sign up for free to comment on this conversation, or sign in.');
-  assert.equal(this.$('.comment-signup a:first').attr('href'), '/signup');
-  assert.equal(this.$('.comment-signup a:last').attr('href'), '/login');
+  assert.ok(page.rendersSignup, 'Sign up link is rendered');
+  assert.ok(page.rendersLogin, 'Login ink is rendered');
 });

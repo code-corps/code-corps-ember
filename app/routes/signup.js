@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
+import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 
 const {
   Route,
@@ -19,12 +20,9 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       this.get('session').authenticate('authenticator:jwt', credentials);
     },
 
-    handleErrors(error) {
-      let { errors, status } = error;
-      let payloadContainsValidationErrors = errors.some(() => status === 422);
-
-      if (!payloadContainsValidationErrors) {
-        set(this, 'controller.signup.error', error);
+    handleErrors(payload) {
+      if (isNonValidationError(payload)) {
+        set(this, 'controller.signup.error', payload);
       }
     }
   }

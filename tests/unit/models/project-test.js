@@ -82,17 +82,3 @@ test('it should have computed properties for its current donation goal', functio
 
   assert.deepEqual(project.get('currentDonationGoal'), currentDonationGoal, 'It has the right current donation goal');
 });
-
-test('it should have computed properties for its inbox task list', function(assert) {
-  assert.expect(1);
-
-  let _this = this;
-  let project, inboxTaskList;
-
-  run(function() {
-    inboxTaskList = _this.store().createRecord('task-list', { project, inbox: true });
-    project = _this.subject({ taskLists: [inboxTaskList] });
-  });
-
-  assert.deepEqual(project.get('inboxTaskList'), inboxTaskList, 'It has the right inbox task list');
-});
