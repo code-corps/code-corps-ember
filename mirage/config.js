@@ -78,6 +78,11 @@ const routes = [
 export default function() {
   this.passthrough('https://api.stripe.com/**');
   this.passthrough('https://uploads.stripe.com/**');
+  this.post('https://api.cloudinary.com/**', () => {
+    return new Mirage.Response(201, {}, {
+      public_id: 'abc123'
+    });
+  });
 
   /**
   * Categories
@@ -405,12 +410,9 @@ export default function() {
    */
 
   this.post('/stripe-connect-accounts', function(schema) {
-    let { country } = this.normalizedRequestAttrs();
-    let stripeConnectAccount = schema.create('stripeConnectAccount', {
-      country,
-      recipientStatus: 'required'
-    });
-    return stripeConnectAccount;
+    let attrs = this.normalizedRequestAttrs();
+    attrs.recipientStatus = 'required';
+    return schema.create('stripeConnectAccount', attrs);
   });
 
   this.get('/stripe-connect-accounts/:id');
@@ -595,22 +597,24 @@ export default function() {
     let user = schema.users.find(userId);
 
     // Mock out state machine
-    switch (attrs.stateTransition) {
-      case 'edit_profile':
-        attrs.state = 'edited_profile';
-        break;
-      case 'select_categories':
-        attrs.state = 'selected_categories';
-        break;
-      case 'select_roles':
-        attrs.state = 'selected_roles';
-        break;
-      case 'select_skills':
-        attrs.state = 'selected_skills';
-        break;
-      default:
-        console.error('You added a transition without changing the state machine in Mirage.');
-        break;
+    if (!isEmpty(attrs.stateTransition)) {
+      switch (attrs.stateTransition) {
+        case 'edit_profile':
+          attrs.state = 'edited_profile';
+          break;
+        case 'select_categories':
+          attrs.state = 'selected_categories';
+          break;
+        case 'select_roles':
+          attrs.state = 'selected_roles';
+          break;
+        case 'select_skills':
+          attrs.state = 'selected_skills';
+          break;
+        default:
+          console.error('You added a transition without changing the state machine in Mirage.');
+          break;
+      }
     }
 
     user.attrs = attrs;
@@ -681,4 +685,8 @@ export default function() {
 
   // DELETE /user-skills/:id
   this.delete('/user-skills/:id');
+
+  // Create a passthrough for ember-cli-code-coverage
+  // https://github.com/kategengler/ember-cli-code-coverage
+  this.passthrough('/write-coverage');
 }

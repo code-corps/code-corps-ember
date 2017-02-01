@@ -1,9 +1,21 @@
-{{input value=query autofocus=true focus-in="focus" focus-out="blur" placeholder="Start typing a skill, like Ruby or Photoshop"}}
+{{user-skills-textfield
+  autofocus=true
+  focus-in="focus"
+  focus-out="blur"
+  getKeyDown=(action "getKeyDown")
+  placeholder="Start typing a skill, like Ruby or PhotoShop"
+  value=query
+}}
 
 {{#if canShow}}
 <div class="dropdown-menu">
   {{#each results as |skill index|}}
-    {{user-skills-input-item skill=skill hover="hoverSkill" selectSkill="selectSkill" query=queryString}}
+    {{user-skills-input-item
+      hover="hoverSkill"
+      query=queryString
+      selectSkill="selectSkill"
+      skill=skill
+    }}
   {{/each}}
 </div>
 {{/if}}

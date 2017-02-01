@@ -13,8 +13,6 @@ export default function fillInFileInput(selector, file) {
     target: { files: [{ name, type }] }
   });
 
-  console.log(event);
-
   // Stub readAsDataURL function
   let stub = sinon.stub(FileReader.prototype, 'readAsDataURL', function() {
     this.onload({ target: { result: content } });

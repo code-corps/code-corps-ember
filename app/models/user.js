@@ -6,8 +6,8 @@ import Ember from 'ember';
 const { computed } = Ember;
 
 export default Model.extend({
-  base64PhotoData: attr(),
   biography: attr(),
+  cloudinaryPublicId: attr(),
   insertedAt: attr('date'),
   email: attr(),
   firstName: attr(),

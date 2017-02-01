@@ -3,8 +3,9 @@ import {
   create,
   visitable
 } from 'ember-cli-page-object';
-import projectDetails from '../../components/project-details';
-import projectMenu from '../../components/project-menu';
+import projectDetails from 'code-corps-ember/tests/pages/components/project-details';
+import projectMenu from 'code-corps-ember/tests/pages/components/project-menu';
+import taskBoard from 'code-corps-ember/tests/pages/components/task-board';
 
 export default create({
   visit: visitable(':organization/:project/tasks'),
@@ -22,7 +23,9 @@ export default create({
   },
 
   clickNewTask: clickable('.new-task'),
+  clickCancel: clickable('.cancel'),
 
   projectDetails,
-  projectMenu
+  projectMenu,
+  taskBoard
 });

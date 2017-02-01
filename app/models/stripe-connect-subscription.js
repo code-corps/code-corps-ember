@@ -5,10 +5,6 @@ import { belongsTo } from 'ember-data/relationships';
 export default Model.extend({
   quantity: attr('dollar-cents'),
 
-  stripeConnectPlan: belongsTo('stripe-connect-plan', { async: true }),
-  user: belongsTo('user', { async: true }),
-
-  // TODO: Virtual attributes. We should reconsider our API relationships to get rid of these
-  // Subscription should belong to a project
-  projectId: attr()
+  project: belongsTo('project', { async: true }),
+  user: belongsTo('user', { async: true })
 });

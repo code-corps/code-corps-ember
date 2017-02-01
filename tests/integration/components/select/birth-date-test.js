@@ -6,24 +6,18 @@ import PageObject from 'ember-cli-page-object';
 
 const {
   getProperties,
-  set,
-  setProperties
+  set
 } = Ember;
 
 let page = PageObject.create(selectBirthDateComponent);
 
-function setHandler(context, onChange = function() {}) {
-  set(context, 'onChange', onChange);
-}
-
 function renderPage() {
-  page.render(hbs`{{select/birth-date month=month day=day year=year onChange=onChange}}`);
+  page.render(hbs`{{select/birth-date month=month day=day year=year}}`);
 }
 
 moduleForComponent('select/birth-date', 'Integration | Component | select/birth date', {
   integration: true,
   beforeEach() {
-    setHandler(this);
     page.setContext(this);
   },
   afterEach() {
@@ -34,21 +28,21 @@ moduleForComponent('select/birth-date', 'Integration | Component | select/birth 
 test('it sets the month strings correctly', function(assert) {
   assert.expect(1);
 
+  set(this, 'day', 1);
+  set(this, 'month', 1);
+  set(this, 'year', 2016);
+
   renderPage();
 
-  assert.equal(page.month.text, 'January February March April May June July August September October December');
+  assert.equal(page.month.text, 'January February March April May June July August September October November December');
 });
 
 test('it sets to the correct date', function(assert) {
   assert.expect(1);
 
-  this.set('day', 1);
-  this.set('month', 1);
-  this.set('year', 2016);
-
-  setHandler(this, (day, month, year) => {
-    setProperties(this, { day, month, year });
-  });
+  set(this, 'day', 1);
+  set(this, 'month', 1);
+  set(this, 'year', 2016);
 
   renderPage();
 
@@ -59,6 +53,6 @@ test('it sets to the correct date', function(assert) {
   assert.deepEqual(
     getProperties(this, 'day', 'month', 'year'),
     { day: 13, month: 4, year: 1970 },
-    'Each selection change is reported correctly'
+    'Each selection change is passed out correctly'
   );
 });

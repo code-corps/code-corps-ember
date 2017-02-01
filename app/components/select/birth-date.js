@@ -1,8 +1,10 @@
 import Ember from 'ember';
 import moment from 'moment';
+import { range } from 'code-corps-ember/utils/array-utils';
 
 const {
   Component,
+  computed,
   get,
   getProperties,
   set
@@ -11,40 +13,59 @@ const {
 export default Component.extend({
   classNames: ['select-birth-date'],
 
-  monthOptions: function() {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12].map((i) => {
-      return {
-        number: i,
-        text: moment.months(i - 1)
-      };
-    });
-  }.property(),
+  selectedMoment: computed('month', 'year', function() {
+    let { month, year } = getProperties(this, 'month', 'year');
+    return moment(`${year}-${month}`, 'Y-M');
+  }),
 
-  dayOptions: function() {
-    let results = [];
-    for (let i = 1; i <= 31; i++) {
-      results.push(i);
-    }
-    return results;
-  }.property(),
+  monthOptions: computed(function() {
+    return moment.months().map(this._formatMonth);
+  }),
 
-  yearOptions: function() {
+  dayOptions: computed('selectedMoment', function() {
+    let selectedMoment = get(this, 'selectedMoment');
+    let maxDay = selectedMoment.daysInMonth();
+
+    return range(1, maxDay);
+  }),
+
+  yearOptions: computed(function() {
     let thisYear = moment().year();
-    let results = [];
-    return (function() {
-      for (let i = thisYear, ref = thisYear - 120; thisYear <= ref ? i <= ref : i >= ref; thisYear <= ref ? i++ : i--) {
-        results.push(i);
-      }
-      return results;
-    }).apply(this);
-  }.property(),
+    return range(thisYear - 120, thisYear).reverse();
+  }),
 
   update(property, value) {
     set(this, property, value);
-    let { selectedDay, selectedMonth, selectedYear }
-      = getProperties(this, 'selectedDay', 'selectedMonth', 'selectedYear');
 
-    let onChange = get(this, 'onChange');
-    onChange(selectedDay, selectedMonth, selectedYear);
+    if (property === 'month') {
+      this._constrainDay();
+    }
+
+    if (property === 'year') {
+      this._constrainDay();
+      this._constrainMonth();
+    }
+  },
+
+  _constrainDay() {
+    let day = get(this, 'day');
+    let days = get(this, 'dayOptions');
+    let maxDay = days[days.length - 1];
+    if (day > maxDay) {
+      set(this, 'day', maxDay);
+    }
+  },
+
+  _constrainMonth() {
+    let month = get(this, 'month');
+    let months = get(this, 'monthOptions');
+    let maxMonth = months[months.length - 1];
+    if (month > maxMonth.number) {
+      set(this, 'month', maxMonth.number);
+    }
+  },
+
+  _formatMonth(name, index) {
+    return { text: name, number: index + 1 };
   }
 });

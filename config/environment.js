@@ -22,6 +22,8 @@ module.exports = function(environment) {
       // when it is created
     },
 
+    cloudinary: {},
+
     flashMessageDefaults: {
       // flash message defaults
       timeout: 2000,
@@ -81,11 +83,10 @@ module.exports = function(environment) {
 
     ENV.API_BASE_URL = 'http://api.lvh.me:4000';
     ENV.WEB_BASE_URL = 'http://localhost:4200';
-
+    ENV.cloudinary.cloud = 'dlfnmtoq1';
+    ENV.cloudinary.uploadPreset = 'xjyyogvi';
     ENV.sentry.development = true;
-
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
-
     ENV['ember-cli-mirage'] = {
       enabled: false
     };
@@ -125,24 +126,20 @@ module.exports = function(environment) {
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
-
+    ENV.cloudinary.cloud = 'dlcthdxrt';
+    ENV.cloudinary.uploadPreset = 'gp6mt4v3';
     ENV.sentry.development = true;
-
     ENV.stripe.publishableKey = 'pk_test_WN9xr9Ly1m0D36bdPQCbAzMi';
   }
 
   if (environment === 'mirage-development') {
     ENV.API_BASE_URL = '';
     ENV.WEB_BASE_URL = '';
-
     ENV.sentry.development = true;
-
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
-
     ENV['ember-cli-mirage'] = {
       enabled: true
     };
-
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'
     };
@@ -151,9 +148,9 @@ module.exports = function(environment) {
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
-
+    ENV.cloudinary.cloud = 'dlcthdxrt';
+    ENV.cloudinary.uploadPreset = 'gp6mt4v3';
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
-
     ENV.stripe.publishableKey = 'pk_test_AjQ9D0wliXnWRXH9d14DIW2E';
   }
 
@@ -186,6 +183,8 @@ module.exports = function(environment) {
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
     ENV.WEB_BASE_URL = 'http://www.codecorps.org';
+    ENV.cloudinary.cloud = 'dtrnlbt7o';
+    ENV.cloudinary.uploadPreset = 'n5zjzoqc';
     ENV.stripe.publishableKey = 'pk_live_AieoBpMkVudxrwizI0yqwRF8';
   }
 

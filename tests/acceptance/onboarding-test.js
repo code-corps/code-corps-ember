@@ -101,8 +101,8 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     onboardingPage.userSkillsInput.focus();
-    assert.equal(onboardingPage.userSkillsInput.dropdown(0).text, 'Ruby');
-    onboardingPage.userSkillsInput.dropdown(0).click();
+    assert.equal(onboardingPage.userSkillsInput.inputItems(0).text, 'Ruby');
+    onboardingPage.userSkillsInput.inputItems(0).click();
   });
 
   andThen(() => {
@@ -117,8 +117,8 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     onboardingPage.userSkillsInput.focus();
-    assert.equal(onboardingPage.userSkillsInput.dropdown(0).text, 'Ruby');
-    onboardingPage.userSkillsInput.dropdown(0).click();
+    assert.equal(onboardingPage.userSkillsInput.inputItems(0).text, 'Ruby');
+    onboardingPage.userSkillsInput.inputItems(0).click();
   });
 
   andThen(() => {

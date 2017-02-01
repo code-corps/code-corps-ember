@@ -3,7 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 
-const { getOwner, RSVP } = Ember;
+const { getOwner, RSVP, set } = Ember;
 
 moduleForComponent('organization-settings-form', 'Integration | Component | organization settings form', {
   integration: true,
@@ -28,7 +28,7 @@ test('it renders', function(assert) {
 test('it renders form elements properly', function(assert) {
   assert.expect(3);
 
-  this.set('organization', organization);
+  set(this, 'organization', organization);
 
   this.render(hbs`{{organization-settings-form organization=organization}}`);
 
@@ -46,7 +46,7 @@ test('it calls save on organization when save button is clicked', function(asser
     return RSVP.resolve();
   };
 
-  this.set('organization', organization);
+  set(this, 'organization', organization);
 
   this.render(hbs`{{organization-settings-form organization=organization}}`);
 

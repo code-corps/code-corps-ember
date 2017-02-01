@@ -20,7 +20,7 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('user', [
-  'base64PhotoData', 'biography', 'email', 'firstName', 'insertedAt',
+  'biography', 'cloudinaryPublicId', 'email', 'firstName', 'insertedAt',
   'lastName', 'name', 'password', 'photoLargeUrl', 'photoThumbUrl',
   'state', 'stateTransition', 'twitter', 'username', 'website'
 ]);

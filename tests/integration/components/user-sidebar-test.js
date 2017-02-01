@@ -1,22 +1,26 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
+import PageObject from 'ember-cli-page-object';
+import Ember from 'ember';
+import userSidebarComponent from '../../pages/components/user-sidebar';
+
+const { set } = Ember;
+
+let page = PageObject.create(userSidebarComponent);
 
 moduleForComponent('user-sidebar', 'Integration | Component | user sidebar', {
   integration: true,
   setup() {
     startMirage(this.container);
   },
+  beforeEach() {
+    page.setContext(this);
+  },
   afterEach() {
     server.shutdown();
+    page.removeContext();
   }
-});
-
-test('it renders', function(assert) {
-  assert.expect(1);
-  this.render(hbs`{{user-sidebar}}`);
-
-  assert.equal(this.$('.user-sidebar').length, 1, 'Component\'s element is rendered');
 });
 
 function mockUser() {
@@ -41,32 +45,31 @@ function mockUser() {
 }
 
 test('it renders all required elements', function(assert) {
-  assert.expect(7);
+  assert.expect(6);
 
   let user = mockUser();
-  this.set('user', user);
+  set(this, 'user', user);
 
-  this.render(hbs`{{user-sidebar user=user}}`);
+  page.render(hbs`{{user-sidebar user=user}}`);
 
-  assert.equal(this.$('.user-sidebar').length, 1, 'Component\'s element is rendered');
-  assert.equal(this.$('h2 .name').text(), 'Josh Smith', 'Their name renders');
-  assert.equal(this.$('h2 .username').text(), 'JoshSmith', 'Their username renders');
-  assert.equal(this.$('li.twitter').text().trim(), '@joshsmith', 'Their twitter handler renders');
-  assert.equal(this.$('li.twitter a').attr('href'), 'https://twitter.com/joshsmith', 'The twitter link renders');
-  assert.equal(this.$('li.website').text().trim(), 'https://codecorps.org', 'Their website renders');
-  assert.equal(this.$('li.website a').attr('href'), 'https://codecorps.org', 'The website link renders');
+  assert.equal(page.name, 'Josh Smith', 'Their name renders');
+  assert.equal(page.username, 'JoshSmith', 'Their username renders');
+  assert.equal(page.twitterHandle, '@joshsmith', 'Their twitter handler renders');
+  assert.equal(page.twitterLink, 'https://twitter.com/joshsmith', 'The twitter link renders');
+  assert.equal(page.website, 'https://codecorps.org', 'Their website renders');
+  assert.equal(page.websiteLink, 'https://codecorps.org/', 'The website link renders');
 });
 
 test('it does not show some details if blank', function(assert) {
   assert.expect(2);
 
   let user = {};
-  this.set('user', user);
+  set(this, 'user', user);
 
-  this.render(hbs`{{user-sidebar user=user}}`);
+  page.render(hbs`{{user-sidebar user=user}}`);
 
-  assert.equal(this.$('li.twitter').length, 0);
-  assert.equal(this.$('li.website').length, 0);
+  assert.ok(page.twitterHandleHidden);
+  assert.ok(page.websiteHidden);
 });
 
 test('it sets the name to username if name is blank', function(assert) {
@@ -75,9 +78,9 @@ test('it sets the name to username if name is blank', function(assert) {
   let user = {
     username: 'joshsmith'
   };
-  this.set('user', user);
+  set(this, 'user', user);
 
-  this.render(hbs`{{user-sidebar user=user}}`);
+  page.render(hbs`{{user-sidebar user=user}}`);
 
-  assert.equal(this.$('h2 .name').text(), 'joshsmith');
+  assert.equal(page.name, 'joshsmith');
 });

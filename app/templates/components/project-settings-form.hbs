@@ -1,5 +1,11 @@
 <div class="input-group">
-  {{image-drop originalImage=project.iconLargeUrl droppedImage=project.base64IconData hoverText="Change your project logo."}}
+  {{image-drop
+    hoverText="Change your project logo."
+    onDone=(action uploadDone)
+    onError=(action uploadErrored)
+    onStart=(action uploadStarted)
+    originalImage=project.iconLargeUrl
+  }}
 </div>
 <div class="input-group">
   {{input type="text" name="title" value=project.title placeholder="Title"}}
