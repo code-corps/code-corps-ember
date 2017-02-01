@@ -8,7 +8,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['organization-settings-form'],
+  classNames: ['organization-settings-form', 'settings-form'],
 
   flashMessages: service(),
   loadingBar: service(),

@@ -1,4 +1,5 @@
 <img src={{user.photoLargeUrl}} />
+
 <h2>
   {{#if user.name}}
     <div class="name">{{user.name}}</div>
@@ -7,15 +8,23 @@
   {{/if}}
   <div class="username">{{user.username}}</div>
 </h2>
+
+{{#if user.biography}}
+  <p class="biography">
+    {{user.biography}}
+  </p>
+{{/if}}
+
 <ul class="details border-top border-gray-light">
   {{#if user.twitter}}
-  <li class="twitter">
-    <a href={{user.twitterUrl}}>@{{user.twitter}}</a>
-  </li>
+    <li class="twitter">
+      <a href={{user.twitterUrl}}>@{{user.twitter}}</a>
+    </li>
   {{/if}}
+
   {{#if user.website}}
-  <li class="website">
-    <a href={{user.website}}>{{user.website}}</a>
-  </li>
+    <li class="website">
+      <a href={{user.website}}>{{user.website}}</a>
+    </li>
   {{/if}}
 </ul>

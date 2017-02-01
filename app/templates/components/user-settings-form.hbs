@@ -1,30 +1,35 @@
-<div class="input-group">
-  {{image-drop
-    hoverText="Change your profile photo."
-    onDone=(action uploadDone)
-    onError=(action uploadErrored)
-    onStart=(action uploadStarted)
-    originalImage=user.photoLargeUrl
-  }}
+<div class="settings-form__image">
+  <div class="input-group">
+    {{image-drop
+      hoverText="Change your profile photo."
+      large=true
+      onDone=(action uploadDone)
+      onError=(action uploadErrored)
+      onStart=(action uploadStarted)
+      originalImage=user.photoLargeUrl
+    }}
+  </div>
 </div>
 
-<div class="input-group">
-  {{input type="text" name="firstName" value=user.firstName placeholder="First name"}}
-</div>
-<div class="input-group">
-  {{input type="text" name="lastName" value=user.lastName placeholder="Last name"}}
-</div>
-<div class="input-group">
-  <span class="input-group-addon">@</span>
-  {{input type="text" name="twitter" value=user.twitter placeholder="Twitter"}}
-</div>
-<div class="input-group">
-  {{input type="text" name="website" value=user.website placeholder="Website"}}
-</div>
-<div class="input-group">
-  {{input type="text" name="biography" value=user.biography placeholder="Bio"}}
-</div>
+<div class="settings-form__form">
+  <div class="input-group">
+    {{input type="text" name="firstName" value=user.firstName placeholder="First name"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="lastName" value=user.lastName placeholder="Last name"}}
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon">@</span>
+    {{input type="text" name="twitter" value=user.twitter placeholder="Twitter"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="website" value=user.website placeholder="Website"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="biography" value=user.biography placeholder="Bio"}}
+  </div>
 
-<div class="input-group">
-  <button class="default save" {{action 'save'}}>Update Profile</button>
+  <div class="input-group">
+    <button class="default save" {{action 'save'}}>Update Profile</button>
+  </div>
 </div>

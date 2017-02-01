@@ -176,6 +176,16 @@ p.subtext {
   width: 1px;
 }
 
+.page-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid $border-light;
+
+  h2 {
+    font-weight: 500;
+    margin: 10px 0;
+  }
+}
+
 .header-section {
   margin: 20px 0;
 
