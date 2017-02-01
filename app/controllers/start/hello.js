@@ -3,13 +3,37 @@ import OnboardingControllerMixin from '../../mixins/onboarding-controller';
 
 const {
   computed,
-  Controller
+  Controller,
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
   firstNameIsEmpty: computed.empty('model.firstName'),
   lastNameIsEmpty: computed.empty('model.lastName'),
   usersNameIsEmpty: computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
+
+  flashMessages: service(),
+  loadingBar: service(),
+
+  uploadDone(cloudinaryPublicId) {
+    let model = get(this, 'model');
+    set(model, 'cloudinaryPublicId', cloudinaryPublicId);
+    model.save().then(() => {
+      this._stopLoadingBar();
+      get(this, 'flashMessages').clearMessages().success('Photo uploaded successfully');
+    });
+  },
+
+  uploadErrored() {
+    this._stopLoadingBar();
+    get(this, 'flashMessages').clearMessages().danger('Upload failed');
+  },
+
+  uploadStarted() {
+    this._startLoadingBar();
+  },
 
   actions: {
     /**
@@ -24,5 +48,13 @@ export default Controller.extend(OnboardingControllerMixin, {
         this.send('continue');
       }
     }
+  },
+
+  _startLoadingBar() {
+    get(this, 'loadingBar').start();
+  },
+
+  _stopLoadingBar() {
+    get(this, 'loadingBar').stop();
   }
 });

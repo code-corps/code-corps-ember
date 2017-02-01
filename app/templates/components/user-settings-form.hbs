@@ -1,6 +1,13 @@
 <div class="input-group">
-  {{image-drop originalImage=user.photoLargeUrl droppedImage=user.base64PhotoData hoverText="Change your profile photo."}}
+  {{image-drop
+    hoverText="Change your profile photo."
+    onDone=(action uploadDone)
+    onError=(action uploadErrored)
+    onStart=(action uploadStarted)
+    originalImage=user.photoLargeUrl
+  }}
 </div>
+
 <div class="input-group">
   {{input type="text" name="firstName" value=user.firstName placeholder="First name"}}
 </div>

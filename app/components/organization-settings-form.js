@@ -3,13 +3,33 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject: { service }
+  inject: { service },
+  set
 } = Ember;
 
 export default Component.extend({
   classNames: ['organization-settings-form'],
 
   flashMessages: service(),
+  loadingBar: service(),
+
+  uploadDone(cloudinaryPublicId) {
+    let organization = get(this, 'organization');
+    set(organization, 'cloudinaryPublicId', cloudinaryPublicId);
+    organization.save().then(() => {
+      this._stopLoadingBar();
+      get(this, 'flashMessages').clearMessages().success('Organization icon uploaded successfully');
+    });
+  },
+
+  uploadErrored() {
+    this._stopLoadingBar();
+    get(this, 'flashMessages').clearMessages().danger('Upload failed');
+  },
+
+  uploadStarted() {
+    this._startLoadingBar();
+  },
 
   actions: {
     save() {
@@ -17,5 +37,13 @@ export default Component.extend({
         get(this, 'flashMessages').clearMessages().success('Organization updated successfully');
       });
     }
+  },
+
+  _startLoadingBar() {
+    get(this, 'loadingBar').start();
+  },
+
+  _stopLoadingBar() {
+    get(this, 'loadingBar').stop();
   }
 });

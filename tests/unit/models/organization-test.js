@@ -28,7 +28,7 @@ test('it should have all of its attributes', function(assert) {
   let actualAttributes = get(model, 'attributes');
 
   let expectedAttributes = [
-    'base64IconData',
+    'cloudinaryPublicId',
     'description',
     'iconLargeUrl',
     'iconThumbUrl',

@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 export default Model.extend({
-  base64IconData: attr(),
+  cloudinaryPublicId: attr(),
   description: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),

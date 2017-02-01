@@ -3,7 +3,8 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject: { service }
+  inject: { service },
+  set
 } = Ember;
 
 /**
@@ -25,6 +26,25 @@ export default Component.extend({
     @type Ember.Service
    */
   flashMessages: service(),
+  loadingBar: service(),
+
+  uploadDone(cloudinaryPublicId) {
+    let user = get(this, 'user');
+    set(user, 'cloudinaryPublicId', cloudinaryPublicId);
+    user.save().then(() => {
+      this._stopLoadingBar();
+      get(this, 'flashMessages').clearMessages().success('Photo uploaded successfully');
+    });
+  },
+
+  uploadErrored() {
+    this._stopLoadingBar();
+    get(this, 'flashMessages').clearMessages().danger('Upload failed');
+  },
+
+  uploadStarted() {
+    this._startLoadingBar();
+  },
 
   actions: {
     /**
@@ -33,9 +53,17 @@ export default Component.extend({
       @method save
      */
     save() {
-      this.get('user').save().then(() => {
+      get(this, 'user').save().then(() => {
         get(this, 'flashMessages').clearMessages().success('Profile updated successfully');
       });
     }
+  },
+
+  _startLoadingBar() {
+    get(this, 'loadingBar').start();
+  },
+
+  _stopLoadingBar() {
+    get(this, 'loadingBar').stop();
   }
 });
