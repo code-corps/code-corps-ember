@@ -23,23 +23,33 @@
 }
 
 .image-drop {
-  height: 150px;
-  width: 150px;
+  $size: 150px;
+  $border-radius: $size / 2;
+
+  height: $size;
+  width: $size;
   border-radius: 5px;
   background: transparent;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
 
+  &.is-large {
+    $size: 200px;
+    $border-radius: $size / 2;
+    height: $size;
+    width: $size;
+  }
+
   &.is-circular {
-    border-radius: 75px;
+    border-radius: $border-radius;
 
     .hover {
-      border-radius: 75px;
+      border-radius: $border-radius;
     }
 
     input[type=file] {
-      border-radius: 75px;
+      border-radius: $border-radius;
     }
   }
 
@@ -47,7 +57,7 @@
     @include outside-border(2px, dashed, $border-default);
 
     &.is-circular {
-      @include outside-border(2px, default, $border-default, 75px);
+      @include outside-border(2px, default, $border-default, $border-radius);
     }
 
     background: transparent !important;
@@ -82,14 +92,14 @@
     background: rgba(0, 0, 0, 0.6);
     z-index: 2;
 
-    &:before {
-      @include sprite($camera);
-      content: "";
-      display: block;
-      margin: 15px auto 5px auto;
-    }
-
     p {
+      &:before {
+        @include sprite($camera);
+        content: "";
+        display: block;
+        margin: 0 auto;
+      }
+
       color: white;
       display: block;
       font-size: $body-font-size-normal;
@@ -103,11 +113,12 @@
     @include outside-border(2px, solid, $dark-blue);
 
     &.is-circular {
-      @include outside-border(2px, solid, $dark-blue, 75px);
+      @include outside-border(2px, solid, $dark-blue, $border-radius);
     }
 
     .hover {
-      display: block;
+      display: flex;
+      align-items: center;
     }
   }
 }

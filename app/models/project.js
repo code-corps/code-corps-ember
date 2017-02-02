@@ -33,11 +33,7 @@ export default Model.extend({
   }),
   hasOpenTasks: gt('openTasksCount', 0),
   hasPendingMembers: alias('organization.hasPendingMembers'),
-  inboxTaskList: computed('_inboxTaskListAsArray', function() {
-    return get(this, '_inboxTaskListAsArray.firstObject');
-  }),
   pendingMembersCount: alias('organization.pendingMembersCount'),
 
-  _currentGoals: filterBy('donationGoals', 'current', true),
-  _inboxTaskListAsArray: filterBy('taskLists', 'inbox', true)
+  _currentGoals: filterBy('donationGoals', 'current', true)
 });

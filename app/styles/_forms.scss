@@ -221,3 +221,13 @@ select {
     }
   }
 }
+
+.settings-form {
+  display: flex;
+
+  &__form {
+    margin-left: 20px;
+    max-width: 500px;
+    width: 100%;
+  }
+}

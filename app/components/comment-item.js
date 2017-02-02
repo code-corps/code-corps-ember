@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { alias } from 'ember-computed';
+import { parse } from 'code-corps-ember/utils/mention-parser';
 
 const {
   Component,
@@ -14,7 +14,7 @@ const {
   `comment-item` composes a comment
 
   ```handlebars
-  {{comment-item comment=comment}}
+  {{comment-item comment=comment saveError=onSaveError}}
   ```
 
   @class comment-item
@@ -26,125 +26,92 @@ export default Component.extend({
   classNameBindings: ['isEditing:editing'],
 
   /**
-    @property currentUser
-    @type Ember.Service
+   * canEdit - Computed property
+   *
+   * @property canEdit
+   * @return {Boolean}  True if current user is the comment author
    */
-  currentUser: service(),
-
-  /**
-    A service that is used for fetching mentions within a body of text.
-
-    @property mentionFetcher
-    @type Ember.Service
-   */
-  mentionFetcher: service(),
-
-  /**
-    Returns whether or not the current user can edit the current comment.
-
-    @property canEdit
-    @type Boolean
-   */
-  canEdit: alias('currentUserIsCommentAuthor'),
-
-  /**
-    Returns the comment author's ID.
-
-    @property commentAuthorId
-    @type Number
-   */
-  commentAuthorId: alias('comment.user.id'),
-
-  /**
-    Returns the current user's ID.
-
-    @property currentUserId
-    @type Number
-   */
-  currentUserId: alias('currentUser.user.id'),
-
-  /**
-    Consumes `currentUserId` and `commentAuthorId` and returns if the current
-    user is the comment author.
-
-    @property currentUserIsCommentAuthor
-    @type Boolean
-   */
-  currentUserIsCommentAuthor: computed('currentUserId', 'commentAuthorId', function() {
-    let userId = parseInt(get(this, 'currentUserId'), 10);
-    let authorId = parseInt(get(this, 'commentAuthorId'), 10);
+  canEdit: computed('currentUser.user.id', 'comment.user.id', function() {
+    let userId = parseInt(get(this, 'currentUser.user.id'), 10);
+    let authorId = parseInt(get(this, 'comment.user.id'), 10);
 
     return isEqual(userId, authorId);
   }),
 
   /**
-    Overrides the init method, sets the `isEditing` property to `false`,
-    prefetches mentions and calls the `super` on `init`.
-
-    @method init
+   * Injection of /services/current-user
+   *
+   * Used to determine if the current user is the comment author,
+   * for edit permissions.
+   *
+   * @property session
+   * @type Ember.Service
    */
-  init() {
+  currentUser: service(),
+
+  /**
+   * processedBody - Computed property
+   *
+   * Parses the provided body and "linkifies" the username mentions within it
+   * using information provided in the mentions collection
+   *
+   * We are expected to assign mentions in the template
+   *
+   * NOTE: This feature is currently disabled, so the unmodified body is returned
+   *
+   * @property processedComment
+   @ @type String
+   */
+  processedBody: computed('comment.body', 'mentions', function() {
+    let body = get(this, 'comment.body');
+    let mentions = get(this, 'mentions');
+    return parse(body, mentions || []);
+  }),
+
+  /**
+   * didReceiveAttrs - Component lifecycle hook
+   *
+   * Used to initially set the component into view mode.
+   */
+  didReceiveAttrs() {
     set(this, 'isEditing', false);
-    this._prefetchMentions(get(this, 'comment'));
-    return this._super(...arguments);
   },
 
   actions: {
-
     /**
-      Action that toggle editing of the corresponding comment.
-
-      @method toggleEdit
+     * cancel - Action
+     *
+     * Triggered when user clicks the cancel button in edit mode.
+     * Rolls back comment record and enters view mode.
      */
-    toggleEdit() {
-      this.toggleProperty('isEditing');
+    cancel() {
+      let comment = get(this, 'comment');
+      comment.rollbackAttributes();
+      set(this, 'isEditing', false);
     },
 
     /**
-      Action that saves the corresponding comment, turns off edit mode, and
-      refetches the mentions.
+     * edit - Action
+     *
+     * Triggered when the user clicks the edit link in view mode.
+     * Enters edit mode.
+     */
+    edit() {
+      set(this, 'isEditing', true);
+    },
 
-      @method save
+    /**
+     * save - Action
+     *
+     * Triggered when user clicks the save button in edit mode.
+     * Save changes to comment.
+     * On success, enters view mode.
+     * On failure, sends `saveError` action with the failure payload.
      */
     save() {
-      let component = this;
       let comment = get(this, 'comment');
-
-      comment.save().then((comment) => {
-        component.set('isEditing', false);
-        this._fetchMentions(comment);
-      }).catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
-      });
+      comment.save().then(() => set(this, 'isEditing', false))
+                    .catch((payload) => this.sendAction('saveError', payload));
     }
-  },
-
-  /**
-    Queries the store for body of text with mentions.
-
-    @method _fetchMentions
-    @param {Object} comment
-    @private
-   */
-  _fetchMentions(comment) {
-    get(this, 'mentionFetcher').fetchBodyWithMentions(comment, 'comment').then((body) => {
-      set(this, 'commentBodyWithMentions', body);
-    });
-  },
-
-  /**
-    Parses the body of text and prefetches mentions.
-
-    @method _prefetchMentions
-    @param {Object} comment
-    @private
-   */
-  _prefetchMentions(comment) {
-    let body = get(this, 'mentionFetcher').prefetchBodyWithMentions(comment, 'comment');
-    set(this, 'commentBodyWithMentions', body);
   }
 });

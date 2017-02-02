@@ -1,7 +1,9 @@
 import {
   clickable,
   collection,
-  fillable
+  fillable,
+  isVisible,
+  text
 } from 'ember-cli-page-object';
 
 export default {
@@ -9,9 +11,12 @@ export default {
 
   clickEdit: clickable('.edit'),
   clickSave: clickable('.save'),
+  clickCancel: clickable('.cancel'),
+
+  codeThemeSelectorVisible: isVisible('.code-theme-selector'),
 
   commentBody: {
-    scope: '.comment-body p'
+    scope: '.comment-body'
   },
 
   editLink: {
@@ -32,5 +37,7 @@ export default {
 
   errors: collection({
     itemScope: '.error'
-  })
+  }),
+
+  username: text('.username')
 };

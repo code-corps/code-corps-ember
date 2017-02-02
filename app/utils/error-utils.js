@@ -17,3 +17,15 @@ export function isValidationError(payload) {
 
   return errors.some((e) => e.source);
 }
+
+/**
+ * isNonValidationError - function
+ *
+ * Returns the negation of isValidationError
+ *
+ * @param  {DS.AdapterError} payload An instance of a DS.Adapter error.
+ * @return {Boolean}                 `true`, if the payload is a non-validation error.
+ */
+export function isNonValidationError(payload) {
+  return !isValidationError(payload);
+}

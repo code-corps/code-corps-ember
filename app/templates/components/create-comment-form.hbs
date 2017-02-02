@@ -1,19 +1,24 @@
 {{#if session.isAuthenticated}}
   {{#link-to 'slugged-route' comment.user.username}}
-    <img class="icon" src={{comment.user.photoThumbUrl}} />
+    {{#if comment.user.isLoaded}}
+      <img class="icon" src={{comment.user.photoThumbUrl}} />
+    {{else}}
+      <div class="icon"></div>
+    {{/if}}
   {{/link-to}}
   <div class="comment-content">
     <div class="input-group">
       {{editor-with-preview
-        input=comment.markdown
-        isLoading=comment.isSaving
-        modifiedSubmit="saveComment"}}
+        input=markdown
+        isLoading=isBusy
+        modifiedSubmit=(action save markdown)}}
       {{#each comment.errors.markdown as |error|}}
         <p class="error">{{error.message}}</p>
       {{/each}}
     </div>
     <div class="input-group">
-      <button class="default small right {{if comment.isSaving "disabled"}}" name="save" {{action 'saveComment'}}>Comment</button>
+      <button class="default small right {{if isBusy "disabled"}}"
+              name="save" {{action save markdown}}>Comment</button>
       {{yield}}
     </div>
   </div>

@@ -33,6 +33,7 @@ function mockUser() {
   let user = {
     id: 1,
     name: 'Josh Smith',
+    biography: 'Test bio',
     username: 'JoshSmith',
     twitter: 'joshsmith',
     website: 'https://codecorps.org',
@@ -45,7 +46,7 @@ function mockUser() {
 }
 
 test('it renders all required elements', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   let user = mockUser();
   set(this, 'user', user);
@@ -54,6 +55,7 @@ test('it renders all required elements', function(assert) {
 
   assert.equal(page.name, 'Josh Smith', 'Their name renders');
   assert.equal(page.username, 'JoshSmith', 'Their username renders');
+  assert.equal(page.biography, 'Test bio', 'Their biography renders');
   assert.equal(page.twitterHandle, '@joshsmith', 'Their twitter handler renders');
   assert.equal(page.twitterLink, 'https://twitter.com/joshsmith', 'The twitter link renders');
   assert.equal(page.website, 'https://codecorps.org', 'Their website renders');
@@ -61,13 +63,14 @@ test('it renders all required elements', function(assert) {
 });
 
 test('it does not show some details if blank', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   let user = {};
   set(this, 'user', user);
 
   page.render(hbs`{{user-sidebar user=user}}`);
 
+  assert.ok(page.biographyIsHidden);
   assert.ok(page.twitterHandleHidden);
   assert.ok(page.websiteHidden);
 });

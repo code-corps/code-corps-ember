@@ -1,7 +1,9 @@
 import {
   clickable,
   collection,
-  fillable
+  fillable,
+  isVisible,
+  triggerable
 } from 'ember-cli-page-object';
 
 export default {
@@ -12,8 +14,10 @@ export default {
   editor: {
     scope: '.editor-with-preview',
 
+    hitCtrlEnter: triggerable('keydown', 'textarea[name=markdown]', { eventProperties: { keyCode: 13, ctrlKey: true } }),
+
     bodyPreview: {
-      scope: '.body-preview p'
+      scope: '.body-preview'
     },
 
     clickPreview: clickable('.preview'),
@@ -23,5 +27,10 @@ export default {
 
   errors: collection({
     itemScope: '.error'
-  })
+  }),
+
+  rendersLogin: isVisible('a[href$=login]'),
+  rendersMarkdown: isVisible('[name=markdown]'),
+  rendersSaveButton: isVisible('[name=save]'),
+  rendersSignup: isVisible('a[href$=signup]')
 };

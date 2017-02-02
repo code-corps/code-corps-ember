@@ -27,8 +27,9 @@ export default Component.extend({
   classNameBindings: [
     'active',
     'circle:is-circular',
+    'hasImage',
     'isDraggingOnApp:is-dragging',
-    'hasImage'
+    'large:is-large'
   ],
   droppedImage: null,
   files: null,

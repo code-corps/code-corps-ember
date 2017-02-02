@@ -46,6 +46,7 @@ test('A task can be successfully created', function(assert) {
   let taskList = project.createTaskList({ inbox: true });
 
   authenticateSession(this.application, { user_id: user.id });
+
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
@@ -55,7 +56,12 @@ test('A task can be successfully created', function(assert) {
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
     assert.equal(find('[name=task-type]').val(), 'issue', 'Has the right default task type');
-    projectTasksNewPage.taskTitle('A task title').taskMarkdown('A task body').taskType('idea').clickSubmit();
+
+    projectTasksNewPage.taskTitle('A task title')
+                       .taskMarkdown('A task body')
+                       .taskType('idea');
+
+    projectTasksNewPage.clickSubmit();
   });
 
   andThen(() => {
@@ -74,7 +80,6 @@ test('A task can be successfully created', function(assert) {
     assert.equal(currentRouteName(), 'project.tasks.task', 'We got redirected to the task route');
   });
 
-  // TODO: Make sure we got redirected to the task route and task is properly rendered
 });
 
 test('Task preview works during creation', function(assert) {

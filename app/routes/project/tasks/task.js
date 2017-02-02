@@ -1,47 +1,29 @@
 import Ember from 'ember';
 
 const {
+  get,
+  inject: { service },
   Route,
-  inject: { service }
+  setProperties
 } = Ember;
 
 export default Route.extend({
   currentUser: service(),
+  store: service(),
 
   model(params) {
     let projectId = this.modelFor('project').id;
     let { number } = params;
+    let store = get(this, 'store');
 
-    return this.store.queryRecord('task', { projectId, number });
+    return store.queryRecord('task', { projectId, number });
   },
 
   setupController(controller, task) {
-    let user = this.get('currentUser.user');
-    let newComment = this.store.createRecord('comment', { user });
-    controller.setProperties({ newComment, task });
-  },
+    let store = get(this, 'store');
+    let user = get(this, 'currentUser.user');
+    let newComment = store.createRecord('comment', { task, user });
 
-  actions: {
-    save(task) {
-      return task.save().catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
-      });
-    },
-
-    saveComment(comment) {
-      let task = this.get('controller.task');
-      comment.set('task', task);
-      comment.save().catch((error) => {
-        let payloadContainsValidationErrors = error.errors.some((error) => error.status === 422);
-
-        if (!payloadContainsValidationErrors) {
-          this.controllerFor('project.tasks.task').set('error', error);
-        }
-      });
-    }
+    return setProperties(controller, { newComment, task });
   }
 });

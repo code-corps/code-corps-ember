@@ -3,7 +3,11 @@
 {{#each members as |user|}}
   <li>
     {{#link-to 'slugged-route' user.username}}
-      <img class="icon" src={{user.photoThumbUrl}} />
+      {{#if user.isLoaded}}
+        <img class="icon" src={{user.photoThumbUrl}} />
+      {{else}}
+        <div class="icon"></div>
+      {{/if}}
     {{/link-to}}
   </li>
 {{/each}}

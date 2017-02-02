@@ -1,19 +1,25 @@
-<div class="input-group">
-  {{image-drop
-    hoverText="Change your project logo."
-    onDone=(action uploadDone)
-    onError=(action uploadErrored)
-    onStart=(action uploadStarted)
-    originalImage=project.iconLargeUrl
-  }}
-</div>
-<div class="input-group">
-  {{input type="text" name="title" value=project.title placeholder="Title"}}
-</div>
-<div class="input-group">
-  {{input type="text" name="description" value=project.description placeholder="Description"}}
+<div class="settings-form__image">
+  <div class="input-group">
+    {{image-drop
+      hoverText="Change your project logo."
+      large=true
+      onDone=(action uploadDone)
+      onError=(action uploadErrored)
+      onStart=(action uploadStarted)
+      originalImage=project.iconLargeUrl
+    }}
+  </div>
 </div>
 
-<div class="input-group">
-  <button class="save default" {{action 'save'}}>Update Settings</button>
+<div class="settings-form__form">
+  <div class="input-group">
+    {{input type="text" name="title" value=project.title placeholder="Title"}}
+  </div>
+  <div class="input-group">
+    {{input type="text" name="description" value=project.description placeholder="Description"}}
+  </div>
+
+  <div class="input-group">
+    <button class="save default" {{action 'save'}}>Update Settings</button>
+  </div>
 </div>

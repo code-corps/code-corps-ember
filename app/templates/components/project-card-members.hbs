@@ -1,6 +1,10 @@
 {{#each visibleMembers as |user|}}
   <li class="member">
-    <img class="icon tiny circle" src={{user.photoThumbUrl}} />
+    {{#if user.isLoaded}}
+      <img class="icon tiny circle" src={{user.photoThumbUrl}} />
+    {{else}}
+      <div class="icon tiny circle"></div>
+    {{/if}}
   </li>
 {{/each}}
 {{#if hiddenMembersExist}}

@@ -19,7 +19,7 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['user-settings-form'],
+  classNames: ['user-settings-form', 'settings-form'],
 
   /**
     @property flashMessages

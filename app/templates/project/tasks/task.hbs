@@ -1,16 +1,14 @@
-{{task-header task=task saveTask=(route-action "save")}}
+{{task-header task=task saveTask=(action 'saveTask')}}
 {{task-status task=task}}
 <div class="task-timeline">
-  {{task-details task=task saveTask=(route-action "save")}}
-  {{task-comment-list comments=task.comments}}
-  <div>
-    {{#create-comment-form comment=newComment saveComment='saveComment'}}
-      {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}
-    {{/create-comment-form}}
-    {{#if error}}
-      {{error-formatter error=error}}
-    {{/if}}
-  </div>
+  {{task-details task=task saveTask=(action 'saveTask')}}
+  {{task-comment-list comments=comments onSaveError=(action 'onSaveError')}}
+  {{#create-comment-form comment=newComment save=(action 'saveComment')}}
+    {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}
+  {{/create-comment-form}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
 </div>
 <div class="task-sidebar">
 </div>

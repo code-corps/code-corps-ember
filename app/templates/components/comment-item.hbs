@@ -1,5 +1,9 @@
 {{#link-to 'slugged-route' comment.user.username}}
-  <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{#if comment.user.isLoaded}}
+    <img class="icon" src={{comment.user.photoThumbUrl}} />
+  {{else}}
+    <div class="icon"></div>
+  {{/if}}
 {{/link-to}}
 <div class="comment-content">
 {{#if isEditing}}
@@ -7,7 +11,8 @@
     {{editor-with-preview
       input=comment.markdown
       isLoading=comment.isSaving
-      modifiedSubmit="save"}}
+      modifiedSubmit=(action 'save')
+    }}
     {{#each comment.errors.markdown as |error|}}
       <p class="error">{{error.message}}</p>
     {{/each}}
@@ -17,19 +22,21 @@
       <button class="default small right">Saving...</button>
     {{else}}
       <button {{action 'save'}} class="default small right save">Save</button>
-      <button {{action 'toggleEdit'}} class="clear small right cancel">Cancel</button>
+      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
     {{/if}}
   </div>
 {{else}}
   <div class="comment-info">
     {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.insertedAt}}
     {{#if canEdit}}
-      <a class="edit" {{action 'toggleEdit'}}>edit</a>
+      <a class="edit" {{action 'edit'}}>edit</a>
     {{/if}}
     {{#if comment.containsCode}}
       {{code-theme-selector}}
     {{/if}}
   </div>
-  <div class="comment-body">{{{commentBodyWithMentions}}}</div>
+  <div class="comment-body">
+    {{{processedBody}}}
+  </div>
 {{/if}}
 </div>
