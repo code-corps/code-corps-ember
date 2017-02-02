@@ -5,6 +5,9 @@ export default {
 
   name: text('h2 .name'),
 
+  biography: text('p.biography'),
+  biographyIsHidden: isHidden('li.twitter'),
+
   twitterHandle: text('li.twitter'),
   twitterHandleHidden: isHidden('li.twitter'),
   twitterLink: property('href', 'li.twitter a'),
