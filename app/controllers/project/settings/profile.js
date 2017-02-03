@@ -13,9 +13,12 @@ export default Controller.extend({
   project: alias('model'),
   projectSkills: alias('project.projectSkills'),
 
+  removeProjectSkill(projectSkill) {
+    return projectSkill.destroyRecord();
+  },
+
   toggleSkill(skill) {
     let list = get(this, 'projectSkillsList');
-    list.setProject(get(this, 'project'));
     return list.toggle(skill);
   }
 });

@@ -30,6 +30,8 @@ let skillsList = {
 
 function _matchForModel(model, item, skill, relationship) {
   switch (model) {
+    case 'project-skill':
+      return _matchWithRelationship(item, skill, relationship, 'project');
     case 'user-skill':
       return _matchWithRelationship(item, skill, relationship, 'user');
     default:

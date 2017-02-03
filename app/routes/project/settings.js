@@ -10,6 +10,7 @@ const {
 
 export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
   credentials: service(),
+  projectSkillsList: service(),
   session: service(),
 
   model() {
@@ -29,5 +30,9 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
     } else {
       return this._super(...arguments);
     }
+  },
+
+  afterModel(project) {
+    get(this, 'projectSkillsList').setProject(project);
   }
 });

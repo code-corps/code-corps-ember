@@ -29,29 +29,31 @@ export default Service.extend({
   },
 
   find(skill) {
-    let projectSkills = get(this, 'projectSkills');
-    let project = get(this, 'project');
+    let { projectSkills, project } = getProperties(this, 'projectSkills', 'project');
     return skillsList.find(projectSkills, skill, project);
   },
 
   remove(skill) {
-    let { projectSkills, project } = getProperties(this, 'projectSkills', 'project');
-    let projectSkill = skillsList.find(projectSkills, skill, project);
+    let projectSkill = this.find(skill);
     return projectSkill.destroyRecord();
   },
 
   toggle(skill) {
     let { projectSkills, project } = getProperties(this, 'projectSkills', 'project');
-    let foundSkill = skillsList.find(projectSkills, skill, project);
 
-    if (isEmpty(foundSkill)) {
-      this.add(skill);
-    } else {
+    if (skillsList.contains(projectSkills, skill)) {
       this.remove(skill);
+    } else {
+      this.add(skill);
     }
   },
 
   setProject(project) {
     set(this, 'project', project);
+    this._refresh();
+  },
+
+  _refresh() {
+    return get(this, 'projectSkills').reload();
   }
 });

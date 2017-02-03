@@ -1,8 +1,20 @@
 <div class="settings-main">
   {{project-settings-form project=model}}
 
+  <div class="user-skills-list">
+  {{#each projectSkills as |projectSkill|}}
+    {{skill-button
+      isLoading=projectSkill.isLoading
+      remove=(action removeProjectSkill projectSkill)
+      skill=projectSkill.skill
+    }}
+  {{/each}}
+  </div>
+
+  <div class="skills-input-container">
   {{skills-input
     selectSkill=(action toggleSkill)
-    skills=model.projectSkills
+    skillsList=projectSkillsList
   }}
+  </div>
 </div>

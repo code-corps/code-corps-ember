@@ -1,3 +1,10 @@
+.skills-input-container {
+  @include span-columns(12);
+
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+
 .skills-input {
   margin: 0 auto;
   position: relative;
