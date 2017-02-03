@@ -6,14 +6,19 @@
 <div class="start-skills">
   <div class="user-skills-list">
   {{#each model as |userSkill|}}
-    {{skill-button skill=userSkill.skill isLoading=userSkill.isLoading}}
+    {{skill-button
+      isLoading=userSkill.isLoading
+      skill=userSkill.skill
+    }}
   {{else}}
     <p>Add your skills and they'll show up here.</p>
   {{/each}}
   </div>
 
   <div class="user-skills-input-container">
-    {{user-skills-input}}
+    {{user-skills-input
+      userSkills=model
+    }}
   </div>
 </div>
 

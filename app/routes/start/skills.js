@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import OnboardingRouteMixin from '../../mixins/onboarding-route';
 
-const { Route } = Ember;
+const { get, inject: { service }, Route } = Ember;
 
 export default Route.extend(OnboardingRouteMixin, {
+  currentUser: service(),
+
   model() {
-    return this.get('currentUser.user.userSkills');
+    return get(this, 'currentUser.user.userSkills');
   }
 });

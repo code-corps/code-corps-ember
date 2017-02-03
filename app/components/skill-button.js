@@ -3,7 +3,9 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  inject: { service }
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 export default Component.extend({
@@ -12,9 +14,9 @@ export default Component.extend({
   userSkills: service(),
 
   spanClass: computed('isLoading', 'isHovering', function() {
-    if (this.get('isLoading')) {
+    if (get(this, 'isLoading')) {
       return 'button-spinner';
-    } else if (this.get('isHovering')) {
+    } else if (get(this, 'isHovering')) {
       return 'x-mark';
     } else {
       return 'check-mark';
@@ -23,15 +25,15 @@ export default Component.extend({
 
   actions: {
     hoverButton() {
-      this.set('isHovering', true);
+      set(this, 'isHovering', true);
     },
 
     leaveButton() {
-      this.set('isHovering', false);
+      set(this, 'isHovering', false);
     },
 
     removeSkill(skill) {
-      let userSkills = this.get('userSkills');
+      let userSkills = get(this, 'userSkills');
       userSkills.removeSkill(skill);
     }
   }

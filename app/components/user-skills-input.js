@@ -22,7 +22,7 @@ export default Component.extend({
   results: [],
 
   store: service(),
-  userSkills: service(),
+  userSkillsService: service('userSkills'),
 
   canShow: and('hasResults', 'notHidden'),
   hasResults: notEmpty('results'),
@@ -35,7 +35,7 @@ export default Component.extend({
 
   _isNewQuery: not('_sameQuery'),
   _sameQuery: computed('queryString', 'lastQuery', function() {
-    return this.get('queryString') === this.get('lastQuery');
+    return get(this, 'queryString') === get(this, 'lastQuery');
   }),
 
   actions: {
@@ -66,27 +66,27 @@ export default Component.extend({
       let cursorAt;
       switch (key) {
         case 'ArrowDown':
-          cursorAt = this.get('cursorAt');
+          cursorAt = get(this, 'cursorAt');
           this._setPosition(++cursorAt);
-          this.set('hidden', false);
+          set(this, 'hidden', false);
           break;
         case 'ArrowUp':
-          cursorAt = this.get('cursorAt');
+          cursorAt = get(this, 'cursorAt');
           this._setPosition(--cursorAt);
-          this.set('hidden', false);
+          set(this, 'hidden', false);
           break;
         case 'Comma':
         case 'Enter':
           this._selectSkill();
           break;
         case 'Escape':
-          this.set('results', []);
-          this.set('hidden', true);
+          set(this, 'results', []);
+          set(this, 'hidden', true);
           break;
         default:
           // Any other alphanumeric character
           if (/^Key\w(?!.)/.test(key)) {
-            this.set('hidden', false);
+            set(this, 'hidden', false);
           }
       }
     }
@@ -120,16 +120,16 @@ export default Component.extend({
       let cursorAt = get(this, 'cursorAt');
       let results = get(this, 'results');
       let skill = results.objectAt(cursorAt);
-      let userSkills = get(this, 'userSkills');
+      let userSkillsService = get(this, 'userSkillsService');
 
-      let foundSkill = userSkills.findUserSkill(skill);
+      let foundSkill = userSkillsService.findUserSkill(skill);
 
       this._reset();
 
       if (isEmpty(foundSkill)) {
-        userSkills.addSkill(skill);
+        userSkillsService.addSkill(skill);
       } else {
-        userSkills.removeSkill(skill);
+        userSkillsService.removeSkill(skill);
       }
     }
   },
