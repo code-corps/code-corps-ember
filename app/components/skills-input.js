@@ -77,8 +77,7 @@ export default Component.extend({
           this._selectSkill();
           break;
         case 'Escape':
-          set(this, 'results', []);
-          set(this, 'hidden', true);
+          this._reset();
           break;
         default:
           // Any other alphanumeric character
