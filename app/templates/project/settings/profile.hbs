@@ -1,11 +1,21 @@
-<div class="settings-main">
+<div class="page-section">
   {{project-settings-form project=model}}
+</div>
 
-  <div class="user-skills-list">
+<div class="page-section">
+  <div class="page-section__header">
+    <h2>Skills</h2>
+    <p>What skills does your project require? These will help contributors find your project.</p>
+  </div>
+
+  <div class="project-skills-list centered">
   {{#each projectSkills as |projectSkill|}}
     {{skill-button
+      alwaysShowX=true
+      iconBefore=false
       isLoading=projectSkill.isLoading
       remove=(action removeProjectSkill projectSkill)
+      size="small"
       skill=projectSkill.skill
     }}
   {{/each}}
@@ -13,6 +23,7 @@
 
   <div class="skills-input-container">
   {{skills-input
+    centered=true
     selectSkill=(action toggleSkill)
     skillsList=projectSkillsList
   }}

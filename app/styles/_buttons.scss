@@ -59,6 +59,10 @@
   &.small {
     font-size: $body-font-size-small;
     padding: 6px 14px;
+
+    &.skill {
+      padding: 6px 9px;
+    }
   }
 
   &.large {
@@ -107,6 +111,15 @@
       margin: -3px 10px 0 0;
       vertical-align: middle;
       width: 18px;
+
+      &.small {
+        height: 10px;
+        width: 12px;
+
+        &.after {
+          margin: -3px 0 0 6px;
+        }
+      }
     }
 
     &.check-area {
@@ -119,6 +132,9 @@
 
     &.x-mark {
       @include sprite($x-mark);
+      &.small {
+        @include sprite($x-mark-small);
+      }
     }
 
     &.button-spinner {

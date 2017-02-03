@@ -5,8 +5,15 @@
   margin-bottom: 30px;
 }
 
+.skills-input-area {
+
+}
+
 .skills-input {
-  margin: 0 auto;
+  &--centered {
+    margin: 0 auto;    
+  }
+
   position: relative;
   width: 400px;
 
