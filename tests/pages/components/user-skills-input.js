@@ -10,10 +10,10 @@ export default {
   focus: triggerable('focus', 'input'),
   inputValue: value('input'),
   dropdownMenuVisible: isVisible('.dropdown-menu'),
-  dropdownMenuItemsHidden: isHidden('.dropdown-menu li'),
+  dropdownMenuHidden: isHidden('.dropdown-menu'),
 
-  mousedownDropdownItem: triggerable('mousedown', '.dropdown-menu li'),
-  mouseenterDropdownFirstItem: triggerable('mouseenter', '.dropdown-menu li:eq(1)'),
+  mousedownDropdownSecondItem: triggerable('mousedown', '.dropdown-menu li:eq(1)'),
+  mouseenterDropdownSecondItem: triggerable('mouseenter', '.dropdown-menu li:eq(1)'),
 
   keydown: triggerable('keydown', 'input'),
 

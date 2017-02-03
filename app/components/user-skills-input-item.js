@@ -25,7 +25,7 @@ export default Component.extend({
 
   mouseDown() {
     let skill = get(this, 'skill');
-    get(this, 'selectSkill')(skill);
+    this.sendAction('selectSkill', skill);
   },
 
   mouseEnter() {

@@ -86,6 +86,10 @@ export default Component.extend({
             set(this, 'hidden', false);
           }
       }
+    },
+
+    selectSkill(skill) {
+      this._selectSkill(skill);
     }
   },
 

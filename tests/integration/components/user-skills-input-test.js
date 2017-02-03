@@ -152,7 +152,7 @@ test('it changes the selection when hovering', function(assert) {
     assert.equal(page.inputItems(0).listItemIsSelected, true);
     assert.equal(page.inputItems(1).listItemIsSelected, false);
 
-    page.mouseenterDropdownFirstItem();
+    page.mouseenterDropdownSecondItem();
     assert.equal(page.inputItems(0).listItemIsSelected, false);
     assert.equal(page.inputItems(1).listItemIsSelected, true);
     done();
@@ -171,7 +171,7 @@ test('it selects the skill when hitting enter', function(assert) {
     page.pressEnterKey();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
@@ -187,7 +187,7 @@ test('it selects the skill when hitting comma', function(assert) {
     page.pressCommaKey();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
@@ -201,10 +201,10 @@ test('it selects the skill when clicking it', function(assert) {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
-    page.mousedownDropdownItem();
+    page.mousedownDropdownSecondItem();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
