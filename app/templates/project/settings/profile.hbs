@@ -1,3 +1,8 @@
 <div class="settings-main">
   {{project-settings-form project=model}}
+
+  {{skills-input
+    selectSkill=(action toggleSkill)
+    skills=model.projectSkills
+  }}
 </div>
