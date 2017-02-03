@@ -5,6 +5,7 @@ const {
   computed,
   computed: { alias, and, not, notEmpty },
   get,
+  getProperties,
   inject: { service },
   isEmpty,
   observer,
@@ -22,7 +23,6 @@ export default Component.extend({
   results: [],
 
   store: service(),
-  userSkillsService: service('userSkills'),
 
   canShow: and('hasResults', 'notHidden'),
   hasResults: notEmpty('results'),
@@ -56,10 +56,6 @@ export default Component.extend({
           set(item, 'selected', false);
         }
       });
-    },
-
-    selectSkill() {
-      this._selectSkill();
     },
 
     getKeyDown(key) {
@@ -117,20 +113,12 @@ export default Component.extend({
 
   _selectSkill() {
     if (get(this, 'hasResults')) {
-      let cursorAt = get(this, 'cursorAt');
-      let results = get(this, 'results');
+      let { cursorAt, results } = getProperties(this, 'cursorAt', 'results');
+
       let skill = results.objectAt(cursorAt);
-      let userSkillsService = get(this, 'userSkillsService');
-
-      let foundSkill = userSkillsService.findUserSkill(skill);
-
+      console.log(cursorAt, results, skill);
+      get(this, 'addSkill')(skill);
       this._reset();
-
-      if (isEmpty(foundSkill)) {
-        userSkillsService.addSkill(skill);
-      } else {
-        userSkillsService.removeSkill(skill);
-      }
     }
   },
 

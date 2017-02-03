@@ -5,8 +5,9 @@ const { get, inject: { service }, Route } = Ember;
 
 export default Route.extend(OnboardingRouteMixin, {
   currentUser: service(),
+  store: service(),
 
   model() {
-    return get(this, 'currentUser.user.userSkills');
+    return get(this, 'currentUser.user');
   }
 });

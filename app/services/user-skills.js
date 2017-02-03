@@ -21,6 +21,7 @@ export default Service.extend({
   userSkills: alias('user.userSkills'),
 
   addSkill(skill) {
+    console.log('add skill');
     let user = get(this, 'user');
     let userSkill = get(this, 'store').createRecord('user-skill', {
       user,

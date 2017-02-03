@@ -2,10 +2,10 @@ import Ember from 'ember';
 
 const {
   Component,
+  computed: { alias, mapBy },
   computed,
-  computed: { alias, notEmpty },
   get,
-  inject: { service }
+  getProperties
 } = Ember;
 
 export default Component.extend({
@@ -13,21 +13,21 @@ export default Component.extend({
   classNames: ['skill-dropdown-item'],
   tagName: ['li'],
 
-  userSkills: service(),
+  addedSkills: mapBy('userSkills', 'skill'),
+  hasSkill: computed('addedSkills', 'skill', function() {
+    let { addedSkills, skill } = getProperties(this, 'addedSkills', 'skill');
 
-  hasSkill: notEmpty('userSkill'),
-  selected: alias('skill.selected'),
-
-  userSkill: computed('skill', 'userSkills.userSkills', function() {
-    let skill = get(this, 'skill');
-    let userSkills = get(this, 'userSkills');
-    return userSkills.findUserSkill(skill);
+    return addedSkills.any((addedSkill) => {
+      return get(addedSkill, 'id') == get(skill, 'id');
+    });
   }),
 
   mouseDown() {
-    this.sendAction('hover', get(this, 'skill'));
-    this.sendAction('selectSkill');
+    let skill = get(this, 'skill');
+    get(this, 'addSkill')(skill);
   },
+
+  selected: alias('skill.selected'),
 
   mouseEnter() {
     this.sendAction('hover', get(this, 'skill'));
