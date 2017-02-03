@@ -25,7 +25,7 @@ let mockStore = {
   }
 };
 
-let mockUserSkillsListService = {
+let mockListService = {
   contains(queriedSkill) {
     return queriedSkill === skills[1];
   },
@@ -40,6 +40,7 @@ let mockUserSkillsListService = {
 };
 
 function setHandlers(context, { selectHandler = function() {} } = {}) {
+  context.set('mockListService', mockListService);
   context.set('selectHandler', selectHandler);
 }
 
@@ -47,7 +48,7 @@ moduleForComponent('skills-input', 'Integration | Component | skills input', {
   integration: true,
   beforeEach() {
     stubService(this, 'store', mockStore);
-    stubService(this, 'user-skills-list', mockUserSkillsListService);
+    stubService(this, 'user-skills-list', mockListService);
     setHandlers(this);
     page.setContext(this);
   },
@@ -58,7 +59,7 @@ moduleForComponent('skills-input', 'Integration | Component | skills input', {
 
 test('it does nothing when pressing a random key', function(assert) {
   assert.expect(1);
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler)}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) skillsList=mockListService}}`);
 
   page.pressRKey();
 
@@ -68,7 +69,7 @@ test('it does nothing when pressing a random key', function(assert) {
 test('it fetches results when changing the input', function(assert) {
   assert.expect(5);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -90,7 +91,7 @@ test('it fetches results when changing the input', function(assert) {
 test('it changes the selection when arrowing up or down', function(assert) {
   assert.expect(10);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -123,7 +124,7 @@ test('it changes the selection when arrowing up or down', function(assert) {
 test('it hides when hitting esc key', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -142,7 +143,7 @@ test('it hides when hitting esc key', function(assert) {
 test('it changes the selection when hovering', function(assert) {
   assert.expect(4);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -162,7 +163,7 @@ test('it changes the selection when hovering', function(assert) {
 test('it selects the skill when hitting enter', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -179,7 +180,7 @@ test('it selects the skill when hitting enter', function(assert) {
 test('it selects the skill when hitting comma', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -195,7 +196,7 @@ test('it selects the skill when hitting comma', function(assert) {
 test('it selects the skill when clicking it', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -218,7 +219,7 @@ test('it does nothing when there are no results', function(assert) {
   set(this, 'store.query', query);
 
   let done = assert.async();
-  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
