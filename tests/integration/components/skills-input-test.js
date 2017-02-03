@@ -121,8 +121,8 @@ test('it changes the selection when arrowing up or down', function(assert) {
   });
 });
 
-test('it hides when hitting esc key', function(assert) {
-  assert.expect(2);
+test('it hides and clears input when hitting esc key', function(assert) {
+  assert.expect(3);
   let done = assert.async();
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
@@ -135,6 +135,7 @@ test('it hides when hitting esc key', function(assert) {
 
     page.pressEscKey();
 
+    assert.equal(page.inputValue, '');
     assert.notOk(page.dropdownMenuVisible);
     done();
   });
