@@ -11,10 +11,11 @@
 <div class="dropdown-menu">
   {{#each results as |skill index|}}
     {{user-skills-input-item
-      addSkill=addSkill
       hover="hoverSkill"
+      query=query
+      selectSkill=selectSkill
       skill=skill
-      query=queryString
+      skills=skills
     }}
   {{/each}}
 </div>

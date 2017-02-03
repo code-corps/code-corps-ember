@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import skillsList from 'code-corps-ember/utils/skills-list';
 
 const {
   Component,
@@ -22,20 +23,21 @@ export default Component.extend({
   limit: 5,
   results: [],
 
+  currentUser: service(),
   store: service(),
 
   canShow: and('hasResults', 'notHidden'),
   hasResults: notEmpty('results'),
   notHidden: not('hidden'),
   numberOfResults: alias('results.length'),
-  queryString: alias('query'),
-  queryStringChanged: observer('queryString', function() {
+  queryChanged: observer('query', function() {
     once(this, '_search');
   }),
+  user: alias('currentUser.user'),
 
   _isNewQuery: not('_sameQuery'),
-  _sameQuery: computed('queryString', 'lastQuery', function() {
-    return get(this, 'queryString') === get(this, 'lastQuery');
+  _sameQuery: computed('query', 'lastQuery', function() {
+    return get(this, 'query') === get(this, 'lastQuery');
   }),
 
   actions: {
@@ -90,20 +92,20 @@ export default Component.extend({
 
   _reset() {
     set(this, 'results', []);
-    set(this, 'queryString', '');
+    set(this, 'query', '');
     this.$('input').focus();
   },
 
   _search() {
     let limit = get(this, 'limit');
-    let queryString = get(this, 'queryString');
+    let query = get(this, 'query');
     let store = get(this, 'store');
 
-    if (isEmpty(queryString)) {
+    if (isEmpty(query)) {
       set(this, 'results', []);
     } else if (get(this, '_isNewQuery')) {
-      set(this, 'lastQuery', queryString);
-      store.query('skill', { query: queryString, limit }).then((skills) => {
+      set(this, 'lastQuery', query);
+      store.query('skill', { query: query, limit }).then((skills) => {
         set(this, 'results', skills);
         set(this, 'cursorAt', 0);
         this._updateSelected();
@@ -114,10 +116,9 @@ export default Component.extend({
   _selectSkill() {
     if (get(this, 'hasResults')) {
       let { cursorAt, results } = getProperties(this, 'cursorAt', 'results');
-
       let skill = results.objectAt(cursorAt);
-      get(this, 'addSkill')(skill);
       this._reset();
+      get(this, 'selectSkill')(skill);
     }
   },
 

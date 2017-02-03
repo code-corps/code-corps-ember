@@ -2,13 +2,11 @@ import Ember from 'ember';
 import skillsList from 'code-corps-ember/utils/skills-list';
 
 const {
-  computed,
   computed: {
     alias, empty
   },
   get,
   inject: { service },
-  isEmpty,
   Service
 } = Ember;
 
@@ -21,7 +19,6 @@ export default Service.extend({
   userSkills: alias('user.userSkills'),
 
   addSkill(skill) {
-    console.log('add skill');
     let user = get(this, 'user');
     let userSkill = get(this, 'store').createRecord('user-skill', {
       user,

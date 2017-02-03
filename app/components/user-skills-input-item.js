@@ -19,7 +19,6 @@ export default Component.extend({
   addedSkills: mapBy('userSkills', 'skill'),
   hasSkill: computed('addedSkills', 'skill', function() {
     let { addedSkills, skill } = getProperties(this, 'addedSkills', 'skill');
-    console.log(addedSkills, skill);
     return addedSkills.any((addedSkill) => {
       return get(addedSkill, 'id') == get(skill, 'id');
     });
@@ -27,7 +26,7 @@ export default Component.extend({
 
   mouseDown() {
     let skill = get(this, 'skill');
-    get(this, 'addSkill')(skill);
+    get(this, 'selectSkill')(skill);
   },
 
   selected: alias('skill.selected'),
