@@ -1,10 +1,10 @@
 import {
   collection, fillable, isVisible, isHidden, triggerable, value
 } from 'ember-cli-page-object';
-import userSkillsInputItem from './user-skills-input-item';
+import skillsInputItem from './skills-input-item';
 
 export default {
-  scope: '.user-skills-input',
+  scope: '.skills-input',
 
   fillIn: fillable('input'),
   focus: triggerable('focus', 'input'),
@@ -60,7 +60,7 @@ export default {
   }),
 
   inputItems: collection({
-    item: userSkillsInputItem,
-    itemScope: userSkillsInputItem.scope
+    item: skillsInputItem,
+    itemScope: skillsInputItem.scope
   })
 };

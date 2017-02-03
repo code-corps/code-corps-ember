@@ -14,7 +14,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['user-skills-input'],
+  classNames: ['skills-input'],
   cursorAt: 0,
   cursorWas: 0,
   hidden: true,

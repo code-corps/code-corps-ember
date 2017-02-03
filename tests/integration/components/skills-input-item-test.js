@@ -3,18 +3,18 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
-import userSkillsInputItemComponent from '../../pages/components/user-skills-input-item';
+import skillsInputItemComponent from '../../pages/components/skills-input-item';
 
 const { Object, set } = Ember;
 
-let page = PageObject.create(userSkillsInputItemComponent);
+let page = PageObject.create(skillsInputItemComponent);
 
 let skill = Object.create({
   selected: true,
   title: 'Ruby on Rails'
 });
 
-moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {
+moduleForComponent('skills-input-item', 'Integration | Component | user skills input item', {
   integration: true,
   beforeEach() {
     stubService(this, 'user-skills-list', {
@@ -43,7 +43,7 @@ test('it renders as selected with the highlighted string', function(assert) {
   set(this, 'query', query);
 
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       query=query
       skill=skill
     }}
@@ -66,7 +66,7 @@ test('it sends the hover action on mouseEnter', function(assert) {
     assert.deepEqual(skill, hoveredSkill);
   });
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       hover="hover"
       query=query
       skill=skill
@@ -86,7 +86,7 @@ test('it sends the selectSkill action on mouseDown', function(assert) {
   });
 
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       hover="hover"
       query=query
       selectSkill=selectSkill
