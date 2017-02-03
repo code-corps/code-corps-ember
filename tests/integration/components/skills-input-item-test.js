@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import skillsInputItemComponent from '../../pages/components/skills-input-item';
 
@@ -14,19 +13,21 @@ let skill = Object.create({
   title: 'Ruby on Rails'
 });
 
-moduleForComponent('skills-input-item', 'Integration | Component | user skills input item', {
+let userSkillsList = {
+  contains() {
+    return true;
+  },
+  find(queriedSkill) {
+    if (queriedSkill === skill) {
+      return skill;
+    }
+  }
+};
+
+moduleForComponent('skills-input-item', 'Integration | Component | skills input item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-skills-list', {
-      contains() {
-        return true;
-      },
-      find(queriedSkill) {
-        if (queriedSkill === skill) {
-          return skill;
-        }
-      }
-    });
+    this.set('userSkillsList', userSkillsList);
     page.setContext(this);
   },
   afterEach() {
@@ -46,6 +47,7 @@ test('it renders as selected with the highlighted string', function(assert) {
     {{skills-input-item
       query=query
       skill=skill
+      skillsList=userSkillsList
     }}
   `);
 
@@ -70,6 +72,7 @@ test('it sends the hover action on mouseEnter', function(assert) {
       hover="hover"
       query=query
       skill=skill
+      skillsList=userSkillsList
     }}
   `);
 
@@ -91,7 +94,7 @@ test('it sends the selectSkill action on mouseDown', function(assert) {
       query=query
       selectSkill=selectSkill
       skill=skill
-      skills=skills
+      skillsList=userSkillsList
     }}
   `);
 

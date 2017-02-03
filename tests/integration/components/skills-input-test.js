@@ -43,7 +43,7 @@ function setHandlers(context, { selectHandler = function() {} } = {}) {
   context.set('selectHandler', selectHandler);
 }
 
-moduleForComponent('skills-input', 'Integration | Component | user skills input', {
+moduleForComponent('skills-input', 'Integration | Component | skills input', {
   integration: true,
   beforeEach() {
     stubService(this, 'store', mockStore);

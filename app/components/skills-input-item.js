@@ -15,11 +15,10 @@ export default Component.extend({
   tagName: ['li'],
 
   currentUser: service(),
-  userSkillsList: service(),
 
   hasSkill: computed('skill', function() {
-    let { skill, userSkillsList } = getProperties(this, 'skill', 'userSkillsList');
-    return userSkillsList.contains(skill);
+    let { skill, skillsList } = getProperties(this, 'skill', 'skillsList');
+    return skillsList.contains(skill);
   }),
   selected: alias('skill.selected'),
 
