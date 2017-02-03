@@ -23,11 +23,11 @@ let skills = [
 moduleForComponent('skill-list-items', 'Integration | Component | skill list items', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-skills', {
-      hasSkill(queriedSkill) {
+    stubService(this, 'user-skills-list', {
+      contains(queriedSkill) {
         return queriedSkill === skills[1];
       },
-      findUserSkill(queriedSkill) {
+      find(queriedSkill) {
         if (queriedSkill === skills[1]) {
           return queriedSkill;
         }

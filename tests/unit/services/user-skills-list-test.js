@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:user-skills', 'Unit | Service | user skills', {
+moduleFor('service:user-skills-list', 'Unit | Service | user skills list', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

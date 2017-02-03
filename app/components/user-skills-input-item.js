@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { alias, mapBy },
+  computed: { alias },
   computed,
   get,
   getProperties,
@@ -15,25 +15,21 @@ export default Component.extend({
   tagName: ['li'],
 
   currentUser: service(),
+  userSkillsList: service(),
 
-  user: alias('currentUser.user'),
-  userSkills: alias('user.userSkills'),
-  addedSkills: mapBy('userSkills', 'skill'),
-  hasSkill: computed('addedSkills', 'skill', function() {
-    let { addedSkills, skill } = getProperties(this, 'addedSkills', 'skill');
-    return addedSkills.any((addedSkill) => {
-      return get(addedSkill, 'id') == get(skill, 'id');
-    });
+  hasSkill: computed('skill', function() {
+    let { skill, userSkillsList } = getProperties(this, 'skill', 'userSkillsList');
+    return userSkillsList.contains(skill);
   }),
+  selected: alias('skill.selected'),
 
   mouseDown() {
     let skill = get(this, 'skill');
     get(this, 'selectSkill')(skill);
   },
 
-  selected: alias('skill.selected'),
-
   mouseEnter() {
-    this.sendAction('hover', get(this, 'skill'));
+    let skill = get(this, 'skill');
+    this.sendAction('hover', skill);
   }
 });

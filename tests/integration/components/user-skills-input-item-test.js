@@ -17,8 +17,11 @@ let skill = Object.create({
 moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-skills', {
-      findUserSkill(queriedSkill) {
+    stubService(this, 'user-skills-list', {
+      contains() {
+        return true;
+      },
+      find(queriedSkill) {
         if (queriedSkill === skill) {
           return skill;
         }
@@ -73,24 +76,22 @@ test('it sends the hover action on mouseEnter', function(assert) {
   page.mouseenter();
 });
 
-test('it sends the hover and selectSkill actions on mousedown', function(assert) {
-  assert.expect(2);
+test('it sends the selectSkill action on mouseDown', function(assert) {
+  assert.expect(1);
 
   set(this, 'skill', skill);
   set(this, 'query', query);
-
-  this.on('hover', (hoveredSkill) => {
-    assert.deepEqual(skill, hoveredSkill);
-  });
-  this.on('selectSkill', () => {
+  set(this, 'selectSkill', () => {
     assert.ok(true);
   });
+
   page.render(hbs`
     {{user-skills-input-item
       hover="hover"
       query=query
-      selectSkill="selectSkill"
+      selectSkill=selectSkill
       skill=skill
+      skills=skills
     }}
   `);
 
