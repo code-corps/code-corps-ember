@@ -116,7 +116,6 @@ export default Component.extend({
       let { cursorAt, results } = getProperties(this, 'cursorAt', 'results');
 
       let skill = results.objectAt(cursorAt);
-      console.log(cursorAt, results, skill);
       get(this, 'addSkill')(skill);
       this._reset();
     }

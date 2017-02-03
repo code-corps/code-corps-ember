@@ -5,7 +5,8 @@ const {
   computed: { alias, mapBy },
   computed,
   get,
-  getProperties
+  getProperties,
+  inject: { service }
 } = Ember;
 
 export default Component.extend({
@@ -13,10 +14,12 @@ export default Component.extend({
   classNames: ['skill-dropdown-item'],
   tagName: ['li'],
 
+  currentUser: service(),
+  userSkills: alias('currentUser.user.userSkills'),
   addedSkills: mapBy('userSkills', 'skill'),
   hasSkill: computed('addedSkills', 'skill', function() {
     let { addedSkills, skill } = getProperties(this, 'addedSkills', 'skill');
-
+    console.log(addedSkills, skill);
     return addedSkills.any((addedSkill) => {
       return get(addedSkill, 'id') == get(skill, 'id');
     });

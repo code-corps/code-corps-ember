@@ -30,11 +30,6 @@ export default Component.extend({
 
     leaveButton() {
       set(this, 'isHovering', false);
-    },
-
-    removeSkill(skill) {
-      let userSkills = get(this, 'userSkills');
-      userSkills.removeSkill(skill);
     }
   }
 });

@@ -6,7 +6,11 @@
 <div class="start-skills">
   <div class="user-skills-list">
   {{#each userSkills as |userSkill|}}
-    {{skill-button isLoading=userSkill.isLoading skill=userSkill.skill}}
+    {{skill-button
+      isLoading=userSkill.isLoading
+      removeSkill=(action removeUserSkill userSkill)
+      skill=userSkill.skill
+    }}
   {{else}}
     <p>Add your skills and they'll show up here.</p>
   {{/each}}

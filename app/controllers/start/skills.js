@@ -20,6 +20,10 @@ export default Controller.extend(OnboardingControllerMixin, {
     let { store, user } = getProperties(this, 'store', 'user');
 
     return store.createRecord('user-skill', { user, skill }).save();
+  },
+
+  removeUserSkill(userSkill) {
+    userSkill.destroyRecord();
   }
 
 });
