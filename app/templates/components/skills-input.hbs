@@ -1,4 +1,4 @@
-{{user-skills-textfield
+{{skill-textfield
   autofocus=true
   focus-in="focus"
   focus-out="blur"
@@ -10,11 +10,12 @@
 {{#if canShow}}
 <div class="dropdown-menu">
   {{#each results as |skill index|}}
-    {{user-skills-input-item
+    {{skills-input-item
       hover="hoverSkill"
-      query=queryString
+      query=query
       selectSkill="selectSkill"
       skill=skill
+      skillsList=skillsList
     }}
   {{/each}}
 </div>

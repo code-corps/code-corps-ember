@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import { getCode } from 'ember-keyboard';
 
-const { TextField } = Ember;
+const { get, set, TextField } = Ember;
 
 export default TextField.extend({
   tagname: 'input',
 
   init() {
     this._super(...arguments);
-    this.set('keyboardActivated', true);
+    set(this, 'keyboardActivated', true);
   },
 
   keyDown(e) {
@@ -23,6 +23,6 @@ export default TextField.extend({
       default:
         this._super(...arguments);
     }
-    this.get('getKeyDown')(key);
+    get(this, 'getKeyDown')(key);
   }
 });

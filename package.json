@@ -63,7 +63,7 @@
     "ember-composable-helpers": "2.0.0",
     "ember-concurrency": "^0.7.11",
     "ember-credit-cards": "1.1.0",
-    "ember-data": "^2.11.0",
+    "ember-data": "^2.9.0",
     "ember-deferred-content": "0.2.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-dragula": "1.9.3",

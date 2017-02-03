@@ -5,11 +5,11 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 moduleForComponent('skill-list-item', 'Integration | Component | skill list item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-skills', {
-      hasSkill(skill) {
-        return skill;
+    stubService(this, 'user-skills-list', {
+      contains() {
+        return true;
       },
-      findUserSkill(skill) {
+      find(skill) {
         return skill;
       }
     });

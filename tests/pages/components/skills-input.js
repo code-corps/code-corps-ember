@@ -1,19 +1,19 @@
 import {
   collection, fillable, isVisible, isHidden, triggerable, value
 } from 'ember-cli-page-object';
-import userSkillsInputItem from './user-skills-input-item';
+import skillsInputItem from './skills-input-item';
 
 export default {
-  scope: '.user-skills-input',
+  scope: '.skills-input',
 
   fillIn: fillable('input'),
   focus: triggerable('focus', 'input'),
   inputValue: value('input'),
   dropdownMenuVisible: isVisible('.dropdown-menu'),
-  dropdownMenuItemsHidden: isHidden('.dropdown-menu li'),
+  dropdownMenuHidden: isHidden('.dropdown-menu'),
 
-  mousedownDropdownItem: triggerable('mousedown', '.dropdown-menu li'),
-  mouseenterDropdownFirstItem: triggerable('mouseenter', '.dropdown-menu li:eq(1)'),
+  mousedownDropdownSecondItem: triggerable('mousedown', '.dropdown-menu li:eq(1)'),
+  mouseenterDropdownSecondItem: triggerable('mouseenter', '.dropdown-menu li:eq(1)'),
 
   keydown: triggerable('keydown', 'input'),
 
@@ -60,7 +60,7 @@ export default {
   }),
 
   inputItems: collection({
-    item: userSkillsInputItem,
-    itemScope: userSkillsInputItem.scope
+    item: skillsInputItem,
+    itemScope: skillsInputItem.scope
   })
 };
