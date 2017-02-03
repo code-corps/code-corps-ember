@@ -17,26 +17,25 @@ let skillsList = {
 
   contains(skills, skill) {
     if (skills) {
-      let matchedSkill = skills.find((item) => {
+      return skills.any((item) => {
         let itemSkillId = item.belongsTo('skill').id();
         let skillId = get(skill, 'id');
         return (itemSkillId === skillId);
       });
-      return !isEmpty(matchedSkill);
     } else {
       false;
     }
   }
-}
+};
 
 function _matchForModel(model, item, skill, relationship) {
-  switch(model) {
+  switch (model) {
     case 'user-skill':
       return _matchWithRelationship(item, skill, relationship, 'user');
     default:
       return undefined;
   }
-};
+}
 
 function _matchWithRelationship(item, skill, relationship, relationshipName) {
   let itemRelationshipId = item.belongsTo(relationshipName).id();
@@ -44,6 +43,6 @@ function _matchWithRelationship(item, skill, relationship, relationshipName) {
   let relationshipId = get(relationship, 'id');
   let skillId = get(skill, 'id');
   return (itemRelationshipId === relationshipId) && (itemSkillId === skillId);
-};
+}
 
 export default skillsList;

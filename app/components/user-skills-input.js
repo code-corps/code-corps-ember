@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import skillsList from 'code-corps-ember/utils/skills-list';
 
 const {
   Component,
@@ -93,7 +92,7 @@ export default Component.extend({
   _reset() {
     set(this, 'results', []);
     set(this, 'query', '');
-    this.$('input').focus();
+    set(this, 'hidden', true);
   },
 
   _search() {
@@ -102,10 +101,10 @@ export default Component.extend({
     let store = get(this, 'store');
 
     if (isEmpty(query)) {
-      set(this, 'results', []);
+      this._reset();
     } else if (get(this, '_isNewQuery')) {
       set(this, 'lastQuery', query);
-      store.query('skill', { query: query, limit }).then((skills) => {
+      store.query('skill', { query, limit }).then((skills) => {
         set(this, 'results', skills);
         set(this, 'cursorAt', 0);
         this._updateSelected();

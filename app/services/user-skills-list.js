@@ -6,7 +6,9 @@ const {
     alias, empty
   },
   get,
+  getProperties,
   inject: { service },
+  isEmpty,
   Service
 } = Ember;
 
@@ -18,28 +20,36 @@ export default Service.extend({
   user: alias('currentUser.user'),
   userSkills: alias('user.userSkills'),
 
-  addSkill(skill) {
-    let user = get(this, 'user');
-    let userSkill = get(this, 'store').createRecord('user-skill', {
-      user,
-      skill
-    });
-    return userSkill.save();
+  add(skill) {
+    let { store, user } = getProperties(this, 'store', 'user');
+    return store.createRecord('user-skill', { user, skill }).save();
   },
 
-  hasSkill(skill) {
+  contains(skill) {
     let userSkills = get(this, 'userSkills');
     return skillsList.contains(userSkills, skill);
   },
 
-  findUserSkill(skill) {
+  find(skill) {
     let userSkills = get(this, 'userSkills');
     let user = get(this, 'user');
     return skillsList.find(userSkills, skill, user);
   },
 
-  removeSkill(skill) {
-    let userSkill = this.findUserSkill(skill);
+  remove(skill) {
+    let { userSkills, user } = getProperties(this, 'userSkills', 'user');
+    let userSkill = skillsList.find(userSkills, skill, user);
     return userSkill.destroyRecord();
+  },
+
+  toggle(skill) {
+    let { userSkills, user } = getProperties(this, 'userSkills', 'user');
+    let foundSkill = skillsList.find(userSkills, skill, user);
+
+    if (isEmpty(foundSkill)) {
+      this.add(skill);
+    } else {
+      this.remove(skill);
+    }
   }
 });

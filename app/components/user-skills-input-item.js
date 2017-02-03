@@ -15,7 +15,9 @@ export default Component.extend({
   tagName: ['li'],
 
   currentUser: service(),
-  userSkills: alias('currentUser.user.userSkills'),
+
+  user: alias('currentUser.user'),
+  userSkills: alias('user.userSkills'),
   addedSkills: mapBy('userSkills', 'skill'),
   hasSkill: computed('addedSkills', 'skill', function() {
     let { addedSkills, skill } = getProperties(this, 'addedSkills', 'skill');

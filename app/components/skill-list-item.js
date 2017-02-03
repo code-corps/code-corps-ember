@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   computed: { alias, notEmpty },
+  get,
   inject: { service }
 } = Ember;
 
@@ -12,15 +13,13 @@ export default Component.extend({
   tagName: 'li',
 
   matched: notEmpty('userSkill'),
-  userSkills: service(),
+  userSkillsList: service(),
   user: alias('currentUser.user'),
-  usersUserSkills: alias('user.userSkills'),
 
-  userSkill: computed('skill', 'userSkills.userSkills.isFulfilled', function() {
-    let skill = this.get('skill');
-    let userSkills = this.get('userSkills');
-    let result = userSkills.findUserSkill(skill);
-    return result;
+  userSkill: computed('skill', 'userSkillsList.userSkills.isFulfilled', function() {
+    let skill = get(this, 'skill');
+    let userSkillsList = get(this, 'userSkillsList');
+    return userSkillsList.find(skill);
   }),
 
   didRender() {

@@ -22,7 +22,7 @@ li.skill-dropdown-item {
 
       a {
         color: $danger-color;
-        font-style: italic;
+        text-decoration: line-through;
 
         &:after {
           @include sprite($cross-red);
