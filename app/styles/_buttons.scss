@@ -69,6 +69,10 @@
   &.large {
     font-size: $body-font-size-large;
     padding: 15px 40px;
+
+    &.skill {
+      padding: 11px 14px;
+    }
   }
 
   &.clear {
@@ -109,7 +113,7 @@
     &.check-area, &.check-mark, &.x-mark {
       display: inline-block;
       height: 16px;
-      margin: -3px 10px 0 0;
+      margin: -3px 5px 0 0;
       vertical-align: middle;
       width: 18px;
 
