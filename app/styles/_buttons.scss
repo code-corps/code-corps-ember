@@ -171,7 +171,7 @@
   cursor: pointer;
 
   &.default, &.clear, &.success, &.danger {
-    @include transition(background 0.2s ease-in);
+    transition: background 0.2s ease-in;
   }
 
   &.default {
@@ -201,7 +201,7 @@
   }
 
   &.can-delete {
-    @include transition(background 0s ease-in);
+    transition: background 0s ease-in;
     background: $red;
     border: 1px solid $red;
   }
