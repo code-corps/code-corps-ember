@@ -47,9 +47,9 @@ export default Service.extend({
     let foundSkill = skillsList.find(userSkills, skill, user);
 
     if (isEmpty(foundSkill)) {
-      this.add(skill);
+      return this.add(skill);
     } else {
-      this.remove(skill);
+      return this.remove(skill);
     }
   }
 });

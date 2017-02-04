@@ -1,22 +1,54 @@
+.ember-tooltip {
+  font-size: $body-font-size-small;
+  padding: 3px 6px;
+}
+
 .skill-list-item {
   a {
     color: $dark-text;
+    cursor: pointer;
+    position: relative;
 
-    &:hover {
-      color: $dark-blue;
-      cursor: pointer;
+    &:before {
+      content: "";
+      display: inline-block;
+      margin: -2px 3px 0 0;
+      vertical-align: middle;
     }
-  }
 
-  &.matched {
-    a {
+    &.just-removed {
       color: $dark-blue;
-      font-weight: 600;
+    }
 
-      &:hover {
+    &.matched {
+      color: $dark-blue;
+
+      &:not(.just-removed) {
+        font-weight: 600;
+        &:before {
+          @include sprite($tiny-check);
+        }
+      }
+    }
+
+    &:hover:not(.matched) {
+      color: $dark-blue;
+    }
+
+    &:hover.matched {
+      &:not(.just-clicked) {
         color: $danger-color;
         text-decoration: line-through;
+
+        &:before {
+          @include sprite($tiny-x);
+          margin-left: 2px;
+        }
       }
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }

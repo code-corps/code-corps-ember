@@ -10,8 +10,9 @@ const {
 
 export default Component.extend({
   classNames: ['skill-list-item'],
-  classNameBindings: ['matched'],
   tagName: 'li',
+
+  justClicked: false,
 
   store: service(),
   userSkillsList: service(),
@@ -26,11 +27,6 @@ export default Component.extend({
     return result;
   }),
 
-  click() {
-    let skill = get(this, 'skill');
-    return get(this, 'userSkillsList').toggle(skill);
-  },
-
   didRender() {
     this._super(...arguments);
     let parentBottom = this.$().parent()[0].getBoundingClientRect().bottom;
@@ -39,5 +35,9 @@ export default Component.extend({
     if (elementBottom > parentBottom) {
       this.sendAction();
     }
+  },
+
+  toggleSkill(skill) {
+    return get(this, 'userSkillsList').toggle(skill);
   }
 });
