@@ -54,20 +54,6 @@
       &:last-child {
         padding: 0;
       }
-
-      a {
-        color: $light-text;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      &.matched {
-        font-weight: 600;
-        a {
-          color: $link-color;
-        }
-      }
     }
   }
 }

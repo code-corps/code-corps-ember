@@ -1,0 +1,11 @@
+.skills-list {
+  li {
+    display: inline-block;
+    margin-right: 5px;
+
+    &.matched {
+      color: $dark-blue;
+      font-weight: 700;
+    }
+  }
+}

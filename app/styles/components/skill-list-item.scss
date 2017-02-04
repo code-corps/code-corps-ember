@@ -1,0 +1,22 @@
+.skill-list-item {
+  a {
+    color: $dark-text;
+
+    &:hover {
+      color: $dark-blue;
+      cursor: pointer;
+    }
+  }
+
+  &.matched {
+    a {
+      color: $dark-blue;
+      font-weight: 600;
+
+      &:hover {
+        color: $danger-color;
+        text-decoration: line-through;
+      }
+    }
+  }
+}
