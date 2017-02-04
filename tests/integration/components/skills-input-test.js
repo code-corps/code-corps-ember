@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
-import userSkillsInputComponent from '../../pages/components/user-skills-input';
+import skillsInputComponent from '../../pages/components/skills-input';
 import wait from 'ember-test-helpers/wait';
 
 const {
@@ -12,31 +12,44 @@ const {
   set
 } = Ember;
 
-let page = PageObject.create(userSkillsInputComponent);
+let page = PageObject.create(skillsInputComponent);
+
+let skills = [
+  Object.create({ title: 'Ruby' }),
+  Object.create({ title: 'Ruby on Rails' })
+];
 
 let mockStore = {
   query() {
-    return RSVP.resolve([
-      Object.create({ title: 'Ruby' }),
-      Object.create({ title: 'Ruby on Rails' })
-    ]);
+    return RSVP.resolve(skills);
   }
 };
 
-let mockUserSkillsService = {
-  findUserSkill() {
-    return true;
+let mockListService = {
+  contains(queriedSkill) {
+    return queriedSkill === skills[1];
   },
-  removeSkill() {
+  find(queriedSkill) {
+    if (queriedSkill === skills[1]) {
+      return queriedSkill;
+    }
+  },
+  remove() {
     return true;
   }
 };
 
-moduleForComponent('user-skills-input', 'Integration | Component | user skills input', {
+function setHandlers(context, { selectHandler = function() {} } = {}) {
+  context.set('mockListService', mockListService);
+  context.set('selectHandler', selectHandler);
+}
+
+moduleForComponent('skills-input', 'Integration | Component | skills input', {
   integration: true,
   beforeEach() {
     stubService(this, 'store', mockStore);
-    stubService(this, 'user-skills', mockUserSkillsService);
+    stubService(this, 'user-skills-list', mockListService);
+    setHandlers(this);
     page.setContext(this);
   },
   afterEach() {
@@ -46,7 +59,7 @@ moduleForComponent('user-skills-input', 'Integration | Component | user skills i
 
 test('it does nothing when pressing a random key', function(assert) {
   assert.expect(1);
-  page.render(hbs`{{user-skills-input}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) skillsList=mockListService}}`);
 
   page.pressRKey();
 
@@ -56,7 +69,7 @@ test('it does nothing when pressing a random key', function(assert) {
 test('it fetches results when changing the input', function(assert) {
   assert.expect(5);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -78,7 +91,7 @@ test('it fetches results when changing the input', function(assert) {
 test('it changes the selection when arrowing up or down', function(assert) {
   assert.expect(10);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -108,10 +121,10 @@ test('it changes the selection when arrowing up or down', function(assert) {
   });
 });
 
-test('it hides when hitting esc key', function(assert) {
-  assert.expect(2);
+test('it hides and clears input when hitting esc key', function(assert) {
+  assert.expect(3);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -122,6 +135,7 @@ test('it hides when hitting esc key', function(assert) {
 
     page.pressEscKey();
 
+    assert.equal(page.inputValue, '');
     assert.notOk(page.dropdownMenuVisible);
     done();
   });
@@ -130,7 +144,7 @@ test('it hides when hitting esc key', function(assert) {
 test('it changes the selection when hovering', function(assert) {
   assert.expect(4);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -140,7 +154,7 @@ test('it changes the selection when hovering', function(assert) {
     assert.equal(page.inputItems(0).listItemIsSelected, true);
     assert.equal(page.inputItems(1).listItemIsSelected, false);
 
-    page.mouseenterDropdownFirstItem();
+    page.mouseenterDropdownSecondItem();
     assert.equal(page.inputItems(0).listItemIsSelected, false);
     assert.equal(page.inputItems(1).listItemIsSelected, true);
     done();
@@ -150,7 +164,7 @@ test('it changes the selection when hovering', function(assert) {
 test('it selects the skill when hitting enter', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -159,7 +173,7 @@ test('it selects the skill when hitting enter', function(assert) {
     page.pressEnterKey();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
@@ -167,7 +181,7 @@ test('it selects the skill when hitting enter', function(assert) {
 test('it selects the skill when hitting comma', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
@@ -175,7 +189,7 @@ test('it selects the skill when hitting comma', function(assert) {
     page.pressCommaKey();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
@@ -183,16 +197,16 @@ test('it selects the skill when hitting comma', function(assert) {
 test('it selects the skill when clicking it', function(assert) {
   assert.expect(2);
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
-    page.mousedownDropdownItem();
+    page.mousedownDropdownSecondItem();
 
     assert.equal(page.inputValue, '');
-    assert.ok(page.dropdownMenuItemsHidden);
+    assert.ok(page.dropdownMenuHidden);
     done();
   });
 });
@@ -206,7 +220,7 @@ test('it does nothing when there are no results', function(assert) {
   set(this, 'store.query', query);
 
   let done = assert.async();
-  page.render(hbs`{{user-skills-input query=query}}`);
+  page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
     set(this, 'query', 'ruby ra');

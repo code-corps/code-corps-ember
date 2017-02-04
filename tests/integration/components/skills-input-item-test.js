@@ -1,29 +1,33 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
-import userSkillsInputItemComponent from '../../pages/components/user-skills-input-item';
+import skillsInputItemComponent from '../../pages/components/skills-input-item';
 
 const { Object, set } = Ember;
 
-let page = PageObject.create(userSkillsInputItemComponent);
+let page = PageObject.create(skillsInputItemComponent);
 
 let skill = Object.create({
   selected: true,
   title: 'Ruby on Rails'
 });
 
-moduleForComponent('user-skills-input-item', 'Integration | Component | user skills input item', {
+let userSkillsList = {
+  contains() {
+    return true;
+  },
+  find(queriedSkill) {
+    if (queriedSkill === skill) {
+      return skill;
+    }
+  }
+};
+
+moduleForComponent('skills-input-item', 'Integration | Component | skills input item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-skills', {
-      findUserSkill(queriedSkill) {
-        if (queriedSkill === skill) {
-          return skill;
-        }
-      }
-    });
+    this.set('userSkillsList', userSkillsList);
     page.setContext(this);
   },
   afterEach() {
@@ -40,9 +44,10 @@ test('it renders as selected with the highlighted string', function(assert) {
   set(this, 'query', query);
 
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       query=query
       skill=skill
+      skillsList=userSkillsList
     }}
   `);
 
@@ -63,34 +68,33 @@ test('it sends the hover action on mouseEnter', function(assert) {
     assert.deepEqual(skill, hoveredSkill);
   });
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       hover="hover"
       query=query
       skill=skill
+      skillsList=userSkillsList
     }}
   `);
 
   page.mouseenter();
 });
 
-test('it sends the hover and selectSkill actions on mousedown', function(assert) {
-  assert.expect(2);
+test('it sends the selectSkill action on mouseDown', function(assert) {
+  assert.expect(1);
 
   set(this, 'skill', skill);
   set(this, 'query', query);
-
-  this.on('hover', (hoveredSkill) => {
-    assert.deepEqual(skill, hoveredSkill);
-  });
-  this.on('selectSkill', () => {
+  set(this, 'selectSkill', () => {
     assert.ok(true);
   });
+
   page.render(hbs`
-    {{user-skills-input-item
+    {{skills-input-item
       hover="hover"
       query=query
-      selectSkill="selectSkill"
+      selectSkill=selectSkill
       skill=skill
+      skillsList=userSkillsList
     }}
   `);
 

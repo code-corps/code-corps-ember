@@ -1,13 +1,19 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
+
+function setHandler(context, removeHandler = function() {}) {
+  context.set('removeHandler', removeHandler);
+}
 
 moduleForComponent('skill-button', 'Integration | Component | skill button', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    setHandler(this);
+  }
 });
 
 test('it renders in its default state', function(assert) {
-  this.render(hbs`{{skill-button}}`);
+  this.render(hbs`{{skill-button remove=(action removeHandler)}}`);
 
   assert.equal(this.$('button').is(':disabled'), false);
   assert.equal(this.$('button span').hasClass('button-spinner'), false);
@@ -17,13 +23,13 @@ test('it renders in its default state', function(assert) {
 
 test('it has the skill title', function(assert) {
   this.set('skill', { title: 'Ruby' });
-  this.render(hbs`{{skill-button skill=skill}}`);
+  this.render(hbs`{{skill-button remove=(action removeHandler) skill=skill}}`);
 
   assert.equal(this.$('button').text().trim(), 'Ruby');
 });
 
 test('it changes disabled when loading or not', function(assert) {
-  this.render(hbs`{{skill-button isLoading=isLoading}}`);
+  this.render(hbs`{{skill-button isLoading=isLoading remove=(action removeHandler)}}`);
 
   assert.equal(this.$('button').is(':disabled'), false);
   assert.equal(this.$('button span').hasClass('button-spinner'), false);
@@ -38,7 +44,7 @@ test('it changes disabled when loading or not', function(assert) {
 });
 
 test('it only renders loading spinner even when hovering', function(assert) {
-  this.render(hbs`{{skill-button isLoading=isLoading}}`);
+  this.render(hbs`{{skill-button isLoading=isLoading remove=(action removeHandler)}}`);
 
   this.set('isLoading', true);
   this.$('button').trigger('mouseenter');
@@ -48,7 +54,7 @@ test('it only renders loading spinner even when hovering', function(assert) {
 });
 
 test('it responds to hovering', function(assert) {
-  this.render(hbs`{{skill-button}}`);
+  this.render(hbs`{{skill-button remove=(action removeHandler)}}`);
 
   assert.equal(this.$('button').hasClass('can-delete'), false);
   assert.equal(this.$('button span').hasClass('x-mark'), false);
@@ -63,13 +69,11 @@ test('it responds to hovering', function(assert) {
 });
 
 test('it removes the skill when clicking', function(assert) {
-  let skill = { title: 'Ruby' };
-  stubService(this, 'user-skills', {
-    removeSkill(removedSkill) {
-      assert.deepEqual(skill, removedSkill);
-    }
+  let userSkill = { id: 1 };
+  this.set('removeHandler', function(removedUserSkill) {
+    assert.deepEqual(removedUserSkill, userSkill);
   });
-  this.set('skill', skill);
-  this.render(hbs`{{skill-button skill=skill}}`);
+  this.set('userSkill', userSkill);
+  this.render(hbs`{{skill-button remove=(action removeHandler userSkill)}}`);
   this.$('button').click();
 });
