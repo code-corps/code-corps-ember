@@ -22,7 +22,7 @@ export default Component.extend({
       return 'button-spinner';
     } else if (get(this, 'alwaysShowX') || get(this, 'isHovering')) {
       return 'x-mark';
-    } else if (get(this, 'hasCheck')){
+    } else if (get(this, 'hasCheck')) {
       return 'check-mark';
     }
   }),

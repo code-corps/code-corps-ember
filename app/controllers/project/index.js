@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Controller,
-  computed,
+  computed: { alias, mapBy },
   inject: { service }
 } = Ember;
 
@@ -10,7 +10,8 @@ export default Controller.extend({
   store: service(),
   currentUser: service(),
 
-  user: computed.alias('currentUser.user'),
+  user: alias('currentUser.user'),
+  projectSkills: mapBy('project.projectSkills', 'skill'),
 
   actions: {
     saveSubscription(amount) {

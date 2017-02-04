@@ -3,12 +3,11 @@ import skillsList from 'code-corps-ember/utils/skills-list';
 
 const {
   computed: {
-    alias, empty
+    alias
   },
   get,
   getProperties,
   inject: { service },
-  isEmpty,
   Service,
   set
 } = Ember;
@@ -38,19 +37,19 @@ export default Service.extend({
     return projectSkill.destroyRecord();
   },
 
-  toggle(skill) {
-    let { projectSkills, project } = getProperties(this, 'projectSkills', 'project');
-
-    if (skillsList.contains(projectSkills, skill)) {
-      this.remove(skill);
-    } else {
-      this.add(skill);
-    }
-  },
-
   setProject(project) {
     set(this, 'project', project);
-    this._refresh();
+    return this._refresh();
+  },
+
+  toggle(skill) {
+    let projectSkills = get(this, 'projectSkills');
+
+    if (skillsList.contains(projectSkills, skill)) {
+      return this.remove(skill);
+    } else {
+      return this.add(skill);
+    }
   },
 
   _refresh() {
