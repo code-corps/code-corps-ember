@@ -96,13 +96,13 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/start/skills');
-    onboardingPage.userSkillsInput.fillIn('ru');
+    onboardingPage.skillsInput.fillIn('ru');
   });
 
   andThen(() => {
-    onboardingPage.userSkillsInput.focus();
-    assert.equal(onboardingPage.userSkillsInput.inputItems(0).text, 'Ruby');
-    onboardingPage.userSkillsInput.inputItems(0).click();
+    onboardingPage.skillsInput.focus();
+    assert.equal(onboardingPage.skillsInput.inputItems(0).text, 'Ruby');
+    onboardingPage.skillsInput.inputItems(0).click();
   });
 
   andThen(() => {
@@ -112,13 +112,13 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     assert.equal(onboardingPage.userSkillsList().count, 0);
-    onboardingPage.userSkillsInput.fillIn('r');
+    onboardingPage.skillsInput.fillIn('r');
   });
 
   andThen(() => {
-    onboardingPage.userSkillsInput.focus();
-    assert.equal(onboardingPage.userSkillsInput.inputItems(0).text, 'Ruby');
-    onboardingPage.userSkillsInput.inputItems(0).click();
+    onboardingPage.skillsInput.focus();
+    assert.equal(onboardingPage.skillsInput.inputItems(0).text, 'Ruby');
+    onboardingPage.skillsInput.inputItems(0).click();
   });
 
   andThen(() => {
