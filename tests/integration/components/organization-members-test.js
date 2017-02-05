@@ -5,14 +5,6 @@ moduleForComponent('organization-members', 'Integration | Component | organizati
   integration: true
 });
 
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{organization-members}}`);
-
-  assert.equal(this.$('.organization-members').length, 1, 'The component\'s element is rendered');
-});
-
 test('it renders an item for each member in the list', function(assert) {
   assert.expect(2);
 
