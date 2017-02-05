@@ -9,7 +9,23 @@
     }
   }
 
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
   li {
-    display: inline-block;
+    width: calc(20% - 16px/5);
+    margin-right: 4px;
+
+    &:nth-child(5n) {
+      margin-right: 0;
+    }
+
+    .icon {
+      height: auto;
+      width: 100%;
+    }
   }
 }

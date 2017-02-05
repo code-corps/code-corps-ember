@@ -1,16 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import organizationMembers from 'code-corps-ember/tests/pages/components/organization-members';
+
+let page = PageObject.create(organizationMembers);
 
 moduleForComponent('organization-members', 'Integration | Component | organization members', {
-  integration: true
-});
-
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{organization-members}}`);
-
-  assert.equal(this.$('.organization-members').length, 1, 'The component\'s element is rendered');
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders an item for each member in the list', function(assert) {
@@ -26,10 +28,10 @@ test('it renders an item for each member in the list', function(assert) {
   }
 
   this.set('members', mockMembers);
-  this.render(hbs`{{organization-members members=members}}`);
+  page.render(hbs`{{organization-members members=members}}`);
 
-  assert.equal(this.$('li').length, 3, 'The correct number of members are rendered');
-  assert.equal(this.$('li:eq(0) img').attr('src'), 'image_1.png', 'The correct photo renders');
+  assert.equal(page.memberCount, 3, 'The correct number of members are rendered');
+  assert.ok(page.members(0).imageSource.indexOf('image_1.png') > -1, 'The correct photo renders');
 });
 
 test('it renders loading items differently', function(assert) {
@@ -43,8 +45,8 @@ test('it renders loading items differently', function(assert) {
   ];
 
   this.set('members', mockMembers);
-  this.render(hbs`{{organization-members members=members}}`);
+  page.render(hbs`{{organization-members members=members}}`);
 
-  assert.equal(this.$('li:eq(0) img').length, 0, 'The photo does not render');
-  assert.equal(this.$('li:eq(0) div.icon').length, 1, 'The placeholder renders');
+  assert.notOk(page.members(0).imageIsVisible, 'The photo does not render');
+  assert.ok(page.members(0).placeholderIsVisible, 'The placeholder renders');
 });
