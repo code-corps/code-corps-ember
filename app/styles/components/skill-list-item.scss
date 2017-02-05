@@ -1,5 +1,5 @@
 .ember-tooltip {
-  font-size: $body-font-size-small;
+  font-size: $body-font-size-tiny;
   padding: 3px 6px;
 }
 
@@ -12,7 +12,7 @@
     &:before {
       content: "";
       display: inline-block;
-      margin: -2px 3px 0 0;
+      margin: -2px 2px 0 0;
       vertical-align: middle;
     }
 

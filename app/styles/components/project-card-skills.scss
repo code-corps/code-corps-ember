@@ -34,20 +34,21 @@
   }
 
   .skills {
-    $font-size: $body-font-size-small;
+    $font-size: $body-font-size-tiny;
     $line-height: $font-size * 1.6;
+    $lines-to-show: 3;
 
     @include clearfix;
 
     &.overflow-hidden {
-      max-height: $line-height;
+      max-height: $line-height * $lines-to-show;
     }
 
     li {
       float: left;
       font-size: $font-size;
       line-height: $line-height;
-      padding: 0 7px 0 0;
+      padding: 0 6px 0 0;
 
       &:last-child {
         padding: 0;
