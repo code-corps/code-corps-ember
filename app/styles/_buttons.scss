@@ -59,11 +59,20 @@
   &.small {
     font-size: $body-font-size-small;
     padding: 6px 14px;
+
+    &.skill {
+      padding: 6px 9px;
+      font-size: $body-font-size-normal;
+    }
   }
 
   &.large {
     font-size: $body-font-size-large;
     padding: 15px 40px;
+
+    &.skill {
+      padding: 11px 14px;
+    }
   }
 
   &.clear {
@@ -104,9 +113,18 @@
     &.check-area, &.check-mark, &.x-mark {
       display: inline-block;
       height: 16px;
-      margin: -3px 10px 0 0;
+      margin: -3px 5px 0 0;
       vertical-align: middle;
       width: 18px;
+
+      &.small {
+        height: 10px;
+        width: 12px;
+
+        &.after {
+          margin: -3px 0 0 6px;
+        }
+      }
     }
 
     &.check-area {
@@ -119,6 +137,9 @@
 
     &.x-mark {
       @include sprite($x-mark);
+      &.small {
+        @include sprite($x-mark-small);
+      }
     }
 
     &.button-spinner {
@@ -171,7 +192,7 @@
   cursor: pointer;
 
   &.default, &.clear, &.success, &.danger {
-    @include transition(background 0.2s ease-in);
+    transition: background 0.2s ease-in;
   }
 
   &.default {
@@ -201,7 +222,7 @@
   }
 
   &.can-delete {
-    @include transition(background 0s ease-in);
+    transition: background 0s ease-in;
     background: $red;
     border: 1px solid $red;
   }

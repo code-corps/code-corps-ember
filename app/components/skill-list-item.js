@@ -9,17 +9,23 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNameBindings: ['matched'],
+  classNames: ['skill-list-item'],
   tagName: 'li',
 
-  matched: notEmpty('userSkill'),
+  justClicked: false,
+
+  session: service(),
+  store: service(),
   userSkillsList: service(),
+
+  matched: notEmpty('userSkill'),
   user: alias('currentUser.user'),
 
-  userSkill: computed('skill', 'userSkillsList.userSkills.isFulfilled', function() {
+  userSkill: computed('skill', 'userSkillsList.userSkills.@each.userSkill', 'userSkillsList.userSkills.isFulfilled', function() {
     let skill = get(this, 'skill');
     let userSkillsList = get(this, 'userSkillsList');
-    return userSkillsList.find(skill);
+    let result = userSkillsList.find(skill);
+    return result;
   }),
 
   didRender() {
@@ -30,5 +36,9 @@ export default Component.extend({
     if (elementBottom > parentBottom) {
       this.sendAction();
     }
+  },
+
+  toggleSkill(skill) {
+    return get(this, 'userSkillsList').toggle(skill);
   }
 });

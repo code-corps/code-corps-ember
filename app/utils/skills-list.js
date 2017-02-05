@@ -7,11 +7,10 @@ const {
 let skillsList = {
   find(skills, skill, relationship) {
     if (skills) {
-      let userSkill = skills.find((item) => {
-        let model = get(item, 'constructor.modelName');
-        return _matchForModel(model, item, skill, relationship);
+      return skills.find((item) => {
+        let modelName = get(item, 'constructor.modelName');
+        return _matchForModelName(modelName, item, skill, relationship);
       });
-      return userSkill;
     }
   },
 
@@ -28,13 +27,9 @@ let skillsList = {
   }
 };
 
-function _matchForModel(model, item, skill, relationship) {
-  switch (model) {
-    case 'user-skill':
-      return _matchWithRelationship(item, skill, relationship, 'user');
-    default:
-      return undefined;
-  }
+function _matchForModelName(modelName, item, skill, relationship) {
+  let relationshipName = get(relationship, 'constructor.modelName');
+  return _matchWithRelationship(item, skill, relationship, relationshipName);
 }
 
 function _matchWithRelationship(item, skill, relationship, relationshipName) {

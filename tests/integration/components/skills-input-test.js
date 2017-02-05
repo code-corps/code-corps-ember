@@ -60,15 +60,14 @@ moduleForComponent('skills-input', 'Integration | Component | skills input', {
 test('it does nothing when pressing a random key', function(assert) {
   assert.expect(1);
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) skillsList=mockListService}}`);
-
   page.pressRKey();
-
   assert.equal(page.inputValue, '');
 });
 
 test('it fetches results when changing the input', function(assert) {
-  assert.expect(5);
   let done = assert.async();
+  assert.expect(5);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -89,8 +88,9 @@ test('it fetches results when changing the input', function(assert) {
 });
 
 test('it changes the selection when arrowing up or down', function(assert) {
-  assert.expect(10);
   let done = assert.async();
+  assert.expect(10);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -122,8 +122,9 @@ test('it changes the selection when arrowing up or down', function(assert) {
 });
 
 test('it hides and clears input when hitting esc key', function(assert) {
-  assert.expect(3);
   let done = assert.async();
+  assert.expect(3);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -142,8 +143,9 @@ test('it hides and clears input when hitting esc key', function(assert) {
 });
 
 test('it changes the selection when hovering', function(assert) {
-  assert.expect(4);
   let done = assert.async();
+  assert.expect(4);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -162,8 +164,9 @@ test('it changes the selection when hovering', function(assert) {
 });
 
 test('it selects the skill when hitting enter', function(assert) {
-  assert.expect(2);
   let done = assert.async();
+  assert.expect(2);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -179,8 +182,9 @@ test('it selects the skill when hitting enter', function(assert) {
 });
 
 test('it selects the skill when hitting comma', function(assert) {
-  assert.expect(2);
   let done = assert.async();
+  assert.expect(2);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -195,8 +199,9 @@ test('it selects the skill when hitting comma', function(assert) {
 });
 
 test('it selects the skill when clicking it', function(assert) {
-  assert.expect(2);
   let done = assert.async();
+  assert.expect(2);
+
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {
@@ -212,6 +217,7 @@ test('it selects the skill when clicking it', function(assert) {
 });
 
 test('it does nothing when there are no results', function(assert) {
+  let done = assert.async();
   assert.expect(1);
 
   let query = function() {
@@ -219,7 +225,6 @@ test('it does nothing when there are no results', function(assert) {
   };
   set(this, 'store.query', query);
 
-  let done = assert.async();
   page.render(hbs`{{skills-input selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
   wait().then(() => {

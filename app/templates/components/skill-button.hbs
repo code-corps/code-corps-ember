@@ -1,1 +1,9 @@
-<button class="default has-spinner {{if isHovering "can-delete"}}" {{action remove}} disabled={{isLoading}} {{action "hoverButton" on="mouseEnter"}} {{action "leaveButton" on="mouseLeave"}}><span class="{{spanClass}}"></span>{{skill.title}}</button>
+<button class="has-spinner skill {{if isHovering "can-delete"}} {{size}} {{type}}" {{action remove}} disabled={{isLoading}} {{action "hoverButton" on="mouseEnter"}} {{action "leaveButton" on="mouseLeave"}}>
+  {{#if iconBefore}}
+    <span class="{{spanClass}} {{size}} {{if iconBefore "before"}}"></span>
+  {{/if}}
+  {{skill.title}}
+  {{#if iconAfter}}
+    <span class="{{spanClass}} {{size}} {{if iconAfter "after"}}"></span>
+  {{/if}}
+</button>

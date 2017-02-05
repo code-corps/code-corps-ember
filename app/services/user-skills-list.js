@@ -8,7 +8,6 @@ const {
   get,
   getProperties,
   inject: { service },
-  isEmpty,
   Service
 } = Ember;
 
@@ -43,13 +42,11 @@ export default Service.extend({
   },
 
   toggle(skill) {
-    let { userSkills, user } = getProperties(this, 'userSkills', 'user');
-    let foundSkill = skillsList.find(userSkills, skill, user);
-
-    if (isEmpty(foundSkill)) {
-      this.add(skill);
+    let userSkills = get(this, 'userSkills');
+    if (skillsList.contains(userSkills, skill)) {
+      return this.remove(skill);
     } else {
-      this.remove(skill);
+      return this.add(skill);
     }
   }
 });

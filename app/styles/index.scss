@@ -143,3 +143,21 @@
   @include clearfix;
   display: none;
 }
+
+.page-section {
+  @include span-columns(12);
+
+  &__header {
+    border-top: 1px solid $border-default;
+    margin: 20px 0;
+    text-align: center;
+
+    h2 {
+      font-weight: 500;
+    }
+
+    p {
+      color: $light-text;
+    }
+  }
+}

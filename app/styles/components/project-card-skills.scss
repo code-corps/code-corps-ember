@@ -35,38 +35,22 @@
 
   .skills {
     $font-size: $body-font-size-small;
-    $line-height: 1.6;
-    $lines-to-show: 1;
-    $max-height: $font-size * $line-height * $lines-to-show;
+    $line-height: $font-size * 1.6;
 
     @include clearfix;
 
     &.overflow-hidden {
-      max-height: $max-height;
+      max-height: $line-height;
     }
 
     li {
       float: left;
       font-size: $font-size;
-      line-height: $max-height;
-      padding: 0 10px 0 0;
+      line-height: $line-height;
+      padding: 0 7px 0 0;
 
       &:last-child {
         padding: 0;
-      }
-
-      a {
-        color: $light-text;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      &.matched {
-        font-weight: 600;
-        a {
-          color: $link-color;
-        }
       }
     }
   }

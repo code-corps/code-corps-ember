@@ -7,6 +7,7 @@
   <div class="user-skills-list">
   {{#each userSkills as |userSkill|}}
     {{skill-button
+      hasCheck=true
       isLoading=userSkill.isLoading
       remove=(action removeUserSkill userSkill)
       skill=userSkill.skill
@@ -18,6 +19,7 @@
 
   <div class="skills-input-container">
     {{skills-input
+      centered=true
       selectSkill=(action selectSkill)
       skillsList=userSkillsList
     }}
