@@ -7,6 +7,24 @@ const {
   set
 } = Ember;
 
+/**
+  This component is used to add or remove a user's skill when authenticated
+  and show the state of the user's skill, or login when unauthenticated.
+
+  ## default usage
+
+  ```Handlebars
+  {{skill-list-item-link
+    matched=matched
+    skill=skill
+    toggleSkill=(action toggleSkill)
+  }}
+  ```
+
+  @class skill-list-item-link
+  @module Component
+  @extends Ember.Component
+ */
 export default Component.extend({
   classNames: 'skill-list-item-link',
   classNameBindings: ['justClicked', 'justRemoved', 'matched'],
