@@ -15,6 +15,7 @@ const {
 
 export default Component.extend({
   classNames: ['skills-input'],
+  classNameBindings: ['centered:skills-input--centered'],
   cursorAt: 0,
   cursorWas: 0,
   hidden: true,

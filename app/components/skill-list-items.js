@@ -14,23 +14,20 @@ export default Component.extend({
   tagName: 'ul',
   sortByTitle: ['title:asc'],
 
+  currentUser: service(),
   userSkillsList: service(),
 
   alphaSkills: sort('skills', 'sortByTitle'),
   skillsNotInCommon: setDiff('skillsToFilter', 'skillsInCommon'),
   sortedSkills: union('skillsInCommon', 'skillsNotInCommon'),
-  userSkills: alias('userSkillsList.userSkills'),
+  user: alias('currentUser.user'),
+  userSkills: alias('user.userSkills'),
 
   skillsInCommon: filter('skillsToFilter', function(skill) {
-    let userSkillsList = get(this, 'userSkillsList');
-    if (userSkillsList) {
-      if (userSkillsList.contains(skill)) {
-        return skill;
-      }
-    }
+    return get(this, 'userSkillsList').find(skill);
   }),
 
-  skillsToFilter: computed('alphaSkills', 'userSkills', function() {
+  skillsToFilter: computed('alphaSkills', function() {
     return get(this, 'alphaSkills');
   }),
 

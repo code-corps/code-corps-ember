@@ -3,19 +3,26 @@ import Ember from 'ember';
 const {
   Component,
   computed,
+  computed: { not },
   get,
   set
 } = Ember;
 
 export default Component.extend({
+  alwaysShowX: false,
+  hasCheck: false,
+  iconBefore: true,
   isHovering: false,
+  size: 'large',
+
+  iconAfter: not('iconBefore'),
 
   spanClass: computed('isLoading', 'isHovering', function() {
     if (get(this, 'isLoading')) {
       return 'button-spinner';
-    } else if (get(this, 'isHovering')) {
+    } else if (get(this, 'alwaysShowX') || get(this, 'isHovering')) {
       return 'x-mark';
-    } else {
+    } else if (get(this, 'hasCheck')) {
       return 'check-mark';
     }
   }),

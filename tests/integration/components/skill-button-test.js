@@ -1,55 +1,82 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+import PageObject from 'ember-cli-page-object';
+import skillButton from 'code-corps-ember/tests/pages/components/skill-button';
+
+const { set } = Ember;
 
 function setHandler(context, removeHandler = function() {}) {
-  context.set('removeHandler', removeHandler);
+  set(context, 'removeHandler', removeHandler);
 }
+
+let page = PageObject.create(skillButton);
 
 moduleForComponent('skill-button', 'Integration | Component | skill button', {
   integration: true,
   beforeEach() {
     setHandler(this);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
 test('it renders in its default state', function(assert) {
   this.render(hbs`{{skill-button remove=(action removeHandler)}}`);
 
-  assert.equal(this.$('button').is(':disabled'), false);
-  assert.equal(this.$('button span').hasClass('button-spinner'), false);
-  assert.equal(this.$('button span').hasClass('check-mark'), true);
-  assert.equal(this.$('button span').hasClass('x-mark'), false);
+  assert.notOk(page.isDisabled);
+  assert.notOk(page.span.hasSpinner);
+  assert.notOk(page.span.hasCheck);
+  assert.notOk(page.span.hasX);
+});
+
+test('it can have a check mark', function(assert) {
+  this.render(hbs`{{skill-button hasCheck=true remove=(action removeHandler)}}`);
+  assert.ok(page.span.hasCheck);
+});
+
+test('it can have an x mark', function(assert) {
+  this.render(hbs`{{skill-button alwaysShowX=true remove=(action removeHandler)}}`);
+  assert.ok(page.span.hasX);
+});
+
+test('it can change size', function(assert) {
+  this.render(hbs`{{skill-button remove=(action removeHandler) size="large"}}`);
+  assert.ok(page.isLarge);
+  assert.ok(page.span.isLarge);
 });
 
 test('it has the skill title', function(assert) {
   this.set('skill', { title: 'Ruby' });
   this.render(hbs`{{skill-button remove=(action removeHandler) skill=skill}}`);
 
-  assert.equal(this.$('button').text().trim(), 'Ruby');
+  assert.equal(page.text, 'Ruby');
 });
 
 test('it changes disabled when loading or not', function(assert) {
   this.render(hbs`{{skill-button isLoading=isLoading remove=(action removeHandler)}}`);
 
-  assert.equal(this.$('button').is(':disabled'), false);
-  assert.equal(this.$('button span').hasClass('button-spinner'), false);
+  assert.notOk(page.isDisabled);
+  assert.notOk(page.span.hasSpinner);
 
   this.set('isLoading', true);
-  assert.equal(this.$('button').is(':disabled'), true);
-  assert.equal(this.$('button span').hasClass('button-spinner'), true);
+  assert.ok(page.isDisabled);
+  assert.ok(page.span.hasSpinner);
 
   this.set('isLoading', false);
-  assert.equal(this.$('button').is(':disabled'), false);
-  assert.equal(this.$('button span').hasClass('button-spinner'), false);
+  assert.notOk(page.isDisabled);
+  assert.notOk(page.span.hasSpinner);
 });
 
 test('it only renders loading spinner even when hovering', function(assert) {
   this.render(hbs`{{skill-button isLoading=isLoading remove=(action removeHandler)}}`);
 
   this.set('isLoading', true);
-  this.$('button').trigger('mouseenter');
-  assert.equal(this.$('button').is(':disabled'), true);
-  assert.equal(this.$('button span').hasClass('button-spinner'), true);
+  page.mouseenter();
+  assert.ok(page.isDisabled);
+  assert.ok(page.span.hasSpinner);
   assert.equal(this.$('button').hasClass('can-delete'), true);
 });
 
@@ -57,15 +84,15 @@ test('it responds to hovering', function(assert) {
   this.render(hbs`{{skill-button remove=(action removeHandler)}}`);
 
   assert.equal(this.$('button').hasClass('can-delete'), false);
-  assert.equal(this.$('button span').hasClass('x-mark'), false);
+  assert.notOk(page.span.hasX);
 
-  this.$('button').trigger('mouseenter');
+  page.mouseenter();
   assert.equal(this.$('button').hasClass('can-delete'), true);
-  assert.equal(this.$('button span').hasClass('x-mark'), true);
+  assert.ok(page.span.hasX);
 
-  this.$('button').trigger('mouseleave');
+  page.mouseleave();
   assert.equal(this.$('button').hasClass('can-delete'), false);
-  assert.equal(this.$('button span').hasClass('x-mark'), false);
+  assert.notOk(page.span.hasX);
 });
 
 test('it removes the skill when clicking', function(assert) {
@@ -75,5 +102,5 @@ test('it removes the skill when clicking', function(assert) {
   });
   this.set('userSkill', userSkill);
   this.render(hbs`{{skill-button remove=(action removeHandler userSkill)}}`);
-  this.$('button').click();
+  page.click();
 });

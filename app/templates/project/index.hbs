@@ -25,4 +25,9 @@
   <div class="project-sidebar__section">
     {{organization-members count=project.organization.totalMembersCount members=project.organization.organizationMembers}}
   </div>
+
+  <div class="project-sidebar__section">
+    <h3>Skills</h3>
+    {{skills-list skills=projectSkills}}
+  </div>
 </div>

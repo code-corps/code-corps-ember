@@ -25,9 +25,7 @@ test('it allows editing of project profile', function(assert) {
   assert.expect(4);
 
   let user = server.create('user');
-
   let project = createProjectWithSluggedRoute();
-
   server.create('organizationMembership', {
     member: user,
     organization: project.organization,
@@ -71,9 +69,7 @@ test("it allows editing of project's image", function(assert) {
   let done = assert.async();
 
   let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-
   let user = server.create('user');
-
   let project = createProjectWithSluggedRoute();
 
   server.create('organizationMembership', {
@@ -97,6 +93,50 @@ test("it allows editing of project's image", function(assert) {
     assert.ok(projectSettingsPage.successAlert.isVisible);
     assert.equal(projectSettingsPage.successAlert.message, 'Project icon uploaded successfully');
     assert.equal(projectSettingsPage.projectSettingsForm.imageDrop.backgroundImageData(), `url(${droppedImageString})`);
+    done();
+  });
+});
+
+test("it allows editing of project's skills", function(assert) {
+  assert.expect(4);
+  let done = assert.async();
+
+  server.create('skill', {
+    title: 'Ruby'
+  });
+  let user = server.create('user');
+  let project = createProjectWithSluggedRoute();
+  server.create('organizationMembership', {
+    member: user,
+    organization: project.organization,
+    role: 'admin'
+  });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectSettingsPage.visit({
+    organization: project.organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    projectSettingsPage.skillsInput.fillIn('ru');
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`);
+    projectSettingsPage.skillsInput.focus();
+    assert.equal(projectSettingsPage.skillsInput.inputItems(0).text, 'Ruby');
+    projectSettingsPage.skillsInput.inputItems(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(projectSettingsPage.projectSkillsList(0).text, 'Ruby');
+    projectSettingsPage.projectSkillsList(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(projectSettingsPage.projectSkillsList().count, 0);
     done();
   });
 });
