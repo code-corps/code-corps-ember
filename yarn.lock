@@ -1439,6 +1439,12 @@ broccoli-middleware@^0.18.1:
     handlebars "^4.0.4"
     mime "^1.2.11"
 
+broccoli-module-alchemist-install@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/broccoli-module-alchemist-install/-/broccoli-module-alchemist-install-0.1.6.tgz#d3cf490e7f63350a3fd5efb32cbbeee4561ba943"
+  dependencies:
+    debug "^2.2.0"
+
 broccoli-persistent-filter@^1.0.1, broccoli-persistent-filter@^1.0.3, broccoli-persistent-filter@^1.1.6, broccoli-persistent-filter@^1.2.0:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/broccoli-persistent-filter/-/broccoli-persistent-filter-1.2.13.tgz#61368669e2b8f35238fdd38a2a896597e4a1c821"
@@ -2261,6 +2267,12 @@ doctrine@^1.2.2:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+dom-ruler@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/dom-ruler/-/dom-ruler-0.2.5.tgz#8213d34698dc19b23db96c608c3a31f95be1bd10"
+  dependencies:
+    broccoli-module-alchemist-install "^0.1.6"
+
 dot-prop@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-3.0.0.tgz#1b708af094a49c9a0e7dbcad790aba539dac1177"
@@ -2310,11 +2322,13 @@ ember-auto-focus@1.0.5:
     ember-cli-babel "5.2.1"
     ember-cli-htmlbars "1.1.1"
 
-ember-autoresize@0.5.20:
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.5.20.tgz#f2ee7b4c576c420f450af6661806da81c43fba53"
+ember-autoresize@0.5.22:
+  version "0.5.22"
+  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.5.22.tgz#97e72642242993af9a4816aba652d374b7bba08a"
   dependencies:
-    ember-cli-babel "^5.1.6"
+    dom-ruler "^0.2.5"
+    ember-cli-babel "^5.1.7"
+    ember-cli-node-assets "^0.1.6"
 
 ember-can@0.8.3:
   version "0.8.3"
