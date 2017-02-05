@@ -1,6 +1,6 @@
 <h3>Contributors<span>{{count}}</span></h3>
 <ul>
-{{#each members as |user|}}
+{{#each (slice 0 15 members) as |user|}}
   <li>
     {{#link-to 'slugged-route' user.username}}
       {{#if user.isLoaded}}
