@@ -10,7 +10,7 @@
 {{#if canShow}}
   <div class="dropdown-menu">
     {{#each results as |skill index|}}
-      {{skills-input-item
+      {{skills-typeahead-result
         hover="hoverSkill"
         query=query
         selectSkill="selectSkill"

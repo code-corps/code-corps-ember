@@ -9,7 +9,7 @@ import {
   triggerable,
   visitable
 } from 'ember-cli-page-object';
-import skillsInput from './components/skills-input';
+import skillsTypeahead from './components/skills-typeahead';
 import navMenu from './components/navigation-menu';
 
 export default create({
@@ -58,8 +58,8 @@ export default create({
     }
   }),
 
-  // select and manipulate .skills-input and various site-chrome nodes to
+  // select and manipulate .skills-typeahead and various site-chrome nodes to
   // this page
-  skillsInput,
+  skillsTypeahead,
   navMenu
 });

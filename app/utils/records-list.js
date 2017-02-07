@@ -16,7 +16,8 @@ export default {
     if (records) {
       return records.any((found) => {
         let targetId = get(target, 'id');
-        let targetModelName = get(target, 'content.constructor.modelName');
+        let targetModelName = get(target, 'constructor.modelName')
+                              || get(target, 'content.constructor.modelName');
         let foundId = found.belongsTo(targetModelName).id();
 
         return (foundId === targetId);
@@ -43,11 +44,13 @@ export default {
       return records.find((found) => {
         // Get relationship id and model name
         let relationshipId = get(relationship, 'id');
-        let relationshipModelName = get(relationship, 'constructor.modelName');
+        let relationshipModelName = get(relationship, 'constructor.modelName')
+                                 || get(relationship, 'content.constructor.modelName');
 
         // Get target id and model name
         let targetId = get(target, 'id');
-        let targetModelName = get(target, 'content.constructor.modelName');
+        let targetModelName = get(target, 'constructor.modelName')
+                           || get(target, 'content.constructor.modelName');
 
         // Exit early with `false` if we're missing values
         if (!(relationshipId && relationshipModelName && targetId && targetModelName)) {
@@ -60,7 +63,7 @@ export default {
         let foundRelationshipId = found.belongsTo(relationshipModelName).id();
 
         return (foundRelationshipId === relationshipId) // relationships match
-            && (foundId             === targetId);      // found matches target
+            && (foundId === targetId); // found matches target
       });
     }
   }

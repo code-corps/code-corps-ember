@@ -1,15 +1,15 @@
-.skills-input-container {
+.skills-typeahead-container {
   @include span-columns(12);
 
   margin-top: 15px;
   margin-bottom: 30px;
 }
 
-.skills-input-area {
+.skills-typeahead-area {
 
 }
 
-.skills-input {
+.skills-typeahead {
   &--centered {
     margin: 0 auto;    
   }

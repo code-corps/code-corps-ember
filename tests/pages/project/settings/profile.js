@@ -6,7 +6,7 @@ import {
   visitable
 } from 'ember-cli-page-object';
 import projectSettingsForm from '../../components/project-settings-form';
-import skillsInput from '../../components/skills-input';
+import skillsTypeahead from '../../components/skills-typeahead';
 
 export default create({
   visit: visitable(':organization/:project/settings/profile'),
@@ -26,5 +26,5 @@ export default create({
   },
 
   projectSettingsForm,
-  skillsInput
+  skillsTypeahead
 });
