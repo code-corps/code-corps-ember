@@ -8,17 +8,15 @@
 }}
 
 {{#if canShow}}
-<div class="dropdown-menu">
-  {{#each results as |skill index|}}
-    {{skills-input-item
-      hover="hoverSkill"
-      query=query
-      selectSkill="selectSkill"
-      skill=skill
-      skillsList=skillsList
-    }}
-  {{/each}}
-</div>
+  <div class="dropdown-menu">
+    {{#each results as |skill index|}}
+      {{skills-input-item
+        hover="hoverSkill"
+        query=query
+        selectSkill="selectSkill"
+        skill=skill
+        skillsList=skillsList
+      }}
+    {{/each}}
+  </div>
 {{/if}}
-
-{{selectedSkill.title}}
