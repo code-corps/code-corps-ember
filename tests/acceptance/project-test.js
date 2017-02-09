@@ -71,31 +71,31 @@ test('It renders all the required ui elements for task list', function(assert) {
   });
 });
 
-test('A user can join the organization of the project', function(assert) {
-  assert.expect(4);
+test('A user can join the project', function(assert) {
+  assert.expect(3);
 
   let project = server.create('project');
-  let projectURL = `/${project.organization.slug}/${project.slug}/`;
+  let { organization } = project;
   let user = server.create('user');
 
-  visit(projectURL);
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
     assert.equal(projectTasksIndexPage.projectDetails.signUpLink.text, 'Join project', 'The link to the sign up page is present when logged out');
 
     authenticateSession(this.application, { user_id: user.id });
-    visit(projectURL);
+    projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
   });
 
   andThen(() => {
-    let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
-    assert.equal(joinButton.text, 'Join project', 'The button to join is present when logged in');
-    joinButton.click();
+    let modalButton = projectTasksIndexPage.projectDetails.projectJoinModal.openButton;
+    assert.equal(modalButton.text, 'Join project', 'The button to join is present when logged in');
+    modalButton.click();
+    projectTasksIndexPage.projectDetails.projectJoinModal.modal.joinProjectButton.click();
   });
 
   andThen(() => {
-    let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
-    assert.equal(joinButton.text, 'Request sent', 'The button to join has changed to pending');
-    assert.ok(joinButton.disabled, 'Button should be disabled.');
+    let membership = server.schema.projectUsers.findBy({ userId: user.id,  projectId: project.id, role: 'pending' });
+    assert.ok(membership, 'Project membership was created correctly.');
   });
 });

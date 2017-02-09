@@ -41,24 +41,6 @@ test('it renders correctly for skill', function(assert) {
   assert.equal(page.skillTitle.text, 'Ember.js', 'The skill title renders');
 });
 
-test('it renders correctly when matched', function(assert) {
-  assert.expect(1);
-
-  set(this, 'matched', true);
-  renderPage();
-
-  assert.equal(page.tooltip.text, 'Delete your skill', 'The delete text renders when matched');
-});
-
-test('it renders correctly when unmatched', function(assert) {
-  assert.expect(1);
-
-  set(this, 'matched', false);
-  renderPage();
-
-  assert.equal(page.tooltip.text, 'Add new skill', 'The add text renders when not matched');
-});
-
 test('it toggles the action when clicked and authenticated', function(assert) {
   assert.expect(1);
 

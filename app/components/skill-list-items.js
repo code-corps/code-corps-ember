@@ -14,6 +14,8 @@ export default Component.extend({
   tagName: 'ul',
   sortByTitle: ['title:asc'],
 
+  isClickable: false,
+
   currentUser: service(),
   userSkillsList: service(),
 

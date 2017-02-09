@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias },
+  computed: { alias, mapBy },
   get,
   getProperties,
   inject: { service }
@@ -63,6 +63,8 @@ export default Component.extend({
       return get(item, 'user.id') === currentUserId;
     });
   }),
+
+  projectSkills: mapBy('project.projectSkills', 'skill'),
 
   actions: {
     // TODO: This should go outside the component, but with the way the

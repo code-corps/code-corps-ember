@@ -9,12 +9,10 @@ const {
 
 export default Controller.extend({
   currentUser: service(),
-  store: service(),
 
   projectUsers: mapBy('project.projectUsers', 'user'),
   usersCount: alias('members.length'),
   projectSkills: mapBy('project.projectSkills', 'skill'),
-  user: alias('currentUser.user'),
 
   actions: {
     saveSubscription(amount) {

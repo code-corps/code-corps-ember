@@ -1,0 +1,28 @@
+<button class="button default small" {{action (mut showModal) true}}>Join project</button>
+{{#if showModal}}
+  {{#modal-dialog
+     clickOutsideToClose=true
+     close=(action close)
+     containerClassNames="project-join-modal"
+     renderInPlace=true
+     targetAttachment="center"
+     translucentOverlay=true}}
+    <h1>Join {{project.title}}</h1>
+    <div class="project-join-modal__icons">
+      <div class="project-join-modal__icons__avatar">
+        <img class="icon medium" src={{user.photoLargeUrl}} />
+      </div>
+      <div class="project-join-modal__icons__icon project-join-modal__icons__icon--join"></div>
+      <div class="project-join-modal__icons__avatar">
+        <img class="icon medium" src={{project.iconLargeUrl}} />
+      </div>
+    </div>
+    <div class="project-join-modal__skills">
+      <p>What can you help with?</p>
+      {{related-skills isClickable=true skills=skills}}
+    </div>
+    <div class="project-join-modal__button">
+      <button class="button default" {{action "joinProject" project}}>Request to Join</button>
+    </div>
+  {{/modal-dialog}}
+{{/if}}
