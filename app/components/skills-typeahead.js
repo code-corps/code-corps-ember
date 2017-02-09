@@ -14,8 +14,8 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['skills-input'],
-  classNameBindings: ['centered:skills-input--centered'],
+  classNames: ['skills-typeahead'],
+  classNameBindings: ['centered:skills-typeahead--centered'],
   cursorAt: 0,
   cursorWas: 0,
   hidden: true,

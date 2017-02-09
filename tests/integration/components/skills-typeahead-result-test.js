@@ -2,11 +2,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
-import skillsInputItemComponent from '../../pages/components/skills-input-item';
+import skillsTypeaheadResultComponent from '../../pages/components/skills-typeahead-result';
 
 const { Object, set } = Ember;
 
-let page = PageObject.create(skillsInputItemComponent);
+let page = PageObject.create(skillsTypeaheadResultComponent);
 
 let skill = Object.create({
   selected: true,
@@ -24,7 +24,7 @@ let userSkillsList = {
   }
 };
 
-moduleForComponent('skills-input-item', 'Integration | Component | skills input item', {
+moduleForComponent('skills-typeahead-result', 'Integration | Component | skills input item', {
   integration: true,
   beforeEach() {
     this.set('userSkillsList', userSkillsList);
@@ -44,7 +44,7 @@ test('it renders as selected with the highlighted string', function(assert) {
   set(this, 'query', query);
 
   page.render(hbs`
-    {{skills-input-item
+    {{skills-typeahead-result
       query=query
       skill=skill
       skillsList=userSkillsList
@@ -68,7 +68,7 @@ test('it sends the hover action on mouseEnter', function(assert) {
     assert.deepEqual(skill, hoveredSkill);
   });
   page.render(hbs`
-    {{skills-input-item
+    {{skills-typeahead-result
       hover="hover"
       query=query
       skill=skill
@@ -89,7 +89,7 @@ test('it sends the selectSkill action on mouseDown', function(assert) {
   });
 
   page.render(hbs`
-    {{skills-input-item
+    {{skills-typeahead-result
       hover="hover"
       query=query
       selectSkill=selectSkill

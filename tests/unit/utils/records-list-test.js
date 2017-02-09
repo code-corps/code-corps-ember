@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import skillsList from 'code-corps-ember/utils/skills-list';
+import recordsList from 'code-corps-ember/utils/records-list';
 import { module, test } from 'qunit';
 
 const { isEmpty, Object } = Ember;
@@ -34,30 +34,32 @@ let skill = Object.create({
   belongsTo(relationshipName) {
     return { id: `${relationshipName}-1` };
   },
-  constructor: {
-    modelName: 'skill'
+  content: {
+    constructor: {
+      modelName: 'skill'
+    }
   },
   id: 'skill-1'
 });
 
 test('find returns a match correctly', function(assert) {
   let projectSkills = [projectSkill];
-  let result = skillsList.find(projectSkills, skill, project);
+  let result = recordsList.find(projectSkills, skill, project);
   assert.equal(projectSkill, result);
 });
 
 test('find returns no match correctly', function(assert) {
-  let result = skillsList.find([], skill, project);
+  let result = recordsList.find([], skill, project);
   assert.ok(isEmpty(result));
 });
 
 test('contains returns true when there is a match', function(assert) {
   let projectSkills = [projectSkill];
-  let result = skillsList.contains(projectSkills, skill);
+  let result = recordsList.contains(projectSkills, skill);
   assert.ok(result);
 });
 
 test('contains returns false when there is no match', function(assert) {
-  let result = skillsList.contains([], skill);
+  let result = recordsList.contains([], skill);
   assert.notOk(result);
 });
