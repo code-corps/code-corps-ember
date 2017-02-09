@@ -128,3 +128,5 @@ If you're testing anything with donations locally, you'll need a Stripe account.
 You can register for a Stripe account here: [https://dashboard.stripe.com/register](https://dashboard.stripe.com/register)
 
 In your `environment.js` you should have an `ENV.stripe.publishableKey` variable. You should change this to your own variable when developing locally, and then remove your change before pushing to GitHub.
+
+Additionally, Stripe has test card numbers that can be used in test mode to create a successful payment: [https://stripe.com/docs/testing#cards](https://stripe.com/docs/testing#cards)
