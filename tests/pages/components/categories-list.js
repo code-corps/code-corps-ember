@@ -4,11 +4,11 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.categories-list',
+  scope: '.start__interests',
   items: collection({
     itemScope: '.category-item',
     item: {
-      name: text('')
+      name: text('button')
     }
   })
 };

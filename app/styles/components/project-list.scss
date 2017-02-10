@@ -1,3 +1,7 @@
 .project-list {
   @include span-columns(8);
 }
+
+.project-task-list {
+  width: 100%;
+}

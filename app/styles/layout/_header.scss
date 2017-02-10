@@ -1,0 +1,71 @@
+// pace (automatic page loader progress bar)
+// http://github.hubspot.com/pace/
+.pace-progress {
+  background: $blue;
+}
+
+.drag-zone {
+  height: 100%;
+}
+
+.site-header {
+  display: flex;
+  height: 5em;
+  padding: .7em 0;
+}
+
+.header__logo {
+  line-height: 50px;
+  margin: 0;
+  a {
+    @include sprite($logo);
+    display: inline-block;
+    text-indent: -9999px;
+  }
+}
+
+.header-navigation {
+  &--main, &--auth {
+    padding: 0 2em;
+  }
+}
+
+.header-navigation--auth {
+  margin-left: auto;
+}
+
+.header-navigation__options {
+  li {
+    display: inline-block;
+    float: left;
+    font-size: $body-font-size-normal;
+  }
+  a {
+    border-bottom: 3px solid transparent;
+    color: $text--dark;
+    display: block;
+    font-weight: 600;
+    padding: 15px 10px;
+    &.active, &:hover {
+      border-bottom-color: $blue;
+      color: $link-color;
+    }
+    &:hover {
+      transition: border-bottom-color ease 0.3s;
+    }
+  }
+}
+
+.header-navigation--onboarding {
+  display: flex;
+  margin-left: auto;
+}
+
+.onboarding__progress {
+  padding: 23px 0 22px 0;
+  width: 180px;
+}
+
+.onboarding__steps {
+  padding: 0 30px;
+}

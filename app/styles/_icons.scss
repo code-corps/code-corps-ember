@@ -1,3 +1,7 @@
+//
+// GENERAL SPRITES
+//
+
 @mixin sprite( $spriteVals ) {
   width: nth( $spriteVals, 1 );
   height: nth( $spriteVals, 2 );
@@ -137,6 +141,10 @@ $taskTypeIconHovers: (
   }
 }
 
+//
+// INTERESTS ICONS
+//
+
 $interestsPath: '/assets/images/icons/interests';
 $interestsURL: $interestsPath + '.png';
 $interestsx2URL: $interestsPath + '@2x.png';
@@ -275,6 +283,10 @@ $transportation-hover: 35px 35px $interestsURL -35px -245px $interestsx2URL;
   }
 }
 
+//
+// CATEGORIES ICONS
+//
+
 @mixin categoryIconSprite( $spriteVals ) {
   width: nth( $spriteVals, 1 );
   height: nth( $spriteVals, 2 );
@@ -325,99 +337,86 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
 .category-icon {
   display: block;
   height: 70px;
+  margin: 10px auto;
   width: 70px;
-
   &.arts {
     @include categoryIconSprite($arts);
     &.selected {
       @include categoryIconSprite($arts-hover);
     }
   }
-
   &.economy {
     @include categoryIconSprite($economy);
     &.selected {
       @include categoryIconSprite($economy-hover);
     }
   }
-
   &.education {
     @include categoryIconSprite($education);
     &.selected {
       @include categoryIconSprite($education-hover);
     }
   }
-
   &.environment {
     @include categoryIconSprite($environment);
     &.selected {
       @include categoryIconSprite($environment-hover);
     }
   }
-
   &.government {
     @include categoryIconSprite($government);
     &.selected {
       @include categoryIconSprite($government-hover);
     }
   }
-
   &.health {
     @include categoryIconSprite($health);
     &.selected {
       @include categoryIconSprite($health-hover);
     }
   }
-
   &.justice {
     @include categoryIconSprite($justice);
     &.selected {
       @include categoryIconSprite($justice-hover);
     }
   }
-
   &.politics {
     @include categoryIconSprite($politics);
     &.selected {
       @include categoryIconSprite($politics-hover);
     }
   }
-
   &.public-safety {
     @include categoryIconSprite($public-safety);
     &.selected {
       @include categoryIconSprite($public-safety-hover);
     }
   }
-
   &.science {
     @include categoryIconSprite($science);
     &.selected {
       @include categoryIconSprite($science-hover);
     }
   }
-
   &.security {
     @include categoryIconSprite($security);
     &.selected {
       @include categoryIconSprite($security-hover);
     }
   }
-
   &.society {
     @include categoryIconSprite($society);
     &.selected {
       @include categoryIconSprite($society-hover);
     }
   }
-
   &.technology {
     @include categoryIconSprite($technology);
     &.selected {
       @include categoryIconSprite($technology-hover);
     }
   }
-
   &.transportation {
     @include categoryIconSprite($transportation);
     &.selected {
@@ -426,14 +425,17 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
   }
 }
 
+//
+// ROLES SPRITES
+//
+
 @mixin rolesSprite($spriteVals) {
-  width: nth($spriteVals, 1);
-  height: nth($spriteVals, 2);
-  background-repeat: no-repeat;
   $url: nth($spriteVals,3);
   background-image: url($url);
-  background-position: nth($spriteVals, 4) nth($spriteVals, 5);
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+  background-position: center nth($spriteVals, 5);
+  background-repeat: no-repeat;
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min-device-pixel-ratio: 2) {
     $retinaUrl: nth($spriteVals,6);
     background-image: url($retinaUrl);
     background-size: $roles-bgiSizeW $roles-bgiSizeH;
@@ -442,11 +444,17 @@ $transportation: 70px 70px $categoriesURL -70px -140px $categoriesx2URL;
 $roles-spritePath: '/assets/images/icons/roles-sprite';
 $roles-spriteURL: $roles-spritePath + '.png';
 $roles-spritex2URL: $roles-spritePath + '@2x.png';
+
 $roles-bgiSizeW: 181px;
 $roles-bgiSizeH: 210px;
+
 $technology: 181px 70px $roles-spriteURL 0px 0px $roles-spritex2URL;
 $creative: 181px 70px $roles-spriteURL 0px -70px $roles-spritex2URL;
 $support: 181px 70px $roles-spriteURL 0px -140px $roles-spritex2URL;
+
+//
+// ABOUT SPRITES
+//
 
 @mixin aboutSprite($spriteVals) {
   width: nth($spriteVals, 1);

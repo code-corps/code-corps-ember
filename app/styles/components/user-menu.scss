@@ -1,38 +1,37 @@
 .user-menu {
-  .avatar {
-    background: $gray;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    line-height: 1;
-    vertical-align: middle;
-  }
+  position: relative;
 
-  .dropdown-menu {
-    min-width: 220px;
-  }
-
-  &.menu-hidden {
-    .dropdown-arrow {
-      @include arrow-down;
-    }
-  }
-
-  &.menu-visible {
-    .dropdown-arrow {
-      @include arrow-up;
-    }
-  }
-
-  a:hover {
-    .dropdown-arrow {
-      border-top-color: $link-hover-color;
-      border-bottom-color: $link-hover-color;
+  &:hover {
+    .user-menu__arrow {
+      border-color: $link-color transparent;
     }
   }
 }
 
-.user-menu-select {
+// classes below should be .user-menu--hidden and .user-menu--visible
+// to follow BEM but it was causing problems with the dropdown toggle
+
+.menu-hidden {
+  .user-menu__arrow {
+    @include arrow-down;
+  }
+}
+
+.menu-visible {
+  .user-menu__arrow {
+    @include arrow-up;
+  }
+}
+
+.user-menu a {
   padding: 5px;
-  display: block;
+}
+
+.user-menu__avatar {
+  background: $gray;
+  border-radius: 20px;
+  height: 40px;
+  line-height: 1;
+  vertical-align: middle;
+  width: 40px;
 }

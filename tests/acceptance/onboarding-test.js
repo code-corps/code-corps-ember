@@ -66,28 +66,31 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/start/expertise');
-    assert.equal(onboardingPage.roles(0).title, 'Technology');
-    assert.ok(onboardingPage.roles(0).header.hasClass('technology'));
-    assert.equal(onboardingPage.roles(0).button.text, 'Backend Development');
-    assert.equal(onboardingPage.roles(1).title, 'Creative');
-    assert.ok(onboardingPage.roles(1).header.hasClass('creative'));
-    assert.equal(onboardingPage.roles(1).button.text, 'Marketing');
-    assert.equal(onboardingPage.roles(2).title, 'Support');
-    assert.ok(onboardingPage.roles(2).header.hasClass('support'));
-    assert.equal(onboardingPage.roles(2).button.text, 'Donations');
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
 
-    onboardingPage.roles(0).button.click();
+    assert.equal(onboardingPage.roleColumns(0).header.title, 'Technology');
+    assert.ok(onboardingPage.roleColumns(0).hasClass('expertise__column--technology'));
+    assert.equal(onboardingPage.roleColumns(0).roles(0).button.text, 'Backend Development');
+
+    assert.equal(onboardingPage.roleColumns(1).header.title, 'Creative');
+    assert.ok(onboardingPage.roleColumns(1).hasClass('expertise__column--creative'));
+    assert.equal(onboardingPage.roleColumns(1).roles(0).button.text, 'Marketing');
+
+    assert.equal(onboardingPage.roleColumns(2).header.title, 'Support');
+    assert.ok(onboardingPage.roleColumns(2).hasClass('expertise__column--support'));
+    assert.equal(onboardingPage.roleColumns(2).roles(0).button.text, 'Donations');
+
+    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {
     assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
-    onboardingPage.roles(0).button.click();
+    onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {
     assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
-    onboardingPage.roles(0).button.click();
+    onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {

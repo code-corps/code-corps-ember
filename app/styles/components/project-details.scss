@@ -1,19 +1,30 @@
-.project-details {
+.project__header {
   margin: 0 0 10px 0;
+  width: 100%;
 
   @include clearfix;
 
-  .basic-details {
+  &__icon {
+    float: left;
+  }
+
+  &__main {
+    display: flex;
     @include span-columns(8);
   }
 
-  .more-details {
-    @include span-columns(4);
+  &__details {
+    margin-left: 10px;
   }
 
-  .join-project {
-    font-size: $body-font-size-small;
-    margin: 7px 0;
+  &__side {
+    @include span-columns(4);
+    p {
+      text-align: right;
+    }
+    span {
+      color: $blue;
+    }
   }
 
   h2 {
@@ -29,16 +40,7 @@
   }
 
   p {
-    margin: 3px 0;
     font-size: $body-font-size-small;
-  }
-
-  .icon-container {
-    float: left;
-  }
-
-  .details-container {
-    padding-left: 70px;
   }
 
   .organization {

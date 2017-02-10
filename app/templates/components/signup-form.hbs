@@ -1,13 +1,21 @@
 <form>
+
   <h2>Join Code Corps today.</h2>
 
-  {{signup-username-input user=user usernameValidated="usernameValidated"}}
+  {{#auto-focus}}
+    {{signup-username-input autofocus=true user=user usernameValidated="usernameValidated"}}
+  {{/auto-focus}}
+
   {{signup-email-input user=user emailValidated="emailValidated"}}
+
   {{signup-password-input user=user}}
+
   <div class="input-group">
     <input class="button default {{if hasError "has-error"}}" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
   </div>
+
   {{#if error}}
     {{error-formatter error=error}}
   {{/if}}
+
 </form>

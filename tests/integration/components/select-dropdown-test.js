@@ -32,5 +32,5 @@ test('it renders proper ui elements, properly bound', function(assert) {
   this.render(hbs`{{select-dropdown items=items optionValuePath='value' optionLabelPath='label' selectedItem=selectedItem}}`);
 
   assert.equal(this.$('option[value="task"]').text(), 'Task', 'Label and value are properly bound and rendered');
-  assert.equal(this.$('.select-dropdown').hasClass('task'), true, 'Class is bound to selectedItem value');
+  assert.ok(this.$('.select-dropdown').hasClass('task'), 'Class is bound to selectedItem value');
 });

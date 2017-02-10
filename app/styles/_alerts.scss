@@ -3,6 +3,8 @@
 }
 
 .alert {
+  z-index: 99999;
+
   .container {
     position: relative;
   }
@@ -43,7 +45,7 @@
 .alert-success {
   .full-width-container,
   .fixed-flash-inner {
-    background: $dark-blue;
+    background: $blue;
     color: white;
   }
 }
@@ -56,8 +58,10 @@
   }
 }
 
-.close {
+.alert__close {
+  color: white;
   left: -20px;
+  padding: none;
   position: absolute;
-  top: -3px;
+  top: 0;
 }

@@ -148,7 +148,7 @@
   @include span-columns(12);
 
   &__header {
-    border-top: 1px solid $border-default;
+    border-top: 1px solid $gray;
     margin: 20px 0;
     text-align: center;
 
@@ -157,7 +157,7 @@
     }
 
     p {
-      color: $light-text;
+      color: $text--light;
     }
   }
 }

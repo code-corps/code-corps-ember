@@ -1,12 +1,14 @@
 {{title "Projects"}}
 
-{{#each projects as |project|}}
-  {{project-card project=project}}
-{{/each}}
-<div class="temporary-projects-notice">
-  <div class="curved-arrow-icon"></div>
-  <p>Hey! Code Corps is the only project as we learn what's working.</p>
-  <p>We'd love your help getting ready for more ambitious projects.</p>
-  <p>Have a project idea when we’re ready?</p>
-  <p><a href="https://codecorps.typeform.com/to/rMxOCA" target="_blank" class="button default small">Submit your idea</a></p>
+<div class="project-wrapper">
+  {{#each projects as |project|}}
+    {{project-card project=project}}
+  {{/each}}
+  <div class="temporary-projects-notice">
+    <div class="curved-arrow-icon"></div>
+    <p>Hey! Code Corps is the only project as we learn what's working.</p>
+    <p>We'd love your help getting ready for more ambitious projects.</p>
+    <p>Have a project idea when we’re ready?</p>
+    <p><a href="https://codecorps.typeform.com/to/rMxOCA" target="_blank" class="button default small">Submit your idea</a></p>
+  </div>
 </div>

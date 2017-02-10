@@ -1,0 +1,19 @@
+.site-content {
+  &.for-project-tasks {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+	// align-items: center;
+	// display: flex;
+	// flex: 1;
+	// flex-direction: column;
+  // justify-content: center;
+}
+
+// .site-content--start {
+// 	display: flex;
+// 	flex-direction: column;
+// 	min-height: calc(100vh - 5em);
+//   justify-content: center;
+// }
