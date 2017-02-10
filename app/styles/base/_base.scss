@@ -1,0 +1,38 @@
+@charset 'utf-8';
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: color ease 0.3s;
+
+  &:hover {
+    color: $link-hover-color;
+    cursor: pointer;
+  }
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0 10px;
+
+  > .ember-view:first-of-type {
+    height: 100%;
+    position: relative;
+  }
+}
+
+html {
+  font-family: $body-font-family;
+  font-size: $body-font-size-normal;
+  height: 100%;
+}
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}

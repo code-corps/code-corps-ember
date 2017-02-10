@@ -82,7 +82,7 @@ test('Logged in, from user menu can log out', function(assert) {
     indexPage.navMenu.userMenu.open();
   });
   andThen(function() {
-    indexPage.navMenu.userMenu.logOut.click();
+    indexPage.navMenu.userMenu.logOut();
   });
   andThen(function() {
     assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains sign in link');

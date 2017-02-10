@@ -33,20 +33,16 @@ moduleForComponent('user-menu', 'Integration | Component | user menu', {
 });
 
 test('it renders properly', function(assert) {
-  assert.expect(9);
+  assert.expect(7);
 
   set(this, 'user', stubUser);
   page.render(hbs`{{user-menu user=user}}`);
 
-  assert.ok(page.avatarVisible, "The user's avatar renders");
-  assert.equal(this.$('img.avatar').attr('src'), stubUser.get('photoThumbUrl'), 'The avatar has the correct source');
-  assert.equal(this.$('img.avatar').attr('alt'), stubUser.get('atUsername'), 'The avatar has the correct alt');
+  page.toggle();
 
-  assert.ok(page.dropdownIsHidden, 'The dropdown is initially hidden');
-
-  this.$('.user-menu-select').click();
-
-  assert.notOk(page.dropdownIsHidden, 'The dropdown is now visible');
+  assert.ok(page.iconVisible, "The user's icon renders");
+  assert.equal(page.icon.src, stubUser.get('photoThumbUrl'), 'The icon has the correct source');
+  assert.equal(page.icon.alt, stubUser.get('atUsername'), 'The icon has the correct alt');
 
   assert.ok(page.sluggedRouteLinkVisible, 'The link to the user route is rendered');
   assert.ok(page.profileLinkVisible, 'The link to the user profile is rendered');
@@ -55,13 +51,14 @@ test('it renders properly', function(assert) {
   assert.equal(page.footerText, `Signed in as ${stubUser.get('username')}`, 'The username is rendered in the footer');
 });
 
-test('clicking an open dropdown dismisses it', function(assert) {
-  assert.expect(2);
+test('clicking the menu toggles the dropdown', function(assert) {
+  assert.expect(3);
 
   set(this, 'user', stubUser);
   page.render(hbs`{{user-menu user=user}}`);
 
-  this.$('.user-menu-select').click();
+  assert.ok(page.dropdownIsHidden, 'The dropdown is initially hidden');
+  page.toggle();
   assert.notOk(page.dropdownIsHidden, 'The dropdown is now visible');
   this.$('.user-menu .dropdown-menu').click();
   assert.ok(page.dropdownIsHidden, 'The dropdown is now hidden');

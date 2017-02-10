@@ -16,7 +16,7 @@ test('it displays the user-details component with user details', function(assert
   userProfile.visit({ username: user.username });
 
   andThen(() => {
-    assert.equal(userProfile.userDetails.isVisible, true, 'The user details component renders');
+    assert.ok(userProfile.userDetails.isVisible, 'The user details component renders');
     assert.equal(userProfile.userDetails.twitter.text, `@${user.twitter}`, "The user's twitter renders");
     assert.equal(userProfile.userDetails.twitter.link.href, `https://twitter.com/${user.twitter}`, "The user's twitter URL renders");
     assert.equal(userProfile.userDetails.website.text, user.website, "The user's website renders");

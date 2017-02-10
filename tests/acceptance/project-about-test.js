@@ -21,7 +21,7 @@ test('When unauthenticated, and project has no long description, it shows proper
   });
 
   andThen(() => {
-    assert.equal(projectAboutPage.projectLongDescription.longDescription.isEmpty, true, 'The empty container is shown');
+    assert.ok(projectAboutPage.projectLongDescription.longDescription.isEmpty, 'The empty container is shown');
     assert.ok(projectAboutPage.editorWithPreview.isHidden, 'User is not logged in, so they cannot edit the description');
   });
 });

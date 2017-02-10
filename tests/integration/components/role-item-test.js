@@ -90,13 +90,13 @@ test('it works for selecting unselected roles', function(assert) {
   this.set('role', unselectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
-  assert.equal(this.$('.role-item').hasClass('selected'), false);
+  assert.notOk(this.$('.role-item').hasClass('selected'));
   assert.equal(this.$('button').text().trim(), 'Backend Development');
 
   this.$('button').click();
 
   wait().then(() => {
-    assert.equal(this.$('.role-item').hasClass('selected'), true);
+    assert.ok(this.$('.role-item').hasClass('selected'));
     done();
   });
 });
@@ -109,13 +109,13 @@ test('it works for removing selected roles', function(assert) {
   this.set('role', selectedRole);
   this.render(hbs`{{role-item role=role}}`);
 
-  assert.equal(this.$('.role-item').hasClass('selected'), true);
+  assert.ok(this.$('.role-item').hasClass('selected'));
   assert.equal(this.$('button').text().trim(), 'Mobile Development');
 
   this.$('button').click();
 
   wait().then(() => {
-    assert.equal(this.$('.role-item').hasClass('selected'), false);
+    assert.notOk(this.$('.role-item').hasClass('selected'));
     done();
   });
 });

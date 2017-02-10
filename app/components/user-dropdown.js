@@ -17,7 +17,7 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['user-dropdown', 'dropdown-menu', 'right'],
+  classNames: ['dropdown-menu', 'dropdown-menu--right'],
   /**
     @property session
     @type Ember.Service

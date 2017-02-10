@@ -21,11 +21,11 @@
   }
 
   &.issue .task-new-form-body {
-    border-color: $issue-background;
+    border-color: $red--light;
   }
 
   &.idea .task-new-form-body {
-    border-color: $idea-background;
+    border-color: $yellow--light;
   }
 
   .task-type.input-group {

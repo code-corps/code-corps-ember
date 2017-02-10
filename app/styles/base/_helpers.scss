@@ -1,0 +1,27 @@
+.container {
+  @include outer-container(980px);
+  min-width: 980px;
+}
+
+.flexbox-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.flexbox-spacer {
+  flex: auto;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.visible {
+  visibility: visible;
+}

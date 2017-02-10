@@ -20,9 +20,9 @@ test("it displays the organization's details", function(assert) {
 
   organizationPage.visitIndex({ organization: organization.slug });
   andThen(() => {
-    assert.equal(organizationPage.orgHeader.isVisible, true, 'The organization header component renders');
-    assert.equal(organizationPage.projectList.isVisible, true, 'The projects list component renders');
-    assert.equal(organizationPage.orgMembersSection.isVisible, true, 'The organization members component renders');
+    assert.ok(organizationPage.orgHeader.isVisible, 'The organization header component renders');
+    assert.ok(organizationPage.projectList.isVisible, 'The projects list component renders');
+    assert.ok(organizationPage.orgMembersSection.isVisible, 'The organization members component renders');
     assert.equal(organizationPage.orgTitle.text, organization.name, 'The organization title renders');
     assert.equal(organizationPage.orgDescription.text, organization.description, 'The organization description renders');
     assert.equal(organizationPage.projectListItems().count, 3, 'The projects render');
@@ -55,7 +55,7 @@ test('an admin can navigate to settings', function(assert) {
 
   andThen(() => {
     assert.ok(organizationPage.settingsMenuItemIsActive, 'The organization settings menu is active');
-    assert.equal(organizationPage.settingsForm.isVisible, true, 'The organization settings form renders');
+    assert.ok(organizationPage.settingsForm.isVisible, 'The organization settings form renders');
   });
 });
 
@@ -79,6 +79,6 @@ test('anyone can navigate to projects', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(organizationPage.projectDetails.isVisible, true, "The project's details render");
+    assert.equal(currentURL(), `/${project.organization.slug}/${project.slug}`, 'Navigating to the project works');
   });
 });

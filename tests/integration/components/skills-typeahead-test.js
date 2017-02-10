@@ -78,10 +78,10 @@ test('it fetches results when changing the input', function(assert) {
     page.keydown();
 
     assert.equal(page.inputItems(0).highlightedStrings(0).text, 'Ruby');
-    assert.equal(page.inputItems(0).listItemIsSelected, true);
+    assert.ok(page.inputItems(0).listItemIsSelected);
 
     assert.equal(page.inputItems(1).highlightedStrings(1).text, 'Ra');
-    assert.equal(page.inputItems(1).listItemIsSelected, false);
+    assert.notOk(page.inputItems(1).listItemIsSelected);
 
     done();
   });
@@ -98,24 +98,24 @@ test('it changes the selection when arrowing up or down', function(assert) {
     page.focus();
     page.keydown();
 
-    assert.equal(page.inputItems(0).listItemIsSelected, true);
-    assert.equal(page.inputItems(1).listItemIsSelected, false);
+    assert.ok(page.inputItems(0).listItemIsSelected);
+    assert.notOk(page.inputItems(1).listItemIsSelected);
 
     page.pressDownKey();
-    assert.equal(page.inputItems(0).listItemIsSelected, false);
-    assert.equal(page.inputItems(1).listItemIsSelected, true);
+    assert.notOk(page.inputItems(0).listItemIsSelected);
+    assert.ok(page.inputItems(1).listItemIsSelected);
 
     page.pressDownKey();
-    assert.equal(page.inputItems(0).listItemIsSelected, true);
-    assert.equal(page.inputItems(1).listItemIsSelected, false);
+    assert.ok(page.inputItems(0).listItemIsSelected);
+    assert.notOk(page.inputItems(1).listItemIsSelected);
 
     page.pressUpKey();
-    assert.equal(page.inputItems(0).listItemIsSelected, false);
-    assert.equal(page.inputItems(1).listItemIsSelected, true);
+    assert.notOk(page.inputItems(0).listItemIsSelected);
+    assert.ok(page.inputItems(1).listItemIsSelected);
 
     page.pressUpKey();
-    assert.equal(page.inputItems(0).listItemIsSelected, true);
-    assert.equal(page.inputItems(1).listItemIsSelected, false);
+    assert.ok(page.inputItems(0).listItemIsSelected);
+    assert.notOk(page.inputItems(1).listItemIsSelected);
 
     done();
   });
@@ -153,12 +153,12 @@ test('it changes the selection when hovering', function(assert) {
     page.focus();
     page.keydown();
 
-    assert.equal(page.inputItems(0).listItemIsSelected, true);
-    assert.equal(page.inputItems(1).listItemIsSelected, false);
+    assert.ok(page.inputItems(0).listItemIsSelected);
+    assert.notOk(page.inputItems(1).listItemIsSelected);
 
     page.mouseenterDropdownSecondItem();
-    assert.equal(page.inputItems(0).listItemIsSelected, false);
-    assert.equal(page.inputItems(1).listItemIsSelected, true);
+    assert.notOk(page.inputItems(0).listItemIsSelected);
+    assert.ok(page.inputItems(1).listItemIsSelected);
     done();
   });
 });

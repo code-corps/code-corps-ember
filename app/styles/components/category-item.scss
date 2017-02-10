@@ -4,12 +4,12 @@
 
   text-align: center;
 
-  .category-icon {
-    margin: 10px auto;
+  button {
+    text-align: left;
   }
 
   p {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-small;
     margin: 10px 0;
 

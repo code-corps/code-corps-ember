@@ -1,7 +1,16 @@
+{{! too many nested DIV elements }}
+
 {{#if descriptionIsBlank}}
+
+  {{! are empty -inner and user-can-add added just as JS hooks? better to
+  use classes instead of adding extra DIV element with no semantic value }}
+  
   <div class="long-description empty">
+
     <div class="long-description-inner">
+
       {{#if (can "manage organization" project.organization)}}
+
         <div class="no-description user-can-add">
           <h3>Add your project description.</h3>
           <div class="box-icon"></div>
@@ -13,16 +22,20 @@
             <li>What risks and challenges will you face?</li>
           </ul>
         </div>
+
       {{else}}
+
         <div class="no-description user-cannot-add">
           <h3>Nothing to see here!</h3>
           <div class="box-icon"></div>
           <p>Looks like this project is still getting set up!</p>
         </div>
+
       {{/if}}
     </div>
   </div>
 {{else}}
+
   <div class="long-description">
     {{#unless inEditMode}}
       <div class="long-description-header">
@@ -34,13 +47,15 @@
       {{{project.longDescriptionBody}}}
     {{/unless}}
   </div>
-{{/if}}
 
+{{/if}}
 {{#if (can "manage organization" project.organization)}}
   {{#if shouldDisplayEditor}}
+
     <div class="long-description-editor">
       {{editor-with-preview input=project.longDescriptionMarkdown isLoading=project.isSaving modifiedSubmit="save"}}
       <button class="default save" name="save" {{action 'save'}}>Save description</button>
     </div>
+
   {{/if}}
 {{/if}}

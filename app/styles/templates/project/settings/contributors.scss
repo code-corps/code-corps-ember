@@ -1,26 +1,19 @@
 .contributors-list {
   @include span-columns(12);
-
-  margin-bottom: 40px;
-
   &:last-child {
     margin-bottom: 0;
   }
 }
 
-.contributors-list-header {
-  margin: 10px 0 10px 60px;
-
-  h3 {
-    margin: 0 0 5px 0;
-  }
-
+.contributors-list__header {
+  margin-bottom: 1em;
   p {
+    font-size: $body-font-size-small;
     margin: 5px 0;
   }
 }
 
-.contributors-list-empty {
+.contributors-list--empty {
   background: $background-gray;
   border-radius: 4px;
   padding: 20px 60px;
