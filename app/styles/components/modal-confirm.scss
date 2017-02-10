@@ -1,0 +1,15 @@
+.modal-confirm {
+  @include span-columns(6);
+
+}
+a#cancel.modal-confirm-cancel {
+  color: $red;
+  text-decoration: none;
+  transition: color ease 0.3s;
+
+  &:hover {
+    color: $hidden-link-color;
+    cursor: pointer;
+  }
+}
+

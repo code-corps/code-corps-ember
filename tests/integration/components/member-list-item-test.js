@@ -110,6 +110,7 @@ test('it sends the approve action when clicking approve', function(assert) {
   page.render(hbs`{{member-list-item membership=membership user=user}}`);
 
   page.approveButton.click();
+  page.modal.confirmButton.click();
 
   assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
@@ -121,11 +122,11 @@ test('it sends the approve action when clicking approve', function(assert) {
 });
 
 test('it sends the deny action when clicking deny', function(assert) {
-  assert.expect(4);
 
-  window.confirm = function() {
-    return true;
-  };
+  let modalDialogService = this.container.lookup('service:modal-dialog');
+  modalDialogService.destinationElementId = 'modal-container';
+
+  assert.expect(4);
 
   let membership = Object.create({
     role: 'pending',
@@ -138,9 +139,9 @@ test('it sends the deny action when clicking deny', function(assert) {
   set(this, 'membership', membership);
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item membership=membership user=user}}`);
-
+  page.render(hbs`<div id='modal-container'></div>{{member-list-item membership=membership user=user}}`);
   page.denyButton.click();
+  page.modal.confirmButton.click();
 
   assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 

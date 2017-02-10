@@ -17,6 +17,17 @@
 // http://neat.bourbon.io/
 @import "neat";
 
+//ember-modal-dialog
+//The ember-modal-dialog addon provides components to implement modal dialogs throughout an Ember application using a simple, consistent pattern.
+//https://github.com/yapplabs/ember-modal-dialog
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
+
+.ember-modal-dialog {
+  border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
 //
 // HELPERS
 //
@@ -27,6 +38,8 @@
 
 @import "base/base";
 @import "base/helpers";
+
+
 
 //
 //
@@ -65,6 +78,7 @@
 @import "components/image-drop";
 @import "components/loading-bar";
 @import "components/member-list-item";
+@import "components/modal-confirm";
 @import "components/pager-control";
 @import "components/progress-bar";
 @import "components/settings-menu";

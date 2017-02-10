@@ -1,22 +1,19 @@
 import {
+  collection,
   create,
   visitable,
-  collection,
   isVisible,
-  text,
-  clickable
+  text
 } from 'ember-cli-page-object';
+import memberListItem from './components/member-list-item';
 
 function buildContributorsDefinitionForIndex(index) {
   return {
     scope: `.contributors-list:eq(${index})`,
     emptyMessageVisible: isVisible('.contributors-list--empty'),
     members: collection({
-      itemScope: '.member-list-item',
-      item: {
-        approveMembership: clickable('button.default'),
-        denyMembership: clickable('button.danger')
-      }
+      itemScope: 'li',
+      item: memberListItem
     })
   };
 }
@@ -28,7 +25,6 @@ export default create({
   owners: buildContributorsDefinitionForIndex(1),
   admins: buildContributorsDefinitionForIndex(2),
   others: buildContributorsDefinitionForIndex(3),
-
   projectMenu: {
     scope: '.project__menu',
     contributors: {

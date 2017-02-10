@@ -29,7 +29,9 @@
 
 <div class="project-member__actions">
   {{#if (eq membership.role 'pending')}}
-    <button class="default small" {{action "approve" membership}}>Approve</button>
-    <button class="danger small" {{action "deny" membership}}>Deny</button>
+    <button class="default small" {{action "showApprove"}}>Approve</button>
+    <button class="danger small" {{action "showDeny"}}>Deny</button>
+    {{modal-confirm dialogText='Are you sure you want to approve their membership?' okAction=(action 'approve' membership) showDialog=showApprove}}
+    {{modal-confirm dialogText='Are you sure you want to deny their membership?' okAction=(action 'deny' membership) showDialog=showDeny}}
   {{/if}}
 </div>
