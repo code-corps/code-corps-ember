@@ -1,0 +1,57 @@
+@mixin border-top-radius($radius) {
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-radius($radius) {
+  border-bottom-left-radius: $radius;
+  border-bottom-right-radius: $radius;
+}
+
+@mixin arrow-base($border-color: #333 transparent, $border-width: 6px 4px) {
+  border-color: $border-color;
+  border-style: solid;
+  border-width: $border-width;
+  content: "";
+  display: inline-block;
+  height: 0;
+  vertical-align: middle;
+  width: 0;
+}
+
+@mixin arrow-down {
+  @include arrow-base;
+  border-bottom: none;
+}
+
+@mixin arrow-up {
+  @include arrow-base;
+  border-top: none;
+}
+
+$retina:
+  "only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (min--moz-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-device-pixel-ratio: 2),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx)";
+
+@mixin background-image-retina(
+  $file,
+  $type,
+  $width,
+  $height,
+  $positionX: left,
+  $positionY: top,
+  $background-repeat: no-repeat) {
+    background-image: url($file + '.' + $type);
+    background-position: $positionX $positionY;
+    background-repeat: $background-repeat;
+    height: $height;
+    width: $width;
+    @media #{$retina} {
+      background-image: url($file + '@2x.' + $type);
+      background-size: $width $height;
+    }
+}

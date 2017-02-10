@@ -1,0 +1,77 @@
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700);
+
+$body-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+//
+// TYPOGRAPHY
+// Open Sans: light (300), regular (400), italic (400i), semi-bold (600), bold (700)
+//
+
+$body-font-size-x-large: 18px;
+$body-font-size-large: 16px;
+$body-font-size-normal: 14px;
+$body-font-size-small: 12px;
+$body-font-size-tiny: 11px;
+
+$header-font-size-x-large: 36px;
+$header-font-size-large: 26px;
+$header-font-size-medium: 22px;
+$header-font-size-small: 18px;
+
+$close-icon-font-size: 20px;
+
+//
+// HEADERS
+// Type Scale: Major Third - 1.250
+//
+
+body {
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+	font-size: 2.441em;
+	font-weight: 700;
+  margin-top: 0;
+}
+
+h2 {
+	font-size: 1.953em;
+	font-weight: 700;
+}
+
+h3 {
+	font-size: 1.563em;
+	font-weight: 600;
+}
+
+h4, h5, h6 {
+	font-size: 1.2em;
+	font-weight: 600;
+}
+
+//
+// TEXT
+//
+
+p {
+	margin-bottom: 1.3em;
+}
+
+small, .font_small {
+	font-size: 0.8em;
+}
+
+//$text
+$text--dark: $gray--darkest;
+// below is the most common text color in the project
+// it bothers me a bit that text--light uses gray--darker as its color
+$text--light: $gray--darker;
+$text--lighter: $gray;

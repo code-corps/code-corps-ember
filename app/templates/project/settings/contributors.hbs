@@ -1,60 +1,61 @@
-<div class="settings-main centered">
-  <div class="contributors-list">
-    <div class="contributors-list-header">
-      <h3>Pending</h3>
-      <p>People who want to join your project. See if their skills match up and help them get started.</p>
-    </div>
-    <ul>
-    {{#each (filter-by "isPending" true model.organization.organizationMemberships) as |membership|}}
-      {{member-list-item membership=membership user=membership.member}}
-    {{else}}
-      <div class="contributors-list-empty">
-        <p>No one's waiting to be approved. Good work!</p>
-      </div>
-    {{/each}}
-    </ul>
+<div class="contributors-list">
+  <div class="contributors-list__header">
+    <h3>Pending</h3>
+    <p>People who want to join your project. See if their skills match up and help them get started.</p>
   </div>
-  <div class="contributors-list">
-    <div class="contributors-list-header">
-      <h3>Owners</h3>
-      <p>Have complete control over your project.</p>
+  <ul>
+  {{#each (filter-by "isPending" true model.organization.organizationMemberships) as |membership|}}
+    {{member-list-item membership=membership user=membership.member}}
+  {{else}}
+    <div class="contributors-list--empty">
+      <p>No one's waiting to be approved. Good work!</p>
     </div>
-    <ul>
-    {{#each (filter-by "isOwner" true model.organization.organizationMemberships) as |membership|}}
-      {{member-list-item membership=membership user=membership.member}}
-    {{/each}}
-    </ul>
+  {{/each}}
+  </ul>
+</div>
+
+<div class="contributors-list">
+  <div class="contributors-list__header">
+    <h3>Owners</h3>
+    <p>Have complete control over your project.</p>
   </div>
-  <div class="contributors-list">
-    <div class="contributors-list-header">
-      <h3>Admins</h3>
-      <p>Can approve other contributors and help with administrative tasks.</p>
+  <ul>
+  {{#each (filter-by "isOwner" true model.organization.organizationMemberships) as |membership|}}
+    {{member-list-item membership=membership user=membership.member}}
+  {{/each}}
+  </ul>
+</div>
+
+<div class="contributors-list">
+  <div class="contributors-list__header">
+    <h3>Admins</h3>
+    <p>Can approve other contributors and help with administrative tasks.</p>
+  </div>
+  <ul>
+  {{#each (filter-by "isAdmin" true model.organization.organizationMemberships) as |membership|}}
+    {{member-list-item membership=membership user=membership.member}}
+  {{else}}
+    <div class="contributors-list--empty">
+      <p>You don't have any admins in your project.</p>
+      <p>They can help lighten your load, so consider promoting someone you trust.</p>
     </div>
-    <ul>
-    {{#each (filter-by "isAdmin" true model.organization.organizationMemberships) as |membership|}}
-      {{member-list-item membership=membership user=membership.member}}
-    {{else}}
-      <div class="contributors-list-empty">
-        <p>You don't have any admins in your project.</p>
-        <p>They can help lighten your load, so consider promoting someone you trust.</p>
-      </div>
-    {{/each}}
-    </ul>
+  {{/each}}
+  </ul>
+</div>
+
+<div class="contributors-list">
+  <div class="contributors-list__header">
+    <h3>Everyone else</h3>
+    <p>Can task and assign tasks in your project and contribute more fully to the project's goals.</p>
   </div>
-  <div class="contributors-list">
-    <div class="contributors-list-header">
-      <h3>Everyone else</h3>
-      <p>Can task and assign tasks in your project and contribute more fully to the project's goals.</p>
+  <ul>
+  {{#each (filter-by "isContributor" true model.organization.organizationMemberships) as |membership|}}
+    {{member-list-item membership=membership user=membership.member}}
+  {{else}}
+    <div class="contributors-list--empty">
+      <p>You don't have any other contributors yet.</p>
+      <p>Share the link to your project and encourage friends and colleagues to join.</p>
     </div>
-    <ul>
-    {{#each (filter-by "isContributor" true model.organization.organizationMemberships) as |membership|}}
-      {{member-list-item membership=membership user=membership.member}}
-    {{else}}
-      <div class="contributors-list-empty">
-        <p>You don't have any other contributors yet.</p>
-        <p>Share the link to your project and encourage friends and colleagues to join.</p>
-      </div>
-    {{/each}}
-    </ul>
-  </div>
+  {{/each}}
+  </ul>
 </div>

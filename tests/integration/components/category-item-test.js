@@ -91,15 +91,15 @@ test('it works for selecting unselected categories', function(assert) {
   this.render(hbs`{{category-item category=category}}`);
 
   assert.ok(this.$('.category-icon').hasClass('technology'));
-  assert.equal(this.$('.category-icon').hasClass('selected'), false);
+  assert.notOk(this.$('.category-icon').hasClass('selected'));
   assert.equal(this.$('p').text().trim(), 'You want to help technology.');
-  assert.equal(this.$('p').hasClass('selected'), false);
+  assert.notOk(this.$('p').hasClass('selected'));
   assert.equal(this.$('button').text().trim(), 'Technology');
 
   this.$('button').click();
 
   wait().then(() => {
-    assert.equal(this.$('.category-item').hasClass('selected'), true);
+    assert.ok(this.$('.category-item').hasClass('selected'));
     done();
   });
 });
@@ -112,14 +112,14 @@ test('it works for removing selected categories', function(assert) {
   this.set('category', selectedCategory);
   this.render(hbs`{{category-item category=category}}`);
 
-  assert.equal(this.$('.category-icon').hasClass('selected'), true);
-  assert.equal(this.$('p').hasClass('selected'), true);
+  assert.ok(this.$('.category-icon').hasClass('selected'));
+  assert.ok(this.$('p').hasClass('selected'));
   assert.equal(this.$('button').text().trim(), 'Society');
 
   this.$('button').click();
 
   wait().then(() => {
-    assert.equal(this.$('.category-item').hasClass('selected'), false);
+    assert.notOk(this.$('.category-item').hasClass('selected'));
     done();
   });
 });

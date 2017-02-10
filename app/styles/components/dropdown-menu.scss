@@ -1,0 +1,88 @@
+.dropdown-menu {
+  background: white;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
+  float: left;
+  margin-top: 5px;
+  min-width: 15em;
+  padding: 5px 0;
+  position: absolute;
+  text-align: left;
+  top: 100%;
+  z-index: 99999;
+  &--right {
+    float: none;
+    right: 0;
+  }
+}
+
+.dropdown {
+  position: relative;
+  &.menu-hidden {
+    .dropdown-menu {
+      display: none;
+    }
+  }
+  &.menu-visible {
+    .dropdown-menu {
+      display: block;
+    }
+  }
+}
+
+.close {
+  color: $text--light;
+  line-height: 14px;
+  padding: 10px 14px;
+  vertical-align: middle;
+  &:hover {
+    color: $blue;
+  }
+  &.right {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+.dropdown__header, .dropdown__footer {
+  background: $background-gray;
+  color: $text--light;
+  padding: 10px 14px;
+  p {
+    font-size: $body-font-size-small;
+    margin: 0;
+  }
+}
+
+.dropdown__header {
+  @include border-top-radius(4px);
+  margin: -5px 0 5px 0;
+}
+
+.dropdown__footer {
+  @include border-bottom-radius(4px);
+  font-size: $body-font-size-small;
+  margin: 5px 0 -5px 0;
+}
+
+.dropdown__body {
+  padding: 10px 15px;
+}
+
+.dropdown__options {
+  li {
+    display: block;
+    float: none;
+    padding: 3px 0;
+  }
+  a {
+    // having problems with "navigation__options a"
+    // overwriting the properties below
+    border: 0;
+    color: #08A8FC;
+    font-weight: normal;
+    padding: 0;
+  }
+}

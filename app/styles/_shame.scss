@@ -1,0 +1,122 @@
+//
+// shame.css
+// http://csswizardry.com/2013/04/shame-css/
+//
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+// TODO: Remove when we add more projects
+.temporary-projects-notice {
+  @include span-columns(4);
+
+  border: 1px dashed $gray--lightest;
+  border-radius: 4px;
+  color: $text--light;
+  min-height: 390px;
+  padding: 20px;
+
+  p {
+    font-size: $body-font-size-small;
+  }
+
+  .curved-arrow-icon {
+    @include sprite($curved-arrow);
+
+    margin-top: 90px;
+  }
+}
+
+.page-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid $gray--lightest;
+
+  h2 {
+    font-weight: 500;
+    margin: 10px 0;
+  }
+}
+
+
+
+// styles below are probably not necessary after refactoring
+.header-section {
+  margin: 20px 0;
+
+  h2 {
+    font-weight: 700;
+  }
+
+  p {
+    color: $text--light;
+    line-height: 2em;
+  }
+}
+
+html {
+  &.danger {
+    background: $danger-color;
+  }
+  &.warning {
+    background: $warning-color;
+  }
+}
+
+.menu {
+  padding: 10px 0;
+  ul {
+    list-style-type: none;
+    @include clearfix;
+  }
+  a.active {
+    font-weight: 600;
+  }
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.subtext {
+  font-size: $body-font-size-small;
+}
+
+// this seems to have been inherited from http://primercss.io/utilities/#truncation
+// originally used in the "Signed in as [username]" dropdown message
+.css-truncate-target {
+  display: inline-block;
+  max-width: 125px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+// this is not good, I'd like .slugged-route-model-details to be added to
+// site-container and not its own div element and add the property below to
+// .user-details instead
+.slugged-route-model-details {
+  width: 100%;
+}
+
+.legal {
+  margin: auto;
+  max-width: 600px;
+}
+
+h4 span {
+  color: #08A8FC;
+  float: right;
+}

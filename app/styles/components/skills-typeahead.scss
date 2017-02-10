@@ -32,7 +32,7 @@ li.skill-dropdown-item {
 
   &.has-skill {
     &.selected {
-      background: $light-red-background;
+      background: $red--light;
 
       a {
         color: $danger-color;
@@ -45,12 +45,12 @@ li.skill-dropdown-item {
     }
 
     a {
-      color: $dark-blue;
+      color: $blue;
     }
   }
 
   &.selected {
-    background: $light-blue-background;
+    background: $blue--lighter;
 
     a {
       &:after {
@@ -60,7 +60,7 @@ li.skill-dropdown-item {
   }
 
   a {
-    color: $dark-text;
+    color: $text--dark;
     display: block;
     padding: 10px 10px;
     transition-property: none;

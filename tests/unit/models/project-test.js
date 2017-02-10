@@ -49,7 +49,7 @@ test('it should have open tasks', function(assert) {
 
   let project = this.subject({ openTasksCount: 1 });
 
-  assert.equal(project.get('hasOpenTasks'), true, 'has open tasks');
+  assert.ok(project.get('hasOpenTasks'), 'has open tasks');
 });
 
 test('it should have computed properties for its organization\'s members', function(assert) {
@@ -66,7 +66,7 @@ test('it should have computed properties for its organization\'s members', funct
   });
 
   assert.equal(project.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');
-  assert.equal(project.get('hasPendingMembers'), true, 'hasPendingMembers should return true');
+  assert.ok(project.get('hasPendingMembers'), 'hasPendingMembers should return true');
 });
 
 test('it should have computed properties for its current donation goal', function(assert) {

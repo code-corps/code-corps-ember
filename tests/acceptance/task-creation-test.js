@@ -231,7 +231,7 @@ test('When task creation fails due to non-validation issues, the error is displa
 
   andThen(() => {
     assert.equal(projectTasksNewPage.errors().count, 1);
-    assert.equal(projectTasksNewPage.errors().contains('An unknown error: Something happened', 'The error is messaged'), true);
+    assert.ok(projectTasksNewPage.errors().contains('An unknown error: Something happened', 'The error is messaged'));
   });
 });
 

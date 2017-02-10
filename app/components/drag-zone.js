@@ -7,7 +7,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['drag-zone'],
+  classNames: ['drag-zone', 'flexbox-container'],
 
   dragState: service(),
 

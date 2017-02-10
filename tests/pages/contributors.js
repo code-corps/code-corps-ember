@@ -10,7 +10,7 @@ import {
 function buildContributorsDefinitionForIndex(index) {
   return {
     scope: `.contributors-list:eq(${index})`,
-    emptyMessageVisible: isVisible('.contributors-list-empty'),
+    emptyMessageVisible: isVisible('.contributors-list--empty'),
     members: collection({
       itemScope: '.member-list-item',
       item: {
@@ -30,11 +30,11 @@ export default create({
   others: buildContributorsDefinitionForIndex(3),
 
   projectMenu: {
-    scope: '.project-menu',
+    scope: '.project__menu',
     contributors: {
       scope: '.contributors',
-      infoVisible: isVisible('.info'),
-      infoText: text('.info')
+      infoText: text('.info'),
+      infoVisible: isVisible('.info')
     }
   }
 });

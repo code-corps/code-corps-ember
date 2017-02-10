@@ -1,19 +1,22 @@
+.project-wrapper {
+  min-height: 50vh;
+  width: 100%;
+  overflow: auto;
+}
+
 .project-main {
   @include span-columns(8);
 }
 
 .project-sidebar {
   @include span-columns(4);
-
   .project-sidebar__section {
     margin: 40px 0;
-
     &:first-child {
       margin-top: 0px;
     }
   }
-
-  h3 {
+  h4 {
     margin: 20px 0 10px 0;
   }
 }

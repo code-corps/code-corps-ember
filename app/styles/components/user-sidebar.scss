@@ -12,14 +12,14 @@
   .username {
     font-size: $body-font-size-normal;
     font-weight: 500;
-    color: $light-text;
+    color: $text--light;
   }
 
   .details {
     margin: 10px 0;
     padding: 10px 0;
     font-size: $body-font-size-small;
-    color: $light-text;
+    color: $text--light;
 
     li {
       padding: 4px 0;
@@ -33,4 +33,12 @@
       @include userSidebarIcon($link);
     }
   }
+}
+
+.border-top {
+  border-top: 1px solid;
+}
+
+.border-gray-light {
+  border-color: $gray--lightest;
 }

@@ -32,7 +32,7 @@ test('The footer and spacer are hidden, the main container is set up for project
     assert.equal(currentRouteName(), 'project.tasks.index');
     assert.notOk(projectTasksIndexPage.flexboxSpacer.isVisible, 'The flexbox spacer is hidden');
     assert.notOk(projectTasksIndexPage.footer.isVisible, 'The footer is hidden');
-    assert.ok(projectTasksIndexPage.mainContainer.isVisible, 'The main container is set up for project tasks');
+    assert.ok(projectTasksIndexPage.siteContentContainer.isVisible, 'The main container is set up for project tasks');
   });
 });
 
@@ -68,7 +68,7 @@ test('It renders all the required ui elements for task list', function(assert) {
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(function() {
-    assert.equal(find('.project-details').length, 1, 'project-details component is rendered');
+    assert.equal(find('.project__header').length, 1, 'project header component is rendered');
   });
 });
 
@@ -96,7 +96,7 @@ test('A user can join the organization of the project', function(assert) {
 
   andThen(() => {
     let joinButton = projectTasksIndexPage.projectDetails.joinProjectButton;
-    assert.equal(joinButton.text, 'Membership pending', 'The button to join has changed to pending');
+    assert.equal(joinButton.text, 'Request sent', 'The button to join has changed to pending');
     assert.ok(joinButton.disabled, 'Button should be disabled.');
   });
 });

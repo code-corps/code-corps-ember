@@ -27,7 +27,7 @@
   }
 
   &.open {
-    background: $dark-blue;
+    background: $blue;
 
     &:before {
       @include sprite($open-white);

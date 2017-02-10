@@ -1,58 +1,59 @@
-.horizontal-menu {
-  @include clearfix;
+.project__menu, .organization-menu {
+  &--horizontal {
+    @include clearfix;
+    border-bottom: 1px solid $gray--light;
+    height: 2.5em;
+    list-style-type: none;
+    margin-bottom: .7em;
+    padding: 0;
+    width: 100%;
 
-  border-bottom: 1px solid $border-default;
-  list-style-type: none;
-  margin: 0 0 10px 0;
-  padding: 0;
-  width: 100%;
-
-  li {
-    float: left;
-    font-size: $body-font-size-normal;
-  }
-
-  a {
-    border-bottom: 3px solid transparent;
-    color: $extra-light-text;
-    display: block;
-    font-weight: 500;
-    margin-bottom: -1px;
-    padding: 6px 10px;
-    text-decoration: none;
-
-    &.active {
-      border-bottom-color: $primary-color;
-      color: $primary-color;
-      font-weight: 700;
-
-      span.info {
-        background: $dark-blue;
-      }
+    li {
+      float: left;
+      font-size: $body-font-size-normal;
+      height: 100%;
     }
 
-    &:hover {
-      border-bottom-color: $primary-color;
-      color: $primary-color;
-      transition: border-bottom-color ease 0.3s;
+    a {
+      border-bottom: 3px solid transparent;
+      color: $text--lighter;
+      display: block;
+      font-weight: 500;
+      height: 100%;
+      padding: 6px 14px;
+      text-decoration: none;
 
-      span.info {
-        background: $dark-blue;
+      &.active, &:hover {
+        border-bottom-color: $blue;
+        color: $blue;
+
+        span.info {
+          background: $blue--light;
+        }
       }
-    }
 
-    span.info {
-      background: $extra-light-text;
-      border-radius: 4px;
-      color: white;
-      font-size: $body-font-size-small;
-      font-weight: 300;
-      padding: 2px 7px 3px 7px;
-      margin-left: 5px;
-      vertical-align: 1px;
-
-      strong {
+      &.active {
         font-weight: 700;
+      }
+
+      &:hover {
+        transition: border-bottom-color ease 0.3s;
+      }
+
+      span.info {
+        background: $gray--light;
+        border-radius: 4px;
+        color: white;
+        display: inline-block;
+        font-size: $body-font-size-small;
+        font-weight: 300;
+        margin-left: 5px;
+        padding: 1px 7px 2px 7px;
+        vertical-align: 1px;
+
+        strong {
+          font-weight: 700;
+        }
       }
     }
   }
