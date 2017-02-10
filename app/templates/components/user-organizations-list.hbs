@@ -1,4 +1,4 @@
-<h2>Organizations</h2>
+<h3>Organizations</h3>
 <ul>
 {{#each organizations as |organization|}}
   <li class="user-organization-item">
@@ -8,11 +8,11 @@
       {{/link-to}}
     </div>
     <div class="content">
-      <h3>
+      <h4>
         {{#link-to 'slugged-route' organization.slug}}
           {{organization.name}}
         {{/link-to}}
-      </h3>
+      </h4>
       <p>
         {{organization.description}}
       </p>

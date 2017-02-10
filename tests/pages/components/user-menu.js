@@ -1,14 +1,33 @@
-import { hasClass, isVisible, text } from 'ember-cli-page-object';
+import { attribute, clickable, hasClass, isVisible, text } from 'ember-cli-page-object';
 
 export default {
   scope: '.user-menu',
 
   dropdownIsHidden: hasClass('menu-hidden'),
 
-  avatarVisible: isVisible('img.avatar'),
+  icon: {
+    scope: 'img',
+    alt: attribute('alt'),
+    src: attribute('src')
+  },
+  iconVisible: isVisible('img'),
+  loginLinkVisible: isVisible('a.login'),
   logoutLinkVisible: isVisible('a.logout'),
   profileLinkVisible: isVisible('a.profile'),
   sluggedRouteLinkVisible: isVisible('a.slugged-route'),
 
-  footerText: text('.dropdown-footer')
+  footerText: text('.dropdown__footer'),
+
+  logOut: clickable('a.logout'),
+  open: clickable('a'),
+  toggle: clickable('a.user-menu__toggle'),
+
+  profileLink: {
+    scope: 'a.slugged-route',
+    href: attribute('href')
+  },
+  settingsLink: {
+    scope: '.profile',
+    href: attribute('href')
+  }
 };

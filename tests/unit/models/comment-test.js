@@ -27,7 +27,7 @@ test('it correctly identifies code in the body', function(assert) {
 
   let model = this.subject({ body: '<code>Hello, world!<code>' });
 
-  assert.equal(model.get('containsCode'), true);
+  assert.ok(model.get('containsCode'));
 });
 
 test('it correctly identifies lack of code in the body', function(assert) {
@@ -35,5 +35,5 @@ test('it correctly identifies lack of code in the body', function(assert) {
 
   let model = this.subject({ body: '<pre>Hello, world!<pre>' });
 
-  assert.equal(model.get('containsCode'), false);
+  assert.notOk(model.get('containsCode'));
 });

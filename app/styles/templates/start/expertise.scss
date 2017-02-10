@@ -1,32 +1,60 @@
-.start-roles {
-  margin: 30px 0;
+.start__expertise {
+  display: flex;
+  flex: 1;
+  margin-bottom: 2em;
+  justify-content: space-around;
+  text-align: center;
+  width: 100%;
 }
 
-.roles-column {
-  @include span-columns(4);
-  text-align: center;
+.start__expertise {
+  button, button.clear {
+    margin-bottom: .7em;
+    padding: .8em;
+    text-align: center;
+  }
+}
+
+.expertise__column {
+  width: 33.3%;
+
+  &--creative {
+    &::before {
+      @include rolesSprite($creative);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;
+      width: 100%;
+    }
+  }
+  &--technology {
+    &::before {
+      @include rolesSprite($technology);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;
+      top: 0;
+      width: 100%;
+    }
+  }
+  &--support {
+    &::before {
+      @include rolesSprite($support);
+      content: "";
+      float: left;
+      height: 5em;
+      margin-bottom: .5em;
+      top: 0;
+      width: 100%;
+    }
+  }
 
   h3 {
-    color: $dark-text;
+    color: $text--dark;
     font-size: $header-font-size-medium;
     font-weight: 300;
     margin: 20px 0;
-  }
-}
-
-.roles-column-header {
-  display: inline-block;
-
-  &.creative {
-    @include rolesSprite($creative);
-    margin-left: 5px;
-  }
-
-  &.technology {
-    @include rolesSprite($technology);
-  }
-
-  &.support {
-    @include rolesSprite($support);
   }
 }

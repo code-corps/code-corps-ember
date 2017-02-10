@@ -1,10 +1,10 @@
 import {
   collection, fillable, isVisible, isHidden, triggerable, value
 } from 'ember-cli-page-object';
-import skillsInputItem from './skills-input-item';
+import skillsTypeaheadResult from './skills-typeahead-result';
 
 export default {
-  scope: '.skills-input',
+  scope: '.skills-typeahead',
 
   fillIn: fillable('input'),
   focus: triggerable('focus', 'input'),
@@ -60,7 +60,7 @@ export default {
   }),
 
   inputItems: collection({
-    item: skillsInputItem,
-    itemScope: skillsInputItem.scope
+    item: skillsTypeaheadResult,
+    itemScope: skillsTypeaheadResult.scope
   })
 };

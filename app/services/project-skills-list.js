@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import skillsList from 'code-corps-ember/utils/skills-list';
+import recordsList from 'code-corps-ember/utils/records-list';
 
 const {
   computed: {
@@ -24,12 +24,12 @@ export default Service.extend({
 
   contains(skill) {
     let projectSkills = get(this, 'projectSkills');
-    return skillsList.contains(projectSkills, skill);
+    return recordsList.contains(projectSkills, skill);
   },
 
   find(skill) {
     let { projectSkills, project } = getProperties(this, 'projectSkills', 'project');
-    return skillsList.find(projectSkills, skill, project);
+    return recordsList.find(projectSkills, skill, project);
   },
 
   remove(skill) {
@@ -44,8 +44,7 @@ export default Service.extend({
 
   toggle(skill) {
     let projectSkills = get(this, 'projectSkills');
-
-    if (skillsList.contains(projectSkills, skill)) {
+    if (recordsList.contains(projectSkills, skill)) {
       return this.remove(skill);
     } else {
       return this.add(skill);

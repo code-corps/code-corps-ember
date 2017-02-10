@@ -3,16 +3,16 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.project-details',
+  scope: '.project__header',
 
   joinProjectButton: {
-    scope: '.join-project button',
+    scope: 'aside button',
     href: attribute('href'),
     disabled: attribute('disabled')
   },
 
   signUpLink: {
-    scope: '.join-project a',
+    scope: 'aside a',
     href: attribute('href')
   }
 };

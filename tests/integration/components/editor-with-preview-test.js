@@ -109,7 +109,7 @@ test('it sets the edit button class when editing', function(assert) {
   this.render(hbs`{{editor-with-preview}}`);
   this.set('editing', true);
 
-  assert.equal(this.$('.editor-with-preview button.edit').hasClass('active'), true);
+  assert.ok(this.$('.editor-with-preview button.edit').hasClass('active'));
 });
 
 test('it has the code theme selector', function(assert) {
@@ -134,7 +134,7 @@ test('it does not autofocus on first load if not provided', function(assert) {
 
   this.render(hbs`{{editor-with-preview}}`);
 
-  assert.equal(this.$('.editor-with-preview textarea').hasClass('focused'), false);
+  assert.notOk(this.$('.editor-with-preview textarea').hasClass('focused'));
 });
 
 test('it autofocuses on second render if not provided', function(assert) {
@@ -144,7 +144,7 @@ test('it autofocuses on second render if not provided', function(assert) {
   this.$('.preview').click();
   this.$('.edit').click();
 
-  assert.equal(this.$('.editor-with-preview textarea').hasClass('focused'), true);
+  assert.ok(this.$('.editor-with-preview textarea').hasClass('focused'));
 });
 
 test('it autofocuses on first load if provided', function(assert) {
@@ -153,7 +153,7 @@ test('it autofocuses on first load if provided', function(assert) {
   this.set('autofocus', true);
   this.render(hbs`{{editor-with-preview autofocus=autofocus}}`);
 
-  assert.equal(this.$('.editor-with-preview textarea').hasClass('focused'), true);
+  assert.ok(this.$('.editor-with-preview textarea').hasClass('focused'));
 });
 
 test('it sets the editor min-height to the editor height when previewing and still loading', function(assert) {
@@ -177,10 +177,10 @@ test('it clears the editor style when previewing and done loading', function(ass
   this.render(hbs`{{editor-with-preview isLoading=isLoading}}`);
 
   this.$('.preview').click();
-  assert.equal(this.$('.editor-with-preview')[0].hasAttribute('style'), true);
+  assert.ok(this.$('.editor-with-preview')[0].hasAttribute('style'));
 
   this.set('isLoading', false);
-  assert.equal(this.$('.editor-with-preview')[0].hasAttribute('style'), false);
+  assert.notOk(this.$('.editor-with-preview')[0].hasAttribute('style'));
 });
 
 test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {

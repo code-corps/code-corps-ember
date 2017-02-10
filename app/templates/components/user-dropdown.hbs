@@ -1,12 +1,12 @@
-<div class="dropdown-body">
-  <ul>
+<div class="dropdown__body">
+  <ul class="dropdown__options">
+    {{! all classes added to link elements below
+    seem to be used as hooks for testing only }}
     <li>{{#link-to 'slugged-route' user.username class="slugged-route"}}Your profile{{/link-to}}</li>
     <li>{{#link-to 'settings.profile' class="profile"}}Settings{{/link-to}}</li>
     <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
   </ul>
 </div>
-<div class="dropdown-footer">
-  <p>
-    Signed in as <strong class="css-truncate-target">{{user.username}}</strong>
-  </p>
+<div class="dropdown__footer">
+  Signed in as <strong>{{user.username}}</strong>
 </div>

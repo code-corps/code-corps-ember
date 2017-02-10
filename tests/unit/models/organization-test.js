@@ -54,5 +54,5 @@ test('it should have computed properties for its organization\'s members', funct
   });
 
   assert.equal(model.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');
-  assert.equal(model.get('hasPendingMembers'), true, 'hasPendingMembers should return true');
+  assert.ok(model.get('hasPendingMembers'), 'hasPendingMembers should return true');
 });

@@ -20,8 +20,8 @@ test('it shows nothing when empty', function(assert) {
   this.render(hbs`{{signup-username-input}}`);
 
   assert.equal(this.$('.suggestions li').length, 0);
-  assert.equal(this.$('.suggestions p').hasClass('ok'), false);
-  assert.equal(this.$('.suggestions p').hasClass('not-ok'), false);
+  assert.notOk(this.$('.suggestions p').hasClass('ok'));
+  assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
 });
 
 test('it shows suggestions when invalid', function(assert) {
@@ -34,7 +34,7 @@ test('it shows suggestions when invalid', function(assert) {
 
   this.on('usernameValidated', (result) => {
     run.next(() => {
-      assert.equal(result, false);
+      assert.notOk(result);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
@@ -42,8 +42,8 @@ test('it shows suggestions when invalid', function(assert) {
   this.set('user', { username: 'lots--of--hypens' });
 
   wait().then(() => {
-    assert.equal(this.$('.suggestions p').hasClass('ok'), false);
-    assert.equal(this.$('.suggestions p').hasClass('not-ok'), true);
+    assert.notOk(this.$('.suggestions p').hasClass('ok'));
+    assert.ok(this.$('.suggestions p').hasClass('not-ok'));
     assert.equal(this.$('.suggestions li').length, 1);
     assert.equal(this.$('.suggestions li:eq(0)').text().trim(), 'Please enter a username with only letters, numbers, or underscores.');
     done();
@@ -60,7 +60,7 @@ test('it shows suggestions when unavailable', function(assert) {
 
   this.on('usernameValidated', (result) => {
     run.next(() => {
-      assert.equal(result, false);
+      assert.notOk(result);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
@@ -68,8 +68,8 @@ test('it shows suggestions when unavailable', function(assert) {
   this.set('user', { username: 'taken' });
 
   wait().then(() => {
-    assert.equal(this.$('.suggestions p').hasClass('ok'), false);
-    assert.equal(this.$('.suggestions p').hasClass('not-ok'), true);
+    assert.notOk(this.$('.suggestions p').hasClass('ok'));
+    assert.ok(this.$('.suggestions p').hasClass('not-ok'));
     assert.equal(this.$('.suggestions li').length, 1);
     assert.equal(this.$('.suggestions li:eq(0)').text().trim(), 'This username is already registered. Want to login?');
     done();
@@ -86,7 +86,7 @@ test('it shows ok when valid and available', function(assert) {
 
   this.on('usernameValidated', (result) => {
     run.next(() => {
-      assert.equal(result, true);
+      assert.ok(result);
     });
   });
   this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
@@ -94,8 +94,8 @@ test('it shows ok when valid and available', function(assert) {
   this.set('user', { username: 'available' });
 
   wait().then(() => {
-    assert.equal(this.$('.suggestions p').hasClass('ok'), true);
-    assert.equal(this.$('.suggestions p').hasClass('not-ok'), false);
+    assert.ok(this.$('.suggestions p').hasClass('ok'));
+    assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
     assert.equal(this.$('.suggestions li').length, 0);
     done();
   });
@@ -111,7 +111,7 @@ test('it resets to invalid when deleted', function(assert) {
 
   this.on('usernameValidated', (result) => {
     run.next(() => {
-      assert.equal(result, false);
+      assert.notOk(result);
     });
   });
   this.set('user', { username: 'available' });
@@ -120,8 +120,8 @@ test('it resets to invalid when deleted', function(assert) {
   this.set('user', { username: '' });
 
   wait().then(() => {
-    assert.equal(this.$('.suggestions p').hasClass('ok'), false);
-    assert.equal(this.$('.suggestions p').hasClass('not-ok'), false);
+    assert.notOk(this.$('.suggestions p').hasClass('ok'));
+    assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
     assert.equal(this.$('.suggestions li').length, 0);
     done();
   });

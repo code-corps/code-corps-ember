@@ -20,9 +20,9 @@ test('it renders default state without a photo', function(assert) {
   // Handle any actions with this.on('myAction', function(val) { ... });"
   this.render(hbs`{{image-drop}}`);
 
-  assert.equal(this.$('p.help-text').text().trim(), 'Drop your image here.');
-  assert.equal(this.$('.image-drop').hasClass('active'), false);
-  assert.equal(this.$('.image-drop').hasClass('is-dragging'), false);
+  assert.equal(this.$('p.help-text').text().trim(), 'Click to add your photo.');
+  assert.notOk(this.$('.image-drop').hasClass('image-drop--active'));
+  assert.notOk(this.$('.image-drop').hasClass('image-drop--drag'));
   let style = this.$('.image-drop').css('background-image');
   assert.equal(style, 'none');
 });
@@ -35,20 +35,20 @@ test('it reacts to dragging on the application', function(assert) {
   `);
 
   this.$('.drag-zone').trigger('dragover');
-  assert.equal(this.$('.image-drop').hasClass('is-dragging'), true);
+  assert.ok(this.$('.image-drop').hasClass('image-drop--drag'));
 
   this.$('.drag-zone').trigger('dragleave');
-  assert.equal(this.$('.image-drop').hasClass('is-dragging'), false);
+  assert.notOk(this.$('.image-drop').hasClass('image-drop--drag'));
 });
 
 test('it reacts to dragging on itself', function(assert) {
   this.render(hbs`{{image-drop}}`);
 
   this.$('.image-drop').trigger('dragover');
-  assert.equal(this.$('.image-drop').hasClass('active'), true);
+  assert.ok(this.$('.image-drop').hasClass('image-drop--active'));
 
   this.$('.image-drop').trigger('dragleave');
-  assert.equal(this.$('.image-drop').hasClass('active'), false);
+  assert.notOk(this.$('.image-drop').hasClass('image-drop--active'));
 });
 
 test('it renders the original image', function(assert) {
@@ -78,14 +78,14 @@ test('it handles a dropped image file', function(assert) {
   let fileName = 'file.png';
 
   this.$('.image-drop').trigger('dragover');
-  assert.equal(this.$('.image-drop').hasClass('active'), true);
+  assert.ok(this.$('.image-drop').hasClass('image-drop--active'));
 
   fillInFileInput('.image-drop input[type=file]', { name: fileName, content: droppedImageString });
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${droppedImageString})`;
   assert.equal(removeDoubleQuotes(style), expectedStyle);
-  assert.equal(this.$('.image-drop').hasClass('active'), false);
+  assert.notOk(this.$('.image-drop').hasClass('image-drop--active'));
 });
 
 test('it does not show the hover text if not hovering', function(assert) {
@@ -113,5 +113,5 @@ test('it does not show the hover text if not hovering', function(assert) {
 test('it is circular if circle passed in', function(assert) {
   this.render(hbs`{{image-drop circle=true}}`);
 
-  assert.equal(this.$('.image-drop').hasClass('is-circular'), true);
+  assert.ok(this.$('.image-drop').hasClass('image-drop--circle'));
 });

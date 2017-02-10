@@ -9,7 +9,7 @@ import {
   triggerable,
   visitable
 } from 'ember-cli-page-object';
-import skillsInput from './components/skills-input';
+import skillsTypeahead from './components/skills-typeahead';
 import navMenu from './components/navigation-menu';
 
 export default create({
@@ -23,34 +23,43 @@ export default create({
   lastName: fillable('[name="lastName"]'),
   lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
+
   footer: {
     scope: '.site-footer'
   },
 
   startButton: {
-    scope: '.start-actions button',
+    scope: '.start__footer button',
     isDisabled: attribute('disabled')
   },
 
-  roles: collection({
-    itemScope: '.roles-column',
+  roleColumns: collection({
+    itemScope: '.expertise__column',
 
     item: {
-      title: text('h3'),
+      hasClass,
+
       header: {
-        scope: '.roles-column-header',
-        hasClass
+        scope: 'h3',
+        title: text()
       },
-      button: {
-        scope: 'button',
-        text: text(),
-        hasClass
-      }
+
+      roles: collection({
+        itemScope: '.role-item',
+
+        item: {
+          button: {
+            scope: 'button',
+            text: text(),
+            hasClass
+          }
+        }
+      })
     }
   }),
 
   userSkillsList: collection({
-    scope: '.user-skills-list',
+    scope: '.skills__list',
     itemScope: 'button',
     item: {
       text: text(),
@@ -58,8 +67,8 @@ export default create({
     }
   }),
 
-  // select and manipulate .skills-input and various site-chrome nodes to
+  // select and manipulate .skills-typeahead and various site-chrome nodes to
   // this page
-  skillsInput,
+  skillsTypeahead,
   navMenu
 });

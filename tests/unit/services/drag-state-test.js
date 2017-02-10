@@ -12,18 +12,18 @@ test('it exists', function(assert) {
 
 test('it is not dragging by default', function(assert) {
   let service = this.subject();
-  assert.equal(service.get('isDragging'), false);
+  assert.notOk(service.get('isDragging'));
 });
 
 test('it sets dragging to false when leaving is called', function(assert) {
   let service = this.subject();
   service.set('isDragging', true);
   service.leaving();
-  assert.equal(service.get('isDragging'), false);
+  assert.notOk(service.get('isDragging'));
 });
 
 test('it sets dragging to true when dragging is called', function(assert) {
   let service = this.subject();
   service.dragging();
-  assert.equal(service.get('isDragging'), true);
+  assert.ok(service.get('isDragging'));
 });
