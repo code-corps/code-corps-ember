@@ -17,40 +17,12 @@ test('when not authenticated, it renders properly', function(assert) {
 
   this.render(hbs`{{project-menu}}`);
 
-  assert.equal(this.$('.project-menu li a').length, 2, 'The correct number of links render');
-  assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
-  assert.equal(this.$('.project-menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
+  assert.equal(this.$('.project__menu li a').length, 2, 'The correct number of links render');
+  assert.equal(this.$('.project__menu li a:contains("About")').length, 1, 'The about link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
+  assert.equal(this.$('.project__menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
 
-});
-
-test('it renders the task count when it has tasks', function(assert) {
-  assert.expect(1);
-
-  stubService(this, 'session', { isAuthenticated: false });
-  this.set('project', {
-    hasOpenTasks: true,
-    openTasksCount: 7
-  });
-
-  this.render(hbs`{{project-menu project=project}}`);
-
-  assert.equal(this.$('.project-menu li a span.info').text().trim(), '7', 'The number of open tasks are rendered');
-});
-
-test('it does not render the task count when it has no tasks', function(assert) {
-  assert.expect(1);
-
-  stubService(this, 'session', { isAuthenticated: false });
-  this.set('project', {
-    hasOpenTasks: false,
-    openTasksCount: 0
-  });
-
-  this.render(hbs`{{project-menu project=project}}`);
-
-  assert.equal(this.$('.project-menu li a span.info').length, 0, 'The number of open tasks are not rendered');
 });
 
 test('when authenticated, and user cannot manage organization, it renders properly', function(assert) {
@@ -61,11 +33,11 @@ test('when authenticated, and user cannot manage organization, it renders proper
 
   this.render(hbs`{{project-menu}}`);
 
-  assert.equal(this.$('.project-menu li a').length, 2, 'The correct number of links render');
-  assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
-  assert.equal(this.$('.project-menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
+  assert.equal(this.$('.project__menu li a').length, 2, 'The correct number of links render');
+  assert.equal(this.$('.project__menu li a:contains("About")').length, 1, 'The about link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Contributors")').length, 0, 'The contributors link is not rendered');
+  assert.equal(this.$('.project__menu li a:contains("Settings")').length, 0, 'The settings link is not rendered');
 });
 
 test('when authenticated, and user can manage organization, it renders properly', function(assert) {
@@ -76,13 +48,13 @@ test('when authenticated, and user can manage organization, it renders properly'
 
   this.render(hbs`{{project-menu}}`);
 
-  assert.equal(this.$('.project-menu li a').length, 6, 'The correct number of links render');
-  assert.equal(this.$('.project-menu li a:contains("About")').length, 1, 'The about link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Contributors")').length, 1, 'The contributors link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Settings")').length, 1, 'The settings link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Donations")').length, 1, 'The donations link is rendered');
-  assert.equal(this.$('.project-menu li a:contains("Payments")').length, 1, 'The payments link is rendered');
+  assert.equal(this.$('.project__menu li a').length, 6, 'The correct number of links render');
+  assert.equal(this.$('.project__menu li a:contains("About")').length, 1, 'The about link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Tasks")').length, 1, 'The tasks link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Contributors")').length, 1, 'The contributors link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Settings")').length, 1, 'The settings link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Donations")').length, 1, 'The donations link is rendered');
+  assert.equal(this.$('.project__menu li a:contains("Payments")').length, 1, 'The payments link is rendered');
 });
 
 test('when authenticated, and user can manage organization, and project has pending members', function(assert) {
@@ -95,7 +67,7 @@ test('when authenticated, and user can manage organization, and project has pend
 
   this.render(hbs`{{project-menu project=project}}`);
 
-  assert.equal(this.$('.project-menu li.contributors a span.info').text().trim(), '7 pending', 'The correct number of pending members render');
+  assert.equal(this.$('.project__menu li.contributors a span.info').text().trim(), '7 pending', 'The correct number of pending members render');
 });
 
 test('when authenticated, and user can manage organization, and project has no pending members', function(assert) {
@@ -108,5 +80,5 @@ test('when authenticated, and user can manage organization, and project has no p
 
   this.render(hbs`{{project-menu project=project}}`);
 
-  assert.equal(this.$('.project-menu li.contributors a span.info').length, 0, 'The pending members span tag does not render');
+  assert.equal(this.$('.project__menu li.contributors a span.info').length, 0, 'The pending members span tag does not render');
 });

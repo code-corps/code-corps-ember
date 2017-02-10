@@ -1,0 +1,117 @@
+// COLORS
+//
+// color variables should follow the same modular naming convention used when styling components
+// the root of the variable name is the name of the color (e.g. blue) followed by a modifier
+// --light --lighter, --lightest, --dark, --darker, --darkest
+//
+// modifiers should only be used if a base color has already been set
+// e.g. $red--darker only makes sense if $red already exists
+//
+// hex codes should only be used in the base color variables
+// whenever a color is needed it should use either an existing variable
+// or a variation of it using Sass color functions (e.g. darken($green, 5%))
+//
+// This is a great guide about hex colors
+// https://www.smashingmagazine.com/2012/10/the-code-side-of-color/
+//
+// we should perhaps consider switching from hex to rgba or hsla as they're easier to
+// understand and build varations of
+// https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+//
+// Styleguide 1.0
+
+//
+// BASE COLORS
+//
+
+$blue: #08A8FC;
+$blue--light: #51A7E8;
+$blue--lighter: #EDF9FF;
+$blue--lightest: #F6FCFF;
+$blue--dark: #1B9BE5;
+// #3ABAFC, #51A7E8
+
+$gray: #AAA;
+$gray--light: #BBB;
+$gray--lighter: #CCC;
+$gray--lightest: #DDD;
+$gray--dark: #999;
+$gray--darker: #666;
+$gray--darkest: #333;
+
+// these colors were used previously and removed for the sake of consistency
+// I'll add these back using sass color functions
+// #E5E5E5, #FCFCFC, #F3F3F3, #FBFBFB
+
+$green: #23871E;
+$green--light: #DFF0D8;
+$green--lighter: #EFFFEE;
+
+$red: #C0392B;
+$red--light: #FFE5E1;
+
+$yellow: #F39C12;
+$yellow--light: #FFF9DE;
+
+//
+// LINKS
+//
+$link-color: $blue;
+$hidden-link-color: $gray--darkest;
+$link-hover-color: $blue--dark;
+
+//
+// BUTTONS
+//
+$clear-hover: #E5E5E5;
+$clear-focus: #FCFCFC;
+$clear-active: #E5E5E5;
+$primary-active: $blue--dark;
+
+//
+// BACKGROUNDS
+//
+$background-gray: #F3F3F3;
+
+//
+// COLOR TYPES
+//
+$danger-color: $red;
+$default-color: $blue;
+$success-color: $green;
+$warning-color: $yellow;
+
+//
+// TASK TYPES
+//
+
+$idea-color: $yellow;
+$issue-color: $red;
+$progress-color: $green;
+$task-color: $blue;
+
+$idea-background: $yellow--light;
+$issue-background: $red--light;
+$progress-background: $green--light;
+$task-background: $blue--lighter;
+
+$taskTypeColors: (
+  "idea": $idea-color,
+  "issue": $issue-color,
+  "progress": $progress-color,
+  "task": $task-color,
+);
+
+$taskTypeTextOnBackgroundColors: (
+  "idea": $gray--darkest,
+  "issue": white,
+  "progress": white,
+  "task": white,
+);
+
+$taskTypeBackgrounds: (
+  "idea": $idea-background,
+  "issue": $issue-background,
+  "progress": $progress-background,
+  "task": $task-background,
+);

@@ -12,15 +12,15 @@ test('it exists', function(assert) {
 
 test('it is light by default', function(assert) {
   let service = this.subject();
-  assert.equal(service.get('isLight'), true);
-  assert.equal(service.get('isDark'), false);
+  assert.ok(service.get('isLight'));
+  assert.notOk(service.get('isDark'));
   assert.equal(service.get('className'), 'code-theme--light');
 });
 
 test('it changes to dark when toggled', function(assert) {
   let service = this.subject();
   service.toggle();
-  assert.equal(service.get('isLight'), false);
-  assert.equal(service.get('isDark'), true);
+  assert.notOk(service.get('isLight'));
+  assert.ok(service.get('isDark'));
   assert.equal(service.get('className'), 'code-theme--dark');
 });

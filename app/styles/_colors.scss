@@ -3,22 +3,22 @@ $gray: #CCC;
 $red: #c0392b;
 $green: #23871E;
 $dark-yellow: #f39c12;
-$dark-blue: #08A8FC;
+$blue--dark: #08A8FC;
 $light-green: #DFF0D8;
 $light-blue: #F6FCFF;
 
 // Defaults
-$primary-color: $dark-blue;
+$primary-color: $blue--dark;
 
 // Text
-$extra-light-text: #AAAAAA;
-$light-text: #666;
-$dark-text: #333;
+$text--lighter: #AAAAAA;
+$text--light: #666;
+$text--dark: #333;
 
 // Links
-$link-color: $dark-blue;
-$hidden-link-color: $dark-text;
-$link-hover-color: darken($dark-blue, 5%);
+$link-color: $blue--dark;
+$hidden-link-color: $text--dark;
+$link-hover-color: darken($blue--dark, 5%);
 
 // Buttons
 $clear-hover: #E5E5E5;
@@ -27,10 +27,10 @@ $clear-active: $clear-hover;
 $primary-active: darken($primary-color, 5%);
 
 // Borders
-$border-default: $gray;
-$border-light: #EEE;
+$gray: $gray;
+$gray--lightest: #EEE;
 $border-focus: #51A7E8;
-$border-light-blue: #3ABAFC;
+$gray--lightest-blue: #3ABAFC;
 
 // Backgrounds
 $background-gray: #F3F3F3;
@@ -53,7 +53,7 @@ $success-background: $green;
 $idea-color: $dark-yellow;
 $issue-color: $red;
 $progress-color: $green;
-$task-color: $dark-blue;
+$task-color: $blue--dark;
 
 $taskTypeColors: (
   "idea": $idea-color,
@@ -63,7 +63,7 @@ $taskTypeColors: (
 );
 
 $taskTypeTextOnBackgroundColors: (
-  "idea": $dark-text,
+  "idea": $text--dark,
   "issue": white,
   "progress": white,
   "task": white,

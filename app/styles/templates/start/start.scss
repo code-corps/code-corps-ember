@@ -1,0 +1,29 @@
+.start__header {
+  align-self: flex-start;
+  margin-bottom: 2em;
+  text-align: center;
+  width: 100%;
+
+  h2 {
+    color: $text--dark;
+    font-size: $header-font-size-medium;
+    font-weight: 500;
+  }
+
+  h3 {
+    color: $text--lighter;
+    font-size: $header-font-size-small;
+    font-weight: 300;
+  }
+}
+
+.start__footer {
+  align-self: flex-end;
+  border-top: 1px solid $gray--lightest;
+  margin-bottom: 2em;
+  text-align: center;
+  width: 100%;
+  p {
+    color: $text--lighter;
+  }
+}

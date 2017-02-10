@@ -5,7 +5,7 @@
 
 .skill-list-item {
   a {
-    color: $dark-text;
+    color: $text--dark;
     cursor: pointer;
     position: relative;
 
@@ -17,11 +17,11 @@
     }
 
     &.just-removed {
-      color: $dark-blue;
+      color: $blue--dark;
     }
 
     &.matched {
-      color: $dark-blue;
+      color: $blue--dark;
 
       &:not(.just-removed) {
         font-weight: 600;
@@ -32,7 +32,7 @@
     }
 
     &:hover:not(.matched) {
-      color: $dark-blue;
+      color: $blue--dark;
     }
 
     &:hover.matched {

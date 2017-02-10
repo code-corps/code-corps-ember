@@ -12,7 +12,7 @@ test('it renders closed status', function(assert) {
   this.set('task', task);
   this.render(hbs`{{task-status task=task}}`);
 
-  assert.equal(this.$('.task-status').hasClass('closed'), true);
+  assert.ok(this.$('.task-status').hasClass('closed'));
   assert.equal(this.$('.task-status').text().trim(), 'Closed');
 });
 
@@ -23,6 +23,6 @@ test('it renders open status', function(assert) {
   this.set('task', task);
   this.render(hbs`{{task-status task=task}}`);
 
-  assert.equal(this.$('.task-status').hasClass('open'), true);
+  assert.ok(this.$('.task-status').hasClass('open'));
   assert.equal(this.$('.task-status').text().trim(), 'Open');
 });

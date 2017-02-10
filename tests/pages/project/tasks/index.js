@@ -18,8 +18,8 @@ export default create({
     scope: '.site-footer'
   },
 
-  mainContainer: {
-    scope: '.main.container.for-project-tasks'
+  siteContentContainer: {
+    scope: '.site-content.container.for-project-tasks'
   },
 
   clickNewTask: clickable('.new-task'),

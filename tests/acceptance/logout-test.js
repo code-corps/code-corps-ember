@@ -11,10 +11,13 @@ test('Logging out', function(assert) {
   authenticateSession(this.application, { user_id: user.id });
   indexPage.visit();
   andThen(function() {
-    assert.equal(indexPage.navMenu.userMenu.logOut.text, 'Log out', 'Page contains logout link');
-    indexPage.navMenu.userMenu.logOut.click();
+    indexPage.navMenu.userMenu.toggle();
   });
   andThen(function() {
-    assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains login link');
+    assert.ok(indexPage.navMenu.userMenu.logoutLinkVisible, 'Page contains logout link');
+    indexPage.navMenu.userMenu.logOut();
+  });
+  andThen(function() {
+    assert.ok(indexPage.navMenu.loginLinkVisible, 'Page contains login link');
   });
 });

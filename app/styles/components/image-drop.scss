@@ -15,7 +15,7 @@
     z-index: -1;
   }
 
-  &.is-circular {
+  &--circle {
     &:before {
       border-radius: $border-radius;
     }
@@ -41,7 +41,7 @@
     width: $size;
   }
 
-  &.is-circular {
+  &--circle {
     border-radius: $border-radius;
 
     .hover {
@@ -53,11 +53,11 @@
     }
   }
 
-  &.is-dragging {
-    @include outside-border(2px, dashed, $border-default);
+  &--drag {
+    @include outside-border(2px, dashed, $gray--lightest);
 
-    &.is-circular {
-      @include outside-border(2px, default, $border-default, $border-radius);
+    &--circle {
+      @include outside-border(2px, default, $gray--lightest, $border-radius);
     }
 
     background: transparent !important;
@@ -67,15 +67,15 @@
     }
   }
 
-  &.active {
-    background: $light-blue-background !important;
+  &--active {
+    background: $blue--lighter !important;
 
     &:before {
-      border-color: $dark-blue;
+      border-color: $blue--dark;
     }
 
     p {
-      color: $dark-blue;
+      color: $blue--dark;
     }
   }
 
@@ -109,11 +109,11 @@
     }
   }
 
-  &:hover:not(.is-dragging) {
-    @include outside-border(2px, solid, $dark-blue);
+  &:hover:not(&--drag) {
+    @include outside-border(2px, solid, $blue--dark);
 
-    &.is-circular {
-      @include outside-border(2px, solid, $dark-blue, $border-radius);
+    &--circle {
+      @include outside-border(2px, solid, $blue--dark, $border-radius);
     }
 
     .hover {

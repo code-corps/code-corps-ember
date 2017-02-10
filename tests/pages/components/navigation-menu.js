@@ -1,11 +1,11 @@
-import {
-  attribute,
-  clickable
-} from 'ember-cli-page-object';
+import { isVisible } from 'ember-cli-page-object';
+import userMenu from './user-menu';
 
 export default {
+  loginLinkVisible: isVisible('a.login'),
+
   logo: {
-    scope: '.site-logo a'
+    scope: '.header__logo a'
   },
   logIn: {
     scope: 'a.login'
@@ -13,20 +13,6 @@ export default {
   signUp: {
     scope: 'a.signup'
   },
-  userMenu: {
-    scope: '.user-menu',
-    open: clickable('a.user-menu-select'),
 
-    profileLink: {
-      scope: 'a.slugged-route',
-      href: attribute('href')
-    },
-    settingsLink: {
-      scope: '.profile',
-      href: attribute('href')
-    },
-    logOut: {
-      scope: 'a.logout'
-    }
-  }
+  userMenu
 };

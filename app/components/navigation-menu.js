@@ -19,7 +19,8 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['menu', 'container'],
+  tagName: 'header',
+  classNames: ['site-header', 'container'],
 
   /**
     @property currentUser

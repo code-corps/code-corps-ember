@@ -23,34 +23,43 @@ export default create({
   lastName: fillable('[name="lastName"]'),
   lastNameEnter: triggerable('keyup', '[name="lastName"]', { eventProperties: { keyCode: 13 } }),
   clickCategoryItem: clickable('.category-item button'),
+
   footer: {
     scope: '.site-footer'
   },
 
   startButton: {
-    scope: '.start-actions button',
+    scope: '.start__footer button',
     isDisabled: attribute('disabled')
   },
 
-  roles: collection({
-    itemScope: '.roles-column',
+  roleColumns: collection({
+    itemScope: '.expertise__column',
 
     item: {
-      title: text('h3'),
+      hasClass,
+
       header: {
-        scope: '.roles-column-header',
-        hasClass
+        scope: 'h3',
+        title: text()
       },
-      button: {
-        scope: 'button',
-        text: text(),
-        hasClass
-      }
+
+      roles: collection({
+        itemScope: '.role-item',
+
+        item: {
+          button: {
+            scope: 'button',
+            text: text(),
+            hasClass
+          }
+        }
+      })
     }
   }),
 
   userSkillsList: collection({
-    scope: '.user-skills-list',
+    scope: '.skills__list',
     itemScope: 'button',
     item: {
       text: text(),
