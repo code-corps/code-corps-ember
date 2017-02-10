@@ -9,17 +9,9 @@ isn't this here mainly for updating a user's image? }}
     'navigation-menu' to 'site-header' }}
     {{navigation-menu}}
     {{flash-messages}}
-    {{#if isOnboarding}}
-      <div class="site-content--start container {{codeTheme.className}}">
-        {{outlet}}
-      </div>
-    {{else}}
-      {{! is codeTheme.className needed this early in the DOM tree? }}
-      {{! add flex-direction: column to site-content when looking at tasks }}
-      <div class="site-content container {{codeTheme.className}} {{projectTaskBoard.className}}">
-        {{outlet}}
-      </div>
-    {{/if}}
+    <div class="site-content {{if isOnboarding "site-content--start"}} {{codeTheme.className}} {{projectTaskBoard.className}}">
+      {{outlet}}
+    </div>
     {{#if shouldShowSpacer}}
       <div class="flexbox-spacer"></div>
     {{/if}}

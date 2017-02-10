@@ -1,3 +1,8 @@
+.start {
+  display: flex;
+  flex-direction: column;
+}
+
 .start__header {
   align-self: flex-start;
   margin-bottom: 2em;
@@ -20,7 +25,8 @@
 .start__footer {
   align-self: flex-end;
   border-top: 1px solid $gray--lightest;
-  margin-bottom: 2em;
+  margin: 2em 0;
+  padding: 2em 0;
   text-align: center;
   width: 100%;
   p {

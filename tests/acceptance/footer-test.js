@@ -22,12 +22,4 @@ test('can visit links from footer', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), '/team');
   });
-
-  andThen(function() {
-    indexPage.siteFooter.clickLogo();
-  });
-
-  andThen(function() {
-    assert.equal(currentURL(), '/');
-  });
 });
