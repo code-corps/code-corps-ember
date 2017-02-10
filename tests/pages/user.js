@@ -12,7 +12,7 @@ export default create({
 
   organizations: collection({
     scope: '.user-organizations-list li',
-    itemScope: 'h3 a',
+    itemScope: 'h4 a',
     item: {
       click: clickable(),
       href: attribute('href')

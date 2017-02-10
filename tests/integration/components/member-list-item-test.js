@@ -15,13 +15,6 @@ let user = Object.create({
   name: 'Josh Smith',
   username: 'joshsmith',
   photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
-  userCategories: [
-    {
-      category: {
-        name: 'Technology'
-      }
-    }
-  ],
   userSkills: [
     {
       skill: {
@@ -67,13 +60,12 @@ test('it renders the basic information for the user', function(assert) {
   this.render(hbs`{{member-list-item user=user}}`);
 
   assert.equal(this.$('.icon').attr('src'), user.photoThumbUrl);
-  assert.equal(this.$('p.name').text().trim(), user.name);
-  assert.equal(this.$('p.username').text().trim(), user.username);
+  assert.equal(this.$('.project-member__name strong').text().trim(), user.name);
+  assert.equal(this.$('.project-member__name span').text().trim(), user.username);
   assert.equal(this.$('.icon').attr('src'), user.photoThumbUrl);
-  assert.equal(this.$('p.interests').text().trim(), 'Technology');
-  assert.equal(this.$('p.skills li:eq(0)').text().trim(), 'Ember.js');
-  assert.equal(this.$('p.skills li:eq(1)').text().trim(), 'Rails');
-  assert.equal(this.$('p.skills li:eq(2)').text().trim(), 'Ruby');
+  assert.equal(this.$('.project-member__skills li:eq(0)').text().trim(), 'Ember.js');
+  assert.equal(this.$('.project-member__skills li:eq(1)').text().trim(), 'Rails');
+  assert.equal(this.$('.project-member__skills li:eq(2)').text().trim(), 'Ruby');
   assert.equal(this.$('button').length, 0);
 });
 
@@ -83,7 +75,7 @@ test('it renders the username in the name if name is empty', function(assert) {
 
   this.render(hbs`{{member-list-item user=user}}`);
 
-  assert.equal(this.$('p.name').text().trim(), get(user, 'username'));
+  assert.equal(this.$('.project-member__name strong').text().trim(), get(user, 'username'));
 });
 
 test('it renders the buttons when pending', function(assert) {

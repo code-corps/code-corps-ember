@@ -1,35 +1,33 @@
-<div class="content">
-  <div class="avatar">
-    {{#link-to 'slugged-route' user.username}}
-      <img class="icon" src={{user.photoThumbUrl}} />
-    {{/link-to}}
-  </div>
-  {{#if user.name}}
-    <p class="name">
-      {{link-to user.name 'slugged-route' user.username}}
-    </p>
-  {{else}}
-    <p class="name">
-      {{link-to user.username 'slugged-route' user.username}}
-    </p>
-  {{/if}}
-  <p class="username">{{user.username}}</p>
-  <p class="interests">
-    <ul>
-      {{#each user.userCategories as |userCategory|}}
-        <li>{{userCategory.category.name}}</li>
-      {{/each}}
-    </ul>
-  </p>
-  <p class="skills">
-    <ul>
-      {{#each user.userSkills as |userSkill|}}
-        <li>{{userSkill.skill.title}}</li>
-      {{/each}}
-    </ul>
-  </p>
+<div class="project-member__avatar">
+  {{#link-to 'slugged-route' user.username}}
+    <img class="icon" src= {{user.photoThumbUrl}} />
+  {{/link-to}}
 </div>
-<div class="actions">
+
+<div class="project-member__name">
+  <strong>
+  {{#if user.name}}
+    {{link-to user.name 'slugged-route' user.username}}
+  {{else}}
+    {{link-to user.username 'slugged-route' user.username}}
+  {{/if}}
+  </strong>
+  <br>
+  <span>
+    {{user.username}}
+  </span>
+</div>
+
+<div class="project-member__skills">
+  <h4>Skills</h4>
+  <ul>
+    {{#each user.userSkills as |userSkill|}}
+      <li>{{userSkill.skill.title}}</li>
+    {{/each}}
+  </ul>
+</div>
+
+<div class="project-member__actions">
   {{#if membership.isPending}}
     <button class="default small" {{action "approve" membership}}>Approve</button>
     <button class="danger small" {{action "deny" membership}}>Deny</button>

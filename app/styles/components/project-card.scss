@@ -1,7 +1,7 @@
 .project-card {
   @include omega(3n);
   @include span-columns(4);
-  border: 1px solid $border-light;
+  border: 1px solid $gray--lightest;
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
@@ -17,15 +17,15 @@
     text-align: center;
 
     a {
-      color: $dark-text;
+      color: $text--dark;
       &:hover {
-        color: $dark-blue;
+        color: $blue;
       }
     }
   }
 
   p {
-    color: $light-text;
+    color: $text--light;
     font-size: $body-font-size-small;
   }
 

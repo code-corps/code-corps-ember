@@ -3,7 +3,7 @@ import { text, isHidden, property } from 'ember-cli-page-object';
 export default {
   scope: '.user-sidebar',
 
-  name: text('h2 .name'),
+  name: text('.name'),
 
   biography: text('p.biography'),
   biographyIsHidden: isHidden('li.twitter'),
@@ -16,5 +16,5 @@ export default {
   websiteHidden: isHidden('li.website'),
   websiteLink: property('href', 'li.website a'),
 
-  username: text('h2 .username')
+  username: text('.username')
 };

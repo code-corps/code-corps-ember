@@ -32,7 +32,7 @@ test('it returns true "code" tag is present', function(assert) {
 
   let model = this.subject({ body: '<code>Hello, world!<code>' });
 
-  assert.equal(model.get('containsCode'), true);
+  assert.ok(model.get('containsCode'));
 });
 
 test('it returns false if "code" tag is absent', function(assert) {
@@ -40,5 +40,5 @@ test('it returns false if "code" tag is absent', function(assert) {
 
   let model = this.subject({ body: 'Hello, world!' });
 
-  assert.equal(model.get('containsCode'), false);
+  assert.notOk(model.get('containsCode'));
 });

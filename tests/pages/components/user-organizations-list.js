@@ -7,10 +7,10 @@ import {
 export default {
   scope: '.user-organizations-list',
 
-  header: text('h2'),
+  header: text('h3'),
   emptyState: text('.empty-state strong'),
   listItemCount: count('li'),
   organizationDescription: text('li:first p'),
   organizationIconSrc: property('src', 'li:first img'),
-  organizationTitle: text('li:first h3')
+  organizationTitle: text('li:first h4')
 };

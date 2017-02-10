@@ -77,21 +77,21 @@ test('it only renders loading spinner even when hovering', function(assert) {
   page.mouseenter();
   assert.ok(page.isDisabled);
   assert.ok(page.span.hasSpinner);
-  assert.equal(this.$('button').hasClass('can-delete'), true);
+  assert.ok(this.$('button').hasClass('can-delete'));
 });
 
 test('it responds to hovering', function(assert) {
   this.render(hbs`{{skill-button remove=(action removeHandler)}}`);
 
-  assert.equal(this.$('button').hasClass('can-delete'), false);
+  assert.notOk(this.$('button').hasClass('can-delete'));
   assert.notOk(page.span.hasX);
 
   page.mouseenter();
-  assert.equal(this.$('button').hasClass('can-delete'), true);
+  assert.ok(this.$('button').hasClass('can-delete'));
   assert.ok(page.span.hasX);
 
   page.mouseleave();
-  assert.equal(this.$('button').hasClass('can-delete'), false);
+  assert.notOk(this.$('button').hasClass('can-delete'));
   assert.notOk(page.span.hasX);
 });
 

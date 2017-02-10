@@ -20,8 +20,8 @@ const {
   @class project-menu
  */
 export default Component.extend({
-  classNames: ['project-menu', 'horizontal-menu'],
-  tagName: 'ul',
+  classNames: ['project__menu', 'project__menu--horizontal'],
+  tagName: 'nav',
 
   /**
     Retreives user credentials to show more content for project managers.

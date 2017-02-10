@@ -1,4 +1,9 @@
 .categories-list {
-  @include span-columns(12);
+  flex: 1;
+  margin-bottom: 2em;
+  width: 100%;
 }
 
+.start__interests {
+  @extend .categories-list;
+}

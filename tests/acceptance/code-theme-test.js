@@ -10,6 +10,6 @@ test('Code theme class exists on the main container', function(assert) {
   indexPage.visit();
 
   andThen(function() {
-    assert.ok(indexPage.isLightTheme, 'light class added to .main.container');
+    assert.ok(indexPage.isLightTheme);
   });
 });

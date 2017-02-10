@@ -21,7 +21,11 @@ test('Logging in', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(loginPage.navMenu.userMenu.logOut.text, 'Log out', 'Page contains logout link');
+    loginPage.navMenu.userMenu.toggle();
+  });
+
+  andThen(() => {
+    assert.ok(loginPage.navMenu.userMenu.logoutLinkVisible, 'Page contains logout link');
     assert.equal(currentURL(), '/projects');
   });
 });

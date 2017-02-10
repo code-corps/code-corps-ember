@@ -51,7 +51,7 @@ test('it renders as selected with the highlighted string', function(assert) {
     }}
   `);
 
-  assert.equal(page.listItemIsSelected, true);
+  assert.ok(page.listItemIsSelected);
 
   assert.equal(page.highlightedStrings(0).text, 'Ru');
   assert.equal(page.highlightedStrings(1).text, 'on');

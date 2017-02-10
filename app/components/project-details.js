@@ -19,9 +19,10 @@ const {
  */
 
 export default Component.extend({
-  classNames: ['project-details'],
+  classNames: ['project__header'],
   classNameBindings: ['expanded'],
   expanded: false,
+  tagName: 'header',
 
   /**
     @property store
