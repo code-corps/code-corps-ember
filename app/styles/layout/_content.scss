@@ -1,9 +1,9 @@
 .site-content {
+  display: flex;
+  flex-direction: column;
   margin-top: 10px;
 
   &.for-project-tasks {
-    display: flex;
-    flex-direction: column;
     flex-grow: 1;
   }
 	// align-items: center;
