@@ -3,6 +3,7 @@
     {{link-to 'New task' 'project.tasks.new' tagName='button' class="default small new-task"}}
   </div>
 </div>
+
 <div class="task-board-container">
   {{#ember-dragula class="task-board" drop="onDrop" config=dragulaconfig as |drake|}}
     {{#each orderedTaskLists as |taskList|}}

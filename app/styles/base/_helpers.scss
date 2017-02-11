@@ -1,6 +1,13 @@
 .container {
-  @include outer-container(980px);
-  min-width: 980px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 10px;
+  height: 100%;
+  width: 100%;
+
+  &--wide {
+    padding: 0 10px;
+  }
 }
 
 .flexbox-container {

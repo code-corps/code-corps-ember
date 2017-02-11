@@ -41,44 +41,6 @@
     width: $size;
   }
 
-  &--circle {
-    border-radius: $border-radius;
-
-    .hover {
-      border-radius: $border-radius;
-    }
-
-    input[type=file] {
-      border-radius: $border-radius;
-    }
-  }
-
-  &--drag {
-    @include outside-border(2px, dashed, $gray--lightest);
-
-    &--circle {
-      @include outside-border(2px, default, $gray--lightest, $border-radius);
-    }
-
-    background: transparent !important;
-
-    p {
-      display: block;
-    }
-  }
-
-  &--active {
-    background: $blue--lighter !important;
-
-    &:before {
-      border-color: $blue--dark;
-    }
-
-    p {
-      color: $blue--dark;
-    }
-  }
-
   .hover {
     border-radius: 5px;
     display: none;
@@ -105,14 +67,53 @@
       font-size: $body-font-size-normal;
       margin: 5px 0;
       padding: 0 10px;
+      text-align: center;
       width: 100%;
     }
   }
 
-  &:hover:not(&--drag) {
+  &--circle {
+    border-radius: $border-radius;
+
+    .hover {
+      border-radius: $border-radius;
+    }
+
+    input[type=file] {
+      border-radius: $border-radius;
+    }
+  }
+
+  &--drag {
+    @include outside-border(2px, dashed, $gray--lightest);
+
+    &.image-drop--circle {
+      @include outside-border(2px, default, $gray--lightest, $border-radius);
+    }
+
+    background: transparent !important;
+
+    p {
+      display: block;
+    }
+  }
+
+  &--active {
+    background: $blue--lighter !important;
+
+    &:before {
+      border-color: $blue--dark;
+    }
+
+    p {
+      color: $blue--dark;
+    }
+  }
+
+  &:hover:not(.image-drop--drag) {
     @include outside-border(2px, solid, $blue--dark);
 
-    &--circle {
+    &.image-drop--circle {
       @include outside-border(2px, solid, $blue--dark, $border-radius);
     }
 

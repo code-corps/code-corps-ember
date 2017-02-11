@@ -1,9 +1,15 @@
-<li>
-  {{#link-to 'slugged-route' organization.slug}}Projects{{/link-to}}
-</li>
+<div class="container">
+  <div>
+    <ul>
+      <li>
+        {{#link-to 'slugged-route' organization.slug}}Projects{{/link-to}}
+      </li>
 
-{{#if (can 'manage organization')}}
-  <li>
-    {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}Settings{{/link-to}}
-  </li>
-{{/if}}
+      {{#if (can 'manage organization')}}
+        <li>
+          {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}Settings{{/link-to}}
+        </li>
+      {{/if}}
+    </ul>
+  </div>
+</div>

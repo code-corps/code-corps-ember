@@ -15,6 +15,15 @@
 .temporary-projects-notice {
   @include span-columns(4);
 
+  @include media($md-screen) {
+    @include omega(2n);
+    @include span-columns(6);
+  }
+
+  @include media($xs-screen) {
+    display: none;
+  }
+
   border: 1px dashed $gray--lightest;
   border-radius: 4px;
   color: $text--light;

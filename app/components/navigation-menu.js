@@ -20,7 +20,7 @@ const {
  */
 export default Component.extend({
   tagName: 'header',
-  classNames: ['site-header', 'container'],
+  classNames: ['site-header'],
 
   /**
     @property currentUser

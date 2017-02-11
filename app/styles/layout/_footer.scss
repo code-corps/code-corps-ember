@@ -1,5 +1,5 @@
 .site-footer {
-  padding: 1.4em 0;
+  padding: 2em 0 1em 0;
   h4 {
     margin: 7px 0;
   }
@@ -14,11 +14,12 @@
 .footer-columns {
   > li {
     float: left;
+    margin-bottom: 1em;
+    width: 25%;
 
-    &:first-child {
-      width: 28%
+    @include media($md-screen) {
+      width: 50%;
     }
-    width: 18%;
   }
 }
 

@@ -9,7 +9,7 @@ import siteFooter from './components/site-footer';
 export default create({
   visit: visitable('/'),
 
-  isLightTheme: hasClass('code-theme--light', '.site-content.container'),
+  isLightTheme: hasClass('code-theme--light', '.site-content'),
 
   navMenu,
   siteFooter

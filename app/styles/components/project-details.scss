@@ -1,11 +1,14 @@
 .project__header {
-  margin: 0 0 10px 0;
   width: 100%;
 
   @include clearfix;
 
+  $icon-size: 50px;
+
   &__icon {
     float: left;
+    height: $icon-size;
+    width: $icon-size;
   }
 
   &__main {
@@ -13,15 +16,17 @@
     @include span-columns(8);
   }
 
-  &__details {
-    margin-left: 10px;
-  }
-
   &__side {
     @include span-columns(4);
-    p {
-      text-align: right;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    justify-content: flex-end;
+
+    button {
+      vertical-align: middle;
     }
+
     span {
       color: $blue;
     }

@@ -1,6 +1,17 @@
 .project-card {
   @include omega(3n);
   @include span-columns(4);
+
+  @include media($md-screen) {
+    @include omega(2n);
+    @include span-columns(6);
+  }
+
+  @include media($xs-screen) {
+    @include omega(1n);
+    @include span-columns(12);
+  }
+
   border: 1px solid $gray--lightest;
   border-radius: 4px;
   padding: 20px;
