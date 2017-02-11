@@ -1,8 +1,10 @@
-<div class="task-new-main">
-  {{task-new-form task=task save=(action 'saveTask' task)}}
-  {{#if error}}
-    {{error-formatter error=error}}
-  {{/if}}
-</div>
-<div class="task-new-sidebar">
+<div class="container">
+  <div class="task-new-main">
+    {{task-new-form task=task save=(action 'saveTask' task)}}
+    {{#if error}}
+      {{error-formatter error=error}}
+    {{/if}}
+  </div>
+  <div class="task-new-sidebar">
+  </div>
 </div>

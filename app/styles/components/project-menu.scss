@@ -1,10 +1,9 @@
 .project__menu, .organization-menu {
   &--horizontal {
     @include clearfix;
-    border-bottom: 1px solid $gray--light;
-    height: 2.5em;
+    border-bottom: 1px solid $blue--lighter;
     list-style-type: none;
-    margin-bottom: .7em;
+    margin-bottom: 10px;
     padding: 0;
     width: 100%;
 
@@ -20,7 +19,8 @@
       display: block;
       font-weight: 500;
       height: 100%;
-      padding: 6px 10px;
+      margin-bottom: -1px;
+      padding: 9px 10px;
       text-decoration: none;
 
       &.active, &:hover {

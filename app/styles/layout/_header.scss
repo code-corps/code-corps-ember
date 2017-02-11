@@ -9,32 +9,54 @@
 }
 
 .site-header {
+  border-bottom: 1px solid #EEE;
   display: flex;
-  height: 5em;
-  padding: .7em 0;
+  height: 53px;
+  padding: 0 10px;
 }
 
 .header__logo {
+  display: flex;
+  align-items: center;
   line-height: 50px;
   margin: 0;
   a {
-    @include sprite($logo);
+    @include sprite($logo-small);
     display: inline-block;
     text-indent: -9999px;
+
+    @include media($sm-screen) {
+      @include sprite($logo-small-icon-only);
+    }
   }
 }
 
 .header-navigation {
-  &--main, &--auth {
-    padding: 0 2em;
+  &--left {
+    display: flex;
+    flex: 2;
+    order: 1;
+  }
+
+  &--middle {
+    display: flex;
+    flex: 1;
+    order: 2;
+    justify-content: center;
+  }
+
+  &--right {
+    display: flex;
+    flex: 2;
+    justify-content: flex-end;
+    order: 3;
   }
 }
 
-.header-navigation--auth {
-  margin-left: auto;
-}
-
 .header-navigation__options {
+  display: flex;
+  justify-content: flex-end;
+
   li {
     display: inline-block;
     float: left;

@@ -9,7 +9,7 @@ moduleForComponent('navigation-menu', 'Integration | Component | navigation menu
 test('it renders elements for the default menu when logged out', function(assert) {
   this.render(hbs`{{navigation-menu}}`);
   assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation--main').length, 1);
+  assert.equal(this.$('.header-navigation__options').length, 2);
   assert.equal(this.$('.user-menu').length, 0, 'does not show uer menu');
   assert.equal(this.$('.onboarding__steps').length, 0);
 });
@@ -19,7 +19,7 @@ test('it renders elements for the default menu when logged in', function(assert)
 
   this.render(hbs`{{navigation-menu}}`);
   assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation--main').length, 1);
+  assert.equal(this.$('.header-navigation__options').length, 2);
   assert.equal(this.$('.user-menu').length, 1, 'shows uer menu');
   assert.equal(this.$('.onboarding__steps').length, 0);
 });
@@ -34,7 +34,7 @@ test('it renders elements for the onboarding menu', function(assert) {
 
   this.render(hbs`{{navigation-menu}}`);
   assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation--main').length, 0);
+  assert.equal(this.$('.header-navigation__options').length, 0);
   assert.equal(this.$('.user-menu').length, 0, 'does not show uer menu');
   assert.equal(this.$('.onboarding__steps').length, 1);
   assert.equal(this.$('.onboarding__steps').text().trim(), 'Step 1 of 4');

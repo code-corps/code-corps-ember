@@ -1,5 +1,9 @@
 {{title "Tasks" " « " model.title " by " model.organization.name}}
 
-{{project-details project=model}}
-{{project-menu project=model}}
+<div class="container--wide">
+  {{project-details project=model}}
+</div>
+
+{{project-menu project=model wide=true}}
+
 {{outlet}}

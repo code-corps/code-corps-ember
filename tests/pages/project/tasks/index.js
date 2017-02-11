@@ -19,7 +19,7 @@ export default create({
   },
 
   siteContentContainer: {
-    scope: '.site-content.container.for-project-tasks'
+    scope: '.site-content.for-project-tasks'
   },
 
   clickNewTask: clickable('.new-task'),

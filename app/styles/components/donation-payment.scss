@@ -1,6 +1,22 @@
 .donation-container {
   @include span-columns(5);
   @include shift(7/2);
+
+  @include media($lg-screen) {
+    @include span-columns(8);
+    @include shift(2);
+  }
+
+  @include media($md-screen) {
+    @include shift(1);
+    @include span-columns(10);
+  }
+
+  @include media($sm-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
+
   h3 {
     margin-top: 35px;
     margin-top: 2.5em;

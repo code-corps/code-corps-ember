@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   computed,
+  get,
   inject: { service },
   Service
 } = Ember;
@@ -13,7 +14,7 @@ export default Service.extend({
   isOnboarding: computed.equal('menuType', 'onboarding'),
 
   menuType: computed('onboarding.isOnboarding', function() {
-    let isOnboarding = this.get('onboarding.isOnboarding');
+    let isOnboarding = get(this, 'onboarding.isOnboarding');
     if (isOnboarding) {
       return 'onboarding';
     } else {

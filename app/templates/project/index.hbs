@@ -1,37 +1,41 @@
 {{title project.title " by " project.organization.name}}
 
-{{project-details project=project expanded=true}}
+<div class="container">
+  {{project-details project=project expanded=true}}
+</div>
 
 {{project-menu project=project}}
 
-<div class="project-wrapper">
+<div class="container">
+  <div class="project-wrapper">
 
-  {{project-long-description project=project}}
+    {{project-long-description project=project}}
 
-  <aside class="project-sidebar">
+    <aside class="project-sidebar">
 
-    {{#if project.donationsActive}}
+      {{#if project.donationsActive}}
+        <section class="project-sidebar__section">
+          <h4>Donations</h4>
+          {{donations/donation-progress
+            amountDonated=project.totalMonthlyDonated
+            donationGoal=project.currentDonationGoal
+          }}
+          {{donations/donation-status
+            createDonation=(action 'saveSubscription')
+            subscription=subscription
+          }}
+        </section>
+      {{/if}}
+
       <section class="project-sidebar__section">
-        <h4>Donations</h4>
-        {{donations/donation-progress
-          amountDonated=project.totalMonthlyDonated
-          donationGoal=project.currentDonationGoal
-        }}
-        {{donations/donation-status
-          createDonation=(action 'saveSubscription')
-          subscription=subscription
-        }}
+        {{organization-members count=project.organization.totalMembersCount members=project.organization.organizationMembers}}
       </section>
-    {{/if}}
 
-    <section class="project-sidebar__section">
-      {{organization-members count=project.organization.totalMembersCount members=project.organization.organizationMembers}}
-    </section>
+      <section class="project-sidebar__section">
+        <h4>Skills</h4>
+        {{skills-list skills=projectSkills}}
+      </section>
 
-    <section class="project-sidebar__section">
-      <h4>Skills</h4>
-      {{skills-list skills=projectSkills}}
-    </section>
-
-  </aside>
+    </aside>
+  </div>
 </div>

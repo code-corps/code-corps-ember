@@ -5,9 +5,13 @@
   height: 100%;
   width: 280px;
   overflow-y: scroll;
-  margin-right: 7px;
+  margin-left: 7px;
   padding: 8px 10px;
   white-space: normal;
+
+  &:first-child {
+    margin-left: 10px;
+  }
 }
 
 .task-list {

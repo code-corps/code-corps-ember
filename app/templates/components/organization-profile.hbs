@@ -1,12 +1,17 @@
-{{organization-header organization=organization expanded=true}}
-{{organization-menu organization=organization}}
-
-<div class="organization-main">
-  {{project-list projects=organization.projects}}
+<div class="container">
+  {{organization-header organization=organization expanded=true}}
 </div>
 
-<div class="organization-sidebar">
-  <div class="organization-sidebar__section">
-    {{organization-members count=organization.totalMembersCount members=organizationMembers}}
+{{organization-menu organization=organization}}
+
+<div class="container">
+  <div class="organization-main">
+    {{project-list projects=organization.projects}}
+  </div>
+
+  <div class="organization-sidebar">
+    <div class="organization-sidebar__section">
+      {{organization-members count=organization.totalMembersCount members=organizationMembers}}
+    </div>
   </div>
 </div>
