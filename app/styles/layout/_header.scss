@@ -10,9 +10,14 @@
 
 .site-header {
   border-bottom: 1px solid #EEE;
-  display: flex;
+  display: block;
   height: 53px;
   padding: 0 10px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .header__logo {
@@ -56,6 +61,7 @@
 .header-navigation__options {
   display: flex;
   justify-content: flex-end;
+  white-space: nowrap;
 
   li {
     display: inline-block;
