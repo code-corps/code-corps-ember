@@ -1,6 +1,6 @@
 <div class="amount-group">
   <span class="currency">$</span>
-  {{input class="amount" name="amount" type="number" placeholder="Custom amount" value=amount}}
+  {{input class="amount" name="amount" type="number" min="0" step="1" placeholder="Custom amount" value=amount}}
   <span class="period">per month</span>
 </div>
 {{#each donationGoal.errors.amount as |error|}}
