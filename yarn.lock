@@ -2605,7 +2605,7 @@ ember-cli-head@^0.1.2:
     ember-cli-version-checker "^1.1.6"
     fastboot-filter-initializers "0.0.1"
 
-ember-cli-htmlbars-inline-precompile@^0.3.3:
+ember-cli-htmlbars-inline-precompile@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-0.3.6.tgz#4095fe423f93102724c0725e4dd1a31f25e24de5"
   dependencies:
@@ -2885,9 +2885,9 @@ ember-cli-version-checker@^1.0.2, ember-cli-version-checker@^1.1.4, ember-cli-ve
   dependencies:
     semver "^5.3.0"
 
-ember-cli@2.11.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.11.0.tgz#29461b1b3b1d7412b60dfc14e9399ba49ac9b707"
+ember-cli@2.11.1:
+  version "2.11.1"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-2.11.1.tgz#519f93ee944e0a092e77da81027400a692c5b7d3"
   dependencies:
     amd-name-resolver "0.0.6"
     bower "^1.3.12"
@@ -3183,6 +3183,14 @@ ember-network@^0.3.0:
     ember-cli-babel "^5.1.5"
     node-fetch "^1.3.3"
     whatwg-fetch "^0.11.0"
+
+ember-normalize@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-normalize/-/ember-normalize-1.0.0.tgz#f5a0077caa1047321a436dd4f2fa7cf944f3b587"
+  dependencies:
+    broccoli-funnel "^0.2.3"
+    ember-cli-babel "^5.1.6"
+    normalize.css "~4.1.1"
 
 ember-page-title@^3.1.2:
   version "3.1.5"
@@ -5784,6 +5792,14 @@ normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
 
+normalize.css@^4.1.1:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-4.2.0.tgz#21d66cc557154d4379fd1e079ec7de58a379b099"
+
+normalize.css@~4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-4.1.1.tgz#4f0b1d5a235383252b04d8566b866cc5fcad9f0c"
+
 npm-cache-filename@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/npm-cache-filename/-/npm-cache-filename-1.0.2.tgz#ded306c5b0bfc870a9e9faf823bc5f283e05ae11"
@@ -7599,17 +7615,13 @@ utils-merge@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
 
-uuid@3.0.0:
+uuid@3.0.0, uuid@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.0.tgz#6728fc0459c450d796a99c31837569bdf672d728"
 
 uuid@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
-
-uuid@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
