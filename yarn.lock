@@ -3309,12 +3309,12 @@ ember-tether@0.4.1:
     ember-cli-node-assets "^0.1.6"
     tether "^1.4.0"
 
-ember-tooltips@2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/ember-tooltips/-/ember-tooltips-2.8.2.tgz#1b105269e45d2df21275bb1f079297a2d8970eff"
+ember-tooltips@^2.9.0-beta:
+  version "2.9.0-beta.0"
+  resolved "https://registry.yarnpkg.com/ember-tooltips/-/ember-tooltips-2.9.0-beta.0.tgz#a7a024cc606bc18d58f8f7a655ca4e65e0d25ac6"
   dependencies:
-    ember-cli-babel "^5.1.6"
-    ember-cli-htmlbars "^1.1.0"
+    ember-cli-babel "^5.1.7"
+    ember-cli-htmlbars "^1.1.1"
     ember-cli-sass "6.0.0"
     ember-hash-helper-polyfill "^0.1.1"
 

@@ -1,7 +1,12 @@
 {{#link-to 'projects-list'
   class="interest-icon"
-  classNameBindings="category.slug selected"}}
+  classNameBindings="category.slug selected"
+}}
 {{/link-to}}
-{{#tooltip-on-component effect='none' side='bottom' updateFor=category.isLoaded}}
+{{#tooltip-on-component
+  effect='none'
+  side='bottom'
+  updateFor=category.isLoaded
+}}
   {{category.name}}
 {{/tooltip-on-component}}

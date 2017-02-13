@@ -1,6 +1,7 @@
 {{#if task.isLoading}}
   <div class="long"></div>
   <div class="short"></div>
+  <div class="icon--loading"></div>
 {{else}}
   <p>
     <span class="task-card__title" data-test-selector="task title">{{task.title}}</span>
@@ -11,4 +12,10 @@
     <span class="task-card__icon"></span>
     <span class="task-card__time" data-test-selector="task time">{{moment-from-now task.insertedAt}}</span>
   </p>
+  {{task/user/user-select
+    canEdit=canEdit
+    task=task
+    user=task.userTask.user
+    userTask=task.userTask
+  }}
 {{/if}}

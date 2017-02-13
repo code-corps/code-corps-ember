@@ -13,8 +13,12 @@ let mockSession = { isAuthenticated: true };
 
 let page = PageObject.create(skillListItemLink);
 
-function setHandlers(context, { toggleHandler = function() {} } = {}) {
+function setHandlers(context, toggleHandler = function() {}) {
   context.set('toggleHandler', toggleHandler);
+}
+
+function renderPage() {
+  page.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
 }
 
 moduleForComponent('skill-list-item-link', 'Integration | Component | skill list item link', {
@@ -32,8 +36,7 @@ test('it renders correctly for skill', function(assert) {
   assert.expect(1);
 
   set(this, 'skill', { title: 'Ember.js' });
-
-  this.render(hbs`{{skill-list-item-link skill=skill}}`);
+  renderPage();
 
   assert.equal(page.skillTitle.text, 'Ember.js', 'The skill title renders');
 });
@@ -42,20 +45,18 @@ test('it renders correctly when matched', function(assert) {
   assert.expect(1);
 
   set(this, 'matched', true);
+  renderPage();
 
-  this.render(hbs`{{skill-list-item-link matched=matched}}`);
-
-  assert.equal(page.text, 'Delete your skill', 'The delete text renders when matched');
+  assert.equal(page.tooltip.text, 'Delete your skill', 'The delete text renders when matched');
 });
 
 test('it renders correctly when unmatched', function(assert) {
   assert.expect(1);
 
   set(this, 'matched', false);
+  renderPage();
 
-  this.render(hbs`{{skill-list-item-link matched=matched}}`);
-
-  assert.equal(page.text, 'Add new skill', 'The add text renders when not matched');
+  assert.equal(page.tooltip.text, 'Add new skill', 'The add text renders when not matched');
 });
 
 test('it toggles the action when clicked and authenticated', function(assert) {
@@ -66,12 +67,12 @@ test('it toggles the action when clicked and authenticated', function(assert) {
   let skill = { title: 'Ember.js' };
   set(this, 'skill', skill);
 
-  let toggleHandler = function(toggledSkill) {
+  function toggleHandler(toggledSkill) {
     assert.deepEqual(skill, toggledSkill);
-  };
-  set(this, 'toggleHandler', toggleHandler);
+  }
+  setHandlers(this, toggleHandler);
+  renderPage();
 
-  this.render(hbs`{{skill-list-item-link skill=skill toggleSkill=(action toggleHandler)}}`);
   page.click();
 });
 
@@ -83,18 +84,18 @@ test('it does not toggle the action when clicked and unauthenticated', function(
   let skill = { title: 'Ember.js' };
   set(this, 'skill', skill);
 
-  let toggleHandler = function(toggledSkill) {
+  function toggleHandler(toggledSkill) {
     assert.deepEqual(skill, toggledSkill);
-  };
-  set(this, 'toggleHandler', toggleHandler);
+  }
+  setHandlers(this, toggleHandler);
 
-  this.render(hbs`{{skill-list-item-link skill=skill toggleSkill=(action toggleHandler)}}`);
+  renderPage();
   page.click();
 });
 
 test('it does not have clicked or removed classes at first', function(assert) {
   assert.expect(2);
-  this.render(hbs`{{skill-list-item-link}}`);
+  renderPage();
   assert.notOk(page.hasJustClicked, 'Does not have clicked class');
   assert.notOk(page.hasJustRemoved, 'Does not have removed class');
 });
@@ -103,10 +104,11 @@ test('it correctly adds and removes clicked class', function(assert) {
   assert.expect(2);
 
   stubService(this, 'session', mockSession);
-  this.render(hbs`{{skill-list-item-link toggleSkill=(action toggleHandler)}}`);
+  renderPage();
 
   page.mouseenter();
   page.click();
+
   assert.ok(page.hasJustClicked, 'Added clicked class');
 
   page.mouseleave();
@@ -131,10 +133,13 @@ test('it does not add removed class when unmatched', function(assert) {
   assert.expect(2);
 
   stubService(this, 'session', mockSession);
-  this.render(hbs`{{skill-list-item-link matched=false toggleSkill=(action toggleHandler)}}`);
+  set(this, 'matched', false);
+  renderPage();
 
   page.mouseenter();
+
   page.click();
+
   assert.ok(page.hasJustClicked, 'Added clicked class');
   assert.notOk(page.hasJustRemoved, 'Does not have removed class');
 });

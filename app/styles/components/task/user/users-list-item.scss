@@ -1,0 +1,52 @@
+$icon-width: 12px;
+
+.task__user__users-list-item {
+  border: none;
+  display: flex;
+  position: relative;
+
+  &:before {
+    content: "";
+    height: 10px;
+    margin: 10px 7px 0 0;
+    position: absolute;
+    width: $icon-width;
+  }
+
+  &__avatar {
+    align-items: center;
+    display: flex;
+    margin: 0 7px 0 ($icon-width + 7px);
+
+    img {
+      border-radius: 15px;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    color: $text--lighter;
+    display: block;
+    font-size: $body-font-size-tiny;
+    font-weight: 500;
+  }
+
+  &__username {
+    color: $text--dark;
+    display: block;
+    font-size: $body-font-size-small;
+    font-weight: 700;
+  }
+
+  &--assigned {
+    &:before {
+      @include sprite($tick-blue);
+    }
+  }
+}

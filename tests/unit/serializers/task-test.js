@@ -3,14 +3,15 @@ import { moduleForModel, test } from 'ember-qunit';
 moduleForModel('task', 'Unit | Serializer | task', {
   // Specify the other units that are required for this test.
   needs: [
-    'serializer:task',
-    'model:project',
-    'model:user',
     'model:comment',
     'model:comment-user-mention',
+    'model:project',
     'model:task-list',
     'model:task-skill',
-    'model:task-user-mention'
+    'model:task-user-mention',
+    'model:user',
+    'model:user-task',
+    'serializer:task'
   ]
 });
 

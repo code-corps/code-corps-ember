@@ -11,7 +11,8 @@ moduleForModel('task', 'Unit | Model | task', {
     'model:task-list',
     'model:task-skill',
     'model:task-user-mention',
-    'model:user'
+    'model:user',
+    'model:user-task'
   ]
 });
 

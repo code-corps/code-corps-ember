@@ -134,5 +134,13 @@ export default Model.extend(ContainsCodeMixin, {
     @attribute user
     @type Ember.computed
    */
-  user: belongsTo('user', { async: true })
+  user: belongsTo('user', { async: true }),
+
+  /**
+    The user task relationshipp
+
+    @attribute userTask
+    @type Ember.computed
+   */
+  userTask: belongsTo('user-task', { async: true })
 });

@@ -21,6 +21,7 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
+  classNames: ['project-category-item'],
   tagName: ['li'],
 
   /**

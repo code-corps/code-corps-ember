@@ -46,6 +46,7 @@
 @import "layout/footer";
 @import "layout/forms";
 @import "layout/header";
+@import "layout/select-dropdown";
 
 //
 // COMPONENTS
@@ -114,6 +115,12 @@
 // COMPONETS - RELATED SKILLS
 //
 @import "components/related-skills";
+
+//
+// COMPONENTS - TASK
+//
+@import "components/task/user/user-select";
+@import "components/task/user/users-list-item";
 
 //
 // COMPONENTS - TASKS

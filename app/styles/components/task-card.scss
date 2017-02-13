@@ -2,6 +2,7 @@
   background: white;
   border: 1px solid $gray--lightest;
   border-radius: 0 0 4px 4px;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
@@ -11,7 +12,12 @@
     margin: 0 0 7px 0;
 
     &:last-child {
+      flex-direction: row;
+      justify-content: flex-start;
       margin: 0;
+      span:nth-child(2) {
+        margin: 0 5px;
+      }
     }
   }
 
@@ -21,6 +27,7 @@
 
   &__meta {
     display: flex;
+    margin-bottom: 20px;
   }
 
   &__number {
@@ -33,6 +40,7 @@
   }
 
   &__title {
+    cursor: pointer;
     font-weight: 600;
     margin-right: 5px;
   }
@@ -79,17 +87,13 @@
   }
 
   &.gu-mirror {
-    cursor: grabbing;
-    cursor: -moz-grabbing;
-    cursor: -webkit-grabbing;
+    box-shadow: -2px 2px 6px #CCC;
+    cursor: grab;
     opacity: 1.0;
     transform: rotate(5deg);
-    -ms-transform: rotate(5deg);
-    -webkit-transform: rotate(5deg);
     &.task-card--idea { background-color: $idea-background; }
     &.task-card--issue { background-color: $issue-background; }
     &.task-card--task { background-color: $task-background; }
-    box-shadow: -2px 2px 6px #CCC;
   }
 
   a {
