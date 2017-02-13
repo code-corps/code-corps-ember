@@ -9,6 +9,7 @@ moduleForModel('task', 'Unit | Serializer | task', {
     'model:comment',
     'model:comment-user-mention',
     'model:task-list',
+    'model:task-skill',
     'model:task-user-mention'
   ]
 });

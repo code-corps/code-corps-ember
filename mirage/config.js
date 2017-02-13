@@ -68,10 +68,11 @@ function generatePreviewMentions(schema, preview) {
 
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
-  'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations', 'task-lists',
-  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories', 'slugged-routes',
-  'stripe-connect-accounts', 'stripe-connect-subscriptions', 'stripe-connect-plans',
-  'stripe-platform-cards', 'stripe-platform-customers',
+  'categories', 'comment-user-mentions', 'comments', 'donation-goals',
+  'organizations', 'task-lists', 'task-skills', 'task-user-mentions', 'tasks',
+  'previews', 'projects', 'project-categories', 'slugged-routes',
+  'stripe-connect-accounts', 'stripe-connect-subscriptions',
+  'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
   'user-categories', 'users'
 ];
 
@@ -538,6 +539,15 @@ export default function() {
 
     return task;
   });
+
+  /**
+  * Task skills
+  */
+
+  this.get('/task-skills', { coalesce: true });
+  this.post('/task-skills');
+  this.get('/task-skills/:id');
+  this.delete('/task-skills/:id');
 
   /**
   * Token
