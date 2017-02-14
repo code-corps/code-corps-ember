@@ -1,19 +1,21 @@
-{{task-header task=task saveTask=(action 'saveTask')}}
-{{task-status task=task}}
+<div class="container">
+  {{task-header task=task saveTask=(action 'saveTask')}}
+  {{task-status task=task}}
 
-<div class="task-wrapper">
-  <div class="task-timeline">
-    {{task-details task=task saveTask=(action 'saveTask')}}
-    {{task-comment-list comments=comments onSaveError=(action 'onSaveError')}}
-    <div>
-      {{#create-comment-form comment=newComment save=(action 'saveComment')}}
-        {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}
-      {{/create-comment-form}}
-      {{#if error}}
-        {{error-formatter error=error}}
-      {{/if}}
+  <div class="task-wrapper">
+    <div class="task-timeline">
+      {{task-details task=task saveTask=(action 'saveTask')}}
+      {{task-comment-list comments=comments onSaveError=(action 'onSaveError')}}
+      <div>
+        {{#create-comment-form comment=newComment save=(action 'saveComment')}}
+          {{#if (can "edit task" task)}}{{task-status-button task=task}}{{/if}}
+        {{/create-comment-form}}
+        {{#if error}}
+          {{error-formatter error=error}}
+        {{/if}}
+      </div>
     </div>
-  </div>
-  <div class="task-sidebar">
+    <div class="task-sidebar">
+    </div>
   </div>
 </div>

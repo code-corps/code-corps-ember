@@ -26,7 +26,7 @@ test('it renders proper information', function(assert) {
   page.render(hbs`{{donations/donation-progress donationGoal=donationGoal amountDonated=500}}`);
 
   assert.equal(page.amountValue, '$500', 'Correct amount value is rendered');
-  assert.equal(page.percentageDescription, 'of $1,000 goal', 'Correct percentage description is rendered');
+  assert.equal(page.percentageLabel, 'of $1,000 goal', 'Correct percentage label is rendered');
   assert.equal(page.percentageValue, '50%', 'Correct percentage value is rendered');
   assert.equal(page.goalDescription, mockGoal.description, 'Goal description is rendered');
   assert.ok(page.rendersProgressBar, 'Progress bar component is rendered');
@@ -42,7 +42,7 @@ test('it renders decimal values if there are any', function(assert) {
   page.render(hbs`{{donations/donation-progress donationGoal=donationGoal amountDonated=505.50}}`);
 
   assert.equal(page.amountValue, '$505.50', 'Correct amount is rendered');
-  assert.equal(page.percentageDescription, 'of $1,000 goal', 'Correct percentage description is rendered');
+  assert.equal(page.percentageLabel, 'of $1,000 goal', 'Correct percentage label is rendered');
   assert.equal(page.percentageValue, '50.5%', 'Correct percentage is rendered');
   assert.ok(page.rendersProgressBar, 'Progress bar component is rendered');
 });

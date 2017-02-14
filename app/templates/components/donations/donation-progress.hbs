@@ -1,17 +1,14 @@
-<div class="information">
-  <div class="amount">
-    <div class="value">{{format-currency amountDonated trimZero=true}}</div>
-    <div class="description">given each month</div>
+{{progress-bar-container percentage=percentage}}
+<div class="donation-progress__details">
+  <div class="donation-progress__details__amount">
+    <div class="donation-progress__details__amount__value">{{format-currency amountDonated trimZero=true}}</div>
+    <div class="donation-progress__details__amount__label">given each month</div>
   </div>
-  <div class="percentage">
-    <div class="value">{{format-percentage percentage trimZero=true}}</div>
-    <div class="description">of {{format-currency donationGoal.amount trimZero=true}} goal</div>
+  <div class="donation-progress__details__percentage">
+    <div class="donation-progress__details__percentage__value">{{format-percentage percentage trimZero=true}}</div>
+    <div class="donation-progress__details__percentage__label">of {{format-currency donationGoal.amount trimZero=true}} goal</div>
   </div>
 </div>
-{{progress-bar-container percentage=percentage}}
-<p class="donation-progress__description-header">
-  Current Goal
-</p>
 <p class="donation-progress__description">
   {{description}}
 </p>

@@ -40,12 +40,13 @@
   .show-donation {
     background: $blue--lighter;
     border-radius: 4px;
-    padding: 10px 15px;
+    padding: 1em;
 
     .info {
       display: flex;
       font-weight: 700;
       line-height: 30px;
+      margin: 0;
       vertical-align: middle;
 
       &:before {

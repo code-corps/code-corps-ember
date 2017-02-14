@@ -5,10 +5,23 @@
 
 .project-main {
   @include span-columns(8);
+  @include media($lg-screen) {
+    @include span-columns(7);
+  }
+  @include media($md-screen) {
+    @include span-columns(12);
+  }
 }
 
 .project-sidebar {
   @include span-columns(4);
+  @include media($lg-screen) {
+    @include span-columns(5);
+  }
+  @include media($md-screen) {
+    @include span-columns(12);
+  }
+
   .project-sidebar__section {
     margin: 40px 0;
     &:first-child {
