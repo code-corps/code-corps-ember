@@ -2969,9 +2969,9 @@ ember-cli@2.11.1:
     walk-sync "^0.3.0"
     yam "0.0.22"
 
-ember-click-outside@0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/ember-click-outside/-/ember-click-outside-0.1.5.tgz#37f5532bb7c16c5673c75765e15dced2f5528ebb"
+ember-click-outside@0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/ember-click-outside/-/ember-click-outside-0.1.6.tgz#b56f14277351cccd84edaa78bcd399d71393871a"
   dependencies:
     ember-cli-babel "^5.1.7"
     ember-cli-htmlbars "*"
