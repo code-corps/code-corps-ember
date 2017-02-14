@@ -95,7 +95,6 @@
 // COMPONENTS - PROJECTS
 //
 @import "components/project-card-members";
-@import "components/project-card-skills";
 @import "components/project-card";
 @import "components/project-details";
 @import "components/project-header";
@@ -110,6 +109,11 @@
 @import "components/skill-list-item";
 @import "components/skills-list";
 @import "components/skills-typeahead";
+
+//
+// COMPONETS - RELATED SKILLS
+//
+@import "components/related-skills";
 
 //
 // COMPONENTS - TASKS

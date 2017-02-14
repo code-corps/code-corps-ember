@@ -4,7 +4,7 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  computed: { alias },
+  computed: { alias, mapBy },
   get,
   inject: { service }
 } = Ember;
@@ -35,6 +35,7 @@ export default Component.extend({
   taskTypeClass: computed('taskType', function() {
     return `task-card--${get(this, 'taskType')}`;
   }),
+  taskSkills: mapBy('task.taskSkills', 'skill'),
 
   click() {
     let isLoading = get(this, 'isLoading');
