@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 
 const { isEmpty, Object } = Ember;
 
-module('Unit | Utility | skills-list');
+module('Unit | Utility | records-list');
 
 let projectSkill = Object.create({
   belongsTo(relationshipName) {
@@ -53,13 +53,13 @@ test('find returns no match correctly', function(assert) {
   assert.ok(isEmpty(result));
 });
 
-test('contains returns true when there is a match', function(assert) {
+test('includes returns true when there is a match', function(assert) {
   let projectSkills = [projectSkill];
-  let result = recordsList.contains(projectSkills, skill);
+  let result = recordsList.includes(projectSkills, skill);
   assert.ok(result);
 });
 
-test('contains returns false when there is no match', function(assert) {
-  let result = recordsList.contains([], skill);
+test('includes returns false when there is no match', function(assert) {
+  let result = recordsList.includes([], skill);
   assert.notOk(result);
 });

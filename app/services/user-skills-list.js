@@ -24,9 +24,9 @@ export default Service.extend({
     return store.createRecord('user-skill', { user, skill }).save();
   },
 
-  contains(skill) {
+  includes(skill) {
     let userSkills = get(this, 'userSkills');
-    return recordsList.contains(userSkills, skill);
+    return recordsList.includes(userSkills, skill);
   },
 
   find(skill) {
@@ -41,7 +41,7 @@ export default Service.extend({
 
   toggle(skill) {
     let userSkills = get(this, 'userSkills');
-    if (recordsList.contains(userSkills, skill)) {
+    if (recordsList.includes(userSkills, skill)) {
       return this.remove(skill);
     } else {
       return this.add(skill);

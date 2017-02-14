@@ -23,7 +23,7 @@ moduleForComponent('skill-list-item', 'Integration | Component | skill list item
   },
   beforeEach() {
     stubService(this, 'user-skills-list', {
-      contains() {
+      includes() {
         return true;
       },
       find(skill) {

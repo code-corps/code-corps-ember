@@ -26,7 +26,7 @@ let mockStore = {
 };
 
 let mockListService = {
-  contains(queriedSkill) {
+  includes(queriedSkill) {
     return queriedSkill === skills[1];
   },
   find(queriedSkill) {

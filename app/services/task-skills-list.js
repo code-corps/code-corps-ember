@@ -22,9 +22,9 @@ export default Service.extend({
     return store.createRecord('task-skill', { task, skill }).save();
   },
 
-  contains(skill) {
+  includes(skill) {
     let taskSkills = get(this, 'taskSkills');
-    return recordsList.contains(taskSkills, skill);
+    return recordsList.includes(taskSkills, skill);
   },
 
   find(skill) {
@@ -44,7 +44,7 @@ export default Service.extend({
 
   toggle(skill) {
     let taskSkills = get(this, 'taskSkills');
-    if (recordsList.contains(taskSkills, skill)) {
+    if (recordsList.includes(taskSkills, skill)) {
       return this.remove(skill);
     } else {
       return this.add(skill);

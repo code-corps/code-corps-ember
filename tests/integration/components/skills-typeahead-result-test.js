@@ -14,7 +14,7 @@ let skill = Object.create({
 });
 
 let userSkillsList = {
-  contains() {
+  includes() {
     return true;
   },
   find(queriedSkill) {

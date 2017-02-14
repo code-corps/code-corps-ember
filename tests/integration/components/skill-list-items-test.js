@@ -30,7 +30,7 @@ moduleForComponent('skill-list-items', 'Integration | Component | skill list ite
   integration: true,
   beforeEach() {
     stubService(this, 'user-skills-list', {
-      contains(queriedSkill) {
+      includes(queriedSkill) {
         return queriedSkill === skills[1];
       },
       find(queriedSkill) {
