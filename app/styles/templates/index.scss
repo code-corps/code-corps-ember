@@ -30,6 +30,18 @@
     height: 186px;
     margin: 40px auto;
     width: 810px;
+    @include media($lg-screen) {
+      background-position: -175px 0;
+      width: 645px;
+    }
+    @include media($sm-screen) {
+      background-position: -330px 0;
+      width: 420px;
+    }
+    @include media($xs-screen) {
+      background-position: -450px 0;
+      width: 310px;
+    }
   }
 
   .button {
@@ -40,15 +52,27 @@
 .demo-categories {
   @include shift(2.4);
   @include span-columns(2.4 * 3);
+  @include media($md-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
 
   .category-item {
     @include omega(3n);
     @include span-columns(4);
+    @include media($sm-screen) {
+      @include span-columns(12 of 12);
+    }
   }
 }
 
 .demo-skills {
   ul {
+    @include media($xs-screen) {
+      @include shift(0);
+      @include span-columns(12);
+    }
+
     li {
       display: inline;
 
@@ -69,6 +93,10 @@
 .demo-projects {
   @include shift(2);
   @include span-columns(8);
+  @include media($md-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
 
   .project-card {
     @include span-columns(6);
@@ -81,6 +109,12 @@
       bottom: 50;
       background: white;
       z-index: 2;
+    }
+    @include media($md-screen) {
+      @include span-columns(6 of 12);
+    }
+    @include media($xs-screen) {
+      @include span-columns(12 of 12);
     }
   }
 }

@@ -1,10 +1,4 @@
-.project-long-description {
-  @include span-columns(8);
-}
-
 .long-description {
-  @include span-columns(12);
-
   &.empty {
     background: $background-gray;
     border-radius: 6px;

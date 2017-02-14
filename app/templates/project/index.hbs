@@ -9,13 +9,14 @@
 <div class="container">
   <div class="project-wrapper">
 
-    {{project-long-description project=project}}
+    <div class="project-main">
+      {{project-long-description project=project}}
+    </div>
 
     <aside class="project-sidebar">
 
       {{#if project.donationsActive}}
         <section class="project-sidebar__section">
-          <h4>Donations</h4>
           {{donations/donation-progress
             amountDonated=project.totalMonthlyDonated
             donationGoal=project.currentDonationGoal
