@@ -5,4 +5,20 @@
   input[type="submit"] {
     width: 100%;
   }
+  @include media($lg-screen) {
+    @include shift(2);
+    @include span-columns(8);
+  }
+  @include media($sm-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
+
+  .suggestions {
+    @include media($lg-screen) {
+      position: relative;
+      top: 5px;
+      right: -8px;
+    }
+  }
 }

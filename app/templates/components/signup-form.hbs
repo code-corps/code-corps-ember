@@ -1,21 +1,23 @@
-<form>
+<div class="container">
+  <form>
 
-  <h2>Join Code Corps today.</h2>
+    <h2>Join Code Corps today.</h2>
 
-  {{#auto-focus}}
-    {{signup-username-input autofocus=true user=user usernameValidated="usernameValidated"}}
-  {{/auto-focus}}
+    {{#auto-focus}}
+      {{signup-username-input autofocus=true user=user usernameValidated="usernameValidated"}}
+    {{/auto-focus}}
 
-  {{signup-email-input user=user emailValidated="emailValidated"}}
+    {{signup-email-input user=user emailValidated="emailValidated"}}
 
-  {{signup-password-input user=user}}
+    {{signup-password-input user=user}}
 
-  <div class="input-group">
-    <input class="button default {{if hasError "has-error"}}" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
-  </div>
+    <div class="input-group">
+      <input class="button default {{if hasError "has-error"}}" name="signup" type="submit" value='Sign up' {{action 'signUp'}} />
+    </div>
 
-  {{#if error}}
-    {{error-formatter error=error}}
-  {{/if}}
+    {{#if error}}
+      {{error-formatter error=error}}
+    {{/if}}
 
-</form>
+  </form>
+</div>
