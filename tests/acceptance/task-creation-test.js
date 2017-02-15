@@ -301,3 +301,59 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
     stub.restore();
   });
 });
+
+test('Skills can be assigned to task during creation', function(assert) {
+  assert.expect(6);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  let skill = server.create('skill', { title: 'Ruby' });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
+    assert.equal(find('[name=task-type]').val(), 'issue', 'Has the right default task type');
+
+    projectTasksNewPage.taskTitle('A task title')
+                       .taskMarkdown('A task body')
+                       .taskType('idea');
+  });
+
+  // NOTE: We need to be doing this async, so the code is ugly
+  // Possibly switching to await/async might make it nicer
+  andThen(() => {
+    // find skill
+    projectTasksNewPage.skillsTypeahead.fillIn('ru');
+  });
+
+  andThen(() => {
+    // add skill
+    projectTasksNewPage.skillsTypeahead.inputItems(0).click();
+  });
+
+  andThen(() => {
+    projectTasksNewPage.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created');
+    assert.equal(server.schema.taskSkills.all().models.length, 1, 'A single task skill has been created.');
+
+    let [task] = server.schema.tasks.all().models;
+    let [taskSkill] = server.schema.taskSkills.all().models;
+
+    assert.equal(taskSkill.taskId, task.id, 'The correct task was assigned');
+    assert.equal(taskSkill.skillId, skill.id, 'The correct skill was assigned');
+  });
+});
