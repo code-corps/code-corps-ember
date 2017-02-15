@@ -6,6 +6,7 @@
     <span class="task-card__title" data-test-selector="task title">{{task.title}}</span>
     <span class="task-card__number" data-test-selector="task number">#{{task.number}}</span>
   </p>
+  {{related-skills class="task-card__skills" skills=taskSkills}}
   <p class="task-card__meta">
     <span class="task-card__icon"></span>
     <span class="task-card__time" data-test-selector="task time">{{moment-from-now task.insertedAt}}</span>

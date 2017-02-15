@@ -1,5 +1,11 @@
-.project-card-skills {
-  margin: 20px 0 0 0;
+.related-skills {
+  &.project-card__skills {
+    margin: 20px 0 0 0;
+  }
+
+  &.task-card__skills {
+    margin: 0 0 7px 0;
+  }
 
   .expander {
     display: flex;
@@ -23,6 +29,10 @@
 
     &::after {
       margin-left: 10px;
+    }
+
+    &.hidden {
+      display: none;
     }
 
     a {

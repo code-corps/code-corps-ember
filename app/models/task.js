@@ -110,6 +110,8 @@ export default Model.extend(ContainsCodeMixin, {
    */
   taskList: belongsTo('task-list', { async: true }),
 
+  taskSkills: hasMany('task-skill', { async: true }),
+
   /**
     The task user mentions that belong to the task.
 

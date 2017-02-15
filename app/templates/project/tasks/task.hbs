@@ -16,6 +16,32 @@
       </div>
     </div>
     <div class="task-sidebar">
+      <div class="task-sidebar-section">
+        <div class="task-sidebar-section__header">
+          <h2>Skills</h2>
+        </div>
+
+        <div class="task-skills-list centered">
+          {{#each task.taskSkills as |taskSkill|}}
+          {{skill-button
+            alwaysShowX=true
+            iconBefore=false
+            isLoading=taskSkill.isLoading
+            remove=(action 'removeTaskSkill' taskSkill)
+            size="small"
+            skill=taskSkill.skill
+          }}
+          {{/each}}
+        </div>
+
+        <div class="skills-typeahead-container">
+          {{skills-typeahead
+            centered=true
+            selectSkill=(action 'toggleSkill')
+            skillsList=taskSkillsList
+          }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

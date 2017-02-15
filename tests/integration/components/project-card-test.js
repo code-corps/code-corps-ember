@@ -50,7 +50,7 @@ test('it renders', function(assert) {
   assert.equal(this.$('p.organization').text().trim(), `by ${organization.name}`);
   assert.equal(this.$('ul.categories li').length, 1);
   assert.equal(this.$('p.description').text().trim(), project.description);
-  assert.equal(this.$('.project-card-skills').length, 1);
+  assert.equal(this.$('.project-card__skills').length, 1);
   assert.equal(this.$('ul.project-card-members li').length, 1);
   assert.equal(this.$('ul.project-card-members li:first img').attr('src'), user.photoThumbUrl);
 });

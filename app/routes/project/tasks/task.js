@@ -10,6 +10,7 @@ const {
 export default Route.extend({
   currentUser: service(),
   store: service(),
+  taskSkillsList: service(),
 
   model(params) {
     let projectId = this.modelFor('project').id;
@@ -17,6 +18,11 @@ export default Route.extend({
     let store = get(this, 'store');
 
     return store.queryRecord('task', { projectId, number });
+  },
+
+  afterModel(task) {
+    get(this, 'taskSkillsList').setTask(task);
+    return task;
   },
 
   setupController(controller, task) {

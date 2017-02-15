@@ -20,6 +20,15 @@ export default Controller.extend({
   store: service(),
 
   /**
+   * The injected taskSkillsList service
+   * Used to toggle task Skills
+   *
+   * @property taskSkillsList
+   * @type Ember.Service
+   */
+  taskSkillsList: service(),
+
+  /**
    * The injected services/current-user service
    * @property currentUser
    * @type Ember.Service
@@ -36,6 +45,14 @@ export default Controller.extend({
    * @type DS.ManyArray
    */
   comments: filterBy('task.comments', 'isNew', false),
+
+  /**
+   * Shorthad for a list of the current task's assigned skills
+   *
+   * @property taskSkills
+   * @type DS.ManyArray
+   */
+  taskSkills: alias('task.taskSkills'),
 
   /**
    * Alias to the user property of the current user
@@ -79,6 +96,30 @@ export default Controller.extend({
      */
     onSaveError(payload) {
       this._onError(payload);
+    },
+
+    /**
+     * removeTaskSkill - Triggers when a user clicks an assigned task skill's
+     * button. Destroys the taskSkill record, removing the skill from the task's
+     * list of skills.
+     *
+     * @param {DS.Model} taskSkill - The taskSkill record to destroy
+     */
+    removeTaskSkill(taskSkill) {
+      return taskSkill.destroyRecord();
+    },
+
+    /**
+     * toggleSkill - Triggers when a user clicks or submits a skill in the skill
+     * dropdown. Uses the `taskSkillList` service to create or destroy the
+     * `taskSkill` record associated to the currently loaded `task` and the
+     * provided `skill`
+     *
+     * @param {DS.Model} skill - The skill to create or destroy a `taskSkill` for
+     */
+    toggleSkill(skill) {
+      let list = get(this, 'taskSkillsList');
+      return list.toggle(skill);
     }
   },
 
