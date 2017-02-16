@@ -1,27 +1,63 @@
 .start__hello {
-  $file: "/assets/images/people-signup";
-  @include background-image-retina($file, "png", 410px, 396px);
-  background-position: right center;
+  align-items: flex-end;
   display: flex;
   flex: 1;
   flex-flow: row wrap;
-  padding-right: 50%;
+  flex-wrap: wrap-reverse;
   width: 100%;
 }
 
-.hello__column {
-  width: 30%;
-  &:first-of-type {
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-end;
-    padding-bottom: 2em;
+.hello__column__wrapper {
+  width: 55%;
+  @include media($lg-screen) {
     width: 100%;
   }
-  &:last-of-type {
-    padding-left: 5%;
-    width: 70%;
+}
+
+.hello__column__subgroup {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 85%;
+  @include media($lg-screen) {
+    width: 100%;
   }
+}
+
+.hello__column--header {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  padding-bottom: 2em;
+  width: 85%;
+  @include media($sm-screen) {
+    width: 100%;
+  }
+}
+
+.hello__column--image-drop {
+  width: 35%;
+  @include media($sm-screen) {
+    width: 100%;
+  }
+}
+
+.image-drop {
+  margin: 0 auto;
+}
+
+.hello__column--name-input {
+  padding-left: 5%;
+  width: 65%;
+  @include media($sm-screen) {
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.hello__column {
   h2 {
     color: $text--dark;
     font-size: $header-font-size-large;
@@ -35,19 +71,44 @@
     line-height: 24px;
     margin: 10px 0;
   }
-
-}
-
-.hello__column {
   .input-group input {
     width: 50%;
     &:first-child {
       border-radius: 4px 0 0 4px;
       border-right: none;
+      @include media($md-screen) {
+        border-radius: 4px;
+        border-right: 1px solid #aaa;
+      }
+    }
+    @include media($md-screen) {
+      margin-bottom: 5px;
+      width: 100%;
     }
   }
 }
 
 .photo-help-text {
   text-align: center;
+}
+
+.hello__image {
+  $file: "/assets/images/people-signup";
+  @include background-image-retina($file, "png", 410px, 396px);
+  width: 45%;
+  @include media($lg-screen) {
+    background-position: center;
+    width: 100%;
+  }
+  @include media($md-screen) {
+    background-position: center -236px;
+    height: 190px;
+  }
+  @include media($sm-screen) {
+    background-position: -123px -250px;
+    width: 300px;
+    height: 160px;
+    float: none;
+    margin: 0 auto;
+  }
 }

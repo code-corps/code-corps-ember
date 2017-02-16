@@ -90,9 +90,13 @@
 
 .onboarding__progress {
   padding: 23px 0 22px 0;
-  width: 180px;
+  width: 100px;
+
+  .progress-bar-container {
+    height: 7px;
+  }
 }
 
 .onboarding__steps {
-  padding: 0 30px;
+  padding: 16px 30px;
 }
