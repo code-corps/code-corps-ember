@@ -3156,9 +3156,9 @@ ember-metrics@0.8.1:
     ember-getowner-polyfill "^1.0.0"
     ember-runtime-enumerable-includes-polyfill "^1.0.1"
 
-ember-modal-dialog@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-0.9.0.tgz#e2797762f13eea5aa71524c1ec516c150980b287"
+ember-modal-dialog@0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-0.9.1.tgz#cefb708a665e76f910a669f19a3a39930ca0e1bf"
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-cli-htmlbars "^1.0.8"

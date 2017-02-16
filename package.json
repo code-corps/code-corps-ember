@@ -72,7 +72,7 @@
     "ember-keyboard": "^2.1.9",
     "ember-load-initializers": "^0.6.0",
     "ember-metrics": "0.8.1",
-    "ember-modal-dialog": "0.9.0",
+    "ember-modal-dialog": "0.9.1",
     "ember-moment": "7.3.0",
     "ember-normalize": "1.0.0",
     "ember-page-title": "^3.1.2",
