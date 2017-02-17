@@ -22,7 +22,7 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['login-form'],
+  classNames: ['form--centered', 'login-form'],
 
   /**
     @property session
