@@ -9,7 +9,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['signup-form'],
+  classNames: ['form--centered', 'signup-form'],
   emailValid: false,
   hasError: false,
   usernameValid: false,
