@@ -20,6 +20,8 @@ export default Component.extend({
   trueValue: true,
 
   ability: EmberCan.computed.ability('task'),
+  canAssign: alias('ability.canAssign'),
+  canEdit: alias('ability.canEdit'),
   canReposition: alias('ability.canReposition'),
 
   'data-can-reposition': computed('canReposition', function() {
@@ -28,6 +30,8 @@ export default Component.extend({
   }),
   'data-model-id': alias('task.id'),
   'data-model-type': 'task',
+
+  assignedUser: alias('task.assignedUser'),
 
   isLoading: alias('task.isLoading'),
 

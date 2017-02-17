@@ -1,0 +1,54 @@
+$icon-size: 20px;
+$icon-border-radius: $icon-size / 2;
+
+@mixin user-icon {
+  background: $background-gray;
+  border-radius: $icon-border-radius;
+  height: $icon-size;
+  width: $icon-size;
+}
+
+.task__user__user-select {
+  align-items: left;
+  align-self: flex-start;
+  background: transparent;
+  color: $gray;
+  cursor: pointer;
+  display: flex;
+  font-size: $body-font-size-small;
+  justify-content: left;
+  margin-bottom: 8px;
+  position: relative;
+
+  &__icon {
+    &--assigned, &--loading, &--unassigned {
+      @include user-icon;
+    }
+
+    &--assigned {
+      border: none;
+    }
+
+    &--unassigned {
+      background: none;
+      border: 1px dashed $gray;
+    }
+  }
+
+  &__username {
+    color: $text--dark;
+    font-weight: 600;
+  }
+
+  &--can-edit {
+    &:hover {
+      color: $link-hover-color;
+
+      .task__user__user-select__icon {
+        &--unassigned {
+          border-color: $link-hover-color;
+        }
+      }
+    }
+  }
+}

@@ -2,22 +2,36 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import projectCategoryItemCoponent from 'code-corps-ember/tests/pages/components/project-category-item';
+import PageObject from 'ember-cli-page-object';
+
+let page = PageObject.create(projectCategoryItemCoponent);
 
 const {
   Object,
   run
 } = Ember;
 
+let mockUserCategoriesService = {
+  findUserCategory(category) {
+    if (category.id === mockUserCategory.get('categoryId')) {
+      return mockUserCategory;
+    }
+  }
+};
+
+function renderPage() {
+  page.render(hbs`{{project-category-item category=category}}`);
+}
+
 moduleForComponent('project-category-item', 'Integration | Component | project category item', {
   integration: true,
   beforeEach() {
-    stubService(this, 'user-categories', {
-      findUserCategory(category) {
-        if (category.id === mockUserCategory.get('categoryId')) {
-          return mockUserCategory;
-        }
-      }
-    });
+    page.setContext(this);
+    stubService(this, 'user-categories', mockUserCategoriesService);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
@@ -38,18 +52,19 @@ test('it works for unselected categories', function(assert) {
   };
 
   this.set('category', category);
-  this.render(hbs`{{project-category-item category=category}}`);
+  renderPage();
 
-  assert.ok(this.$('.interest-icon').hasClass('technology'));
-  assert.notOk(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('ember-tooltip-or-popover-target'));
-  assert.equal(this.$('.ember-tooltip').text().trim(), 'Technology');
-  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), 'true');
+  assert.ok(page.linkIcon.hasClass('technology'), 'Dynamic category class is properly bound.');
+  assert.ok(page.linkIcon.unselected, 'Icon is unselected.');
+  assert.ok(page.isTooltipTarget, 'Component works as a tooltip target.');
+  assert.equal(page.tooltip.text, 'Technology', 'Dynamic tooltip text is properly bound.');
+  assert.ok(page.tooltip.isAriaHidden, 'Aria attribute is bound as hidden by default.');
 
   run(() => {
-    this.$('li').trigger('mouseenter');
+    page.mouseenter();
   });
-  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), 'false');
+
+  assert.ok(page.tooltip.isAriaVisible, 'Aria attribute switches out of hiden on hover.');
 });
 
 test('it works for selected categories', function(assert) {
@@ -63,16 +78,17 @@ test('it works for selected categories', function(assert) {
   };
 
   this.set('category', category);
-  this.render(hbs`{{project-category-item category=category}}`);
+  renderPage();
 
-  assert.ok(this.$('.interest-icon').hasClass('society'));
-  assert.ok(this.$('.interest-icon').hasClass('selected'));
-  assert.ok(this.$('li').hasClass('ember-tooltip-or-popover-target'));
-  assert.equal(this.$('.ember-tooltip').text().trim(), 'Society');
-  assert.equal(this.$('.ember-tooltip').attr('aria-hidden'), 'true');
+  assert.ok(page.linkIcon.hasClass('society'));
+  assert.ok(page.linkIcon.selected);
+  assert.ok(page.isTooltipTarget);
+  assert.equal(page.tooltip.text, 'Society');
+  assert.ok(page.tooltip.isAriaHidden);
 
   run(() => {
-    this.$('li').trigger('mouseenter');
+    page.mouseenter();
   });
-  assert.ok(this.$('.ember-tooltip').attr('aria-hidden'), 'false');
+
+  assert.ok(page.tooltip.isAriaVisible);
 });
