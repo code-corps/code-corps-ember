@@ -18,7 +18,6 @@ export default Factory.extend({
     return i + 1;
   },
   status: 'open',
-  taskType: faker.list.cycle('task', 'idea', 'issue'),
   title() {
     return faker.lorem.sentence();
   }

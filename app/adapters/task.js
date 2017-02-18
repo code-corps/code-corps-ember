@@ -21,12 +21,6 @@ export default ApplicationAdapter.extend({
       query.page = { page: query.page };
     }
 
-    // we don't want to send the taskType parameter to the API if it does not
-    // have a proper value
-    if (isEmpty(query.taskType)) {
-      delete query.taskType;
-    }
-
     // we don't want to send the status parameter to the API if it does not
     // have a proper value
     if (isEmpty(query.status)) {

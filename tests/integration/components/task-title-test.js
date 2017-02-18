@@ -24,7 +24,6 @@ let mockTask = Object.create({
   title: 'Original title',
   body: 'A <strong>body</strong>',
   number: 12,
-  taskType: 'issue',
   user: {
     id: 1
   },

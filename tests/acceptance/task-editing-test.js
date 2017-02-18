@@ -13,7 +13,7 @@ test('Task editing requires logging in', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -49,7 +49,7 @@ test('A task body can be edited on its own', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -87,7 +87,7 @@ test('A task title can be edited on its own', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -125,7 +125,6 @@ test('Mentions are rendered during editing in preview mode', function(assert) {
   let task = project.createTask({
     title: "Test title",
     body: "Test body",
-    taskType: "issue",
     number: 1
   });
   task.user = user;
@@ -277,7 +276,7 @@ test('Skills can be assigned or unassigned to/from task', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 

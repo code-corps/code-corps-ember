@@ -74,4 +74,5 @@ $text--dark: $gray--darkest;
 // below is the most common text color in the project
 // it bothers me a bit that text--light uses gray--darker as its color
 $text--light: $gray--darker;
-$text--lighter: $gray;
+$text--lighter: #767676;
+$text--lightest: $gray;

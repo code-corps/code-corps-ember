@@ -12,7 +12,7 @@ test('Task comments are displayed correctly', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   server.createList('comment', 4, { taskId: task.id });
 
@@ -32,7 +32,7 @@ test('A comment can be added to a task', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
@@ -132,7 +132,7 @@ test('When comment creation fails due to validation, validation errors are displ
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
@@ -179,7 +179,7 @@ test('When comment creation fails due to non-validation issues, the error is dis
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
@@ -223,7 +223,7 @@ test('A comment can only be edited by the author', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   server.createList('comment', 1, { task, user });
 
@@ -257,7 +257,7 @@ test('Comment editing with preview works', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
 
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
   server.createList('comment', 1, { task, user });
 
@@ -301,7 +301,7 @@ test('Comment editing with preview works', function(assert) {
   let project = createProjectWithSluggedRoute();
   let organization = project.organization;
 
-  let task = project.createTask({ title: "Test title", body: "Test body", taskType: "issue", number: 1 });
+  let task = project.createTask({ title: "Test title", body: "Test body", number: 1 });
 
   server.createList('comment', 1, { task, user });
 

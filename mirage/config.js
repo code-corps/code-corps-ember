@@ -269,7 +269,6 @@ export default function() {
   // GET project/:id/tasks
   this.get('/projects/:projectId/tasks', (schema, request) => {
     let { projectId } = request.params;
-    let taskType = request.queryParams.task_type;
     let taskStatus = request.queryParams.status;
 
     let pageNumber = parseInt(request.queryParams['page[page]']);
@@ -278,10 +277,6 @@ export default function() {
     let project = schema.projects.find(projectId);
 
     let { tasks } = project;
-
-    if (taskType) {
-      tasks = tasks.filter((p) =>  p.taskType === taskType);
-    }
 
     if (taskStatus) {
       tasks = tasks.filter((p) => p.status === taskStatus);

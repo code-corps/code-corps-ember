@@ -20,7 +20,6 @@ export default create({
 
   taskTitle: fillable('[name=title]'),
   taskMarkdown: fillable('[name=markdown]'),
-  taskType: fillable('[name=task-type]'),
 
   projectMenu,
 

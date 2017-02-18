@@ -1,20 +1,28 @@
-.task-list {
-  border: 1px solid #DDD; // need a new border color, slightly lighter?
-  background-color: #FAFAFA;
-  border-radius: 4px;
-  height: 100%;
-  width: 280px;
-  overflow-y: scroll;
-  margin-left: 7px;
-  padding: 8px 6px;
-  white-space: normal;
-
+.task-list-container {
   &:first-child {
-    margin-left: 10px;
+    .task-list {
+      margin-left: 10px;
+    }
+  }
+
+  &:last-child {
+    .task-list {
+      margin-right: 10px;
+    }
   }
 }
 
 .task-list {
+  border: 1px solid #DFDFDF;
+  background-color: #F7F7F7;
+  border-radius: 4px;
+  height: 100%;
+  margin-left: 7px;
+  overflow-y: scroll;
+  padding: 8px 6px;
+  white-space: normal;
+  width: 280px;
+
   &__name {
     font-weight: 600;
     margin-bottom: 10px;

@@ -14,14 +14,12 @@ let taskList = {
     {
       title: 'test task 2',
       number: 2,
-      order: 1,
-      taskType: 'task'
+      order: 1
     },
     {
       title: 'test task 1',
       number: 1,
-      order: 2,
-      taskType: 'task'
+      order: 2
     }
   ]
 };

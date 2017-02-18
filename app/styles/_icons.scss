@@ -77,26 +77,6 @@ $tiny-x: 6px 6px $spriteURL -8px -324px $spritex2URL;
   @include sprite($search);
 }
 
-$taskTypeIcons: (
-  "idea": $idea,
-  "issue": $issue,
-  "task": $task,
-);
-
-$taskTypeIconHovers: (
-  "idea": $idea-hover,
-  "issue": $issue-hover,
-  "task": $task-hover,
-);
-
-@mixin taskItemIcon($icon) {
-  .task-icon:before {
-    @include sprite($icon);
-    content: "";
-    display: inline-block;
-  }
-}
-
 @mixin taskBoardIcon($icon) {
   &:before {
     @include sprite($icon);

@@ -26,10 +26,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
    */
   model() {
     let project = this.modelFor('project').reload();
-    let taskType = this._getTaskType();
     let user = get(this, 'currentUser.user');
 
-    return RSVP.hash({ project, taskType, user });
+    return RSVP.hash({ project, user });
   },
 
   /**
@@ -40,12 +39,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
    *
    * @param  {Ember.Controller} controller The associated controller instance
    * @param  {DS.Model} project            The currently loaded project
-   * @param  {String} taskType             The intially selected task type for the task
    * @param  {DS.Model} user               The currently authenticated user
    */
-  setupController(controller, { project, taskType, user }) {
+  setupController(controller, { project, user }) {
     let store = get(this, 'store');
-    let task = store.createRecord('task', { project, taskType, user });
+    let task = store.createRecord('task', { project, user });
 
     set(controller, 'task', task);
     set(controller, 'unsavedTaskSkills', []);
@@ -76,19 +74,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
         }
       }
     }
-  },
-
-  /**
-   * _getTaskType - Private method
-   *
-   * Used to determine the intial value of the task type of a new task.
-   * The intial value is `task` if the user can create a task.
-   * Otherwise, it's `issue`
-   *
-   * @return {String}  The initial value for the `taskType`property
-   */
-  async _getTaskType() {
-    let canCreateTask = await get(this, 'ability.canCreateTaskTask');
-    return canCreateTask ? 'task' : 'issue';
   }
 });

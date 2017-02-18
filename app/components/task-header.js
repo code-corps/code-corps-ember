@@ -4,7 +4,7 @@ const { Component } = Ember;
 
 /**
   The task-header component represents the header of a task. It is composed of
-  the task icon & title.
+  the task title and number.
 
   ## default usage
 
@@ -17,6 +17,5 @@ const { Component } = Ember;
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['task-header'],
-  classNameBindings: ['task.taskType']
+  classNames: ['task-header']
 });
