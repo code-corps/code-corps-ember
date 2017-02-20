@@ -1,0 +1,290 @@
+$ember-power-select-border-color: $gray--lightest;
+$ember-power-select-border-radius: 5px;
+$ember-power-select-dropdown-margin: 5px !default;
+$ember-power-select-active-trigger-border: none !default;
+$ember-power-select-focus-outline: 0 !default;
+$ember-power-select-trigger-border: none !default;
+$ember-power-select-trigger-focus-border: none !default;
+
+$icon-size: 20px;
+$icon-border-radius: $icon-size / 2;
+
+$list-height: 220px;
+
+@mixin select-icon {
+  background: $background-gray;
+  border-radius: $icon-border-radius;
+  height: $icon-size;
+  margin-right: 5px;
+  width: $icon-size;
+}
+
+@mixin arrow-icon($color) {
+  .ember-power-select-status-icon {
+    border-color: $color transparent transparent transparent;
+  }
+}
+
+// |-icon-| [ |-selected-text-| or |-unselected-text-| ] |-arrow-|
+@mixin hover-colors($icon-color: $blue, $selected-text-color: $blue, $unselected-text-color: $blue, $arrow-color: $blue) {
+  @include arrow-icon($arrow-color);
+
+  .select-inline__selected-item__text {
+    color: $selected-text-color;
+  }
+
+  .select-inline__unselected-item {
+    &__icon {
+      border-color: $icon-color;
+    }
+
+    &__text {
+      color: $unselected-text-color;
+    }
+  }
+}
+
+.select-inline {
+  display: flex;
+  align-items: center;
+
+  .ember-power-select-trigger {
+    align-items: left;
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    color: $gray;
+    cursor: pointer;
+    display: flex;
+    font-size: $body-font-size-small;
+    justify-content: left;
+    position: relative;
+
+    &:hover {
+      @include hover-colors;
+    }
+
+    @include arrow-icon($gray);
+
+    &[aria-disabled=true] {
+      background: transparent;
+
+      .ember-power-select-status-icon {
+        border-color: transparent;
+      }
+
+      &:hover {
+        @include hover-colors($gray, $text--dark, $text--lighter, transparent);
+      }
+    }
+  }
+
+  &__loading-item, &__selected-item, &__unselected-item {
+    &__icon {
+      @include select-icon;
+    }
+
+    &__text {
+      color: $text--lighter;
+      font-weight: 500;
+      margin-right: 5px;
+    }
+  }
+
+  &__loading-item {
+    &__icon {
+      background: $background-gray;
+      border: none;
+    }
+
+    &__text {
+      background: $background-gray;
+      height: 11px;
+      width: 100px;
+    }
+  }
+
+  &__selected-item {
+    &__icon {
+      border: none;
+    }
+  }
+
+  &__unselected-item {
+    &__icon {
+      background: none;
+      border: 1px dashed $gray;
+    }
+  }
+}
+
+.select-inline-dropdown {
+  &__header {
+    color: $text--lighter;
+    font-size: $body-font-size-small;
+    font-weight: 600;
+    padding: 5px 0 9px 0;
+    text-align: center;
+    text-transform: uppercase;
+
+    &__close {
+      color: $text--lighter;
+      cursor: pointer;
+      float: left;
+      font-size: 21px;
+      font-weight: 500;
+      line-height: 21px;
+      padding: 10px;
+      position: absolute;
+      left: 0;
+      top: -1px;
+
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+
+  &.ember-power-select-dropdown.ember-basic-dropdown-content {
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    width: 300px;
+
+    &--above {
+      border-bottom: 1px solid $ember-power-select-border-color;
+      border-radius: $ember-power-select-border-radius;
+    }
+
+    &--below {
+      border-top: 1px solid $ember-power-select-border-color;
+      border-radius: $ember-power-select-border-radius;
+    }
+
+    input {
+      padding: 6px 8px;
+    }
+  }
+
+  .ember-power-select-group {
+    padding: 0;
+
+    .ember-power-select-group-name {
+      display: none;
+    }
+  }
+
+  .ember-power-select-options[role="listbox"] {
+    max-height: $list-height;
+  }
+
+  .ember-power-select-search {
+    border-bottom: 1px solid $gray--lightest;
+  }
+
+  $icon-width: 12px;
+
+  li,
+  .ember-power-select-option,
+  .ember-power-select-group .ember-power-select-option {
+    @include clearfix;
+    border: none;
+    border-top: 1px solid $gray--lightest;
+    cursor: pointer;
+    display: block;
+    list-style-type: none;
+    padding: 9px 10px;
+    position: relative;
+
+    &.ember-power-select-group {
+      position: inherit;
+    }
+
+    &:before {
+      content: "";
+      height: 10px;
+      margin: 5px 7px 0 0;
+      position: absolute;
+      width: $icon-width;
+    }
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &[aria-current=true] {
+      background: $blue--lightest;
+    }
+
+    &[aria-selected=true] {
+      background: transparent;
+
+      &:before {
+        @include sprite($tick-blue);
+      }
+
+      &[aria-current=true] {
+        background: $blue--lightest;
+        background: $red--light;
+
+        &:before {
+          margin-left: -2px;
+          @include sprite($cross-red);
+        }
+      }
+    }
+
+    &--no-matches-message {
+      display: none;
+    }
+  }
+
+  &__list-item {
+    &__icon {
+      float: left;
+      height: 20px;
+      margin: 0 7px 0 ($icon-width + 7px);
+      width: 20px;
+
+      img {
+        border-radius: 10px;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    &__content {
+      color: $text--lightest;
+      font-size: $body-font-size-tiny;
+      line-height: 18px;
+      padding-top: 1px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &__primary {
+        color: $text--dark;
+        font-size: $body-font-size-small;
+        font-weight: 500;
+        margin-right: 2px;
+        overflow: hidden;
+        white-space: nowrap;
+
+        strong {
+          background: $yellow--light;
+          font-weight: 500;
+        }
+      }
+
+      &__secondary {
+        color: $text--lightest;
+        font-size: $body-font-size-tiny;
+        font-weight: 500;
+
+        strong {
+          background: $yellow--light;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

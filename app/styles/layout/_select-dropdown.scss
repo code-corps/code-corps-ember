@@ -1,3 +1,5 @@
+$list-height: 260px;
+
 .select-dropdown {
   background: white;
   border: 1px solid $gray--lightest;
@@ -20,7 +22,7 @@
     font-weight: 700;
 
     &__close {
-      color: $text--lighter;
+      color: $text--lightest;
       cursor: pointer;
       float: right;
       font-size: 22px;
@@ -41,14 +43,18 @@
     top: 0; right: 0; bottom: 0; left: 0;
   }
 
+  &__results {
+    &__empty-item {
+      align-items: center;
+      display: flex;
+      height: $list-height;
+      justify-content: center;
+    }
+  }
+
   input {
     height: 34px;
     width: 100%;
-  }
-
-  ul {
-    max-height: 220px;
-    overflow: auto;
   }
 
   li {

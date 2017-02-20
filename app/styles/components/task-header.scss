@@ -5,28 +5,7 @@
 
   padding: 10px 0;
 
-  &.task {
-    @include taskItemIcon($task);
-  }
-
-  &.issue {
-    @include taskItemIcon($issue);
-  }
-
-  &.idea {
-    @include taskItemIcon($idea);
-  }
-
-  .task-icon {
-    float: left;
-
-    &:before {
-      margin: 9px 0 0 0;
-    }
-  }
-
   .task-title {
-    padding-left: 35px;
     line-height: inherit;
   }
 }

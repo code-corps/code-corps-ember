@@ -260,21 +260,13 @@ export default function(server) {
     project
   });
 
-  server.createList('task', 2, { project, taskList: inboxTaskList, taskType: 'idea', user: owner });
-  server.createList('task', 1, { project, taskList: inboxTaskList, taskType: 'issue', user: owner });
-  server.createList('task', 1, { project, taskList: inboxTaskList, taskType: 'task', user: owner });
+  server.createList('task', 4, { project, taskList: inboxTaskList, user: owner });
 
-  server.createList('task', 1, { project, taskList: backlogTaskList, taskType: 'idea', user: owner });
-  server.createList('task', 1, { project, taskList: backlogTaskList, taskType: 'issue', user: owner });
-  server.createList('task', 2, { project, taskList: backlogTaskList, taskType: 'task', user: owner });
+  server.createList('task', 5, { project, taskList: backlogTaskList, user: owner });
 
-  server.createList('task', 1, { project, taskList: inProgressTaskList, taskType: 'idea', user: owner });
-  server.createList('task', 3, { project, taskList: inProgressTaskList, taskType: 'issue', user: owner });
-  server.createList('task', 2, { project, taskList: inProgressTaskList, taskType: 'task', user: owner });
+  server.createList('task', 3, { project, taskList: inProgressTaskList, user: owner });
 
-  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'idea', user: owner });
-  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'issue', user: owner });
-  server.createList('task', 1, { project, taskList: doneTaskList, taskType: 'task', user: owner });
+  server.createList('task', 2, { project, taskList: doneTaskList, user: owner });
 
   let skillTitles = ['CSS', 'Ember.js', 'HTML'];
 

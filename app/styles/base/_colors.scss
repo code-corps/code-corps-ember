@@ -81,38 +81,3 @@ $danger-color: $red;
 $default-color: $blue;
 $success-color: $green;
 $warning-color: $yellow;
-
-//
-// TASK TYPES
-//
-
-$idea-color: $yellow;
-$issue-color: $red;
-$progress-color: $green;
-$task-color: $blue;
-
-$idea-background: $yellow--light;
-$issue-background: $red--light;
-$progress-background: $green--light;
-$task-background: $blue--lighter;
-
-$taskTypeColors: (
-  "idea": $idea-color,
-  "issue": $issue-color,
-  "progress": $progress-color,
-  "task": $task-color,
-);
-
-$taskTypeTextOnBackgroundColors: (
-  "idea": $gray--darkest,
-  "issue": white,
-  "progress": white,
-  "task": white,
-);
-
-$taskTypeBackgrounds: (
-  "idea": $idea-background,
-  "issue": $issue-background,
-  "progress": $progress-background,
-  "task": $task-background,
-);

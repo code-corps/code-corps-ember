@@ -44,7 +44,7 @@ function setHandlers(context, { selectHandler = function() {} } = {}) {
   context.set('selectHandler', selectHandler);
 }
 
-moduleForComponent('skills-typeahead', 'Integration | Component | skills input', {
+moduleForComponent('skills-typeahead', 'Integration | Component | skills typeahead', {
   integration: true,
   beforeEach() {
     stubService(this, 'store', mockStore);

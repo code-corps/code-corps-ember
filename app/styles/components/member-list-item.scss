@@ -28,7 +28,7 @@
     }
   }
   &__skills {
-    color: $text--lighter;
+    color: $text--lightest;
     font-size: $body-font-size-small;
     @include span-columns(6);
     ul {

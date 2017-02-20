@@ -54,14 +54,6 @@ export default Model.extend(ContainsCodeMixin, {
   order: attr(),
 
   /**
-    The task's type (issue/task/idea/etc.)
-
-    @attribute taskType
-    @type string
-   */
-  taskType: attr(),
-
-  /**
     The task's status (open/closed)
 
     @attribute status

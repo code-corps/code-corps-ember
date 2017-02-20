@@ -15,43 +15,4 @@
     border-radius: 4px;
     padding: 10px 10px 0 10px;
   }
-
-  &.task .task-new-form-body {
-    border-color: $task-background;
-  }
-
-  &.issue .task-new-form-body {
-    border-color: $red--light;
-  }
-
-  &.idea .task-new-form-body {
-    border-color: $yellow--light;
-  }
-
-  .task-type.input-group {
-    &:before {
-      content: "";
-      display: block;
-      float: left;
-      margin: 5px 10px 5px 0px;
-    }
-
-    &.task {
-      &:before {
-        @include sprite($task);
-      }
-    }
-
-    &.issue {
-      &:before {
-        @include sprite($issue);
-      }
-    }
-
-    &.idea {
-      &:before {
-        @include sprite($idea);
-      }
-    }
-  }
 }

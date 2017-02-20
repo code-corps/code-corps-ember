@@ -7,10 +7,6 @@ export default {
 
   canReposition: hasClass('task-card--can-reposition'),
 
-  isIdea: hasClass('task-card--idea'),
-  isIssue: hasClass('task-card--issue'),
-  isTask: hasClass('task-card--task'),
-
   number: {
     scope: '[data-test-selector="task number"]'
   },
