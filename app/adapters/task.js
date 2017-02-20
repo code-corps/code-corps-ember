@@ -4,8 +4,7 @@ import Ember from 'ember';
 const {
   String: { underscore },
   get,
-  isEmpty,
-  isPresent
+  isBlank
 } = Ember;
 
 export default ApplicationAdapter.extend({
@@ -17,21 +16,21 @@ export default ApplicationAdapter.extend({
     // to preserve a clean url with just `&page=X` we only
     // transform the page number to the proper JSON api format here, in the
     // adapter, instead of back in the route
-    if (isPresent(query.page)) {
+    if (isBlank(query.page)) {
+      delete query.page;
+    } else {
       query.page = { page: query.page };
     }
 
     // we don't want to send the status parameter to the API if it does not
     // have a proper value
-    if (isEmpty(query.status)) {
+    if (isBlank(query.status)) {
       delete query.status;
     }
 
     // projectId is part of the url in `projects/:projectId/tasks`, so we
     // do not want to see it in the query as well
-    if (query.projectId) {
-      delete query.projectId;
-    }
+    delete query.projectId;
 
     // any remaining fields are in camelCase, so we want to serialize them into
     // underscore_format
