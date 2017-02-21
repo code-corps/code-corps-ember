@@ -2,6 +2,7 @@
   padding: 2em 0 1em 0;
   h4 {
     margin: 7px 0;
+    white-space: nowrap;
   }
 }
 
@@ -15,10 +16,15 @@
   > li {
     float: left;
     margin-bottom: 1em;
+    padding-left: 8%;
     width: 25%;
 
     @include media($md-screen) {
+      padding-left: 12%;
       width: 50%;
+    }
+    @include media($xs-screen) {
+      padding-left: 7%;
     }
   }
 }

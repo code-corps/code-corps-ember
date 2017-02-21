@@ -13,7 +13,7 @@ test('Task editing requires logging in', function(assert) {
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -49,7 +49,7 @@ test('A task body can be edited on its own', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -87,7 +87,7 @@ test('A task title can be edited on its own', function(assert) {
 
   let project = createProjectWithSluggedRoute();
   let { organization } = project;
-  let task = project.createTask({ title: 'Test title', body: 'Test body', taskType: 'issue', number: 1 });
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
   task.save();
 
@@ -125,7 +125,6 @@ test('Mentions are rendered during editing in preview mode', function(assert) {
   let task = project.createTask({
     title: "Test title",
     body: "Test body",
-    taskType: "issue",
     number: 1
   });
   task.user = user;
@@ -260,5 +259,51 @@ test('A task cannot be opened or closed by someone else', function(assert) {
 
   andThen(() => {
     assert.notOk(taskPage.taskStatusButton.close.isVisible, 'The close button is not rendered');
+  });
+});
+
+test('Skills can be assigned or unassigned to/from task', function(assert) {
+  assert.expect(5);
+
+  let done = assert.async();
+
+  server.create('skill', {
+    title: 'Ruby'
+  });
+
+  let user = server.schema.users.create({ username: 'test_user' });
+  authenticateSession(this.application, { user_id: user.id });
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
+  task.user = user;
+  task.save();
+
+  taskPage.visit({
+    organization: organization.slug,
+    project: project.slug,
+    number: task.number
+  });
+
+  andThen(() => {
+    taskPage.skillsTypeahead.fillIn('ru');
+  });
+
+  andThen(() => {
+    assert.equal(taskPage.skillsTypeahead.inputItems().count, 1);
+    assert.equal(taskPage.skillsTypeahead.inputItems(0).text, 'Ruby');
+    taskPage.skillsTypeahead.inputItems(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(taskPage.taskSkillsList().count, 1);
+    assert.equal(taskPage.taskSkillsList(0).text, 'Ruby');
+    taskPage.taskSkillsList(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(taskPage.taskSkillsList().count, 0);
+    done();
   });
 });

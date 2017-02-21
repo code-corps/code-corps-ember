@@ -12,7 +12,7 @@ export default {
     @return {Boolean} `true` if found, otherwise `false`
     @public
   */
-  contains(records, target) {
+  includes(records, target) {
     if (records) {
       return records.any((found) => {
         let targetId = get(target, 'id');

@@ -9,8 +9,10 @@ moduleForModel('task', 'Unit | Model | task', {
     'model:comment-user-mention',
     'model:project',
     'model:task-list',
+    'model:task-skill',
     'model:task-user-mention',
-    'model:user'
+    'model:user',
+    'model:user-task'
   ]
 });
 
@@ -19,12 +21,13 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['body', 'insertedAt', 'markdown', 'number', 'order', 'position', 'status', 'taskType', 'title']);
+testForAttributes('task', ['body', 'insertedAt', 'markdown', 'number', 'order', 'position', 'status', 'title']);
 testForBelongsTo('task', 'project');
 testForBelongsTo('task', 'taskList');
 testForBelongsTo('task', 'user');
 testForHasMany('task', 'comments');
 testForHasMany('task', 'commentUserMentions');
+testForHasMany('task', 'taskSkills');
 testForHasMany('task', 'taskUserMentions');
 
 test('it correctly identifies code in the body', function(assert) {

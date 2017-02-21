@@ -29,6 +29,7 @@ export default Ability.extend({
   userIsAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
   userIsAtLeastContributor: or('membership.isContributor', 'userIsAtLeastAdmin'),
 
+  canAssign: or('userIsAuthor', 'userIsAtLeastContributor'),
   canEdit: or('userIsAuthor', 'userIsAtLeastAdmin'),
   canReposition: or('userIsAuthor', 'userIsAtLeastContributor')
 });

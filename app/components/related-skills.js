@@ -6,21 +6,23 @@ const {
 } = Ember;
 
 /**
-  `project-card-skills` composes the given project's list of skills on a
-  project's card.
+  `related-skills` renders a list of associated skill records for an entity
+
+  - For projects, this is `project.projectSkills`
+  - For tasks, this is `task.taskSkills`
 
   ## default usage
 
   ```handlebars
-  {{project-card-skills skills=project.skills}}
+  {{related-skills skills=parent.xSkills}}
   ```
 
-  @class project-card-skills
+  @class card-skills
   @module Component
   @extends Ember.Component
  */
 export default Component.extend({
-  classNames: ['project-card-skills'],
+  classNames: ['related-skills'],
 
   /**
     Returns whether or not the overflowing skills on the project card should be

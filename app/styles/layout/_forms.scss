@@ -1,6 +1,29 @@
 $inner-border-radius: 0px;
 $outer-border-radius: 4px;
 
+.form {
+  &--centered {
+    @include shift(3.5);
+    @include span-columns(5);
+
+    @include media($lg-screen) {
+      @include shift(2);
+      @include span-columns(8);
+    }
+
+    @include media($md-screen) {
+      @include shift(0);
+      @include span-columns(12);
+    }
+
+    padding-top: 10vh;
+
+    button, input[type="submit"] {
+      width: 100%;
+    }
+  }
+}
+
 .input-group {
   @include clearfix;
 

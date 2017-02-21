@@ -1,21 +1,5 @@
 <img class="icon" src={{task.user.photoThumbUrl}} />
 <div class="task-new-form-body">
-  <div class="input-group task-type {{task.taskType}}">
-    <select autofocus="autofocus" tabindex="1" class={{task.taskType}} name="task-type" onchange={{action (mut task.taskType) value="target.value"}} value={{task.taskType}}>
-      {{#if (can "create task task in organization" organization)}}
-        <option value="task" selected={{eq task.taskType 'task'}}>Task</option>
-      {{/if}}
-      {{#if (can "create issue task in organization" organization)}}
-        <option value="issue" selected={{eq task.taskType 'issue'}}>Issue</option>
-      {{/if}}
-      {{#if (can "create idea task in organization" organization)}}
-        <option value="idea" selected={{eq task.taskType 'idea'}}>Idea</option>
-      {{/if}}
-    </select>
-    {{#each task.errors.taskType as |error|}}
-      <p class="error">{{error.message}}</p>
-    {{/each}}
-  </div>
   <div class="input-group">
     {{input tabindex="2" name="title" type="text" placeholder="Title" value=task.title}}
     {{#each task.errors.title as |error|}}
@@ -34,6 +18,6 @@
     {{/each}}
   </div>
   <div class="input-group">
-    <input tabindex="4" class="button right {{task.taskType}}" name="submit" type="submit" value="Submit new {{task.taskType}}" {{action save}} />
+    <input tabindex="4" class="button right" name="submit" type="submit" value="Submit new task" {{action save}} />
   </div>
 </div>

@@ -1,0 +1,19 @@
+{{#if searchEnabled}}
+  <div class="ember-power-select-search">
+    <div class="select-inline-dropdown__header">
+      <label>Assign task</label>
+      <div {{action "close"}} class="select-inline-dropdown__header__close">&times;</div>
+    </div>
+    <input type="search" autocomplete="off"
+      autocorrect="off" autocapitalize="off"
+      spellcheck="false" role="combobox"
+      class="ember-power-select-search-input"
+      value={{select.searchText}}
+      aria-controls={{listboxId}}
+      placeholder={{searchPlaceholder}}
+      oninput={{onInput}}
+      onfocus={{onFocus}}
+      onblur={{onBlur}}
+      onkeydown={{action "onKeydown"}}>
+  </div>
+{{/if}}

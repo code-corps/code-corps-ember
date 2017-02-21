@@ -68,10 +68,11 @@ function generatePreviewMentions(schema, preview) {
 
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
-  'categories', 'comment-user-mentions', 'comments', 'donation-goals', 'organizations', 'task-lists',
-  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories', 'slugged-routes',
-  'stripe-connect-accounts', 'stripe-connect-subscriptions', 'stripe-connect-plans',
-  'stripe-platform-cards', 'stripe-platform-customers',
+  'categories', 'comment-user-mentions', 'comments', 'donation-goals',
+  'organizations', 'task-lists', 'task-skills', 'task-user-mentions', 'tasks',
+  'previews', 'projects', 'project-categories', 'slugged-routes',
+  'stripe-connect-accounts', 'stripe-connect-subscriptions',
+  'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
   'user-categories', 'users'
 ];
 
@@ -268,7 +269,6 @@ export default function() {
   // GET project/:id/tasks
   this.get('/projects/:projectId/tasks', (schema, request) => {
     let { projectId } = request.params;
-    let taskType = request.queryParams.task_type;
     let taskStatus = request.queryParams.status;
 
     let pageNumber = parseInt(request.queryParams['page[page]']);
@@ -277,10 +277,6 @@ export default function() {
     let project = schema.projects.find(projectId);
 
     let { tasks } = project;
-
-    if (taskType) {
-      tasks = tasks.filter((p) =>  p.taskType === taskType);
-    }
 
     if (taskStatus) {
       tasks = tasks.filter((p) => p.status === taskStatus);
@@ -538,6 +534,15 @@ export default function() {
 
     return task;
   });
+
+  /**
+  * Task skills
+  */
+
+  this.get('/task-skills', { coalesce: true });
+  this.post('/task-skills');
+  this.get('/task-skills/:id');
+  this.delete('/task-skills/:id');
 
   /**
   * Token

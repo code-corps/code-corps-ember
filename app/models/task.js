@@ -54,14 +54,6 @@ export default Model.extend(ContainsCodeMixin, {
   order: attr(),
 
   /**
-    The task's type (issue/task/idea/etc.)
-
-    @attribute taskType
-    @type string
-   */
-  taskType: attr(),
-
-  /**
     The task's status (open/closed)
 
     @attribute status
@@ -110,6 +102,8 @@ export default Model.extend(ContainsCodeMixin, {
    */
   taskList: belongsTo('task-list', { async: true }),
 
+  taskSkills: hasMany('task-skill', { async: true }),
+
   /**
     The task user mentions that belong to the task.
 
@@ -132,5 +126,13 @@ export default Model.extend(ContainsCodeMixin, {
     @attribute user
     @type Ember.computed
    */
-  user: belongsTo('user', { async: true })
+  user: belongsTo('user', { async: true }),
+
+  /**
+    The user task relationshipp
+
+    @attribute userTask
+    @type Ember.computed
+   */
+  userTask: belongsTo('user-task', { async: true })
 });

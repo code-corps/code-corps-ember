@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
-const { Helper } = Ember;
+const { Helper, isEmpty } = Ember;
 
 export function highlightSubstrings([string, substring]) {
+  if (isEmpty(substring) || isEmpty(string)) {
+    return string;
+  }
   let substrings = substring.split(' ').uniq();
   let positionsToAdd = [];
   let newString = [];

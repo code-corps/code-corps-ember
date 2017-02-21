@@ -29,13 +29,12 @@ moduleForComponent('task-new-form', 'Integration | Component | task new form', {
 });
 
 test('it renders proper ui elements, properly bound', function(assert) {
-  assert.expect(7);
+  assert.expect(3);
   stubService(this, 'credentials', { membership: null });
 
   let task = {
     title: 'A task',
-    markdown: 'A body',
-    taskType: 'idea'
+    markdown: 'A body'
   };
 
   let placeholder = 'Test placeholder';
@@ -46,11 +45,7 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
   assert.equal(page.title.value, 'A task', 'Title is properly bound and rendered.');
   assert.equal(page.markdown.value, 'A body', 'Markdown content is properly bound and rendered.');
-  assert.equal(page.taskType.value, 'idea', 'Task type is properly bound and rendered.');
   assert.equal(page.markdown.placeholder, placeholder, 'Placeholder attribute is properly bound and rendered.');
-  assert.ok(page.taskTypeWrapper.rendersAsIdea, 'Task type class is properly bound to input group.');
-  assert.ok(page.saveButton.rendersAsIdea, 'Task type class is properly bound to save button.');
-  assert.equal(page.saveButton.value, 'Submit new idea', 'The dynamic text for the save button is properly rendered.');
 });
 
 test('it triggers an action when the task is saved', function(assert) {
@@ -70,32 +65,4 @@ test('it triggers an action when the task is saved', function(assert) {
   renderPage();
 
   page.saveButton.click();
-});
-
-test('it renders only idea and issue task type options if user is not at least a contributor to the organization', function(assert) {
-  assert.expect(3);
-
-  stubService(this, 'credentials', {
-    membership: { isContributor: false, isAdmin: false, isOwner: false }
-  });
-
-  renderPage();
-
-  assert.ok(page.taskType.contains('Idea'), 'Idea option is rendered.');
-  assert.ok(page.taskType.contains('Issue'), 'Issue option is rendered.');
-  assert.notOk(page.taskType.contains('Task'), 'Task option is not rendered.');
-});
-
-test('it renders all task type options if user is at least contributor', function(assert) {
-  assert.expect(3);
-
-  stubService(this, 'credentials', {
-    membership: { isContributor: true }
-  });
-
-  renderPage();
-
-  assert.ok(page.taskType.contains('Idea'), 'Idea option is rendered.');
-  assert.ok(page.taskType.contains('Issue'), 'Issue option is rendered.');
-  assert.ok(page.taskType.contains('Task'), 'Task option is rendered.');
 });

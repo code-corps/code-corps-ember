@@ -10,21 +10,6 @@
 // MIXINS
 //
 
-@mixin taskTypeButtonColors($type) {
-  $background: map-get($taskTypeColors, $type);
-  $text: map-get($taskTypeTextOnBackgroundColors, $type);
-
-  $darker-color: darken($background, 5%);
-  background-color: $background;
-  border-color: $background;
-  color: $text;
-  &:hover {
-    background-color: $darker-color;
-    background-image: linear-gradient($background, $darker-color);
-    border-color: $darker-color;
-  }
-}
-
 @mixin primary-active {
   &.primary-active {
     &.active {
@@ -205,10 +190,6 @@
       }
     }
   }
-
-  &.task { @include taskTypeButtonColors('task'); }
-  &.issue { @include taskTypeButtonColors('issue'); }
-  &.idea { @include taskTypeButtonColors('idea'); }
 }
 
 @mixin hoverButton($color) {

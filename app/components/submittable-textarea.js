@@ -1,15 +1,15 @@
 import Ember from 'ember';
-import { keyDown as keyDownEvent } from 'ember-keyboard';
+import { EKMixin, EKOnFocusMixin, keyDown } from 'ember-keyboard';
 
 const { TextArea, on } = Ember;
 
-export default TextArea.extend({
+export default TextArea.extend(EKMixin, EKOnFocusMixin, {
   init() {
     this._super(...arguments);
     this.set('keyboardActivated', true);
   },
 
-  customSubmit: on(keyDownEvent('cmd+Enter'), keyDownEvent('ctrl+Enter'), function(e) {
+  customSubmit: on(keyDown('Enter+cmd'), function(e) {
     e.preventDefault();
     this.sendAction('modifiedSubmit');
   })

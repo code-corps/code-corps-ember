@@ -38,7 +38,7 @@ test('Creating a task requires logging in', function(assert) {
 });
 
 test('A task can be successfully created', function(assert) {
-  assert.expect(10);
+  assert.expect(8);
   let user = server.schema.users.create({ username: 'test_user' });
 
   let project = createProjectWithSluggedRoute();
@@ -55,11 +55,9 @@ test('A task can be successfully created', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
-    assert.equal(find('[name=task-type]').val(), 'issue', 'Has the right default task type');
 
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body')
-                       .taskType('idea');
+                       .taskMarkdown('A task body');
 
     projectTasksNewPage.clickSubmit();
   });
@@ -71,7 +69,6 @@ test('A task can be successfully created', function(assert) {
 
     assert.equal(task.title, 'A task title');
     assert.equal(task.markdown, 'A task body');
-    assert.equal(task.taskType, 'idea');
 
     assert.equal(task.userId, user.id, 'The correct user was assigned');
     assert.equal(task.projectId, project.id, 'The correct project was assigned');
@@ -137,7 +134,9 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   andThen(() => projectTasksIndexPage.clickNewTask());
 
   andThen(() => {
-    projectTasksNewPage.taskTitle('A task title').taskMarkdown('A task body').taskType('Task').clickSubmit();
+    projectTasksNewPage.taskTitle('A task title')
+                       .taskMarkdown('A task body')
+                       .clickSubmit();
   });
 
   andThen(() => {
@@ -175,25 +174,14 @@ test('When task creation fails due to validation, validation errors are displaye
             source: { pointer: 'data/attributes/markdown' },
             detail: "can't be blank",
             status: 422
-          },
-          {
-            id: 'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/task-type' },
-            detail: 'is invalid',
-            status: 422
-          },
-          {
-            id: 'VALIDATION_ERROR',
-            source: { pointer: 'data/attributes/task-type' },
-            detail: 'can only be one of the specified values',
-            status: 422
           }
-        ] });
+        ]
+      });
     });
     projectTasksNewPage.clickSubmit();
   });
 
-  andThen(() => assert.equal(projectTasksNewPage.errors().count, 4));
+  andThen(() => assert.equal(projectTasksNewPage.errors().count, 2));
 });
 
 test('When task creation fails due to non-validation issues, the error is displayed', function(assert) {
@@ -299,5 +287,59 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Navigation was aborted.');
     stub.restore();
+  });
+});
+
+test('Skills can be assigned to task during creation', function(assert) {
+  assert.expect(5);
+
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = createProjectWithSluggedRoute();
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  let skill = server.create('skill', { title: 'Ruby' });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
+
+    projectTasksNewPage.taskTitle('A task title')
+                       .taskMarkdown('A task body');
+  });
+
+  // NOTE: We need to be doing this async, so the code is ugly
+  // Possibly switching to await/async might make it nicer
+  andThen(() => {
+    // find skill
+    projectTasksNewPage.skillsTypeahead.fillIn('ru');
+  });
+
+  andThen(() => {
+    // add skill
+    projectTasksNewPage.skillsTypeahead.inputItems(0).click();
+  });
+
+  andThen(() => {
+    projectTasksNewPage.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created');
+    assert.equal(server.schema.taskSkills.all().models.length, 1, 'A single task skill has been created.');
+
+    let [task] = server.schema.tasks.all().models;
+    let [taskSkill] = server.schema.taskSkills.all().models;
+
+    assert.equal(taskSkill.taskId, task.id, 'The correct task was assigned');
+    assert.equal(taskSkill.skillId, skill.id, 'The correct skill was assigned');
   });
 });

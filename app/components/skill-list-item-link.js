@@ -32,7 +32,9 @@ export default Component.extend({
 
   session: service(),
 
-  click() {
+  click(e) {
+    e.stopPropagation();
+
     if (get(this, 'session.isAuthenticated')) {
       this._toggleClickState();
 

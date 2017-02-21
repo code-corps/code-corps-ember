@@ -26,7 +26,7 @@ let mockStore = {
 };
 
 let mockListService = {
-  contains(queriedSkill) {
+  includes(queriedSkill) {
     return queriedSkill === skills[1];
   },
   find(queriedSkill) {
@@ -44,7 +44,7 @@ function setHandlers(context, { selectHandler = function() {} } = {}) {
   context.set('selectHandler', selectHandler);
 }
 
-moduleForComponent('skills-typeahead', 'Integration | Component | skills input', {
+moduleForComponent('skills-typeahead', 'Integration | Component | skills typeahead', {
   integration: true,
   beforeEach() {
     stubService(this, 'store', mockStore);

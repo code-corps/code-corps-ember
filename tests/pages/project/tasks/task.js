@@ -3,11 +3,13 @@ import {
   collection,
   create,
   fillable,
+  text,
   value,
   visitable
 } from 'ember-cli-page-object';
 import commentItem from '../../components/comment-item';
 import createCommentForm from '../../components/create-comment-form';
+import skillsTypeahead from 'code-corps-ember/tests/pages/components/skills-typeahead';
 
 export default create({
   commentItem,
@@ -40,6 +42,8 @@ export default create({
     itemScope: '.error'
   }),
 
+  skillsTypeahead,
+
   taskBody: {
     scope: '.task-body',
 
@@ -63,6 +67,15 @@ export default create({
       scope: '[name=open]'
     }
   },
+
+  taskSkillsList: collection({
+    scope: '.task-skills-list',
+    itemScope: 'button',
+    item: {
+      text: text(),
+      click: clickable()
+    }
+  }),
 
   taskTitle: {
     scope: '.task-title',

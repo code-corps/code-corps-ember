@@ -46,6 +46,10 @@
 @import "layout/footer";
 @import "layout/forms";
 @import "layout/header";
+@import "layout/select-dropdown";
+@import "layout/select-inline";
+
+@import "ember-power-select";
 
 //
 // COMPONENTS
@@ -60,7 +64,6 @@
 @import "components/error-wrapper";
 @import "components/image-drop";
 @import "components/loading-bar";
-@import "components/login-form";
 @import "components/member-list-item";
 @import "components/pager-control";
 @import "components/progress-bar";
@@ -95,7 +98,6 @@
 // COMPONENTS - PROJECTS
 //
 @import "components/project-card-members";
-@import "components/project-card-skills";
 @import "components/project-card";
 @import "components/project-details";
 @import "components/project-header";
@@ -110,6 +112,17 @@
 @import "components/skill-list-item";
 @import "components/skills-list";
 @import "components/skills-typeahead";
+
+//
+// COMPONETS - RELATED SKILLS
+//
+@import "components/related-skills";
+
+//
+// COMPONENTS - TASK
+//
+@import "components/task/user/user-select";
+@import "components/task/user/users-list-item";
 
 //
 // COMPONENTS - TASKS

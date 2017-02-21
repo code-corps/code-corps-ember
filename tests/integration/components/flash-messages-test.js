@@ -1,18 +1,28 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/flash-messages';
 
 const {
   getOwner,
   run
 } = Ember;
 
+let page = PageObject.create(component);
+
 moduleForComponent('flash-messages', 'Integration | Component | flash messages', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders a fixed error message', function(assert) {
-  this.render(hbs`{{flash-messages}}`);
+  page.render(hbs`{{flash-messages}}`);
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({
@@ -24,11 +34,11 @@ test('it renders a fixed error message', function(assert) {
     });
   });
 
-  assert.equal(this.$('.flash .fixed-flash .fixed-flash-inner p').text().trim(), 'Error message');
+  assert.equal(page.fixed.message, 'Error message');
 });
 
 test('it renders a normal success message', function(assert) {
-  this.render(hbs`{{flash-messages}}`);
+  page.render(hbs`{{flash-messages}}`);
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({
@@ -37,5 +47,5 @@ test('it renders a normal success message', function(assert) {
     });
   });
 
-  assert.equal(this.$('.flash .container p').text().trim(), 'Success message');
+  assert.equal(page.normal.message, 'Success message');
 });

@@ -18,7 +18,7 @@ export default Component.extend({
 
   hasSkill: computed('skill', function() {
     let { skill, skillsList } = getProperties(this, 'skill', 'skillsList');
-    return skillsList.contains(skill);
+    return skillsList.includes(skill);
   }),
   selected: alias('skill.selected'),
 

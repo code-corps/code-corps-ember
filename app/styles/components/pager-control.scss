@@ -55,11 +55,11 @@
 
     .disabled {
       background-color: $clear-hover;
-      color: $text--lighter;
+      color: $text--lightest;
       cursor: default;
       &:hover {
         background-color: $clear-hover;
-        color: $text--lighter;
+        color: $text--lightest;
       }
     }
   }
