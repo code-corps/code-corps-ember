@@ -1,6 +1,7 @@
 import {
   clickable,
-  hasClass
+  hasClass,
+  isVisible
 } from 'ember-cli-page-object';
 
 export default {
@@ -9,5 +10,6 @@ export default {
   clickable,
 
   isDark: hasClass('dark'),
-  isLight: hasClass('light')
+  isLight: hasClass('light'),
+  isVisible: isVisible()
 };
