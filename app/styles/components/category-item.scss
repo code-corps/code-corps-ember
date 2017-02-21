@@ -13,7 +13,7 @@
     font-size: $body-font-size-small;
     margin: 10px 0;
 
-    &.selected {
+    .selected & {
       color: $default-color;
     }
   }

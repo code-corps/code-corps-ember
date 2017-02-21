@@ -4,6 +4,7 @@ const {
   Component,
   computed,
   computed: { alias, notEmpty },
+  get,
   inject: { service }
 } = Ember;
 
@@ -23,6 +24,21 @@ const {
 export default Component.extend({
   classNames: ['project-category-item'],
   tagName: ['li'],
+
+  /**
+   * Returns the class name for the icon.
+   *
+   * @property iconClass
+   * @type String
+   */
+  iconClass: computed('category.slug', 'selected', function() {
+    let slug = get(this, 'category.slug');
+    if (get(this, 'selected')) {
+      return `category-item__icon--small--${slug}--selected`;
+    } else {
+      return `category-item__icon--small--${slug}`;
+    }
+  }),
 
   /**
     Returns true if 'userCategory' is not empty

@@ -24,7 +24,6 @@ const {
  */
 export default Component.extend({
   classNames: ['category-item'],
-  classNameBindings: ['selected'],
   isLoading: false,
 
   /**
@@ -38,6 +37,21 @@ export default Component.extend({
    * @type Ember.Service
    */
   userCategories: service(),
+
+  /**
+   * Returns the class name for the icon.
+   *
+   * @property iconClass
+   * @type String
+   */
+  iconClass: computed('category.slug', 'selected', function() {
+    let slug = get(this, 'category.slug');
+    if (get(this, 'selected')) {
+      return `category-item__icon--${slug}--selected`;
+    } else {
+      return `category-item__icon--${slug}`;
+    }
+  }),
 
   /**
    * Returns if the category has been selected by the user.

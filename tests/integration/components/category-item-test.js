@@ -5,18 +5,32 @@ import wait from 'ember-test-helpers/wait';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 
+import pageComponent from 'code-corps-ember/tests/pages/components/category-item';
+import PageObject from 'ember-cli-page-object';
+
+let page = PageObject.create(pageComponent);
+
 const {
   getOwner,
+  getProperties,
   Object,
   run,
   RSVP
 } = Ember;
+
+function renderPage() {
+  page.render(hbs`{{category-item category=category}}`);
+}
 
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
     mockUserCategory.set('categoryId', defaultCategoryId);
     getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
@@ -84,65 +98,70 @@ let selectedCategory = Object.create({
 
 test('it works for selecting unselected categories', function(assert) {
   let done = assert.async();
-  assert.expect(6);
+
+  assert.expect(5);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
-  this.render(hbs`{{category-item category=category}}`);
 
-  assert.ok(this.$('.category-icon').hasClass('technology'));
-  assert.notOk(this.$('.category-icon').hasClass('selected'));
-  assert.equal(this.$('p').text().trim(), 'You want to help technology.');
-  assert.notOk(this.$('p').hasClass('selected'));
-  assert.equal(this.$('button').text().trim(), 'Technology');
+  renderPage();
 
-  this.$('button').click();
+  assert.ok(page.icon.classContains('technology'), 'renders the right icon');
+  assert.notOk(page.icon.classContains('technology--selected'), 'is not selected');
+  assert.equal(page.description.text, 'You want to help technology.', 'Correct description is rendered.');
+  assert.equal(page.button.text, 'Technology', 'Button text is rendered correctly');
+
+  page.button.click();
 
   wait().then(() => {
-    assert.ok(this.$('.category-item').hasClass('selected'));
+    assert.ok(page.icon.classContains('technology--selected'), 'is selected');
     done();
   });
 });
 
 test('it works for removing selected categories', function(assert) {
   let done = assert.async();
-  assert.expect(4);
+
+  assert.expect(3);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
-  this.render(hbs`{{category-item category=category}}`);
 
-  assert.ok(this.$('.category-icon').hasClass('selected'));
-  assert.ok(this.$('p').hasClass('selected'));
-  assert.equal(this.$('button').text().trim(), 'Society');
+  renderPage();
 
-  this.$('button').click();
+  assert.ok(page.icon.classContains('society--selected'), 'is selected');
+  assert.equal(page.button.text, 'Society', 'Button text is rendered correctly.');
+
+  page.button.click();
 
   wait().then(() => {
-    assert.notOk(this.$('.category-item').hasClass('selected'));
+    assert.ok(page.icon.classContains('society'), 'is unselected');
     done();
   });
 });
 
 test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
+
   assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
 
-  this.render(hbs`{{category-item category=category}}`);
+  renderPage();
 
-  this.$('button').click();
+  page.button.click();
+
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.ok(page.button.unchecked, 'Operation failed. Button is rendered as unchecked.');
 
     assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
 
     let flash = getFlashMessageAt(0, this);
-    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
     let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
     assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+
     assert.ok(flash.message.indexOf(unselectedCategory.name) !== -1, 'Message text includes the category name');
 
     done();
@@ -151,23 +170,26 @@ test('it creates a flash message on an error when adding', function(assert) {
 
 test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
+
   assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
 
-  this.render(hbs`{{category-item category=category}}`);
+  renderPage();
 
-  this.$('button').click();
+  page.button.click();
+
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.ok(page.button.checked, 'Operation failed. Button is rendered as checked.');
 
-    assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
+    assert.equal(getFlashMessageCount(this), 1, 'One message is shown.');
 
     let flash = getFlashMessageAt(0, this);
-    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+    let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
     let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
     assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+
     assert.ok(flash.message.indexOf(selectedCategory.name) !== -1, 'Message text includes the category name');
 
     done();
@@ -176,38 +198,40 @@ test('it creates a flash message on an error when removing', function(assert) {
 
 test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
-  assert.expect(3);
+
+  assert.expect(2);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
 
-  this.render(hbs`{{category-item category=category}}`);
+  renderPage();
 
-  this.$('button').click();
-  assert.ok(this.$('span').hasClass('button-spinner'));
-  assert.notOk(this.$('span').hasClass('check-area'));
+  page.button.click();
+
+  assert.ok(page.button.spinning, 'Button is rendering as busy.');
 
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.ok(page.button.checked, 'Operation worked. Button is rendered as checked.');
     done();
   });
 });
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  stubService(this, 'user-categories', mockUserCategoriesService);
-  assert.expect(3);
 
+  assert.expect(2);
+
+  stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
 
-  this.render(hbs`{{category-item category=category}}`);
+  renderPage();
 
-  this.$('button').click();
-  assert.ok(this.$('span').hasClass('button-spinner'));
-  assert.notOk(this.$('span').hasClass('check-area'));
+  page.button.click();
+
+  assert.ok(page.button.spinning, 'Button is rendering as busy.');
 
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.ok(page.button.unchecked, 'Operation worked. Button is rendered as unchecked.');
     done();
   });
 });
