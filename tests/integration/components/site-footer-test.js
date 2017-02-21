@@ -1,38 +1,46 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/site-footer';
+
+let page = PageObject.create(component);
 
 moduleForComponent('site-footer', 'Integration | Component | site footer', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders all elements', function(assert) {
-  this.render(hbs`{{site-footer}}`);
+  page.render(hbs`{{site-footer}}`);
 
-  assert.equal(this.$('ul.footer-columns > li').length, 4);
+  assert.equal(page.columns().count, 4);
 
-  assert.equal(this.$('ul.footer-columns > li:eq(0) h4').text().trim(), 'Code Corps');
-  assert.equal(this.$('ul.footer-columns > li:eq(1) h4').text().trim(), 'Help');
-  assert.equal(this.$('ul.footer-columns > li:eq(2) h4').text().trim(), 'Learn');
-  assert.equal(this.$('ul.footer-columns > li:eq(3) h4').text().trim(), 'Connect');
+  assert.equal(page.columns(0).header, 'Code Corps');
+  assert.equal(page.columns(1).header, 'Help');
+  assert.equal(page.columns(2).header, 'Learn');
+  assert.equal(page.columns(3).header, 'Connect');
 
-  assert.equal(this.$('ul.footer-columns > li:eq(0) li:eq(0)').text().trim(), 'About us');
-  assert.equal(this.$('ul.footer-columns > li:eq(0) li:eq(1)').text().trim(), 'Team');
+  assert.equal(page.columns(0).rows(0).text, 'About us');
+  assert.equal(page.columns(0).rows(1).text, 'Team');
 
-  assert.equal(this.$('ul.footer-columns > li:eq(1) li:eq(0)').text().trim(), 'team@codecorps.org');
-  assert.equal(this.$('ul.footer-columns > li:eq(1) li:eq(1)').text().trim(), 'Terms of Use');
-  assert.equal(this.$('ul.footer-columns > li:eq(1) li:eq(2)').text().trim(), 'Privacy Policy');
+  assert.equal(page.columns(1).rows(0).text, 'team@codecorps.org');
+  assert.equal(page.columns(1).rows(0).link.href, 'mailto:team@codecorps.org');
+  assert.equal(page.columns(1).rows(1).text, 'Terms of Use');
+  assert.equal(page.columns(1).rows(2).text, 'Privacy Policy');
 
-  assert.equal(this.$('ul.footer-columns > li:eq(1) li:eq(0) a').attr('href'), 'mailto:team@codecorps.org');
+  assert.equal(page.columns(2).rows(0).text, 'Blog');
 
-  assert.equal(this.$('ul.footer-columns > li:eq(2) li:eq(0)').text().trim(), 'Blog');
-
-  assert.equal(this.$('.github').text().trim(), 'GitHub');
-  assert.equal(this.$('.slack').text().trim(), 'Slack');
-  assert.equal(this.$('.twitter').text().trim(), 'Twitter');
-  assert.equal(this.$('.facebook').text().trim(), 'Facebook');
-
-  assert.equal(this.$('.github').attr('href'), 'https://github.com/code-corps');
-  assert.equal(this.$('.slack').attr('href'), 'http://slack.codecorps.org');
-  assert.equal(this.$('.twitter').attr('href'), 'https://twitter.com/thecodecorps');
-  assert.equal(this.$('.facebook').attr('href'), 'https://www.facebook.com/thecodecorps');
+  assert.equal(page.columns(3).rows(0).text, 'GitHub');
+  assert.equal(page.columns(3).rows(0).link.href, 'https://github.com/code-corps');
+  assert.equal(page.columns(3).rows(1).text, 'Slack');
+  assert.equal(page.columns(3).rows(1).link.href, 'http://slack.codecorps.org');
+  assert.equal(page.columns(3).rows(2).text, 'Twitter');
+  assert.equal(page.columns(3).rows(2).link.href, 'https://twitter.com/thecodecorps');
+  assert.equal(page.columns(3).rows(3).text, 'Facebook');
+  assert.equal(page.columns(3).rows(3).link.href, 'https://www.facebook.com/thecodecorps');
 });
