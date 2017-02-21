@@ -70,8 +70,7 @@ export default Component.extend({
     let { currentUserId, taskUserId, users }
       = getProperties(this, 'currentUserId', 'taskUserId', 'users');
     if (users) {
-      // TODO: Replace content here!
-      return createTaskUserOptions(users.mapBy('content'), currentUserId, taskUserId);
+      return createTaskUserOptions(users, currentUserId, taskUserId);
     } else {
       return [];
     }
@@ -100,7 +99,7 @@ export default Component.extend({
       return option;
     },
 
-    async changeUser(user) {
+    changeUser(user) {
       let { task, taskAssignment } = getProperties(this, 'task', 'taskAssignment');
 
       if (user) {
