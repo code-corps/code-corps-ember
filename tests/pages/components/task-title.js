@@ -8,7 +8,7 @@ import {
 
 export default {
   scope: '.task-title',
-  
+
   isEditing: hasClass('editing'),
 
   cancel: {
