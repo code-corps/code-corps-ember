@@ -5,7 +5,7 @@ import {
 
 export default {
   scope: '.task-status',
-  
+
   isClosed: hasClass('closed'),
   isOpen: hasClass('open'),
   statusText: text()
