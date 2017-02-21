@@ -5,7 +5,6 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/editor-with-preview';
 import { initialize as initializeKeyboard } from 'ember-keyboard';
-import { triggerKeyDown } from 'ember-keyboard';
 
 const {
   Object,
@@ -174,15 +173,14 @@ test('it clears the editor style when previewing and done loading', function(ass
   assert.notOk(page.style);
 });
 
-test('it sends the modifiedSubmit action with ctrl+enter', function(assert) {
-  assert.expect(2);
+test('it sends the modifiedSubmit action with ctrl/cmd + enter', function(assert) {
+  assert.expect(1);
 
   this.on('modifiedSubmit', () => {
-    assert.ok(true);
+    assert.equal(page.textarea.value, '', 'Action was called, input is unchanged.');
   });
+
   page.render(hbs`{{editor-with-preview modifiedSubmit="modifiedSubmit"}}`);
 
-  page.focus();
-  triggerKeyDown('Enter+cmd');
-  assert.equal(page.textarea.value, '');
+  page.textarea.keySubmit();
 });

@@ -1,14 +1,12 @@
 import {
   attribute,
   clickable,
-  fillable,
   hasClass,
   isVisible,
-  text,
-  triggerable,
-  value
+  text
 } from 'ember-cli-page-object';
 import codeThemeSelector from 'code-corps-ember/tests/pages/components/code-theme-selector';
+import submittableTextarea from 'code-corps-ember/tests/pages/components/submittable-textarea';
 
 export default {
   scope: '.editor-with-preview',
@@ -28,20 +26,12 @@ export default {
     isActive: hasClass('active')
   },
 
-  focus: triggerable('focus', 'textarea'),
+  textarea: submittableTextarea,
 
   isEditing: hasClass('editing'),
   isPreviewing: hasClass('previewing'),
 
   spinnerIsVisible: isVisible('.spinner'),
 
-  style: attribute('style'),
-
-  textarea: {
-    scope: 'textarea',
-    fillIn: fillable(),
-    isFocused: hasClass('focused'),
-    placeholder: attribute('placeholder'),
-    value: value()
-  }
+  style: attribute('style')
 };
