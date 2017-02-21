@@ -93,24 +93,29 @@ export default Component.extend({
   },
 
   actions: {
+    buildSelection(option, select) {
+      if (option === select.selected) {
+        return null;
+      }
+      return option;
+    },
+
+    async changeUser(user) {
+      let { task, taskAssignment } = getProperties(this, 'task', 'taskAssignment');
+
+      if (user) {
+        return taskAssignment.assign(task, user);
+      } else {
+        return taskAssignment.unassign(task);
+      }
+    },
+
     searchUsers(query) {
       let { currentUserId, store, taskUserId }
         = getProperties(this, 'currentUserId', 'store', 'taskUserId');
       return store.query('user', { query }).then((users) => {
         return createTaskUserOptions(users.toArray(), currentUserId, taskUserId);
       });
-    },
-
-    async selectUser(user) {
-      let { task, taskAssignment } = getProperties(this, 'task', 'taskAssignment');
-
-      let taskIsAssignedToUser = await taskAssignment.isAssignedTo(task, user);
-
-      if (taskIsAssignedToUser) {
-        return taskAssignment.unassign(task);
-      } else {
-        return taskAssignment.assign(task, user);
-      }
     },
 
     stopClickPropagation(e) {

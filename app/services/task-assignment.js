@@ -10,13 +10,13 @@ const {
 export default Service.extend({
   store: service(),
 
-  async isAssignedTo(task, user) {
-    return await get(task, 'userTask.user.id') === get(user, 'id');
-  },
-
   async assign(task, user) {
     let userTask = await get(task, 'userTask');
     return userTask ? this._update(userTask, user) : this._create(user, task);
+  },
+
+  async isAssignedTo(task, user) {
+    return await get(task, 'userTask.user.id') === get(user, 'id');
   },
 
   async unassign(task) {

@@ -18,12 +18,13 @@
   </p>
   {{#power-select
     beforeOptionsComponent=(component "power-select/before-options" selectRemoteController=selectRemoteController)
+    buildSelection=(action "buildSelection")
     class="select-inline"
     disabled=userSelectDisabled
     dropdownClass="select-inline-dropdown"
     loadingMessage=""
     matchTriggerWidth=false
-    onchange=(action "selectUser")
+    onchange=(action "changeUser")
     options=userOptions
     placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
     registerAPI=(action (mut selectRemoteController))
