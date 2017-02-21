@@ -1,6 +1,7 @@
 import {
   hasClass
 } from 'ember-cli-page-object';
+import taskAssignment from 'code-corps-ember/tests/pages/components/power-select';
 
 export default {
   scope: '.task-card',
@@ -15,5 +16,7 @@ export default {
   },
   title: {
     scope: '[data-test-selector="task title"]'
-  }
+  },
+
+  taskAssignment
 };
