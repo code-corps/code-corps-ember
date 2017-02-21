@@ -2,6 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/task-details';
 
 const {
   Object,
@@ -47,21 +49,18 @@ let mockTask = Object.create({
 //   ]
 // });
 
+let page = PageObject.create(component);
+
 moduleForComponent('task-details', 'Integration | Component | task details', {
   integration: true,
   beforeEach() {
     stubService(this, 'current-user', mockCurrentUser);
     stubService(this, 'store', mockStore);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
-});
-
-test('it renders', function(assert) {
-
-  stubService(this, 'mention-fetcher', mockMentionFetcher);
-
-  this.render(hbs`{{task-details}}`);
-
-  assert.equal(this.$('.task-details').length, 1, 'The component\'s element is rendered');
 });
 
 test('it renders all the ui elements properly bound', function(assert) {
@@ -73,10 +72,10 @@ test('it renders all the ui elements properly bound', function(assert) {
     }
   });
 
-  this.render(hbs`{{task-details task=task}}`);
+  page.render(hbs`{{task-details task=task}}`);
 
-  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A body', 'Body is correctly bound and rendered');
-  assert.equal(this.$('.task-details .code-theme-selector').length, 1);
+  assert.equal(page.commentBody.text, 'A body', 'Body is correctly bound and rendered');
+  assert.ok(page.codeThemeSelector.isVisible);
 });
 
 test('the task body is rendered as unescaped html', function(assert) {
@@ -88,8 +87,8 @@ test('the task body is rendered as unescaped html', function(assert) {
 
   this.set('task', mockTask);
 
-  this.render(hbs`{{task-details task=task}}`);
-  assert.equal(this.$('.task-details .comment-body strong').length, 1, 'A html element within the body element is rendered unescaped');
+  page.render(hbs`{{task-details task=task}}`);
+  assert.ok(page.commentBody.hasStrongText, 'An html element within the body element is rendered unescaped');
 });
 
 test('user can switch between view and edit mode for task body', function(assert) {
@@ -98,14 +97,14 @@ test('user can switch between view and edit mode for task body', function(assert
 
   stubService(this, 'mention-fetcher', mockMentionFetcher);
 
-  this.render(hbs`{{task-details task=task}}`);
-  assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
+  page.render(hbs`{{task-details task=task}}`);
+  assert.ok(page.edit.isVisible, 'The edit button is rendered');
 
-  this.$('.task-body .edit').click();
-  assert.equal(this.$('.task-body .cancel').length, 1, 'The cancel button is rendered');
+  page.edit.click();
+  assert.ok(page.cancel.isVisible, 'The cancel button is rendered');
 
-  this.$('.task-body .cancel').click();
-  assert.equal(this.$('.task-body .edit').length, 1, 'The edit button is rendered');
+  page.cancel.click();
+  assert.ok(page.edit.isVisible, 'The edit button is rendered');
 });
 
 test('it saves', function(assert) {
@@ -126,24 +125,11 @@ test('it saves', function(assert) {
     return RSVP.resolve(task);
   });
 
-  this.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
-  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A body', 'The original body is correct');
+  page.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
+  assert.equal(page.commentBody.text, 'A body', 'The original body is correct');
 
-  this.$('.task-body .edit').click();
-  this.$('.task-body .editor-with-preview textarea').val('A new body').trigger('change');
-  this.$('.task-body .save').click();
-  assert.equal(this.$('.task-details .comment-body').text().trim(), 'A new body', 'The body is saved');
+  page.edit.click();
+  page.editorWithPreview.textarea.fillIn('A new body');
+  page.save.click();
+  assert.equal(page.commentBody.text, 'A new body', 'The body is saved');
 });
-// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/*
-test('mentions are rendered on task body in read-only mode', function(assert) {
-  assert.expect(1);
-
-  this.set('task', mockTaskWithMentions);
-
-  let expectedOutput = '<p>Mentioning <a href="/user1" class="username">@user1</a> and <a href="/user2" class="username">@user2</a></p>';
-
-  this.render(hbs`{{task-details task=task}}`);
-  assert.equal(this.$('.task-body .comment-body').html(), expectedOutput, 'Mentions are rendered');
-});
-*/

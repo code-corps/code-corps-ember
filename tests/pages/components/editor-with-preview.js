@@ -1,6 +1,7 @@
 import {
   attribute,
   clickable,
+  fillable,
   hasClass,
   isVisible,
   text,
@@ -38,6 +39,7 @@ export default {
 
   textarea: {
     scope: 'textarea',
+    fillIn: fillable(),
     isFocused: hasClass('focused'),
     placeholder: attribute('placeholder'),
     value: value()
