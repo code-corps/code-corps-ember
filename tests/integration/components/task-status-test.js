@@ -1,8 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/task-status';
+
+let page = PageObject.create(component);
 
 moduleForComponent('task-status', 'Integration | Component | task status', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders closed status', function(assert) {
@@ -10,10 +20,10 @@ test('it renders closed status', function(assert) {
 
   let task = { status: 'closed' };
   this.set('task', task);
-  this.render(hbs`{{task-status task=task}}`);
+  page.render(hbs`{{task-status task=task}}`);
 
-  assert.ok(this.$('.task-status').hasClass('closed'));
-  assert.equal(this.$('.task-status').text().trim(), 'Closed');
+  assert.ok(page.isClosed);
+  assert.equal(page.statusText, 'Closed');
 });
 
 test('it renders open status', function(assert) {
@@ -21,8 +31,8 @@ test('it renders open status', function(assert) {
 
   let task = { status: 'open' };
   this.set('task', task);
-  this.render(hbs`{{task-status task=task}}`);
+  page.render(hbs`{{task-status task=task}}`);
 
-  assert.ok(this.$('.task-status').hasClass('open'));
-  assert.equal(this.$('.task-status').text().trim(), 'Open');
+  assert.ok(page.isOpen);
+  assert.equal(page.statusText, 'Open');
 });
