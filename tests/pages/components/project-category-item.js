@@ -1,4 +1,4 @@
-import { attribute, hasClass, notHasClass, triggerable } from 'ember-cli-page-object';
+import { attribute, hasClass, triggerable } from 'ember-cli-page-object';
 import tooltip from 'code-corps-ember/tests/pages/helpers/tooltip';
 
 export default {
@@ -8,10 +8,8 @@ export default {
 
   linkIcon: {
     scope: 'a',
-    selected: hasClass('selected'),
-    unselected: notHasClass('selected'),
     cssClass: attribute('class'),
-    hasClass(klass) {
+    classContains(klass) {
       return this.cssClass.indexOf(klass) > -1;
     }
   },

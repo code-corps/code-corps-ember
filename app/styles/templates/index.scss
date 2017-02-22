@@ -1,6 +1,6 @@
 .landing {
   .landing-section {
-    margin-bottom: 80px;
+    margin: 80px 0;
     text-align: center;
   }
 
@@ -15,12 +15,6 @@
     font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
     font-size: $header-font-size-large;
     font-weight: 200;
-    margin: 10px;
-  }
-
-  h4 {
-    font-size: $header-font-size-large;
-    font-weight: 500;
     margin: 10px;
   }
 
@@ -171,6 +165,12 @@
 .landing-subsection-header {
   display: none;
   margin-bottom: 30px;
+
+  h4 {
+    font-size: $header-font-size-large;
+    font-weight: 500;
+    margin: 10px;
+  }
 }
 
 .landing-subsection-content {

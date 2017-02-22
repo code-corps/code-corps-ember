@@ -1,4 +1,4 @@
-<div class="category-icon {{category.slug}} {{if category.selected "selected"}}"></div>
+<div class="category-item__icon {{iconClass}}"></div>
 
 {{#if category.selected}}
   <button class="default has-spinner" disabled={{category.isLoading}}><span class="{{if category.isLoading "button-spinner" "check-mark"}}"></span>{{category.name}}</button>

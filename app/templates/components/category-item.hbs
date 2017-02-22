@@ -1,4 +1,4 @@
-<div class="category-icon {{category.slug}} {{if selected "selected"}}"></div>
+<div class="category-item__icon {{iconClass}}"></div>
 
 {{#if selected}}
   <button class="default has-spinner" {{action "removeCategory" category}} disabled={{isLoading}}>
@@ -12,4 +12,4 @@
   </button>
 {{/if}}
 
-<p class="{{if selected "selected"}}">{{category.description}}</p>
+<p>{{category.description}}</p>
