@@ -48,7 +48,7 @@ test('It renders a 404 error when no slugged route exists', function(assert) {
 
   andThen(function() {
     assert.ok(sluggedRoutePage.errorWrapper.isVisible, 'error-wrapper component is rendered');
-    assert.equal(sluggedRoutePage.errorWrapper.title.text, '404 Error', 'The 404 title is rendered');
+    assert.equal(sluggedRoutePage.errorWrapper.title, '404 Error', 'The 404 title is rendered');
     assert.ok($('html').hasClass('warning'), 'The class of the html element is correct');
     sluggedRoutePage.errorWrapper.clickLink();
   });
