@@ -3,6 +3,10 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import wait from 'ember-test-helpers/wait';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/signup-username-input';
+
+let page = PageObject.create(component);
 
 const { run } = Ember;
 
@@ -11,17 +15,20 @@ moduleForComponent('signup-username-input', 'Integration | Component | signup us
   setup() {
     startMirage(this.container);
   },
+  beforeEach() {
+    page.setContext(this);
+  },
   afterEach() {
+    page.removeContext();
     server.shutdown();
   }
 });
 
 test('it shows nothing when empty', function(assert) {
-  this.render(hbs`{{signup-username-input}}`);
+  page.render(hbs`{{signup-username-input}}`);
 
-  assert.equal(this.$('.suggestions li').length, 0);
-  assert.notOk(this.$('.suggestions p').hasClass('ok'));
-  assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
+  assert.notOk(page.suggestionsArea.visible);
+  assert.notOk(page.suggestionsArea.visible);
 });
 
 test('it shows suggestions when invalid', function(assert) {
@@ -37,15 +44,15 @@ test('it shows suggestions when invalid', function(assert) {
       assert.notOk(result);
     });
   });
-  this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
   this.set('user', { username: 'lots--of--hypens' });
 
   wait().then(() => {
-    assert.notOk(this.$('.suggestions p').hasClass('ok'));
-    assert.ok(this.$('.suggestions p').hasClass('not-ok'));
-    assert.equal(this.$('.suggestions li').length, 1);
-    assert.equal(this.$('.suggestions li:eq(0)').text().trim(), 'Please enter a username with only letters, numbers, or underscores.');
+    assert.notOk(page.suggestionsArea.ok);
+    assert.ok(page.suggestionsArea.notOk);
+    assert.equal(page.suggestionsArea.suggestions().count, 1);
+    assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a username with only letters, numbers, or underscores.');
     done();
   });
 });
@@ -63,15 +70,15 @@ test('it shows suggestions when unavailable', function(assert) {
       assert.notOk(result);
     });
   });
-  this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
   this.set('user', { username: 'taken' });
 
   wait().then(() => {
-    assert.notOk(this.$('.suggestions p').hasClass('ok'));
-    assert.ok(this.$('.suggestions p').hasClass('not-ok'));
-    assert.equal(this.$('.suggestions li').length, 1);
-    assert.equal(this.$('.suggestions li:eq(0)').text().trim(), 'This username is already registered. Want to login?');
+    assert.notOk(page.suggestionsArea.ok);
+    assert.ok(page.suggestionsArea.notOk);
+    assert.equal(page.suggestionsArea.suggestions().count, 1);
+    assert.equal(page.suggestionsArea.suggestions(0).text, 'This username is already registered. Want to login?');
     done();
   });
 });
@@ -89,21 +96,21 @@ test('it shows ok when valid and available', function(assert) {
       assert.ok(result);
     });
   });
-  this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
   this.set('user', { username: 'available' });
 
   wait().then(() => {
-    assert.ok(this.$('.suggestions p').hasClass('ok'));
-    assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
-    assert.equal(this.$('.suggestions li').length, 0);
+    assert.ok(page.suggestionsArea.ok);
+    assert.notOk(page.suggestionsArea.notOk);
+    assert.equal(page.suggestionsArea.suggestions().count, 0);
     done();
   });
 });
 
-test('it resets to invalid when deleted', function(assert) {
+test('it resets to show nothing when cleared', function(assert) {
   let done = assert.async();
-  assert.expect(4);
+  assert.expect(3);
 
   server.get('/users/username_available', () => {
     return { valid: true, available: true };
@@ -115,14 +122,13 @@ test('it resets to invalid when deleted', function(assert) {
     });
   });
   this.set('user', { username: 'available' });
-  this.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
 
   this.set('user', { username: '' });
 
   wait().then(() => {
-    assert.notOk(this.$('.suggestions p').hasClass('ok'));
-    assert.notOk(this.$('.suggestions p').hasClass('not-ok'));
-    assert.equal(this.$('.suggestions li').length, 0);
+    assert.notOk(page.suggestionsArea.visible);
+    assert.notOk(page.suggestionsArea.visible);
     done();
   });
 });
