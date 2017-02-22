@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const {
-  computed: { alias, sort },
+  computed: { sort },
   Controller,
   get,
   inject: { service },
@@ -27,9 +27,7 @@ export default Controller.extend({
     enabledEvents: ['drag', 'drop']
   },
 
-  members: alias('project.organization.organizationMembers'),
   orderedTaskLists: sort('project.taskLists', 'taskListsSorting'),
-  project: alias('model'),
 
   actions: {
     onDrop(droppedTaskEl, listDropTargetEl, source, siblingTaskEl) {

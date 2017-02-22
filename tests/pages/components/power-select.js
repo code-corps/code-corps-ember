@@ -17,7 +17,20 @@ import { clickTrigger, nativeMouseUp } from 'code-corps-ember/tests/helpers/embe
 
 export default {
   trigger: {
-    open: clickTrigger
+    scope: '.ember-power-select-trigger',
+    open: clickTrigger,
+    unassigned: {
+      isDescriptor: true,
+      get() {
+        return this.text === 'No one yet';
+      }
+    },
+    assigned: {
+      isDescriptor: true,
+      get() {
+        return !this.unassigned;
+      }
+    }
   },
 
   dropdown: {

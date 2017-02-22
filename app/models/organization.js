@@ -24,6 +24,5 @@ export default Model.extend({
   hasPendingMembers: gt('pendingMembersCount', 0),
   organizationMembers: mapBy('organizationMemberships', 'member'),
   pendingMembersCount: alias('pendingMemberships.length'),
-  pendingMemberships: filterBy('organizationMemberships', 'isPending'),
-  totalMembersCount: alias('organizationMembers.length')
+  pendingMemberships: filterBy('organizationMemberships', 'isPending')
 });

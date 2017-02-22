@@ -6,5 +6,6 @@ export default Model.extend({
   taskList: belongsTo(),
   taskUserMentions: hasMany(),
   project: belongsTo(),
-  user: belongsTo()
+  user: belongsTo(),
+  userTask: belongsTo()
 });
