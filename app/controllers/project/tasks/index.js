@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const {
-  computed: { sort },
+  computed: { alias, sort },
   Controller,
   get,
   inject: { service },
@@ -10,11 +10,9 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  sorting: ['order:asc'],
+  taskListsSorting: ['order:asc'],
 
   store: service(),
-
-  orderedTaskLists: sort('project.taskLists', 'sorting'),
 
   dragulaconfig: {
     options: {
@@ -28,6 +26,10 @@ export default Controller.extend({
     },
     enabledEvents: ['drag', 'drop']
   },
+
+  members: alias('project.organization.organizationMembers'),
+  orderedTaskLists: sort('project.taskLists', 'taskListsSorting'),
+  project: alias('model'),
 
   actions: {
     onDrop(droppedTaskEl, listDropTargetEl, source, siblingTaskEl) {
