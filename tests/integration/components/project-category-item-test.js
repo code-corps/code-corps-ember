@@ -54,8 +54,8 @@ test('it works for unselected categories', function(assert) {
   this.set('category', category);
   renderPage();
 
-  assert.ok(page.linkIcon.hasClass('technology'), 'Dynamic category class is properly bound.');
-  assert.ok(page.linkIcon.unselected, 'Icon is unselected.');
+  assert.ok(page.linkIcon.classContains('technology'), 'Dynamic category class is properly bound.');
+  assert.notOk(page.linkIcon.classContains('selected'), 'Icon is unselected.');
   assert.ok(page.isTooltipTarget, 'Component works as a tooltip target.');
   assert.equal(page.tooltip.text, 'Technology', 'Dynamic tooltip text is properly bound.');
   assert.ok(page.tooltip.isAriaHidden, 'Aria attribute is bound as hidden by default.');
@@ -80,8 +80,8 @@ test('it works for selected categories', function(assert) {
   this.set('category', category);
   renderPage();
 
-  assert.ok(page.linkIcon.hasClass('society'));
-  assert.ok(page.linkIcon.selected);
+  assert.ok(page.linkIcon.classContains('society'));
+  assert.ok(page.linkIcon.classContains('selected'));
   assert.ok(page.isTooltipTarget);
   assert.equal(page.tooltip.text, 'Society');
   assert.ok(page.tooltip.isAriaHidden);

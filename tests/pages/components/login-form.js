@@ -1,30 +1,43 @@
 import {
   fillable,
   clickable,
-  collection
+  collection,
+  isVisible
 } from 'ember-cli-page-object';
 
 export default {
-  scope:    '.login-form',
+  scope: '.login-form',
 
-  username: fillable('#identification'),
-  password: fillable('#password'),
-  submit:   clickable('#login'),
+  emailInput: {
+    scope: '[name=email]',
+    isVisible: isVisible()
+  },
 
-  errors:   collection({
+  errors: collection({
     itemScope: 'p.error'
   }),
 
   loginSuccessfully(email, password) {
-    this
-      .username(email)
-      .password(password)
-      .submit();
+    this.username(email).password(password).submit();
   },
+
   loginUnsuccessfully(email, password) {
-    this
-      .username(email)
-      .password(password)
-      .submit();
-  }
+    this.username(email).password(password).submit();
+  },
+
+  password: fillable('[name=password]'),
+
+  passwordInput: {
+    scope: '[name=password]',
+    isVisible: isVisible()
+  },
+
+  submit: clickable('button'),
+
+  submitButton: {
+    scope: 'button',
+    isVisible: isVisible()
+  },
+
+  username: fillable('[name=email]')
 };

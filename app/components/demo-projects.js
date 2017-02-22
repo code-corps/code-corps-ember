@@ -17,12 +17,16 @@ export default Component.extend({
         {
           name: 'Society',
           selected: false,
-          slug: 'society'
+          slug: 'society',
+          className: 'category-item__icon--small--society',
+          selectedClassName: 'category-item__icon--small--society--selected'
         },
         {
           name: 'Technology',
           selected: true,
-          slug: 'technology'
+          slug: 'technology',
+          className: 'category-item__icon--small--technology',
+          selectedClassName: 'category-item__icon--small--technology--selected'
         }
       ],
       skills: [
@@ -61,17 +65,23 @@ export default Component.extend({
         {
           name: 'Government',
           selected: true,
-          slug: 'government'
+          slug: 'government',
+          className: 'category-item__icon--small--government',
+          selectedClassName: 'category-item__icon--small--government--selected'
         },
         {
           name: 'Politics',
           selected: false,
-          slug: 'politics'
+          slug: 'politics',
+          className: 'category-item__icon--small--politics',
+          selectedClassName: 'category-item__icon--small--politics--selected'
         },
         {
           name: 'Society',
           selected: false,
-          slug: 'society'
+          slug: 'society',
+          className: 'category-item__icon--small--society',
+          selectedClassName: 'category-item__icon--small--society--selected'
         }
       ],
       skills: [
