@@ -27,8 +27,6 @@ Have questions? Need help? You can also always come :wave: hello [in our Slack](
 
 We highlight everyone who's contributed to [the Code Corps team page](https://www.codecorps.org/team). If we've missed you for some reason, please [open an issue in the Ember app](https://github.com/code-corps/code-corps-ember/issues/new)!
 
-**At the moment, our focus is integration with Stripe**, so if you want to help, that would be the most useful spot. Check our [Donations milestone](https://github.com/code-corps/code-corps-ember/milestone/2) to see which parts we need help on. Of course, help with other areas is always welcome, so if that sort of thing isn't your cup of tea, feel free to pick anything else.
-
 ## Installing
 
 To learn more about getting started with the codebase, [follow this guide.](docs/INSTALLING.md)
