@@ -3,21 +3,14 @@ import Ember from 'ember';
 const {
   get,
   inject: { service },
-  Route,
-  RSVP
+  Route
  } = Ember;
 
 export default Route.extend({
   projectTaskBoard: service(),
 
   model() {
-    let project = this.modelFor('project');
-    let members = get(project, 'organization.organizationMembers');
-    return RSVP.hash({ project, members });
-  },
-
-  setupController(controller, models) {
-    controller.setProperties(models);
+    return this.modelFor('project');
   },
 
   actions: {
