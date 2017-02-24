@@ -10,10 +10,12 @@ const {
 export default Route.extend({
   projectTaskBoard: service(),
 
-  model() {
+  async model() {
     let project = this.modelFor('project');
-    let members = RSVP.all(get(project, 'organization.organizationMemberships').mapBy('member'));
-    return RSVP.hash({ project, members });
+    let memberPromises = await get(project, 'organization.organizationMemberships').then((memberships) => {
+      return memberships.map((membership) => get(membership, 'member'));
+    });
+    return RSVP.hash({ project, members: RSVP.all(memberPromises) });
   },
 
   setupController(controller, models) {
