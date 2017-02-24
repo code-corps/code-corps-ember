@@ -691,6 +691,15 @@ export default function() {
   // DELETE /user-skills/:id
   this.delete('/user-skills/:id');
 
+  /**
+  * User tasks
+  */
+  this.get('/user-tasks', { coalesce: true });
+  this.patch('/user-tasks/:id');
+  this.post('/user-tasks');
+  this.get('/user-tasks/:id');
+  this.delete('/user-tasks/:id');
+
   // Create a passthrough for ember-cli-code-coverage
   // https://github.com/kategengler/ember-cli-code-coverage
   this.passthrough('/write-coverage');

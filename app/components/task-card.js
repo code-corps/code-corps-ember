@@ -9,8 +9,11 @@ const {
   get,
   getProperties,
   inject: { service },
-  isEmpty
+  set
 } = Ember;
+
+const ICON_CLASS = 'ember-power-select-status-icon';
+const TRIGGER_CLASS = 'ember-power-select-trigger';
 
 export default Component.extend({
   attributeBindings: ['data-can-reposition', 'data-model-id', 'data-model-type'],
@@ -34,9 +37,9 @@ export default Component.extend({
   currentUserId: alias('currentUser.user.id'),
 
   /**
-   * For usage with data attribute bindings. Needs to be a function becaue it
-   * needs to send 'true'/'false' strings.
-   */
+    For usage with data attribute bindings. Needs to be a function because it
+    needs to send 'true' and 'false' strings.
+  */
   'data-can-reposition': computed('canReposition', function() {
     let canReposition = get(this, 'canReposition');
     return canReposition ? 'true' : 'false';
@@ -45,32 +48,31 @@ export default Component.extend({
   'data-model-type': 'task',
 
   isLoading: alias('task.isLoading'),
-
-  selectedOption: computed('taskUser', 'users', function() {
-    let { taskUser, users } = getProperties(this, 'taskUser', 'users');
-    if (isEmpty(taskUser) || isEmpty(users)) {
-      return;
-    }
-    return users.find((item) => {
-      return get(taskUser, 'id') === get(item, 'id');
-    });
-  }),
-
   taskSkills: mapBy('task.taskSkills', 'skill'),
   taskUserId: alias('taskUser.id'),
-  users: alias('members'),
+
+  // TODO: this updates selection when it changes. However, it updates while
+  // the change is still processing, and rolls back if it fails.
+  // We should somehow skip the update if the change is processing
+  // TODO: It also fails to roll back when reassignment fails
+  didReceiveAttrs() {
+    let { taskUserId, members } = getProperties(this, 'taskUserId', 'members');
+    if (members) {
+      set(this, 'selectedOption', members.findBy('id', taskUserId));
+    }
+  },
 
   /**
-   * Computed property, builds and maintains the list used to render the
-   * dropdown options on task assignment
-   *
-   * @property userOptions
-   */
-  userOptions: computed('currentUserId', 'taskUserId', 'users', function() {
-    let { currentUserId, taskUserId, users }
-      = getProperties(this, 'currentUserId', 'taskUserId', 'users');
-    if (users) {
-      return createTaskUserOptions(users, currentUserId, taskUserId);
+    Computed property, builds and maintains the list used to render the
+    dropdown options on task assignment
+
+    @property userOptions
+  */
+  userOptions: computed('currentUserId', 'taskUserId', 'members', function() {
+    let { currentUserId, taskUserId, members }
+      = getProperties(this, 'currentUserId', 'taskUserId', 'members');
+    if (members) {
+      return createTaskUserOptions(members, currentUserId, taskUserId);
     } else {
       return [];
     }
@@ -79,9 +81,9 @@ export default Component.extend({
   click(e) {
     // TODO: Find a better way to do this
     // Currently necessary due to the way that power select handles trigger
-    let iconClassName = 'ember-power-select-status-icon';
-    let triggerClassName = 'ember-power-select-trigger';
-    if (e.target.className.includes(iconClassName) || e.target.className.includes(triggerClassName)) {
+    let clickedIcon = e.target.className.includes(ICON_CLASS);
+    let clickedTrigger = e.target.className.includes(TRIGGER_CLASS);
+    if (clickedIcon || clickedTrigger) {
       return;
     }
 

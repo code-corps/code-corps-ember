@@ -12,7 +12,7 @@ export default Route.extend({
 
   model() {
     let project = this.modelFor('project');
-    let members = get(project, 'organization.organizationMembers');
+    let members = RSVP.all(get(project, 'organization.organizationMemberships').mapBy('member'));
     return RSVP.hash({ project, members });
   },
 

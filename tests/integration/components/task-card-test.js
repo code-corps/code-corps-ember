@@ -4,12 +4,12 @@ import PageObject from 'ember-cli-page-object';
 import taskCardComponent from 'code-corps-ember/tests/pages/components/task-card';
 import moment from 'moment';
 import { Ability } from 'ember-can';
-import Ember from 'ember';
 import DS from 'ember-data';
+import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
-const { RSVP, set, setProperties } = Ember;
 const { PromiseObject } = DS;
+const { RSVP, set, setProperties } = Ember;
 
 let page = PageObject.create(taskCardComponent);
 
@@ -48,7 +48,7 @@ test('it renders all the required elements', function(assert) {
     title: 'Clean the house'
   };
 
-  this.set('task', task);
+  set(this, 'task', task);
   this.render(hbs`{{task-card task=task}}`);
 
   assert.equal(page.number.text, '#1', 'The number renders');
@@ -82,10 +82,10 @@ test('it sends action if clicked and not loading', function(assert) {
     number: 1
   };
 
-  this.set('clickedTask', function(clickedTask) {
+  set(this, 'clickedTask', function(clickedTask) {
     assert.deepEqual(clickedTask, task);
   });
-  this.set('task', task);
+  set(this, 'task', task);
 
   this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
   page.click();
@@ -99,10 +99,10 @@ test('it does not send action if clicked and loading', function(assert) {
     number: 1
   };
 
-  this.set('clickedTask', function() {
+  set(this, 'clickedTask', function() {
     assert.notOk();
   });
-  this.set('task', task);
+  set(this, 'task', task);
 
   this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
   page.click();
@@ -110,14 +110,11 @@ test('it does not send action if clicked and loading', function(assert) {
 });
 
 test('assignment works if user has ability', function(assert) {
-  assert.expect(2);
-
-  // there is some async behavior here, so we need to explicitly be `done()`
   let done = assert.async();
+  assert.expect(2);
 
   let task = { id: 'task' };
   let user = { id: 'user', username: 'testuser' };
-
   let members = [user];
 
   setProperties(this, { task, members });
@@ -143,17 +140,15 @@ test('assignment works if user has ability', function(assert) {
 });
 
 test('unassignment works if user has ability', function(assert) {
-  assert.expect(1);
-
-  // there is some async behavior here, so we need to explicitly be `done()`
   let done = assert.async();
+  assert.expect(1);
 
   let task = { id: 'task' };
   let user = { id: 'user', username: 'testuser' };
-
   let members = [user];
+  let taskUser = user;
 
-  setProperties(this, { task, taskUser: user, members });
+  setProperties(this, { task, members, taskUser });
 
   stubService(this, 'task-assignment', {
     unassign(sentTask) {
@@ -172,13 +167,12 @@ test('unassignment works if user has ability', function(assert) {
   page.taskAssignment.dropdown.options(0).select();
 });
 
-test('assignment dropdown renders when records are loaded', function(assert) {
+test('assignment dropdown renders', function(assert) {
   assert.expect(2);
 
   let task = { id: 'task' };
   let user1 = { id: 'user1', username: 'testuser1' };
   let user2 = { id: 'user2', username: 'testuser2' };
-
   let members = [user1, user2];
 
   setProperties(this, { task, members });
@@ -194,15 +188,13 @@ test('assignment dropdown renders when records are loaded', function(assert) {
   renderPage();
 
   page.taskAssignment.trigger.open();
-
   assert.equal(page.taskAssignment.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
   assert.equal(page.taskAssignment.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
 });
 
 test('assignment dropdown renders when records are still being loaded', function(assert) {
-  assert.expect(2);
-
   let done = assert.async();
+  assert.expect(2);
 
   let task = { id: 'task' };
   let user1 = { id: 'user1', username: 'testuser1' };
@@ -221,12 +213,6 @@ test('assignment dropdown renders when records are still being loaded', function
   let members = [user1, user2].map((user) => proxify(user));
 
   setProperties(this, { task, members });
-
-  stubService(this, 'task-assignment', {
-    isAssignedTo() {
-      return RSVP.resolve(false);
-    }
-  });
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 

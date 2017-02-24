@@ -40,10 +40,10 @@ export default Component.extend({
   /**
     Total number of members of a project.
 
-    @property totalMembersCount
+    @property membersCount
     @type Number
   */
-  totalMembersCount: alias('members.length'),
+  membersCount: alias('members.length'),
 
   /**
     Total number of members not shown on the project card.
@@ -51,8 +51,8 @@ export default Component.extend({
     @property hiddenMembersCount
     @type Number
   */
-  hiddenMembersCount: computed('totalMembersCount', function() {
-    return this.get('totalMembersCount') -  VISIBLE_MEMBERS_COUNT;
+  hiddenMembersCount: computed('membersCount', function() {
+    return this.get('membersCount') -  VISIBLE_MEMBERS_COUNT;
   }),
 
   /**

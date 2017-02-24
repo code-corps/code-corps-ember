@@ -10,11 +10,9 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  sorting: ['order:asc'],
+  taskListsSorting: ['order:asc'],
 
   store: service(),
-
-  orderedTaskLists: sort('project.taskLists', 'sorting'),
 
   dragulaconfig: {
     options: {
@@ -28,6 +26,8 @@ export default Controller.extend({
     },
     enabledEvents: ['drag', 'drop']
   },
+
+  orderedTaskLists: sort('project.taskLists', 'taskListsSorting'),
 
   actions: {
     onDrop(droppedTaskEl, listDropTargetEl, source, siblingTaskEl) {
