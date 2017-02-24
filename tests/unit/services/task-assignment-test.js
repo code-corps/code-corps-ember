@@ -104,3 +104,49 @@ test('it unassigns a task from the user using unassign', function(assert) {
     done();
   });
 });
+
+test('it calls unloadRecord if assign fails', function(assert) {
+  let done = assert.async();
+  let service = this.subject();
+
+  let rejectingStore = Object.create({
+    createRecord() {
+      return Object.create({
+        save() {
+          return RSVP.reject();
+        },
+        unloadRecord() {
+          assert.ok(true);
+          done();
+        }
+      });
+    }
+  });
+
+  set(service, 'store', rejectingStore);
+
+  service.assign(Object.create(), Object.create());
+});
+
+test('it calls rollbackAttributes if assign fails', function(assert) {
+  let done = assert.async();
+  let service = this.subject();
+
+  let assignedTask = Object.create({
+    id: 'task-1',
+    userTask: Object.create({
+      rollbackAttributes() {
+        assert.ok(true);
+        done();
+      },
+      save() {
+        return RSVP.reject();
+      },
+      user: {
+        id: 'user-1'
+      }
+    })
+  });
+
+  service.assign(assignedTask, user2);
+});

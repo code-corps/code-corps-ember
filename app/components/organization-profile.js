@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { mapBy },
+  computed: { alias, mapBy },
   inject: { service }
 } = Ember;
 
@@ -11,7 +11,8 @@ export default Component.extend({
 
   credentials: service(),
 
-  organizationMembers: mapBy('organization.organizationMemberships', 'member'),
+  members: mapBy('organization.organizationMemberships', 'member'),
+  membersCount: alias('members.length'),
 
   didReceiveAttrs() {
     this._super(...arguments);
