@@ -31,5 +31,5 @@
 
 <div class="start__footer">
   <p>Nice to finally meet you.</p>
-  <button class="{{if usersNameIsEmpty "clear" "default"}}" disabled={{usersNameIsEmpty}} {{action 'continue'}}>Let's go!</button>
+  <button class="{{if usersNameIsEmpty "clear" "default"}}" disabled={{or usersNameIsEmpty uploadingImage}} {{action 'continue'}}>Let's go!</button>
 </div>

@@ -4,11 +4,14 @@ import {
   collection,
   create,
   fillable,
+  findElement,
   hasClass,
   text,
   triggerable,
   visitable
 } from 'ember-cli-page-object';
+import fillInFileInput from '../helpers/fill-in-file-input';
+import removeDoubleQuotes from '../helpers/remove-double-quotes';
 import skillsTypeahead from './components/skills-typeahead';
 import navMenu from './components/navigation-menu';
 
@@ -31,6 +34,20 @@ export default create({
   startButton: {
     scope: '.start__footer button',
     isDisabled: attribute('disabled')
+  },
+
+  imageDrop: {
+    scope: '.image-drop',
+
+    backgroundImageData() {
+      let $el = findElement(this);
+      let backgroundImageData = $el.css('background-image');
+      return removeDoubleQuotes(backgroundImageData);
+    },
+
+    dropFile(content) {
+      fillInFileInput(`${this.scope} input[type=file]`, { name: 'file.png', content });
+    }
   },
 
   roleColumns: collection({
