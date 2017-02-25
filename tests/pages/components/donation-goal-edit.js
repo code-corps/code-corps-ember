@@ -5,6 +5,8 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
+  scope: '.donation-goal-edit',
+
   cancelButtonIsVisible: isVisible('.cancel'),
 
   clickCancel: clickable('.cancel'),
