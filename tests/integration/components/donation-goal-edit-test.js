@@ -1,5 +1,9 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/donation-goal-edit';
+
+let page = PageObject.create(component);
 
 import Ember from 'ember';
 
@@ -14,36 +18,32 @@ function setHandlers(context, { saveHandler = function() {}, cancelHandler = fun
   context.set('cancelHandler', cancelHandler);
 }
 
-moduleForComponent('edit-donation-goal', 'Integration | Component | donation goal edit', {
+moduleForComponent('donation-goal-edit', 'Integration | Component | donation goal edit', {
   integration: true,
   beforeEach() {
     this.set('donationGoal', mockGoal);
     setHandlers(this);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
-});
-
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal cancel=cancelHandler save=saveHandler}}`);
-
-  assert.equal(this.$('.donation-goal-edit').length, 1);
 });
 
 test('it renders cancel button, when canCancel is true', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=cancelHandler save=saveHandler}}`);
+  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=cancelHandler save=saveHandler}}`);
 
-  assert.equal(this.$('.cancel').length, 1, 'The "cancel" button is rendered');
+  assert.ok(page.cancelButtonIsVisible);
 });
 
 test('it does not render cancel button, when canCancel is false', function(assert) {
   assert.expect(1);
 
-  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=false save=saveHandler}}`);
+  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=false save=saveHandler}}`);
 
-  assert.equal(this.$('.cancel').length, 0, 'The "cancel" button is not rendered');
+  assert.notOk(page.cancelButtonIsVisible);
 });
 
 test('it sends save action, with user input properties as argument, when save button is clicked', function(assert) {
@@ -57,11 +57,11 @@ test('it sends save action, with user input properties as argument, when save bu
 
   setHandlers(this, { saveHandler });
 
-  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
+  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
 
-  this.$('.amount').val(mockProperties.amount).change();
-  this.$('.description').val(mockProperties.description).change();
-  this.$('.save').click();
+  page.fillInAmount(mockProperties.amount)
+      .fillInDescription(mockProperties.description)
+      .clickSave();
 });
 
 test('it sends cancel action, when cancel button is clicked', function(assert) {
@@ -73,7 +73,7 @@ test('it sends cancel action, when cancel button is clicked', function(assert) {
 
   setHandlers(this, { cancelHandler });
 
-  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=(action cancelHandler donationGoal) save=saveHandler}}`);
+  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=(action cancelHandler donationGoal) save=saveHandler}}`);
 
-  this.$('.cancel').click();
+  page.clickCancel();
 });
