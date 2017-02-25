@@ -2,6 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/member-list-item';
 
 const {
   get,
@@ -47,59 +49,65 @@ function mockMembership(pending) {
   return membership;
 }
 
+let page = PageObject.create(component);
+
 moduleForComponent('member-list-item', 'Integration | Component | member list item', {
   integration: true,
   beforeEach() {
     getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
 test('it renders the basic information for the user', function(assert) {
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item user=user}}`);
+  page.render(hbs`{{member-list-item user=user}}`);
 
-  assert.equal(this.$('.icon').attr('src'), user.photoThumbUrl);
-  assert.equal(this.$('.project-member__name strong').text().trim(), user.name);
-  assert.equal(this.$('.project-member__name span').text().trim(), user.username);
-  assert.equal(this.$('.icon').attr('src'), user.photoThumbUrl);
-  assert.equal(this.$('.project-member__skills li:eq(0)').text().trim(), 'Ember.js');
-  assert.equal(this.$('.project-member__skills li:eq(1)').text().trim(), 'Rails');
-  assert.equal(this.$('.project-member__skills li:eq(2)').text().trim(), 'Ruby');
-  assert.equal(this.$('button').length, 0);
+  assert.equal(page.icon.url, user.photoThumbUrl);
+  assert.equal(page.name.name.text, user.name);
+  assert.equal(page.name.username.text, user.username);
+  assert.equal(page.skills(0).text, 'Ember.js');
+  assert.equal(page.skills(1).text, 'Rails');
+  assert.equal(page.skills(2).text, 'Ruby');
+  assert.notOk(page.approveButton.isVisible);
+  assert.notOk(page.denyButton.isVisible);
 });
 
 test('it renders the username in the name if name is empty', function(assert) {
   set(user, 'name', '');
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item user=user}}`);
+  page.render(hbs`{{member-list-item user=user}}`);
 
-  assert.equal(this.$('.project-member__name strong').text().trim(), get(user, 'username'));
+  assert.equal(page.name.username.text, get(user, 'username'));
 });
 
 test('it renders the buttons when pending', function(assert) {
-  let membership = mockMembership(true); // pending
+  assert.expect(2);
 
-  set(this, 'membership', membership);
+  set(this, 'membership', mockMembership(true)); // pending
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{member-list-item membership=membership user=user}}`);
 
-  assert.equal(this.$('button').length, 2);
-  assert.equal(this.$('button.default').text().trim(), 'Approve');
-  assert.equal(this.$('button.danger').text().trim(), 'Deny');
+  assert.equal(page.approveButton.text, 'Approve');
+  assert.equal(page.denyButton.text, 'Deny');
 });
 
 test('it does not render the buttons when not pending', function(assert) {
-  let membership = mockMembership(false); // pending
+  assert.expect(2);
 
-  set(this, 'membership', membership);
+  set(this, 'membership', mockMembership(false));
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{member-list-item membership=membership user=user}}`);
 
-  assert.equal(this.$('button').length, 0);
+  assert.notOk(page.approveButton.isVisible);
+  assert.notOk(page.denyButton.isVisible);
 });
 
 test('it sends the approve action when clicking approve', function(assert) {
@@ -116,9 +124,9 @@ test('it sends the approve action when clicking approve', function(assert) {
   set(this, 'membership', membership);
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{member-list-item membership=membership user=user}}`);
 
-  this.$('button.default').click();
+  page.approveButton.click();
 
   assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
@@ -147,9 +155,9 @@ test('it sends the deny action when clicking deny', function(assert) {
   set(this, 'membership', membership);
   set(this, 'user', user);
 
-  this.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{member-list-item membership=membership user=user}}`);
 
-  this.$('button.danger').click();
+  page.denyButton.click();
 
   assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
