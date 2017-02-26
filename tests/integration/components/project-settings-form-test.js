@@ -5,7 +5,7 @@ import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-messa
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-settings-form';
 
-const { getOwner, RSVP } = Ember;
+const { getOwner, RSVP, set } = Ember;
 
 let page = PageObject.create(component);
 
@@ -21,18 +21,18 @@ moduleForComponent('project-settings-form', 'Integration | Component | project s
 });
 
 let project = {
-  title: 'Test Organization',
+  title: 'Test Project',
   description: 'A test project'
 };
 
 test('it renders form elements properly', function(assert) {
   assert.expect(3);
 
-  this.set('project', project);
+  set(this, 'project', project);
 
   page.render(hbs`{{project-settings-form project=project}}`);
 
-  assert.equal(page.title.value, 'Test Organization');
+  assert.equal(page.title.value, 'Test Project');
   assert.equal(page.description.value, 'A test project');
   assert.ok(page.save.isVisible);
 });
@@ -45,7 +45,7 @@ test('it calls save on project when save button is clicked', function(assert) {
     return RSVP.resolve();
   };
 
-  this.set('project', project);
+  set(this, 'project', project);
 
   page.render(hbs`{{project-settings-form project=project}}`);
 
