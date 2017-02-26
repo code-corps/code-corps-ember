@@ -10,7 +10,7 @@ import fillInFileInput from '../../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../../helpers/remove-double-quotes';
 
 export default {
-  scope: '.project-settings-form',
+  scope: '.organization-settings-form',
 
   description: {
     scope: 'input[name=description]',
@@ -32,15 +32,15 @@ export default {
     }
   },
 
+  name: {
+    scope: 'input[name=name]',
+    fillIn: fillable(),
+    value: value()
+  },
+
   save: {
     scope: '.save',
     click: clickable(),
     isVisible: isVisible()
-  },
-
-  title: {
-    scope: 'input[name=title]',
-    fillIn: fillable(),
-    value: value()
   }
 };
