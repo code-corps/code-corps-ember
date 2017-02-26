@@ -40,10 +40,10 @@ test('it allows editing of project profile', function(assert) {
   });
 
   andThen(() => {
-    projectSettingsPage.projectSettingsForm
-      .title('Edited Project')
-      .description('Lorem edit')
-      .clickSave();
+    let form = projectSettingsPage.projectSettingsForm;
+    form.title.fillIn('Edited Project');
+    form.description.fillIn('Lorem edit');
+    form.save.click();
   });
 
   let done = assert.async();

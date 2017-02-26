@@ -1,7 +1,9 @@
 import {
   clickable,
   fillable,
-  findElement
+  findElement,
+  isVisible,
+  value
 } from 'ember-cli-page-object';
 
 import fillInFileInput from '../../helpers/fill-in-file-input';
@@ -10,10 +12,11 @@ import removeDoubleQuotes from '../../helpers/remove-double-quotes';
 export default {
   scope: '.project-settings-form',
 
-  description: fillable('input[name=description]'),
-  title: fillable('input[name=title]'),
-
-  clickSave: clickable('.save'),
+  description: {
+    scope: 'input[name=description]',
+    fillIn: fillable(),
+    value: value()
+  },
 
   imageDrop: {
     scope: '.image-drop',
@@ -27,5 +30,17 @@ export default {
       let backgroundImageData = $el.css('background-image');
       return removeDoubleQuotes(backgroundImageData);
     }
+  },
+
+  save: {
+    scope: '.save',
+    click: clickable(),
+    isVisible: isVisible()
+  },
+
+  title: {
+    scope: 'input[name=title]',
+    fillIn: fillable(),
+    value: value()
   }
 };
