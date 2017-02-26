@@ -4,6 +4,7 @@ import {
   hasClass,
   text
 } from 'ember-cli-page-object';
+import editorWithPreview from 'code-corps-ember/tests/pages/components/editor-with-preview';
 
 export default {
   scope: '.project-long-description',
@@ -11,21 +12,39 @@ export default {
   clickEdit: clickable('button[name=edit]'),
   clickSave: clickable('button[name=save]'),
 
-  textarea: fillable('textarea'),
-
-  editButton: {
+  edit: {
     scope: 'button[name=edit]'
   },
+
+  editorWithPreview,
+
+  fillInTextarea: fillable('textarea'),
 
   longDescription: {
     scope: '.long-description',
 
-    text: text(),
     isEmpty: hasClass('empty'),
 
     paragraph: {
       scope: 'p',
       text: text()
-    }
+    },
+
+    strong: {
+      scope: 'strong',
+      text: text()
+    },
+
+    text: text()
+  },
+
+  noDescription: {
+    scope: '.no-description',
+    canAdd: hasClass('user-can-add'),
+    cannotAdd: hasClass('user-cannot-add')
+  },
+
+  save: {
+    scope: 'button[name=save]'
   }
 };
