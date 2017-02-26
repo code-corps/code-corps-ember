@@ -2,6 +2,8 @@ import {
   attribute,
   text
 } from 'ember-cli-page-object';
+import userOrganizationsList from 'code-corps-ember/tests/pages/components/user-organizations-list';
+import userSidebar from 'code-corps-ember/tests/pages/components/user-sidebar';
 
 export default {
   scope: '.user-details',
@@ -15,6 +17,11 @@ export default {
       text: text()
     }
   },
+
+  userOrganizationsList,
+
+  userSidebar,
+
   website: {
     scope: '.website',
 
