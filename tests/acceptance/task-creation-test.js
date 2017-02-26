@@ -245,7 +245,7 @@ test('Navigating away from task route destroys task with prompt', function(asser
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.tasksLink.click();
+    projectTasksNewPage.projectMenu.links(1).click();
   });
 
   andThen(() => {
@@ -281,7 +281,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.tasksLink.click();
+    projectTasksNewPage.projectMenu.links(1).click();
   });
 
   andThen(() => {

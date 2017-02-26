@@ -1,20 +1,26 @@
 import {
   attribute,
-  hasClass
+  collection,
+  hasClass,
+  isVisible,
+  text
 } from 'ember-cli-page-object';
 
 export default {
   scope: '.project__menu',
 
-  aboutLink: {
-    scope: 'li:eq(0) a',
-    href: attribute('href'),
-    isActive: hasClass('active')
-  },
-
-  tasksLink: {
-    scope: 'li:eq(1) a',
-    href: attribute('href'),
-    isActive: hasClass('active')
-  }
+  links: collection({
+    itemScope: 'li a',
+    item: {
+      badge: {
+        scope: 'span.info',
+        isVisible: isVisible(),
+        text: text()
+      },
+      href: attribute('href'),
+      isActive: hasClass('active'),
+      isVisible: isVisible(),
+      text: text()
+    }
+  })
 };
