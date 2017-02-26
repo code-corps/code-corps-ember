@@ -24,6 +24,6 @@ test('it renders properly', function(assert) {
 
   page.render(hbs`{{organization-settings}}`);
 
-  assert.ok(page.header.isVisible);
-  assert.ok(page.menu.isVisible);
+  assert.ok(page.organizationHeader.isVisible);
+  assert.ok(page.organizationMenu.isVisible);
 });

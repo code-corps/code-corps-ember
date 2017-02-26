@@ -1,15 +1,7 @@
-import {
-  isVisible
-} from 'ember-cli-page-object';
+import organizationHeader from 'code-corps-ember/tests/pages/components/organization-header';
+import organizationMenu from 'code-corps-ember/tests/pages/components/organization-menu';
 
 export default {
-  header: {
-    scope: '.organization-header',
-    isVisible: isVisible()
-  },
-
-  menu: {
-    scope: '.organization-menu',
-    isVisible: isVisible()
-  }
+  organizationHeader,
+  organizationMenu
 };
