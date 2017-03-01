@@ -2,14 +2,24 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/project-long-description';
 
 const {
   Object,
   RSVP
 } = Ember;
 
+let page = PageObject.create(component);
+
 moduleForComponent('project-long-description', 'Integration | Component | project long description', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 let credentialsWithAdminMembership = {
@@ -33,11 +43,11 @@ test('it renders properly when decription is blank and the user cannot add to it
   stubService(this, 'credentials');
 
   this.set('project', blankProject);
-  this.render(hbs`{{project-long-description project=project}}`);
+  page.render(hbs`{{project-long-description project=project}}`);
 
-  assert.equal(this.$('.no-description.user-cannot-add').length, 1, 'The correct element is shown');
-  assert.equal(this.$('.editor-with-preview').length, 0, 'The editor is not shown');
-  assert.equal(this.$('button[name=save]').length, 0, 'The button to save changes is not shown');
+  assert.ok(page.noDescription.cannotAdd, 'The correct element is shown');
+  assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown');
+  assert.notOk(page.save.isVisible, 'The button to save changes is not shown');
 });
 
 test('it renders properly when description is blank and the user can add to it', function(assert) {
@@ -46,11 +56,11 @@ test('it renders properly when description is blank and the user can add to it',
   this.set('project', blankProject);
   stubService(this, 'credentials', credentialsWithAdminMembership);
 
-  this.render(hbs`{{project-long-description project=project}}`);
+  page.render(hbs`{{project-long-description project=project}}`);
 
-  assert.equal(this.$('.no-description.user-can-add').length, 1, 'The correct element is shown');
-  assert.equal(this.$('.editor-with-preview').length, 1, 'The editor is shown');
-  assert.equal(this.$('button[name=save]').length, 1, 'The button to save changes is shown');
+  assert.ok(page.noDescription.canAdd, 'The correct element is shown');
+  assert.ok(page.editorWithPreview.isVisible, 'The editor is shown');
+  assert.ok(page.save.isVisible, 'The button to save changes is shown');
 });
 
 test('it renders properly when description is present and user cannot edit', function(assert) {
@@ -59,14 +69,14 @@ test('it renders properly when description is present and user cannot edit', fun
 
   this.set('project', projectWithDescription);
 
-  this.render(hbs`{{project-long-description project=project}}`);
+  page.render(hbs`{{project-long-description project=project}}`);
 
-  assert.equal(this.$('.long-description.empty').length, 0, 'The section for empty description is not shown');
-  assert.equal(this.$('.editor-with-preview').length, 0, 'The editor is not shown, since we are in read mode');
-  assert.equal(this.$('button[name=save]').length, 0, 'The button to save changes is not shown');
-  assert.equal(this.$('button[name=edit]').length, 0, 'The button to enter edit mode is not shown');
-  assert.ok(this.$('.long-description').text().trim().indexOf('A body') !== -1, 'The body is rendered');
-  assert.equal(this.$('.long-description strong:contains("body")').length, 1, 'The body is rendered as html');
+  assert.notOk(page.longDescription.isEmpty, 'The section for empty description is not shown');
+  assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
+  assert.notOk(page.save.isVisible, 'The button to save changes is not shown');
+  assert.notOk(page.edit.isVisible, 'The button to enter edit mode is not shown');
+  assert.ok(page.longDescription.text.indexOf('A body') !== -1, 'The body is rendered');
+  assert.equal(page.longDescription.strong.text, 'body', 'The body is rendered as html');
 });
 
 test('it renders properly when description is present and user can edit', function(assert) {
@@ -75,12 +85,12 @@ test('it renders properly when description is present and user can edit', functi
   this.set('project', projectWithDescription);
   stubService(this, 'credentials', credentialsWithAdminMembership);
 
-  this.render(hbs`{{project-long-description project=project}}`);
+  page.render(hbs`{{project-long-description project=project}}`);
 
-  assert.equal(this.$('.long-description.empty').length, 0, 'The section for empty description is not shown');
-  assert.equal(this.$('.editor-with-preview').length, 0, 'The editor is not shown, since we are in read mode');
-  assert.equal(this.$('button[name=save]').length, 0, 'The button to save changes is not shown');
-  assert.equal(this.$('button[name=edit]').length, 1, 'The button to enter edit mode is shown');
+  assert.notOk(page.longDescription.isEmpty, 'The section for empty description is not shown');
+  assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
+  assert.notOk(page.save.isVisible, 'The button to save changes is not shown');
+  assert.ok(page.edit.isVisible, 'The button to enter edit mode is shown');
 });
 
 test('it is possible to add a description', function(assert) {
@@ -96,9 +106,9 @@ test('it is possible to add a description', function(assert) {
   this.set('project', savableProject);
   stubService(this, 'credentials', credentialsWithAdminMembership);
 
-  this.render(hbs`{{project-long-description project=project}}`);
+  page.render(hbs`{{project-long-description project=project}}`);
 
-  this.$('button[name=save]').click();
+  page.save.click();
 });
 
 test('it is possible to edit a description', function(assert) {
@@ -114,9 +124,10 @@ test('it is possible to edit a description', function(assert) {
   this.set('project', savableProject);
   stubService(this, 'credentials', credentialsWithAdminMembership);
 
-  this.render(hbs`{{project-long-description project=project}}`);
-  assert.equal(this.$('.editor-with-preview').length, 0, 'The editor is not shown, since we are in read mode');
-  this.$('button[name=edit]').click();
-  assert.equal(this.$('.editor-with-preview').length, 1, 'The editor is shown, since we are in edit mode');
-  this.$('button[name=save]').click();
+  page.render(hbs`{{project-long-description project=project}}`);
+
+  assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
+  page.edit.click();
+  assert.ok(page.editorWithPreview.isVisible, 'The editor is shown, since we are in edit mode');
+  page.save.click();
 });

@@ -42,7 +42,7 @@ test('When unauthenticated, and project has long description, it shows the proje
 
   andThen(() => {
     assert.ok(projectAboutPage.projectLongDescription.text.indexOf(project.longDescriptionBody) !== -1, 'The body is rendered');
-    assert.ok(projectAboutPage.projectLongDescription.editButton.isHidden, 'User is not logged in, so they cannot edit the description');
+    assert.ok(projectAboutPage.projectLongDescription.edit.isHidden, 'User is not logged in, so they cannot edit the description');
   });
 });
 
@@ -67,7 +67,7 @@ test('When authenticated as admin, and project has no long description, it allow
   });
 
   andThen(() => {
-    projectAboutPage.projectLongDescription.textarea('A new body').clickSave();
+    projectAboutPage.projectLongDescription.fillInTextarea('A new body').clickSave();
   });
 
   andThen(() => {
@@ -75,7 +75,7 @@ test('When authenticated as admin, and project has no long description, it allow
     assert.equal(project.longDescriptionMarkdown, 'A new body');
     assert.equal(project.longDescriptionBody, '<p>A new body</p>');
     assert.equal(projectAboutPage.projectLongDescription.longDescription.paragraph.text, project.longDescriptionMarkdown, 'The body is rendered');
-    assert.ok(projectAboutPage.projectLongDescription.editButton.isVisible, 'We can edit the description again');
+    assert.ok(projectAboutPage.projectLongDescription.edit.isVisible, 'We can edit the description again');
   });
 });
 
@@ -100,7 +100,7 @@ test('When authenticated as admin, and project has long description, it allows e
   });
 
   andThen(() => {
-    projectAboutPage.projectLongDescription.clickEdit().textarea('An edited body').clickSave();
+    projectAboutPage.projectLongDescription.clickEdit().fillInTextarea('An edited body').clickSave();
   });
 
   andThen(() => {
@@ -108,7 +108,7 @@ test('When authenticated as admin, and project has long description, it allows e
     assert.equal(project.longDescriptionMarkdown, 'An edited body');
     assert.equal(project.longDescriptionBody, '<p>An edited body</p>');
     assert.equal(projectAboutPage.projectLongDescription.longDescription.paragraph.text, project.longDescriptionMarkdown, 'The body is rendered');
-    assert.ok(projectAboutPage.projectLongDescription.editButton.isVisible, 'We can edit the description again');
+    assert.ok(projectAboutPage.projectLongDescription.edit.isVisible, 'We can edit the description again');
   });
 });
 
