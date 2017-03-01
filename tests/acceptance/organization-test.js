@@ -1,13 +1,12 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import organizationPage from '../pages/organization';
 
 moduleForAcceptance('Acceptance | Organization');
 
 test("it displays the organization's details", function(assert) {
-  assert.expect(7);
+  assert.expect(5);
 
   let organization = server.create('organization', { description: 'Test description.' });
   server.create('sluggedRoute', {
@@ -16,31 +15,22 @@ test("it displays the organization's details", function(assert) {
   });
 
   server.createList('project', 3, { organization });
-  server.createList('organizationMembership', 3, { organization });
 
   organizationPage.visitIndex({ organization: organization.slug });
   andThen(() => {
     assert.ok(organizationPage.orgHeader.isVisible, 'The organization header component renders');
     assert.ok(organizationPage.projectList.isVisible, 'The projects list component renders');
-    assert.ok(organizationPage.orgMembersSection.isVisible, 'The organization members component renders');
     assert.equal(organizationPage.orgTitle.text, organization.name, 'The organization title renders');
     assert.equal(organizationPage.orgDescription.text, organization.description, 'The organization description renders');
     assert.equal(organizationPage.projectListItems().count, 3, 'The projects render');
-    assert.equal(organizationPage.orgMembers().count, 3, 'The members render');
   });
 });
 
-test('an admin can navigate to settings', function(assert) {
+test('an owner can navigate to settings', function(assert) {
   assert.expect(3);
 
-  let organization = createOrganizationWithSluggedRoute();
-  let user = server.create('user');
-
-  server.create('organization-membership', {
-    member: user,
-    organization,
-    role: 'admin'
-  });
+  let organization = server.create('organization');
+  let user = organization.createOwner();
 
   // we assume authenticate session here. specific behavior regarding authentication and
   // showing/hiding of links is handled in the organization-menu component integration test
@@ -62,7 +52,7 @@ test('an admin can navigate to settings', function(assert) {
 test('anyone can navigate to projects', function(assert) {
   assert.expect(2);
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   // no need to create membership. even non-members should be able to visit

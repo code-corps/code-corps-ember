@@ -10,7 +10,6 @@ let page = PageObject.create(component);
 moduleForComponent('project-menu', 'Integration | Component | project menu', {
   integration: true,
   beforeEach() {
-    stubService(this, 'credentials');
     page.setContext(this);
   },
   afterEach() {
@@ -30,11 +29,11 @@ test('when not authenticated, it renders properly', function(assert) {
   assert.equal(page.links(1).text, 'Tasks', 'The tasks link is rendered');
 });
 
-test('when authenticated, and user cannot manage organization, it renders properly', function(assert) {
+test('when authenticated, and user cannot manage project, it renders properly', function(assert) {
   assert.expect(3);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:organization', Ability.extend({ canManage: false }));
+  this.register('ability:project', Ability.extend({ canManage: false }));
 
   page.render(hbs`{{project-menu}}`);
 
@@ -43,11 +42,11 @@ test('when authenticated, and user cannot manage organization, it renders proper
   assert.equal(page.links(1).text, 'Tasks', 'The tasks link is rendered');
 });
 
-test('when authenticated, and user can manage organization, it renders properly', function(assert) {
+test('when authenticated, and user can manage project, it renders properly', function(assert) {
   assert.expect(7);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:organization', Ability.extend({ canManage: true }));
+  this.register('ability:project', Ability.extend({ canManage: true }));
 
   page.render(hbs`{{project-menu}}`);
 
@@ -60,25 +59,33 @@ test('when authenticated, and user can manage organization, it renders properly'
   assert.equal(page.links(5).text, 'Settings', 'The settings link is rendered');
 });
 
-test('when authenticated, and user can manage organization, and project has pending members', function(assert) {
+test('when authenticated, and user can manage project, and project has pending members', function(assert) {
   assert.expect(1);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:organization', Ability.extend({ canManage: true }));
-  let project = { hasPendingMembers: true, pendingMembersCount: 7 };
+  this.register('ability:project', Ability.extend({ canManage: true }));
+  let project = {
+    projectUsers: [
+      { role: 'pending' }
+    ]
+  };
   this.set('project', project);
 
   page.render(hbs`{{project-menu project=project}}`);
 
-  assert.equal(page.links(2).badge.text, '7 pending', 'The correct number of pending members render');
+  assert.equal(page.links(2).badge.text, '1 pending', 'The correct number of pending members render');
 });
 
-test('when authenticated, and user can manage organization, and project has no pending members', function(assert) {
+test('when authenticated, and user can manage project, and project has no pending members', function(assert) {
   assert.expect(1);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:organization', Ability.extend({ canManage: true }));
-  let project = { hasPendingMembers: false, pendingMembersCount: 0 };
+  this.register('ability:project', Ability.extend({ canManage: true }));
+  let project = {
+    projectUsers: [
+      { role: 'contributor' }
+    ]
+  };
   this.set('project', project);
 
   page.render(hbs`{{project-menu project=project}}`);

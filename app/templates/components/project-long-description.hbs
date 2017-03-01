@@ -1,7 +1,7 @@
 {{#if descriptionIsBlank}}
   <div class="long-description empty">
     <div class="long-description-inner">
-      {{#if (can "manage organization" project.organization)}}
+      {{#if (can "manage project" project)}}
         <div class="no-description user-can-add">
           <h3>Add your project description.</h3>
           <div class="box-icon"></div>
@@ -27,7 +27,7 @@
     {{#unless inEditMode}}
       <div class="long-description-header">
         <h3>About this project</h3>
-        {{#if (can "manage organization" project.organization)}}
+        {{#if (can "manage project" project)}}
           <button class="clear small" name="edit" {{action 'edit'}}>Edit description</button>
         {{/if}}
       </div>
@@ -36,7 +36,7 @@
   </div>
 {{/if}}
 
-{{#if (can "manage organization" project.organization)}}
+{{#if (can "manage project" project)}}
   {{#if shouldDisplayEditor}}
     <div class="long-description-editor">
       {{editor-with-preview input=project.longDescriptionMarkdown isLoading=project.isSaving modifiedSubmit="save"}}

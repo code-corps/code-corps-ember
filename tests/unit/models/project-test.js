@@ -12,9 +12,9 @@ moduleForModel('project', 'Unit | Model | project', {
   needs: [
     'model:donation-goal',
     'model:organization',
-    'model:organization-membership',
     'model:project-category',
     'model:project-skill',
+    'model:project-user',
     'model:stripe-connect-account',
     'model:stripe-connect-plan',
     'model:task',
@@ -36,11 +36,13 @@ testForAttributes('project', [
 ]);
 
 testForBelongsTo('project', 'organization');
+testForBelongsTo('project', 'owner');
 testForBelongsTo('project', 'stripeConnectPlan');
 
 testForHasMany('project', 'donationGoals');
 testForHasMany('project', 'projectCategories');
 testForHasMany('project', 'projectSkills');
+testForHasMany('project', 'projectUsers');
 testForHasMany('project', 'taskLists');
 testForHasMany('project', 'tasks');
 
@@ -50,23 +52,6 @@ test('it should have open tasks', function(assert) {
   let project = this.subject({ openTasksCount: 1 });
 
   assert.ok(project.get('hasOpenTasks'), 'has open tasks');
-});
-
-test('it should have computed properties for its organization\'s members', function(assert) {
-  assert.expect(2);
-
-  let _this = this;
-  let project;
-
-  run(function() {
-    let organization = _this.store().createRecord('organization');
-    _this.store().createRecord('organization-membership', { organization, role: 'pending' });
-
-    project = _this.subject({ organization });
-  });
-
-  assert.equal(project.get('pendingMembersCount'), 1, 'pendingMembersCount should return 1');
-  assert.ok(project.get('hasPendingMembers'), 'hasPendingMembers should return true');
 });
 
 test('it should have computed properties for its current donation goal', function(assert) {

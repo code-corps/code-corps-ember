@@ -7,7 +7,8 @@ import component from 'code-corps-ember/tests/pages/components/project-long-desc
 
 const {
   Object,
-  RSVP
+  RSVP,
+  set
 } = Ember;
 
 let page = PageObject.create(component);
@@ -22,27 +23,24 @@ moduleForComponent('project-long-description', 'Integration | Component | projec
   }
 });
 
-let credentialsWithAdminMembership = {
-  membership: Object.create({
-    isAdmin: true
-  })
-};
+let owner = Object.create({ id: 'owner' });
 
 let projectWithDescription = Object.create({
   longDescriptionBody: 'A <strong>body</strong>',
-  longDescriptionMarkdown: 'A **body**'
+  longDescriptionMarkdown: 'A **body**',
+  owner
 });
 
 let blankProject = Object.create({
   longDescriptionBody: null,
-  longDescriptionMarkdown: null
+  longDescriptionMarkdown: null,
+  owner
 });
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {
   assert.expect(3);
-  stubService(this, 'credentials');
 
-  this.set('project', blankProject);
+  set(this, 'project', blankProject);
   page.render(hbs`{{project-long-description project=project}}`);
 
   assert.ok(page.noDescription.cannotAdd, 'The correct element is shown');
@@ -53,8 +51,8 @@ test('it renders properly when decription is blank and the user cannot add to it
 test('it renders properly when description is blank and the user can add to it', function(assert) {
   assert.expect(3);
 
-  this.set('project', blankProject);
-  stubService(this, 'credentials', credentialsWithAdminMembership);
+  set(this, 'project', blankProject);
+  stubService(this, 'current-user', { user: owner });
 
   page.render(hbs`{{project-long-description project=project}}`);
 
@@ -65,9 +63,8 @@ test('it renders properly when description is blank and the user can add to it',
 
 test('it renders properly when description is present and user cannot edit', function(assert) {
   assert.expect(6);
-  stubService(this, 'credentials');
 
-  this.set('project', projectWithDescription);
+  set(this, 'project', projectWithDescription);
 
   page.render(hbs`{{project-long-description project=project}}`);
 
@@ -82,8 +79,8 @@ test('it renders properly when description is present and user cannot edit', fun
 test('it renders properly when description is present and user can edit', function(assert) {
   assert.expect(4);
 
-  this.set('project', projectWithDescription);
-  stubService(this, 'credentials', credentialsWithAdminMembership);
+  set(this, 'project', projectWithDescription);
+  stubService(this, 'current-user', { user: owner });
 
   page.render(hbs`{{project-long-description project=project}}`);
 
@@ -103,8 +100,8 @@ test('it is possible to add a description', function(assert) {
     }
   });
 
-  this.set('project', savableProject);
-  stubService(this, 'credentials', credentialsWithAdminMembership);
+  set(this, 'project', savableProject);
+  stubService(this, 'current-user', { user: owner });
 
   page.render(hbs`{{project-long-description project=project}}`);
 
@@ -121,8 +118,8 @@ test('it is possible to edit a description', function(assert) {
     }
   });
 
-  this.set('project', savableProject);
-  stubService(this, 'credentials', credentialsWithAdminMembership);
+  set(this, 'project', savableProject);
+  stubService(this, 'current-user', { user: owner });
 
   page.render(hbs`{{project-long-description project=project}}`);
 

@@ -11,12 +11,12 @@
     </li>
 
     {{#if session.isAuthenticated}}
-      {{#if (can "manage organization" project.organization)}}
+      {{#if (can "manage project" project)}}
         <li class="contributors">
           {{#link-to 'project.settings.contributors' project}}
             Contributors
-            {{#if project.hasPendingMembers}}
-              <span class="info"><strong>{{project.pendingMembersCount}}</strong> pending</span>
+            {{#if projectHasPendingMembers}}
+              <span class="info"><strong>{{projectPendingMembersCount}}</strong> pending</span>
             {{/if}}
           {{/link-to}}
         </li>

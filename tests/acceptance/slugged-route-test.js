@@ -1,7 +1,5 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
-import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
 import sluggedRoutePage from '../pages/slugged-route';
 
 moduleForAcceptance('Acceptance | Slugged Route');
@@ -9,9 +7,9 @@ moduleForAcceptance('Acceptance | Slugged Route');
 test('It renders user details when the sluggedRoute model is a user', function(assert) {
   assert.expect(1);
 
-  let user = createUserWithSluggedRoute(server);
+  let user = server.create('user');
 
-  sluggedRoutePage.visit({ slug: user.username });
+  sluggedRoutePage.visit({ slug: user.sluggedRoute.slug });
 
   andThen(function() {
     assert.ok(sluggedRoutePage.userDetails.isVisible, 'user-details component is rendered');
@@ -21,9 +19,9 @@ test('It renders user details when the sluggedRoute model is a user', function(a
 test('It renders organization profile when the sluggedRoute model is an organization', function(assert) {
   assert.expect(1);
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
 
-  sluggedRoutePage.visit({ slug: organization.slug });
+  sluggedRoutePage.visit({ slug: organization.sluggedRoute.slug });
 
   andThen(function() {
     assert.ok(sluggedRoutePage.organizationProfile.isVisible, 'organization-profile component is rendered');

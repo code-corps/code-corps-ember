@@ -2,6 +2,10 @@ import Ember from 'ember';
 
 const {
   Component,
+  computed,
+  computed: { alias },
+  get,
+  getProperties,
   inject: { service }
 } = Ember;
 
@@ -25,38 +29,47 @@ export default Component.extend({
   tagName: 'header',
 
   /**
-    @property store
-    @type Ember.service
+   * @property store
+   * @type Ember.Service
    */
   store: service(),
 
   /**
     @property session
-    @type Ember.service
+    @type Ember.Service
    */
   session: service(),
 
   /**
-    @property credentials
-    @type Ember.service
-   */
-  credentials: service(),
-
-  /**
     @property currentUser
-    @type Ember.service
+    @type Ember.Service
    */
   currentUser: service(),
 
-  actions: {
-    /**
-      Action that allows a user to join a project.
+  /**
+   * @property user
+   * @type DS.Model
+   */
+  user: alias('currentUser.user'),
 
-      @method joinProject
-     */
-    joinProject() {
-      let organization = this.get('project.organization');
-      this.get('credentials').joinOrganization(organization);
+  // TODO: Similar code is defined in `abilities/task.js`
+  currentProjectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
+    let projectUsers = get(this, 'project.projectUsers');
+    let currentUserId = get(this, 'currentUser.user.id');
+
+    return projectUsers.find((item) => {
+      return get(item, 'user.id') === currentUserId;
+    });
+  }),
+
+  actions: {
+    // TODO: This should go outside the component, but with the way the
+    // project, project.index, project.settings and project.tasks templates are
+    // set up, it's difficult to move this into a route/controller action
+    joinProject(project) {
+      let { store, user } = getProperties(this, 'store', 'user');
+      return store.createRecord('project-user', { user, project, role: 'pending' })
+                  .save();
     }
   }
 });

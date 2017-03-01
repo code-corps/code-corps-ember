@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/organization-header';
 
@@ -12,13 +11,6 @@ let page = PageObject.create(component);
 moduleForComponent('organization-header', 'Integration | Component | organization header', {
   integration: true,
   beforeEach() {
-    stubService(this, 'credentials', {
-      membership: Object.create({
-        member: user,
-        organization,
-        role: 'admin'
-      })
-    });
     page.setContext(this);
   },
   afterEach() {
@@ -26,7 +18,6 @@ moduleForComponent('organization-header', 'Integration | Component | organizatio
   }
 });
 
-let user = Object.create({});
 let organization = Object.create({
   name: 'Test Organization',
   description: 'A test organization',

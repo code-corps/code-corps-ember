@@ -15,7 +15,7 @@ const VISIBLE_MEMBERS_COUNT = 8;
   ## default usage
 
   ```handlebars
-  {{project-card-members members=projectOrganizationMembers}}
+  {{project-card-members members=projectUsers}}
   ```
 
   @class project-card-members

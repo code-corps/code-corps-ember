@@ -1,14 +1,13 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectAboutPage from '../pages/project/about';
 
 moduleForAcceptance('Acceptance | Project - About');
 
 test('When unauthenticated, and project has no long description, it shows proper UI', function(assert) {
   assert.expect(2);
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', {
     longDescriptionBody: null,
     longDescriptionMarkdown: null,
@@ -28,7 +27,8 @@ test('When unauthenticated, and project has no long description, it shows proper
 
 test('When unauthenticated, and project has long description, it shows the project long description', function(assert) {
   assert.expect(2);
-  let organization = createOrganizationWithSluggedRoute();
+
+  let organization = server.create('organization');
   let project = server.create('project', {
     longDescriptionBody: 'A body',
     longDescriptionMarkdown: 'A body',
@@ -46,18 +46,18 @@ test('When unauthenticated, and project has long description, it shows the proje
   });
 });
 
-test('When authenticated as admin, and project has no long description, it allows setting it', function(assert) {
+test('When authenticate as owner, and project has no long description, it allows setting it', function(assert) {
   assert.expect(4);
 
-  let user = server.create('user');
-  let organization = createOrganizationWithSluggedRoute();
-  server.create('organization-membership', { organization, member: user, role: 'admin' });
+  let organization = server.create('organization');
 
   let project = server.create('project', {
     longDescriptionBody: null,
     longDescriptionMarkdown: null,
     organization
   });
+
+  let user = project.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -79,18 +79,18 @@ test('When authenticated as admin, and project has no long description, it allow
   });
 });
 
-test('When authenticated as admin, and project has long description, it allows editing it', function(assert) {
+test('When authenticated as owner, and project has long description, it allows editing it', function(assert) {
   assert.expect(4);
 
-  let user = server.create('user');
-  let organization = createOrganizationWithSluggedRoute();
-  server.create('organization-membership', { organization, member: user, role: 'admin' });
+  let organization = server.create('organization');
 
   let project = server.create('project', {
     longDescriptionBody: 'A body',
     longDescriptionMarkdown: 'A body',
     organization
   });
+
+  let user = project.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -116,7 +116,7 @@ test('Does not show donation progress sidebar if donations are not active', func
   assert.expect(1);
 
   let user = server.create('user');
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
 
   let project = server.create('project', {
     donationsActive: false,
@@ -139,7 +139,7 @@ test('Allows donating to a project from the sidebar', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
 
   let project = server.create('project', {
     donationsActive: true,

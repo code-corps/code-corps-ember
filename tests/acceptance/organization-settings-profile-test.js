@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import fillInFileInput from '../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../helpers/remove-double-quotes';
 import organizationPage from '../pages/organization';
@@ -11,7 +10,7 @@ moduleForAcceptance('Acceptance | Organization Settings – Profile');
 test('it requires authentication', function(assert) {
   assert.expect(1);
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
 
   organizationPage.visitSettingsProfile({ organization: organization.slug });
   andThen(() => {
@@ -19,18 +18,25 @@ test('it requires authentication', function(assert) {
   });
 });
 
+test('it requires user to be owner of organization', function(assert) {
+  assert.expect(1);
+
+  let organization = server.create('organization');
+  let user = server.create('user');
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  organizationPage.visitSettingsProfile({ organization: organization.slug });
+  andThen(() => {
+    assert.equal(currentRouteName(), 'projects-list', 'User was redirected due to not having ownership.');
+  });
+});
+
 test('it allows editing of organization profile', function(assert) {
   assert.expect(4);
 
-  let user = server.create('user');
-
-  let organization = createOrganizationWithSluggedRoute();
-
-  server.create('organizationMembership', {
-    member: user,
-    organization,
-    role: 'admin'
-  });
+  let organization = server.create('organization');
+  let user = organization.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -65,15 +71,8 @@ test("it allows editing of organization's image", function(assert) {
   let fileName = 'file.png';
   let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
-  let user = server.create('user');
-
-  let organization = createOrganizationWithSluggedRoute();
-
-  server.create('organizationMembership', {
-    member: user,
-    organization,
-    role: 'admin'
-  });
+  let organization = server.create('organization');
+  let user = organization.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 

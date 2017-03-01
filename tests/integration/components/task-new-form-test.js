@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import taskNewFormComponent from 'code-corps-ember/tests/pages/components/task-new-form';
 
@@ -30,7 +29,6 @@ moduleForComponent('task-new-form', 'Integration | Component | task new form', {
 
 test('it renders proper ui elements, properly bound', function(assert) {
   assert.expect(3);
-  stubService(this, 'credentials', { membership: null });
 
   let task = {
     title: 'A task',
@@ -50,7 +48,6 @@ test('it renders proper ui elements, properly bound', function(assert) {
 
 test('it triggers an action when the task is saved', function(assert) {
   assert.expect(3);
-  stubService(this, 'credentials', { membership: null });
 
   let taskList = Object.create({ id: 1, inbox: true, name: 'Inbox' });
   let task = Object.create({ id: 1, taskList });
