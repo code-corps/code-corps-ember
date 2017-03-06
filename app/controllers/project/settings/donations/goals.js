@@ -12,7 +12,6 @@ const {
 const PROBLEM_SAVING_DONATION_GOAL = 'There was a problem saving your donation goal. Please try again.';
 
 export default Controller.extend({
-  projectDonationGoals: service(),
   store: service(),
 
   actions: {
