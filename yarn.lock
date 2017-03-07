@@ -3007,9 +3007,9 @@ ember-cookies@^0.0.11:
     ember-cli-babel "^5.1.6"
     ember-getowner-polyfill "~1.1.1"
 
-ember-credit-cards@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-credit-cards/-/ember-credit-cards-1.1.0.tgz#f051850cdce7e70ae08ea30c6a9a379e65a96cde"
+ember-credit-cards@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ember-credit-cards/-/ember-credit-cards-1.1.1.tgz#4f54bd4b9d0c19cfa2c0c5710d2beb4a61bfbe84"
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-runtime-enumerable-includes-polyfill "1.0.2"
