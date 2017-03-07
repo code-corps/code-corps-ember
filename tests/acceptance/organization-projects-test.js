@@ -1,14 +1,13 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import organizationProjects from '../pages/organization-projects';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 
 moduleForAcceptance('Acceptance | Organization projects');
 
 test('It renders all the required ui elements', function(assert) {
   assert.expect(3);
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let projects = server.createList('project', 5, { organization });
 
   organizationProjects.visit({ slug: organization.slug });

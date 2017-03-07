@@ -5,7 +5,6 @@ import Mirage from 'ember-cli-mirage';
 
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
 import projectDonatePage from '../pages/project/donate';
 
 const {
@@ -72,7 +71,7 @@ moduleForAcceptance('Acceptance | Project - Donate');
 test('It requires authentication', function(assert) {
   assert.expect(1);
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({
@@ -92,7 +91,7 @@ test('It redirects to project route if already a subscriber, with a flash', func
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   project.createStripeConnectPlan({ project });
@@ -119,7 +118,7 @@ test('Allows creating a card and donating (creating a subscription)', function(a
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
   project.createStripeConnectPlan();
 
@@ -167,7 +166,7 @@ test('Shows stripe errors when creating a card token fails', function(assert) {
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({
@@ -202,7 +201,7 @@ test('Shows error indicating problem with stripe customer if that part of the pr
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({
@@ -248,7 +247,7 @@ test('Shows error indicating problem with stripe card if that part of the proces
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({
@@ -294,7 +293,7 @@ test('Shows subscription validation errors if that part of the process fails due
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({
@@ -343,7 +342,7 @@ test('Shows error indicating problem with creating subscription if that part of 
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   projectDonatePage.visit({

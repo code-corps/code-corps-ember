@@ -1,8 +1,8 @@
-.user-organizations-list {
+.user-projects-list {
   @include span-columns(9);
 }
 
-.user-organization-item {
+.user-project-item {
   @include span-columns(12);
   margin: 5px 0;
 

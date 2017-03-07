@@ -18,35 +18,18 @@ let user = Object.create({
   username: 'joshsmith',
   photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
   userSkills: [
-    {
-      skill: {
-        title: 'Ember.js'
-      }
-    },
-    {
-      skill: {
-        title: 'Rails'
-      }
-    },
-    {
-      skill: {
-        title: 'Ruby'
-      }
-    }
+    { skill: { title: 'Ember.js' } },
+    { skill: { title: 'Rails' } },
+    { skill: { title: 'Ruby' } }
   ]
 });
 
-function mockMembership(pending) {
-  let membership = Object.create({
-    isPending: pending,
-    destroyRecord() {
-      return RSVP.resolve();
-    },
-    save() {
-      return RSVP.resolve();
-    }
+function mockMembership(role) {
+  return Object.create({
+    role,
+    destroyRecord: RSVP.resolve,
+    save: RSVP.resolve
   });
-  return membership;
 }
 
 let page = PageObject.create(component);
@@ -89,7 +72,7 @@ test('it renders the username in the name if name is empty', function(assert) {
 test('it renders the buttons when pending', function(assert) {
   assert.expect(2);
 
-  set(this, 'membership', mockMembership(true)); // pending
+  set(this, 'membership', mockMembership('pending')); // pending
   set(this, 'user', user);
 
   page.render(hbs`{{member-list-item membership=membership user=user}}`);
@@ -101,7 +84,7 @@ test('it renders the buttons when pending', function(assert) {
 test('it does not render the buttons when not pending', function(assert) {
   assert.expect(2);
 
-  set(this, 'membership', mockMembership(false));
+  set(this, 'membership', mockMembership('contributor'));
   set(this, 'user', user);
 
   page.render(hbs`{{member-list-item membership=membership user=user}}`);
@@ -114,9 +97,9 @@ test('it sends the approve action when clicking approve', function(assert) {
   assert.expect(4);
 
   let membership = Object.create({
-    isPending: true,
+    role: 'pending',
     save() {
-      assert.ok(true);
+      assert.ok(true, 'Action was called');
       return RSVP.resolve();
     }
   });
@@ -145,9 +128,9 @@ test('it sends the deny action when clicking deny', function(assert) {
   };
 
   let membership = Object.create({
-    isPending: true,
+    role: 'pending',
     destroyRecord() {
-      assert.ok(true);
+      assert.ok(true, 'Action was called.');
       return RSVP.resolve();
     }
   });

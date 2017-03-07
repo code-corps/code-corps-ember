@@ -8,5 +8,5 @@ const {
 export default Component.extend({
   classNames: ['user-details'],
 
-  userOrganizations: mapBy('user.organizationMemberships', 'organization')
+  userProjects: mapBy('user.projectUsers', 'project')
 });

@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   Component,
   computed: { or },
-  inject: { service },
   isPresent
 } = Ember;
 
@@ -23,14 +22,6 @@ const {
 
 export default Component.extend({
   classNames: ['project-long-description'],
-
-  /**
-    A service that returns the users credentials.
-
-    @property credentials
-    @type Ember.Service
-   */
-  credentials: service(),
 
   /**
     Property that holds the edit mode status.

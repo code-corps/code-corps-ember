@@ -2,7 +2,7 @@ import {
   attribute,
   text
 } from 'ember-cli-page-object';
-import userOrganizationsList from 'code-corps-ember/tests/pages/components/user-organizations-list';
+import userProjectsList from 'code-corps-ember/tests/pages/components/user-projects-list';
 import userSidebar from 'code-corps-ember/tests/pages/components/user-sidebar';
 
 export default {
@@ -18,7 +18,7 @@ export default {
     }
   },
 
-  userOrganizationsList,
+  userProjectsList,
 
   userSidebar,
 

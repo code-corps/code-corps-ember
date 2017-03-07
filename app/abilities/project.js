@@ -2,7 +2,9 @@ import Ember from 'ember';
 import { Ability } from 'ember-can';
 
 const {
+  computed,
   computed: { alias },
+  get,
   inject: { service }
 } = Ember;
 
@@ -13,17 +15,20 @@ const {
  * @extends EmberCan.Ability
  */
 export default Ability.extend({
-  _credentials: service('credentials'),
-
-  _isOwner: alias('_membership.isOwner'),
-  _membership: alias('_credentials.membership'),
+  currentUser: service(),
 
   /**
    * An `ember-can` ability.
    *
-   * Indicates if the current user can manage donation goals in a project.
-   * Returns true if the user is the owner of the projects organization.
-   * @type {[type]}
+   * Indicates if the current user can manage a project.
+   * Returns true if the user is the owner of the project.
+   * @type {Boolean}
    */
-  canManageDonationGoals: alias('_isOwner')
+  canManage: alias('isOwner'),
+
+  isOwner: computed('project.owner.id', 'currentUser.user.id', function() {
+    return get(this, 'project.owner.id') === get(this, 'currentUser.user.id');
+  }),
+
+  project: alias('model')
 });

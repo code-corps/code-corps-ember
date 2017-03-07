@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { CanMixin } from 'ember-can';
 
 const {
   Route
@@ -17,25 +16,7 @@ const {
  * @module  Route
  * @extends Ember.Route
  */
-export default Route.extend(CanMixin, {
-  /**
-   * An Ember.Route hook
-   *
-   * Managing donation goals is for owners only, unlike managing
-   * organizations generally, which is also allowed for admins.
-   *
-   * The hook ensures the user is able to manage organization goals.
-   *
-   * @method beforeModel
-   */
-  beforeModel() {
-    if (this.cannot('manage donation goals in project')) {
-      return this.transitionTo('project');
-    } else {
-      return this._super(...arguments);
-    }
-  },
-
+export default Route.extend({
   /**
    * An Ember.Route hook
    *

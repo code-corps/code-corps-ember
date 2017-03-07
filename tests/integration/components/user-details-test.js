@@ -20,6 +20,6 @@ test('it renders subcomponents', function(assert) {
 
   page.render(hbs`{{user-details}}`);
 
-  assert.ok(page.userOrganizationsList.isVisible);
+  assert.ok(page.userProjectsList.isVisible);
   assert.ok(page.userSidebar.isVisible);
 });

@@ -1,8 +1,7 @@
 import Ember from 'ember';
 
 const {
-  Component,
-  inject: { service }
+  Component
 } = Ember;
 
 /**
@@ -22,12 +21,6 @@ const {
 export default Component.extend({
   classNames: ['task-new-form'],
   tagName: 'form',
-
-  /**
-    @property credentials
-    @type Ember.Service
-   */
-  credentials: service(),
 
   /**
     Returns which placeholder message to use.

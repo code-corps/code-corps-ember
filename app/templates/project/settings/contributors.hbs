@@ -4,8 +4,8 @@
     <p>People who want to join your project. See if their skills match up and help them get started.</p>
   </div>
   <ul>
-  {{#each (filter-by "isPending" true model.organization.organizationMemberships) as |membership|}}
-    {{member-list-item membership=membership user=membership.member}}
+  {{#each (filter-by 'role' 'pending' model.projectUsers) as |membership|}}
+    {{member-list-item membership=membership user=membership.user}}
   {{else}}
     <div class="contributors-list--empty">
       <p>No one's waiting to be approved. Good work!</p>
@@ -20,8 +20,8 @@
     <p>Have complete control over your project.</p>
   </div>
   <ul>
-  {{#each (filter-by "isOwner" true model.organization.organizationMemberships) as |membership|}}
-    {{member-list-item membership=membership user=membership.member}}
+  {{#each (filter-by 'role' 'owner' model.projectUsers) as |membership|}}
+    {{member-list-item membership=membership user=membership.user}}
   {{/each}}
   </ul>
 </div>
@@ -32,8 +32,8 @@
     <p>Can approve other contributors and help with administrative tasks.</p>
   </div>
   <ul>
-  {{#each (filter-by "isAdmin" true model.organization.organizationMemberships) as |membership|}}
-    {{member-list-item membership=membership user=membership.member}}
+  {{#each (filter-by 'role' 'admin' model.projectUsers) as |membership|}}
+    {{member-list-item membership=membership user=membership.user}}
   {{else}}
     <div class="contributors-list--empty">
       <p>You don't have any admins in your project.</p>
@@ -49,8 +49,8 @@
     <p>Can task and assign tasks in your project and contribute more fully to the project's goals.</p>
   </div>
   <ul>
-  {{#each (filter-by "isContributor" true model.organization.organizationMemberships) as |membership|}}
-    {{member-list-item membership=membership user=membership.member}}
+  {{#each (filter-by 'role' 'contributor' model.projectUsers) as |membership|}}
+    {{member-list-item membership=membership user=membership.user}}
   {{else}}
     <div class="contributors-list--empty">
       <p>You don't have any other contributors yet.</p>

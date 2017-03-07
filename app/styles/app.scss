@@ -84,7 +84,6 @@
 // COMPONENTS - ORGANIZATION
 //
 @import "components/organization-header";
-@import "components/organization-members";
 @import "components/organization-profile";
 
 //
@@ -104,6 +103,7 @@
 @import "components/project-item";
 @import "components/project-list";
 @import "components/project-long-description";
+@import "components/project-members";
 @import "components/project-menu";
 
 //
@@ -149,7 +149,7 @@
 // dropdown-menu has to come after user-menu for styles to work correctly
 @import "components/dropdown-menu";
 
-@import "components/user-organizations-list";
+@import "components/user-projects-list";
 @import "components/user-sidebar";
 
 //

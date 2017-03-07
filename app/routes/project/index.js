@@ -15,6 +15,7 @@ export default Route.extend({
       return RSVP.hash({ project, subscription });
     });
   },
+
   setupController(controller, { project, subscription }) {
     controller.setProperties({ project, subscription });
   }

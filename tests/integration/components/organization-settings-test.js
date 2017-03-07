@@ -11,7 +11,6 @@ moduleForComponent('organization-settings', 'Integration | Component | organizat
   beforeEach() {
     stubService(this, 'store');
     stubService(this, 'session');
-    stubService(this, 'credentials');
     page.setContext(this);
   },
   afterEach() {

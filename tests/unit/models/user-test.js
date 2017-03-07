@@ -4,7 +4,8 @@ import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
 
 moduleForModel('user', 'Unit | Model | user', {
   needs: [
-    'model:organization-membership',
+    'model:project-user',
+    'model:project',
     'model:stripe-connect-subscription',
     'model:stripe-platform-card',
     'model:stripe-platform-customer',
@@ -27,7 +28,7 @@ testForAttributes('user', [
 
 testForBelongsTo('user', 'stripePlatformCard');
 
-testForHasMany('user', 'organizationMemberships');
+testForHasMany('project', 'projectUsers');
 testForHasMany('user', 'stripeConnectSubscriptions');
 testForHasMany('user', 'userCategories');
 testForHasMany('user', 'userRoles');

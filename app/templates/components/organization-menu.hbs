@@ -5,7 +5,7 @@
         {{#link-to 'slugged-route' organization.slug}}Projects{{/link-to}}
       </li>
 
-      {{#if (can 'manage organization')}}
+      {{#if (can 'manage organization' organization)}}
         <li>
           {{#link-to 'organizations.slugged-route.settings.profile' organization.slug}}Settings{{/link-to}}
         </li>

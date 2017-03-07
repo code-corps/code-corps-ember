@@ -1,66 +1,103 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
-const { Object } = Ember;
+const { Object, get, set } = Ember;
 
 moduleFor('ability:task', 'Unit | Ability | task', { });
 
-test('it can edit task if user is the task author', function(assert) {
-  let ability = this.subject({
-    model: Object.create({ user: Object.create({ id: 1 }) }),
-    currentUser: Object.create({ user: Object.create({ id: 1 }) })
-  });
-  assert.ok(ability.get('canEdit'));
+// users of different roles
+let author = Object.create({ id: 'author' });
+let other = Object.create({ id: 'other' });
+let pending = Object.create({ id: 'pending' });
+let contributor = Object.create({ id: 'contributor' });
+let admin = Object.create({ id: 'admin' });
+let owner = Object.create({ id: 'owner' });
+
+// the task model
+let model = Object.create({
+  user: author,
+  project: {
+    owner,
+    projectUsers: [
+      { user: pending, role: 'pending' },
+      { user: contributor, role: 'contributor' },
+      { user: admin, role: 'admin' },
+      { user: owner, role: 'owner' }
+    ]
+  }
 });
 
-test('it cannot edit task if user is not the task author', function(assert) {
-  let ability = this.subject({
-    model: Object.create({ user: Object.create({ id: 1 }) }),
-    currentUser: Object.create({ user: Object.create({ id: 2 }) })
-  });
-  assert.notOk(ability.get('canEdit'));
+test('canEdit works properly', function(assert) {
+  let ability = this.subject({ model });
+
+  set(ability, 'currentUser', Object.create({ user: null  }));
+  assert.notOk(get(ability, 'canEdit'), 'Unauthenticated users cannot edit.');
+
+  set(ability, 'currentUser', Object.create({ user: author  }));
+  assert.ok(get(ability, 'canEdit'), 'Authors can edit.');
+
+  set(ability, 'currentUser', Object.create({ user: other  }));
+  assert.notOk(get(ability, 'canEdit'), 'Users not associated with task or project cannot edit.');
+
+  set(ability, 'currentUser', Object.create({ user: pending  }));
+  assert.notOk(get(ability, 'canEdit'), 'Pending project members cannot edit.');
+
+  set(ability, 'currentUser', Object.create({ user: contributor  }));
+  assert.notOk(get(ability, 'canEdit'), 'Contributor project members cannot edit.');
+
+  set(ability, 'currentUser', Object.create({ user: admin  }));
+  assert.ok(get(ability, 'canEdit'), 'Admin project members can edit.');
+
+  set(ability, 'currentUser', Object.create({ user: owner  }));
+  assert.ok(get(ability, 'canEdit'), 'Owners can edit.');
 });
 
-test('it can edit task if user is at least admin in organization', function(assert) {
-  let ability = this.subject({
-    credentials: Object.create({
-      membership: Object.create({ isAdmin: true })
-    })
-  });
-  assert.ok(ability.get('canEdit'));
+test('canAssign works properly', function(assert) {
+  let ability = this.subject({ model });
+
+  set(ability, 'currentUser', Object.create({ user: null  }));
+  assert.notOk(get(ability, 'canAssign'), 'Unauthenticated users cannot assign.');
+
+  set(ability, 'currentUser', Object.create({ user: author  }));
+  assert.ok(get(ability, 'canAssign'), 'Authors can assign.');
+
+  set(ability, 'currentUser', Object.create({ user: other  }));
+  assert.notOk(get(ability, 'canAssign'), 'Users not associated with task or project cannot assign.');
+
+  set(ability, 'currentUser', Object.create({ user: pending  }));
+  assert.notOk(get(ability, 'canAssign'), 'Pending project members cannot assign.');
+
+  set(ability, 'currentUser', Object.create({ user: contributor  }));
+  assert.ok(get(ability, 'canAssign'), 'Contributor project members can assign.');
+
+  set(ability, 'currentUser', Object.create({ user: admin  }));
+  assert.ok(get(ability, 'canAssign'), 'Admin project members can assign.');
+
+  set(ability, 'currentUser', Object.create({ user: owner  }));
+  assert.ok(get(ability, 'canAssign'), 'Owners can assign.');
 });
 
-test('it cannot edit task if user is not at least admin in organization', function(assert) {
-  let ability = this.subject({
-    credentials: Object.create({
-      membership: Object.create({ isAdmin: false })
-    })
-  });
-  assert.notOk(ability.get('canEdit'));
-});
+test('canReposition works properly', function(assert) {
+  let ability = this.subject({ model });
 
-test('it can reposition task if user is at least a contributor in organization', function(assert) {
-  let ability = this.subject({
-    credentials: Object.create({
-      membership: Object.create({ isAdmin: true })
-    })
-  });
-  assert.ok(ability.get('canReposition'));
-});
+  set(ability, 'currentUser', Object.create({ user: null  }));
+  assert.notOk(get(ability, 'canReposition'), 'Unauthenticated users cannot reposition.');
 
-test('it cannot reposition task if user is not at least a contributor in organization', function(assert) {
-  let ability = this.subject({
-    credentials: Object.create({
-      membership: Object.create({ isAdmin: false })
-    })
-  });
-  assert.notOk(ability.get('canReposition'));
-});
+  set(ability, 'currentUser', Object.create({ user: author  }));
+  assert.ok(get(ability, 'canReposition'), 'Authors can reposition.');
 
-test('it can reposition task if user is the task author', function(assert) {
-  let ability = this.subject({
-    model: Object.create({ user: Object.create({ id: 1 }) }),
-    currentUser: Object.create({ user: Object.create({ id: 1 }) })
-  });
-  assert.ok(ability.get('canReposition'));
+  set(ability, 'currentUser', Object.create({ user: other  }));
+  assert.notOk(get(ability, 'canReposition'), 'Users not associated with task or project cannot reposition.');
+
+  set(ability, 'currentUser', Object.create({ user: pending  }));
+  assert.notOk(get(ability, 'canReposition'), 'Pending project members cannot reposition.');
+
+  set(ability, 'currentUser', Object.create({ user: contributor  }));
+  assert.ok(get(ability, 'canReposition'), 'Contributor project members can reposition.');
+
+  set(ability, 'currentUser', Object.create({ user: admin  }));
+  assert.ok(get(ability, 'canReposition'), 'Admin project members can reposition.');
+
+  set(ability, 'currentUser', Object.create({ user: owner  }));
+  assert.ok(get(ability, 'canReposition'), 'Owners can reposition.');
 });

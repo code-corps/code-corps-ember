@@ -3,7 +3,6 @@ import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 const {
-  computed,
   get,
   inject: { service },
   Route,
@@ -12,11 +11,9 @@ const {
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  credentials: service(),
   currentUser: service(),
 
   ability: EmberCan.computed.ability('organization', 'membership'),
-  membership: computed.alias('credentials.membership'),
 
   /**
    * model - Route lifecycle hook

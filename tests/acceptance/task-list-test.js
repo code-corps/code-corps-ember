@@ -1,40 +1,38 @@
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import { test } from 'qunit';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import page from '../pages/project/tasks/index';
 
 moduleForAcceptance('Acceptance | Task List');
 
-function createContributor(organization) {
-  return createMemberWithRole(organization, 'contributor');
+function createContributor(project) {
+  return createMemberWithRole(project, 'contributor');
 }
 
-function createMemberWithRole(organization, role) {
-  let member = server.create('user');
-  server.create('organizationMembership', { member, organization, role });
-  return member;
+function createMemberWithRole(project, role) {
+  let user = server.create('user');
+  server.create('project-user', { user, project, role });
+  return user;
 }
 
 test('member can assign/reassign/unassign tasks to user', function(assert) {
   assert.expect(7);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
 
-  let { organization } = project;
-  let currentUser = createContributor(organization);
+  let currentUser = createContributor(project);
   let taskList = server.create('task-list', { project });
   server.create('task', { project, taskList });
 
   let otherUsers = server.createList('user', 5);
-  otherUsers.forEach((member) => {
-    server.create('organizationMembership', { member, organization, role: 'contributor' });
+  otherUsers.forEach((user) => {
+    server.create('project-user', { user, project, role: 'contributor' });
   });
 
   authenticateSession(this.application, { user_id: currentUser.id });
 
   page.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 

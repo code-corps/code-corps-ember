@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
 import indexPage from '../pages/index';
 import signupPage from '../pages/signup';
 import loginPage from '../pages/login';
@@ -35,7 +34,7 @@ test('Logged out, can sign in', function(assert) {
 test('Logged in, from user menu can visit profile', function(assert) {
   assert.expect(2);
 
-  let user = createUserWithSluggedRoute(server);
+  let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
   indexPage.visit();

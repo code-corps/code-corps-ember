@@ -10,8 +10,8 @@ import userDetails from './components/user-details';
 export default create({
   visit: visitable(':username'),
 
-  organizations: collection({
-    scope: '.user-organizations-list li',
+  projects: collection({
+    scope: '.user-projects-list li',
     itemScope: 'h4 a',
     item: {
       click: clickable(),
