@@ -1,5 +1,3 @@
-import createUserWithSluggedRoute from 'code-corps-ember/mirage/helpers/create-user-with-slugged-route';
-
 export default function(server) {
 
   /*
@@ -164,7 +162,14 @@ export default function(server) {
     server.create('role', { name, ability, kind });
   });
 
+  let owner = server.create('user', {
+    email: 'owner@codecorps.org',
+    password: 'password',
+    username: 'codecorps-owner'
+  });
+
   let organization = server.create('organization', {
+    owner,
     description: 'Help build and fund public software projects for social good.',
     name: 'Code Corps',
     slug: 'code-corps'
@@ -178,59 +183,38 @@ export default function(server) {
   let project = server.create('project', {
     description: 'Help build and fund public software projects for social good.',
     organization,
+    owner,
     slug: 'code-corps',
     title: 'Code Corps'
   });
 
-  let owner = createUserWithSluggedRoute(server, {
-    email: 'owner@codecorps.org',
-    password: 'password',
-    username: 'codecorps-owner'
-  });
+  server.create('project-user', { user: owner, project, role: 'owner' });
 
-  server.create('organization-membership', {
-    member: owner,
-    organization,
-    role: 'owner'
-  });
-
-  let admin = createUserWithSluggedRoute(server, {
+  let admin = server.create('user', {
     email: 'admin@codecorps.org',
     password: 'password',
     username: 'codecorps-admin'
   });
 
-  server.create('organization-membership', {
-    member: admin,
-    organization,
-    role: 'admin'
-  });
+  server.create('project-user', { user: admin, project, role: 'admin' });
 
-  let contributor = createUserWithSluggedRoute(server, {
+  let contributor = server.create('user', {
     email: 'contributor@codecorps.org',
     password: 'password',
     username: 'codecorps-contributor'
   });
 
-  server.create('organization-membership', {
-    member: contributor,
-    organization,
-    role: 'contributor'
-  });
+  server.create('project-user', { user: contributor, project, role: 'contributor' });
 
-  let pending = createUserWithSluggedRoute(server, {
+  let pending = server.create('user', {
     email: 'pending@codecorps.org',
     password: 'password',
     username: 'codecorps-pending'
   });
 
-  server.create('organization-membership', {
-    member: pending,
-    organization,
-    role: 'pending'
-  });
+  server.create('project-user', { user: pending, project, role: 'pending' });
 
-  createUserWithSluggedRoute(server, {
+  server.create('user', {
     email: 'random@user.com',
     password: 'password',
     username: 'random'

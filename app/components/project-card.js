@@ -23,6 +23,6 @@ export default Component.extend({
   classNames: ['project-card'],
 
   projectCategories: mapBy('project.projectCategories', 'category'),
-  projectOrganizationMembers: mapBy('project.organization.organizationMemberships', 'member'),
+  projectUsers: mapBy('project.projectUsers', 'user'),
   projectSkills: mapBy('project.projectSkills', 'skill')
 });

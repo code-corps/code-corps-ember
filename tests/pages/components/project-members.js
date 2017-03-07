@@ -6,7 +6,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.organization-members',
+  scope: '.project-members',
 
   memberCount: count('li'),
 

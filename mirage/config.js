@@ -161,25 +161,6 @@ export default function() {
   this.post('/donation-goals');
 
   /**
-  * Organization memberships
-  */
-
-  // GET /organization-memberships
-  this.get('/organization-memberships', { coalesce: true });
-
-  // POST /organization-memberships
-  this.post('/organization-memberships');
-
-  // GET /organization-memberships/:id
-  this.get('/organization-memberships/:id');
-
-  // PATCH /organization-memberships/:id
-  this.patch('/organization-memberships/:id');
-
-  // DELETE /organization-memberships/:id
-  this.delete('/organization-memberships/:id');
-
-  /**
   * Organizations
   */
 
@@ -252,6 +233,16 @@ export default function() {
 
   // DELETE /project-skills/:id
   this.delete('/project-skills/:id');
+
+  /**
+  * Project users
+  */
+
+  this.get('/project-users', { coalesce: true });
+  this.post('/project-users');
+  this.get('/project-users/:id');
+  this.patch('/project-users/:id');
+  this.delete('/project-users/:id');
 
   /**
   * Projects

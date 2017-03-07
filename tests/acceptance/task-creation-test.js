@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
@@ -13,7 +12,7 @@ moduleForAcceptance('Acceptance | Task Creation');
 test('Creating a task requires logging in', function(assert) {
   assert.expect(2);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
@@ -41,7 +40,7 @@ test('A task can be successfully created', function(assert) {
   assert.expect(8);
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let taskList = project.createTaskList({ inbox: true });
 
@@ -83,7 +82,7 @@ test('Task preview works during creation', function(assert) {
   assert.expect(1);
 
   let user = server.schema.users.create({ username: 'test_user' });
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   authenticateSession(this.application, { user_id: user.id });
 
@@ -103,7 +102,7 @@ test('Task preview works during creation', function(assert) {
 /* test('Task preview during creation renders user mentions', function(assert) {
   assert.expect(1);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let organization = project.organization;
   let user1 = server.create('user');
   let user2 = server.create('user');
@@ -125,7 +124,7 @@ test('When task creation succeeeds, the user is redirected to the task page for 
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   authenticateSession(this.application, { user_id: user.id });
 
@@ -148,7 +147,7 @@ test('When task creation succeeeds, the user is redirected to the task page for 
 test('When task creation fails due to validation, validation errors are displayed', function(assert) {
   assert.expect(1);
   let user = server.schema.users.create({ username: 'test_user' });
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   authenticateSession(this.application, { user_id: user.id });
 
@@ -189,7 +188,7 @@ test('When task creation fails due to non-validation issues, the error is displa
 
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   authenticateSession(this.application, { user_id: user.id });
 
@@ -228,7 +227,7 @@ test('Navigating away from task route destroys task with prompt', function(asser
 
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   project.createTaskList({ inbox: true });
 
@@ -245,7 +244,7 @@ test('Navigating away from task route destroys task with prompt', function(asser
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.tasksLink.click();
+    projectTasksNewPage.projectMenu.links(1).click();
   });
 
   andThen(() => {
@@ -264,7 +263,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
 
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   project.createTaskList({ inbox: true });
 
@@ -281,7 +280,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.tasksLink.click();
+    projectTasksNewPage.projectMenu.links(1).click();
   });
 
   andThen(() => {
@@ -295,7 +294,7 @@ test('Skills can be assigned to task during creation', function(assert) {
 
   let user = server.schema.users.create({ username: 'test_user' });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   project.createTaskList({ inbox: true });
 

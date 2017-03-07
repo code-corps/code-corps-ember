@@ -1,10 +1,13 @@
 import {
   attribute,
-  collection
+  collection,
+  isVisible
 } from 'ember-cli-page-object';
 
 export default {
   scope: '.project-list',
+
+  isVisible: isVisible(),
 
   items: collection({
     itemScope: '.project-item',

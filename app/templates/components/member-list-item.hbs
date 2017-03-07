@@ -28,7 +28,7 @@
 </div>
 
 <div class="project-member__actions">
-  {{#if membership.isPending}}
+  {{#if (eq membership.role 'pending')}}
     <button class="default small" {{action "approve" membership}}>Approve</button>
     <button class="danger small" {{action "deny" membership}}>Deny</button>
   {{/if}}

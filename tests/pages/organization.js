@@ -37,14 +37,6 @@ export default create({
     scope: '.project-list'
   },
 
-  orgMembersSection: {
-    scope: '.organization-members'
-  },
-
-  orgMembers: collection({
-    scope: '.organization-members li'
-  }),
-
   settingsForm: {
     scope: '.organization-settings-form'
   },

@@ -12,8 +12,8 @@ export default Route.extend({
 
   async model() {
     let project = this.modelFor('project');
-    let memberPromises = await get(project, 'organization.organizationMemberships').then((memberships) => {
-      return memberships.map((membership) => get(membership, 'member'));
+    let memberPromises = await get(project, 'projectUsers').then((projectUsers) => {
+      return projectUsers.map((projectUser) => get(projectUser, 'user'));
     });
     return RSVP.hash({ project, members: RSVP.all(memberPromises) });
   },

@@ -1,12 +1,11 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectsPage from '../pages/projects';
 
 moduleForAcceptance('Acceptance | Projects');
 
 test('visiting /projects', function(assert) {
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
 
   let skill = server.create('skill', {
     title: 'Ruby'
@@ -25,11 +24,10 @@ test('visiting /projects', function(assert) {
 });
 
 test('members are displayed correctly', function(assert) {
-  let project = createProjectWithSluggedRoute();
-  let { organization } = project;
-  server.createList('organizationMembership', 10, {
+  let project = server.create('project');
+  server.createList('project-user', 10, {
     role: 'contributor',
-    organization
+    project
   });
 
   projectsPage.visit();

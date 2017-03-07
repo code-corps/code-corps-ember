@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectSettingsPage from '../pages/project/settings/profile';
 
 moduleForAcceptance('Acceptance | Project Settings - Profile');
@@ -9,7 +8,7 @@ moduleForAcceptance('Acceptance | Project Settings - Profile');
 test('it requires authentication', function(assert) {
   assert.expect(1);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
 
   projectSettingsPage.visit({
     organization: project.organization.slug,
@@ -21,16 +20,11 @@ test('it requires authentication', function(assert) {
   });
 });
 
-test('it allows editing of project profile', function(assert) {
+test('it allows editing of project profile for owners', function(assert) {
   assert.expect(4);
 
-  let user = server.create('user');
-  let project = createProjectWithSluggedRoute();
-  server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'admin'
-  });
+  let project = server.create('project');
+  let user = project.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -40,10 +34,10 @@ test('it allows editing of project profile', function(assert) {
   });
 
   andThen(() => {
-    projectSettingsPage.projectSettingsForm
-      .title('Edited Project')
-      .description('Lorem edit')
-      .clickSave();
+    let form = projectSettingsPage.projectSettingsForm;
+    form.title.fillIn('Edited Project');
+    form.description.fillIn('Lorem edit');
+    form.save.click();
   });
 
   let done = assert.async();
@@ -64,19 +58,13 @@ test('it allows editing of project profile', function(assert) {
   });
 });
 
-test("it allows editing of project's image", function(assert) {
+test("it allows editing of project's image for owners", function(assert) {
   assert.expect(3);
   let done = assert.async();
 
   let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-  let user = server.create('user');
-  let project = createProjectWithSluggedRoute();
-
-  server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'admin'
-  });
+  let project = server.create('project');
+  let user = project.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -97,20 +85,13 @@ test("it allows editing of project's image", function(assert) {
   });
 });
 
-test("it allows editing of project's skills", function(assert) {
+test("it allows editing of project's skills for owners", function(assert) {
   assert.expect(4);
   let done = assert.async();
 
-  server.create('skill', {
-    title: 'Ruby'
-  });
-  let user = server.create('user');
-  let project = createProjectWithSluggedRoute();
-  server.create('organizationMembership', {
-    member: user,
-    organization: project.organization,
-    role: 'admin'
-  });
+  server.create('skill', { title: 'Ruby' });
+  let project = server.create('project');
+  let user = project.createOwner();
 
   authenticateSession(this.application, { user_id: user.id });
 

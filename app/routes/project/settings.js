@@ -9,7 +9,6 @@ const {
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
-  credentials: service(),
   projectSkillsList: service(),
   session: service(),
 
@@ -18,21 +17,25 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
   },
 
   beforeModel() {
-    if (get(this, 'session.isAuthenticated')) {
-      let organization = this.modelFor('project.organization');
-      return get(this, 'credentials').fetchMembership().then((membership) => {
-        if (this.cannot('manage organization', organization, { membership })) {
-          return this.transitionTo('index');
-        } else {
-          return this._super(...arguments);
-        }
-      });
+    // we need to deal with overriding the `AuthenticatedRouteMixin`
+    let isAuthenticated = get(this, 'session.isAuthenticated');
+
+    if (isAuthenticated) {
+      return this._ensureUserHasCredentials(...arguments);
     } else {
+      // call `beforeModel` in `AuthenticatedRouteMixin`
       return this._super(...arguments);
     }
   },
 
   afterModel(project) {
     get(this, 'projectSkillsList').setProject(project);
+  },
+
+  _ensureUserHasCredentials() {
+    let project = this.modelFor('project');
+    if (this.cannot('manage project', project)) {
+      return this.transitionTo('project');
+    }
   }
 });

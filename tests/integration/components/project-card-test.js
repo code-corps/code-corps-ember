@@ -17,23 +17,15 @@ let user = {
 };
 
 let organization = {
-  name: 'Test Organization',
-  organizationMemberships: [
-    {
-      member: user
-    }
-  ]
+  name: 'Test Organization'
 };
 
 let project = {
   description: 'Test description',
   iconLargeUrl: 'http://lorempixel.com/500/500/',
   organization,
-  projectCategories: [
-    {
-      title: 'Test category'
-    }
-  ],
+  projectCategories: [{ title: 'Test category' }],
+  projectUsers: [{ user }],
   title: 'Test Project'
 };
 

@@ -6,7 +6,6 @@
   </div>
 
   <div class="project__header__details">
-
     <h2 class="project__header__title">
       {{#link-to 'project.index' project}}
         {{project.title}}
@@ -17,10 +16,10 @@
 
 <aside class="project__header__side">
   {{#if session.isAuthenticated}}
-    {{#if (can "join organization" project.organization)}}
-      <button class="default small" {{action 'joinProject'}}>Join project</button>
-    {{/if}}
-    {{#if credentials.userMembershipIsPending}}
+    {{#unless currentProjectMembership}}
+      <button class="default small" {{action "joinProject" project}}>Join project</button>
+    {{/unless}}
+    {{#if (eq currentProjectMembership.role 'pending')}}
       <button class="clear small" disabled>Request sent</button>
     {{/if}}
   {{else}}

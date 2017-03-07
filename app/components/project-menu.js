@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 const {
   Component,
+  computed: { alias, gt, filterBy },
   inject: { service }
 } = Ember;
 
@@ -24,18 +25,14 @@ export default Component.extend({
   tagName: 'nav',
 
   /**
-    Retreives user credentials to show more content for project managers.
-
-    @property credentials
-    @type Ember.Service
-   */
-  credentials: service(),
-
-  /**
     Service that provides user authentication information.
 
     @property session
     @type Ember.Service
    */
-  session: service()
+  session: service(),
+
+  projectHasPendingMembers: gt('projectPendingMembersCount', 0),
+  projectPendingMembersCount: alias('projectPendingMemberships.length'),
+  projectPendingMemberships: filterBy('project.projectUsers', 'role', 'pending')
 });

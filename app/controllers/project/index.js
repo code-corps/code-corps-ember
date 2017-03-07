@@ -11,8 +11,8 @@ export default Controller.extend({
   currentUser: service(),
   store: service(),
 
-  members: mapBy('project.organization.organizationMemberships', 'member'),
-  membersCount: alias('members.length'),
+  projectUsers: mapBy('project.projectUsers', 'user'),
+  usersCount: alias('members.length'),
   projectSkills: mapBy('project.projectSkills', 'skill'),
   user: alias('currentUser.user'),
 

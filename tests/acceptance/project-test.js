@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 
 moduleForAcceptance('Acceptance | Project');
@@ -9,24 +8,24 @@ moduleForAcceptance('Acceptance | Project');
 test('It renders navigation properly', function(assert) {
   assert.expect(2);
 
-  let project = createProjectWithSluggedRoute();
-  let { organization } = project;
-  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
-  let aboutURL = `/${organization.slug}/${project.slug}`;
+  let project = server.create('project');
+  let aboutURL = `/${project.organization.slug}/${project.slug}`;
   let tasksURL = `${aboutURL}/tasks`;
 
+  projectTasksIndexPage.visit({ organization: project.organization.slug, project: project.slug });
+
   andThen(function() {
-    assert.equal(projectTasksIndexPage.projectMenu.aboutLink.href, aboutURL, 'Link to about is properly rendered');
-    assert.equal(projectTasksIndexPage.projectMenu.tasksLink.href, tasksURL, 'Link to tasks is properly rendered');
+    assert.equal(projectTasksIndexPage.projectMenu.links(0).href, aboutURL, 'Link to about is properly rendered');
+    assert.equal(projectTasksIndexPage.projectMenu.links(1).href, tasksURL, 'Link to tasks is properly rendered');
   });
 });
 
 test('The footer and spacer are hidden, the main container is set up for project tasks', function(assert) {
   assert.expect(4);
 
-  let project = createProjectWithSluggedRoute();
-  let { organization } = project;
-  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+  let project = server.create('project');
+
+  projectTasksIndexPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(function() {
     assert.equal(currentRouteName(), 'project.tasks.index');
@@ -39,30 +38,30 @@ test('The footer and spacer are hidden, the main container is set up for project
 test('Navigation works', function(assert) {
   assert.expect(6);
 
-  let project = createProjectWithSluggedRoute();
-  let { organization } = project;
-  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+  let project = server.create('project');
+
+  projectTasksIndexPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(function() {
     assert.equal(currentRouteName(), 'project.tasks.index');
-    assert.ok(projectTasksIndexPage.projectMenu.tasksLink.isActive, 'Tasks link is active');
-    projectTasksIndexPage.projectMenu.aboutLink.click();
+    assert.ok(projectTasksIndexPage.projectMenu.links(1).isActive, 'Tasks link is active');
+    projectTasksIndexPage.projectMenu.links(0).click();
   });
   andThen(() => {
     assert.equal(currentRouteName(), 'project.index');
-    assert.ok(projectTasksIndexPage.projectMenu.aboutLink.isActive, 'About link is active');
-    projectTasksIndexPage.projectMenu.tasksLink.click();
+    assert.ok(projectTasksIndexPage.projectMenu.links(0).isActive, 'About link is active');
+    projectTasksIndexPage.projectMenu.links(1).click();
   });
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.index');
-    assert.ok(projectTasksIndexPage.projectMenu.tasksLink.isActive, 'Tasks link is active');
+    assert.ok(projectTasksIndexPage.projectMenu.links(1).isActive, 'Tasks link is active');
   });
 });
 
 test('It renders all the required ui elements for task list', function(assert) {
   assert.expect(1);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   server.createList('task', 5, { project });
   let { organization } = project;
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
@@ -75,7 +74,7 @@ test('It renders all the required ui elements for task list', function(assert) {
 test('A user can join the organization of the project', function(assert) {
   assert.expect(4);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let projectURL = `/${project.organization.slug}/${project.slug}/`;
   let user = server.create('user');
 

@@ -15,5 +15,18 @@ export default Factory.extend({
     if (this.title) {
       return String.underscore(this.title.toLowerCase());
     }
+  },
+
+  // ensures associations exist if they haven't been provided
+  afterCreate(project, server) {
+    if (!project.owner) {
+      project.owner = server.create('user');
+      project.save();
+    }
+
+    if (!project.organization) {
+      project.organization = server.create('organization');
+      project.save();
+    }
   }
 });

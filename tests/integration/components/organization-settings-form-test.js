@@ -2,13 +2,21 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/organization-settings-form';
 
 const { getOwner, RSVP, set } = Ember;
+
+let page = PageObject.create(component);
 
 moduleForComponent('organization-settings-form', 'Integration | Component | organization settings form', {
   integration: true,
   beforeEach() {
     getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
@@ -17,25 +25,16 @@ let organization = {
   description: 'A test organization'
 };
 
-test('it renders', function(assert) {
-  assert.expect(1);
-
-  this.render(hbs`{{organization-settings-form}}`);
-
-  assert.equal(this.$('.organization-settings-form').length, 1);
-});
-
-test('it renders form elements properly', function(assert) {
+test('it renders form elements', function(assert) {
   assert.expect(3);
 
   set(this, 'organization', organization);
 
-  this.render(hbs`{{organization-settings-form organization=organization}}`);
+  page.render(hbs`{{organization-settings-form organization=organization}}`);
 
-  assert.equal(this.$('input[name=name]').val(), 'Test Organization');
-  assert.equal(this.$('input[name=description]').val(), 'A test organization');
-
-  assert.equal(this.$('.save').length, 1);
+  assert.equal(page.name.value, 'Test Organization');
+  assert.equal(page.description.value, 'A test organization');
+  assert.ok(page.save.isVisible);
 });
 
 test('it calls save on organization when save button is clicked', function(assert) {
@@ -48,9 +47,9 @@ test('it calls save on organization when save button is clicked', function(asser
 
   set(this, 'organization', organization);
 
-  this.render(hbs`{{organization-settings-form organization=organization}}`);
+  page.render(hbs`{{organization-settings-form organization=organization}}`);
 
-  this.$('.save').click();
+  page.save.click();
 
   assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown');
 });

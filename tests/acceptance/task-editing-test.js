@@ -1,8 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createOrganizationWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-organization-with-slugged-route';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import taskPage from '../pages/project/tasks/task';
 
 moduleForAcceptance('Acceptance | Task Editing');
@@ -10,7 +8,7 @@ moduleForAcceptance('Acceptance | Task Editing');
 test('Task editing requires logging in', function(assert) {
   assert.expect(4);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let user = server.schema.users.create({ username: 'test_user' });
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -47,7 +45,7 @@ test('A task body can be edited on its own', function(assert) {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
@@ -85,7 +83,7 @@ test('A task title can be edited on its own', function(assert) {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;
@@ -119,7 +117,7 @@ test('A task title can be edited on its own', function(assert) {
 test('Mentions are rendered during editing in preview mode', function(assert) {
   assert.expect(1);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let organization = project.organization;
 
   let task = project.createTask({
@@ -162,7 +160,7 @@ test('A task can be opened or closed by the author', function(assert) {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
   let task = server.schema.create('task', {
@@ -198,23 +196,21 @@ test('A task can be opened or closed by the author', function(assert) {
 test('A task can be opened or closed by the organization admin', function(assert) {
   assert.expect(2);
 
-  let user = server.schema.users.create({ username: 'test_user' });
+  let user = server.create('user', { username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
-  let project = server.create('project', { organization });
+  let project = server.create('project');
 
-  let task = server.schema.create('task', {
+  let task = project.createTask({
     type: 'issue',
     status: 'open',
-    number: 1,
-    project
+    number: 1
   });
 
-  server.schema.create('organization-membership', { organization, member:  user, role: 'admin' });
+  server.create('project-user', { project, user, role: 'admin' });
 
   taskPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug,
     number: task.number
   });
@@ -238,13 +234,13 @@ test('A task can be opened or closed by the organization admin', function(assert
 test('A task cannot be opened or closed by someone else', function(assert) {
   assert.expect(1);
 
-  let user = server.schema.users.create({ username: 'test_user' });
+  let user = server.create('user', { username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let organization = createOrganizationWithSluggedRoute();
+  let organization = server.create('organization');
   let project = server.create('project', { organization });
 
-  let task = server.schema.create('task', {
+  let task = server.create('task', {
     type: 'issue',
     status: 'open',
     number: 1,
@@ -274,7 +270,7 @@ test('Skills can be assigned or unassigned to/from task', function(assert) {
   let user = server.schema.users.create({ username: 'test_user' });
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
   task.user = user;

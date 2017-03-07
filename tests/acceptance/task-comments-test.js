@@ -1,7 +1,6 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import createProjectWithSluggedRoute from 'code-corps-ember/tests/helpers/mirage/create-project-with-slugged-route';
 import Mirage from 'ember-cli-mirage';
 import taskPage from '../pages/project/tasks/task';
 
@@ -9,7 +8,7 @@ moduleForAcceptance('Acceptance | Task Comments');
 
 test('Task comments are displayed correctly', function(assert) {
   assert.expect(1);
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -30,7 +29,7 @@ test('Task comments are displayed correctly', function(assert) {
 test('A comment can be added to a task', function(assert) {
   assert.expect(6);
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
 
@@ -66,7 +65,7 @@ test('Comment preview works during creation', function(assert) {
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
@@ -97,7 +96,7 @@ test('Comment preview works during creation', function(assert) {
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let organization = project.organization;
 
   let task = server.schema.tasks.create({ projectId: project.id, number: 1 });
@@ -129,7 +128,7 @@ test('Comment preview works during creation', function(assert) {
 });*/
 
 test('When comment creation fails due to validation, validation errors are displayed', function(assert) {
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -176,7 +175,7 @@ test('When comment creation fails due to validation, validation errors are displ
 });
 
 test('When comment creation fails due to non-validation issues, the error is displayed', function(assert) {
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -220,7 +219,7 @@ test('A comment can only be edited by the author', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -254,7 +253,7 @@ test('Comment editing with preview works', function(assert) {
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let { organization } = project;
 
   let task = project.createTask({ title: 'Test title', body: 'Test body', number: 1 });
@@ -298,7 +297,7 @@ test('Comment editing with preview works', function(assert) {
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
-  let project = createProjectWithSluggedRoute();
+  let project = server.create('project');
   let organization = project.organization;
 
   let task = project.createTask({ title: "Test title", body: "Test body", number: 1 });

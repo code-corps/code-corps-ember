@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { Ability } from 'ember-can';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 moduleForComponent('organization-menu', 'Integration | Component | organization menu', {
   integration: true
@@ -9,8 +8,6 @@ moduleForComponent('organization-menu', 'Integration | Component | organization 
 
 test('it renders', function(assert) {
   assert.expect(1);
-
-  stubService(this, 'credentials');
 
   this.render(hbs`{{organization-menu}}`);
 
@@ -20,7 +17,6 @@ test('it renders', function(assert) {
 test('when user cannot manage organization the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  stubService(this, 'credentials', { userCanManageOrganization: false });
   this.register('ability:organization', Ability.extend({ canManage: false }));
 
   this.render(hbs`{{organization-menu}}`);
@@ -32,7 +28,6 @@ test('when user cannot manage organization the proper menu items are rendered', 
 test('when user can manage organization, the proper menu items are rendered', function(assert) {
   assert.expect(2);
 
-  stubService(this, 'credentials', { userCanManageOrganization: true });
   this.register('ability:organization', Ability.extend({ canManage: true }));
 
   this.render(hbs`{{organization-menu}}`);

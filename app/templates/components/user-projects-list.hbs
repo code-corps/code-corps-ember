@@ -1,0 +1,26 @@
+<h3>Projects</h3>
+<ul>
+{{#each projects as |project|}}
+  <li class="user-project-item">
+    <div class="thumb">
+      {{#link-to 'project' project.organization.slug project.slug}}
+        <img src={{project.iconThumbUrl}} width="60" height="60" />
+      {{/link-to}}
+    </div>
+    <div class="content">
+      <h4>
+        {{#link-to 'project' project.organization.slug project.slug}}
+          {{project.title}}
+        {{/link-to}}
+      </h4>
+      <p>
+        {{project.description}}
+      </p>
+    </div>
+  </li>
+{{else}}
+  <p class="empty-state">
+    <strong>{{user.username}}</strong> hasn't joined any projects yet.
+  </p>
+{{/each}}
+</ul>

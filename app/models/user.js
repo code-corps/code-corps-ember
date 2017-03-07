@@ -23,7 +23,7 @@ export default Model.extend({
 
   stateTransition: attr(),
 
-  organizationMemberships: hasMany('organization-membership', { async: true }),
+  projectUsers: hasMany('project-user', { async: true }),
 
   stripeConnectSubscriptions: hasMany('stripe-connect-subscription', { async: true }),
   stripePlatformCard: belongsTo('stripe-platform-card', { async: true }),

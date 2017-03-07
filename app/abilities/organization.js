@@ -2,25 +2,18 @@ import Ember from 'ember';
 import { Ability } from 'ember-can';
 
 const {
-  computed: { alias, empty, notEmpty, or },
+  computed,
+  computed: { alias },
+  get,
   inject: { service }
 } = Ember;
 
 export default Ability.extend({
-  credentials: service(),
+  currentUser: service(),
 
-  canCreateIssueTask: true,
-  canCreateIdeaTask: true,
-  canCreateTaskTask: alias('isAtLeastContributor'),
-  canJoin: alias('userCanJoinOrganization'),
-  canManage: alias('isAtLeastAdmin'),
+  canManage: computed('organization.owner.id', 'currentUser.user.id', function() {
+    return get(this, 'organization.owner.id') === get(this, 'currentUser.user.id');
+  }),
 
-  isAtLeastAdmin: or('membership.isAdmin', 'membership.isOwner'),
-  isAtLeastContributor: or('membership.isContributor', 'membership.isAdmin', 'membership.isOwner'),
-  userCanJoinOrganization: empty('membership'),
-  userCanLeaveOrganization: or('membership.isContributor', 'membership.isAdmin'),
-  userIsMemberInOrganization: notEmpty('membership'),
-
-  membership: alias('credentials.membership'),
   organization: alias('model')
 });
