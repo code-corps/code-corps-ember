@@ -62,7 +62,7 @@
     "ember-click-outside": "0.1.6",
     "ember-composable-helpers": "2.0.0",
     "ember-concurrency": "^0.7.11",
-    "ember-credit-cards": "1.1.0",
+    "ember-credit-cards": "1.1.1",
     "ember-data": "^2.11.1",
     "ember-deferred-content": "0.2.0",
     "ember-disable-proxy-controllers": "^1.0.1",
