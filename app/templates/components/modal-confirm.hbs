@@ -1,0 +1,13 @@
+{{#if showDialog}}
+<div class="modal-confirm">
+  {{#modal-dialog clickOutsideToClose=true close="closeDialog" translucentOverlay=true}}
+    <div class="dialog-text">
+      <p>{{dialogText}}</p>
+    </div>
+    <div class="actions">
+      <button id="ok" class="default small" {{action "okAction" }}>{{okText}}</button>
+      <a href id="cancel" class="modal-confirm-cancel" {{action "closeDialog" }}>{{cancelText}}</a>
+    </div>
+  {{/modal-dialog}}
+</div>
+{{/if}}

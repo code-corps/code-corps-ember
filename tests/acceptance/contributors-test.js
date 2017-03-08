@@ -97,7 +97,8 @@ test('Lists multiple contributors if they exists.', function(assert) {
     assert.equal(page.admins.members().count, 1, 'Admins has 1 member listed');
     assert.equal(page.others.members().count, 1, 'Others has 1 member listed');
 
-    page.pendingContributors.members(0).approveMembership();
+    page.pendingContributors.members(0).approveButton.click();
+    page.pendingContributors.members(0).modal.confirmButton.click();
   });
 
   andThen(function() {
@@ -105,10 +106,8 @@ test('Lists multiple contributors if they exists.', function(assert) {
     assert.equal(page.pendingContributors.members().count, 1, 'Pending contributors has 1 member listed');
     assert.equal(page.others.members().count, 2, 'Others has 2 members listed');
 
-    window.confirm = function() {
-      return true;
-    };
-    page.pendingContributors.members(0).denyMembership();
+    page.pendingContributors.members(0).denyButton.click();
+    page.pendingContributors.members(0).modal.confirmButton.click();
   });
 
   andThen(function() {

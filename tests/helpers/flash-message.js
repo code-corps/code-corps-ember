@@ -18,7 +18,6 @@ export function getFlashMessageAt(index, context) {
 function getTestContainer(context) {
   if (context.application) { // acceptance test
     return context.application.__container__;
-
   } else { // integration/unit test
     return getOwner(context);
   }

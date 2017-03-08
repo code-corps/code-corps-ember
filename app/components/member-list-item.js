@@ -3,12 +3,15 @@ import Ember from 'ember';
 const {
   Component,
   get,
-  inject: { service }
+  inject: { service },
+  set
 } = Ember;
 
 export default Component.extend({
   classNames: ['member-list-item'],
   tagName: 'li',
+  showApprove: false,
+  showDeny: false,
 
   flashMessages: service(),
 
@@ -21,11 +24,17 @@ export default Component.extend({
     },
 
     deny(membership) {
-      if (confirm('Are you sure want to deny their membership?')) {
-        return membership.destroyRecord().then(() => {
-          this._flashSuccess('Membership denied');
-        });
-      }
+      return membership.destroyRecord().then(() => {
+        this._flashSuccess('Membership denied');
+      });
+    },
+
+    showApprove() {
+      set(this, 'showApprove', true);
+    },
+
+    showDeny() {
+      set(this, 'showDeny', true);
     }
   },
 
