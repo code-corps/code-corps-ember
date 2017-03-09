@@ -42,5 +42,11 @@ export default {
     scope: 'input[name=title]',
     fillIn: fillable(),
     value: value()
+  },
+
+  website: {
+    scope: 'input[name=website]',
+    fillIn: fillable(),
+    value: value()
   }
 };
