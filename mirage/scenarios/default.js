@@ -185,7 +185,8 @@ export default function(server) {
     organization,
     owner,
     slug: 'code-corps',
-    title: 'Code Corps'
+    title: 'Code Corps',
+    website: 'https://www.codecorps.org'
   });
 
   server.create('project-user', { user: owner, project, role: 'owner' });

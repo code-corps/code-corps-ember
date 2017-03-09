@@ -32,7 +32,7 @@ testForAttributes('project', [
   'canActivateDonations', 'closedTasksCount', 'cloudinaryPublicId',
   'description', 'donationsActive', 'iconLargeUrl', 'iconThumbUrl',
   'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount',
-  'slug', 'title', 'totalMonthlyDonated'
+  'slug', 'shouldLinkExternally', 'title', 'totalMonthlyDonated', 'website'
 ]);
 
 testForBelongsTo('project', 'organization');

@@ -16,9 +16,11 @@ export default Model.extend({
   longDescriptionBody: attr(),
   longDescriptionMarkdown: attr(),
   openTasksCount: attr('number'),
+  shouldLinkExternally: attr('boolean'),
   slug: attr(),
   title: attr(),
   totalMonthlyDonated: attr('dollar-cents'),
+  website: attr(),
 
   donationGoals: hasMany('donation-goal', { async: true }),
   organization: belongsTo('organization', { async: true }),

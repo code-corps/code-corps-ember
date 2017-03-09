@@ -22,11 +22,12 @@ moduleForComponent('project-settings-form', 'Integration | Component | project s
 
 let project = {
   title: 'Test Project',
-  description: 'A test project'
+  description: 'A test project',
+  website: 'https://www.testproject.org'
 };
 
 test('it renders form elements properly', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
 
   set(this, 'project', project);
 
@@ -34,6 +35,7 @@ test('it renders form elements properly', function(assert) {
 
   assert.equal(page.title.value, 'Test Project');
   assert.equal(page.description.value, 'A test project');
+  assert.equal(page.website.value, 'https://www.testproject.org');
   assert.ok(page.save.isVisible);
 });
 
