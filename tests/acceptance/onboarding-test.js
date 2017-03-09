@@ -276,3 +276,34 @@ test('The footer is hidden when onboarding', function(assert) {
     assert.ok(onboardingPage.footer.isHidden, 'no footer visible');
   });
 });
+
+test('it allows editing of users image and disabled btn while uploading', function(assert) {
+  assert.expect(5);
+  let done = assert.async();
+
+  let user = server.create('user', { username: 'test_user', state: 'signed_up' });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+  indexPage.visit();
+
+  andThen(() => {
+    assert.equal(currentURL(), '/start/hello');
+    onboardingPage.firstName('Josh');
+    onboardingPage.lastName('Smith');
+  });
+
+  andThen(() => {
+    assert.equal(onboardingPage.startButton.isDisabled, undefined, 'start button is not disabled after filling in user names');
+    onboardingPage.imageDrop.dropFile(droppedImageString);
+    assert.equal(onboardingPage.startButton.isDisabled, 'disabled', 'start button is disabled while uploading image');
+  });
+
+  andThen(() => {
+    assert.equal(onboardingPage.imageDrop.backgroundImageData(), `url(${droppedImageString})`);
+    assert.equal(onboardingPage.startButton.isDisabled, undefined, 'start button is not disabled after filling in user names and uploading of image is done');
+    done();
+  });
+});
