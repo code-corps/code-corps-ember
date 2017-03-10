@@ -11,6 +11,11 @@
     width: $icon-size;
   }
 
+  &__details {
+    float: left;
+    padding-left: 10px;
+  }
+
   &__main {
     display: flex;
     @include span-columns(8);

@@ -21,7 +21,7 @@ test('it requires authentication', function(assert) {
 });
 
 test('it allows editing of project profile for owners', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   let project = server.create('project');
   let user = project.createOwner();
@@ -37,6 +37,7 @@ test('it allows editing of project profile for owners', function(assert) {
     let form = projectSettingsPage.projectSettingsForm;
     form.title.fillIn('Edited Project');
     form.description.fillIn('Lorem edit');
+    form.website.fillIn('https://www.testproject.org');
     form.save.click();
   });
 
@@ -47,6 +48,7 @@ test('it allows editing of project profile for owners', function(assert) {
 
     assert.equal(attrs.title, 'Edited Project');
     assert.equal(attrs.description, 'Lorem edit');
+    assert.equal(attrs.website, 'https://www.testproject.org');
     done();
 
     return this._getJsonApiDocForRequest(request, 'project');

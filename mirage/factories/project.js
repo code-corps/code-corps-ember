@@ -10,6 +10,7 @@ export default Factory.extend({
   iconThumbUrl: faker.image.imageUrl,
   openTasksCount: 0,
   title: faker.name.title,
+  website: faker.url,
 
   slug() {
     if (this.title) {

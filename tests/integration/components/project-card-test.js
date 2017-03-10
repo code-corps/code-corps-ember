@@ -16,21 +16,16 @@ let user = {
   photoThumbUrl: 'http://lorempixel.com/25/25/'
 };
 
-let organization = {
-  name: 'Test Organization'
-};
-
 let project = {
   description: 'Test description',
   iconLargeUrl: 'http://lorempixel.com/500/500/',
-  organization,
   projectCategories: [{ title: 'Test category' }],
   projectUsers: [{ user }],
   title: 'Test Project'
 };
 
 test('it renders', function(assert) {
-  assert.expect(8);
+  assert.expect(7);
 
   stubService(this, 'user-categories', { findUserCategory() {} });
 
@@ -39,7 +34,6 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
-  assert.equal(this.$('p.organization').text().trim(), `by ${organization.name}`);
   assert.equal(this.$('ul.categories li').length, 1);
   assert.equal(this.$('p.description').text().trim(), project.description);
   assert.equal(this.$('.project-card__skills').length, 1);

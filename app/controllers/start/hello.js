@@ -10,6 +10,13 @@ const {
 } = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
+  /**
+   * disables continue button while uploading
+   * @prop uploadingImage
+   * @default false
+   */
+  uploadingImage: false,
+
   firstNameIsEmpty: computed.empty('model.firstName'),
   lastNameIsEmpty: computed.empty('model.lastName'),
   usersNameIsEmpty: computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
@@ -23,15 +30,18 @@ export default Controller.extend(OnboardingControllerMixin, {
     model.save().then(() => {
       this._stopLoadingBar();
       get(this, 'flashMessages').clearMessages().success('Photo uploaded successfully');
+      set(this, 'uploadingImage', false);
     });
   },
 
   uploadErrored() {
+    set(this, 'uploadingImage', false);
     this._stopLoadingBar();
     get(this, 'flashMessages').clearMessages().danger('Upload failed');
   },
 
   uploadStarted() {
+    set(this, 'uploadingImage', true);
     this._startLoadingBar();
   },
 

@@ -1,4 +1,8 @@
 .long-description {
+  img {
+    max-width: 100%;
+  }
+
   &.empty {
     background: $background-gray;
     border-radius: 6px;
