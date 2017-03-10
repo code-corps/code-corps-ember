@@ -29,7 +29,7 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('project', [
-  'canActivateDonations', 'closedTasksCount', 'cloudinaryPublicId',
+  'approved', 'canActivateDonations', 'closedTasksCount', 'cloudinaryPublicId',
   'description', 'donationsActive', 'iconLargeUrl', 'iconThumbUrl',
   'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount',
   'slug', 'shouldLinkExternally', 'title', 'totalMonthlyDonated', 'website'

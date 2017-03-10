@@ -11,36 +11,6 @@
   float: right;
 }
 
-// TODO: Remove when we add more projects
-.temporary-projects-notice {
-  @include span-columns(4);
-
-  @include media($md-screen) {
-    @include omega(2n);
-    @include span-columns(6);
-  }
-
-  @include media($xs-screen) {
-    display: none;
-  }
-
-  border: 1px dashed $gray--lightest;
-  border-radius: 4px;
-  color: $text--light;
-  min-height: 390px;
-  padding: 20px;
-
-  p {
-    font-size: $body-font-size-small;
-  }
-
-  .curved-arrow-icon {
-    @include sprite($curved-arrow);
-
-    margin-top: 90px;
-  }
-}
-
 .page-header {
   margin-bottom: 20px;
   border-bottom: 1px solid $gray--lightest;
@@ -128,4 +98,17 @@ html {
 h4 span {
   color: #08A8FC;
   float: right;
+}
+
+
+// we'll want to remove this later
+.external-link {
+  span {
+    @include sprite($external-link-small);
+    display: inline-block;
+    height: 10px;
+    margin: -3px 0 0 10px;
+    vertical-align: middle;
+    width: 12px;
+  }
 }

@@ -6,6 +6,7 @@ import Ember from 'ember';
 const { computed, computed: { filterBy, gt }, get } = Ember;
 
 export default Model.extend({
+  approved: attr(),
   canActivateDonations: attr(),
   closedTasksCount: attr('number'),
   cloudinaryPublicId: attr(),
@@ -16,7 +17,7 @@ export default Model.extend({
   longDescriptionBody: attr(),
   longDescriptionMarkdown: attr(),
   openTasksCount: attr('number'),
-  shouldLinkExternally: attr('boolean'),
+  shouldLinkExternally: attr(),
   slug: attr(),
   title: attr(),
   totalMonthlyDonated: attr('dollar-cents'),
