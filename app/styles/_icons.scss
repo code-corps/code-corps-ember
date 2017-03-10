@@ -43,6 +43,7 @@ $tick-blue: 12px 10px $spriteURL -24px -136px $spritex2URL;
 $cross-red: 16px 10px $spriteURL -36px -136px $spritex2URL;
 $enter-blue: 16px 10px $spriteURL -52px -136px $spritex2URL;
 $x-mark-small: 12px 10px $spriteURL -102px -136px $spritex2URL;
+$external-link-small: 12px 10px $spriteURL -114px -136px $spritex2URL;
 $check-area: 18px 16px $spriteURL 0px -146px $spritex2URL;
 $check-area-white: 18px 16px $spriteURL -18px -146px $spritex2URL;
 $check-mark: 18px 16px $spriteURL -36px -146px $spritex2URL;
@@ -52,9 +53,7 @@ $github-footer: 16px 16px $spriteURL -16px -162px $spritex2URL;
 $twitter-footer: 16px 16px $spriteURL -32px -162px $spritex2URL;
 $slack-footer: 16px 16px $spriteURL -48px -162px $spritex2URL;
 $box: 50px 50px $spriteURL 0px -178px $spritex2URL;
-$curved-arrow: 50px 50px $spriteURL -50px -178px $spritex2URL;
-$camera: 50px 50px $spriteURL -100px -178px $spritex2URL;
-$search: 50px 50px $spriteURL -150px -178px $spritex2URL;
+$camera: 50px 50px $spriteURL -50px -178px $spritex2URL;
 $closed: 20px 20px $spriteURL 0px -228px $spritex2URL;
 $open: 20px 20px $spriteURL -20px -228px $spritex2URL;
 $closed-white: 20px 20px $spriteURL -40px -228px $spritex2URL;
@@ -71,10 +70,6 @@ $tiny-x: 6px 6px $spriteURL -8px -324px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
-}
-
-.search-icon {
-  @include sprite($search);
 }
 
 @mixin taskBoardIcon($icon) {

@@ -28,14 +28,18 @@
         </section>
       {{/if}}
 
-      <section class="project-sidebar__section">
-        {{project-members users=projectUsers}}
-      </section>
+      {{#if projectUsers}}
+        <section class="project-sidebar__section">
+          {{project-members users=projectUsers}}
+        </section>
+      {{/if}}
 
-      <section class="project-sidebar__section">
-        <h4>Skills</h4>
-        {{skills-list skills=projectSkills}}
-      </section>
+      {{#if projectSkills}}
+        <section class="project-sidebar__section">
+          <h4>Skills</h4>
+          {{skills-list skills=projectSkills}}
+        </section>
+      {{/if}}
 
     </aside>
   </div>

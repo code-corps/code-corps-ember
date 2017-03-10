@@ -4,11 +4,13 @@
       {{link-to 'About' 'project.index' project}}
     </li>
 
+    {{#unless project.shouldLinkExternally}}
     <li>
       {{#link-to 'project.tasks' project}}
         Tasks
       {{/link-to}}
     </li>
+    {{/unless}}
 
     {{#if session.isAuthenticated}}
       {{#if (can "manage project" project)}}

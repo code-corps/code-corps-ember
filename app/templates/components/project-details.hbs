@@ -15,14 +15,18 @@
 </section>
 
 <aside class="project__header__side">
-  {{#if session.isAuthenticated}}
-    {{#unless currentProjectMembership}}
-      <button class="default small" {{action "joinProject" project}}>Join project</button>
-    {{/unless}}
-    {{#if (eq currentProjectMembership.role 'pending')}}
-      <button class="clear small" disabled>Request sent</button>
-    {{/if}}
+  {{#if project.shouldLinkExternally}}
+    <a class="button default small external-link" href="{{project.website}}">Join project<span></span></a>
   {{else}}
-    {{link-to "Sign up" "signup" class="button default small"}} to join this project.
+    {{#if session.isAuthenticated}}
+      {{#unless currentProjectMembership}}
+        <button class="default small" {{action "joinProject" project}}>Join project</button>
+      {{/unless}}
+      {{#if (eq currentProjectMembership.role 'pending')}}
+        <button class="clear small" disabled>Request sent</button>
+      {{/if}}
+    {{else}}
+      {{link-to "Sign up" "signup" class="button default small"}} to join this project.
+    {{/if}}
   {{/if}}
 </aside>
