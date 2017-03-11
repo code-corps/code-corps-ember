@@ -1,8 +1,23 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import Ember from 'ember';
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/project-list';
+
+const {
+  set
+} = Ember;
+
+let page = PageObject.create(component);
 
 moduleForComponent('project-list', 'Integration | Component | project list', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders', function(assert) {
@@ -21,8 +36,27 @@ test('it renders an item for each project in the list', function(assert) {
     mockProjects.push({ id: i, title: `Project ${i}`, slug: `project_${i}` });
   }
 
-  this.set('projects', mockProjects);
+  set(this, 'projects', mockProjects);
   this.render(hbs`{{project-list projects=projects}}`);
 
   assert.equal(this.$('.project-item').length, 3, 'The correct number of project-items is rendered');
+});
+
+test('it sorts the list by id', function(assert) {
+  assert.expect(3);
+
+  let mockProjects = [];
+  let mockProjectIds = [1, 3, 2];
+
+  mockProjectIds.forEach(function(id) {
+    mockProjects.push({ id, title: `Project ${id}`, slug: `project_${id}` });
+  });
+
+  set(this, 'projects', mockProjects);
+  page.render(hbs`{{project-list projects=projects}}`);
+
+  for (let i = 0; i < 3; i++) {
+    let id = i + 1;
+    assert.equal(page.items(i).text, `Project ${id}`);
+  }
 });
