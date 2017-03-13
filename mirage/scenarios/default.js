@@ -183,7 +183,6 @@ export default function(server) {
   let project = server.create('project', {
     description: 'Help build and fund public software projects for social good.',
     organization,
-    owner,
     slug: 'code-corps',
     title: 'Code Corps',
     website: 'https://www.codecorps.org'
