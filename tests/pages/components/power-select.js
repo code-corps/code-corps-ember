@@ -1,4 +1,4 @@
-import { collection } from 'ember-cli-page-object';
+import { collection, isVisible } from 'ember-cli-page-object';
 import { clickTrigger, nativeMouseUp } from 'code-corps-ember/tests/helpers/ember-power-select';
 
 // NOTE: The default ember-cli-page-objects do not work properly here
@@ -16,23 +16,6 @@ import { clickTrigger, nativeMouseUp } from 'code-corps-ember/tests/helpers/embe
 // We're also using the `testContainer` feature provided by ember-cli-page-object
 
 export default {
-  trigger: {
-    scope: '.ember-power-select-trigger',
-    open: clickTrigger,
-    unassigned: {
-      isDescriptor: true,
-      get() {
-        return this.text === 'No one yet';
-      }
-    },
-    assigned: {
-      isDescriptor: true,
-      get() {
-        return !this.unassigned;
-      }
-    }
-  },
-
   dropdown: {
     resetScope: true,
     testContainer: '.ember-power-select-dropdown',
@@ -45,5 +28,24 @@ export default {
         }
       }
     })
-  }
+  },
+
+  trigger: {
+    scope: '.ember-power-select-trigger',
+    assigned: {
+      isDescriptor: true,
+      get() {
+        return !this.unassigned;
+      }
+    },
+    open: clickTrigger,
+    unassigned: {
+      isDescriptor: true,
+      get() {
+        return this.text === 'No one yet';
+      }
+    }
+  },
+
+  triggerRenders: isVisible('.ember-power-select-trigger')
 };

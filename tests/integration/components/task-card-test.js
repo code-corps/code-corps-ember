@@ -167,7 +167,7 @@ test('unassignment works if user has ability', function(assert) {
   page.taskAssignment.dropdown.options(0).select();
 });
 
-test('assignment dropdown renders', function(assert) {
+test('assignment dropdown renders if user has ability', function(assert) {
   assert.expect(2);
 
   let task = { id: 'task' };
@@ -224,4 +224,33 @@ test('assignment dropdown renders when records are still being loaded', function
     assert.equal(page.taskAssignment.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
     done();
   });
+});
+
+test('assignment dropdown does not render if user has no ability', function(assert) {
+  assert.expect(3);
+
+  let task = { id: 'task' };
+  let user1 = { id: 'user1', username: 'testuser1' };
+  let user2 = {
+    id: 'user2',
+    username: 'testuser2',
+    photoThumbUrl: 'test.png'
+  };
+  let members = [user1, user2];
+
+  setProperties(this, { task, members, taskUser: user2 });
+
+  stubService(this, 'task-assignment', {
+    isAssignedTo() {
+      return RSVP.resolve(false);
+    }
+  });
+
+  this.register('ability:task', Ability.extend({ canAssign: false }));
+
+  renderPage();
+
+  assert.notOk(page.taskAssignment.triggerRenders, 'Dropdown trigger for assignment does not render.');
+  assert.equal(page.assignedUser.text, 'testuser2');
+  assert.equal(page.assignedUser.icon.url, 'test.png');
 });
