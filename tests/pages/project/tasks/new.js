@@ -8,6 +8,7 @@ import {
 } from 'ember-cli-page-object';
 
 import projectMenu from 'code-corps-ember/tests/pages/components/project-menu';
+import projectSkillsList from 'code-corps-ember/tests/pages/components/project-skills-list';
 import skillsTypeahead from 'code-corps-ember/tests/pages/components/skills-typeahead';
 
 export default create({
@@ -22,6 +23,7 @@ export default create({
   taskMarkdown: fillable('[name=markdown]'),
 
   projectMenu,
+  projectSkillsList,
 
   previewBody: {
     scope: '.body-preview'

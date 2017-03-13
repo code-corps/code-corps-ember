@@ -53,16 +53,6 @@
     @include focus($default-color);
   }
 
-  &.small {
-    font-size: $body-font-size-small;
-    padding: 6px 14px;
-
-    &.skill {
-      padding: 6px 9px;
-      font-size: $body-font-size-normal;
-    }
-  }
-
   &.large {
     font-size: $body-font-size-large;
     padding: 15px 40px;
@@ -88,6 +78,16 @@
 
     &.skill {
       padding: 11px 14px;
+    }
+  }
+
+  &.small {
+    font-size: $body-font-size-small;
+    padding: 6px 14px;
+
+    &.skill {
+      padding: 6px 9px;
+      font-size: $body-font-size-normal;
     }
   }
 

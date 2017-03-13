@@ -1,0 +1,38 @@
+.project-skills-list {
+  $color: $gray--dark;
+
+  &__header {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 1em;
+
+    span {
+      display: inline-block;
+      vertical-align: baseline;
+      zoom: 1;
+      *display: inline;
+      *vertical-align: auto;
+      position: relative;
+      padding: 0 1em;
+      color: $color;
+
+      &:before, &:after {
+        content: '';
+        display: block;
+        width: 1000px;
+        position: absolute;
+        top: 0.73em;
+        border-top: 1px solid $color;
+      }
+
+      &:before { right: 100%; }
+      &:after { left: 100%; }
+    }
+  }
+
+  &__fallback {
+    color: $color;
+  }
+}
