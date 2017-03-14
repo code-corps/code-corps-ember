@@ -7,15 +7,13 @@ moduleForAcceptance('Acceptance | Project - About');
 
 test('When unauthenticated, and project has no long description, it shows proper UI', function(assert) {
   assert.expect(2);
-  let organization = server.create('organization');
   let project = server.create('project', {
     longDescriptionBody: null,
-    longDescriptionMarkdown: null,
-    organization
+    longDescriptionMarkdown: null
   });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -28,15 +26,13 @@ test('When unauthenticated, and project has no long description, it shows proper
 test('When unauthenticated, and project has long description, it shows the project long description', function(assert) {
   assert.expect(2);
 
-  let organization = server.create('organization');
   let project = server.create('project', {
     longDescriptionBody: 'A body',
-    longDescriptionMarkdown: 'A body',
-    organization
+    longDescriptionMarkdown: 'A body'
   });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -46,23 +42,20 @@ test('When unauthenticated, and project has long description, it shows the proje
   });
 });
 
-test('When authenticate as owner, and project has no long description, it allows setting it', function(assert) {
+test('When authenticated as owner, and project has no long description, it allows setting it', function(assert) {
   assert.expect(4);
-
-  let organization = server.create('organization');
 
   let project = server.create('project', {
     longDescriptionBody: null,
-    longDescriptionMarkdown: null,
-    organization
+    longDescriptionMarkdown: null
   });
 
-  let user = project.createOwner();
+  let { user } = server.create('project-user', { project, role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -82,20 +75,17 @@ test('When authenticate as owner, and project has no long description, it allows
 test('When authenticated as owner, and project has long description, it allows editing it', function(assert) {
   assert.expect(4);
 
-  let organization = server.create('organization');
-
   let project = server.create('project', {
     longDescriptionBody: 'A body',
-    longDescriptionMarkdown: 'A body',
-    organization
+    longDescriptionMarkdown: 'A body'
   });
 
-  let user = project.createOwner();
+  let { user } = server.create('project-user', { project, role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -116,17 +106,13 @@ test('Does not show donation progress sidebar if donations are not active', func
   assert.expect(1);
 
   let user = server.create('user');
-  let organization = server.create('organization');
 
-  let project = server.create('project', {
-    donationsActive: false,
-    organization
-  });
+  let project = server.create('project', { donationsActive: false });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -139,19 +125,17 @@ test('Allows donating to a project from the sidebar', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
-  let organization = server.create('organization');
 
   let project = server.create('project', {
     donationsActive: true,
     longDescriptionBody: 'A body',
-    longDescriptionMarkdown: 'A body',
-    organization
+    longDescriptionMarkdown: 'A body'
   });
 
   authenticateSession(this.application, { user_id: user.id });
 
   projectAboutPage.visit({
-    organization: organization.slug,
+    organization: project.organization.slug,
     project: project.slug
   });
 
@@ -163,7 +147,7 @@ test('Allows donating to a project from the sidebar', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.donate', 'App transitioned to the donate route.');
-    let expectedURL = `/${organization.slug}/${project.slug}/donate?amount=15`;
+    let expectedURL = `/${project.organization.slug}/${project.slug}/donate?amount=15`;
     assert.equal(currentURL(), expectedURL, 'URL contains amount as query parameter.');
   });
 });

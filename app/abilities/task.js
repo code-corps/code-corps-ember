@@ -25,7 +25,9 @@ export default Ability.extend({
     }
   }),
 
-  // TODO: Similar code is defined in `components/project-details.js`
+  // TODO: Similar code is defined in
+  // - `components/project-details.js`
+  // - `abilities/project.js`
   projectMembership: computed('task.project.projectUsers', 'currentUser.user.id', function() {
     let currentUserId = get(this, 'currentUser.user.id');
 
@@ -38,13 +40,10 @@ export default Ability.extend({
     }
   }),
 
-  userIsOwner: computed('currentUser.user.id', 'task.project.owner.id', function() {
-    return get(this, 'currentUser.user.id') === get(this, 'task.project.owner.id');
-  }),
-
   userRole: alias('projectMembership.role'),
   userIsContributor: equal('userRole', 'contributor'),
   userIsAdmin: equal('userRole', 'admin'),
+  userIsOwner: equal('userRole', 'owner'),
 
   //
   // Abilities

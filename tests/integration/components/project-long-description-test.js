@@ -28,13 +28,13 @@ let owner = Object.create({ id: 'owner' });
 let projectWithDescription = Object.create({
   longDescriptionBody: 'A <strong>body</strong>',
   longDescriptionMarkdown: 'A **body**',
-  owner
+  projectUsers: [{ user: owner, role: 'owner' }]
 });
 
 let blankProject = Object.create({
   longDescriptionBody: null,
   longDescriptionMarkdown: null,
-  owner
+  projectUsers: [{ user: owner, role: 'owner' }]
 });
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {

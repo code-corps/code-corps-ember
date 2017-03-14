@@ -3,9 +3,10 @@ import { Ability } from 'ember-can';
 
 const {
   computed,
-  computed: { alias },
+  computed: { alias, equal },
   get,
-  inject: { service }
+  inject: { service },
+  isEmpty
 } = Ember;
 
 /**
@@ -24,11 +25,25 @@ export default Ability.extend({
    * Returns true if the user is the owner of the project.
    * @type {Boolean}
    */
-  canManage: alias('isOwner'),
+  canManage: alias('userIsOwner'),
 
-  isOwner: computed('project.owner.id', 'currentUser.user.id', function() {
-    return get(this, 'project.owner.id') === get(this, 'currentUser.user.id');
+  // TODO: Similar code is defined in
+  // - `components/project-details.js`
+  // - `abilities/task.js`
+  projectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
+    let currentUserId = get(this, 'currentUser.user.id');
+
+    if (isEmpty(currentUserId)) {
+      return false;
+    } else {
+      return get(this, 'project.projectUsers').find((item) => {
+        return get(item, 'user.id') === currentUserId;
+      });
+    }
   }),
+
+  userRole: alias('projectMembership.role'),
+  userIsOwner: equal('userRole', 'owner'),
 
   project: alias('model')
 });

@@ -10,7 +10,9 @@ const {
 
 let owner = Object.create({ id: 'owner' });
 let other = Object.create({ id: 'other' });
-let project = Object.create({ owner });
+let project = Object.create({
+  projectUsers: [{ user: owner, role: 'owner' }]
+});
 
 moduleFor('ability:project', 'Unit | Ability | project', {
   needs: ['service:current-user']

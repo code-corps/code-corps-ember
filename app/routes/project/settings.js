@@ -4,8 +4,8 @@ import { CanMixin } from 'ember-can';
 
 const {
   get,
-  Route,
-  inject: { service }
+  inject: { service },
+  Route
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
@@ -34,8 +34,14 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
 
   _ensureUserHasCredentials() {
     let project = this.modelFor('project');
-    if (this.cannot('manage project', project)) {
-      return this.transitionTo('project');
-    }
+    // TODO: As things grow, this will be problematic. We need to wait to load
+    // all membership records here. Solutions are
+    // 1. Sideload membership records
+    // 2. Have the server compute an ability table for the current user
+    return get(project, 'projectUsers').then(() => {
+      if (this.cannot('manage project', project)) {
+        return this.transitionTo('project');
+      }
+    });
   }
 });
