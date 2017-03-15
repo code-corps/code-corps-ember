@@ -1,5 +1,7 @@
 .categories-list {
-  flex: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin-bottom: 2em;
   width: 100%;
 }

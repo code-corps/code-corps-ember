@@ -1,8 +1,10 @@
 .category-item {
-  @include omega(5n);
-  @include span-columns(2.4);
-
   text-align: center;
+  width: 20%;
+  @include media($lg-screen) { width: 25%; }
+  @include media($md-screen) { width: 33%; }
+  @include media($sm-screen) { width: 50%; }
+  @include media($xs-screen) { width: 100%; }
 
   button {
     text-align: left;
