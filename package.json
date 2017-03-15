@@ -83,7 +83,7 @@
     "ember-simple-auth": "1.2.0",
     "ember-simple-auth-token": "^2.1.0",
     "ember-sinon": "0.6.0",
-    "ember-source": "^2.11.0",
+    "ember-source": "2.11.3",
     "ember-stripe-service": "4.4.2",
     "ember-tether": "0.4.1",
     "ember-tooltips": "^2.9.0-beta",
