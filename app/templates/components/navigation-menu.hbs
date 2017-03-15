@@ -9,7 +9,9 @@
   {{/if}}
 
   {{#if navigationMenu.isOnboarding}}
-    <div class="header-navigation--left"></div>
+    <div class="header-navigation--left">
+      <div class="onboarding__steps">Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</div>
+    </div>
   {{/if}}
 
   <nav class="header-navigation--middle">
@@ -38,7 +40,6 @@
       <div class="onboarding__progress">
         {{progress-bar-container percentage=onboarding.progressPercentage}}
       </div>
-      <p class="onboarding__steps">Step {{onboarding.currentStepNumber}} of {{onboarding.totalSteps}}</p>
     </div>
   {{/if}}
 </div>
