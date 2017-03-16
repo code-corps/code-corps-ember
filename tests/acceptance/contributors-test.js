@@ -18,11 +18,7 @@ moduleForAcceptance('Acceptance: Contributors');
 test('Requires user to be project owner to visit.', function(assert) {
   assert.expect(1);
 
-  let project = server.create('project');
-
-  let user = server.create('user');
-
-  server.create('projectUser', { user, project, role: 'contributor' });
+  let { project, user } = server.create('project-user', { role: 'contributor' });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
@@ -39,10 +35,7 @@ test('Requires user to be project owner to visit.', function(assert) {
 test('Lists owner when owner is the only member.', function(assert) {
   assert.expect(9);
 
-  let project = server.create('project');
-  let user = project.createOwner();
-
-  server.create('projectUser', { user, project, role: 'owner' });
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 
@@ -68,13 +61,11 @@ test('Lists owner when owner is the only member.', function(assert) {
 test('Lists multiple contributors if they exists.', function(assert) {
   assert.expect(16);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
-  server.create('projectUser', { user, project, role: 'owner' });
-  server.create('projectUser', { project, role: 'admin' });
-  server.create('projectUser', { project, role: 'contributor' });
-  server.createList('projectUser', 2, { project, role: 'pending' });
+  server.create('project-user', { project, role: 'admin' });
+  server.create('project-user', { project, role: 'contributor' });
+  server.createList('project-user', 2, { project, role: 'pending' });
 
   let contributorURLParts = buildURLParts(project.organization.slug, project.slug);
 

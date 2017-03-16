@@ -22,12 +22,11 @@ test('it redirects to project list page if user is not allowed to manage project
   assert.expect(1);
 
   let project = server.create('project');
-  let { organization } = project;
   let user = server.create('user');
 
   authenticateSession(this.application, { user_id: user.id });
 
-  projectSettingsDonationsPage.visit({ organization: organization.slug, project: project.slug });
+  projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.index', 'User was redirected to project list route');
@@ -37,8 +36,8 @@ test('it redirects to project list page if user is not allowed to manage project
 test('it renders existing donation goals', function(assert) {
   assert.expect(1);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
+
   server.createList('donation-goal', 3, { project });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -53,8 +52,7 @@ test('it renders existing donation goals', function(assert) {
 test('it sets up a new unsaved donation goal if there are no donation goals, which can be added', function(assert) {
   assert.expect(4);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -80,8 +78,7 @@ test('it sets up a new unsaved donation goal if there are no donation goals, whi
 test('it is possible to add a donation goal when donation goals already exists', function(assert) {
   assert.expect(3);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
   server.createList('donation-goal', 1, { project });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -108,8 +105,7 @@ test('it is possible to add a donation goal when donation goals already exists',
 test('it allows editing of existing donation goals', function(assert) {
   assert.expect(3);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
   server.createList('donation-goal', 1, { project });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -136,8 +132,7 @@ test('it allows editing of existing donation goals', function(assert) {
 test('cancelling edit of an unsaved new goal removes that goal from the list', function(assert) {
   assert.expect(1);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
   server.createList('donation-goal', 1, { project });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -159,8 +154,7 @@ test('cancelling edit of an unsaved new goal removes that goal from the list', f
 test('cancelling edit of an unsaved existing goal keeps that goal in the list', function(assert) {
   assert.expect(1);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
   server.createList('donation-goal', 1, { project });
 
   authenticateSession(this.application, { user_id: user.id });
@@ -182,8 +176,7 @@ test('cancelling edit of an unsaved existing goal keeps that goal in the list', 
 test('it allows activating donations for the project', function(assert) {
   assert.expect(2);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
   project.attrs.canActivateDonations = true;
   project.save();
 
@@ -205,18 +198,14 @@ test('it allows activating donations for the project', function(assert) {
 test('it shows donation progress if donations are active', function(assert) {
   assert.expect(1);
 
-  let organization = server.create('organization');
-  let project = server.create('project', {
-    donationsActive: true,
-    organization
-  });
-  let user = project.createOwner();
+  let project = server.create('project', { donationsActive: true });
+  let { user } = server.create('project-user', { project, role: 'owner' });
 
   server.createList('donation-goal', 1, { project });
 
   authenticateSession(this.application, { user_id: user.id });
 
-  projectSettingsDonationsPage.visit({ organization: organization.slug, project: project.slug });
+  projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
     assert.ok(projectSettingsDonationsPage.donationProgress.isVisible, 'It shows donation progress.');
@@ -226,16 +215,12 @@ test('it shows donation progress if donations are active', function(assert) {
 test('it does not show donation progress if donations are not active', function(assert) {
   assert.expect(1);
 
-  let organization = server.create('organization');
-  let project = server.create('project', {
-    donationsActive: false,
-    organization
-  });
-  let user = project.createOwner();
+  let project = server.create('project', { donationsActive: false });
+  let { user } = server.create('project-user', { project, role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
-  projectSettingsDonationsPage.visit({ organization: organization.slug, project: project.slug });
+  projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
     assert.notOk(projectSettingsDonationsPage.donationProgress.isVisible, 'It does not show donation progress.');
@@ -245,8 +230,7 @@ test('it does not show donation progress if donations are not active', function(
 test('it renders validation errors', function(assert) {
   assert.expect(3);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -288,8 +272,7 @@ test('it renders validation errors', function(assert) {
 test('it renders other errors', function(assert) {
   assert.expect(1);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 

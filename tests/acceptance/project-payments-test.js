@@ -36,8 +36,7 @@ test('it redirects to project list page if user is not allowed to setup the acco
 test('The full setup works properly', function(assert) {
   assert.expect(12);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 

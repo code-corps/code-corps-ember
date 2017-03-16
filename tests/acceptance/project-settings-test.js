@@ -23,8 +23,7 @@ test('it requires authentication', function(assert) {
 test('it allows editing of project profile for owners', function(assert) {
   assert.expect(5);
 
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -65,8 +64,7 @@ test("it allows editing of project's image for owners", function(assert) {
   let done = assert.async();
 
   let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -92,8 +90,7 @@ test("it allows editing of project's skills for owners", function(assert) {
   let done = assert.async();
 
   server.create('skill', { title: 'Ruby' });
-  let project = server.create('project');
-  let user = project.createOwner();
+  let { project, user } = server.create('project-user', { role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 

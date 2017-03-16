@@ -25,45 +25,43 @@ const stripeCardError = {
 };
 
 const stripeTokenResponse = {
-  id: 'tok_something', // Token identifier
-  card: { // Dictionary of the card used to create the token
-    name: null,
-    address_line1: '12 Main Street',
-    address_line2: 'Apt 42',
-    address_city: 'Palo Alto',
-    address_state: 'CA',
-    address_zip: '94301',
-    address_country: 'US',
-    country: 'US',
-    exp_month: 2,
-    exp_year: 2017,
-    last4: '4242',
-    object: 'card',
-    brand: 'Visa',
-    funding: 'credit'
-  },
-  created: 1478892395, // Timestamp of when token was created
-  livemode: true, // Whether this token was created with a live API key
-  type: 'card',
-  object: 'token', // Type of object, always "token"
-  used: false // Whether this token has been used
+  token: {
+    id: 'tok_something', // Token identifier
+    card: { // Dictionary of the card used to create the token
+      name: null,
+      address_line1: '12 Main Street',
+      address_line2: 'Apt 42',
+      address_city: 'Palo Alto',
+      address_state: 'CA',
+      address_zip: '94301',
+      address_country: 'US',
+      country: 'US',
+      exp_month: 2,
+      exp_year: 2017,
+      last4: '4242',
+      object: 'card',
+      brand: 'Visa',
+      funding: 'credit'
+    },
+    created: 1478892395, // Timestamp of when token was created
+    livemode: true, // Whether this token was created with a live API key
+    type: 'card',
+    object: 'token', // Type of object, always "token"
+    used: false // Whether this token has been used
+  }
 };
 
 const stripeMockSuccess = {
-  card: {
-    createToken: () => RSVP.resolve(stripeTokenResponse)
-  }
+  createToken: () => RSVP.resolve(stripeTokenResponse)
 };
 
 const stripeMockFailure = {
-  card: {
-    createToken: () => RSVP.reject(stripeCardError)
-  }
+  createToken: () => RSVP.reject(stripeCardError)
 };
 
 function stubStripe(context, mock) {
   let mockService = Service.create(mock);
-  context.application.__container__.lookup('controller:project.donate').set('stripe', mockService);
+  context.application.__container__.lookup('controller:project.donate').set('stripev3', mockService);
 }
 
 moduleForAcceptance('Acceptance | Project - Donate');
@@ -129,14 +127,7 @@ test('Allows creating a card and donating (creating a subscription)', function(a
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {
@@ -176,14 +167,7 @@ test('Shows stripe errors when creating a card token fails', function(assert) {
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {
@@ -222,14 +206,7 @@ test('Shows error indicating problem with stripe customer if that part of the pr
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {
@@ -268,14 +245,7 @@ test('Shows error indicating problem with stripe card if that part of the proces
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {
@@ -303,13 +273,6 @@ test('Shows subscription validation errors if that part of the process fails due
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
     server.post('/stripe-connect-subscriptions', function() {
       return new Mirage.Response(422, {}, {
         errors: [{
@@ -323,7 +286,7 @@ test('Shows subscription validation errors if that part of the process fails due
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {
@@ -363,14 +326,7 @@ test('Shows error indicating problem with creating subscription if that part of 
   });
 
   andThen(() => {
-    projectDonatePage.creditCard.cardNumber.fillIn('4242-4242-4242-4242');
-    projectDonatePage.creditCard.cardCVC.fillIn('123');
-    projectDonatePage.creditCard.cardMonth.selectOption('12');
-    projectDonatePage.creditCard.cardYear.selectOption('2020');
-  });
-
-  andThen(() => {
-    projectDonatePage.creditCard.clickSubmit();
+    projectDonatePage.donationContainer.clickSubmit();
   });
 
   andThen(() => {

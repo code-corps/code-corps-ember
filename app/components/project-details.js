@@ -52,7 +52,9 @@ export default Component.extend({
    */
   user: alias('currentUser.user'),
 
-  // TODO: Similar code is defined in `abilities/task.js`
+  // TODO: Similar code is defined in
+  // - `abilities/project.js`
+  // - `abilities/task.js`
   currentProjectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
     let projectUsers = get(this, 'project.projectUsers');
     let currentUserId = get(this, 'currentUser.user.id');

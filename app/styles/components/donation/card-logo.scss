@@ -1,0 +1,23 @@
+.card-logo__container {
+  height: 100%;
+  left: 0;
+  perspective: 1000px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 1.5em;
+}
+
+.card-logo {
+  height: 100%;
+  position: relative;
+}
+
+.card-logo__inner {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  height: 100%;
+  width: 1.5em;
+  z-index: 2;
+}

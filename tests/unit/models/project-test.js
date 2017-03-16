@@ -18,8 +18,7 @@ moduleForModel('project', 'Unit | Model | project', {
     'model:stripe-connect-account',
     'model:stripe-connect-plan',
     'model:task',
-    'model:task-list',
-    'model:user'
+    'model:task-list'
   ]
 });
 
@@ -36,7 +35,6 @@ testForAttributes('project', [
 ]);
 
 testForBelongsTo('project', 'organization');
-testForBelongsTo('project', 'owner');
 testForBelongsTo('project', 'stripeConnectPlan');
 
 testForHasMany('project', 'donationGoals');

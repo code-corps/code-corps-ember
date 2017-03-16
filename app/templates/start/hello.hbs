@@ -1,31 +1,36 @@
 <div class="start__hello">
+  <div class="hello__column__wrapper">
+    <div class="hello__column hello__column--header">
+      <h2>Hey, thanks for joining!</h2>
+      <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
+    </div>
 
-  <div class="hello__column">
-    <h2>Hey, thanks for joining!</h2>
-    <p>Code Corps is a community of people like you. Developers and designers, builders and dreamers, all working together to make software that makes the world a better place.</p>
-  </div>
+    <div class="hello__column__subgroup">
+      <div class="hello__column hello__column--image-drop">
+        {{image-drop
+          circle=true
+          hoverText="Change your profile photo."
+          onDone=(action uploadDone)
+          onError=(action uploadErrored)
+          onStart=(action uploadStarted)
+          originalImage=model.photoLargeUrl
+        }}
+        <p class="photo-help-text">Click to add photo</p>
+      </div>
 
-  <div class="hello__column">
-    {{image-drop
-      circle=true
-      hoverText="Change your profile photo."
-      onDone=(action uploadDone)
-      onError=(action uploadErrored)
-      onStart=(action uploadStarted)
-      originalImage=model.photoLargeUrl
-    }}
-    <p class="photo-help-text">Click to add photo</p>
-  </div>
-
-  <div class="hello__column">
-    <p>Let’s get to know you by putting a face to a name.</p>
-    <div class="input-group">
-      {{#auto-focus}}
-        {{input type="text" name="firstName" value=model.firstName placeholder="First name" autofocus=true enter='attemptToContinue' }}
-      {{/auto-focus}}
-      {{input type="text" name="lastName" value=model.lastName placeholder="Last name" enter='attemptToContinue' }}
+      <div class="hello__column hello__column--name-input">
+        <p>Let’s get to know you by putting a face to a name.</p>
+        <div class="input-group">
+          {{#auto-focus}}
+            {{input type="text" name="firstName" value=model.firstName placeholder="First name" autofocus=true enter='attemptToContinue' }}
+          {{/auto-focus}}
+          {{input type="text" name="lastName" value=model.lastName placeholder="Last name" enter='attemptToContinue' }}
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="hello__image"></div>
 
 </div>
 
