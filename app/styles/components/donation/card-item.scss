@@ -6,61 +6,23 @@
   display: flex;
   height: 2.5em;
   justify-content: space-between;
-  margin-bottom: .6em;
+  margin-bottom: 10px;
   padding: 1.5em 1.15em;
-}
-
-.card-item__brand {
-  height: 30px;
-  margin-right: .7em;
-  width: 50px;
-}
-
-.card-item__brand--amex {
-  background: url(/assets/images/icons/american-express.png) no-repeat top center;
-  @extend .card-item__brand;
-}
-
-.card-item__brand--diners {
-  background: url(/assets/images/icons/diners-club.png) no-repeat top center;
-  @extend .card-item__brand;
-}
-
-.card-item__brand--discover {
-  background: url(/assets/images/icons/discover.png) no-repeat top center;
-  @extend .card-item__brand;
-}
-
-.card-item__brand--jcb {
-  background: url(/assets/images/icons/jcb.png) no-repeat top center;
-  @extend .card-item__brand;
-}
-
-.card-item__brand--mastercard {
-  background: url(/assets/images/icons/mastercard.png) no-repeat top center;
-  @extend .card-item__brand;
-}
-
-.card-item__brand--visa {
-  background: url(/assets/images/icons/visa.png) no-repeat top center;
-  @extend .card-item__brand;
 }
 
 .card-item__info {
   display: flex;
   flex: 1;
+  line-height: 32px;
+  position: relative;
   p {
     line-height: 30px;
-    margin: 0;
+    margin: 0 0 0 2em;
   }
   span {
     font-weight: bold;
     margin: 0;
   }
-}
-
-.card-item__expiry {
-
 }
 
 // will move this to _buttons.scss once finished styling

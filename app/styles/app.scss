@@ -65,6 +65,11 @@
 @import "ember-power-select";
 
 //
+// ADDONS
+//
+@import "addons/ember-stripe-elements/stripe-element";
+
+//
 // COMPONENTS
 //
 @import "components/animated-high-five";
@@ -91,6 +96,7 @@
 @import "components/donation-goal";
 @import "components/donation-payment";
 @import "components/donation/card-item";
+@import "components/donation/card-logo";
 @import "components/donations/donation-progress";
 @import "components/donations/donation-status";
 

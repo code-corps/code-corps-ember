@@ -23,7 +23,7 @@ export default Controller.extend({
 
   currentUser: service(),
   store: service(),
-  stripe: service(),
+  stripev3: service(),
 
   project: alias('model'),
   user: alias('currentUser.user'),
@@ -32,18 +32,20 @@ export default Controller.extend({
   shouldCreateCustomer: not('stripeCustomerCreated'),
 
   actions: {
-    saveAndDonate(amount, cardParams) {
+    // If the card does not exist yet
+    saveAndDonate(amount, stripeElement) {
       this._clearErrors();
       this._updateisProcessing(true);
 
-      return this._createCreditCardToken(cardParams)
-                 .then((stripeResponse) => this._createCardForPlatformCustomer(stripeResponse))
+      return this._createStripeToken(stripeElement)
+                 .then((token) => this._createCardForPlatformCustomer(token))
                  .then((stripeCard) => this._createSubscription(amount, stripeCard))
                  .then(() => this._transitionToThankYou())
                  .catch((response) => this._handleError(response))
                  .finally(() => this._updateisProcessing(false));
     },
 
+    // If the card exists already
     donate(amount, stripeCard) {
       this._clearErrors();
       this._updateisProcessing(true);
@@ -54,15 +56,18 @@ export default Controller.extend({
     }
   },
 
-  // credit card token
+  // Stripe token
 
-  _createCreditCardToken(cardParams) {
-    let stripeCard = this._tokenParams(cardParams);
-    let stripe = get(this, 'stripe');
+  async _createStripeToken(stripeElement) {
+    let stripe = get(this, 'stripev3');
 
-    return stripe.card.createToken(stripeCard)
-                      .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                      .catch((reason) => this._handleCreditCardTokenError(reason));
+    return await stripe.createToken(stripeElement).then(({ error, token }) => {
+      if (error) {
+        return this._handleCreditCardTokenError(error);
+      } else if (token) {
+        return RSVP.resolve(token);
+      }
+    });
   },
 
   _handleCreditCardTokenError(response) {

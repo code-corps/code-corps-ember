@@ -12,10 +12,28 @@
 </div>
 
 {{#if shouldShowNewForm}}
-  {{#donation/credit-card isProcessing=isProcessing submit=(action saveAndDonate)}}
-    {{!show errors}}
+  {{#stripe-card autofocus=true options=cardOptions as |stripeElement error|}}
+    {{#if error}}
+      <p class="error">{{error.message}}</p>
+    {{/if}}
+
+    <button
+      {{action saveAndDonate stripeElement}}
+      class="button {{unless (or error isProcessing) "default"}} large submit-card"
+      disabled={{if (or error isProcessing) true}}>
+
+      {{#if isProcessing}}
+        Processing...
+      {{else}}
+        Donate
+      {{/if}}
+    </button>
+  {{/stripe-card}}
+
+  {{#unless isProcessing}}
+    {{!validation errors can be passed in from parent, using a block}}
     {{yield}}
-  {{/donation/credit-card}}
+  {{/unless}}
 {{else}}
   {{donation/card-item card=card}}
   <button
