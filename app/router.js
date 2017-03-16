@@ -8,7 +8,7 @@ const {
   run
 } = Ember;
 
-let AppRouter = Router.extend({
+const AppRouter = Router.extend({
   location: config.locationType,
   rootURL: config.rootURL,
   metrics: service(),
