@@ -36,7 +36,9 @@
     {{/if}}
   </div>
   <div class="comment-body">
-    {{{processedBody}}}
+    {{#highlight-syntax}}
+      {{{processedBody}}}
+    {{/highlight-syntax}}
   </div>
 {{/if}}
 </div>
