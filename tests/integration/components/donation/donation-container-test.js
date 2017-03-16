@@ -76,7 +76,7 @@ test('it renders new card form when the card is added and is processing', functi
 });
 
 test('it renders the card item if there is a card and the form is processing', function(assert) {
-  assert.expect(4);
+  assert.expect(3);
 
   this.set('card', visa);
   this.set('isProcessing', true);
@@ -92,7 +92,6 @@ test('it renders the card item if there is a card and the form is processing', f
 
   assert.notOk(page.cardFormIsVisible, 'The new card form is not rendered.');
   assert.ok(page.donationButtonIsVisible, 'Donation button is rendered.');
-  assert.notOk(page.creditCard.submitButtonIsVisible, 'Card form button is not rendered.');
   assert.ok(page.cards(0).isVisible, 'The card item is visible.');
 });
 
@@ -122,15 +121,8 @@ test('it handles adding a card correctly', function(assert) {
     }
   });
 
-  let cardDetails = {
-    cardNumber: '1234-5678-9012-3456',
-    cvc: '123',
-    month: '12',
-    year: '2020'
-  };
-
-  function saveAndDonateHandler(actualProps) {
-    assert.deepEqual(actualProps, cardDetails, 'Card parameters were passed correctly.');
+  function saveAndDonateHandler(stripeElement) {
+    assert.equal(stripeElement._componentName, 'card');
     return RSVP.resolve();
   }
 
@@ -143,11 +135,7 @@ test('it handles adding a card correctly', function(assert) {
       card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
-  page.creditCard.cardNumber.fillIn(cardDetails.cardNumber);
-  page.creditCard.cardMonth.selectOption(cardDetails.month);
-  page.creditCard.cardYear.selectOption(cardDetails.year);
-  page.creditCard.cardCVC.fillIn(cardDetails.cvc);
-  page.creditCard.clickSubmit();
+  page.clickSubmit();
 });
 
 test('it handles donating correctly', function(assert) {
