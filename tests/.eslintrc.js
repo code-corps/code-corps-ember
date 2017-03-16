@@ -1,6 +1,6 @@
 module.exports = {
   env: {
-    'embertest': true
+    embertest: true
   },
   parserOptions: {
     ecmaVersion: 8

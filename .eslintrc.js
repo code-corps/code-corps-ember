@@ -9,14 +9,14 @@ module.exports = {
     'plugin:ember-suave/recommended'
   ],
   env: {
-    'browser': true
+    browser: true
   },
   rules: {
-    'no-console': 'off',
     'camelcase': 'off',
+    'ember-suave/require-access-in-comments': 'off',
     'key-spacing': 'off',
     'new-cap': 'off',
-    'ember-suave/require-access-in-comments': 'off',
+    'no-console': 'off'
   },
   globals: {
     'server': true,
