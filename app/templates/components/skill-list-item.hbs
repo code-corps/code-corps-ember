@@ -1,5 +1,5 @@
-{{#if session.isAuthenticated}}
+{{#if canClick}}
   {{skill-list-item-link matched=matched skill=skill toggleSkill=(action toggleSkill)}}
 {{else}}
-  {{#link-to 'login'}}{{skill.title}}{{/link-to}}
+  <span class="{{if matched "matched"}}">{{skill.title}}</span>
 {{/if}}
