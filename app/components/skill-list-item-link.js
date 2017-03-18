@@ -8,12 +8,12 @@ const {
 } = Ember;
 
 /**
-  This component is used to add or remove a user's skill when authenticated
-  and show the state of the user's skill, or login when unauthenticated.
+  Shows whether a user has a skill and allows them to add or remove the skill
+  in the context of a list of skills.
 
   ## default usage
 
-  ```Handlebars
+  ```handlebars
   {{skill-list-item-link
     matched=matched
     skill=skill
@@ -30,34 +30,57 @@ export default Component.extend({
   classNameBindings: ['justClicked', 'justRemoved', 'matched'],
   tagName: 'a',
 
+  /**
+   * Whether the user just clicked the skill. Resets to `false` on `mouseLeave`.
+   * @type {Boolean}
+   */
+  justClicked: false,
+
+  /**
+   * Whether the user just removed the skill. Resets to `false` on `mouseLeave`.
+   * @type {Boolean}
+   */
+  justRemoved: false,
+
   session: service(),
 
+  /**
+   * Toggles the `justClicked` and potentially the `justRemoved` states,
+   * and also toggles the skill (add or remove the given skill for the user)
+   *
+   * Prevents the click from bubbling.
+   *
+   * @method click
+   */
   click(e) {
     e.stopPropagation();
 
-    if (get(this, 'session.isAuthenticated')) {
-      this._toggleClickState();
+    this._toggleClickState();
 
-      let skill = get(this, 'skill');
-      get(this, 'toggleSkill')(skill);
-    }
+    let skill = get(this, 'skill');
+    get(this, 'toggleSkill')(skill);
   },
 
+  /**
+   * Resets the `justClicked` and `justRemoved` states when the mouse leaves
+   *
+   * @method mouseLeave
+   */
   mouseLeave() {
-    this._clearClickState();
+    this._resetClickState();
   },
 
-  _clearClickState() {
+  _resetClickState() {
     set(this, 'justClicked', false);
     set(this, 'justRemoved', false);
   },
 
   _toggleClickState() {
-    let matched = get(this, 'matched');
-    if (matched) {
-      set(this, 'justRemoved', true);
+    let userHadSkill = get(this, 'matched');
+    if (userHadSkill) {
+      set(this, 'justRemoved', true); // User just removed an existing skill
     } else {
-      set(this, 'justRemoved', false);
+      set(this, 'justRemoved', false); // User just added a new skill
     }
     set(this, 'justClicked', true);
   }
