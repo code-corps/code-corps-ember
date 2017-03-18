@@ -10,3 +10,13 @@
 .task-sidebar {
   @include span-columns(3);
 }
+
+.task-sidebar-section {
+  &__header {
+    h2 {
+      color: $text--dark;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+}

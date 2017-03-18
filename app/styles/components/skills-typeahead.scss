@@ -1,24 +1,16 @@
 .skills-typeahead-container {
-  @include span-columns(12);
-
-  margin-top: 15px;
-  margin-bottom: 30px;
-}
-
-.skills-typeahead-area {
-
+  margin: 0.6em 0;
 }
 
 .skills-typeahead {
   &--centered {
-    margin: 0 auto;    
+    margin: 0 auto;
   }
 
   position: relative;
-  width: 400px;
 
   input {
-    min-width: 400px;
+    width: 100%;
   }
 
   .dropdown-menu {

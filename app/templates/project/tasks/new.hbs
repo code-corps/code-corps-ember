@@ -31,6 +31,13 @@
           skillsList=unsavedTaskSkills
         }}
       </div>
+      {{project-skills-list
+        onSkillClicked=(action 'toggleSkill')
+        project=task.project
+        excludedSkills=unsavedTaskSkills
+        showHeader=true
+        header="Or click to add skills below"
+      }}
     </div>
   </div>
 </div>
