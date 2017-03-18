@@ -4,16 +4,32 @@
   flex-direction: column;
   //justify-content: center;
   margin-bottom: 2em;
+
+  @include shift(3.5);
+  @include span-columns(5);
+
+  @include media($lg-screen) {
+    @include shift(2);
+    @include span-columns(8);
+  }
+
+  @include media($md-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
 }
 
 .skills__list {
   text-align: center;
+
   button {
-    margin: 0 .5em 1em 0;
+    margin: 0 5px 5px 0;
   }
+
   div {
     display: inline-block;
   }
+
   p {
     color: $text--lightest;
     font-style: italic;

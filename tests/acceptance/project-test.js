@@ -81,7 +81,7 @@ test('A user can join the organization of the project', function(assert) {
   visit(projectURL);
 
   andThen(() => {
-    assert.equal(projectTasksIndexPage.projectDetails.signUpLink.text, 'Sign up', 'The link to sign up is present when logged out');
+    assert.equal(projectTasksIndexPage.projectDetails.signUpLink.text, 'Join project', 'The link to the sign up page is present when logged out');
 
     authenticateSession(this.application, { user_id: user.id });
     visit(projectURL);
