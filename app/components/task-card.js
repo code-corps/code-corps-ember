@@ -29,6 +29,7 @@ export default Component.extend({
   bound: false,
   shouldShowUsers: false,
 
+  // auto-assigns 'task' property from component as ability 'model'
   ability: EmberCan.computed.ability('task'),
   canAssign: alias('ability.canAssign'),
   canEdit: alias('ability.canEdit'),

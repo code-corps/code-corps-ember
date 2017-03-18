@@ -45,8 +45,9 @@ $list-height: 220px;
 }
 
 .select-inline {
-  display: flex;
   align-items: center;
+  display: flex;
+  font-size: $body-font-size-small;
 
   .ember-power-select-trigger {
     align-items: left;
@@ -56,7 +57,6 @@ $list-height: 220px;
     color: $gray;
     cursor: pointer;
     display: flex;
-    font-size: $body-font-size-small;
     justify-content: left;
     position: relative;
 
