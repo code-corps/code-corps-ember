@@ -56,21 +56,21 @@ export default Component.extend({
   actions: {
 
     /**
-      Action that toggles edit mode.
-
-      @method edit
-     */
-    edit() {
-      this._enterEditMode();
-    },
-
-    /**
       Action that leaves edit mode without saving changes.
 
       @method cancel
      */
     cancel() {
       this._enterReadMode();
+    },
+
+    /**
+      Action that toggles edit mode.
+
+      @method edit
+     */
+    edit() {
+      this._enterEditMode();
     },
 
     /**
