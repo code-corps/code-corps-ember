@@ -1,0 +1,12 @@
+{{#if showHeader}}
+  <div class="project-skills-list__header">
+    <span>{{header}}</span>
+  </div>
+{{/if}}
+{{#each skills as |skill|}}
+  {{project-skill-item skill=skill onClicked=onSkillClicked}}
+{{else}}
+  <div class="project-skills-list__fallback">
+    There are no more project skills to be added.
+  </div>
+{{/each}}

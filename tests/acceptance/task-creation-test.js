@@ -290,7 +290,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
 });
 
 test('Skills can be assigned to task during creation', function(assert) {
-  assert.expect(5);
+  assert.expect(6);
 
   let user = server.schema.users.create({ username: 'test_user' });
 
@@ -306,11 +306,13 @@ test('Skills can be assigned to task during creation', function(assert) {
     projectTasksIndexPage.clickNewTask();
   });
 
-  let skill = server.create('skill', { title: 'Ruby' });
+  // just a skill for searching
+  let ruby = server.create('skill', { title: 'Ruby' });
+  // this one will be added via project skills
+  let css = server.create('skill', { title: 'CSS' });
+  server.create('project-skill', { project, skill: css });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
-
     projectTasksNewPage.taskTitle('A task title')
                        .taskMarkdown('A task body');
   });
@@ -328,17 +330,27 @@ test('Skills can be assigned to task during creation', function(assert) {
   });
 
   andThen(() => {
+    // add skill from project skill list
+    projectTasksNewPage.projectSkillsList.skills(0).click();
+  });
+
+  andThen(() => {
     projectTasksNewPage.clickSubmit();
   });
 
   andThen(() => {
-    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created');
-    assert.equal(server.schema.taskSkills.all().models.length, 1, 'A single task skill has been created.');
+    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created.');
+    assert.equal(server.schema.taskSkills.all().models.length, 2, 'Correct number task skills has been created.');
 
     let [task] = server.schema.tasks.all().models;
-    let [taskSkill] = server.schema.taskSkills.all().models;
+    // NOTE: Order here depends on interaction order above
+    // Ruby skill was added first, by searching
+    // CSS skill was added second, by clicking
+    let [rubyTaskSkill, cssTaskSkill] = server.schema.taskSkills.all().models;
 
-    assert.equal(taskSkill.taskId, task.id, 'The correct task was assigned');
-    assert.equal(taskSkill.skillId, skill.id, 'The correct skill was assigned');
+    assert.equal(rubyTaskSkill.taskId, task.id, 'The correct task was assigned.');
+    assert.equal(rubyTaskSkill.skillId, ruby.id, 'The correct skill was assigned.');
+    assert.equal(cssTaskSkill.taskId, task.id, 'The correct task was assigned.');
+    assert.equal(cssTaskSkill.skillId, css.id, 'The correct skill was assigned.');
   });
 });

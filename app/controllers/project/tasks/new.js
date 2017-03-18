@@ -40,8 +40,11 @@ export default Controller.extend({
 
     toggleSkill(skill) {
       let unsavedTaskSkills = get(this, 'unsavedTaskSkills');
-      if (unsavedTaskSkills.includes(skill)) {
-        unsavedTaskSkills.removeObject(skill);
+      let id = get(skill, 'id');
+
+      let unsavedSkill = unsavedTaskSkills.findBy('id', id);
+      if (unsavedSkill) {
+        unsavedTaskSkills.removeObject(unsavedSkill);
       } else {
         unsavedTaskSkills.pushObject(skill);
       }
