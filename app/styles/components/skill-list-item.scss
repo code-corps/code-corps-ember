@@ -3,52 +3,55 @@
   padding: 3px 6px;
 }
 
-.skill-list-item {
-  a {
-    color: $text--dark;
-    cursor: pointer;
-    position: relative;
+// Styles both clickable and unclickable items
+.skill-list-item a, .skill-list-item > span {
+  color: $text--dark;
+  position: relative;
 
-    &:before {
-      content: "";
-      display: inline-block;
-      margin: -2px 2px 0 0;
-      vertical-align: middle;
-    }
+  &:before {
+    content: "";
+    display: inline-block;
+    margin: -2px 2px 0 0;
+    vertical-align: middle;
+  }
 
-    &.just-removed {
-      color: $blue--dark;
-    }
+  &.matched {
+    color: $blue--dark;
 
-    &.matched {
-      color: $blue--dark;
-
-      &:not(.just-removed) {
-        font-weight: 600;
-        &:before {
-          @include sprite($tiny-check);
-        }
+    &:not(.just-removed) {
+      font-weight: 600;
+      &:before {
+        @include sprite($tiny-check);
       }
     }
+  }
+}
 
-    &:hover:not(.matched) {
-      color: $blue--dark;
-    }
+// Only for the link
+.skill-list-item a {
+  cursor: pointer;
 
-    &:hover.matched {
-      &:not(.just-clicked) {
-        color: $danger-color;
-        text-decoration: line-through;
+  &.just-removed {
+    color: $blue--dark;
+  }
 
-        &:before {
-          @include sprite($tiny-x);
-          margin-left: 2px;
-        }
+  &:focus {
+    outline: none;
+  }
+
+  &:hover:not(.matched) {
+    color: $blue--dark;
+  }
+
+  &:hover.matched {
+    &:not(.just-clicked) {
+      color: $danger-color;
+      text-decoration: line-through;
+
+      &:before {
+        @include sprite($tiny-x);
+        margin-left: 2px;
       }
-    }
-
-    &:focus {
-      outline: none;
     }
   }
 }

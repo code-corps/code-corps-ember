@@ -62,7 +62,7 @@ test('it renders correctly when unmatched', function(assert) {
 test('it toggles the action when clicked and authenticated', function(assert) {
   assert.expect(1);
 
-  stubService(this, 'session', { isAuthenticated: true });
+  stubService(this, 'session', mockSession);
 
   let skill = { title: 'Ember.js' };
   set(this, 'skill', skill);
@@ -73,23 +73,6 @@ test('it toggles the action when clicked and authenticated', function(assert) {
   setHandlers(this, toggleHandler);
   renderPage();
 
-  page.click();
-});
-
-test('it does not toggle the action when clicked and unauthenticated', function(assert) {
-  assert.expect(0);
-
-  stubService(this, 'session', { isAuthenticated: false });
-
-  let skill = { title: 'Ember.js' };
-  set(this, 'skill', skill);
-
-  function toggleHandler(toggledSkill) {
-    assert.deepEqual(skill, toggledSkill);
-  }
-  setHandlers(this, toggleHandler);
-
-  renderPage();
   page.click();
 });
 

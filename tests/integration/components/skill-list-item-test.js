@@ -37,7 +37,7 @@ moduleForComponent('skill-list-item', 'Integration | Component | skill list item
   }
 });
 
-test('it renders and sends an action when its hidden', function(assert) {
+test('it renders and sends an action when hidden', function(assert) {
   assert.expect(2);
 
   stubService(this, 'session', mockSession);
@@ -53,7 +53,7 @@ test('it renders and sends an action when its hidden', function(assert) {
     </div>
   `);
 
-  assert.equal(page.skillListItemLink.skillTitle.text, 'Ruby');
+  assert.equal(page.skillListItemSpan.text, 'Ruby');
 });
 
 test('it renders and sends no action when not hidden', function(assert) {
@@ -68,13 +68,19 @@ test('it renders and sends no action when not hidden', function(assert) {
 
   this.render(hbs`{{skill-list-item skill=skill action='skillItemHidden'}}`);
 
-  assert.equal(page.skillListItemLink.skillTitle.text, 'Ruby');
+  assert.equal(page.skillListItemSpan.text, 'Ruby');
 });
 
-test('it renders the login link', function(assert) {
+test('it renders a link when clickable and authenticated', function(assert) {
   assert.expect(1);
-  this.render(hbs`{{skill-list-item}}`);
+  stubService(this, 'session', { isAuthenticated: true });
+  this.render(hbs`{{skill-list-item isClickable=true}}`);
+  assert.ok(page.skillListItemLink.isVisible, 'Renders a link');
+});
 
-  stubService(this, 'session', { authenticated: false });
-  assert.ok(page.rendersLogin, 'Renders the login link');
+test('it renders no link when clickable and unauthenticated', function(assert) {
+  assert.expect(1);
+  stubService(this, 'session', { isAuthenticated: false });
+  this.render(hbs`{{skill-list-item isClickable=true}}`);
+  assert.notOk(page.skillListItemLink.isVisible, 'Renders no link');
 });
