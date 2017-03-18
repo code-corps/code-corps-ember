@@ -56,6 +56,17 @@
   &.large {
     font-size: $body-font-size-large;
     padding: 15px 40px;
+
+    &.skill {
+      padding: 8px 14px;
+    }
+  }
+
+  &.normal {
+    &.skill {
+      font-size: $body-font-size-normal;
+      padding: 8px 11px;
+    }
   }
 
   &.on-solid {
@@ -86,8 +97,8 @@
     padding: 6px 14px;
 
     &.skill {
-      padding: 6px 9px;
-      font-size: $body-font-size-normal;
+      padding: 4px 6px;
+      font-size: $body-font-size-small;
     }
   }
 
@@ -133,7 +144,7 @@
       vertical-align: middle;
       width: 18px;
 
-      &.small {
+      &.normal, &.small {
         height: 10px;
         width: 12px;
 
@@ -153,7 +164,7 @@
 
     &.x-mark {
       @include sprite($x-mark);
-      &.small {
+      &.normal, &.small {
         @include sprite($x-mark-small);
       }
     }
