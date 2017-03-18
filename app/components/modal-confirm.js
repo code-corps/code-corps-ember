@@ -38,7 +38,7 @@ const {
   page.modal.confirmOk();
   ```
 
-  @module Components
+  @module Component
   @extends Ember.component
   @class modal-confirm
  */
