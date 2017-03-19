@@ -11,6 +11,7 @@ const {
  *
  * ```handlebars
  * {{become-a-donor becomeADonor=(action externalHandler)}}
+ * ```
  *
  * Used as above, the `externalHandler` function will receive a
  * call when the button rendered by the component is clicked.

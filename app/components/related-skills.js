@@ -6,31 +6,31 @@ const {
 } = Ember;
 
 /**
-  `related-skills` renders a list of associated skill records for an entity
-
-  - For projects, this is `project.projectSkills`
-  - For tasks, this is `task.taskSkills`
-
-  ## default usage
-
-  ```handlebars
-  {{related-skills skills=parent.xSkills}}
-  ```
-
-  @class card-skills
-  @module Component
-  @extends Ember.Component
+ * `related-skills` renders a list of associated skill records for an entity
+ *
+ * - For projects, this is `project.projectSkills`
+ * - For tasks, this is `task.taskSkills`
+ *
+ * ## default usage
+ *
+ * ```handlebars
+ * {{related-skills skills=parent.xSkills}}
+ * ```
+ *
+ * @class related-skills
+ * @module Component
+ * @extends Ember.Component
  */
 export default Component.extend({
   classNames: ['related-skills'],
 
   /**
-    Returns whether or not the overflowing skills on the project card should be
-    displayed.
-
-    @property overflowHidden
-    @type Boolean
-    @default true
+   * Returns whether or not the overflowing skills on the project card should be
+   * displayed.
+   *
+   * @property overflowHidden
+   * @type Boolean
+   * @default true
    */
   overflowHidden: true,
 
