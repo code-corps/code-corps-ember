@@ -1,12 +1,6 @@
 {{title project.title " by " project.organization.name}}
 
 <div class="container">
-  {{project-details project=project expanded=true}}
-</div>
-
-{{project-menu project=project}}
-
-<div class="container">
   <div class="project-wrapper">
 
     <div class="project-main">
@@ -22,7 +16,7 @@
             donationGoal=project.currentDonationGoal
           }}
           {{donations/donation-status
-            createDonation=(action 'saveSubscription')
+            project=project
             subscription=subscription
           }}
         </section>

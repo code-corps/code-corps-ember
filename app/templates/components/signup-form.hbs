@@ -1,7 +1,11 @@
 <div class="container">
   <form>
 
-    <h2>Join Code Corps today.</h2>
+    {{#if (eq user.state 'signed_up_donating')}}
+      <h2>Join Code Corps to continue.</h2>
+    {{else}}
+      <h2>Join Code Corps today.</h2>
+    {{/if}}
 
     {{#auto-focus}}
       {{signup-username-input autofocus=true user=user usernameValidated="usernameValidated"}}

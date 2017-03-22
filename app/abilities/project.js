@@ -28,7 +28,7 @@ export default Ability.extend({
   canManage: alias('userIsOwner'),
 
   // TODO: Similar code is defined in
-  // - `components/project-details.js`
+  // - `components/project-header.js`
   // - `abilities/task.js`
   projectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
     let currentUserId = get(this, 'currentUser.user.id');

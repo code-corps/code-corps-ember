@@ -1,7 +1,5 @@
 {{#if subscription}}
   {{donations/show-donation amount=subscription.quantity}}
-{{else if donationStatusExpanded}}
-  {{donations/create-donation continue=(action createDonation)}}
 {{else}}
-  {{donations/become-a-donor becomeADonor=(action (mut donationStatusExpanded) true)}}
+  {{#link-to 'project.donate' project class="button default large"}}Donate to project{{/link-to}}
 {{/if}}

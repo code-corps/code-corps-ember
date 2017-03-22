@@ -1,16 +1,13 @@
-import { isVisible } from 'ember-cli-page-object';
-import becomeADonorComponent from './become-a-donor';
-import createDonationComponent from './create-donation';
+import { clickable, isVisible } from 'ember-cli-page-object';
 import showDonationComponent from './show-donation';
 
 export default {
   scope: '.donation-status',
 
-  rendersBecomeADonor: isVisible('.become-a-donor'),
-  rendersCreateDonation: isVisible('.create-donation'),
+  clickLink: clickable('a'),
+
+  rendersLink: isVisible('a'),
   rendersShowDonation: isVisible('.show-donation'),
 
-  becomeADonor: becomeADonorComponent,
-  createDonation: createDonationComponent,
   showDonation: showDonationComponent
 };

@@ -1,15 +1,9 @@
 <div class="container">
-  {{project-header project=project}}
-  {{#donation/donation-container
-    card=user.stripePlatformCard
-    donate=(action 'donate' amount user.stripePlatformCard)
-    donationAmount=amount
-    isProcessing=isProcessing
-    projectTitle=project.title
-    saveAndDonate=(action 'saveAndDonate' amount)
+  {{donation/project-header project=project}}
+
+  {{donations/create-donation
+    amount=amount
+    continue=(action "continueToCheckout")
+    onAmountChanged=(action (mut amount))
   }}
-    {{#if error}}
-      {{error-formatter error=error}}
-    {{/if}}
-  {{/donation/donation-container}}
 </div>

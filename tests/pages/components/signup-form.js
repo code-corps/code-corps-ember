@@ -5,6 +5,10 @@ import {
 export default {
   scope: '.signup-form',
 
+  title: {
+    scope: 'h2'
+  },
+
   emailInput: {
     scope: 'input[name=email]',
     isVisible: isVisible()

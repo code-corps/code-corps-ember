@@ -81,17 +81,17 @@ test('A user can join the project', function(assert) {
   projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
 
   andThen(() => {
-    assert.equal(projectTasksIndexPage.projectDetails.signUpLink.text, 'Join project', 'The link to the sign up page is present when logged out');
+    assert.equal(projectTasksIndexPage.projectHeader.signUpLink.text, 'Join project', 'The link to the sign up page is present when logged out');
 
     authenticateSession(this.application, { user_id: user.id });
     projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
   });
 
   andThen(() => {
-    let modalButton = projectTasksIndexPage.projectDetails.projectJoinModal.openButton;
+    let modalButton = projectTasksIndexPage.projectHeader.projectJoinModal.openButton;
     assert.equal(modalButton.text, 'Join project', 'The button to join is present when logged in');
     modalButton.click();
-    projectTasksIndexPage.projectDetails.projectJoinModal.modal.joinProjectButton.click();
+    projectTasksIndexPage.projectHeader.projectJoinModal.modal.joinProjectButton.click();
   });
 
   andThen(() => {

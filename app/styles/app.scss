@@ -101,8 +101,10 @@
 @import "components/donation-payment";
 @import "components/donation/card-item";
 @import "components/donation/card-logo";
+@import "components/donations/create-donation";
 @import "components/donations/donation-progress";
 @import "components/donations/donation-status";
+@import "components/donation/project-header";
 
 //
 // COMPONENTS - ORGANIZATION
@@ -122,7 +124,6 @@
 //
 @import "components/project-card-members";
 @import "components/project-card";
-@import "components/project-details";
 @import "components/project-header";
 @import "components/project-item";
 @import "components/project-join-modal";

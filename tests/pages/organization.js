@@ -56,9 +56,5 @@ export default create({
       text: text(),
       click: clickable()
     }
-  }),
-
-  projectDetails: {
-    scope: '.project-details'
-  }
+  })
 });

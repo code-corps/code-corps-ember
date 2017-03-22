@@ -1,40 +1,7 @@
 .donation-status {
-  .become-a-donor {
-    button {
-      width: 100%;
-    }
-  }
-
-  .create-donation {
-    display: flex;
-    flex-direction: column;
-
-    .amounts {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .preset-amount {
-      flex: 2;
-      flex-basis: 48%;
-      margin-bottom: 5px;
-
-      &:nth-child(even) {
-        margin-left: 2px;
-      }
-
-      &:nth-child(odd) {
-        margin-right: 2px;
-      }
-    }
-
-    .custom-amount {
-      flex: 1;
-    }
-
-    .continue {
-      flex: 1;
-    }
+  .button {
+    text-align: center;
+    width: 100%;
   }
 
   .show-donation {
