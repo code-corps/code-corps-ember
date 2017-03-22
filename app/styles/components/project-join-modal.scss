@@ -1,0 +1,59 @@
+.project-join-modal {
+  padding: 20px;
+  width: 350px;
+
+  @include media($xs-screen) {
+    max-width: calc(100% - 20px);
+  }
+
+  h1 {
+    font-size: $body-font-size-x-large;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+.project-join-modal__button {
+  button {
+    width: 100%;
+  }
+}
+
+.project-join-modal__icons {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  &__icon {
+    content: "";
+    display: block;
+    height: 25px;
+    margin: 0 15px;
+    vertical-align: middle;
+    width: 25px;
+
+    &--join {
+      @include sprite($join);
+    }
+  }
+}
+
+.project-join-modal__skills {
+  margin-bottom: 20px;
+  text-align: center;
+
+  p {
+    font-size: $body-font-size-normal;
+    margin-bottom: 10px;
+  }
+
+  .related-skills .skills {
+    max-height: none;
+    overflow: auto;
+
+    li {
+      display: inline-block;
+      float: none;
+    }
+  }
+}

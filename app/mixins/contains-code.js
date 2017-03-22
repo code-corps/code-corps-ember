@@ -19,7 +19,7 @@ const {
  * ```
  *
  * @mixin contains-code
- * @module mixin
+ * @module Mixin
  */
 export default Mixin.create({
 

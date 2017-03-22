@@ -23,6 +23,10 @@
 @import "ember-modal-dialog/ember-modal-structure";
 @import "ember-modal-dialog/ember-modal-appearance";
 
+.ember-modal-overlay.translucent {
+  background: rgba(0,0,0, 0.70)
+}
+
 .ember-modal-dialog {
   border-radius: 4px;
   box-shadow: 0 3px 12px rgba(0,0,0,0.15);
@@ -121,6 +125,7 @@
 @import "components/project-details";
 @import "components/project-header";
 @import "components/project-item";
+@import "components/project-join-modal";
 @import "components/project-list";
 @import "components/project-long-description";
 @import "components/project-members";

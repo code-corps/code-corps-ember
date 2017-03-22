@@ -13,6 +13,27 @@
   <p class="description">
     {{project.description}}
   </p>
+  <p class="project-card__actions">
+    {{#if project.shouldLinkExternally}}
+      <a class="button default small external-link" href="{{project.website}}">Join project<span></span></a>
+    {{else}}
+      {{#if session.isAuthenticated}}
+        {{#if currentProjectMembership.isLoaded}}
+          {{#if (eq currentProjectMembership.role 'pending')}}
+            <button class="clear small" disabled>Request sent</button>
+          {{else}}
+            <button class="clear small" disabled>Member</button>
+          {{/if}}
+        {{/if}}
+
+        {{#unless currentProjectMembership}}
+          {{project-join-modal project=project skills=projectSkills}}
+        {{/unless}}
+      {{else}}
+        {{link-to "Join project" "signup" class="button default small"}}
+      {{/if}}
+    {{/if}}
+  </p>
   {{related-skills class="project-card__skills" skills=projectSkills}}
   {{project-card-members members=projectUsers}}
 </div>

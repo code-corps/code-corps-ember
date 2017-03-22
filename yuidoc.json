@@ -1,6 +1,7 @@
 {
   "name": "code-corps-ember",
-  "description": "Small description for code-corps-ember goes here",
+  "url": "https://github.com/code-corps/code-corps-ember",
+  "description": "Help build and fund software projects with massive social impact.",
   "version": "0.0.0",
   "options": {
     "exclude": "vendor",
@@ -10,6 +11,9 @@
     "parseOnly": false,
     "paths": [
       "app"
-    ]
+    ],
+    "quiet": true,
+    "themedir": "node_modules/yuidoc-ember-theme",
+    "helpers": ["node_modules/yuidoc-ember-theme/helpers/helpers.js"]
   }
 }

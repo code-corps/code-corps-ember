@@ -19,12 +19,17 @@
     <a class="button default small external-link" href="{{project.website}}">Join project<span></span></a>
   {{else}}
     {{#if session.isAuthenticated}}
-      {{#unless currentProjectMembership}}
-        <button class="default small" {{action "joinProject" project}}>Join project</button>
-      {{/unless}}
-      {{#if (eq currentProjectMembership.role 'pending')}}
-        <button class="clear small" disabled>Request sent</button>
+      {{#if currentProjectMembership.isLoaded}}
+        {{#if (eq currentProjectMembership.role 'pending')}}
+          <button class="clear small" disabled>Request sent</button>
+        {{else}}
+          <button class="clear small" disabled>Member</button>
+        {{/if}}
       {{/if}}
+
+      {{#unless currentProjectMembership}}
+        {{project-join-modal project=project skills=projectSkills}}
+      {{/unless}}
     {{else}}
       {{link-to "Join project" "signup" class="button default small"}}
     {{/if}}

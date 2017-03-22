@@ -2,16 +2,32 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import pageComponent from 'code-corps-ember/tests/pages/components/project-card';
 
-const {
-  set
-} = Ember;
+let page = PageObject.create(pageComponent);
+
+const { set } = Ember;
+
+function renderPage() {
+  page.render(hbs`
+    {{project-card onJoin=onJoin project=project skills=skills}}
+  `);
+}
 
 moduleForComponent('project-card', 'Integration | Component | project card', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+    set(this, 'onJoin', () => {});
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 let user = {
+  id: 'user',
   isLoaded: true,
   photoThumbUrl: 'http://lorempixel.com/25/25/'
 };
@@ -30,7 +46,7 @@ test('it renders', function(assert) {
   stubService(this, 'user-categories', { findUserCategory() {} });
 
   set(this, 'project', project);
-  this.render(hbs`{{project-card project=project}}`);
+  renderPage();
 
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
@@ -48,7 +64,7 @@ test('it renders the right icon when the user is not loaded', function(assert) {
   stubService(this, 'user-categories', { findUserCategory() {} });
 
   set(this, 'project', project);
-  this.render(hbs`{{project-card project=project}}`);
+  renderPage();
 
   assert.equal(this.$('ul.project-card-members li:first img').length, 0);
 });
