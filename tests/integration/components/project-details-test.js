@@ -34,28 +34,19 @@ test('it renders title', function(assert) {
 });
 
 test('it triggers binding when clicking join project button', function(assert) {
-  assert.expect(4);
+  assert.expect(1);
   this.set('project', mockProject);
 
-  // this is complex due to needing to mock the store and several
-  // mock records from within
-  // Once we move the joinProject action outside, it can be simplified
-  stubService(this, 'store', {
-    createRecord(type, { user, project, role }) {
-      assert.deepEqual(user, { id: 'test' }, 'User was assigned.');
-      assert.deepEqual(project, mockProject, 'Project was assigned.');
-      assert.equal(role, 'pending', 'Role was assigned.');
-      return {
-        save() {
-          assert.ok(true, 'Record was saved.');
-        }
-      };
-    }
-  });
   stubService(this, 'session', { isAuthenticated: true });
   stubService(this, 'current-user', { user: { id: 'test' } });
+  stubService(this, 'project-user', {
+    joinProject(joinedProject) {
+      assert.deepEqual(joinedProject, mockProject);
+    }
+  });
 
   page.render(hbs`{{project-details project=project}}`);
 
-  page.joinProjectButton.click();
+  page.projectJoinModal.openButton.click();
+  page.projectJoinModal.modal.joinProjectButton.click();
 });

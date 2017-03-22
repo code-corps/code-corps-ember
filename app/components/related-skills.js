@@ -24,6 +24,8 @@ const {
 export default Component.extend({
   classNames: ['related-skills'],
 
+  isClickable: false,
+
   /**
    * Returns whether or not the overflowing skills on the project card should be
    * displayed.

@@ -2,6 +2,7 @@ import {
   attribute,
   text
 } from 'ember-cli-page-object';
+import projectJoinModal from 'code-corps-ember/tests/pages/components/project-join-modal';
 
 export default {
   scope: '.project__header',
@@ -11,11 +12,7 @@ export default {
     src: attribute('src')
   },
 
-  joinProjectButton: {
-    scope: 'aside button',
-    href: attribute('href'),
-    disabled: attribute('disabled')
-  },
+  projectJoinModal,
 
   signUpLink: {
     scope: 'aside a',

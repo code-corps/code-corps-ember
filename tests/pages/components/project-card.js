@@ -2,6 +2,8 @@ import {
   collection
 } from 'ember-cli-page-object';
 
+import projectJoinModal from 'code-corps-ember/tests/pages/components/project-join-modal';
+
 export default {
   scope: '.project-card',
 
@@ -12,5 +14,7 @@ export default {
   members: collection({
     scope: '.project-card-members',
     itemScope: 'li.member'
-  })
+  }),
+
+  projectJoinModal
 };

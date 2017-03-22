@@ -3,12 +3,14 @@ import Ember from 'ember';
 const { $ } = Ember;
 
 /**
- * This helper is used to deal with DOM elements inserted by the ember-tooltips addon
+ * This helper is used to deal with DOM elements inserted by the
+ * `ember-tooltips` addon
  *
- * These elements attach themselves to the body instead of any container, so in
- * integration tests, they cannot be accessed through the scope system. Instead,
- * we fall back to jquery selectors to find them. This helper can be used as a
- * single sub-component of a page object, or as an item in a collection.
+ * These elements attach themselves to the body instead of any container,
+ * so in integration tests, they cannot be accessed through the scope
+ * system. Instead, we fall back to jquery selectors to find them. This
+ * helper can be used as a single sub-component of a page object, or as
+ * an item in a collection.
  */
 export default {
   defaultSelector: '.ember-tooltip',
@@ -27,7 +29,9 @@ export default {
       }
     }
   },
-  // tooltips attach outside the integration context, so we are forced to use jquery
+
+  // tooltips attach outside the integration context
+  // so we are forced to use jquery
   element: {
     isDescriptor: true,
     get() {

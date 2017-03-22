@@ -2,7 +2,10 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { mapBy }
+  computed,
+  computed: { mapBy },
+  get,
+  inject: { service }
 } = Ember;
 
 /**
@@ -22,7 +25,22 @@ const {
 export default Component.extend({
   classNames: ['project-card'],
 
+  currentUser: service(),
+  session: service(),
+
+  // TODO: Similar code is defined in
+  // - `abilities/project.js`
+  // - `abilities/task.js`
+  currentProjectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
+    let projectUsers = get(this, 'project.projectUsers');
+    let currentUserId = get(this, 'currentUser.user.id');
+
+    return projectUsers.find((item) => {
+      return get(item, 'user.id') === currentUserId;
+    });
+  }),
+
   projectCategories: mapBy('project.projectCategories', 'category'),
-  projectUsers: mapBy('project.projectUsers', 'user'),
-  projectSkills: mapBy('project.projectSkills', 'skill')
+  projectSkills: mapBy('project.projectSkills', 'skill'),
+  projectUsers: mapBy('project.projectUsers', 'user')
 });
