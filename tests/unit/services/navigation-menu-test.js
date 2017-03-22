@@ -2,7 +2,12 @@ import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:navigation-menu', 'Unit | Service | navigation menu', {
   // Specify the other units that are required for this test.
-  // needs: ['service:foo']
+  needs: [
+    'service:current-user',
+    'service:metrics',
+    'service:onboarding',
+    'service:session'
+  ]
 });
 
 test('it isDefault by default', function(assert) {

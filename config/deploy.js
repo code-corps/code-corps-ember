@@ -29,7 +29,7 @@ module.exports = function(deployTarget) {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     }
     ENV.slack = {
-      webhookURL: 'https://hooks.slack.com/services/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',
+      webhookURL: 'https://hooks.slack.com/services/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',
       username: 'ember-cli-deploy',
       iconEmoji: ':rocket:',
     }

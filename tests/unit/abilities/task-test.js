@@ -3,7 +3,12 @@ import { moduleFor, test } from 'ember-qunit';
 
 const { Object, get, set } = Ember;
 
-moduleFor('ability:task', 'Unit | Ability | task', { });
+moduleFor('ability:task', 'Unit | Ability | task', {
+  needs: [
+    'service:current-user',
+    'service:session'
+  ]
+});
 
 // users of different roles
 let author = Object.create({ id: 'author' });
