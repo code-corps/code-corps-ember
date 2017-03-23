@@ -2633,9 +2633,9 @@ ember-cli-meta-tags@3.0.4:
     ember-cli-htmlbars "^1.0.10"
     ember-runtime-enumerable-includes-polyfill "^1.0.2"
 
-ember-cli-mirage@^0.2.4:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.2.9.tgz#f710bb97e6895b3918839127ab5e570538d668b4"
+ember-cli-mirage@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.3.1.tgz#2541d624f4994fae3188fcd76a768e8eaff71c4b"
   dependencies:
     broccoli-funnel "^1.0.2"
     broccoli-merge-trees "^1.1.0"
