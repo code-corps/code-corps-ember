@@ -1,13 +1,61 @@
-.project-header {
-  margin: 20px 0;
-  text-align: center;
+.project__header {
+  width: 100%;
+
+  @include clearfix;
+
+  $icon-size: 50px;
+
+  &__icon {
+    float: left;
+    height: $icon-size;
+    width: $icon-size;
+  }
+
+  &__details {
+    float: left;
+    padding-left: 10px;
+  }
+
+  &__main {
+    display: flex;
+    @include span-columns(8);
+  }
+
+  &__side {
+    @include span-columns(4);
+    display: flex;
+    align-items: center;
+    height: 50px;
+    justify-content: flex-end;
+
+    button {
+      vertical-align: middle;
+    }
+
+    > span {
+      color: $blue;
+    }
+  }
 
   h2 {
-    margin: 5px 0;
+    margin: 10px 0;
+    font-size: $header-font-size-medium;
+
+    a {
+      color: $hidden-link-color;
+      &:hover {
+        color: $link-color;
+      }
+    }
   }
 
   p {
-    color: $text--light;
-    margin: 5px 0;
+    font-size: $body-font-size-small;
+  }
+
+  .organization {
+    margin-top: 8px;
+    font-size: $body-font-size-small;
+    min-height: 25px;
   }
 }

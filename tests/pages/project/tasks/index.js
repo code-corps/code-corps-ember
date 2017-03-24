@@ -3,7 +3,7 @@ import {
   create,
   visitable
 } from 'ember-cli-page-object';
-import projectDetails from 'code-corps-ember/tests/pages/components/project-details';
+import projectHeader from 'code-corps-ember/tests/pages/components/project-header';
 import projectMenu from 'code-corps-ember/tests/pages/components/project-menu';
 import taskBoard from 'code-corps-ember/tests/pages/components/task-board';
 
@@ -25,7 +25,7 @@ export default create({
   clickNewTask: clickable('.new-task'),
   clickCancel: clickable('.cancel'),
 
-  projectDetails,
+  projectHeader,
   projectMenu,
   taskBoard
 });

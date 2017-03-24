@@ -26,7 +26,7 @@ export default Ability.extend({
   }),
 
   // TODO: Similar code is defined in
-  // - `components/project-details.js`
+  // - `components/project-header.js`
   // - `abilities/project.js`
   projectMembership: computed('task.project.projectUsers', 'currentUser.user.id', function() {
     let currentUserId = get(this, 'currentUser.user.id');

@@ -1,89 +1,13 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-import Ember from 'ember';
-import Mirage from 'ember-cli-mirage';
-
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
-import projectDonatePage from '../pages/project/donate';
-
-const {
-  RSVP,
-  Service
-} = Ember;
-
-// NOTE: Don't think these mocks can be moved, unless we can make them more generic than they are
-// As is, they mock specifically the `stripe` injection for the project.donate controller
-
-const stripeCardError = {
-  error: {
-    type: 'card_error',
-    code: 'invalid_expiry_year',
-    message: "Your card's expiration year is invalid.",
-    param: 'exp_year'
-  }
-};
-
-const stripeTokenResponse = {
-  token: {
-    id: 'tok_something', // Token identifier
-    card: { // Dictionary of the card used to create the token
-      name: null,
-      address_line1: '12 Main Street',
-      address_line2: 'Apt 42',
-      address_city: 'Palo Alto',
-      address_state: 'CA',
-      address_zip: '94301',
-      address_country: 'US',
-      country: 'US',
-      exp_month: 2,
-      exp_year: 2017,
-      last4: '4242',
-      object: 'card',
-      brand: 'Visa',
-      funding: 'credit'
-    },
-    created: 1478892395, // Timestamp of when token was created
-    livemode: true, // Whether this token was created with a live API key
-    type: 'card',
-    object: 'token', // Type of object, always "token"
-    used: false // Whether this token has been used
-  }
-};
-
-const stripeMockSuccess = {
-  createToken: () => RSVP.resolve(stripeTokenResponse)
-};
-
-const stripeMockFailure = {
-  createToken: () => RSVP.reject(stripeCardError)
-};
-
-function stubStripe(context, mock) {
-  let mockService = Service.create(mock);
-  context.application.__container__.lookup('controller:project.donate').set('stripev3', mockService);
-}
+import checkoutPage from '../pages/project/checkout';
+import donatePage from '../pages/project/donate';
+import signupPage from '../pages/signup';
 
 moduleForAcceptance('Acceptance | Project - Donate');
 
-test('It requires authentication', function(assert) {
-  assert.expect(1);
-
-  let organization = server.create('organization');
-  let project = server.create('project', { organization });
-
-  projectDonatePage.visit({
-    amount: 10,
-    organization: organization.slug,
-    project: project.slug
-  });
-
-  andThen(() => {
-    assert.equal(currentRouteName(), 'login');
-  });
-});
-
-test('It redirects to project route if already a subscriber, with a flash', function(assert) {
+test('Allows setting preset amount before continuing to checkout', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -94,65 +18,30 @@ test('It redirects to project route if already a subscriber, with a flash', func
 
   project.createStripeConnectPlan({ project });
 
-  server.create('stripeConnectSubscription', { project, user });
-
-  projectDonatePage.visit({
-    amount: 10,
+  donatePage.visit({
     organization: organization.slug,
     project: project.slug
   });
 
   andThen(() => {
-    assert.equal(getFlashMessageCount(this), 1, 'A flash message was shown.');
-    assert.equal(currentRouteName(), 'project.index', 'User was redirected to index');
-  });
-});
-
-test('Allows creating a card and donating (creating a subscription)', function(assert) {
-  assert.expect(8);
-
-  stubStripe(this, stripeMockSuccess);
-
-  let user = server.create('user');
-  authenticateSession(this.application, { 'user_id': user.id });
-
-  let organization = server.create('organization');
-  let project = server.create('project', { organization });
-  project.createStripeConnectPlan();
-
-  projectDonatePage.visit({
-    amount: 10,
-    organization: organization.slug,
-    project: project.slug
+    donatePage.createDonation.setTo10.click();
+    donatePage.createDonation.clickContinue();
   });
 
   andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
-  });
-
-  andThen(() => {
-    let customer = server.schema.stripePlatformCustomers.findBy({ email: user.email });
-    assert.ok(customer, 'Customer was created with proper attributes.');
-    assert.equal(customer.userId, user.id, 'Customer was assigned to current user');
-
-    // we use attributes set in the mock stripe token response
-    let card = server.schema.stripePlatformCards.findBy({ userId: user.id });
-    assert.ok(card, 'Card was created with proper attributes.');
-    assert.equal(card.userId, user.id, 'Card was assigned to current user');
-
-    // quantity is 1000, in cents
-    let subscription = server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 });
-    assert.ok(subscription, 'Subscription was created sucessfully.');
-    assert.equal(subscription.userId, user.id, 'User was set to current user.');
-    assert.equal(subscription.projectId, project.id, 'Project was set.');
-    assert.equal(currentRouteName(), 'project.thank-you', 'User was redirected to the thank you route.');
+    assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');
+    // we cannot check query params in a simple way, so we're asserting the UI
+    // is correct instead
+    assert.equal(
+      checkoutPage.donationContainer.donationAmountText,
+      '$10.00 given each month',
+      'Donation amount is correct.'
+    );
   });
 });
 
-test('Shows stripe errors when creating a card token fails', function(assert) {
-  assert.expect(3);
-
-  stubStripe(this, stripeMockFailure);
+test('Allows setting custom amount before continuing to checkout', function(assert) {
+  assert.expect(2);
 
   let user = server.create('user');
   authenticateSession(this.application, { 'user_id': user.id });
@@ -160,178 +49,118 @@ test('Shows stripe errors when creating a card token fails', function(assert) {
   let organization = server.create('organization');
   let project = server.create('project', { organization });
 
-  projectDonatePage.visit({
-    amount: 10,
+  project.createStripeConnectPlan({ project });
+
+  donatePage.visit({
     organization: organization.slug,
     project: project.slug
   });
 
   andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
+    donatePage.createDonation.customAmount(2.5);
+    donatePage.createDonation.clickContinue();
   });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'project.donate');
-    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, stripeCardError.error.message, 'Correct error is displayed.');
+    assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');
+    // we cannot check query params in a simple way, so we're asserting the UI
+    // is correct instead
+    assert.equal(
+      checkoutPage.donationContainer.donationAmountText,
+      '$2.50 given each month',
+      'Donation amount is correct.'
+    );
   });
 });
 
-test('Shows error indicating problem with stripe customer if that part of the process fails', function(assert) {
-  assert.expect(3);
-
-  stubStripe(this, stripeMockSuccess);
-
-  let user = server.create('user');
-  authenticateSession(this.application, { 'user_id': user.id });
-
-  let organization = server.create('organization');
-  let project = server.create('project', { organization });
-
-  projectDonatePage.visit({
-    amount: 10,
-    organization: organization.slug,
-    project: project.slug
-  });
-
-  server.post('/stripe-platform-customers', function() {
-    return new Mirage.Response(500, {}, {
-      errors: [{
-        id: 'INTERNAL_SERVER_ERROR',
-        title: 'Internal server error',
-        detail: 'is invalid',
-        status: 500
-      }]
-    });
-  });
-
-  andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
-  });
-
-  andThen(() => {
-    assert.equal(currentRouteName(), 'project.donate');
-    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in connecting your account with our payment processor. Please try again.');
-  });
-});
-
-test('Shows error indicating problem with stripe card if that part of the process fails', function(assert) {
-  assert.expect(3);
-
-  stubStripe(this, stripeMockSuccess);
-
-  let user = server.create('user');
-  authenticateSession(this.application, { 'user_id': user.id });
-
-  let organization = server.create('organization');
-  let project = server.create('project', { organization });
-
-  projectDonatePage.visit({
-    amount: 10,
-    organization: organization.slug,
-    project: project.slug
-  });
-
-  server.post('/stripe-platform-cards', function() {
-    return new Mirage.Response(500, {}, {
-      errors: [{
-        id: 'INTERNAL_SERVER_ERROR',
-        title: 'Internal server error',
-        detail: 'is invalid',
-        status: 500
-      }]
-    });
-  });
-
-  andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
-  });
-
-  andThen(() => {
-    assert.equal(currentRouteName(), 'project.donate');
-    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in using your payment information. Please try again.');
-  });
-});
-
-test('Shows subscription validation errors if that part of the process fails due to validation', function(assert) {
+test('Requires user to register before getting to checkout', function(assert) {
   assert.expect(4);
 
-  stubStripe(this, stripeMockSuccess);
-
-  let user = server.create('user');
-  authenticateSession(this.application, { 'user_id': user.id });
-
   let organization = server.create('organization');
   let project = server.create('project', { organization });
 
-  projectDonatePage.visit({
-    amount: 0,
+  project.createStripeConnectPlan({ project });
+
+  donatePage.visit({
     organization: organization.slug,
     project: project.slug
   });
 
+  let email = 'joeuser@mail.com';
+
   andThen(() => {
-    server.post('/stripe-connect-subscriptions', function() {
-      return new Mirage.Response(422, {}, {
-        errors: [{
-          id: 'VALIDATION_ERROR',
-          source: { pointer: 'data/attributes/quantity' },
-          detail: 'is invalid',
-          status: 422
-        }]
-      });
-    });
+    donatePage.createDonation.setTo10.click();
+    donatePage.createDonation.clickContinue();
   });
 
   andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
+    assert.equal(currentRouteName(), 'signup', 'User was redirected to signup.');
+    signupPage.form.email(email);
+    signupPage.form.password('password');
+    signupPage.form.username('joeuser');
+    signupPage.form.save();
   });
 
   andThen(() => {
-    assert.notOk(server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 }), 'Subscription was not created.');
-    assert.equal(currentRouteName(), 'project.donate');
-    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, "The amount you've set for your monthly donation is invalid.", 'Correct error is displayed.');
+    // check user was created
+    let user = server.schema.users.findBy({ email });
+    assert.equal(user.state, 'signed_up_donating', 'User was created with state set properly.');
+
+    // check we got redirected back
+    assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');
+
+    // we cannot check query params in a simple way, so we're asserting the UI
+    // is correct instead
+    assert.equal(
+      checkoutPage.donationContainer.donationAmountText,
+      '$10.00 given each month',
+      'Donation amount is correct.'
+    );
   });
 });
 
-test('Shows error indicating problem with creating subscription if that part of the process fails', function(assert) {
-  assert.expect(3);
-
-  stubStripe(this, stripeMockSuccess);
-
-  let user = server.create('user');
-  authenticateSession(this.application, { 'user_id': user.id });
+test('Requires user to register before getting to checkout, with custom amount', function(assert) {
+  assert.expect(4);
 
   let organization = server.create('organization');
   let project = server.create('project', { organization });
 
-  projectDonatePage.visit({
-    amount: 10,
+  project.createStripeConnectPlan({ project });
+
+  donatePage.visit({
     organization: organization.slug,
     project: project.slug
   });
 
-  server.post('/stripe-connect-subscriptions', function() {
-    return new Mirage.Response(500, {}, {
-      errors: [{
-        id: 'INTERNAL_SERVER_ERROR',
-        title: 'Internal server error',
-        detail: 'is invalid',
-        status: 500
-      }]
-    });
+  let email = 'joeuser@mail.com';
+
+  andThen(() => {
+    donatePage.createDonation.customAmount(12.5);
+    donatePage.createDonation.clickContinue();
   });
 
   andThen(() => {
-    projectDonatePage.donationContainer.clickSubmit();
+    assert.equal(currentRouteName(), 'signup', 'User was redirected to signup.');
+    signupPage.form.email(email);
+    signupPage.form.password('password');
+    signupPage.form.username('joeuser');
+    signupPage.form.save();
   });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'project.donate');
-    assert.equal(projectDonatePage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectDonatePage.errorFormatter.errors(0).message, 'There was a problem in setting up your monthly donation. Please try again.');
+    // check user was created
+    let user = server.schema.users.findBy({ email });
+    assert.equal(user.state, 'signed_up_donating', 'User was created with state set properly.');
+
+    // check we got redirected back
+    assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');
+
+    // we cannot check query params in a simple way, so we're asserting the UI
+    // is correct instead
+    assert.equal(
+      checkoutPage.donationContainer.donationAmountText,
+      '$12.50 given each month',
+      'Donation amount is correct.'
+    );
   });
 });

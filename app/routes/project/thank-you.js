@@ -6,5 +6,9 @@ const { Route } = Ember;
 export default Route.extend(AuthenticatedRouteMixin, {
   model() {
     return this.modelFor('project').reload();
+  },
+
+  renderTemplate() {
+    this.render('project/thank-you', { into: 'application' });
   }
 });
