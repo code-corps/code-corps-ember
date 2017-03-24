@@ -7,6 +7,10 @@
     From all the volunteers on the {{project.title}} team.
   </p>
   <p>
-    {{link-to "Back to project" "project" project.organization.slug project.slug}}
+    {{#if onboarding.isOnboarding}}
+      {{link-to "Finish signing up" "start.hello" class="button default"}}
+    {{else}}
+      {{link-to "Back to project" "project" project.organization.slug project.slug class="button default"}}
+    {{/if}}
   </p>
 </div>

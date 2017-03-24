@@ -10,24 +10,25 @@ const {
 } = Ember;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
-  queryParams: { donate: false },
+  queryParams: { context: 'default' },
+
+  session: service(),
 
   /**
    * Model hook initializes and returns a new user record
    *
-   * There is a specific case when an unauthenticated user will navigate to the
-   * project.donate route. They will get redirected to signup here, with a
-   * `donate=true` query parameter.
-   *
-   * This changes initialization of the user so they start with a 'donating'
-   * state, instead of the default 'signing_up'.
+   * We can pass a context of the signup, e.g. `'donating'`
    */
-  model({ donate }) {
-    let user = donate ? { state: 'signed_up_donating' } : {};
+  model({ context }) {
+    let user = context ? { signUpContext: context } : {};
     return get(this, 'store').createRecord('user', user);
   },
 
-  session: service(),
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      controller.set('context', 'default');
+    }
+  },
 
   actions: {
     signIn(credentials) {

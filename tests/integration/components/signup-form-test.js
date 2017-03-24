@@ -38,8 +38,8 @@ test('renders different title if user is donating', function(assert) {
 
   renderPage();
 
-  let normalUser = { state: null };
-  let donatingUser = { state: 'signed_up_donating' };
+  let normalUser = { signUpContext: null };
+  let donatingUser = { signUpContext: 'donation' };
 
   run(() => set(this, 'user', normalUser));
   assert.equal(page.title.text, 'Join Code Corps today.', 'Title is correct.');

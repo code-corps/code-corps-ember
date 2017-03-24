@@ -1,42 +1,112 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import PageObject from 'ember-cli-page-object';
+import pageComponent from 'code-corps-ember/tests/pages/components/navigation-menu';
+
+const page = PageObject.create(pageComponent);
+
+function renderPage() {
+  page.render(hbs`{{navigation-menu}}`);
+}
 
 moduleForComponent('navigation-menu', 'Integration | Component | navigation menu', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders elements for the default menu when logged out', function(assert) {
-  this.render(hbs`{{navigation-menu}}`);
-  assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation__options').length, 2);
-  assert.equal(this.$('.user-menu').length, 0, 'does not show uer menu');
-  assert.equal(this.$('.onboarding__steps').length, 0);
+  assert.expect(9);
+
+  renderPage();
+
+  assert.ok(page.logo.isVisible, 'The logo is rendered.');
+  assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
+  assert.ok(page.blogLink.isVisible, 'The link to blogs route is rendered');
+  assert.ok(page.signUpLink.isVisible, 'The link to signup route is rendered');
+  assert.ok(page.signInLink.isVisible, 'The link to login route is rendered');
+  assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
+  assert.notOk(page.onboarding.status.isVisible, 'The onboarding status text is not rendered.');
+  assert.notOk(page.onboarding.progressBar.isVisible, 'The onboarding progress bar is not rendered.');
+  assert.notOk(page.onboarding.finishSigningUp.isVisible, 'The link to finish signing up is not rendered.');
 });
 
 test('it renders elements for the default menu when logged in', function(assert) {
+  assert.expect(9);
+
   stubService(this, 'session', { isAuthenticated: true });
 
-  this.render(hbs`{{navigation-menu}}`);
-  assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation__options').length, 2);
-  assert.equal(this.$('.user-menu').length, 1, 'shows uer menu');
-  assert.equal(this.$('.onboarding__steps').length, 0);
+  renderPage();
+
+  assert.ok(page.logo.isVisible, 'The logo is rendered.');
+  assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
+  assert.ok(page.blogLink.isVisible, 'The link to blogs route is rendered');
+  assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered');
+  assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered');
+  assert.ok(page.userMenu.isVisible, 'User menu is shown.');
+  assert.notOk(page.onboarding.status.isVisible, 'The onboarding status text is not rendered.');
+  assert.notOk(page.onboarding.progressBar.isVisible, 'The onboarding progress bar is not rendered.');
+  assert.notOk(page.onboarding.finishSigningUp.isVisible, 'The link to finish signing up is not rendered.');
 });
 
-test('it renders elements for the onboarding menu', function(assert) {
-  stubService(this, 'navigation-menu', { isOnboarding: true });
+test('it renders elements for the onboarding menu correctly when on onboarding route', function(assert) {
+  assert.expect(11);
+
+  stubService(this, 'navigation-menu', {
+    isOnboarding: true,
+    isViewingOnboarding: true
+  });
+
   stubService(this, 'onboarding', {
-    currentStepNumber: 1,
+    currentRouteStepNumber: 1,
     totalSteps: 4,
     progressPercentage: 25
   });
 
-  this.render(hbs`{{navigation-menu}}`);
-  assert.equal(this.$('.header__logo').length, 1);
-  assert.equal(this.$('.header-navigation__options').length, 0);
-  assert.equal(this.$('.user-menu').length, 0, 'does not show uer menu');
-  assert.equal(this.$('.onboarding__steps').length, 1);
-  assert.equal(this.$('.onboarding__steps').text().trim(), 'Step 1 of 4');
-  assert.equal(this.$('.progress-bar').attr('style'), 'width: 25%;');
+  renderPage();
+
+  assert.ok(page.logo.isVisible, 'The logo is rendered.');
+  assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered.');
+  assert.notOk(page.blogLink.isVisible, 'The link to blogs route is not rendered.');
+
+  assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
+  assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered.');
+  assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered.');
+
+  assert.ok(page.onboarding.status.isVisible, 'The onboarding status text is rendered.');
+  assert.equal(page.onboarding.status.text, 'Step 1 of 4', 'Correct status is rendered.');
+  assert.ok(page.onboarding.progressBar.isVisible, 'The onboarding progress bar is rendered.');
+  assert.ok(page.onboarding.progressBar.displaysPercentage(25), 'Correct progress percentage is rendered.');
+  assert.notOk(page.onboarding.finishSigningUp.isVisible, 'The link to finish signing up is not rendered.');
+});
+
+test('it renders elements for the onboarding menu correctly when on project.thank-you route', function(assert) {
+  assert.expect(9);
+
+  stubService(this, 'navigation-menu', {
+    // on project.thank-you route
+    currentRouteName: 'project.thank-you',
+    isOnboarding: true,
+    // not on nonboarding route
+    isViewingOnboarding: false
+  });
+
+  renderPage();
+
+  assert.ok(page.logo.isVisible, 'The logo is rendered.');
+  assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered');
+  assert.notOk(page.blogLink.isVisible, 'The link to blogs route is not rendered');
+
+  assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
+  assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered');
+  assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered');
+
+  assert.notOk(page.onboarding.status.isVisible, 'Onboarding status is not rendered.');
+  assert.notOk(page.onboarding.progressBar.isVisible, 'Onboarding progress bar is not rendered.');
+  assert.ok(page.onboarding.finishSigningUp.isVisible, 'The link to finish signing up is rendered.');
 });

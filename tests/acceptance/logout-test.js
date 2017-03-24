@@ -18,6 +18,6 @@ test('Logging out', function(assert) {
     indexPage.navMenu.userMenu.logOut();
   });
   andThen(function() {
-    assert.ok(indexPage.navMenu.loginLinkVisible, 'Page contains login link');
+    assert.ok(indexPage.navMenu.signInLink.isVisible, 'Page contains login link');
   });
 });

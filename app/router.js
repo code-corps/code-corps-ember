@@ -29,10 +29,12 @@ let AppRouter = Router.extend({
 });
 
 AppRouter.map(function() {
+  this.route('about');
+
   this.route('login');
 
-  this.route('oauth-stripe', {
-    path: '/oauth/stripe'
+  this.route('organization', function() {
+    this.route('settings', function() { });
   });
 
   this.route('organizations', function() {
@@ -44,6 +46,8 @@ AppRouter.map(function() {
       });
     });
   });
+
+  this.route('privacy');
 
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
     this.route('checkout');
@@ -77,6 +81,10 @@ AppRouter.map(function() {
 
   this.route('signup');
 
+  this.route('slugged-route', {
+    path: '/:slugged_route_slug'
+  });
+
   this.route('start', function() {
     this.route('hello');
     this.route('interests');
@@ -84,18 +92,7 @@ AppRouter.map(function() {
     this.route('skills');
   });
 
-  this.route('slugged-route', {
-    path: '/:slugged_route_slug'
-  });
-
   this.route('team');
-  this.route('about');
-
-  this.route('organization', function() {
-    this.route('settings', function() { });
-  });
-
-  this.route('privacy');
   this.route('terms');
 });
 

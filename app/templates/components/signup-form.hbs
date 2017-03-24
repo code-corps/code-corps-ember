@@ -1,7 +1,7 @@
 <div class="container">
   <form>
 
-    {{#if (eq user.state 'signed_up_donating')}}
+    {{#if (eq user.signUpContext 'donation')}}
       <h2>Join Code Corps to continue.</h2>
     {{else}}
       <h2>Join Code Corps today.</h2>

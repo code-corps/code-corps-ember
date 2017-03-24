@@ -22,8 +22,9 @@
 .header__logo {
   display: flex;
   align-items: center;
-  line-height: 50px;
+  line-height: 45px;
   margin: 0;
+  min-height: 45px;
   a {
     @include sprite($logo-small);
     display: inline-block;
@@ -88,8 +89,12 @@
   margin-left: auto;
 }
 
+.onboarding__continue {
+  padding: 7px 0;
+}
+
 .onboarding__progress {
-  padding: 23px 0 22px 0;
+  padding: 18px 0 17px 0;
   width: 100px;
 
   .progress-bar-container {
@@ -98,5 +103,5 @@
 }
 
 .onboarding__steps {
-  padding: 16px 30px;
+  padding: 12px 0;
 }
