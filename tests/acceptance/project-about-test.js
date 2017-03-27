@@ -122,7 +122,7 @@ test('Does not show donation progress sidebar if donations are not active', func
 });
 
 test('Allows donating to a project from the sidebar', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
   let user = server.create('user');
 
@@ -140,14 +140,10 @@ test('Allows donating to a project from the sidebar', function(assert) {
   });
 
   andThen(() => {
-    projectAboutPage.donationStatus.becomeADonor.clickButton();
-    projectAboutPage.donationStatus.createDonation.setTo15.clickButton();
-    projectAboutPage.donationStatus.createDonation.clickContinue();
+    projectAboutPage.donationStatus.clickLink();
   });
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.donate', 'App transitioned to the donate route.');
-    let expectedURL = `/${project.organization.slug}/${project.slug}/donate?amount=15`;
-    assert.equal(currentURL(), expectedURL, 'URL contains amount as query parameter.');
   });
 });

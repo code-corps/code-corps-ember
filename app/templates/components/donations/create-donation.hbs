@@ -1,11 +1,10 @@
+<h3>Support this project each month</h3>
 <div class="amounts">
 {{#each presetAmounts as |presetAmount|}}
   {{donations/donation-amount-button
-    customAmount=customAmount
+    click=(action "selectPresetAmount" presetAmount)
     presetAmount=presetAmount
-    selectedAmount=amount
-    setCustomAmount=(action (mut customAmount))
-    setAmount=(action (mut amount))
+    selected=(eq presetAmount (float amount))
   }}
 {{/each}}
 </div>

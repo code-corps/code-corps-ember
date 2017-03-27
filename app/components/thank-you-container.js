@@ -1,9 +1,12 @@
 import Ember from 'ember';
 
 const {
-  Component
+  Component,
+  inject: { service }
 } = Ember;
 
 export default Component.extend({
-  classNames: ['thank-you-container']
+  classNames: ['thank-you-container'],
+
+  onboarding: service()
 });

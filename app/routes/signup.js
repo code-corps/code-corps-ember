@@ -3,21 +3,36 @@ import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 
 const {
+  get,
   Route,
   inject: { service },
   set
 } = Ember;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
-  model() {
-    return this.get('store').createRecord('user');
-  },
+  queryParams: { context: 'default' },
 
   session: service(),
 
+  /**
+   * Model hook initializes and returns a new user record
+   *
+   * We can pass a context of the signup, e.g. `'donating'`
+   */
+  model({ context }) {
+    let user = context ? { signUpContext: context } : {};
+    return get(this, 'store').createRecord('user', user);
+  },
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      controller.set('context', 'default');
+    }
+  },
+
   actions: {
     signIn(credentials) {
-      this.get('session').authenticate('authenticator:jwt', credentials);
+      get(this, 'session').authenticate('authenticator:jwt', credentials);
     },
 
     handleErrors(payload) {

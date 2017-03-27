@@ -29,10 +29,12 @@ let AppRouter = Router.extend({
 });
 
 AppRouter.map(function() {
+  this.route('about');
+
   this.route('login');
 
-  this.route('oauth-stripe', {
-    path: '/oauth/stripe'
+  this.route('organization', function() {
+    this.route('settings', function() { });
   });
 
   this.route('organizations', function() {
@@ -45,7 +47,11 @@ AppRouter.map(function() {
     });
   });
 
+  this.route('privacy');
+
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
+    this.route('checkout');
+    this.route('donate');
     this.route('settings', function() {
       this.route('contributors');
       this.route('donations', function() {
@@ -54,12 +60,10 @@ AppRouter.map(function() {
       });
       this.route('profile');
     });
-
     this.route('tasks', function() {
       this.route('new');
       this.route('task', { path: '/:number' });
     });
-    this.route('donate');
     this.route('thank-you');
   });
 
@@ -77,6 +81,10 @@ AppRouter.map(function() {
 
   this.route('signup');
 
+  this.route('slugged-route', {
+    path: '/:slugged_route_slug'
+  });
+
   this.route('start', function() {
     this.route('hello');
     this.route('interests');
@@ -84,18 +92,7 @@ AppRouter.map(function() {
     this.route('skills');
   });
 
-  this.route('slugged-route', {
-    path: '/:slugged_route_slug'
-  });
-
   this.route('team');
-  this.route('about');
-
-  this.route('organization', function() {
-    this.route('settings', function() { });
-  });
-
-  this.route('privacy');
   this.route('terms');
 });
 

@@ -3065,9 +3065,9 @@ ember-dragula@1.9.3:
     ember-cli-babel "^5.1.5"
     rsvp "^3.2.1"
 
-ember-exam@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-0.6.0.tgz#665a5c14c80daeea0d85b1beb62b7f5c2e29d14f"
+ember-exam@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-0.6.1.tgz#3e66fc97a51e0901535b3629941a7e42d96ea718"
   dependencies:
     chalk "^1.1.3"
     cli-table2 "^0.2.0"
@@ -5846,9 +5846,9 @@ normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
 
-normalize.css@^4.1.1:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-4.2.0.tgz#21d66cc557154d4379fd1e079ec7de58a379b099"
+normalize.css@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-6.0.0.tgz#22188c2707c911fb3ad3c1aac0677ff68661bea8"
 
 normalize.css@~4.1.1:
   version "4.1.1"
@@ -7931,6 +7931,10 @@ yargs@~3.27.0:
 yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
+
+yuidoc-ember-theme@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/yuidoc-ember-theme/-/yuidoc-ember-theme-1.3.0.tgz#920b20a8d3bb65ce880563a28ec28ed5ba744503"
 
 zxcvbn@^4.3.0:
   version "4.4.2"

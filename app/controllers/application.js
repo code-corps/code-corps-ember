@@ -3,6 +3,7 @@ import Ember from 'ember';
 const {
   computed,
   Controller,
+  get,
   inject: { service }
 } = Ember;
 
@@ -22,7 +23,7 @@ export default Controller.extend({
 
   actions: {
     invalidateSession() {
-      this.get('session').invalidate();
+      get(this, 'session').invalidate();
     }
   }
 });

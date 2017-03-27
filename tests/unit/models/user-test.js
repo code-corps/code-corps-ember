@@ -23,7 +23,8 @@ test('it exists', function(assert) {
 testForAttributes('user', [
   'biography', 'cloudinaryPublicId', 'email', 'firstName', 'insertedAt',
   'lastName', 'name', 'password', 'photoLargeUrl', 'photoThumbUrl',
-  'state', 'stateTransition', 'twitter', 'username', 'website'
+  'signUpContext', 'state', 'stateTransition', 'twitter', 'username',
+  'website'
 ]);
 
 testForBelongsTo('user', 'stripePlatformCard');

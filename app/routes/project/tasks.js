@@ -5,5 +5,9 @@ const { Route } = Ember;
 export default Route.extend({
   model() {
     return this.modelFor('project').reload();
+  },
+
+  renderTemplate() {
+    this.render('project/tasks', { into: 'application' });
   }
 });

@@ -1,20 +1,22 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-
 import donationAmountButtonComponent from '../../../pages/components/donations/donation-amount-button';
+
+const { set } = Ember;
 
 let page = PageObject.create(donationAmountButtonComponent);
 
-function setHandlers(context, { amountHandler = function() {}, customAmountHandler = function() {} } = {}) {
-  context.set('amountHandler', amountHandler);
-  context.set('customAmountHandler', customAmountHandler);
+function renderPage() {
+  page.render(hbs`
+    {{donations/donation-amount-button presetAmount=presetAmount selected=selected}}
+  `);
 }
 
 moduleForComponent('donations/donation-amount-button', 'Integration | Component | donations/donation amount button', {
   integration: true,
   beforeEach() {
-    setHandlers(this);
     page.setContext(this);
   },
   afterEach() {
@@ -22,27 +24,22 @@ moduleForComponent('donations/donation-amount-button', 'Integration | Component 
   }
 });
 
-test('it sends actions when clicked', function(assert) {
-  assert.expect(2);
+test('it renders preset value as part of button text', function(assert) {
+  assert.expect(1);
 
-  let amountHandler = function(amount) {
-    assert.equal(amount, 5, 'Proper amount was sent');
-  };
+  set(this, 'presetAmount', 5);
 
-  let customAmountHandler = function(customAmount) {
-    assert.equal(customAmount, null, 'A null custom amount was sent');
-  };
+  renderPage();
 
-  setHandlers(this, { amountHandler, customAmountHandler });
-
-  page.render(hbs`{{donations/donation-amount-button setAmount=amountHandler setCustomAmount=customAmountHandler presetAmount=5}}`);
-  page.clickButton();
+  assert.equal(page.text, 'Donate $5', 'Value is rendered properly.');
 });
 
 test('it shows as active if button is selected', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-amount-button setAmount=actionHandler presetAmount=5 selectedAmount=5}}`);
+  set(this, 'selected', true);
+
+  renderPage();
 
   assert.ok(page.isActive, 'Button is rendered as active');
 });
@@ -50,7 +47,9 @@ test('it shows as active if button is selected', function(assert) {
 test('it shows as inactive if button is not selected', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-amount-button setAmount=actionHandler presetAmount=5 selectedAmount=10}}`);
+  set(this, 'selected', false);
+
+  renderPage();
 
   assert.ok(page.isInactive, 'Button is rendered as inActive');
 });

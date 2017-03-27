@@ -28,8 +28,8 @@ test('it renders all elements', function(assert) {
   assert.equal(page.columns(0).rows(0).text, 'About us');
   assert.equal(page.columns(0).rows(1).text, 'Team');
 
-  assert.equal(page.columns(1).rows(0).text, 'team@codecorps.org');
-  assert.equal(page.columns(1).rows(0).link.href, 'mailto:team@codecorps.org');
+  assert.equal(page.columns(1).rows(0).text, 'Help Center');
+  assert.equal(page.columns(1).rows(0).link.href, 'https://help.codecorps.org');
   assert.equal(page.columns(1).rows(1).text, 'Terms of Use');
   assert.equal(page.columns(1).rows(2).text, 'Privacy Policy');
 

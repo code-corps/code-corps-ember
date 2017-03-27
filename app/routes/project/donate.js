@@ -1,4 +1,3 @@
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import Ember from 'ember';
 
 const {
@@ -10,8 +9,9 @@ const {
 
 const ALREADY_A_SUBSCRIBER = "You're already supporting this project.";
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend({
   flashMessages: service(),
+  session: service(),
   userSubscriptions: service(),
 
   model() {
@@ -26,11 +26,15 @@ export default Route.extend(AuthenticatedRouteMixin, {
       get(this, 'flashMessages').success(ALREADY_A_SUBSCRIBER);
       this.transitionTo('project', project);
     } else {
-      this._super.call(...arguments);
+      this._super(...arguments);
     }
   },
 
   setupController(controller, models) {
     controller.setProperties(models);
+  },
+
+  renderTemplate() {
+    this.render('project/donate', { into: 'application' });
   }
 });

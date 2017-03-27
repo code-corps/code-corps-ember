@@ -1,0 +1,59 @@
+.create-donation {
+  display: flex;
+  flex-direction: column;
+
+  @include span-columns(5);
+  @include shift(7/2);
+
+  @include media($lg-screen) {
+    @include span-columns(8);
+    @include shift(2);
+  }
+
+  @include media($md-screen) {
+    @include shift(1);
+    @include span-columns(10);
+  }
+
+  @include media($sm-screen) {
+    @include shift(0);
+    @include span-columns(12);
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  .amounts {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .preset-amount {
+    flex: 2;
+    flex-basis: 48%;
+    margin-bottom: 5px;
+
+    &:nth-child(even) {
+      margin-left: 2px;
+    }
+
+    &:nth-child(odd) {
+      margin-right: 2px;
+    }
+  }
+
+  .custom-amount {
+    flex: 1;
+  }
+
+  .continue {
+    flex: 1;
+  }
+
+  button {
+    width: 100%;
+  }
+}

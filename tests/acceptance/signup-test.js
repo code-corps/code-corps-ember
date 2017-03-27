@@ -11,8 +11,8 @@ test('Signup form is accessible from the main site', function(assert) {
   indexPage.visit();
 
   andThen(() => {
-    assert.ok(indexPage.navMenu.signUp.isVisible, 'Link to sign-up route is visible');
-    indexPage.navMenu.signUp.click();
+    assert.ok(indexPage.navMenu.signUpLink.isVisible, 'Link to sign-up route is visible');
+    indexPage.navMenu.signUpLink.click();
   });
 
   andThen(() => {

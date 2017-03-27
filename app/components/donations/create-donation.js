@@ -1,14 +1,57 @@
 import Ember from 'ember';
 
-const { Component, computed, isEmpty } = Ember;
+const {
+  Component,
+  computed,
+  getProperties,
+  isEmpty,
+  observer,
+  set
+} = Ember;
 
 export default Component.extend({
   classNames: ['create-donation'],
+
+  amount: 25,
+  fallbackAmount: 25,
+  customAmount: null,
   presetAmounts: [10, 15, 25, 50],
-  amount: 10,
+
+  init() {
+    this._super(...arguments);
+
+    let { amount, presetAmounts }
+      = getProperties(this, 'amount', 'presetAmounts');
+
+    if (!presetAmounts.includes(amount)) {
+      set(this, 'customAmount', amount);
+    }
+  },
 
   selectedAmount: computed('amount', 'customAmount', function() {
-    let { amount, customAmount } = this.getProperties('amount', 'customAmount');
+    let { amount, customAmount }
+      = getProperties(this, 'amount', 'customAmount');
+
     return isEmpty(customAmount) ? amount : customAmount;
-  })
+  }),
+
+  amountChanged: observer('customAmount', function() {
+    let { amount, customAmount, fallbackAmount, onAmountChanged, presetAmounts }
+      = getProperties(this, 'amount', 'customAmount', 'fallbackAmount', 'onAmountChanged', 'presetAmounts');
+
+    if (isEmpty(customAmount)) {
+      if (!presetAmounts.includes(amount)) {
+        onAmountChanged(fallbackAmount);
+      }
+    } else {
+      onAmountChanged(customAmount);
+    }
+  }),
+
+  actions: {
+    selectPresetAmount(presetAmount) {
+      set(this, 'amount', presetAmount);
+      set(this, 'customAmount', null);
+    }
+  }
 });

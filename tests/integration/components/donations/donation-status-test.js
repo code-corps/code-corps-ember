@@ -21,20 +21,12 @@ moduleForComponent('donations/donation-status', 'Integration | Component | donat
   }
 });
 
-test('it renders become-a-donor component initially', function(assert) {
+test('it renders the become a donor link initially', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-status becomeADonor=becomeADonorHandler}}`);
+  page.render(hbs`{{donations/donation-status}}`);
 
-  assert.ok(page.rendersBecomeADonor, 'become-a-donor subcomponent is rendered.');
-});
-
-test('it renders create-donation if the process has started', function(assert) {
-  assert.expect(1);
-
-  page.render(hbs`{{donations/donation-status createDonation=createDonationHandler donationStatusExpanded=true}}`);
-
-  assert.ok(page.rendersCreateDonation, 'create-donation subcomponent is rendered.');
+  assert.ok(page.rendersLink, 'The link is rendered.');
 });
 
 test('it renders show-donation if a subscription record is present and assigned', function(assert) {
@@ -45,19 +37,4 @@ test('it renders show-donation if a subscription record is present and assigned'
 
   assert.ok(page.rendersShowDonation, 'show-donation subcomponent is rendered.');
   assert.equal(page.showDonation.infoText, 'You pledged $1.50 each month.', 'Info text is properly rendered. Binding is correct.');
-});
-
-test('the become a donor -> set amount -> continue flow works properly', function(assert) {
-  assert.expect(1);
-
-  let createDonationHandler =  function(amount) {
-    assert.equal(amount, 25, 'Handler got called, with proper amount.');
-  };
-
-  setHandler(this, createDonationHandler);
-
-  page.render(hbs`{{donations/donation-status createDonation=createDonationHandler}}`);
-  page.becomeADonor.clickButton();
-  page.createDonation.setTo25.clickButton();
-  page.createDonation.clickContinue();
 });

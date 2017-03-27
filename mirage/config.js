@@ -573,13 +573,8 @@ export default function() {
   this.get('/users', { coalesce: true });
 
   this.post('/users', function(schema) {
-    let { email, password, username } = this.normalizedRequestAttrs();
-    let user = schema.create('user', {
-      email,
-      password,
-      state: 'signed_up',
-      username
-    });
+    let { email, password, username, state = 'signed_up', signUpContext } = this.normalizedRequestAttrs();
+    let user = schema.create('user', { email, password, state, username, signUpContext });
     schema.create('sluggedRoute', { slug: user.username, user });
     return user;
   });
