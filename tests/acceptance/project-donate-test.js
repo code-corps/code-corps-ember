@@ -74,7 +74,7 @@ test('Allows setting custom amount before continuing to checkout', function(asse
 });
 
 test('Requires user to register before getting to checkout', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   let organization = server.create('organization');
   let project = server.create('project', { organization });
@@ -104,7 +104,8 @@ test('Requires user to register before getting to checkout', function(assert) {
   andThen(() => {
     // check user was created
     let user = server.schema.users.findBy({ email });
-    assert.equal(user.state, 'signed_up_donating', 'User was created with state set properly.');
+    assert.equal(user.state, 'signed_up', 'User was created with state set properly.');
+    assert.equal(user.signUpContext, 'donation', 'User was created with context set properly.');
 
     // check we got redirected back
     assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');
@@ -120,7 +121,7 @@ test('Requires user to register before getting to checkout', function(assert) {
 });
 
 test('Requires user to register before getting to checkout, with custom amount', function(assert) {
-  assert.expect(4);
+  assert.expect(5);
 
   let organization = server.create('organization');
   let project = server.create('project', { organization });
@@ -150,7 +151,8 @@ test('Requires user to register before getting to checkout, with custom amount',
   andThen(() => {
     // check user was created
     let user = server.schema.users.findBy({ email });
-    assert.equal(user.state, 'signed_up_donating', 'User was created with state set properly.');
+    assert.equal(user.state, 'signed_up', 'User was created with state set properly.');
+    assert.equal(user.signUpContext, 'donation', 'User was created with context set properly.');
 
     // check we got redirected back
     assert.equal(currentRouteName(), 'project.checkout', 'User was redirected to checkout');

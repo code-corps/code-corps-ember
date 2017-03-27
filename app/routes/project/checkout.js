@@ -21,7 +21,7 @@ export default Route.extend({
       return this._super(...arguments);
     } else {
       set(session, 'attemptedTransition', transition);
-      let queryParams = { donate: true };
+      let queryParams = { context: 'donation' };
       return this.transitionTo('signup', { queryParams });
     }
   },
@@ -38,7 +38,7 @@ export default Route.extend({
       get(this, 'flashMessages').success(ALREADY_A_SUBSCRIBER);
       this.transitionTo('project', project);
     } else {
-      this._super.call(...arguments);
+      this._super(...arguments);
     }
   },
 

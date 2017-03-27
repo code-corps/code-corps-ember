@@ -29,7 +29,7 @@ test('it renders proper information', function(assert) {
   assert.equal(page.percentageLabel, 'of $1,000 goal', 'Correct percentage label is rendered');
   assert.equal(page.percentageValue, '50%', 'Correct percentage value is rendered');
   assert.equal(page.goalDescription, mockGoal.description, 'Goal description is rendered');
-  assert.ok(page.rendersProgressBar, 'Progress bar component is rendered');
+  assert.ok(page.progressBar.isVisible, 'Progress bar component is rendered');
 });
 
 test('it renders decimal values if there are any', function(assert) {
@@ -44,5 +44,5 @@ test('it renders decimal values if there are any', function(assert) {
   assert.equal(page.amountValue, '$505.50', 'Correct amount is rendered');
   assert.equal(page.percentageLabel, 'of $1,000 goal', 'Correct percentage label is rendered');
   assert.equal(page.percentageValue, '50.5%', 'Correct percentage is rendered');
-  assert.ok(page.rendersProgressBar, 'Progress bar component is rendered');
+  assert.ok(page.progressBar.isVisible, 'Progress bar component is rendered');
 });

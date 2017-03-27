@@ -11,8 +11,8 @@ test('Logged out, can sign up', function(assert) {
   assert.expect(2);
   indexPage.visit();
   andThen(function() {
-    assert.equal(indexPage.navMenu.signUp.text, 'Sign up', 'Page contains sign up link');
-    indexPage.navMenu.signUp.click();
+    assert.ok(indexPage.navMenu.signUpLink.isVisible, 'Page contains sign up link.');
+    indexPage.navMenu.signUpLink.click();
   });
   andThen(function() {
     assert.ok(signupPage.form.isVisible, 'Page contains sign up form');
@@ -23,8 +23,8 @@ test('Logged out, can sign in', function(assert) {
   assert.expect(2);
   indexPage.visit();
   andThen(function() {
-    assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains sign in link');
-    indexPage.navMenu.logIn.click();
+    assert.ok(indexPage.navMenu.signInLink.isVisible, 'Page contains sign in link.');
+    indexPage.navMenu.signInLink.click();
   });
   andThen(function() {
     assert.ok(loginPage.form.isVisible, 'Page contains login form');
@@ -84,6 +84,6 @@ test('Logged in, from user menu can log out', function(assert) {
     indexPage.navMenu.userMenu.logOut();
   });
   andThen(function() {
-    assert.equal(indexPage.navMenu.logIn.text, 'Sign in', 'Page contains sign in link');
+    assert.ok(indexPage.navMenu.signInLink.isVisible, 'Page contains sign in link.');
   });
 });

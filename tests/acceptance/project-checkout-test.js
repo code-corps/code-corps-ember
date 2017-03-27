@@ -134,7 +134,7 @@ test('Allows creating a card and donating (creating a subscription)', function(a
 });
 
 test('Allows signing up and donating', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   stubStripe(this, stripeMockSuccess);
 
@@ -160,7 +160,8 @@ test('Allows signing up and donating', function(assert) {
 
   andThen(() => {
     let user = server.schema.users.findBy({ email });
-    assert.equal(user.state, 'signed_up_donating', 'User was created with state set properly.');
+    assert.equal(user.state, 'signed_up', 'User was created with state set properly.');
+    assert.equal(user.signUpContext, 'donation', 'User was created with context set properly.');
   });
 
   andThen(() => {

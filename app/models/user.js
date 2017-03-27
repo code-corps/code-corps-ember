@@ -16,6 +16,7 @@ export default Model.extend({
   password: attr(),
   photoLargeUrl: attr(),
   photoThumbUrl: attr(),
+  signUpContext: attr(),
   state: attr(),
   twitter: attr(),
   username: attr(),

@@ -19,7 +19,7 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   onboarding: service(),
 
   isOnboarding: computed.alias('onboarding.isOnboarding'),
-  onboardingRoute: computed.alias('onboarding.currentRoute'),
+  onboardingRoute: computed.alias('onboarding.routeForCurrentStep'),
 
   headTags: [
     {
@@ -153,19 +153,21 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   ],
 
   beforeModel(transition) {
-    return this._loadCurrentUser().then(() => {
-      if (this._shouldTransitionToOnboardingRoute(transition)) {
-        return this.transitionTo(get(this, 'onboardingRoute'));
-      } else {
-        return this._super(...arguments);
-      }
-    }).catch(() => this._invalidateSession());
+    return this._loadCurrentUser()
+      .then(() => {
+        if (this._shouldRedirectToOnboarding(transition)) {
+          return this.transitionTo(get(this, 'onboardingRoute'));
+        } else {
+          return this._super(...arguments);
+        }
+      })
+      .catch(() => this._invalidateSession());
   },
 
   sessionAuthenticated() {
     return this._loadCurrentUser()
       .then(() => {
-        this._attemptTransition();
+        this._attemptTransitionAfterAuthentication();
         this._trackAuthentication();
       })
       .catch(() => this._invalidateSession());
@@ -173,15 +175,16 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
 
   actions: {
     willTransition(transition) {
-      if (this._shouldTransitionToOnboardingRoute(transition)) {
-        this._abortAndFixHistory(transition);
+      if (this._shouldRedirectToOnboarding(transition)) {
+        transition.abort();
+        this.transitionTo(get(this, 'onboardingRoute'));
       }
     },
 
     // see https://github.com/emberjs/ember.js/issues/12791
     // if we don't handle the error action at application level
-    // te error will continue to be thrown, causing tests to fail
-    // and the error to be outputed to console, even though we technically
+    // the error will continue to be thrown, causing tests to fail
+    // and the error will output to console, even though we technically
     // "handled" it with our application_error route/template
     error(e) {
       console.error(e);
@@ -189,24 +192,24 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
     }
   },
 
-  _abortAndFixHistory(transition) {
-    transition.abort();
-    if (window.history) {
-      window.history.forward();
-    }
-  },
-
-  _attemptTransition() {
-    if (get(this, 'isOnboarding')) {
+  // The default beahavior for an ember-simple-auth ApplicationRouteMixin is to
+  // Either got back to the route the user tried to access before being
+  // redirected to login/signup, or if there is no such route, go to the default
+  // route.
+  //
+  // This slightly extends this behavior by sending the user to the onboarding
+  // route if it's determined that should be the case. If there was a stored
+  // route, for example, if a non-signed-in user tried to donate, then that
+  // still takes precedence.
+  _attemptTransitionAfterAuthentication() {
+    let attemptedTransition = get(this, 'session.attemptedTransition');
+    if (isPresent(attemptedTransition)) {
+      attemptedTransition.retry();
+      set(this, 'session.attemptedTransition', null);
+    } else if (get(this, 'isOnboarding')) {
       this.transitionTo(get(this, 'onboardingRoute'));
     } else {
-      let attemptedTransition = get(this, 'session.attemptedTransition');
-      if (isPresent(attemptedTransition)) {
-        attemptedTransition.retry();
-        set(this, 'session.attemptedTransition', null);
-      } else {
-        this.transitionTo('projects-list');
-      }
+      this.transitionTo('projects-list');
     }
   },
 
@@ -218,14 +221,18 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
     return get(this, 'currentUser').loadCurrentUser();
   },
 
-  _shouldTransitionToOnboardingRoute(transition) {
+  // If the user is still in the process of onboarding, they are allowd to visit
+  // only select routes. Trying to access any other route redirects them to
+  // their next onboarding route.
+  //
+  // This function returns true if that should happen.
+  _shouldRedirectToOnboarding(transition) {
     let isOnboarding = get(this, 'isOnboarding');
-
-    let onboardingRoutes = get(this, 'onboarding.routes');
+    let allowedRoutes = get(this, 'onboarding.allowedRoutes');
     let targetRoute = transition.targetName;
-    let isTransitionToOnboardingRoute = (onboardingRoutes.indexOf(targetRoute) > -1);
+    let isTransitionToAllowedRoute = (allowedRoutes.indexOf(targetRoute) > -1);
 
-    return isOnboarding && !isTransitionToOnboardingRoute;
+    return isOnboarding && !isTransitionToAllowedRoute;
   },
 
   _trackAuthentication() {

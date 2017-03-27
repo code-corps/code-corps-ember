@@ -42,10 +42,11 @@
   {{#if shouldDisplayEditor}}
     <div class="long-description-editor">
       {{editor-with-preview input=project.longDescriptionMarkdown isLoading=project.isSaving modifiedSubmit="save"}}
-      {{log project.errors.longDescriptionMarkdown}}
+
       {{#each project.errors.longDescriptionMarkdown as |error|}}
         <p class="error">{{error.message}}</p>
       {{/each}}
+
       <div class="actions">
         <button class="clear" name="cancel" {{action 'cancel'}}>Cancel</button>
         <button class="default save" name="save" {{action 'save'}}>Save description</button>
