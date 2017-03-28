@@ -5,7 +5,9 @@ const {
   Component,
   computed,
   computed: { alias, and, gte },
-  run: { later }
+  get,
+  run: { later },
+  set
 } = Ember;
 
 export default Component.extend({
@@ -19,50 +21,50 @@ export default Component.extend({
   passwordValid: gte('passwordLength', 6),
 
   password: computed('user.password', function() {
-    return this.get('user.password') || '';
+    return get(this, 'user.password') || '';
   }),
 
   actions: {
     emailValidated(result) {
-      this.set('emailValid', result);
+      set(this, 'emailValid', result);
     },
 
     signUp() {
-      if (this.get('canSubmit')) {
-        this.get('_submit').perform();
+      if (get(this, 'canSubmit')) {
+        get(this, '_submit').perform();
       } else {
         this._shakeButton();
       }
     },
 
     usernameValidated(result) {
-      this.set('usernameValid', result);
+      set(this, 'usernameValid', result);
     }
   },
 
   _setError() {
-    this.set('hasError', true);
+    set(this, 'hasError', true);
   },
 
   _shakeButton() {
-    if (!this.get('hasError')) {
-      this.set('hasError', true);
+    if (!get(this, 'hasError')) {
+      set(this, 'hasError', true);
       later(this, function() {
-        this.set('hasError', false);
+        set(this, 'hasError', false);
       }, 1000);
     }
   },
 
   _submit: task(function* () {
     let credentials = {
-      identification: this.get('user.email'),
-      password: this.get('user.password')
+      identification: get(this, 'user.email'),
+      password: get(this, 'user.password')
     };
 
-    let promise = this.get('user').save().then(() => {
-      this.get('signIn')(credentials);
+    let promise = get(this, 'user').save().then(() => {
+      get(this, 'signIn')(credentials);
     }).catch((error) => {
-      this.get('handleErrors')(error);
+      get(this, 'handleErrors')(error);
     });
 
     yield promise;

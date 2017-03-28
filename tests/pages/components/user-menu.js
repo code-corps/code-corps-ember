@@ -3,6 +3,8 @@ import { attribute, clickable, hasClass, isVisible, text } from 'ember-cli-page-
 export default {
   scope: '.user-menu',
 
+  clickDropdownMenu: clickable('.dropdown-menu'),
+
   dropdownIsHidden: hasClass('menu-hidden'),
 
   icon: {
