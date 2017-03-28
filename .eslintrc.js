@@ -9,7 +9,7 @@ module.exports = {
     'plugin:ember-suave/recommended'
   ],
   env: {
-    'browser': true
+    browser: true
   },
   rules: {
     'no-console': 'off',

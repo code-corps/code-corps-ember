@@ -2,7 +2,12 @@ import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:project/checkout', 'Unit | Controller | project/checkout', {
   // Specify the other units that are required for this test.
-  needs: ['service:metrics']
+  needs: [
+    'service:current-user',
+    'service:metrics',
+    'service:session',
+    'service:stripev3'
+  ]
 });
 
 // Replace this with your real tests.

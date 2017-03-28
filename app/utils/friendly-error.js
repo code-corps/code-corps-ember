@@ -1,6 +1,4 @@
-import { AdapterError } from 'ember-data/adapters/errors';
-
-export default function FriendlyError(message, errors) {
+export default function FriendlyError(message) {
   this.isFriendlyError = true;
-  AdapterError.call(this, errors, message);
+  this.message = message;
 }

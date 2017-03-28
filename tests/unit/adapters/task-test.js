@@ -3,7 +3,11 @@ import Ember from 'ember';
 
 const { set } = Ember;
 
-moduleFor('adapter:task', 'Unit | Adapter | task');
+moduleFor('adapter:task', 'Unit | Adapter | task', {
+  needs: [
+    'service:session'
+  ]
+});
 
 test('"sortQueryParams" passes through (and underscores) any keys that arent special', function(assert) {
   assert.expect(2);
