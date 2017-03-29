@@ -27,22 +27,22 @@ export default Component.extend({
   isClickable: false,
 
   /**
-   * Returns whether or not the overflowing skills on the project card should be
-   * displayed.
+   * Returns whether or not the overflowing skills on the project card
+   * should be displayed.
    *
    * @property overflowHidden
    * @type Boolean
-   * @default true
+   * @default false
    */
-  overflowHidden: true,
+  overflowHidden: false,
 
   /**
-    Returns whether or not the toggle for showing overflowing skills should be
-    visible or not.
-
-    @property showToggle
-    @type Boolean
-    @default false
+   * Returns whether or not the toggle for showing overflowing skills
+   * should be visible or not.
+   *
+   * @property showToggle
+   * @type Boolean
+   * @default false
    */
   showToggle: false,
 

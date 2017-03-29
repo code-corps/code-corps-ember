@@ -8,7 +8,10 @@ const {
 
 moduleFor('service:current-user', 'Unit | Service | current user', {
   // Specify the other units that are required for this test.
-  needs: ['service:session']
+  needs: [
+    'service:metrics',
+    'service:session'
+  ]
 });
 
 test('it returns null for loadCurrentUser when there is no user', function(assert) {

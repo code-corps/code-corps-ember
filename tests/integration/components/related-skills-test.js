@@ -43,8 +43,8 @@ test('it shows no expander for few skills', function(assert) {
   assert.equal(page.skillListItems.listItems().count, 1, 'Correct number of skills is rendered.');
 });
 
-test('it shows expander and toggles for lots of skills', function(assert) {
-  assert.expect(5);
+test('it does not show expander if overflowHidden is not set', function(assert) {
+  assert.expect(1);
 
   let skills = [];
   for (let i = 1; i <= 100; i++) {
@@ -55,6 +55,22 @@ test('it shows expander and toggles for lots of skills', function(assert) {
 
   this.set('skills', skills);
   renderPage();
+
+  assert.notOk(page.overflow.hidden, 'Overflow is not hidden.');
+});
+
+test('it shows expander and toggles for lots of skills when the component is modified to do so', function(assert) {
+  assert.expect(5);
+
+  let skills = [];
+  for (let i = 1; i <= 100; i++) {
+    skills.pushObject({
+      title: `Skill ${i}`
+    });
+  }
+
+  this.set('skills', skills);
+  page.render(hbs`{{related-skills overflowHidden=true skills=skills}}`);
 
   assert.ok(page.overflow.hidden, 'Overflow is hidden.');
   assert.ok(page.expander.visible, 'Expander button is visible.');

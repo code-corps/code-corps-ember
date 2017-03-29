@@ -4,9 +4,11 @@ const {
   Component,
   computed,
   computed: { alias, and, empty, not },
+  get,
   inject: { service },
   observer,
-  run: { cancel, debounce, once }
+  run: { cancel, debounce, once },
+  set
 } = Ember;
 
 export default Component.extend({
@@ -34,22 +36,23 @@ export default Component.extend({
   isUnavailable: not('isAvailable'),
 
   isSameEmail: computed('cachedEmail', 'email', function() {
-    return this.get('cachedEmail') === this.get('email');
+    return get(this, 'cachedEmail') === get(this, 'email');
   }),
 
   checkAvailable() {
-    let email = this.get('email');
+    let email = get(this, 'email');
     this.sendRequest(email).then((result) => {
       let { available, valid } = result;
       let validation = valid && available;
 
-      this.set('cachedEmail', this.get('email'));
-      this.set('hasCheckedOnce', true);
-      this.set('isChecking', false);
-      this.set('isAvailableOnServer', available);
-      this.set('isValid', valid);
+      set(this, 'cachedEmail', get(this, 'email'));
+      set(this, 'hasCheckedOnce', true);
+      set(this, 'isChecking', false);
+      set(this, 'isAvailableOnServer', available);
+      set(this, 'isValid', valid);
 
-      this.set('canSubmit', validation);
+      set(this, 'canSubmit', validation);
+
       this.sendAction('emailValidated', validation);
     });
   },
@@ -59,7 +62,7 @@ export default Component.extend({
   }),
 
   sendRequest(email) {
-    return this.get('ajax').request('/users/email_available', {
+    return get(this, 'ajax').request('/users/email_available', {
       method: 'GET',
       data: {
         email
@@ -69,27 +72,27 @@ export default Component.extend({
 
   actions: {
     keyDown() {
-      if (this.get('isNotSameEmail')) {
-        this.set('isChecking', true);
+      if (get(this, 'isNotSameEmail')) {
+        set(this, 'isChecking', true);
       }
     }
   },
 
   _check() {
-    this.set('isChecking', true);
+    set(this, 'isChecking', true);
 
-    if (this.get('canCheck')) {
-      cancel(this.get('timer'));
+    if (get(this, 'canCheck')) {
+      cancel(get(this, 'timer'));
       let deferredAction = debounce(this, function() {
         this.checkAvailable();
       }, 500);
-      this.set('timer', deferredAction);
-    } else if (this.get('isSameEmail') && this.get('isNotEmpty')) {
-      this.sendAction('emailValidated', this.get('canSubmit'));
-      this.set('isChecking', false);
+      set(this, 'timer', deferredAction);
+    } else if (get(this, 'isSameEmail') && get(this, 'isNotEmpty')) {
+      this.sendAction('emailValidated', get(this, 'canSubmit'));
+      set(this, 'isChecking', false);
     } else {
       this.sendAction('emailValidated', false);
-      this.set('isChecking', false);
+      set(this, 'isChecking', false);
     }
   }
 });

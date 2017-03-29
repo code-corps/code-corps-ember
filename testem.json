@@ -12,5 +12,8 @@
   ],
   "browser_args": [
     "--disable-extensions"
+  ],
+  "phantomjs_args": [
+    "--web-security=false"
   ]
 }

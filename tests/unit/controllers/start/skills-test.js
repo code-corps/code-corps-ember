@@ -1,8 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('controller:start/skills', 'Unit | Controller | start/skills', {
-  // Specify the other units that are required for this test.
-  needs: ['service:metrics']
+  needs: [
+    'service:current-user',
+    'service:metrics',
+    'service:onboarding',
+    'service:user-skills-list'
+  ]
 });
 
 // Replace this with your real tests.

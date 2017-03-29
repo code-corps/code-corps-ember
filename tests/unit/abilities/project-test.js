@@ -1,5 +1,4 @@
 import { moduleFor, test } from 'ember-qunit';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import Ember from 'ember';
 
 const {
@@ -15,7 +14,11 @@ let project = Object.create({
 });
 
 moduleFor('ability:project', 'Unit | Ability | project', {
-  needs: ['service:current-user']
+  needs: [
+    'service:current-user',
+    'service:metrics',
+    'service:session'
+  ]
 });
 
 test('it allows managing if user is owner of project', function(assert) {
@@ -23,8 +26,8 @@ test('it allows managing if user is owner of project', function(assert) {
 
   let ability = this.subject();
   set(ability, 'model', project);
+  set(ability, 'currentUser', { user: owner });
 
-  stubService(this, 'current-user', { user: owner });
   assert.ok(get(ability, 'canManage'));
 });
 
@@ -33,7 +36,7 @@ test('it allows managing donation goals if user is not owner of project organiza
 
   let ability = this.subject();
   set(ability, 'model', project);
+  set(ability, 'currentUser', { user: other });
 
-  stubService(this, 'current-user', { user: other });
   assert.notOk(get(ability, 'canManage'));
 });

@@ -2,7 +2,11 @@ import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:start/expertise', 'Unit | Route | start/expertise', {
   // Specify the other units that are required for this test.
-  needs: ['service:metrics']
+  needs: [
+    'service:current-user',
+    'service:metrics',
+    'service:session'
+  ]
 });
 
 test('it exists', function(assert) {
