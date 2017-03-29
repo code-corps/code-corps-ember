@@ -2675,9 +2675,9 @@ ember-cli-page-object@1.8.0:
     ember-cli-version-checker "^1.2.0"
     rsvp "^3.2.1"
 
-ember-cli-password-strength@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-password-strength/-/ember-cli-password-strength-1.0.0.tgz#ee4f62210c689b218430d8e202dd472f74de009f"
+ember-cli-password-strength@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-password-strength/-/ember-cli-password-strength-1.0.2.tgz#622f20c662e9643f402b9fe020cb046ec5ef2648"
   dependencies:
     broccoli-funnel "^1.1.0"
     broccoli-merge-trees "^2.0.0"
