@@ -17,6 +17,7 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   flashMessages: service(),
   metrics: service(),
   onboarding: service(),
+  i18n: service(),
 
   isOnboarding: computed.alias('onboarding.isOnboarding'),
   onboardingRoute: computed.alias('onboarding.routeForCurrentStep'),
@@ -164,6 +165,10 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
       .catch(() => this._invalidateSession());
   },
 
+  afterModel() {
+    this._setTranslationLocale();
+  },
+
   sessionAuthenticated() {
     return this._loadCurrentUser()
       .then(() => {
@@ -219,6 +224,27 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
 
   _loadCurrentUser() {
     return get(this, 'currentUser').loadCurrentUser();
+  },
+
+  _setTranslationLocale() {
+
+    let locales = this.get('i18n.locales');
+
+    if (navigator.languages) {
+      if (navigator.languages[0]) {
+        if (locales.includes(navigator.languages[0].toLowerCase())) {
+          return this.set('i18n.locale', navigator.languages[0].toLowerCase());
+        } else {
+          this.set('i18n.locale', 'en-us');
+        }
+      } else {
+        this.set('i18n.locale', 'en-us');
+      }
+    } else if (locales.includes(navigator.language.toLowerCase())) {
+      this.set('i18n.locale', navigator.language.toLowerCase());
+    } else {
+      this.set('i18n.locale', 'en-us');
+    }
   },
 
   // If the user is still in the process of onboarding, they are allowd to visit

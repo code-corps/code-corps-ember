@@ -68,6 +68,7 @@
     "ember-dragula": "1.9.3",
     "ember-exam": "0.6.1",
     "ember-export-application-global": "^2.0.0",
+    "ember-i18n": "4.3.2",
     "ember-keyboard": "^2.1.9",
     "ember-load-initializers": "^0.6.0",
     "ember-metrics": "0.10.0",
