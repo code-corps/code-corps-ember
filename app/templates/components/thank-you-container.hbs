@@ -14,3 +14,8 @@
     {{/if}}
   </p>
 </div>
+<div class="thank-you-container__contributors">
+  {{#each volunteers as |volunteer|}}
+    {{volunteer-headshot volunteer=volunteer data-test-selector="volunteer headshot"}}
+  {{/each}}
+</div>
