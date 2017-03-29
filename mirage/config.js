@@ -137,18 +137,12 @@ export default function() {
   this.patch('/comments/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
     let comment = schema.comments.find(attrs.id);
+
     // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
-    // for some reason, comment.update(key, value) updates comment properties, but
-    // doesn't touch the comment.attrs object, which is what is used in response
-    // serialization
-    comment.attrs = attrs;
-
     comment.commentUserMentions.models.forEach((mention) => mention.destroy());
-    comment.save();
-
-    return comment;
+    return comment.update(attrs);
   });
 
   /**
@@ -312,12 +306,9 @@ export default function() {
   this.patch('/projects/:id', function(schema) {
     // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
-    attrs.longDescriptionBody = `<p>${attrs.longDescriptionMarkdown}</p>`;
-
     let project = schema.projects.find(attrs.id);
-    project.attrs = attrs;
-    project.save();
-    return project;
+    attrs.longDescriptionBody = `<p>${attrs.longDescriptionMarkdown}</p>`;
+    return project.update(attrs);
   });
 
   /**
@@ -406,6 +397,7 @@ export default function() {
 
   this.patch('/stripe-connect-accounts/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
+    let stripeConnectAccount = schema.stripeConnectAccounts.find(attrs.id);
 
     if (!isEmpty(attrs.legalEntityAddressCity)) {
       attrs.recipientStatus = 'verifying';
@@ -427,10 +419,7 @@ export default function() {
       attrs.bankAccountStatus = 'verified';
     }
 
-    let stripeConnectAccount = schema.stripeConnectAccounts.find(attrs.id);
-    stripeConnectAccount.attrs = attrs;
-    stripeConnectAccount.save();
-    return stripeConnectAccount;
+    return stripeConnectAccount.update(attrs);
   });
 
   /**
@@ -495,13 +484,14 @@ export default function() {
   // POST /tasks
   this.post('/tasks', function(schema) {
     let attrs = this.normalizedRequestAttrs();
+    let project = schema.projects.find(attrs.projectId);
 
     // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
-    // the API sets task number as an auto-incrementing value, scoped to project,
-    // so we need to simulate that here
-    attrs.number = schema.projects.find(attrs.projectId).tasks.models.length + 1;
+    // the API sets task number as an auto-incrementing value, scoped
+    // to project, so we need to simulate that here
+    attrs.number = project.tasks.models.length + 1;
 
     return schema.create('task', attrs);
   });
@@ -512,18 +502,14 @@ export default function() {
   // PATCH /tasks/:id
   this.patch('/tasks/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
+    let task = schema.tasks.find(attrs.id);
 
     // the API takes takes markdown and renders body
     attrs.body = `<p>${attrs.markdown}</p>`;
 
-    let task = schema.tasks.find(attrs.id);
-    task.attrs = attrs;
-
     task.taskUserMentions.models.forEach((mention) => mention.destroy());
     task.order = (task.position || 0) * 100;
-    task.save();
-
-    return task;
+    return task.update(attrs);
   });
 
   /**
@@ -608,9 +594,7 @@ export default function() {
       }
     }
 
-    user.attrs = attrs;
-    user.save();
-    return user;
+    return user.update(attrs);
   });
 
   // GET /users/email_available

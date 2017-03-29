@@ -64,7 +64,6 @@ test('When authenticated as owner, and project has no long description, it allow
   });
 
   andThen(() => {
-    project.reload();
     assert.equal(project.longDescriptionMarkdown, 'A new body');
     assert.equal(project.longDescriptionBody, '<p>A new body</p>');
     assert.equal(projectAboutPage.projectLongDescription.longDescription.paragraph.text, project.longDescriptionMarkdown, 'The body is rendered');
@@ -80,7 +79,8 @@ test('When authenticated as owner, and project has long description, it allows e
     longDescriptionMarkdown: 'A body'
   });
 
-  let { user } = server.create('project-user', { project, role: 'owner' });
+  let user = server.create('user');
+  server.create('project-user', { project, user, role: 'owner' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -90,11 +90,13 @@ test('When authenticated as owner, and project has long description, it allows e
   });
 
   andThen(() => {
-    projectAboutPage.projectLongDescription.clickEdit().fillInTextarea('An edited body').clickSave();
+    projectAboutPage.projectLongDescription
+      .clickEdit()
+      .fillInTextarea('An edited body')
+      .clickSave();
   });
 
   andThen(() => {
-    project.reload();
     assert.equal(project.longDescriptionMarkdown, 'An edited body');
     assert.equal(project.longDescriptionBody, '<p>An edited body</p>');
     assert.equal(projectAboutPage.projectLongDescription.longDescription.paragraph.text, project.longDescriptionMarkdown, 'The body is rendered');
