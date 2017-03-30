@@ -60,6 +60,6 @@ test('clicking the menu toggles the dropdown', function(assert) {
   assert.ok(page.dropdownIsHidden, 'The dropdown is initially hidden');
   page.toggle();
   assert.notOk(page.dropdownIsHidden, 'The dropdown is now visible');
-  this.$('.user-menu .dropdown-menu').click();
+  page.clickDropdownMenu();
   assert.ok(page.dropdownIsHidden, 'The dropdown is now hidden');
 });
