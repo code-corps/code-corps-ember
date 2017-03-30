@@ -1,8 +1,18 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import projectItemComponent from 'code-corps-ember/tests/pages/components/project-item';
+
+let page = PageObject.create(projectItemComponent);
 
 moduleForComponent('project-item', 'Integration | Component | project item', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 test('it renders', function(assert) {
@@ -21,9 +31,9 @@ test('it renders the correct UI elements', function(assert) {
     title: 'A project',
     description: 'A description'
   });
-  this.render(hbs`{{project-item project=project}}`);
+  page.render(hbs`{{project-item project=project}}`);
 
-  assert.equal(this.$('img').attr('src'), 'icon.png', 'The project icon is properly bound');
-  assert.equal(this.$('h4').text().trim(), 'A project', 'The project title is properly bound');
-  assert.equal(this.$('p').text().trim(), 'A description', 'The project description is properly bound');
+  assert.equal(page.icon.src, 'icon.png', 'The project icon is properly bound');
+  assert.equal(page.title, 'A project', 'The project title is properly bound');
+  assert.equal(page.description, 'A description', 'The project description is properly bound');
 });
