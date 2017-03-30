@@ -50,25 +50,20 @@ export default Component.extend({
   }),
 
   /**
-    Returns the volunteer's name. If the `name` property is not defined, it
-    computes a name from the volunteer's `firstName` & `lastName`. If neither
-    are defined it returns the volunteer's username.
-
-    @property volunteerName
-    @type String
+   * Returns the volunteer's name. If the `name` property is not defined,
+   * it returns the volunteer's username.
+   *
+   * @property volunteerName
+   * @type String
    */
-  volunteerName: computed('volunteer.{name,firstName,lastName}', function() {
+  volunteerName: computed('volunteer.{name,username}', function() {
     let name = get(this, 'volunteer.name');
-    let firstName = get(this, 'volunteer.firstName');
-    let lastName = get(this, 'volunteer.lastName');
-    let userName = get(this, 'volunteer.userName');
+    let username = get(this, 'volunteer.username');
 
     if (isPresent(name)) {
       return name;
-    } else if (isPresent(firstName) && isPresent(lastName)) {
-      return `${firstName} ${lastName}`;
     } else {
-      return userName;
+      return username;
     }
   })
 });
