@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component } = Ember;
+const { Component, set } = Ember;
 
 /**
   The user-menu component is used to show/hide the user-dropdown menu
@@ -28,11 +28,7 @@ export default Component.extend({
      * @method hide
      */
     hide() {
-      // Don't try to hide a destroyed menu component
-      if (this.get('isDestroyed')) {
-        return;
-      }
-      this.set('hidden', true);
+      set(this, 'hidden', true);
     },
 
     /**
