@@ -2313,7 +2313,7 @@ ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-c
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.5, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9:
   version "6.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.0.0-beta.9.tgz#b597d52f12d4429cd5716b55f749ebf6144b7b16"
   dependencies:
@@ -2633,9 +2633,9 @@ ember-cli-meta-tags@3.0.4:
     ember-cli-htmlbars "^1.0.10"
     ember-runtime-enumerable-includes-polyfill "^1.0.2"
 
-ember-cli-mirage@^0.2.4:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.2.9.tgz#f710bb97e6895b3918839127ab5e570538d668b4"
+ember-cli-mirage@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-mirage/-/ember-cli-mirage-0.3.1.tgz#2541d624f4994fae3188fcd76a768e8eaff71c4b"
   dependencies:
     broccoli-funnel "^1.0.2"
     broccoli-merge-trees "^1.1.0"
@@ -2945,13 +2945,21 @@ ember-composable-helpers@2.0.0:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^5.1.7"
 
-ember-concurrency@^0.7.11, ember-concurrency@^0.7.15:
+ember-concurrency@^0.7.15:
   version "0.7.19"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.7.19.tgz#095f2ede1b56ab068958cac5b55e77b9de67e1c6"
   dependencies:
     ember-cli-babel "^5.1.5"
     ember-getowner-polyfill "^1.1.0"
     ember-maybe-import-regenerator "^0.1.4"
+
+ember-concurrency@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.1.tgz#28f4e05d1afe15f9d8611f37a87a59ce8c21a331"
+  dependencies:
+    ember-cli-babel "^6.0.0-beta.5"
+    ember-getowner-polyfill "^1.1.0"
+    ember-maybe-import-regenerator "^0.1.5"
 
 ember-cookies@^0.0.12:
   version "0.0.12"
@@ -3054,6 +3062,15 @@ ember-hash-helper-polyfill@^0.1.1:
     ember-cli-babel "^5.1.7"
     ember-cli-version-checker "^1.2.0"
 
+ember-i18n@4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/ember-i18n/-/ember-i18n-4.3.2.tgz#8a0374ce0815045f47698304450e7cf0497b3a5f"
+  dependencies:
+    broccoli-funnel "^1.0.6"
+    ember-cli-babel "^5.0.0"
+    ember-cli-version-checker "^1.1.6"
+    ember-getowner-polyfill "^1.0.0"
+
 ember-inflector@^1.9.2, ember-inflector@^1.9.4:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/ember-inflector/-/ember-inflector-1.11.0.tgz#99baae18e2bee53cfa97d8db1d739280289a174f"
@@ -3095,7 +3112,7 @@ ember-macro-helpers@^0.4.0:
   dependencies:
     ember-cli-babel "^5.1.7"
 
-ember-maybe-import-regenerator@^0.1.4:
+ember-maybe-import-regenerator@^0.1.4, ember-maybe-import-regenerator@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-maybe-import-regenerator/-/ember-maybe-import-regenerator-0.1.6.tgz#35d41828afa6d6a59bc0da3ce47f34c573d776ca"
   dependencies:

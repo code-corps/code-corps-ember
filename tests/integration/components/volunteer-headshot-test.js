@@ -32,15 +32,12 @@ test('it renders the volunteer\'s name', function(assert) {
   assert.equal(page.name, this.get('user.name'));
 });
 
-test('it computes the name if it is not present', function(assert) {
-  let firstName = 'Split';
-  let lastName = 'Name';
+test('it computes username if name is not present', function(assert) {
+  let username = 'Ace';
 
   this.set('user.name', null);
-  this.set('user.firstName', firstName);
-  this.set('user.lastName', lastName);
-
-  assert.equal(page.name, `${firstName} ${lastName}`);
+  this.set('user.username', username);
+  assert.equal(page.name, `${username}`);
 });
 
 test('it randomly selects one of the available roles', function(assert) {

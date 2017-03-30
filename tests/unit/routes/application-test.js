@@ -5,6 +5,7 @@ moduleFor('route:application', 'Unit | Route | application', {
   needs: [
     'service:current-user',
     'service:flash-messages',
+    'service:i18n',
     'service:loading-bar',
     'service:metrics',
     'service:onboarding',
