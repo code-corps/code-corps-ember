@@ -39,5 +39,10 @@ export default {
     isVisible: isVisible()
   },
 
-  username: fillable('[name=email]')
+  username: fillable('[name=email]'),
+
+  forgotPasswordLink: {
+    scope: '.t-forgot-password',
+    isVisible: isVisible()
+  }
 };

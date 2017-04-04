@@ -21,4 +21,5 @@ test('it renders required ui elements', function(assert) {
   assert.ok(page.emailInput.isVisible, 'The email field renders');
   assert.ok(page.passwordInput.isVisible, 'The password field renders');
   assert.ok(page.submitButton.isVisible, 'The submit button renders');
+  assert.ok(page.forgotPasswordLink.isVisible, 'The forgot password link renders');
 });

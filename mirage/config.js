@@ -171,6 +171,45 @@ export default function() {
   this.patch('/organizations/:id');
 
   /**
+  * Password
+  */
+
+  // POST /password/forgot
+  this.post('/password/forgot', () => {
+
+    // just return something?
+    return new Mirage.Response(201, {}, {
+      email: 'test@test.com'
+    });
+  });
+
+  this.post('/password/reset', function(schema) {
+    let { password, 'password-confirmation': passwordConfirmation, token } = this.normalizedRequestAttrs();
+
+    let [matchedUser] = schema.users.where({ token }).models;
+
+    if (password === passwordConfirmation) {
+      return new Mirage.Response(201, {}, {
+        email: matchedUser.email,
+        token,
+        user_id: matchedUser.id
+      });
+    } else {
+      let errorDetail = 'Your passwords do not match';
+      return new Mirage.Response(422, {}, {
+        errors: [
+          {
+            id: 'VALIDATION_ERROR',
+            title: '422',
+            detail: errorDetail,
+            status: 422
+          }
+        ]
+      });
+    }
+  });
+
+  /**
   * Previews
   */
 
