@@ -2392,9 +2392,9 @@ ember-cli-deploy-display-revisions@1.0.0-beta.0:
     moment "^2.18.0"
     rsvp "^3.5.0"
 
-ember-cli-deploy-gzip@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-gzip/-/ember-cli-deploy-gzip-1.0.0-beta.0.tgz#5fe8e2a671154e7fc28b71948e2a2344fe3e0b47"
+ember-cli-deploy-gzip@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-gzip/-/ember-cli-deploy-gzip-1.0.0.tgz#32b6fcc96ed6d571ad4e5b0c08e53e93d717347f"
   dependencies:
     chalk "^1.1.3"
     core-object "^2.0.6"
