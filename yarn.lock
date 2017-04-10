@@ -2402,9 +2402,9 @@ ember-cli-deploy-gzip@1.0.0-beta.0:
     minimatch "^3.0.3"
     rsvp "^3.5.0"
 
-ember-cli-deploy-manifest@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-manifest/-/ember-cli-deploy-manifest-1.0.0-beta.0.tgz#b341174d79e0bb9fe40219032e1789e7dc6d372c"
+ember-cli-deploy-manifest@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-manifest/-/ember-cli-deploy-manifest-1.0.0.tgz#47ea079f8db4c94bc44b652762320cdc4cc781e7"
   dependencies:
     chalk "^1.0.0"
     core-object "^2.0.0"
@@ -2424,9 +2424,9 @@ ember-cli-deploy-progress@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/ember-cli-deploy-progress/-/ember-cli-deploy-progress-1.3.0.tgz#18663deed25b4d5397476332f25eed3c3fdf225a"
 
-ember-cli-deploy-revision-data@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-revision-data/-/ember-cli-deploy-revision-data-1.0.0-beta.0.tgz#9ca34f31a455286f6724f6ab1ec73cb6e045221a"
+ember-cli-deploy-revision-data@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-revision-data/-/ember-cli-deploy-revision-data-1.0.0.tgz#e870abc79f25bc96fe5532fec41baa9e1bc3ccc6"
   dependencies:
     chalk "^1.1.3"
     core-object "^2.0.6"
