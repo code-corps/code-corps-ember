@@ -2436,9 +2436,9 @@ ember-cli-deploy-revision-data@1.0.0:
     rsvp "^3.5.0"
     simple-git "^1.57.0"
 
-ember-cli-deploy-s3-index@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-s3-index/-/ember-cli-deploy-s3-index-1.0.0-beta.0.tgz#4ab85ecfc7b8826cf0d8ce03273f1a0dea87809f"
+ember-cli-deploy-s3-index@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-s3-index/-/ember-cli-deploy-s3-index-1.0.0.tgz#9353b459d794962916b6075494138cdb87ceee36"
   dependencies:
     aws-sdk "^2.1.48"
     core-object "^2.0.6"
@@ -3130,13 +3130,13 @@ ember-metrics@0.10.0:
     ember-getowner-polyfill "^1.0.0"
     ember-runtime-enumerable-includes-polyfill "^1.0.1"
 
-ember-modal-dialog@0.9.1:
-  version "0.9.1"
-  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-0.9.1.tgz#cefb708a665e76f910a669f19a3a39930ca0e1bf"
+ember-modal-dialog@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-1.0.0.tgz#829f083cb4a4162dd2a5158e3980123b7cb69328"
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-cli-htmlbars "^1.0.8"
-    ember-cli-version-checker "^1.1.6"
+    ember-cli-version-checker "^1.2.0"
     ember-wormhole "~0.3.6"
 
 ember-moment@7.3.0:
