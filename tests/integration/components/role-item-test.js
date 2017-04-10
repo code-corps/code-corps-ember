@@ -2,73 +2,40 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
+
+import PageObject from 'ember-cli-page-object';
+import component from 'code-corps-ember/tests/pages/components/role-item';
 
 const {
   getOwner,
   Object,
   RSVP,
-  run
+  run,
+  set
 } = Ember;
 
-let defaultRoleId = 2;
+const page = PageObject.create(component);
+const template = hbs`{{role-item role=role userRoles=userRoles}}`;
+
+function renderPage() {
+  page.render(template);
+}
 
 let mockUserRolesService = {
-  findUserRole(role) {
-    if (role.id === mockUserRole.get('roleId')) {
-      return mockUserRole;
-    }
-  },
-  addRole(role) {
-    return new RSVP.Promise((fulfill) => {
-      run.next(() => {
-        mockUserRole.set('roleId', role.get('id'));
-        getOwner(this).lookup('service:user-roles').set('userRoles', [mockUserRole]);
-        fulfill();
-      });
-    });
-  },
-  removeRole() {
-    return new RSVP.Promise((fulfill, reject) => {
-      run.next(() => {
-        mockUserRole.set('roleId', null);
-        getOwner(this).lookup('service:user-roles').set('userRoles', []);
-        reject();
-      });
-    });
-  }
+  findUserRole: () => null,
+  addRole: (role) => RSVP.resolve(role),
+  removeRole: () => RSVP.resolve()
 };
 
 let mockUserRolesServiceForErrors = {
-  findUserRole(role) {
-    if (role.id === mockUserRole.get('roleId')) {
-      return mockUserRole;
-    }
-  },
-  addRole() {
-    return RSVP.reject();
-  },
-  removeRole() {
-    return RSVP.reject();
-  }
+  findUserRole: () => null,
+  addRole: () => RSVP.reject(),
+  removeRole: () => RSVP.reject()
 };
 
-let mockUserRole = Object.create({
-  id: 1,
-  roleId: defaultRoleId,
-  userId: 1
-});
-
-let unselectedRole = Object.create({
-  id: 1,
-  name: 'Backend Developer',
-  ability: 'Backend Development',
-  kind: 'technology'
-});
-
-let selectedRole = Object.create({
-  id: 2,
+let mobileDeveloper = Object.create({
+  id: 'foo',
   name: 'Mobile Developer',
   ability: 'Mobile Development',
   kind: 'technology'
@@ -77,69 +44,112 @@ let selectedRole = Object.create({
 moduleForComponent('role-item', 'Integration | Component | role item', {
   integration: true,
   beforeEach() {
-    mockUserRole.set('roleId', defaultRoleId);
+    page.setContext(this);
+
+    // component uses flash-messages service, so we need to register the types
+    // used by the component
     getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
+
+    // need to stub a default user role service
+    set(this, 'userRoles', mockUserRolesService);
   }
 });
 
-test('it works for selecting unselected roles', function(assert) {
-  let done = assert.async();
-  assert.expect(3);
+test('it renders role content properly', function(assert) {
+  assert.expect(1);
 
-  stubService(this, 'user-roles', mockUserRolesService);
-  this.set('role', unselectedRole);
-  this.render(hbs`{{role-item role=role}}`);
+  set(this, 'role', mobileDeveloper);
 
-  assert.notOk(this.$('.role-item').hasClass('selected'));
-  assert.equal(this.$('button').text().trim(), 'Backend Development');
+  renderPage();
 
-  this.$('button').click();
-
-  wait().then(() => {
-    assert.ok(this.$('.role-item').hasClass('selected'));
-    done();
-  });
+  assert.equal(page.button.text, mobileDeveloper.ability, 'Role ability is rendered on button.');
 });
 
-test('it works for removing selected roles', function(assert) {
-  let done = assert.async();
-  assert.expect(3);
+test('it renders role as selected if associated service returns a user role', function(assert) {
+  assert.expect(1);
 
-  stubService(this, 'user-roles', mockUserRolesService);
-  this.set('role', selectedRole);
-  this.render(hbs`{{role-item role=role}}`);
+  let userRoles = {
+    findUserRole:() => mobileDeveloper
+  };
 
-  assert.ok(this.$('.role-item').hasClass('selected'));
-  assert.equal(this.$('button').text().trim(), 'Mobile Development');
+  set(this, 'userRoles', userRoles);
 
-  this.$('button').click();
+  renderPage();
 
-  wait().then(() => {
-    assert.notOk(this.$('.role-item').hasClass('selected'));
-    done();
-  });
+  assert.ok(page.isSelected, 'Component is rendered as selected.');
+});
+
+test('it renders role as unselected if associated service returns no user role', function(assert) {
+  assert.expect(1);
+
+  let userRoles = {
+    findUserRole: () => null
+  };
+
+  set(this, 'userRoles', userRoles);
+
+  renderPage();
+
+  assert.ok(page.isUnselected, 'Component is rendered as unselected.');
+});
+
+test('it calls proper action on service when clicking a selected role', function(assert) {
+  assert.expect(1);
+
+  let userRoles = {
+    findUserRole: () => mobileDeveloper,
+    removeRole(sentRole) {
+      assert.deepEqual(mobileDeveloper, sentRole, 'Proper action was called with proper parameter.');
+      return RSVP.resolve();
+    }
+  };
+
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
+
+  renderPage();
+
+  page.button.click();
+});
+
+test('it calls proper action on service when clicking an unselected role', function(assert) {
+  assert.expect(1);
+
+  let userRoles = {
+    findUserRole: () => null,
+    addRole(sentRole) {
+      assert.deepEqual(mobileDeveloper, sentRole, 'Proper action was called with proper parameter.');
+      return RSVP.resolve();
+    }
+  };
+
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
+
+  renderPage();
+
+  page.button.click();
 });
 
 test('it creates a flash message on an error when adding', function(assert) {
   let done = assert.async();
-  assert.expect(4);
+  assert.expect(3);
 
-  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
-  this.set('role', unselectedRole);
+  set(this, 'userRoles', mockUserRolesServiceForErrors);
+  set(this, 'role', mobileDeveloper);
 
-  this.render(hbs`{{role-item role=role}}`);
+  renderPage();
 
-  this.$('button').click();
+  page.button.click(),
+
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
-
     assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
     let flash = getFlashMessageAt(0, this);
     let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
     let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
     assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-    assert.ok(flash.message.indexOf(unselectedRole.name) !== -1, 'Message text includes the role name');
+    assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
 
     done();
   });
@@ -147,24 +157,23 @@ test('it creates a flash message on an error when adding', function(assert) {
 
 test('it creates a flash message on an error when removing', function(assert) {
   let done = assert.async();
-  assert.expect(4);
+  assert.expect(3);
 
-  stubService(this, 'user-roles', mockUserRolesServiceForErrors);
-  this.set('role', selectedRole);
+  set(this, 'userRoles', mockUserRolesServiceForErrors);
+  set(this, 'role', mobileDeveloper);
 
-  this.render(hbs`{{role-item role=role}}`);
+  renderPage();
 
-  this.$('button').click();
+  run(() => this.$('button').click());
+
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
-
     assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
     let flash = getFlashMessageAt(0, this);
     let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
     let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
     assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-    assert.ok(flash.message.indexOf(selectedRole.name) !== -1, 'Message text includes the role name');
+    assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
 
     done();
   });
@@ -172,38 +181,124 @@ test('it creates a flash message on an error when removing', function(assert) {
 
 test('it sets and unsets loading state when adding', function(assert) {
   let done = assert.async();
-  assert.expect(3);
+  assert.expect(2);
 
-  stubService(this, 'user-roles', mockUserRolesService);
-  this.set('role', unselectedRole);
+  let userRoles = {
+    findUserRole: () => null,
+    addRole() {
+      return new RSVP.Promise((fulfill) => {
+        // we need to wait for a render loop to complete before resolving,
+        // so the loading indicator has a change to render
+        run.next(() => {
+          assert.ok(page.icon.isLoading, 'Component is currently in the loading state.');
+          fulfill();
+        });
+      });
+    }
+  };
 
-  this.render(hbs`{{role-item role=role}}`);
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
 
-  this.$('button').click();
-  assert.ok(this.$('span').hasClass('button-spinner'));
-  assert.notOk(this.$('span').hasClass('check-area'));
+  renderPage();
+
+  page.button.click();
 
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
+    done();
+  });
+});
+
+test('it sets and unsets loading state on error when adding', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  let userRoles = {
+    findUserRole: () => null,
+    addRole() {
+      return new RSVP.Promise((fulfill, reject) => {
+        // we need to wait for a render loop to complete before resolving,
+        // so the loading indicator has a change to render
+        run.next(() => {
+          assert.ok(page.icon.isLoading, 'Component is currently in the loading state.');
+          reject();
+        });
+      });
+    }
+  };
+
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
+
+  renderPage();
+
+  page.button.click();
+
+  wait().then(() => {
+    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
     done();
   });
 });
 
 test('it sets and unsets loading state when removing', function(assert) {
   let done = assert.async();
-  stubService(this, 'user-roles', mockUserRolesService);
-  assert.expect(3);
+  assert.expect(2);
 
-  this.set('role', selectedRole);
+  let userRoles = {
+    findUserRole: () => mobileDeveloper,
+    removeRole() {
+      return new RSVP.Promise((fulfill) => {
+        // we need to wait for a render loop to complete before resolving,
+        // so the loading indicator has a change to render
+        run.next(() => {
+          assert.ok(page.icon.isLoading, 'Component is currently in the loading state.');
+          fulfill();
+        });
+      });
+    }
+  };
 
-  this.render(hbs`{{role-item role=role}}`);
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
 
-  this.$('button').click();
-  assert.ok(this.$('span').hasClass('button-spinner'));
-  assert.notOk(this.$('span').hasClass('check-area'));
+  renderPage();
+
+  page.button.click();
 
   wait().then(() => {
-    assert.notOk(this.$('span').hasClass('button-spinner'));
+    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
+    done();
+  });
+});
+
+test('it sets and unsets loading state on error when removing', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  let userRoles = {
+    findUserRole: () => mobileDeveloper,
+    removeRole() {
+      return new RSVP.Promise((fulfill, reject) => {
+        // we need to wait for a render loop to complete before resolving,
+        // so the loading indicator has a change to render
+        run.next(() => {
+          assert.ok(page.icon.isLoading, 'Component is currently in the loading state.');
+          reject();
+        });
+      });
+    }
+  };
+
+  set(this, 'userRoles', userRoles);
+  set(this, 'role', mobileDeveloper);
+
+  renderPage();
+
+  page.button.click();
+
+  wait().then(() => {
+    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
     done();
   });
 });

@@ -4,7 +4,8 @@ import Ember from 'ember';
 
 const {
   computed,
-  Object
+  Object,
+  run
 } = Ember;
 
 moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
@@ -41,5 +42,5 @@ test('it triggers the hide action when clicked', function(assert) {
     assert.ok(true, 'It triggers the hide action when clicked');
   });
   this.render(hbs`{{user-dropdown user=user action='hide'}}`);
-  this.$('.dropdown-menu').click();
+  run(() => this.$('.dropdown-menu').click());
 });
