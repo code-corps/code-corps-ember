@@ -2382,9 +2382,9 @@ ember-cli-deploy-build@1.0.0-beta.0:
     glob "^7.1.1"
     rsvp "^3.5.0"
 
-ember-cli-deploy-display-revisions@1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-1.0.0-beta.0.tgz#f1b70c5f46896510e84f0e7f2a322410c9341195"
+ember-cli-deploy-display-revisions@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-display-revisions/-/ember-cli-deploy-display-revisions-1.0.0.tgz#72ad8cf74d94e996ae0a52cd1403fd9195db38df"
   dependencies:
     cli-table2 "^0.2.0"
     core-object "^2.0.0"
