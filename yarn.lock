@@ -2253,13 +2253,13 @@ ember-autoresize@0.5.22:
     ember-cli-babel "^5.1.7"
     ember-cli-node-assets "^0.1.6"
 
-ember-basic-dropdown@^0.30.2:
-  version "0.30.3"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.30.3.tgz#96754be687c61fe77e30dfeb178815c7a1391b45"
+ember-basic-dropdown@^0.31.0:
+  version "0.31.1"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-0.31.1.tgz#cfc985ac150fa61a9a60b31d7409b616f9b3ff32"
   dependencies:
-    ember-cli-babel "^5.1.10"
+    ember-cli-babel "^6.0.0-alpha.8"
     ember-cli-htmlbars "^1.1.1"
-    ember-native-dom-helpers "^0.3.0"
+    ember-native-dom-helpers "^0.3.4"
     ember-wormhole "^0.5.1"
 
 ember-can@^0.8.4:
@@ -2303,7 +2303,7 @@ ember-cli-babel@5.2.4, ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cl
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.5, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9:
+ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9:
   version "6.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.0.0-beta.9.tgz#b597d52f12d4429cd5716b55f749ebf6144b7b16"
   dependencies:
@@ -3126,7 +3126,7 @@ ember-moment@7.3.0:
     ember-cli-babel "^5.1.6"
     ember-macro-helpers "^0.4.0"
 
-ember-native-dom-helpers@^0.3.0:
+ember-native-dom-helpers@^0.3.4:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.3.5.tgz#df492bc34f6b277f0c9d2adcacb3fd8a3e11defa"
   dependencies:
@@ -3161,12 +3161,12 @@ ember-page-title@^3.1.2:
     ember-cli-head "0.1.1"
     ember-cli-htmlbars "^1.1.0"
 
-ember-power-select@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-1.5.0.tgz#e18e9ca645adadcfa2c268e5be24bfd026e2575f"
+ember-power-select@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/ember-power-select/-/ember-power-select-1.6.1.tgz#2223ce4f2fd3c794e30ea2412796a4c030966cf2"
   dependencies:
-    ember-basic-dropdown "^0.30.2"
-    ember-cli-babel "^5.1.10"
+    ember-basic-dropdown "^0.31.0"
+    ember-cli-babel "^6.0.0-beta.4"
     ember-cli-htmlbars "^1.1.1"
     ember-concurrency "^0.7.15"
     ember-text-measurer "^0.3.3"
