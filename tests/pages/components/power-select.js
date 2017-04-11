@@ -1,5 +1,6 @@
 import { collection, isVisible } from 'ember-cli-page-object';
 import { clickTrigger, nativeMouseUp } from 'code-corps-ember/tests/helpers/ember-power-select';
+import { findElementWithAssert } from 'ember-cli-page-object/extend';
 
 // NOTE: The default ember-cli-page-objects do not work properly here
 // Instead, ember-power-select exposes the `clickTrigger` and `nativeMouseUp`
@@ -23,7 +24,11 @@ export default {
       itemScope: '.ember-power-select-option',
       item: {
         select() {
-          nativeMouseUp(this.scope);
+          // this.scope is a jQuery selector, so we can't use that because
+          // nativeMouseUp needs either a plain old js selector or a plain old
+          // DOM element, so we fetch the element first
+          let [domElement] = findElementWithAssert(this);
+          nativeMouseUp(domElement);
           return this;
         }
       }
