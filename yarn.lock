@@ -2669,9 +2669,9 @@ ember-cli-normalize-entity-name@^1.0.0:
   dependencies:
     silent-error "^1.0.0"
 
-ember-cli-page-object@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.8.0.tgz#4454fd24517efe131965a2dc0a6a5bc4ee73ba10"
+ember-cli-page-object@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.9.0.tgz#26216f1aa144bceeb5ccc4e9d4bdebd03a8278cd"
   dependencies:
     ceibo "~2.0.0"
     ember-cli-babel "^5.1.7"
