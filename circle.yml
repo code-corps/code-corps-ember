@@ -18,7 +18,6 @@ dependencies:
     - /home/ubuntu/nvm/versions/node/v6.9.4/lib/node_modules
   override:
     - yarn global add bower
-    - yarn global add phantomjs-prebuilt
     - yarn add node-sass
     - yarn install
     - bower install
