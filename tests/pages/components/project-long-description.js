@@ -35,6 +35,16 @@ export default {
       text: text()
     },
 
+    list: {
+      scope: 'ul',
+      text: text(),
+
+      listItem: {
+        scope: 'li',
+        text: text()
+      }
+    },
+
     text: text()
   },
 

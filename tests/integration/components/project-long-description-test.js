@@ -31,6 +31,12 @@ let projectWithDescription = Object.create({
   projectUsers: [{ user: owner, role: 'owner' }]
 });
 
+let projectWithListedDescription = Object.create({
+  longDescriptionBody: 'Todo list: <ul><li>list item 1</li></ul>',
+  longDescriptionMarkdown: 'Todo list: \n *   list item 1',
+  projectUsers: [{ user: owner, role: 'owner' }]
+});
+
 let blankProject = Object.create({
   longDescriptionBody: null,
   longDescriptionMarkdown: null,
@@ -127,4 +133,14 @@ test('it is possible to edit a description', function(assert) {
   page.edit.click();
   assert.ok(page.editorWithPreview.isVisible, 'The editor is shown, since we are in edit mode');
   page.save.click();
+});
+
+test('it renders list items in the description with bullet points', function(assert) {
+  assert.expect(2);
+
+  set(this, 'project', projectWithListedDescription);
+  page.render(hbs`{{project-long-description project=project}}`);
+
+  assert.equal(page.longDescription.list.listItem.text, 'list item 1', 'the description text shows the list');
+  assert.equal(this.$('li').css('listStyleType'), 'disc', 'list in description text is displayed with bullet points');
 });
