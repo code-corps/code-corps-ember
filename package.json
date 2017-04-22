@@ -20,7 +20,7 @@
     "ember-auto-focus": "1.0.6",
     "ember-autoresize": "0.5.22",
     "ember-can": "^0.8.4",
-    "ember-cli": "2.12.1",
+    "ember-cli": "2.12.2",
     "ember-cli-app-version": "^3.0.0",
     "ember-cli-autoprefixer": "0.6.0",
     "ember-cli-babel": "^5.1.7",
