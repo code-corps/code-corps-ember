@@ -423,6 +423,12 @@ export default function() {
   });
 
   /**
+   * Stripe file uploads
+   */
+
+  this.post('/stripe-file-uploads');
+
+  /**
    * Stripe plans
    */
 
