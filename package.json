@@ -51,7 +51,7 @@
     "ember-cli-neat": "0.0.5",
     "ember-cli-page-object": "1.9.0",
     "ember-cli-password-strength": "1.0.2",
-    "ember-cli-qunit": "^3.1.0",
+    "ember-cli-qunit": "^4.0.0",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "^6.0.0",
     "ember-cli-sentry": "^2.4.3",
