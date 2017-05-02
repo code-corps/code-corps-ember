@@ -1,4 +1,5 @@
 import resolver from './helpers/resolver';
+import { start } from 'ember-cli-qunit';
 import './helpers/flash-message';
 
 import {
@@ -6,3 +7,4 @@ import {
 } from 'ember-qunit';
 
 setResolver(resolver);
+start();
