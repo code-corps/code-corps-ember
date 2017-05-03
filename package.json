@@ -75,7 +75,7 @@
     "ember-modal-dialog": "1.0.0",
     "ember-moment": "7.3.0",
     "ember-normalize": "1.0.0",
-    "ember-page-title": "^3.1.2",
+    "ember-page-title": "3.1.5",
     "ember-power-select": "1.6.1",
     "ember-radio-button": "^1.0.7",
     "ember-resolver": "^2.0.3",
