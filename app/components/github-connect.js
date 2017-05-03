@@ -2,8 +2,11 @@ import Ember from 'ember';
 
 const {
   Component,
+  get,
+  inject: { service },
   set
 } = Ember;
+
 const baseUrl = 'https://github.com/login/oauth/authorize';
 
 /**
@@ -26,6 +29,8 @@ export default Component.extend({
   classNames: ['button', 'default'],
   attributeBindings: ['url:href'],
 
+  githubState: service(),
+
   clientId: null,
   scope: null,
   state: null,
@@ -33,8 +38,19 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let { clientId, scope, state, redirectUri } = this.getProperties('clientId', 'scope', 'state', 'redirectUri');
+    this._initState();
+    this._initUrl();
+  },
+
+  _initState() {
+    let githubState = get(this, 'githubState').generate();
+    set(this, 'state', githubState);
+  },
+
+  _initUrl() {
+    let { clientId, scope, state, redirectUri }
+      = this.getProperties('clientId', 'scope', 'state', 'redirectUri');
+
     set(this, 'url', `${baseUrl}?scope=${scope}&client_id=${clientId}&state=${state}&redirect_uri=${redirectUri}`);
   }
-
 });
