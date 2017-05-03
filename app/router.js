@@ -94,6 +94,7 @@ AppRouter.map(function() {
 
   this.route('team');
   this.route('terms');
+  this.route('github');
 });
 
 export default AppRouter;
