@@ -5,6 +5,7 @@ import ContainsCodeMixin from '../mixins/contains-code';
 
 export default Model.extend(ContainsCodeMixin, {
   body: attr('string'),
+  githubId: attr('string'),
   insertedAt: attr('date'),
   markdown: attr('string'),
 

@@ -21,6 +21,14 @@ export default Model.extend(ContainsCodeMixin, {
   body: attr(),
 
   /**
+    The github issue the task is associated with.
+
+    @attribute githubId
+    @type string
+  */
+  githubId: attr(),
+
+  /**
     The date that the task was inserted.
 
     @attribute insertedAt
