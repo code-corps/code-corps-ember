@@ -2309,7 +2309,7 @@ ember-cli-babel@5.2.4, ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cl
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.5, ember-cli-babel@^6.0.0-beta.9:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.1.0.tgz#d9c83a7d0c67cc8a3ccb9bd082971c3593e54fad"
   dependencies:
@@ -2324,7 +2324,7 @@ ember-cli-babel@^6.0.0:
     clone "^2.0.0"
     ember-cli-version-checker "^1.2.0"
 
-ember-cli-babel@^6.0.0-alpha.8, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.5, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9:
+ember-cli-babel@^6.0.0-beta.7:
   version "6.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.0.0-beta.9.tgz#b597d52f12d4429cd5716b55f749ebf6144b7b16"
   dependencies:
@@ -2384,9 +2384,9 @@ ember-cli-dependency-checker@^1.3.0:
     is-git-url "0.2.0"
     semver "^4.1.0"
 
-ember-cli-deploy-build@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.0.0.tgz#b5b938ad907c6423df39590a804e98d4eb87259b"
+ember-cli-deploy-build@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.1.0.tgz#44ef2e09301319a1fc5807e9ec30491a753e2483"
   dependencies:
     chalk "^1.0.0"
     ember-cli-deploy-plugin "^0.2.1"
