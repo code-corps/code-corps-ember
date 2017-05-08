@@ -2282,9 +2282,9 @@ ember-cli-app-version@^3.0.0:
     ember-cli-htmlbars "^1.0.0"
     git-repo-version "0.4.1"
 
-ember-cli-autoprefixer@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-autoprefixer/-/ember-cli-autoprefixer-0.6.0.tgz#a64a106b5b8174a298855b5df6c32e5ac198b642"
+ember-cli-autoprefixer@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-autoprefixer/-/ember-cli-autoprefixer-0.7.0.tgz#104af7018ac2858a3969c5c0a1c22804cd1b39ae"
   dependencies:
     broccoli-autoprefixer "^4.1.0"
     lodash "^4.0.0"
