@@ -3289,11 +3289,11 @@ ember-stripe-elements@0.1.0-beta.7:
     ember-cli-htmlbars "^1.1.1"
     ember-cli-htmlbars-inline-precompile "^0.3.6"
 
-ember-stripe-service@4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/ember-stripe-service/-/ember-stripe-service-4.4.2.tgz#e7f07da7f5380d1fa123ca6b2626a315d61a2ae4"
+ember-stripe-service@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ember-stripe-service/-/ember-stripe-service-6.0.0.tgz#68f088209248cf8f2813f0cdc06d85894e7f9215"
   dependencies:
-    ember-cli-babel "^5.1.6"
+    ember-cli-babel "^5.1.7"
 
 ember-test-helpers@^0.6.0-beta.1:
   version "0.6.3"
