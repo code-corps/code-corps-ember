@@ -2935,9 +2935,9 @@ ember-click-outside@0.1.9:
     ember-cli-babel "^6.0.0"
     ember-cli-htmlbars "*"
 
-ember-composable-helpers@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-composable-helpers/-/ember-composable-helpers-2.0.0.tgz#8ca13c36c33b15f7d2ded05e9e1c9587814cee5a"
+ember-composable-helpers@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ember-composable-helpers/-/ember-composable-helpers-2.0.1.tgz#1568849ee176927fb73b0ed0a16e20b0ac90d774"
   dependencies:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^5.1.7"
