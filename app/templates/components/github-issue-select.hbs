@@ -1,0 +1,11 @@
+{{#power-select
+  disabled=task.githubId
+  loadingMessage='Retrieving issues...'
+  options=issues
+  onchange=onIssueSelected
+  placeholder='Connect your task with a GitHub issue'
+  renderInPlace=true
+  selected=selectedIssue
+  as |issue|}}
+  {{issue.issueName}}
+{{/power-select}}
