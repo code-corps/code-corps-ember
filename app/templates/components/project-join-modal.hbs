@@ -1,10 +1,8 @@
 <button class="button default small" {{action (mut showModal) true}}>Join project</button>
 {{#if showModal}}
   {{#modal-dialog
-     clickOutsideToClose=true
-     close=(action close)
      containerClassNames="project-join-modal"
-     renderInPlace=true
+     onClose=(action (mut showModal) false)
      targetAttachment="center"
      translucentOverlay=true}}
     <h1>Join {{project.title}}</h1>
