@@ -3,8 +3,12 @@ import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-accep
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import Mirage from 'ember-cli-mirage';
 import page from '../pages/github';
+import Ember from 'ember';
+
+const { set } = Ember;
 
 const code = 'test_code';
+const state = 'test_state';
 
 moduleForAcceptance('Acceptance: Github');
 
@@ -18,11 +22,32 @@ test('it requires authentication', function(assert) {
   });
 });
 
+test('if state is invalid, redirects to projects-list with flash error', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { user_id: user.id });
+
+  page.visit({ code, state });
+
+  andThen(() => {
+    assert.equal(
+      currentRouteName(),
+      'settings.profile',
+      'User was redirected to their profile.'
+    );
+
+    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+  });
+});
+
 test('it posts code to API, redirects to profile on success', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
+  let session = this.application.__container__.lookup('service:session');
+  set(session, 'data.githubState', state);
 
   server.post('/github-connect', function() {
     assert.deepEqual(
@@ -34,18 +59,21 @@ test('it posts code to API, redirects to profile on success', function(assert) {
     return user.update('githubAuthToken', 'test_token');
   });
 
-  page.visit({ code });
+  page.visit({ code, state });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'settings.profile', 'User was redirected to settings.profile.');
+    assert.equal(currentRouteName(), 'settings.profile', 'User was redirected to their profile.');
   });
 });
 
-test('it renders error on failure', function(assert) {
+test('if connect request fails, redirects to project list with flash error', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
+
+  let session = this.application.__container__.lookup('service:session');
+  set(session, 'data.githubState', state);
 
   server.post('/github-connect', function() {
     return new Mirage.Response(422, {}, {
@@ -58,13 +86,13 @@ test('it renders error on failure', function(assert) {
     });
   });
 
-  page.visit({ code });
+  page.visit({ code, state });
 
   andThen(() => {
     assert.equal(
       currentRouteName(),
-      'projects-list',
-      'User was redirected to the base route.'
+      'settings.profile',
+      'User was redirected to their profile.'
     );
 
     assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
