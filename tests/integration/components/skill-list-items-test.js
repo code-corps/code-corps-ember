@@ -55,12 +55,24 @@ test('it renders the skills sorted by match and then alphabetically', function(a
   this.render(hbs`{{skill-list-items skills=skills}}`);
 
   assert.equal(page.listItemCount, 4, 'Renders the correct number of skills');
-  assert.equal(page.listItems(0).skillListItemSpan.text, 'HTML');
-  assert.ok(page.listItems(0).skillListItemSpan.hasMatched);
-  assert.equal(page.listItems(1).skillListItemSpan.text, 'Ember.js');
-  assert.notOk(page.listItems(1).skillListItemSpan.hasMatched);
-  assert.equal(page.listItems(2).skillListItemSpan.text, 'Rails');
-  assert.notOk(page.listItems(2).skillListItemSpan.hasMatched);
-  assert.equal(page.listItems(3).skillListItemSpan.text, 'Ruby');
-  assert.notOk(page.listItems(3).skillListItemSpan.hasMatched);
+
+  page.listItems(0).as((item) => {
+    assert.equal(item.skillListItemSpan.text, 'HTML');
+    assert.ok(item.skillListItemSpan.hasMatched);
+  });
+
+  page.listItems(1).as((item) => {
+    assert.equal(item.skillListItemSpan.text, 'Ember.js');
+    assert.notOk(item.skillListItemSpan.hasMatched);
+  });
+
+  page.listItems(2).as((item) => {
+    assert.equal(item.skillListItemSpan.text, 'Rails');
+    assert.notOk(item.skillListItemSpan.hasMatched);
+  });
+
+  page.listItems(3).as((item) => {
+    assert.equal(item.skillListItemSpan.text, 'Ruby');
+    assert.notOk(item.skillListItemSpan.hasMatched);
+  });
 });
