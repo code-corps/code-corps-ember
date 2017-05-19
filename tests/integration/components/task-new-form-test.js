@@ -42,8 +42,10 @@ test('it renders proper ui elements, properly bound', function(assert) {
   renderPage();
 
   assert.equal(page.title.value, 'A task', 'Title is properly bound and rendered.');
-  assert.equal(page.markdown.value, 'A body', 'Markdown content is properly bound and rendered.');
-  assert.equal(page.markdown.placeholder, placeholder, 'Placeholder attribute is properly bound and rendered.');
+  page.markdown.as((markdown) => {
+    assert.equal(markdown.value, 'A body', 'Markdown content is properly bound and rendered.');
+    assert.equal(markdown.placeholder, placeholder, 'Placeholder attribute is properly bound and rendered.');
+  });
 });
 
 test('it triggers an action when the task is saved', function(assert) {
