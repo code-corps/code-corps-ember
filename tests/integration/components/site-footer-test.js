@@ -25,22 +25,28 @@ test('it renders all elements', function(assert) {
   assert.equal(page.columns(2).header, 'Learn');
   assert.equal(page.columns(3).header, 'Connect');
 
-  assert.equal(page.columns(0).rows(0).text, 'About us');
-  assert.equal(page.columns(0).rows(1).text, 'Team');
+  page.columns(0).as((column) => {
+    assert.equal(column.rows(0).text, 'About us');
+    assert.equal(column.rows(1).text, 'Team');
+  });
 
-  assert.equal(page.columns(1).rows(0).text, 'Help Center');
-  assert.equal(page.columns(1).rows(0).link.href, 'https://help.codecorps.org');
-  assert.equal(page.columns(1).rows(1).text, 'Terms of Use');
-  assert.equal(page.columns(1).rows(2).text, 'Privacy Policy');
+  page.columns(1).as((column) => {
+    assert.equal(column.rows(0).text, 'Help Center');
+    assert.equal(column.rows(0).link.href, 'https://help.codecorps.org');
+    assert.equal(column.rows(1).text, 'Terms of Use');
+    assert.equal(column.rows(2).text, 'Privacy Policy');
+  });
 
   assert.equal(page.columns(2).rows(0).text, 'Blog');
 
-  assert.equal(page.columns(3).rows(0).text, 'GitHub');
-  assert.equal(page.columns(3).rows(0).link.href, 'https://github.com/code-corps');
-  assert.equal(page.columns(3).rows(1).text, 'Slack');
-  assert.equal(page.columns(3).rows(1).link.href, 'http://slack.codecorps.org');
-  assert.equal(page.columns(3).rows(2).text, 'Twitter');
-  assert.equal(page.columns(3).rows(2).link.href, 'https://twitter.com/thecodecorps');
-  assert.equal(page.columns(3).rows(3).text, 'Facebook');
-  assert.equal(page.columns(3).rows(3).link.href, 'https://www.facebook.com/thecodecorps');
+  page.columns(3).as((column) => {
+    assert.equal(column.rows(0).text, 'GitHub');
+    assert.equal(column.rows(0).link.href, 'https://github.com/code-corps');
+    assert.equal(column.rows(1).text, 'Slack');
+    assert.equal(column.rows(1).link.href, 'http://slack.codecorps.org');
+    assert.equal(column.rows(2).text, 'Twitter');
+    assert.equal(column.rows(2).link.href, 'https://twitter.com/thecodecorps');
+    assert.equal(column.rows(3).text, 'Facebook');
+    assert.equal(column.rows(3).link.href, 'https://www.facebook.com/thecodecorps');
+  });
 });
