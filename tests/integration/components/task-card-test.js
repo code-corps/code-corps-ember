@@ -251,8 +251,8 @@ test('assignment dropdown does not render if user has no ability', function(asse
   renderPage();
 
   assert.notOk(page.taskAssignment.triggerRenders, 'Dropdown trigger for assignment does not render.');
-  page.assignedUser.as(user => {
+  page.assignedUser.as((user) => {
     assert.equal(user.text, 'testuser2');
     assert.equal(user.icon.url, 'test.png');
-  })
+  });
 });
