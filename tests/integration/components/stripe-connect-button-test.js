@@ -13,6 +13,8 @@ test('it renders all required elements', function(assert) {
   this.set('url', url);
   this.render(hbs`{{stripe-connect-button url=url}}`);
 
-  assert.equal(this.$('.stripe-connect').attr('href'), url);
-  assert.equal(this.$('.stripe-connect').text(), 'Connect with Stripe');
+  this.$('.stripe-connect').as((component) => {
+    assert.equal(component.attr('href'), url);
+    assert.equal(component.text(), 'Connect with Stripe');
+  });
 });
