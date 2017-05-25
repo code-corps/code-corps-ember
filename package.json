@@ -17,7 +17,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "coveralls": "^2.11.14",
     "ember-ajax": "^3.0.0",
-    "ember-auto-focus": "1.0.8",
+    "ember-auto-focus": "1.0.9",
     "ember-autoresize": "0.5.22",
     "ember-can": "^0.8.4",
     "ember-cli": "2.13.1",
