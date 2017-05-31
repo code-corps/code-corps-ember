@@ -54,3 +54,14 @@
     margin: 10px 0;
   }
 }
+
+.long-description {
+
+  &, &-editor {
+
+    li {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+  }
+}
