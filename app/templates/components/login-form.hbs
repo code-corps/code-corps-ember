@@ -20,6 +20,10 @@
     </button>
   </div>
 
+  {{#link-to 'password.forgot' classNames="t-forgot-password"}}
+    Forgot your password?
+  {{/link-to}}
+
   {{#if errors}}
     {{#each errors.errors as |error|}}
       <p class="error">{{error.detail}}</p>

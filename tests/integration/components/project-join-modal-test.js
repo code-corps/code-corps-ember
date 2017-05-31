@@ -45,9 +45,9 @@ test('when button is clicked, modal opens', function(assert) {
 
   renderPage();
 
-  assert.notOk(page.modalVisible, 'Modal is initially hidden.');
+  assert.notOk(page.modal.isVisible, 'Modal is initially hidden.');
   page.openButton.click();
-  assert.ok(page.modalVisible, 'Modal is now visible.');
+  assert.ok(page.modal.isVisible, 'Modal is now visible.');
 });
 
 test('when clicking outside the modal, the modal closes', function(assert) {
@@ -56,9 +56,9 @@ test('when clicking outside the modal, the modal closes', function(assert) {
   set(this, 'showModal', true);
   renderPage();
 
-  assert.ok(page.modalVisible, 'Modal is initially visible.');
+  assert.ok(page.modal.isVisible, 'Modal is initially visible.');
   page.overlay.click();
-  assert.notOk(page.modalVisible, 'Modal is now hidden.');
+  assert.notOk(page.modal.isVisible, 'Modal is now hidden.');
 });
 
 test('when hitting escape, the modal closes', function(assert) {
@@ -67,9 +67,9 @@ test('when hitting escape, the modal closes', function(assert) {
   set(this, 'showModal', true);
   renderPage();
 
-  assert.ok(page.modalVisible, 'Modal is initially visible.');
+  assert.ok(page.modal.isVisible, 'Modal is initially visible.');
   page.modal.hitEscape();
-  assert.notOk(page.modalVisible, 'Modal is now hidden.');
+  assert.notOk(page.modal.isVisible, 'Modal is now hidden.');
 });
 
 test('when hitting "join project" button, the service is called', function(assert) {

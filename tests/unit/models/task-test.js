@@ -21,7 +21,7 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['body', 'insertedAt', 'markdown', 'number', 'order', 'position', 'status', 'title']);
+testForAttributes('task', ['body', 'githubId', 'insertedAt', 'markdown', 'number', 'order', 'position', 'status', 'title']);
 testForBelongsTo('task', 'project');
 testForBelongsTo('task', 'taskList');
 testForBelongsTo('task', 'user');

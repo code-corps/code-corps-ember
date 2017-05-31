@@ -32,18 +32,8 @@ export default Component.extend(EmberKeyboardMixin, {
     set(this, 'keyboardActivated', true);
   },
 
-  close() {
-    // Without this check, tests are throwing
-    // errors on "calling set on destroyed object"
-    // There must be some sort of async behavior related to ember-modal-dialog
-    // we are not understanding.
-    if (this && !get(this, 'isDestroying')) {
-      set(this, 'showModal', false);
-    }
-  },
-
   closeOnEsc: on(keyDown('Escape'), function() {
-    get(this, 'close')();
+    set(this, 'showModal', false);
   }),
 
   actions: {

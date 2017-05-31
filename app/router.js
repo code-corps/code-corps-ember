@@ -75,6 +75,11 @@ AppRouter.map(function() {
     path: '/projects'
   });
 
+  this.route('password', function() {
+    this.route('reset');
+    this.route('forgot');
+  });
+
   this.route('settings', function() {
     this.route('profile');
   });
@@ -94,6 +99,7 @@ AppRouter.map(function() {
 
   this.route('team');
   this.route('terms');
+  this.route('github');
 });
 
 export default AppRouter;
