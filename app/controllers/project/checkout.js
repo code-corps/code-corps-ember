@@ -155,15 +155,6 @@ export default Controller.extend({
 
   // helpers
 
-  _tokenParams(cardParams) {
-    return {
-      number: cardParams.cardNumber,
-      cvc: cardParams.cvc,
-      exp_month: cardParams.month,
-      exp_year: cardParams.year
-    };
-  },
-
   _updateisProcessing(value) {
     set(this, 'isProcessing', value);
   },

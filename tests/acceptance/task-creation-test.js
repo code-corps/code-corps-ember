@@ -98,28 +98,6 @@ test('Task preview works during creation', function(assert) {
   });
 });
 
-// NOTE: Commented out due to comment user mentions being disabled until reimplemented in phoenix
-/* test('Task preview during creation renders user mentions', function(assert) {
-  assert.expect(1);
-
-  let project = server.create('project');
-  let organization = project.organization;
-  let user1 = server.create('user');
-  let user2 = server.create('user');
-  let markdown = `Mentioning @${user1.username} and @${user2.username}`;
-  const expectedBody = `Mentioning @${user1.username} and @${user2.username}`;
-  projectTasksNewPage.visit({ organization: organization.slug, project: project.slug });
-
-  andThen(() => {
-    projectTasksIndexPage.taskMarkdown(markdown);
-    projectTasksNewPage.clickPreviewTask();
-
-    andThen(() => {
-      assert.equal(projectTasksIndexPage.previewBody.text, expectedBody, 'The mentions render');
-    });
-  });
-});*/
-
 test('When task creation succeeeds, the user is redirected to the task page for the new task', function(assert) {
   assert.expect(2);
   let user = server.schema.users.create({ username: 'test_user' });
