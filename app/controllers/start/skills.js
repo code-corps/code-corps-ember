@@ -16,14 +16,6 @@ export default Controller.extend(OnboardingControllerMixin, {
   user: alias('model'),
   userSkills: alias('user.userSkills'),
 
-  addSkill(skill) {
-    return get(this, 'userSkillsList').add(skill);
-  },
-
-  removeSkill(skill) {
-    return get(this, 'userSkillsList').remove(skill);
-  },
-
   removeUserSkill(userSkill) {
     return userSkill.destroyRecord();
   },

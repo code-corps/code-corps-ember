@@ -33,9 +33,9 @@ export default Controller.extend({
                  .catch((payload) => this._handleTaskSaveError(payload));
     },
 
-    deselectSkill(skill) {
+    deselectTaskSkill(taskSkill) {
       let unsavedTaskSkills = get(this, 'unsavedTaskSkills');
-      unsavedTaskSkills.removeObject(skill);
+      unsavedTaskSkills.removeObject(taskSkill);
     },
 
     toggleSkill(skill) {
