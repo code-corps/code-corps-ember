@@ -72,3 +72,11 @@ test('When authenticated, redirects from signup', function(assert) {
     assert.equal(currentURL(), '/projects');
   });
 });
+
+test('Can get to forgot password route from login page', function(assert) {
+  loginPage.visit();
+  loginPage.clickForgotPassword();
+  andThen(() => {
+    assert.equal(currentURL(), '/password/forgot');
+  });
+});

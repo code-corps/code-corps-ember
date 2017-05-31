@@ -1,5 +1,5 @@
 {{#each messages as |message|}}
-  <p class="error">{{message}}</p>
+  <p class="error" data-test-id="error-msg">{{message}}</p>
 {{else}}
-  <p class="error">{{defaultMessage}}</p>
+  <p class="error" data-test-id="default-msg">{{defaultMessage}}</p>
 {{/each}}
