@@ -41,8 +41,10 @@ test('it renders properly', function(assert) {
   page.toggle();
 
   assert.ok(page.iconVisible, "The user's icon renders");
-  assert.equal(page.icon.src, stubUser.get('photoThumbUrl'), 'The icon has the correct source');
-  assert.equal(page.icon.alt, stubUser.get('atUsername'), 'The icon has the correct alt');
+  page.icon.as((icon) => {
+    assert.equal(icon.src, stubUser.get('photoThumbUrl'), 'The icon has the correct source');
+    assert.equal(icon.alt, stubUser.get('atUsername'), 'The icon has the correct alt');
+  });
 
   assert.ok(page.sluggedRouteLinkVisible, 'The link to the user route is rendered');
   assert.ok(page.profileLinkVisible, 'The link to the user profile is rendered');
