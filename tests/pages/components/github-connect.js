@@ -3,8 +3,6 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  button: {
-    scope: '.default',
-    href: attribute('href')
-  }
+  scope: '.github-connect',
+  href: attribute('href')
 };

@@ -22,7 +22,7 @@ test('it requires authentication', function(assert) {
   });
 });
 
-test('if state is invalid, redirects to projects-list with flash error', function(assert) {
+test('if state is invalid, goes back to ingtegrations page with a flash error', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -33,15 +33,15 @@ test('if state is invalid, redirects to projects-list with flash error', functio
   andThen(() => {
     assert.equal(
       currentRouteName(),
-      'settings.profile',
-      'User was redirected to their profile.'
+      'settings.integrations',
+      'User was redirected back to integrations.'
     );
 
     assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
   });
 });
 
-test('it posts code to API, redirects to profile on success', function(assert) {
+test('it posts code to API, goes back to integrations page on success', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -52,7 +52,7 @@ test('it posts code to API, redirects to profile on success', function(assert) {
   server.post('/oauth/github', function() {
     assert.deepEqual(
       this.normalizedRequestAttrs(),
-      { code },
+      { code, state },
       'Correct data was sent in request.'
     );
 
@@ -62,11 +62,11 @@ test('it posts code to API, redirects to profile on success', function(assert) {
   page.visit({ code, state });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'settings.profile', 'User was redirected to their profile.');
+    assert.equal(currentRouteName(), 'settings.integrations', 'User was redirected back to integrations.');
   });
 });
 
-test('if connect request fails, redirects to project list with flash error', function(assert) {
+test('if connect request fails, redirects to integrations with a flash error', function(assert) {
   assert.expect(2);
 
   let user = server.create('user');
@@ -75,7 +75,7 @@ test('if connect request fails, redirects to project list with flash error', fun
   let session = this.application.__container__.lookup('service:session');
   set(session, 'data.githubState', state);
 
-  server.post('/github-connect', function() {
+  server.post('/oauth/github', function() {
     return new Mirage.Response(422, {}, {
       errors: [{
         id: 'VALIDATION_ERROR',
@@ -91,8 +91,8 @@ test('if connect request fails, redirects to project list with flash error', fun
   andThen(() => {
     assert.equal(
       currentRouteName(),
-      'settings.profile',
-      'User was redirected to their profile.'
+      'settings.integrations',
+      'User was redirected to the integrations page.'
     );
 
     assert.equal(page.flashMessages().count, 1, 'A flash was displayed');

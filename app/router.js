@@ -86,6 +86,7 @@ AppRouter.map(function() {
 
   this.route('settings', function() {
     this.route('profile');
+    this.route('integrations');
   });
 
   this.route('signup');

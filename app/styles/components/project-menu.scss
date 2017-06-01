@@ -1,4 +1,4 @@
-.project__menu, .organization-menu {
+.page-menu, .project__menu, .organization-menu {
   &--horizontal {
     @include clearfix;
     border-bottom: 1px solid $blue--lighter;

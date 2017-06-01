@@ -27,7 +27,7 @@ const baseUrl = 'https://github.com/login/oauth/authorize';
 
 export default Component.extend({
   tagName: 'a',
-  classNames: ['button', 'default'],
+  classNames: ['github-connect', 'button', 'default'],
   attributeBindings: ['url:href'],
 
   githubState: service(),

@@ -1,0 +1,23 @@
+.github-connect-state__user {
+  align-items: center;
+  background-color: $background-gray;
+  border-radius: 4px;
+  display: inline-flex;
+  flex-direction: row;
+  padding: 1em;
+
+  svg {
+    margin-right: 10px;
+  }
+
+  img {
+    border-radius: 4px;
+    height: 50px;
+    margin-right: 10px;
+    width: 50px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
