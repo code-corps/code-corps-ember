@@ -49,7 +49,7 @@ test('it posts code to API, redirects to profile on success', function(assert) {
   let session = this.application.__container__.lookup('service:session');
   set(session, 'data.githubState', state);
 
-  server.post('/github-connect', function() {
+  server.post('/oauth/github', function() {
     assert.deepEqual(
       this.normalizedRequestAttrs(),
       { code },

@@ -24,6 +24,10 @@ module.exports = function(environment) {
 
     cloudinary: {},
 
+    github: {
+      scope: 'public_repo,user:email'
+    },
+
     flashMessageDefaults: {
       // flash message defaults
       timeout: 2000,
@@ -85,6 +89,8 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://localhost:4200';
     ENV.cloudinary.cloud = 'dlfnmtoq1';
     ENV.cloudinary.uploadPreset = 'xjyyogvi';
+    ENV.github.clientId = '00dc6a91dd3ebb572430';
+    ENV.github.redirectUri = 'http://localhost:4200/oauth/github';
     ENV.sentry.development = true;
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
     ENV['ember-cli-mirage'] = {
