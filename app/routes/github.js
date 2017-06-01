@@ -12,7 +12,7 @@ const STATE_INVALID = 'Something went wrong while connecting to GitHub. Please t
 
 export default Route.extend(AuthenticatedRouteMixin, {
   queryParams: {
-    // changing any of these query params needs to trigger the model hook, to
+    // changing any of these query params needs to trigger the model hook to
     // start the connect process
     code: { refreshModel: true },
     state: { refreshModel: true }
@@ -49,7 +49,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   _sendRequest(code) {
-    return get(this, 'ajax').post('/github-connect', {
+    return get(this, 'ajax').request('/oauth/github', {
+      method: 'POST',
       data: { code }
     });
   }

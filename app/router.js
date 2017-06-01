@@ -31,6 +31,10 @@ let AppRouter = Router.extend({
 AppRouter.map(function() {
   this.route('about');
 
+  this.route('github', {
+    path: '/oauth/github'
+  });
+
   this.route('login');
 
   this.route('organization', function() {
@@ -99,7 +103,6 @@ AppRouter.map(function() {
 
   this.route('team');
   this.route('terms');
-  this.route('github');
 });
 
 export default AppRouter;
