@@ -3109,9 +3109,9 @@ ember-dragula@1.9.3:
     ember-cli-babel "^5.1.5"
     rsvp "^3.2.1"
 
-ember-exam@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-0.6.2.tgz#e79e52fec5cb43b7f797d2ac8118e04c01e4844d"
+ember-exam@0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-0.7.0.tgz#740ad0e4df3cb6cff8e83ae9c98536d8bb04332a"
   dependencies:
     chalk "^1.1.3"
     cli-table2 "^0.2.0"
