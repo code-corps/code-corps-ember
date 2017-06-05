@@ -2343,13 +2343,13 @@ ember-auto-focus@1.0.9:
     ember-cli-babel "6.1.0"
     ember-cli-htmlbars "1.3.0"
 
-ember-autoresize@0.5.22:
-  version "0.5.22"
-  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.5.22.tgz#97e72642242993af9a4816aba652d374b7bba08a"
+ember-autoresize@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.6.0.tgz#e1cffd9e9e42318e61ae424732c9eff32c367659"
   dependencies:
     dom-ruler "^0.2.5"
     ember-cli-babel "^5.1.7"
-    ember-cli-node-assets "^0.1.6"
+    ember-cli-node-assets "^0.2.2"
 
 ember-basic-dropdown@^0.32.5:
   version "0.32.6"
@@ -2774,6 +2774,17 @@ ember-cli-node-assets@^0.1.2, ember-cli-node-assets@^0.1.4, ember-cli-node-asset
     broccoli-funnel "^1.0.1"
     broccoli-merge-trees "^1.1.1"
     broccoli-unwatched-tree "^0.1.1"
+    debug "^2.2.0"
+    lodash "^4.5.1"
+    resolve "^1.1.7"
+
+ember-cli-node-assets@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.2.2.tgz#d2d55626e7cc6619f882d7fe55751f9266022708"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.1.1"
+    broccoli-source "^1.1.0"
     debug "^2.2.0"
     lodash "^4.5.1"
     resolve "^1.1.7"
