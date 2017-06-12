@@ -8,9 +8,10 @@ const { computed } = Ember;
 export default Model.extend({
   biography: attr(),
   cloudinaryPublicId: attr(),
-  insertedAt: attr('date'),
   email: attr(),
   firstName: attr(),
+  githubAuthToken: attr(),
+  insertedAt: attr('date'),
   lastName: attr(),
   name: attr(),
   password: attr(),
