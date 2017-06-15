@@ -28,30 +28,30 @@ export default Route.extend(AuthenticatedRouteMixin, {
     let stateValidator = get(this, 'githubState');
 
     if (stateValidator.validate(state)) {
-      return this._sendRequest(code);
+      return this._sendRequest(code, state);
     } else {
       get(this, 'flashMessages').clearMessages().danger(STATE_INVALID);
-      return this.transitionTo('settings.profile');
+      return this.transitionTo('settings.integrations');
     }
   },
 
   afterModel(currentUserData) {
     get(this, 'store').pushPayload(currentUserData);
-    return this.transitionTo('settings.profile');
+    return this.transitionTo('settings.integrations');
   },
 
   actions: {
     error() {
       get(this, 'flashMessages').clearMessages().danger(CODE_INVALID);
-      this.replaceWith('settings.profile');
+      this.replaceWith('settings.integrations');
       return false;
     }
   },
 
-  _sendRequest(code) {
+  _sendRequest(code, state) {
     return get(this, 'ajax').request('/oauth/github', {
       method: 'POST',
-      data: { code }
+      data: { code, state }
     });
   }
 });

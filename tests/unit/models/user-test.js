@@ -21,10 +21,11 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('user', [
-  'biography', 'cloudinaryPublicId', 'email', 'firstName', 'insertedAt',
-  'lastName', 'name', 'password', 'photoLargeUrl', 'photoThumbUrl',
-  'signUpContext', 'state', 'stateTransition', 'twitter', 'username',
-  'website'
+  'biography', 'cloudinaryPublicId', 'email', 'firstName',
+  'githubAvatarUrl', 'githubId', 'githubUsername',
+  'insertedAt', 'lastName', 'name', 'password', 'photoLargeUrl',
+  'photoThumbUrl', 'signUpContext', 'state', 'stateTransition', 'twitter',
+  'username', 'website'
 ]);
 
 testForBelongsTo('user', 'stripePlatformCard');

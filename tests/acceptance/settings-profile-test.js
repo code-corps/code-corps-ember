@@ -1,7 +1,7 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
-import settingsProfilePage from '../pages/settings-profile';
+import settingsProfilePage from '../pages/settings/profile';
 
 moduleForAcceptance('Acceptance | Settings – Profile');
 
