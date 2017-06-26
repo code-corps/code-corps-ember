@@ -12,8 +12,9 @@ let page = PageObject.create(pageComponent);
 
 const {
   getOwner,
+  get,
   getProperties,
-  Object,
+  set,
   run,
   RSVP
 } = Ember;
@@ -25,7 +26,7 @@ function renderPage() {
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
-    mockUserCategory.set('categoryId', defaultCategoryId);
+    set(mockUserCategory, 'categoryId', defaultCategoryId);
     getOwner(this).lookup('service:flash-messages').registerTypes(['danger']);
     page.setContext(this);
   },
@@ -38,15 +39,16 @@ let defaultCategoryId = 2;
 
 let mockUserCategoriesService = {
   findUserCategory(category) {
-    if (category.id === mockUserCategory.get('categoryId')) {
+    if (category.id === get(mockUserCategory, 'categoryId')) {
       return mockUserCategory;
     }
   },
   addCategory(category) {
     return new RSVP.Promise((fulfill) => {
       run.next(() => {
-        mockUserCategory.set('categoryId', category.get('id'));
-        getOwner(this).lookup('service:user-categories').set('userCategories', [mockUserCategory]);
+        set(mockUserCategory, 'categoryId', get(category, 'id'));
+        let userCategoriesService = getOwner(this).lookup('service:user-categories');
+        set(userCategoriesService, 'userCategories', [mockUserCategory]);
         fulfill();
       });
     });
@@ -54,8 +56,9 @@ let mockUserCategoriesService = {
   removeCategory() {
     return new RSVP.Promise((fulfill, reject) => {
       run.next(() => {
-        mockUserCategory.set('categoryId', null);
-        getOwner(this).lookup('service:user-categories').set('userCategories', []);
+        set(mockUserCategory, 'categoryId', null);
+        let userCategoriesService = getOwner(this).lookup('service:user-categories');
+        set(userCategoriesService, 'userCategories', []);
         reject();
       });
     });
@@ -64,7 +67,7 @@ let mockUserCategoriesService = {
 
 let mockUserCategoriesServiceForErrors = {
   findUserCategory(category) {
-    if (category.id === mockUserCategory.get('categoryId')) {
+    if (category.id === get(mockUserCategory, 'categoryId')) {
       return mockUserCategory;
     }
   },
@@ -76,25 +79,25 @@ let mockUserCategoriesServiceForErrors = {
   }
 };
 
-let mockUserCategory = Object.create({
+let mockUserCategory = {
   id: 1,
   categoryId: defaultCategoryId,
   userId: 1
-});
+};
 
-let unselectedCategory = Object.create({
+let unselectedCategory = {
   id: 1,
   name: 'Technology',
   slug: 'technology',
   description: 'You want to help technology.'
-});
+};
 
-let selectedCategory = Object.create({
+let selectedCategory = {
   id: 2,
   name: 'Society',
   slug: 'society',
   description: 'You want to help society.'
-});
+};
 
 test('it works for selecting unselected categories', function(assert) {
   let done = assert.async();
@@ -102,7 +105,7 @@ test('it works for selecting unselected categories', function(assert) {
   assert.expect(5);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
-  this.set('category', unselectedCategory);
+  set(this, 'category', unselectedCategory);
 
   renderPage();
 

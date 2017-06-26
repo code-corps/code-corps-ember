@@ -1,9 +1,6 @@
-import Ember from 'ember';
 import { faker } from 'ember-cli-mirage';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-
-const { Object } = Ember;
 
 moduleForComponent('project-card-members', 'Integration | Component | project card members', {
   integration: true
@@ -12,9 +9,9 @@ moduleForComponent('project-card-members', 'Integration | Component | project ca
 function createMembers(count) {
   let members = [];
   for (let i = 1; i <= count; i++) {
-    members.push(Object.create({
+    members.push({
       photoThumbUrl: faker.internet.avatar()
-    }));
+    });
   }
   return members;
 }

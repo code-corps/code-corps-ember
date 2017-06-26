@@ -17,7 +17,7 @@ export default Component.extend({
 
   actions: {
     approve(membership) {
-      membership.set('role', 'contributor');
+      set(membership, 'role', 'contributor');
       return membership.save().then(() => {
         this._flashSuccess('Membership approved');
       });

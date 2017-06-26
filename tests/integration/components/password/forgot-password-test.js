@@ -1,6 +1,6 @@
 import Ember from 'ember';
 const { RSVP, getOwner } = Ember;
-import { moduleForComponent, test, skip } from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import forgotPasswordComponent from 'code-corps-ember/tests/pages/components/password/forgot-password';
 import PageObject from 'ember-cli-page-object';
@@ -62,8 +62,7 @@ test('500 error is displayed', function(assert) {
   assert.equal(this.$('[data-test-id="error-msg"]').length, 1);
 });
 
-// phantomjs fail
-skip('can recover from error', function(assert) {
+test('can recover from error', function(assert) {
   assert.expect(3);
   getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
 

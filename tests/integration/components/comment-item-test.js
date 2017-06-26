@@ -8,7 +8,6 @@ import commentItemComponent from 'code-corps-ember/tests/pages/components/commen
 let page = PageObject.create(commentItemComponent);
 
 const {
-  Object,
   RSVP,
   run,
   set,
@@ -32,9 +31,7 @@ moduleForComponent('comment-item', 'Integration | Component | comment item', {
 test('it renders all required comment elements properly', function(assert) {
   assert.expect(6);
 
-  let comment = Object.create({
-    isLoaded: false
-  });
+  let comment = { isLoaded: false };
 
   set(this, 'comment', comment);
 
@@ -62,7 +59,7 @@ test('it renders all required comment elements properly', function(assert) {
 test('it switches between editing and viewing mode', function(assert) {
   assert.expect(3);
 
-  let user = Object.create({ id: 1 });
+  let user = { id: 1 };
   stubService(this, 'current-user', { user });
 
   let comment = {

@@ -2,7 +2,7 @@ import { moduleFor, test } from 'ember-qunit';
 import Ember from 'ember';
 
 const {
-  Object,
+  get,
   RSVP
 } = Ember;
 
@@ -34,7 +34,7 @@ test('it sets the user when there is a user', function(assert) {
     },
     store: {
       findRecord() {
-        return RSVP.resolve(Object.create({ id: 1 }));
+        return RSVP.resolve({ id: 1 });
       }
     },
     session: {
@@ -48,7 +48,7 @@ test('it sets the user when there is a user', function(assert) {
 
   let done = assert.async();
   service.loadCurrentUser().then((user) => {
-    assert.equal(user.get('id'), 1);
+    assert.equal(get(user, 'id'), 1);
     assert.equal(service.get('user'), user);
     done();
   });

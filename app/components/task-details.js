@@ -4,7 +4,9 @@ const {
   Component,
   computed,
   computed: { alias },
-  inject: { service }
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 /**
@@ -70,14 +72,14 @@ export default Component.extend({
     @type Boolean
    */
   currentUserIsTaskAuthor: computed('currentUserId', 'taskAuthorId', function() {
-    let userId = parseInt(this.get('currentUserId'), 10);
-    let authorId = parseInt(this.get('taskAuthorId'), 10);
+    let userId = parseInt(get(this, 'currentUserId'), 10);
+    let authorId = parseInt(get(this, 'taskAuthorId'), 10);
     return userId === authorId;
   }),
 
   init() {
-    this.set('isEditingBody', false);
-    this._prefetchMentions(this.get('task'));
+    set(this, 'isEditingBody', false);
+    this._prefetchMentions(get(this, 'task'));
     return this._super(...arguments);
   },
 
@@ -89,7 +91,7 @@ export default Component.extend({
       @method cancelEditingTaskBody
      */
     cancelEditingTaskBody() {
-      this.set('isEditingBody', false);
+      set(this, 'isEditingBody', false);
     },
 
     /**
@@ -98,7 +100,7 @@ export default Component.extend({
       @method editTaskBody
      */
     editTaskBody() {
-      this.set('isEditingBody', true);
+      set(this, 'isEditingBody', true);
     },
 
     /**
@@ -108,10 +110,10 @@ export default Component.extend({
       @method saveTaskBody
      */
     applyEditTask() {
-      let task = this.get('task');
+      let task = get(this, 'task');
 
-      this.get('saveTask')(task).then((task) => {
-        this.set('isEditingBody', false);
+      get(this, 'saveTask')(task).then((task) => {
+        set(this, 'isEditingBody', false);
         this._fetchMentions(task);
       });
     }
@@ -125,8 +127,8 @@ export default Component.extend({
     @private
    */
   _fetchMentions(task) {
-    this.get('mentionFetcher').fetchBodyWithMentions(task, 'task').then((body) => {
-      this.set('taskBodyWithMentions', body);
+    get(this, 'mentionFetcher').fetchBodyWithMentions(task, 'task').then((body) => {
+      set(this, 'taskBodyWithMentions', body);
     });
   },
 
@@ -138,8 +140,8 @@ export default Component.extend({
     @private
    */
   _prefetchMentions(task) {
-    let body = this.get('mentionFetcher').prefetchBodyWithMentions(task, 'task');
+    let body = get(this, 'mentionFetcher').prefetchBodyWithMentions(task, 'task');
 
-    this.set('taskBodyWithMentions', body);
+    set(this, 'taskBodyWithMentions', body);
   }
 });

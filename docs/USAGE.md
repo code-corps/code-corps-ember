@@ -76,7 +76,7 @@ Or, more simply, use [nombom](https://www.npmjs.com/package/nombom) which automa
 We use [ember-exam](https://github.com/trentmwillis/ember-exam) for running tests since it allows for parallel testing, randomized orders, and other neat configurations. You can check out the repository readme there to see the available options. A few handy ones to use when running tests locally are outlined below.
 
 * `ember exam` will run the tests
-* `ember exam --split=3 --weighted --parallel` will run tests in 3 PhantomJS instances in parallel with an equal split. Currently, 3 parallel instances will run the tests the quickest.
+* `ember exam --split=3 --weighted --parallel` will run tests in 3 instances in parallel with an equal split. Currently, 3 parallel instances will run the tests the quickest.
 * `ember exam --random` will run the tests in a random order
 * `ember exam --filter='acceptance'` will only run acceptance tests. The same syntax can be used for other types of tests, such as `ember exam --filter='unit'` and `ember exam --filter='integration'`
 

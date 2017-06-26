@@ -4,7 +4,6 @@ import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 const {
-  Object,
   RSVP
 } = Ember;
 
@@ -29,9 +28,9 @@ test('It renders a list of comments if there are comments', function(assert) {
   assert.expect(1);
 
   let comments = [
-    Object.create({ body: 'Comment 1' }),
-    Object.create({ body: 'Comment 2' }),
-    Object.create({ body: 'Comment 3' })
+    { body: 'Comment 1' },
+    { body: 'Comment 2' },
+    { body: 'Comment 3' }
   ];
 
   this.set('comments', comments);

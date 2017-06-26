@@ -9,7 +9,6 @@ import component from 'code-corps-ember/tests/pages/components/role-item';
 
 const {
   getOwner,
-  Object,
   RSVP,
   run,
   set
@@ -34,12 +33,12 @@ let mockUserRolesServiceForErrors = {
   removeRole: () => RSVP.reject()
 };
 
-let mobileDeveloper = Object.create({
+let mobileDeveloper = {
   id: 'foo',
   name: 'Mobile Developer',
   ability: 'Mobile Development',
   kind: 'technology'
-});
+};
 
 moduleForComponent('role-item', 'Integration | Component | role item', {
   integration: true,
