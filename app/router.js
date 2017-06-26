@@ -62,6 +62,7 @@ AppRouter.map(function() {
         this.route('goals');
         this.route('payments');
       });
+      this.route('integrations');
       this.route('profile');
     });
     this.route('tasks', function() {

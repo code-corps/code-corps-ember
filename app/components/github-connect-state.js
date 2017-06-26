@@ -29,6 +29,8 @@ const {
 export default Component.extend({
   classNames: ['github-connect-state'],
 
+  redirectUri: null,
+
   githubAvatarUrlResized: computed('githubAvatarUrl', function() {
     return `${get(this, 'githubAvatarUrl')}&size=100`;
   })
