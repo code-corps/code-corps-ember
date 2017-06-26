@@ -10,7 +10,7 @@ test('visiting /team', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), '/team');
     assert.equal(teamPage.company.header, 'Our Team');
-    assert.equal(teamPage.company.items().count, 2);
+    assert.equal(teamPage.company.items().count, 3);
     assert.equal(teamPage.contributors.header, 'Our Contributors');
     assert.equal(teamPage.contributors.items().count, 29);
   });

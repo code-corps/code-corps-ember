@@ -8,12 +8,11 @@ import component from 'code-corps-ember/tests/pages/components/member-list-item'
 const {
   get,
   getOwner,
-  Object,
   RSVP,
   set
 } = Ember;
 
-let user = Object.create({
+let user = {
   name: 'Josh Smith',
   username: 'joshsmith',
   photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
@@ -22,14 +21,14 @@ let user = Object.create({
     { skill: { title: 'Rails' } },
     { skill: { title: 'Ruby' } }
   ]
-});
+};
 
 function mockMembership(role) {
-  return Object.create({
+  return {
     role,
     destroyRecord: RSVP.resolve,
     save: RSVP.resolve
-  });
+  };
 }
 
 let page = PageObject.create(component);
@@ -96,13 +95,13 @@ test('it does not render the buttons when not pending', function(assert) {
 test('it sends the approve action when clicking approve', function(assert) {
   assert.expect(4);
 
-  let membership = Object.create({
+  let membership = {
     role: 'pending',
     save() {
       assert.ok(true, 'Action was called');
       return RSVP.resolve();
     }
-  });
+  };
 
   set(this, 'membership', membership);
   set(this, 'user', user);
@@ -128,13 +127,13 @@ test('it sends the deny action when clicking deny', function(assert) {
 
   assert.expect(4);
 
-  let membership = Object.create({
+  let membership = {
     role: 'pending',
     destroyRecord() {
       assert.ok(true, 'Action was called.');
       return RSVP.resolve();
     }
-  });
+  };
 
   set(this, 'membership', membership);
   set(this, 'user', user);

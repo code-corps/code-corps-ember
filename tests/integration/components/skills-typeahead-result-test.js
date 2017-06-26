@@ -4,14 +4,14 @@ import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import skillsTypeaheadResultComponent from '../../pages/components/skills-typeahead-result';
 
-const { Object, set } = Ember;
+const { set } = Ember;
 
 let page = PageObject.create(skillsTypeaheadResultComponent);
 
-let skill = Object.create({
+let skill = {
   selected: true,
   title: 'Ruby on Rails'
-});
+};
 
 let userSkillsList = {
   includes() {

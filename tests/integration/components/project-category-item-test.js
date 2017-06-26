@@ -8,13 +8,13 @@ import PageObject from 'ember-cli-page-object';
 let page = PageObject.create(projectCategoryItemCoponent);
 
 const {
-  Object,
+  get,
   run
 } = Ember;
 
 let mockUserCategoriesService = {
   findUserCategory(category) {
-    if (category.id === mockUserCategory.get('categoryId')) {
+    if (category.id === get(mockUserCategory, 'categoryId')) {
       return mockUserCategory;
     }
   }
@@ -35,11 +35,11 @@ moduleForComponent('project-category-item', 'Integration | Component | project c
   }
 });
 
-let mockUserCategory = Object.create({
+let mockUserCategory = {
   id: 1,
   categoryId: 2,
   userId: 1
-});
+};
 
 test('it works for unselected categories', function(assert) {
   assert.expect(6);

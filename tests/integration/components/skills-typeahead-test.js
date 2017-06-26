@@ -7,7 +7,6 @@ import skillsTypeaheadComponent from '../../pages/components/skills-typeahead';
 import wait from 'ember-test-helpers/wait';
 
 const {
-  Object,
   RSVP,
   set
 } = Ember;
@@ -15,8 +14,8 @@ const {
 let page = PageObject.create(skillsTypeaheadComponent);
 
 let skills = [
-  Object.create({ title: 'Ruby' }),
-  Object.create({ title: 'Ruby on Rails' })
+  { title: 'Ruby' },
+  { title: 'Ruby on Rails' }
 ];
 
 let mockStore = {
@@ -40,8 +39,8 @@ let mockListService = {
 };
 
 function setHandlers(context, { selectHandler = function() {} } = {}) {
-  context.set('mockListService', mockListService);
-  context.set('selectHandler', selectHandler);
+  set(context, 'mockListService', mockListService);
+  set(context, 'selectHandler', selectHandler);
 }
 
 moduleForComponent('skills-typeahead', 'Integration | Component | skills typeahead', {

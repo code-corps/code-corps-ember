@@ -7,21 +7,19 @@ let page = PageObject.create(component);
 
 import Ember from 'ember';
 
-const {
-  Object
-} = Ember;
+const { set } = Ember;
 
-let mockGoal = Object.create({ amount: 20, description: 'Some description' });
+let mockGoal = { amount: 20, description: 'Some description' };
 
 function setHandlers(context, { saveHandler = function() {}, cancelHandler = function() {} } = {}) {
-  context.set('saveHandler', saveHandler);
-  context.set('cancelHandler', cancelHandler);
+  set(context, 'saveHandler', saveHandler);
+  set(context, 'cancelHandler', cancelHandler);
 }
 
 moduleForComponent('donation-goal-edit', 'Integration | Component | donation goal edit', {
   integration: true,
   beforeEach() {
-    this.set('donationGoal', mockGoal);
+    set(this, 'donationGoal', mockGoal);
     setHandlers(this);
     page.setContext(this);
   },

@@ -11,7 +11,7 @@ test('when fetching, it queries store for proper type of mentions, with a proper
 
   let service = this.subject();
 
-  let mockStore = Ember.Object.create({
+  let mockStore = Ember.{
     query(type, params) {
       assert.equal(type, 'foo-user-mention');
       assert.equal(params.foo_id, 'nope');
@@ -19,7 +19,7 @@ test('when fetching, it queries store for proper type of mentions, with a proper
     }
   });
 
-  let mockFooRecord = Ember.Object.create({
+  let mockFooRecord = Ember.{
     id: 'nope'
   });
 
@@ -33,13 +33,13 @@ test('when fetching, if there are no mentions, it just returns the record body',
 
   let service = this.subject();
 
-  let mockStore = Ember.Object.create({
+  let mockStore = Ember.{
     query() {
       return Ember.RSVP.resolve([]);
     }
   });
 
-  let mockFooRecord = Ember.Object.create({
+  let mockFooRecord = Ember.{
     id: 'nope',
     body: 'Foo body'
   });
@@ -59,16 +59,16 @@ test('when fetching, if there are mentions, it returns the record body, with tho
 
   let service = this.subject();
 
-  let mockStoreReturningMentions = Ember.Object.create({
+  let mockStoreReturningMentions = Ember.{
     query () {
       return Ember.RSVP.resolve([
-        Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-        Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+        Ember.{ indices: [14, 19], username: 'user1', user: { id: 1 } },
+        Ember.{ indices: [25, 30], username: 'user2', user: { id: 2 } }
       ]);
     }
   });
 
-  let mockFooWithMentions = Ember.Object.create({
+  let mockFooWithMentions = Ember.{
     body: '<p>Mentioning @user1 and @user2</p>',
     user: { id: 1 },
     save() {
@@ -92,7 +92,7 @@ test('when prefetching, if there are no mentions, it just returns the record bod
 
   let service = this.subject();
 
-  let mockFooRecord = Ember.Object.create({
+  let mockFooRecord = Ember.{
     id: 'nope',
     body: 'Foo body'
   });
@@ -106,11 +106,11 @@ test('when prefetching, if there are mentions, it returns the record body, with 
 
   let service = this.subject();
 
-  let mockFooWithMentions = Ember.Object.create({
+  let mockFooWithMentions = Ember.{
     body: '<p>Mentioning @user1 and @user2</p>',
     fooUserMentions: [
-      Ember.Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-      Ember.Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+      Ember.{ indices: [14, 19], username: 'user1', user: { id: 1 } },
+      Ember.{ indices: [25, 30], username: 'user2', user: { id: 2 } }
     ]
   });
 

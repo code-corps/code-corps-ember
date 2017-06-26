@@ -9,10 +9,7 @@ import createCommentForm from 'code-corps-ember/tests/pages/components/create-co
 
 let page = PageObject.create(createCommentForm);
 
-const {
-  set,
-  Object
-} = Ember;
+const { set } = Ember;
 
 let mockSession = { isAuthenticated: true };
 
@@ -64,7 +61,7 @@ test('it calls action when user clicks submit', function(assert) {
 
   stubService(this, 'session', mockSession);
 
-  set(this, 'comment', Object.create({ markdown: 'Test markdown' }));
+  set(this, 'comment', { markdown: 'Test markdown' });
   setHandler(this, (markdown) => {
     assert.equal(markdown, 'Test markdown', 'Action was called with proper parameter');
   });

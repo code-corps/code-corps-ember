@@ -3,15 +3,14 @@ import Ember from 'ember';
 
 const {
   get,
-  Object,
   set
 } = Ember;
 
-let owner = Object.create({ id: 'owner' });
-let other = Object.create({ id: 'other' });
-let project = Object.create({
+let owner = { id: 'owner' };
+let other = { id: 'other' };
+let project = {
   projectUsers: [{ user: owner, role: 'owner' }]
-});
+};
 
 moduleFor('ability:project', 'Unit | Ability | project', {
   needs: [

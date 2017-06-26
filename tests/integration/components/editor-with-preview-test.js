@@ -7,17 +7,16 @@ import component from 'code-corps-ember/tests/pages/components/editor-with-previ
 import { initialize as initializeKeyboard } from 'ember-keyboard';
 
 const {
-  Object,
   RSVP
 } = Ember;
 
-let mockPreview = Object.create({
+let mockPreview = {
   markdown: 'A **body**',
   body: 'A <strong>body</strong>',
   save() {
     return RSVP.resolve(this);
   }
-});
+};
 
 let mockStore = {
   createRecord() {

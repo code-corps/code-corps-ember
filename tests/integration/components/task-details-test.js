@@ -6,8 +6,8 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task-details';
 
 const {
-  Object,
-  RSVP
+  RSVP,
+  set
 } = Ember;
 
 let mockMentionFetcher = {
@@ -27,7 +27,7 @@ let mockStore = {
   }
 };
 
-let mockTask = Object.create({
+let mockTask = {
   title: 'A task',
   body: 'A <strong>body</strong>',
   containsCode: true,
@@ -35,17 +35,17 @@ let mockTask = Object.create({
   save() {
     return RSVP.resolve();
   }
-});
+};
 
-// let mockTaskWithMentions = Object.create({
+// let mockTaskWithMentions = {
 //   title: 'A task with mentions',
 //   body: '<p>Mentioning @user1 and @user2</p>',
 //   save() {
 //     return RSVP.resolve();
 //   },
 //   taskUserMentions: [
-//     Object.create({ indices: [14, 19], username: 'user1', user: { id: 1 } }),
-//     Object.create({ indices: [25, 30], username: 'user2', user: { id: 2 } })
+//     { indices: [14, 19], username: 'user1', user: { id: 1 } },
+//     { indices: [25, 30], username: 'user2', user: { id: 2 } }
 //   ]
 // });
 
@@ -121,7 +121,7 @@ test('it saves', function(assert) {
   });
 
   this.on('route-save', (task) => {
-    task.set('body', 'A new body');
+    set(task, 'body', 'A new body');
     return RSVP.resolve(task);
   });
 

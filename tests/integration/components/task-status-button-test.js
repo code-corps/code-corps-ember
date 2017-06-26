@@ -4,7 +4,7 @@ import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task-status-button';
 
-const { Object } = Ember;
+const { get } = Ember;
 
 let page = PageObject.create(component);
 
@@ -19,41 +19,39 @@ moduleForComponent('task-status-button', 'Integration | Component | task status 
 });
 
 test('when task is open, it renders the button to close it', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
-  let mockTask = Object.create({
+  let mockTask = {
     status: 'open',
-    set(property, value) {
-      assert.equal(property, 'status', 'Status is set to closed');
-      assert.equal(value, 'closed', 'Status is set to closed');
-    },
     save() {
       assert.ok(true, 'Save is called');
     }
-  });
+  };
 
   this.set('task', mockTask);
   page.render(hbs`{{task-status-button task=task}}`);
 
   page.clickClose();
+
+  let task = get(this, 'task');
+  assert.equal(get(task, 'status'), 'closed', 'Status is set to closed');
 });
 
 test('when task is closed, it renders the button to open it', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
-  let mockTask = Object.create({
+  let mockTask = {
     status: 'closed',
-    set(property, value) {
-      assert.equal(property, 'status', 'Status is set to open');
-      assert.equal(value, 'open', 'Status is set to open');
-    },
     save() {
       assert.ok(true, 'Save is called');
     }
-  });
+  };
 
   this.set('task', mockTask);
   page.render(hbs`{{task-status-button task=task}}`);
 
   page.clickOpen();
+
+  let task = get(this, 'task');
+  assert.equal(get(task, 'status'), 'open', 'Status is set to open');
 });

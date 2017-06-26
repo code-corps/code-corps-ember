@@ -4,8 +4,7 @@ import PageObject from 'ember-cli-page-object';
 import Ember from 'ember';
 
 const {
-  get,
-  Object
+  get
 } = Ember;
 
 import detailsFormComponent from 'code-corps-ember/tests/pages/components/payments/funds-recipient/details-form';
@@ -31,7 +30,7 @@ moduleForComponent('payments/funds-recipient/details-form', 'Integration | Compo
 test('it keeps the business properties when submitting in business mode', function(assert) {
   assert.expect(1);
 
-  let account = Object.create({
+  let account = {
     legalEntityType: 'business',
     legalEntityBusinessName: 'Test Business',
     legalEntityBusinessTaxId: '1234',
@@ -47,7 +46,7 @@ test('it keeps the business properties when submitting in business mode', functi
     legalEntityAddressPostalCode: '11111',
     legalEntityAddressCountry: 'US',
     legalEntitySsnLast4: '5555'
-  });
+  };
 
   this.set('onSubmit', () => {
     assert.equal(get(account, 'legalEntityBusinessName'), 'Test Business');
@@ -80,7 +79,7 @@ test('it keeps the business properties when submitting in business mode', functi
 test('it unsets the business properties when submitting in individual mode', function(assert) {
   assert.expect(1);
 
-  let account = Object.create({
+  let account = {
     legalEntityType: 'individual',
     legalEntityBusinessName: 'Test Business',
     legalEntityBusinessTaxId: '1234',
@@ -96,7 +95,7 @@ test('it unsets the business properties when submitting in individual mode', fun
     legalEntityAddressPostalCode: '11111',
     legalEntityAddressCountry: 'US',
     legalEntitySsnLast4: '5555'
-  });
+  };
 
   this.set('onSubmit', () => {
     assert.equal(get(account, 'legalEntityBusinessName'), null);

@@ -1,7 +1,10 @@
 import Ember from 'ember';
 
 const {
-  Component
+  Component,
+  get,
+  getProperties,
+  setProperties
 } = Ember;
 
 /**
@@ -45,8 +48,8 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    let donationGoal = this.get('donationGoal');
-    let { amount, description } = donationGoal.getProperties('amount', 'description');
-    this.setProperties({ amount, description });
+    let donationGoal = get(this, 'donationGoal');
+    let { amount, description } = getProperties(donationGoal, 'amount', 'description');
+    setProperties(this, { amount, description });
   }
 });

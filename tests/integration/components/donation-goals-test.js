@@ -5,7 +5,6 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/donation-goals';
 
 const {
-  Object,
   set
 } = Ember;
 
@@ -32,11 +31,9 @@ moduleForComponent('donation-goals', 'Integration | Component | donation goals',
 test('it renders loading goals when not loaded', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isLoaded: false })
-  ];
+  let mockGoals = [{ isLoaded: false }];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
@@ -47,12 +44,12 @@ test('it renders the correct number of subcomponents', function(assert) {
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isLoaded: true }),
-    Object.create({ isLoaded: true }),
-    Object.create({ isLoaded: true })
+    { isLoaded: true },
+    { isLoaded: true },
+    { isLoaded: true }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
@@ -63,12 +60,12 @@ test('it renders the correct number of subcomponents in view or edit mode', func
   assert.expect(2);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true  }),
-    Object.create({ isEditing: true, isLoaded: true  }),
-    Object.create({ isEditing: false, isLoaded: true  })
+    { isEditing: false, isLoaded: true  },
+    { isEditing: true, isLoaded: true  },
+    { isEditing: false, isLoaded: true  }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -80,10 +77,10 @@ test('it sends "cancel" action with donation goal as parameter when cancel butto
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: false })
+    { isEditing: true, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   let cancelHandler =  function(donationGoal) {
     assert.deepEqual(mockGoals[0], donationGoal, 'Handler got called, with donation goal');
@@ -100,10 +97,10 @@ test('it sends "edit" action with donation goal as parameter when clicked', func
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
+    { isEditing: false, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   let editHandler = function(donationGoal) {
     assert.deepEqual(mockGoals[0], donationGoal, 'Handler got called, with donation goal');
@@ -119,10 +116,10 @@ test('it sends "save" action with donation goal curried first, and values second
   assert.expect(2);
 
   let mockGoals = [
-    Object.create({ amount: 500, description: 'Lorem ipsum', isEditing: true, isLoaded: true, isNew: false })
+    { amount: 500, description: 'Lorem ipsum', isEditing: true, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   let saveHandler = function(donationGoal, { amount, description }) {
     assert.deepEqual(mockGoals[0], donationGoal, 'First parameter for handler is donation goal');
@@ -139,10 +136,10 @@ test('it does not allow cancelling an edited record if that record is the only o
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: true })
+    { isEditing: true, isLoaded: true, isNew: true }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
 
@@ -153,10 +150,10 @@ test('it allows cancelling an edited record if that record is the only one and n
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: false })
+    { isEditing: true, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler edit=editHandler project=project}}`);
 
@@ -167,11 +164,11 @@ test('it allows cancelling an edited record if that record is new, but there are
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: true }),
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
+    { isEditing: true, isLoaded: true, isNew: true },
+    { isEditing: false, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -182,11 +179,11 @@ test('it only allows editing a single record at a time', function(assert) {
   assert.expect(1);
 
   let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: false }),
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
+    { isEditing: true, isLoaded: true, isNew: false },
+    { isEditing: false, isLoaded: true, isNew: false }
   ];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -196,11 +193,9 @@ test('it only allows editing a single record at a time', function(assert) {
 test('it does not allow adding a record if a record is being edited', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: false })
-  ];
+  let mockGoals = [{ isEditing: true, isLoaded: true, isNew: false }];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -210,11 +205,9 @@ test('it does not allow adding a record if a record is being edited', function(a
 test('it does not allow adding a record if a record is being added', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isEditing: true, isLoaded: true, isNew: true })
-  ];
+  let mockGoals = [{ isEditing: true, isLoaded: true, isNew: true }];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
@@ -224,11 +217,9 @@ test('it does not allow adding a record if a record is being added', function(as
 test('it allows adding a record if no record is being added or edited', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
-  ];
+  let mockGoals = [{ isEditing: false, isLoaded: true, isNew: false }];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
@@ -238,11 +229,9 @@ test('it allows adding a record if no record is being added or edited', function
 test('it calls provided "add" action with project as parameter when add button is clicked', function(assert) {
   assert.expect(1);
 
-  let mockGoals = [
-    Object.create({ isEditing: false, isLoaded: true, isNew: false })
-  ];
+  let mockGoals = [{ isEditing: false, isLoaded: true, isNew: false }];
 
-  set(this, 'project', Object.create({ donationGoals: mockGoals }));
+  set(this, 'project', { donationGoals: mockGoals });
 
   let addHandler = function(actualProject) {
     let expectedProject = this.get('project');

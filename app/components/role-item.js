@@ -28,9 +28,9 @@ export default Component.extend({
   actions: {
     addRole(role) {
       set(this, 'isLoading', true);
-      let userRoles = this.get('userRoles');
+      let userRoles = get(this, 'userRoles');
       return userRoles.addRole(role).catch(() => {
-        let message = `An error occurred trying to add ${role.get('name')}.`;
+        let message = `An error occurred trying to add ${get(role, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
         set(this, 'isLoading', false);
@@ -39,9 +39,9 @@ export default Component.extend({
 
     removeRole(role) {
       set(this, 'isLoading', true);
-      let userRoles = this.get('userRoles');
+      let userRoles = get(this, 'userRoles');
       return userRoles.removeRole(role).catch(() => {
-        let message = `An error occurred trying to remove ${role.get('name')}.`;
+        let message = `An error occurred trying to remove ${get(role, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
         set(this, 'isLoading', false);

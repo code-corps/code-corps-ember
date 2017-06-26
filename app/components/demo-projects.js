@@ -1,14 +1,13 @@
 import Ember from 'ember';
 
 const {
-  Component,
-  Object
+  Component
 } = Ember;
 
 export default Component.extend({
   classNames: ['demo-projects'],
   projects: [
-    Object.create({
+    {
       title: 'Code Corps',
       description: 'Building a better future together. Contribute to public software for social good.',
       iconLargeUrl: 'https://d3pgew4wbk2vb1.cloudfront.net/images/cc-demo.png',
@@ -55,8 +54,8 @@ export default Component.extend({
           matched: false
         }
       ]
-    }),
-    Object.create({
+    },
+    {
       title: 'Movement',
       description: 'We help people elect their representatives and then hold them accountable.',
       iconLargeUrl: 'https://d3pgew4wbk2vb1.cloudfront.net/images/movement-demo.png',
@@ -110,6 +109,6 @@ export default Component.extend({
           matched: false
         }
       ]
-    })
+    }
   ]
 });

@@ -5,23 +5,23 @@ import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import skillListItems from 'code-corps-ember/tests/pages/components/skill-list-items';
 
-const { Object, set } = Ember;
+const { set } = Ember;
 
 let mockSession = { isAuthenticated: true };
 
 let skills = [
-  Object.create({
+  {
     title: 'Rails'
-  }),
-  Object.create({
+  },
+  {
     title: 'HTML'
-  }),
-  Object.create({
+  },
+  {
     title: 'Ruby'
-  }),
-  Object.create({
+  },
+  {
     title: 'Ember.js'
-  })
+  }
 ];
 
 let page = PageObject.create(skillListItems);

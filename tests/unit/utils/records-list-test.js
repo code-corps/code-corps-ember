@@ -2,25 +2,25 @@ import Ember from 'ember';
 import recordsList from 'code-corps-ember/utils/records-list';
 import { module, test } from 'qunit';
 
-const { isEmpty, Object } = Ember;
+const { isEmpty } = Ember;
 
 module('Unit | Utility | records-list');
 
-let projectSkill = Object.create({
+let projectSkill = {
   belongsTo(relationshipName) {
-    return Object.create({
+    return {
       id() {
         return `${relationshipName}-1`;
       }
-    });
+    };
   },
   constructor: {
     modelName: 'project-skill'
   },
   id: 'project-skill-1'
-});
+};
 
-let project = Object.create({
+let project = {
   belongsTo(relationshipName) {
     return { id: `${relationshipName}-1` };
   },
@@ -28,9 +28,9 @@ let project = Object.create({
     modelName: 'project'
   },
   id: 'project-1'
-});
+};
 
-let skill = Object.create({
+let skill = {
   belongsTo(relationshipName) {
     return { id: `${relationshipName}-1` };
   },
@@ -40,7 +40,7 @@ let skill = Object.create({
     }
   },
   id: 'skill-1'
-});
+};
 
 test('find returns a match correctly', function(assert) {
   let projectSkills = [projectSkill];
