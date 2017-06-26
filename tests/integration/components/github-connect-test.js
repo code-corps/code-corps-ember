@@ -31,5 +31,5 @@ test('binds href correctly', function(assert) {
 
   let session = this.container.lookup('service:session');
   let { githubState } = get(session, 'data');
-  assert.equal(page.button.href, `${baseUrl}?scope=3098379083&client_id=ace&state=${githubState}&redirect_uri=ace.com`);
+  assert.equal(page.href, `${baseUrl}?scope=3098379083&client_id=ace&state=${githubState}&redirect_uri=ace.com`);
 });

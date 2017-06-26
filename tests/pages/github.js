@@ -6,7 +6,7 @@ import {
 import { collection } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/github'),
+  visit: visitable('/oauth/github'),
 
   // we have a component under tests/pages/components/flash-messages.js
   // but it doesn't really seem that flexible for testing

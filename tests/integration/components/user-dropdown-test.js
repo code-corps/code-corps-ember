@@ -4,7 +4,6 @@ import Ember from 'ember';
 
 const {
   computed,
-  Object,
   run
 } = Ember;
 
@@ -12,7 +11,7 @@ moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
   integration: true
 });
 
-const stubUser = Object.extend({
+const stubUser = {
   id: 1,
   username: 'tester',
   photoThumbUrl: '/assets/images/twitter.png',
@@ -24,7 +23,7 @@ const stubUser = Object.extend({
   twitterUrl: computed('twitter', function() {
     return `https://twitter.com/${this.get('twitter')}`;
   })
-}).create();
+};
 
 test('it renders', function(assert) {
   assert.expect(1);

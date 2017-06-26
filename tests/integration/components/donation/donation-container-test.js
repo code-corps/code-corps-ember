@@ -11,7 +11,7 @@ const {
   RSVP
 } = Ember;
 
-let visa = Object.create({ id: 1, brand: 'Visa', last4: '4242' });
+let visa = { id: 1, brand: 'Visa', last4: '4242' };
 
 function K() {
   return true;
@@ -39,7 +39,7 @@ test('it renders new card form when there is no card to begin with', function(as
   this.set('amount', 100);
   this.set('isProcessing', false);
   this.set('projectTitle', 'CodeCorps');
-  this.set('card', Object.create({ content: null, isFulfilled: true }));
+  this.set('card', { content: null, isFulfilled: true });
 
   page.render(hbs`
     {{donation/donation-container
@@ -57,7 +57,7 @@ test('it renders new card form when the card is added and is processing', functi
   this.set('amount', 100);
   this.set('isProcessing', false);
   this.set('projectTitle', 'CodeCorps');
-  this.set('card', Object.create({ content: null, isFulfilled: true }));
+  this.set('card', { content: null, isFulfilled: true });
 
   page.render(hbs`
     {{donation/donation-container

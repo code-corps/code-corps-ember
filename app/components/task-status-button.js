@@ -2,7 +2,9 @@ import Ember from 'ember';
 
 const {
   Component,
-  computed: { equal }
+  computed: { equal },
+  get,
+  set
 } = Ember;
 
 /**
@@ -33,8 +35,8 @@ export default Component.extend({
       @method closeTask
      */
     closeTask() {
-      let task = this.get('task');
-      task.set('status', 'closed');
+      let task = get(this, 'task');
+      set(task, 'status', 'closed');
       return task.save();
     },
 
@@ -44,8 +46,8 @@ export default Component.extend({
       @method reopenTask
      */
     reopenTask() {
-      let task = this.get('task');
-      task.set('status', 'open');
+      let task = get(this, 'task');
+      set(task, 'status', 'open');
       return task.save();
     }
   }

@@ -1,9 +1,10 @@
 /* eslint-env node */
+'use strict';
 
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'code-corps-ember',
-    environment: environment,
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -23,6 +24,10 @@ module.exports = function(environment) {
     },
 
     cloudinary: {},
+
+    github: {
+      scope: 'public_repo,user:email'
+    },
 
     flashMessageDefaults: {
       // flash message defaults
@@ -85,6 +90,8 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://localhost:4200';
     ENV.cloudinary.cloud = 'dlfnmtoq1';
     ENV.cloudinary.uploadPreset = 'xjyyogvi';
+    ENV.github.clientId = 'Iv1.86cea3d2991aea7a';
+    ENV.github.redirectUri = 'http://localhost:4200/oauth/github';
     ENV.sentry.development = true;
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
     ENV['ember-cli-mirage'] = {

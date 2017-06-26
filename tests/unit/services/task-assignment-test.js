@@ -3,24 +3,23 @@ import { moduleFor, test } from 'ember-qunit';
 
 const {
   get,
-  Object,
   RSVP,
   set
 } = Ember;
 
-let mockStore = Object.create({
+let mockStore = {
   createRecord() {
-    return Object.create({
+    return {
       save() {
         return RSVP.resolve({ created: true });
       }
-    });
+    };
   }
-});
+};
 
-let task1 = Object.create({
+let task1 = {
   id: 'task-1',
-  userTask: Object.create({
+  userTask: {
     destroyRecord() {
       return RSVP.resolve({ destroyed: true });
     },
@@ -30,20 +29,20 @@ let task1 = Object.create({
     user: {
       id: 'user-1'
     }
-  })
-});
+  }
+};
 
-let task2 = Object.create({
+let task2 = {
   id: 'task-2'
-});
+};
 
-let user1 = Object.create({
+let user1 = {
   id: 'user-1'
-});
+};
 
-let user2 = Object.create({
+let user2 = {
   id: 'user-2'
-});
+};
 
 moduleFor('service:task-assignment', 'Unit | Service | task assignment', {
   beforeEach() {
@@ -109,9 +108,9 @@ test('it calls unloadRecord if assign fails', function(assert) {
   let done = assert.async();
   let service = this.subject();
 
-  let rejectingStore = Object.create({
+  let rejectingStore = {
     createRecord() {
-      return Object.create({
+      return {
         save() {
           return RSVP.reject();
         },
@@ -119,22 +118,22 @@ test('it calls unloadRecord if assign fails', function(assert) {
           assert.ok(true);
           done();
         }
-      });
+      };
     }
-  });
+  };
 
   set(service, 'store', rejectingStore);
 
-  service.assign(Object.create(), Object.create());
+  service.assign({}, {});
 });
 
 test('it calls rollbackAttributes if assign fails', function(assert) {
   let done = assert.async();
   let service = this.subject();
 
-  let assignedTask = Object.create({
+  let assignedTask = {
     id: 'task-1',
-    userTask: Object.create({
+    userTask: {
       rollbackAttributes() {
         assert.ok(true);
         done();
@@ -145,8 +144,8 @@ test('it calls rollbackAttributes if assign fails', function(assert) {
       user: {
         id: 'user-1'
       }
-    })
-  });
+    }
+  };
 
   service.assign(assignedTask, user2);
 });

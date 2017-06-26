@@ -6,7 +6,6 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task-title';
 
 const {
-  Object,
   RSVP
 } = Ember;
 
@@ -22,7 +21,7 @@ let mockDifferentUser = {
   }
 };
 
-let mockTask = Object.create({
+let mockTask = {
   title: 'Original title',
   body: 'A <strong>body</strong>',
   number: 12,
@@ -33,7 +32,7 @@ let mockTask = Object.create({
     this.set('title', this.get('title'));
     return RSVP.resolve();
   }
-});
+};
 
 let page = PageObject.create(component);
 

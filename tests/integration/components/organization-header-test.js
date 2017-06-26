@@ -1,10 +1,7 @@
-import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/organization-header';
-
-const { Object } = Ember;
 
 let page = PageObject.create(component);
 
@@ -18,12 +15,12 @@ moduleForComponent('organization-header', 'Integration | Component | organizatio
   }
 });
 
-let organization = Object.create({
+let organization = {
   name: 'Test Organization',
   description: 'A test organization',
   iconThumbUrl: 'icon_thumb.png',
   iconLargeUrl: 'icon_large.png'
-});
+};
 
 test('it renders properly when not expanded', function(assert) {
   assert.expect(5);

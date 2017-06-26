@@ -6,7 +6,7 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-long-description';
 
 const {
-  Object,
+  merge,
   RSVP,
   set
 } = Ember;
@@ -23,25 +23,25 @@ moduleForComponent('project-long-description', 'Integration | Component | projec
   }
 });
 
-let owner = Object.create({ id: 'owner' });
+let owner = { id: 'owner' };
 
-let projectWithDescription = Object.create({
+let projectWithDescription = {
   longDescriptionBody: 'A <strong>body</strong>',
   longDescriptionMarkdown: 'A **body**',
   projectUsers: [{ user: owner, role: 'owner' }]
-});
+};
 
-let projectWithListedDescription = Object.create({
+let projectWithListedDescription = {
   longDescriptionBody: 'Todo list: <ul><li>list item 1</li></ul>',
   longDescriptionMarkdown: 'Todo list: \n *   list item 1',
   projectUsers: [{ user: owner, role: 'owner' }]
-});
+};
 
-let blankProject = Object.create({
+let blankProject = {
   longDescriptionBody: null,
   longDescriptionMarkdown: null,
   projectUsers: [{ user: owner, role: 'owner' }]
-});
+};
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {
   assert.expect(3);
@@ -99,12 +99,14 @@ test('it renders properly when description is present and user can edit', functi
 test('it is possible to add a description', function(assert) {
   assert.expect(1);
 
-  let savableProject = Object.create(blankProject, {
+  let savable = {
     save() {
       assert.ok(true);
       return RSVP.resolve(this);
     }
-  });
+  };
+
+  let savableProject = merge(blankProject, savable);
 
   set(this, 'project', savableProject);
   stubService(this, 'current-user', { user: owner });
@@ -117,12 +119,14 @@ test('it is possible to add a description', function(assert) {
 test('it is possible to edit a description', function(assert) {
   assert.expect(3);
 
-  let savableProject = Object.create(projectWithDescription, {
+  let savable = {
     save() {
       assert.ok(true);
       return RSVP.resolve(this);
     }
-  });
+  };
+
+  let savableProject = merge(projectWithDescription, savable);
 
   set(this, 'project', savableProject);
   stubService(this, 'current-user', { user: owner });

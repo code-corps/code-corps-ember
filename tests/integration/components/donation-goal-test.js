@@ -5,16 +5,16 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/donation-goal';
 
 const {
-  Object
+  set
 } = Ember;
 
-let mockGoal = Object.create({
+let mockGoal = {
   amount: 500, // dollars
   description: 'A test goal'
-});
+};
 
 function setHandler(context, editHandler = function() {}) {
-  context.set('editHandler', editHandler);
+  set(context, 'editHandler', editHandler);
 }
 
 let page = PageObject.create(component);
@@ -22,7 +22,7 @@ let page = PageObject.create(component);
 moduleForComponent('donation-goal', 'Integration | Component | donation goal', {
   integration: true,
   beforeEach() {
-    this.set('donationGoal', mockGoal);
+    set(this, 'donationGoal', mockGoal);
     setHandler(this);
     page.setContext(this);
   },

@@ -21,7 +21,7 @@ const {
   @class project-menu
  */
 export default Component.extend({
-  classNames: ['project__menu', 'project__menu--horizontal'],
+  classNames: ['page-menu', 'page-menu--horizontal', 'project__menu'],
   tagName: 'nav',
 
   /**

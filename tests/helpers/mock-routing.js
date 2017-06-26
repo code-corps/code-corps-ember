@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
-const { Object } = Ember;
+const { Service } = Ember;
 
 export default function mockRouting({ container }) {
-  container.registry.register('service:-routing', Object.extend({
+  container.registry.register('service:-routing', Service.extend({
     availableRoutes() {
       return ['index'];
     },

@@ -7,7 +7,6 @@ import skillsTypeaheadComponent from '../../pages/components/skills-typeahead';
 import wait from 'ember-test-helpers/wait';
 
 const {
-  Object,
   RSVP,
   set
 } = Ember;
@@ -15,8 +14,8 @@ const {
 let page = PageObject.create(skillsTypeaheadComponent);
 
 let skills = [
-  Object.create({ title: 'Ruby' }),
-  Object.create({ title: 'Ruby on Rails' })
+  { title: 'Ruby' },
+  { title: 'Ruby on Rails' }
 ];
 
 let mockStore = {
@@ -40,8 +39,8 @@ let mockListService = {
 };
 
 function setHandlers(context, { selectHandler = function() {} } = {}) {
-  context.set('mockListService', mockListService);
-  context.set('selectHandler', selectHandler);
+  set(context, 'mockListService', mockListService);
+  set(context, 'selectHandler', selectHandler);
 }
 
 moduleForComponent('skills-typeahead', 'Integration | Component | skills typeahead', {
@@ -77,11 +76,15 @@ test('it fetches results when changing the input', function(assert) {
     assert.equal(page.inputValue, 'ruby ra');
     page.keydown();
 
-    assert.equal(page.inputItems(0).highlightedStrings(0).text, 'Ruby');
-    assert.ok(page.inputItems(0).listItemIsSelected);
+    page.inputItems(0).as((item) => {
+      assert.equal(item.highlightedStrings(0).text, 'Ruby');
+      assert.ok(item.listItemIsSelected);
+    });
 
-    assert.equal(page.inputItems(1).highlightedStrings(1).text, 'Ra');
-    assert.notOk(page.inputItems(1).listItemIsSelected);
+    page.inputItems(1).as((item) => {
+      assert.equal(item.highlightedStrings(1).text, 'Ra');
+      assert.notOk(item.listItemIsSelected);
+    });
 
     done();
   });

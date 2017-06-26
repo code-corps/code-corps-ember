@@ -6,7 +6,7 @@ import taskNewFormComponent from 'code-corps-ember/tests/pages/components/task-n
 
 let page = PageObject.create(taskNewFormComponent);
 
-const { Object, set, setProperties } = Ember;
+const { set, setProperties } = Ember;
 
 function renderPage() {
   page.render(hbs`{{task-new-form task=task placeholder=placeholder save=(action saveHandler task)}}`);
@@ -42,15 +42,17 @@ test('it renders proper ui elements, properly bound', function(assert) {
   renderPage();
 
   assert.equal(page.title.value, 'A task', 'Title is properly bound and rendered.');
-  assert.equal(page.markdown.value, 'A body', 'Markdown content is properly bound and rendered.');
-  assert.equal(page.markdown.placeholder, placeholder, 'Placeholder attribute is properly bound and rendered.');
+  page.markdown.as((markdown) => {
+    assert.equal(markdown.value, 'A body', 'Markdown content is properly bound and rendered.');
+    assert.equal(markdown.placeholder, placeholder, 'Placeholder attribute is properly bound and rendered.');
+  });
 });
 
 test('it triggers an action when the task is saved', function(assert) {
   assert.expect(3);
 
-  let taskList = Object.create({ id: 1, inbox: true, name: 'Inbox' });
-  let task = Object.create({ id: 1, taskList });
+  let taskList = { id: 1, inbox: true, name: 'Inbox' };
+  let task = { id: 1, taskList };
 
   set(this, 'task', task);
   setHandler(this, (task) => {

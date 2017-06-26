@@ -3,7 +3,9 @@ import Ember from 'ember';
 const {
   Component,
   computed,
-  inject: { service }
+  get,
+  inject: { service },
+  set
 } = Ember;
 
 /**
@@ -53,8 +55,8 @@ export default Component.extend({
     @type Boolean
    */
   currentUserIsTaskAuthor: computed('currentUserId', 'taskAuthorId', function() {
-    let userId = parseInt(this.get('currentUserId'), 10);
-    let authorId = parseInt(this.get('taskAuthorId'), 10);
+    let userId = parseInt(get(this, 'currentUserId'), 10);
+    let authorId = parseInt(get(this, 'taskAuthorId'), 10);
     return userId === authorId;
   }),
 
@@ -72,7 +74,7 @@ export default Component.extend({
       @method cancel
      */
     cancel() {
-      this.set('isEditing', false);
+      set(this, 'isEditing', false);
     },
 
     /**
@@ -82,8 +84,8 @@ export default Component.extend({
       @method edit
      */
     edit() {
-      this.set('newTitle', this.get('task.title'));
-      this.set('isEditing', true);
+      set(this, 'newTitle', get(this, 'task.title'));
+      set(this, 'isEditing', true);
     },
 
     /**
@@ -95,12 +97,12 @@ export default Component.extend({
      */
     applyEdit() {
       let component = this;
-      let task = this.get('task');
-      let newTitle = this.get('newTitle');
+      let task = get(this, 'task');
+      let newTitle = get(this, 'newTitle');
 
-      task.set('title', newTitle);
-      this.get('saveTask')(task).then(() => {
-        component.set('isEditing', false);
+      set(task, 'title', newTitle);
+      get(this, 'saveTask')(task).then(() => {
+        set(component, 'isEditing', false);
       });
     }
   }

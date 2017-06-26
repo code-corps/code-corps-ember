@@ -90,7 +90,7 @@ export default Component.extend({
       let userCategories = get(this, 'userCategories');
 
       return userCategories.addCategory(category).catch(() => {
-        let message = `An error occurred trying to add ${category.get('name')}.`;
+        let message = `An error occurred trying to add ${get(category, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
         set(this, 'isLoading', false);
@@ -111,7 +111,7 @@ export default Component.extend({
       let userCategories = get(this, 'userCategories');
 
       return userCategories.removeCategory(category).catch(() => {
-        let message = `An error occurred trying to remove ${category.get('name')}.`;
+        let message = `An error occurred trying to remove ${get(category, 'name')}.`;
         this._flashError(message);
       }).finally(() => {
         set(this, 'isLoading', false);

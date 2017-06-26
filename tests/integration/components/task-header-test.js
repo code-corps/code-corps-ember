@@ -5,18 +5,17 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task-header';
 
 const {
-  Object,
   RSVP
 } = Ember;
 
-let mockTask = Object.create({
+let mockTask = {
   title: 'A task',
   body: 'A <strong>body</strong>',
   number: 12,
   save() {
     return RSVP.resolve();
   }
-});
+};
 
 let page = PageObject.create(component);
 

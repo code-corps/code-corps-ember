@@ -40,22 +40,12 @@ export default function createTaskUserOptions(users, currentUserId, taskUserId) 
   let remainingUsersOptions = users.reject((user) => {
     let userId = get(user, 'id');
     return userId === currentUserId || userId === taskUserId;
-  });
+  }).sortBy('username');
 
-  let currentUserGroup = Object.create({
-    groupName: 'Current User', // needed for ember power select to work
-    options: currentUserOptions
-  });
-
-  let taskUserGroup = Object.create({
-    groupName: 'Assigned User', // needed for ember power select to work
-    options: taskUserOptions
-  });
-
-  let remainingUsersGroup = Object.create({
-    groupName: 'Everyone Else', // needed for ember power select to work
-    options: remainingUsersOptions.sortBy('username')
-  });
+  // 'groupName' is needed for ember power select to work
+  let currentUserGroup = { groupName: 'Current User', options: currentUserOptions };
+  let taskUserGroup = { groupName: 'Assigned User', options: taskUserOptions };
+  let remainingUsersGroup = { groupName: 'Everyone Else',  options: remainingUsersOptions };
 
   let groups = [];
 

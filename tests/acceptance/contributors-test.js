@@ -46,15 +46,25 @@ test('Lists owner when owner is the only member.', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), contributorURLParts.url);
 
-    assert.ok(page.pendingContributors.emptyMessageVisible, 'Pending contributors list is empty');
-    assert.notOk(page.owners.emptyMessageVisible, 'Owners list is NOT empty');
-    assert.ok(page.admins.emptyMessageVisible, 'Admins list is empty');
-    assert.ok(page.others.emptyMessageVisible, 'Others list is empty');
+    page.admins.as((users) => {
+      assert.ok(users.emptyMessageVisible, 'Admins list is empty');
+      assert.equal(users.members().count, 0, 'Admins has no members listed');
+    });
 
-    assert.equal(page.pendingContributors.members().count, 0, 'Pending contributors has no members listed');
-    assert.equal(page.owners.members().count, 1, 'Owners has 1 member listed');
-    assert.equal(page.admins.members().count, 0, 'Admins has no members listed');
-    assert.equal(page.others.members().count, 0, 'Others has no members listed');
+    page.others.as((users) => {
+      assert.ok(users.emptyMessageVisible, 'Others list is empty');
+      assert.equal(users.members().count, 0, 'Others has no members listed');
+    });
+
+    page.owners.as((users) => {
+      assert.notOk(users.emptyMessageVisible, 'Owners list is NOT empty');
+      assert.equal(users.members().count, 1, 'Owners has 1 member listed');
+    });
+
+    page.pendingContributors.as((users) => {
+      assert.ok(users.emptyMessageVisible, 'Pending contributors list is empty');
+      assert.equal(users.members().count, 0, 'Pending contributors has no members listed');
+    });
   });
 });
 
@@ -78,18 +88,27 @@ test('Lists multiple contributors if they exists.', function(assert) {
 
     assert.equal(page.projectMenu.contributors.infoText, '2 pending');
 
-    assert.notOk(page.pendingContributors.emptyMessageVisible, 'Pending contributors list is not empty');
-    assert.notOk(page.owners.emptyMessageVisible, 'Owners list is not empty');
-    assert.notOk(page.admins.emptyMessageVisible, 'Admins list is not empty');
-    assert.notOk(page.others.emptyMessageVisible, 'Others list is not empty');
+    page.admins.as((users) => {
+      assert.notOk(users.emptyMessageVisible, 'Admins list is not empty');
+      assert.equal(users.members().count, 1, 'Admins has 1 member listed');
+    });
 
-    assert.equal(page.pendingContributors.members().count, 2, 'Pending contributors has 2 members listed');
-    assert.equal(page.owners.members().count, 1, 'Owners has 1 member listed');
-    assert.equal(page.admins.members().count, 1, 'Admins has 1 member listed');
-    assert.equal(page.others.members().count, 1, 'Others has 1 member listed');
+    page.others.as((users) => {
+      assert.notOk(users.emptyMessageVisible, 'Others list is not empty');
+      assert.equal(users.members().count, 1, 'Others has 1 member listed');
+    });
 
-    page.pendingContributors.members(0).approveButton.click();
-    page.pendingContributors.members(0).modal.confirmButton.click();
+    page.owners.as((users) => {
+      assert.notOk(users.emptyMessageVisible, 'Owners list is not empty');
+      assert.equal(users.members().count, 1, 'Owners has 1 member listed');
+    });
+
+    page.pendingContributors.as((users) => {
+      assert.notOk(users.emptyMessageVisible, 'Pending contributors list is not empty');
+      assert.equal(users.members().count, 2, 'Pending contributors has 2 members listed');
+      users.members(0).approveButton.click();
+      users.members(0).modal.confirmButton.click();
+    });
   });
 
   andThen(function() {

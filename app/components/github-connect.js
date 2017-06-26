@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'code-corps-ember/config/environment';
 
 const {
   Component,
@@ -15,7 +16,7 @@ const baseUrl = 'https://github.com/login/oauth/authorize';
   ## default usage
 
   ```handlebars
-    {{github-connect clientId=clientId scope=scope state=state redirectUri=redirectUri}}
+    {{github-connect state=state}}
   ```
 
   @module Component
@@ -26,15 +27,15 @@ const baseUrl = 'https://github.com/login/oauth/authorize';
 
 export default Component.extend({
   tagName: 'a',
-  classNames: ['button', 'default'],
+  classNames: ['github-connect', 'button', 'default'],
   attributeBindings: ['url:href'],
 
   githubState: service(),
 
-  clientId: null,
-  scope: null,
+  clientId: `${ENV.github.clientId}`,
+  redirectUri: `${ENV.github.redirectUri}`,
+  scope: `${ENV.github.scope}`,
   state: null,
-  redirectUri: null,
 
   init() {
     this._super(...arguments);
