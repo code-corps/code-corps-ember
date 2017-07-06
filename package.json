@@ -47,7 +47,7 @@
     "ember-cli-jwt-decode": "0.0.3",
     "ember-cli-meta-tags": "3.1.0",
     "ember-cli-mirage": "^0.3.1",
-    "ember-cli-moment-shim": "3.3.0",
+    "ember-cli-moment-shim": "3.3.2",
     "ember-cli-neat": "^0.0.6",
     "ember-cli-page-object": "1.9.0",
     "ember-cli-password-strength": "1.0.2",
