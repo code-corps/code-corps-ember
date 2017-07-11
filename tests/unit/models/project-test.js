@@ -13,6 +13,7 @@ moduleForModel('project', 'Unit | Model | project', {
     'model:donation-goal',
     'model:organization',
     'model:project-category',
+    'model:project-github-repo',
     'model:project-skill',
     'model:project-user',
     'model:stripe-connect-account',
@@ -39,6 +40,7 @@ testForBelongsTo('project', 'stripeConnectPlan');
 
 testForHasMany('project', 'donationGoals');
 testForHasMany('project', 'projectCategories');
+testForHasMany('project', 'projectGithubRepos');
 testForHasMany('project', 'projectSkills');
 testForHasMany('project', 'projectUsers');
 testForHasMany('project', 'taskLists');

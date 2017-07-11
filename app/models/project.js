@@ -29,6 +29,7 @@ export default Model.extend({
   taskLists: hasMany('task-list', { async: true }),
   tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),
+  projectGithubRepos: hasMany('project-github-repo', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
   projectUsers: hasMany('project-user', { async: true }),
   stripeConnectPlan: belongsTo('stripe-connect-plan', { async: true }),

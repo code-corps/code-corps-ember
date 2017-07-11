@@ -22,6 +22,7 @@ testForAttributes('github-repo', [
   'githubAccountType',
   'githubId',
   'insertedAt',
+  'name',
   'updatedAt'
 ]);
 

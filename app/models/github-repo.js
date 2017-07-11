@@ -9,6 +9,7 @@ export default Model.extend({
   githubAccountType: attr(),
   githubId: attr(),
   insertedAt: attr(),
+  name: attr(),
   updatedAt: attr(),
 
   githubAppInstallation: belongsTo('github-app-installation', { async: true })
