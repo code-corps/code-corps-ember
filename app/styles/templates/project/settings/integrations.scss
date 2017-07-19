@@ -1,0 +1,33 @@
+.integrations__header--github {
+  &:before {
+    content: "";
+    $file: "/assets/images/code-corps-github";
+    @include background-image-retina($file, "png", 204px, 128px);
+    display: block;
+    float: left;
+    margin: 0 30px 0 0;
+    height: 128px;
+    width: 204px;
+  }
+
+  @include clearfix;
+
+  margin-bottom: 2em;
+}
+
+.integrations__description {
+  display: flex;
+  flex-flow: column;
+
+  h3 {
+    color: $blue;
+    font-size: $header-font-size-medium;
+    font-weight: 700;
+    margin: 0.25em 0;
+  }
+
+  p {
+    color: $text--lighter;
+    font-size: $body-font-size-normal;
+  }
+}

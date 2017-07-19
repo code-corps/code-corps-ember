@@ -1,0 +1,25 @@
+{{title "Integrations" " « " project.title " by " project.organization.name}}
+
+<div class="container">
+  <div class="page-header">
+    <h3>GitHub</h3>
+  </div>
+
+  <div class="settings">
+    <div class="integrations__header--github">
+      <div class="integrations__description">
+        <h3>Sync with GitHub</h3>
+        <p>Sync issues on your GitHub repositories with tasks in your Code Corps project. We’ll automatically pull in all your new issues and comments and put them right in the Inbox column on your project’s task board. And new tasks in your project on Code Corps can be pushed to one of your GitHub repositories.</p>
+      </div>
+    </div>
+
+    {{#if user.githubId}}
+      <p>
+        <a href="https://github.com/apps/code-corps-local" data-test-installation-link class="button button__github button__github--light default"><span></span>Install on GitHub</a>
+        Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.
+      </p>
+    {{else}}
+      Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before installing GitHub on the <strong>{{project.organization.name}}</strong> organization.
+    {{/if}}
+  </div>
+</div>
