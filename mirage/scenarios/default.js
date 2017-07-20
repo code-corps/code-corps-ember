@@ -225,6 +225,7 @@ export default function(server) {
   let connectedInstallation = server.create('github-app-installation', {
     githubAccountAvatarUrl: 'https://avatars0.githubusercontent.com/u/12991115?v=4',
     githubAccountLogin: 'code-corps',
+    project,
     user: owner
   });
 

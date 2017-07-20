@@ -1,0 +1,13 @@
+<div class="github-app-installation__details">
+  <div>
+    <img src="{{githubAppInstallation.githubAccountAvatarUrl}}&amp;size=40" height="40" width="40" />
+    <h4>{{githubAppInstallation.githubAccountLogin}}</h4>
+  </div>
+  <div>
+    {{#if organizationGithubAppInstallation}}
+      <a {{action "delete" organizationGithubAppInstallation}}>Remove from {{organization.name}}</a>
+    {{else}}
+      <button class="default small" {{action "create" githubAppInstallation organization}}>Connect to <strong>{{organization.name}}</strong></button>
+    {{/if}}
+  </div>
+</div>
