@@ -1,8 +1,11 @@
 import Ember from 'ember';
+import recordsList from 'code-corps-ember/utils/records-list';
 
 const {
-  computed: { alias, notEmpty },
-  Component
+  computed: { alias },
+  computed,
+  Component,
+  get
 } = Ember;
 
 export default Component.extend({
@@ -14,8 +17,15 @@ export default Component.extend({
 
   githubRepo: alias('model.githubRepo'),
   projectGithubRepo: alias('model.projectGithubRepo'),
-  isConnected: notEmpty('model.projectGithubRepo'),
 
   isLoading: alias('githubRepo.isLoading'),
-  name: alias('githubRepo.name')
+  name: alias('githubRepo.name'),
+
+  isConnected: computed('githubRepo', 'project.projectGithubRepos.@each', function() {
+    let githubRepo = get(this, 'githubRepo');
+    let projectGithubRepos = get(this, 'project.projectGithubRepos');
+    if (projectGithubRepos) {
+      return recordsList.includes(projectGithubRepos, githubRepo);
+    }
+  })
 });

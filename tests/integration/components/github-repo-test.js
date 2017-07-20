@@ -74,5 +74,4 @@ test('it changes state based on projectGithubRepo model state', function(assert)
 
   run(() => set(this, 'model.projectGithubRepo', { isLoaded: true, isSaving: true, isDeleted: true }));
   assert.equal(page.text, 'Disconnecting...', 'With project github repo in deleted and saving state, state should be deleting.');
-
 });

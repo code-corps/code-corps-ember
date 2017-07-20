@@ -11,3 +11,15 @@
     {{/if}}
   </div>
 </div>
+{{#if githubRepos}}
+  <div class="github-app-installation__repos">
+    <ul>
+    {{#each githubRepos as |githubRepo|}}
+      {{github-repo
+        githubRepo=githubRepo
+        project=project
+      }}
+    {{/each}}
+    </ul>
+  </div>
+{{/if}}

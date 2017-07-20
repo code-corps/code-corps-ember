@@ -16,8 +16,10 @@ export default {
     if (records) {
       return records.any((found) => {
         let targetId = get(target, 'id');
+        console.log("hello", found);
         let targetModelName = get(target, 'constructor.modelName')
                               || get(target, 'content.constructor.modelName');
+                              console.log(targetModelName);
         let foundId = found.belongsTo(targetModelName).id();
 
         return (foundId === targetId);

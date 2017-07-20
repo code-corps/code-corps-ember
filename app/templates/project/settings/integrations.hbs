@@ -16,8 +16,10 @@
     {{#each project.organization.organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
       {{github-app-installation
         githubAppInstallation=organizationGithubAppInstallation.githubAppInstallation
+        githubRepos=organizationGithubAppInstallation.githubAppInstallation.githubRepos
         organization=organization
         organizationGithubAppInstallation=organizationGithubAppInstallation
+        project=project
       }}
     {{/each}}
 
