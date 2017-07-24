@@ -42,18 +42,15 @@ export default {
   find(records, target, relationship) {
     if (records) {
       return records.find((found) => {
-        console.log(found);
         // Get relationship id and model name
         let relationshipId = get(relationship, 'id');
         let relationshipModelName = get(relationship, 'constructor.modelName')
                                  || get(relationship, 'content.constructor.modelName');
-                                 console.log(relationshipModelName);
 
         // Get target id and model name
         let targetId = get(target, 'id');
         let targetModelName = get(target, 'constructor.modelName')
                            || get(target, 'content.constructor.modelName');
-                           console.log(targetModelName);
 
         // Exit early with `false` if we're missing values
         if (!(relationshipId && relationshipModelName && targetId && targetModelName)) {
@@ -64,7 +61,6 @@ export default {
         // get the id of the found model's relationship model instance
         let foundId = found.belongsTo(targetModelName.camelize()).id();
         let foundRelationshipId = found.belongsTo(relationshipModelName.camelize()).id();
-        console.log(found.belongsTo(targetModelName.camelize()).key);
 
         return (foundRelationshipId === relationshipId) // relationships match
             && (foundId === targetId); // found matches target
