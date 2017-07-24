@@ -14,10 +14,14 @@
 {{#if githubRepos}}
   <div class="github-app-installation__repos">
     <ul>
-    {{#each githubRepos as |githubRepo|}}
+    {{#each githubReposCollection as |githubRepoItem|}}
       {{github-repo
-        githubRepo=githubRepo
-        project=project
+        connect=(action "connect" githubRepoItem.githubRepo project)
+        isConnected=githubRepoItem.isConnected
+        githubRepo=githubRepoItem.githubRepo
+        projectGithubRepo=githubRepoItem.projectGithubRepo
+        name=githubRepoItem.name
+        remove=(action "remove" githubRepoItem.projectGithubRepo)
       }}
     {{/each}}
     </ul>
