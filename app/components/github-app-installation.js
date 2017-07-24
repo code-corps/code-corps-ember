@@ -3,7 +3,7 @@ import recordsList from 'code-corps-ember/utils/records-list';
 
 const {
   computed,
-  computed: { alias, map, mapBy, notEmpty },
+  computed: { alias },
   Component,
   get,
   getProperties,
@@ -22,7 +22,7 @@ export default Component.extend({
       isConnected: isPresent(projectGithubRepo),
       name: get(githubRepo, 'name'),
       projectGithubRepo
-    }
+    };
   },
 
   githubReposCollection: computed('projectGithubRepos.isFulfilled', 'projectGithubRepos.@each.isFulfilled', function() {
@@ -42,6 +42,6 @@ export default Component.extend({
 
     remove(projectGithubRepo) {
       return projectGithubRepo.destroyRecord();
-    },
+    }
   }
 });

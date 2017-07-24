@@ -8,9 +8,9 @@
     }}
       {{#if isConnected}}
         <div class="github-repo__sync">Connected</div>
-        <a {{action "remove"}} class="github-repo__remove-link">Remove</a>
+        <a {{action "remove"}} class="github-repo__remove-link" data-test-disconnect-repo>Remove</a>
       {{else}}
-        <button {{action "connect"}} class="clear small">Connect</button>
+        <button {{action "connect"}} class="clear small" data-test-connect-repo>Connect</button>
       {{/if}}
     {{/common/busy-model-wrapper}}
   </div>
