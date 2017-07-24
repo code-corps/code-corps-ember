@@ -6,7 +6,12 @@
       onSaving='Connecting...'
       onDeleting='Disconnecting...'
     }}
-      {{yield}}
+      {{#if isConnected}}
+        <div class="github-repo__sync">Connected</div>
+        <a {{action "remove" projectGithubRepo}} class="github-repo__remove-link">Remove</a>
+      {{else}}
+        <button {{action "connect"}} class="clear small">Connect</button>
+      {{/if}}
     {{/common/busy-model-wrapper}}
   </div>
 {{else}}

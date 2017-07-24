@@ -1,11 +1,11 @@
 import Ember from 'ember';
-import recordsList from 'code-corps-ember/utils/records-list';
 
 const {
-  computed: { alias },
   computed,
+  computed: { alias, mapBy, notEmpty },
   Component,
-  get
+  get,
+  inject: { service }
 } = Ember;
 
 export default Component.extend({
@@ -13,19 +13,38 @@ export default Component.extend({
   classNameBindings: ['isConnected:github-repo--connected'],
   tagName: 'li',
 
-  model: null,
-
-  githubRepo: alias('model.githubRepo'),
-  projectGithubRepo: alias('model.projectGithubRepo'),
-
   isLoading: alias('githubRepo.isLoading'),
   name: alias('githubRepo.name'),
 
-  isConnected: computed('githubRepo', 'project.projectGithubRepos.@each', function() {
-    let githubRepo = get(this, 'githubRepo');
-    let projectGithubRepos = get(this, 'project.projectGithubRepos');
-    if (projectGithubRepos) {
-      return recordsList.includes(projectGithubRepos, githubRepo);
+  githubRepo: null,
+  project: null,
+
+  store: service(),
+
+  isConnected: notEmpty('projectsGithubRepo'),
+  projectGithubRepo: computed('projectGithubRepos.@each', 'projectGithubRepos.isFulfilled', 'githubRepo.id', function() {
+    return get(this, 'projectGithubRepos').find((projectGithubRepo) => {
+      return projectGithubRepo.belongsTo('githubRepo').id() === get(this, 'githubRepo.id');
+    });
+  }),
+  projectGithubRepos: alias('project.projectGithubRepos'),
+  projectsGithubRepo: computed('projectsGithubRepos.@each', 'projectsGithubRepos.@each.isFulfilled', 'githubRepo', function() {
+    let projectsGithubRepos = get(this, 'projectsGithubRepos');
+    return projectsGithubRepos.find((githubRepo) => {
+      return get(githubRepo, 'id') === get(this, 'githubRepo.id');
+    });
+  }),
+  projectsGithubRepos: mapBy('projectGithubRepos', 'githubRepo'),
+
+  actions: {
+    connect() {
+      let githubRepo = get(this, 'githubRepo');
+      let project = get(this, 'project');
+      return get(this, 'store').createRecord('project-github-repo', { project, githubRepo }).save();
+    },
+
+    remove(projectGithubRepo) {
+      return projectGithubRepo.destroyRecord();
     }
-  })
+  }
 });
