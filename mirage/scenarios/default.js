@@ -164,6 +164,8 @@ export default function(server) {
 
   let owner = server.create('user', {
     email: 'owner@codecorps.org',
+    githubId: 12345,
+    githubUsername: 'codecorps-owner',
     password: 'password',
     username: 'codecorps-owner'
   });
@@ -218,6 +220,32 @@ export default function(server) {
     email: 'random@user.com',
     password: 'password',
     username: 'random'
+  });
+
+  let connectedInstallation = server.create('github-app-installation', {
+    githubAccountAvatarUrl: 'https://avatars0.githubusercontent.com/u/12991115?v=4',
+    githubAccountLogin: 'code-corps',
+    user: owner
+  });
+
+  server.create('organization-github-app-installation', {
+    githubAppInstallation: connectedInstallation,
+    organization
+  });
+
+  let githubRepo = server.create('github-repo', {
+    githubAppInstallation: connectedInstallation,
+    name: 'code-corps-api'
+  });
+
+  server.create('project-github-repo', {
+    githubRepo,
+    project
+  });
+
+  server.create('github-repo', {
+    githubAppInstallation: connectedInstallation,
+    name: 'code-corps-ember'
   });
 
   let inboxTaskList = server.create('task-list', {

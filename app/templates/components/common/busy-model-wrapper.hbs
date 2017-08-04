@@ -1,0 +1,9 @@
+{{#if model.isSaving}}
+  {{#if model.isDeleted}}
+    <span>{{onDeleting}}</span>
+  {{else}}
+    <span>{{onSaving}}</span>
+  {{/if}}
+{{else}}
+  {{yield}}
+{{/if}}
