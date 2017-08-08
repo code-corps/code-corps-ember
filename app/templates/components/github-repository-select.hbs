@@ -1,0 +1,11 @@
+{{#power-select
+  disabled=project.githubId
+  loadingMessage='Retrieving repositories...'
+  options=repositories
+  onchange=onRepoSelected
+  placeholder='Connect your project with a GitHub repository'
+  renderInPlace=true
+  selected=selectedRepository
+  as |repository|}}
+  {{repository.repositoryName}}
+{{/power-select}}

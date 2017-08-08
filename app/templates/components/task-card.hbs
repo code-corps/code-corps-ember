@@ -18,7 +18,7 @@
   </p>
   {{#if canAssign}}
     {{#power-select
-      beforeOptionsComponent=(component "power-select/before-options" selectRemoteController=selectRemoteController)
+      beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
       buildSelection=(action "buildSelection")
       class="select-inline"
       disabled=userSelectDisabled
