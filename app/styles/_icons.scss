@@ -73,7 +73,7 @@ $github-light: 16px 16px $spriteURL 0 -369px $spritex2URL;
 $github-dark: 16px 16px $spriteURL -16px -369px $spritex2URL;
 $repo: 12px 16px $spriteURL 0 -385px $spritex2URL;
 $repo-blue: 12px 16px $spriteURL -12px -385px $spritex2URL;
-$sync: 18px 16px $spriteURL -24px -385px $spritex2URL;
+$sync: 28px 16px $spriteURL -24px -385px $spritex2URL;
 
 .box-icon {
   @include sprite($box);

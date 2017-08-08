@@ -1,6 +1,6 @@
 import { Model, belongsTo } from 'ember-cli-mirage';
 
 export default Model.extend({
-  githubAppInstallation: belongsTo(),
+  githubAppInstallation: belongsTo('github-app-installation'),
   organization: belongsTo()
 });

@@ -10,6 +10,7 @@ export default Model.extend({
   name: attr(),
   slug: attr(),
 
+  organizationGithubAppInstallations: hasMany('organization-github-app-installation', { async: true }),
   owner: belongsTo('user', { async: true }),
   projects: hasMany('project', { async: true }),
   stripeConnectAccount: belongsTo('stripe-connect-account', { async: true })

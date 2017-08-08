@@ -8,7 +8,6 @@ moduleForModel('github-app-installation', 'Unit | Model | github-app-installatio
   needs: [
     'model:github-repo',
     'model:organization-github-app-installation',
-    'model:project',
     'model:user'
   ]
 });
@@ -19,6 +18,10 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('github-app-installation', [
+  'githubAccountAvatarUrl',
+  'githubAccountId',
+  'githubAccountLogin',
+  'githubAccountType',
   'githubId',
   'insertedAt',
   'installed',
@@ -27,6 +30,5 @@ testForAttributes('github-app-installation', [
 ]);
 
 testForHasMany('github-app-installation', 'organizationGithubAppInstallations');
-testForBelongsTo('github-app-installation', 'project');
 testForBelongsTo('github-app-installation', 'user');
 testForHasMany('github-app-installation', 'githubRepos');

@@ -26,7 +26,8 @@ module.exports = function(environment) {
     cloudinary: {},
 
     github: {
-      scope: 'public_repo,admin:org,user:email'
+      scope: 'public_repo,admin:org,user:email',
+      appUrl: 'https://github.com/apps/code-corps-local'
     },
 
     flashMessageDefaults: {

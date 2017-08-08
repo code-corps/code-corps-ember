@@ -16,13 +16,12 @@ export default Route.extend({
 
   model() {
     let project = this.modelFor('project');
-    let organization = get(project, 'organization');
     let user = get(this, 'currentUser.user');
 
-    return RSVP.hash({ project, organization, user });
+    return RSVP.hash({ project, user });
   },
 
-  setupController(controller, { project, organization, user }) {
-    setProperties(controller, { project, organization, user });
+  setupController(controller, { project, user }) {
+    setProperties(controller, { project, user });
   }
 });

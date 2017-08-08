@@ -54,10 +54,11 @@ export default Component.extend({
    * @property skills
    */
   skills: computed('projectSkills.@each', 'excludedSkills.@each', function() {
-    // NOTE: In a perfect case, we would use `Ember.computed.setDif`
-    // However, project.projectSkills.@each.skill is fetched assinchronously, so
-    // each item in `projectSkills` is a `DS.PromiseObject` instead of a
-    // `DS.Model`, so we have to compare by id instead.
+    // NOTE: In a perfect case, we would use `Ember.computed.setDiff`
+    // However, project.projectSkills.@each.skill is fetched
+    // asynchronously, so each item in `projectSkills` is a
+    // `DS.PromiseObject` instead of a `DS.Model`, so we have to
+    // compare by id instead.
     let { projectSkills, excludedSkills } = getProperties(this, 'projectSkills', 'excludedSkills');
     return projectSkills.filter((skill) => {
       return !excludedSkills || !excludedSkills.isAny('id', get(skill, 'id'));

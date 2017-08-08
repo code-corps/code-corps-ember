@@ -13,13 +13,56 @@
       </div>
     </div>
 
+    <h3>Unconnected installations</h3>
+    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+      {{#each unconnectedInstallations as |githubAppInstallation|}}
+        {{github/unconnected-installation
+          connect=(action 'connect' organization githubAppInstallation)
+          githubAppInstallation=githubAppInstallation
+          organization=organization
+        }}
+      {{else}}
+        No unconnected installations found. Install one using the button below.
+      {{/each}}
+    {{else}}
+      Loading..
+    {{/if}}
+
+
+    <h3>Connected installations</h3>
+    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+      {{#each organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
+        {{#if organizationGithubAppInstallation.githubAppInstallation.isLoaded}}
+          {{github/connected-installation
+            connectRepo=(action 'connectRepo')
+            disconnectRepo=(action 'disconnectRepo')
+            disconnect=(action 'disconnect' organizationGithubAppInstallation)
+            organizationGithubAppInstallation=organizationGithubAppInstallation
+            project=project
+          }}
+        {{else}}
+          Loading...
+        {{/if}}
+      {{else}}
+        Connect one of your installation to access integration features.
+      {{/each}}
+    {{else}}
+      Loading..
+    {{/if}}
+
+    <h3>Not finding your installation?</h3>
     {{#if user.githubId}}
       <p>
-        <a href="https://github.com/apps/code-corps-local" data-test-installation-link class="button button__github button__github--light default"><span></span>Install on GitHub</a>
         Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.
       </p>
+      <p>
+        The button will open a new tab, so come back here and refresh the page when you're done.
+      </p>
+      <p>
+        <a href={{githubAppUrl}} data-test-installation-link class="button button__github button__github--light default" target="_blank"><span></span>Install on GitHub</a>
+      </p>
     {{else}}
-      Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before installing GitHub on the <strong>{{project.organization.name}}</strong> organization.
+      Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before adding a GitHub account to the <strong>{{project.organization.name}}</strong> organization.
     {{/if}}
   </div>
 </div>
