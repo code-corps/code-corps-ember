@@ -82,11 +82,7 @@
   dependencies:
     "@glimmer/util" "^0.22.3"
 
-abbrev@1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"
-
-abbrev@1.0.x:
+abbrev@1, abbrev@1.0.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
 
@@ -2390,10 +2386,6 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
 
-depd@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
-
 depd@1.1.1, depd@~1.1.0, depd@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
@@ -2782,7 +2774,7 @@ ember-cli-get-dependency-depth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-get-dependency-depth/-/ember-cli-get-dependency-depth-1.0.0.tgz#e0afecf82a2d52f00f28ab468295281aec368d11"
 
-ember-cli-head@^0.2.0:
+ember-cli-head@^0.2.0, ember-cli-head@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.2.2.tgz#819c7bf17ef72a46b12416240a8a8b3227e99b8d"
   dependencies:
@@ -2791,13 +2783,6 @@ ember-cli-head@^0.2.0:
     ember-cli-htmlbars "^1.3.0"
     ember-cli-version-checker "^1.1.6"
     fastboot-filter-initializers "^0.0.2"
-
-ember-cli-head@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.3.1.tgz#a407df4880f235280371c437bb5b0b5cbdaea646"
-  dependencies:
-    ember-cli-babel "^6.1.0"
-    ember-cli-htmlbars "^2.0.1"
 
 ember-cli-htmlbars-inline-precompile@^0.3.6:
   version "0.3.13"
@@ -3481,12 +3466,12 @@ ember-normalize@1.0.0:
     ember-cli-babel "^5.1.6"
     normalize.css "~4.1.1"
 
-ember-page-title@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-3.2.2.tgz#241effbc8228ecfb75e33540f6707003fdf6db31"
+ember-page-title@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/ember-page-title/-/ember-page-title-3.2.0.tgz#642d81b4f1a5388a5a53b3540168fd283be9fba0"
   dependencies:
     ember-cli-babel "^6.0.0"
-    ember-cli-head "^0.3.1"
+    ember-cli-head "^0.2.1"
     ember-cli-htmlbars "^2.0.1"
 
 ember-power-select@^1.9.5:
@@ -4745,15 +4730,6 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.1.5:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
-http-errors@1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.1.tgz#5f8b8ed98aca545656bf572997387f904a722257"
-  dependencies:
-    depd "1.1.0"
-    inherits "2.0.3"
-    setprototypeof "1.0.3"
-    statuses ">= 1.3.1 < 2"
-
 http-errors@~1.6.1, http-errors@~1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.2.tgz#0a002cc85707192a7e7946ceedc11155f60ec736"
@@ -4798,13 +4774,9 @@ ic-ajax@~2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ic-ajax/-/ic-ajax-2.0.2.tgz#50c8ab1c494320fac66830ce1ee3990ab827f596"
 
-iconv-lite@0.4.15:
+iconv-lite@0.4.15, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
-
-iconv-lite@0.4.18, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
-  version "0.4.18"
-  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.18.tgz#23d8656b16aae6742ac29732ea8f0336a4789cf2"
 
 ieee754@^1.1.4:
   version "1.1.8"
@@ -6638,13 +6610,12 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raw-body@^2.2.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.3.0.tgz#f79ce1acacaba5b6362d33454d785d7129f4bc67"
+raw-body@^2.2.0, raw-body@~2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.2.0.tgz#994976cf6a5096a41162840492f0bdc5d6e7fb96"
   dependencies:
-    bytes "2.5.0"
-    http-errors "1.6.1"
-    iconv-lite "0.4.18"
+    bytes "2.4.0"
+    iconv-lite "0.4.15"
     unpipe "1.0.0"
 
 raw-body@~1.1.0:
@@ -6653,14 +6624,6 @@ raw-body@~1.1.0:
   dependencies:
     bytes "1"
     string_decoder "0.10"
-
-raw-body@~2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.2.0.tgz#994976cf6a5096a41162840492f0bdc5d6e7fb96"
-  dependencies:
-    bytes "2.4.0"
-    iconv-lite "0.4.15"
-    unpipe "1.0.0"
 
 rc@^1.1.7:
   version "1.2.1"
