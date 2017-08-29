@@ -21,14 +21,6 @@ export default Model.extend(ContainsCodeMixin, {
   body: attr(),
 
   /**
-    The github issue the task is associated with.
-
-    @attribute githubId
-    @type string
-  */
-  githubId: attr(),
-
-  /**
     The date that the task was inserted.
 
     @attribute insertedAt
@@ -100,7 +92,15 @@ export default Model.extend(ContainsCodeMixin, {
     @attribute commentUserMentions
     @type Ember.computed
    */
-  commentUserMentions: hasMany('comment-user-mention', { asnyc: true }),
+  commentUserMentions: hasMany('comment-user-mention', { async: true }),
+
+  /**
+   * The github repository where an issue connected to this task exists
+   *
+   * @attribute githubRepo
+   * @type DS.Model
+   */
+  githubRepo: belongsTo('github-repo', { async: true }),
 
   /**
     The task-list that the task belongs to

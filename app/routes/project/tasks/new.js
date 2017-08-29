@@ -43,6 +43,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     let task = store.createRecord('task', { project, user });
 
     set(controller, 'task', task);
+    set(controller, 'selectedRepo', null);
     set(controller, 'unsavedTaskSkills', []);
   },
 

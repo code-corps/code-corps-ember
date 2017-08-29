@@ -4,8 +4,8 @@ import Ember from 'ember';
 const { Controller, set } = Ember;
 
 moduleForComponent(
-  'power-select/before-options',
-  'Unit | Component | power select before options',
+  'power-select/before-task-options',
+  'Unit | Component | power select before task options',
   {
     unit: true
   }
