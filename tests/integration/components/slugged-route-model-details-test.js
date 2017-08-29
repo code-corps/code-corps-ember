@@ -1,8 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { mockRouter } from 'code-corps-ember/tests/helpers/mock-routing';
 
 moduleForComponent('slugged-route-model-details', 'Integration | Component | slugged route model details', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    mockRouter(this);
+  }
 });
 
 test('it renders', function(assert) {
