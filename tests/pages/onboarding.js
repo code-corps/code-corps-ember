@@ -32,6 +32,11 @@ export default create({
   },
 
   startButton: {
+    scope: '.hello__column--name-input button',
+    isDisabled: attribute('disabled')
+  },
+
+  startFooterButton: {
     scope: '.start__footer button',
     isDisabled: attribute('disabled')
   },

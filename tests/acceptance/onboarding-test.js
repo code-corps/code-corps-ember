@@ -46,22 +46,22 @@ test('A user can onboard as expected', function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), '/start/interests');
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
     onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    assert.notOk(onboardingPage.startFooterButton.isDisabled, 'start button is enabled');
     onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
     onboardingPage.clickCategoryItem();
   });
 
   andThen(() => {
-    onboardingPage.startButton.click();
+    onboardingPage.startFooterButton.click();
   });
 
   andThen(() => {
@@ -79,22 +79,22 @@ test('A user can onboard as expected', function(assert) {
     assert.ok(onboardingPage.roleColumns(2).hasClass('expertise__column--support'));
     assert.equal(onboardingPage.roleColumns(2).roles(0).button.text, 'Donations');
 
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
     onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {
-    assert.notOk(onboardingPage.startButton.isDisabled, 'start button is enabled');
+    assert.notOk(onboardingPage.startFooterButton.isDisabled, 'start button is enabled');
     onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
     onboardingPage.roleColumns(0).roles(0).button.click();
   });
 
   andThen(() => {
-    onboardingPage.startButton.click();
+    onboardingPage.startFooterButton.click();
   });
 
   andThen(() => {
@@ -125,7 +125,7 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
-    onboardingPage.startButton.click();
+    onboardingPage.startFooterButton.click();
   });
 
   andThen(() => {
@@ -189,7 +189,7 @@ test('A user can submit name by hitting enter key on firstName input field', fun
 
   andThen(() => {
     assert.equal(currentURL(), '/start/interests');
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
   });
 });
 
@@ -213,7 +213,7 @@ test('A user can submit name by hitting enter key on lastName input field', func
 
   andThen(() => {
     assert.equal(currentURL(), '/start/interests');
-    assert.ok(onboardingPage.startButton.isDisabled, 'start button is disabled');
+    assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
   });
 });
 
