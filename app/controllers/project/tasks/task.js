@@ -70,7 +70,7 @@ export default Controller.extend({
      */
     saveTask(task) {
       return task.save()
-                 .catch((payload) => this._onError(payload));
+        .catch((payload) => this._onError(payload));
     },
 
     /**
@@ -84,8 +84,8 @@ export default Controller.extend({
       let comment = get(this, 'newComment');
       set(comment, 'markdown', markdown);
       return comment.save()
-                    .then((comment) => this._initComment(comment))
-                    .catch((payload) => this._onError(payload));
+        .then((comment) => this._initComment(comment))
+        .catch((payload) => this._onError(payload));
     },
 
     /**

@@ -39,8 +39,7 @@
   <button
     {{action donate}}
     class="button {{unless isProcessing "default"}} large donate"
-    disabled={{isProcessing}}
-    data-test-selector="donate button">
+    disabled={{isProcessing}}>
 
     {{#if isProcessing}}
       Processing...

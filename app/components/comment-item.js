@@ -111,7 +111,7 @@ export default Component.extend({
     save() {
       let comment = get(this, 'comment');
       comment.save().then(() => set(this, 'isEditing', false))
-                    .catch((payload) => this.sendAction('saveError', payload));
+        .catch((payload) => this.sendAction('saveError', payload));
     }
   }
 });

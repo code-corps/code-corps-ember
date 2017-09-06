@@ -1,10 +1,8 @@
-import testSelector from 'ember-test-selectors';
-
 export default {
   scope: '.github-repo',
 
   name: {
-    scope: testSelector('github-repo-name')
+    scope: '[data-test-github-repo-name]'
   },
 
   inLoadingState: {
@@ -15,14 +13,14 @@ export default {
   },
 
   actions: {
-    scope: testSelector('github-repo-actions'),
+    scope: '[data-test-github-repo-actions]',
 
     connect: {
-      scope: testSelector('connect-repo')
+      scope: '[data-test-connect-repo]'
     },
 
     disconnect: {
-      scope: testSelector('disconnect-repo')
+      scope: '[data-test-disconnect-repo]'
     }
   }
 };

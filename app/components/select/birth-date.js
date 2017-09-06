@@ -8,7 +8,7 @@ const {
   get,
   getProperties,
   set
- } = Ember;
+} = Ember;
 
 export default Component.extend({
   classNames: ['select-birth-date'],

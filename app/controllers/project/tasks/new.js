@@ -34,9 +34,9 @@ export default Controller.extend({
       set(task, 'githubRepo', githubRepo);
 
       return task.save()
-                 .then((task) => this._saveSkills(task))
-                 .then((task) => this.transitionToRoute('project.tasks.task', get(task, 'number')))
-                 .catch((payload) => this._handleTaskSaveError(payload));
+        .then((task) => this._saveSkills(task))
+        .then((task) => this.transitionToRoute('project.tasks.task', get(task, 'number')))
+        .catch((payload) => this._handleTaskSaveError(payload));
     },
 
     deselectTaskSkill(taskSkill) {

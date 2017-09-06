@@ -8,14 +8,14 @@ export default {
   scope: '.thank-you-container',
 
   icon: {
-    scope: '[data-test-selector="project icon"]'
+    scope: '[data-test-project-icon]'
   },
 
   clickLink: clickable('a'),
 
-  thankYouText: text('[data-test-selector="thank you message"]'),
+  thankYouText: text('[data-test-thank-you-message]'),
 
   volunteers: collection({
-    scope: '[data-test-selector="volunteer headshot"]'
+    scope: '[data-test-volunteer-headshot]'
   })
 };

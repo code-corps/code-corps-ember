@@ -57,15 +57,15 @@ test('it keeps the business properties when submitting in business mode', functi
   renderPage();
 
   page.selectCompany()
-      .legalEntityBusinessName(account.legalEntityBusinessName)
-      .legalEntityBusinessTaxId(account.legalEntityBusinessTaxId)
-      .legalEntityFirstName(account.legalEntityFirstName)
-      .legalEntityLastName(account.legalEntityLastName)
-      .legalEntityAddressLine1(account.legalEntityAddressLine1)
-      .legalEntityAddressLine2(account.legalEntityAddressLine2)
-      .legalEntityAddressCity(account.legalEntityAddressCity)
-      .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
-      .legalEntitySsnLast4(account.legalEntitySsnLast4);
+    .legalEntityBusinessName(account.legalEntityBusinessName)
+    .legalEntityBusinessTaxId(account.legalEntityBusinessTaxId)
+    .legalEntityFirstName(account.legalEntityFirstName)
+    .legalEntityLastName(account.legalEntityLastName)
+    .legalEntityAddressLine1(account.legalEntityAddressLine1)
+    .legalEntityAddressLine2(account.legalEntityAddressLine2)
+    .legalEntityAddressCity(account.legalEntityAddressCity)
+    .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
+    .legalEntitySsnLast4(account.legalEntitySsnLast4);
 
   page.state.fillIn(account.legalEntityAddressState);
   page.country.fillIn(account.legalEntityAddressCountry);
@@ -106,13 +106,13 @@ test('it unsets the business properties when submitting in individual mode', fun
   renderPage();
 
   page.selectIndividual()
-      .legalEntityFirstName(account.legalEntityFirstName)
-      .legalEntityLastName(account.legalEntityLastName)
-      .legalEntityAddressLine1(account.legalEntityAddressLine1)
-      .legalEntityAddressLine2(account.legalEntityAddressLine2)
-      .legalEntityAddressCity(account.legalEntityAddressCity)
-      .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
-      .legalEntitySsnLast4(account.legalEntitySsnLast4);
+    .legalEntityFirstName(account.legalEntityFirstName)
+    .legalEntityLastName(account.legalEntityLastName)
+    .legalEntityAddressLine1(account.legalEntityAddressLine1)
+    .legalEntityAddressLine2(account.legalEntityAddressLine2)
+    .legalEntityAddressCity(account.legalEntityAddressCity)
+    .legalEntityAddressPostalCode(account.legalEntityAddressPostalCode)
+    .legalEntitySsnLast4(account.legalEntitySsnLast4);
 
   page.state.fillIn(account.legalEntityAddressState);
   page.country.fillIn(account.legalEntityAddressCountry);

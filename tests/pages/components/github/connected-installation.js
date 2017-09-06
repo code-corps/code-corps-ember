@@ -1,21 +1,20 @@
 import { attribute, collection } from 'ember-cli-page-object';
-import testSelector from 'ember-test-selectors';
 import githubRepo from 'code-corps-ember/tests/pages/components/github-repo';
 
 export default {
   scope: '.github-app-installation.connected',
 
   avatar: {
-    scope: testSelector('avatar'),
+    scope: '[data-test-avatar]',
     url: attribute('src')
   },
 
   login: {
-    scope: testSelector('login')
+    scope: '[data-test-login]'
   },
 
   disconnect: {
-    scope: testSelector('disconnect')
+    scope: '[data-test-disconnect]'
   },
 
   githubRepos: collection({

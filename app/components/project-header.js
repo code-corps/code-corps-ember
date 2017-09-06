@@ -73,7 +73,7 @@ export default Component.extend({
     joinProject(project) {
       let { store, user } = getProperties(this, 'store', 'user');
       return store.createRecord('project-user', { user, project, role: 'pending' })
-                  .save();
+        .save();
     }
   }
 });

@@ -16,9 +16,9 @@ export default Service.extend({
   userCategories: computed('user.userCategories',
     'user.userCategories.@each.category',
     'user.userCategories.@each.user',
-  function() {
-    return this.get('user.userCategories');
-  }),
+    function() {
+      return this.get('user.userCategories');
+    }),
 
   addCategory(category) {
     let user = this.get('user');

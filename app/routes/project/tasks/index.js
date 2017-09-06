@@ -5,7 +5,7 @@ const {
   inject: { service },
   Route,
   RSVP
- } = Ember;
+} = Ember;
 
 export default Route.extend({
   projectTaskBoard: service(),
