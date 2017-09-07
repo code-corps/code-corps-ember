@@ -10,6 +10,7 @@ import {
 import projectMenu from 'code-corps-ember/tests/pages/components/project-menu';
 import projectSkillsList from 'code-corps-ember/tests/pages/components/project-skills-list';
 import skillsTypeahead from 'code-corps-ember/tests/pages/components/skills-typeahead';
+import githubRepo from 'code-corps-ember/tests/pages/components/select/github-repo';
 
 export default create({
   clickPreviewTask: clickable('.preview'),
@@ -18,6 +19,8 @@ export default create({
   errors: collection({
     scope: '.error'
   }),
+
+  githubRepo,
 
   taskTitle: fillable('[name=title]'),
   taskMarkdown: fillable('[name=markdown]'),

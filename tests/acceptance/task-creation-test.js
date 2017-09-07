@@ -332,3 +332,41 @@ test('Skills can be assigned to task during creation', function(assert) {
     assert.equal(cssTaskSkill.skillId, css.id, 'The correct skill was assigned.');
   });
 });
+
+test('A github repo can be assigned to the task during creation', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user', { username: 'test_user' });
+
+  let project = server.create('project');
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  let githubRepo = server.create('githubRepo');
+  server.create('project-github-repo', { githubRepo, project });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  andThen(() => {
+    projectTasksNewPage.taskTitle('A task title')
+                       .taskMarkdown('A task body')
+                       .githubRepo.select.fillIn(githubRepo.name);
+  });
+
+  andThen(() => {
+    projectTasksNewPage.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created.');
+
+    let [task] = server.schema.tasks.all().models;
+    assert.equal(task.githubRepoId, githubRepo.id, 'The correct github repo was assigned.');
+  });
+});
