@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 const {
-  computed: { alias, notEmpty },
+  computed: { alias },
   Component
 } = Ember;
 
@@ -10,12 +10,10 @@ export default Component.extend({
   classNameBindings: ['isConnected:github-repo--connected'],
   tagName: 'li',
 
-  model: null,
-
-  githubRepo: alias('model.githubRepo'),
-  projectGithubRepo: alias('model.projectGithubRepo'),
-  isConnected: notEmpty('model.projectGithubRepo'),
-
   isLoading: alias('githubRepo.isLoading'),
-  name: alias('githubRepo.name')
+
+  githubRepo: null,
+  projectGithubRepo: null,
+  isConnected: null,
+  name: null
 });

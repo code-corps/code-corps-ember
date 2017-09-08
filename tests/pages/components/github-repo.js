@@ -1,4 +1,5 @@
 import testSelector from 'ember-test-selectors';
+import { hasClass } from 'ember-cli-page-object';
 
 export default {
   scope: '.github-repo',
@@ -24,5 +25,7 @@ export default {
     disconnect: {
       scope: testSelector('disconnect-repo')
     }
-  }
+  },
+
+  isConnected: hasClass('github-repo--connected')
 };

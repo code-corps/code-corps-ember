@@ -13,44 +13,23 @@
       </div>
     </div>
 
-    <h3>Unconnected installations</h3>
-    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
-      {{#each unconnectedInstallations as |githubAppInstallation|}}
-        {{github/unconnected-installation
-          connect=(action 'connect' organization githubAppInstallation)
-          githubAppInstallation=githubAppInstallation
-          organization=organization
-        }}
-      {{else}}
-        No unconnected installations found. Install one using the button below.
-      {{/each}}
-    {{else}}
-      Loading..
-    {{/if}}
+    {{#each project.organization.organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
+      {{github-app-installation
+        githubAppInstallation=organizationGithubAppInstallation.githubAppInstallation
+        githubRepos=organizationGithubAppInstallation.githubAppInstallation.githubRepos
+        organization=organization
+        organizationGithubAppInstallation=organizationGithubAppInstallation
+        project=project
+      }}
+    {{/each}}
 
+    {{#each project.organization.organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
+      {{github-app-installation
+        githubAppInstallation=organizationGithubAppInstallation.githubAppInstallation
+        organization=organization
+      }}
+    {{/each}}
 
-    <h3>Connected installations</h3>
-    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
-      {{#each organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
-        {{#if organizationGithubAppInstallation.githubAppInstallation.isLoaded}}
-          {{github/connected-installation
-            connectRepo=(action 'connectRepo')
-            disconnectRepo=(action 'disconnectRepo')
-            disconnect=(action 'disconnect' organizationGithubAppInstallation)
-            organizationGithubAppInstallation=organizationGithubAppInstallation
-            project=project
-          }}
-        {{else}}
-          Loading...
-        {{/if}}
-      {{else}}
-        Connect one of your installation to access integration features.
-      {{/each}}
-    {{else}}
-      Loading..
-    {{/if}}
-
-    <h3>Not finding your installation?</h3>
     {{#if user.githubId}}
       <p>
         Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.
