@@ -47,6 +47,10 @@ module.exports = function(environment) {
       preventDuplicates: true
     },
 
+    i18n: {
+      defaultLocale: 'en-US'
+    },
+
     metricsAdapters: [
       {
         name: 'Segment',
