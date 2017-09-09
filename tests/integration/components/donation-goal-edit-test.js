@@ -58,8 +58,8 @@ test('it sends save action, with user input properties as argument, when save bu
   page.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
 
   page.fillInAmount(mockProperties.amount)
-      .fillInDescription(mockProperties.description)
-      .clickSave();
+    .fillInDescription(mockProperties.description)
+    .clickSave();
 });
 
 test('it sends cancel action, when cancel button is clicked', function(assert) {

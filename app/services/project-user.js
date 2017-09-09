@@ -18,8 +18,8 @@ export default Service.extend({
     let projectUser = { project, user, role: 'pending' };
 
     return store.createRecord('project-user', projectUser)
-                .save()
-                .then(() => this._flashSuccess('Your request has been sent.'));
+      .save()
+      .then(() => this._flashSuccess('Your request has been sent.'));
   },
 
   _flashSuccess(message) {

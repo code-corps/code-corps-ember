@@ -1,5 +1,4 @@
 import { collection, create, visitable } from 'ember-cli-page-object';
-import testSelector from 'ember-test-selectors';
 import connectedInstallation from 'code-corps-ember/tests/pages/components/github/connected-installation';
 import unconnectedInstallation from 'code-corps-ember/tests/pages/components/github/unconnected-installation';
 
@@ -7,11 +6,11 @@ export default create({
   visit: visitable(':organization/:project/settings/integrations'),
 
   integrationsLink: {
-    scope: testSelector('integrations-link')
+    scope: '[data-test-integrations-link]'
   },
 
   installationLink: {
-    scope: testSelector('installation-link')
+    scope: '[data-test-installation-link]'
   },
 
   connectedInstallations: collection({

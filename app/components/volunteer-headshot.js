@@ -22,7 +22,6 @@ const {
   @extends Ember.Component
  */
 export default Component.extend({
-  attributeBindings: ['data-test-selector'],
   classNames: ['volunteer-headshot'],
 
   /**

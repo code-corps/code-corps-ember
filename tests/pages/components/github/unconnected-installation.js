@@ -1,19 +1,18 @@
 import { attribute } from 'ember-cli-page-object';
-import testSelector from 'ember-test-selectors';
 
 export default {
   scope: '.github-app-installation.unconnected',
 
   avatar: {
-    scope: testSelector('avatar'),
+    scope: '[data-test-avatar]',
     url: attribute('src')
   },
 
   login: {
-    scope: testSelector('login')
+    scope: '[data-test-login]'
   },
 
   connect: {
-    scope: testSelector('connect')
+    scope: '[data-test-connect]'
   }
 };

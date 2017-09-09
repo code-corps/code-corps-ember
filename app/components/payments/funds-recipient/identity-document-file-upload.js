@@ -86,8 +86,8 @@ export default EmberUploader.FileField.extend({
     let additionalUploadData = get(this, 'additionalUploadData');
 
     uploader.upload(file, additionalUploadData)
-            .then((event) => this._handleUploadDone(event))
-            .catch((reason) => this._handleUploadError(reason));
+      .then((event) => this._handleUploadDone(event))
+      .catch((reason) => this._handleUploadError(reason));
   },
 
   // error handlers

@@ -56,7 +56,7 @@ test('A task can be successfully created', function(assert) {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
 
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body');
+      .taskMarkdown('A task body');
 
     projectTasksNewPage.clickSubmit();
   });
@@ -112,8 +112,8 @@ test('When task creation succeeeds, the user is redirected to the task page for 
 
   andThen(() => {
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body')
-                       .clickSubmit();
+      .taskMarkdown('A task body')
+      .clickSubmit();
   });
 
   andThen(() => {
@@ -292,7 +292,7 @@ test('Skills can be assigned to task during creation', function(assert) {
 
   andThen(() => {
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body');
+      .taskMarkdown('A task body');
   });
 
   // NOTE: We need to be doing this async, so the code is ugly
@@ -355,8 +355,8 @@ test('A github repo can be assigned to the task during creation', function(asser
 
   andThen(() => {
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body')
-                       .githubRepo.select.fillIn(githubRepo.name);
+      .taskMarkdown('A task body')
+      .githubRepo.select.fillIn(githubRepo.name);
   });
 
   andThen(() => {

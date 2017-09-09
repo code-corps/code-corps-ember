@@ -16,9 +16,9 @@ export default Service.extend({
   userRoles: computed('user.userRoles',
     'user.userRoles.@each.role',
     'user.userRoles.@each.user',
-  function() {
-    return this.get('user.userRoles');
-  }),
+    function() {
+      return this.get('user.userRoles');
+    }),
 
   addRole(role) {
     let user = this.get('user');

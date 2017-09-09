@@ -38,11 +38,11 @@ export default Controller.extend({
       this._updateisProcessing(true);
 
       return this._createStripeToken(stripeElement)
-                 .then((token) => this._createCardForPlatformCustomer(token))
-                 .then((stripeCard) => this._createSubscription(amount, stripeCard))
-                 .then(() => this._transitionToThankYou())
-                 .catch((response) => this._handleError(response))
-                 .finally(() => this._updateisProcessing(false));
+        .then((token) => this._createCardForPlatformCustomer(token))
+        .then((stripeCard) => this._createSubscription(amount, stripeCard))
+        .then(() => this._transitionToThankYou())
+        .catch((response) => this._handleError(response))
+        .finally(() => this._updateisProcessing(false));
     },
 
     // If the card exists already
@@ -51,8 +51,8 @@ export default Controller.extend({
       this._updateisProcessing(true);
 
       return this._createSubscription(amount, stripeCard)
-                 .then(() => this._transitionToThankYou())
-                 .finally(() => this._updateisProcessing(false));
+        .then(() => this._transitionToThankYou())
+        .finally(() => this._updateisProcessing(false));
     }
   },
 
@@ -78,7 +78,7 @@ export default Controller.extend({
 
   _createCardForPlatformCustomer({ id }) {
     return this._ensureStripePlatformCustomer()
-               .then(() => this._createStripePlatformCard(id));
+      .then(() => this._createStripePlatformCard(id));
   },
 
   _ensureStripePlatformCustomer() {
@@ -96,9 +96,9 @@ export default Controller.extend({
     let email = get(user, 'email');
 
     return store.createRecord('stripe-platform-customer', { email, user })
-                .save()
-                .then((record) =>RSVP.resolve(record))
-                .catch((response) => this._handleCustomerCreationError(response));
+      .save()
+      .then((record) =>RSVP.resolve(record))
+      .catch((response) => this._handleCustomerCreationError(response));
   },
 
   _handleCustomerCreationError() {
@@ -113,8 +113,8 @@ export default Controller.extend({
     let user = get(this, 'user');
     let card = store.createRecord('stripe-platform-card', { stripeToken, user });
     return card.save()
-               .then((record) =>RSVP.resolve(record))
-               .catch((response) => this._handleCardCreationError(response));
+      .then((record) =>RSVP.resolve(record))
+      .catch((response) => this._handleCardCreationError(response));
   },
 
   _handleCardCreationError() {
@@ -128,9 +128,9 @@ export default Controller.extend({
     let { project, store, user } = getProperties(this, 'project', 'store', 'user');
 
     return store.createRecord('stripe-connect-subscription', { project, quantity, user })
-                .save()
-                .then((record) =>RSVP.resolve(record))
-                .catch((response) => this._handleSubscriptionCreationError(response));
+      .save()
+      .then((record) =>RSVP.resolve(record))
+      .catch((response) => this._handleSubscriptionCreationError(response));
   },
 
   _handleSubscriptionCreationError(response) {

@@ -18,13 +18,13 @@ export default {
   canReposition: hasClass('task-card--can-reposition'),
 
   number: {
-    scope: '[data-test-selector="task number"]'
+    scope: '[data-test-task-number]'
   },
   time: {
-    scope: '[data-test-selector="task time"]'
+    scope: '[data-test-task-time]'
   },
   title: {
-    scope: '[data-test-selector="task title"]'
+    scope: '[data-test-task-title]'
   },
 
   taskAssignment

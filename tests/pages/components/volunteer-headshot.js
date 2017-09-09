@@ -8,6 +8,6 @@ export default {
     src: attribute('src')
   },
 
-  name: text('[data-test-selector="volunteer name"]'),
-  role: text('[data-test-selector="volunteer role"]')
+  name: text('[data-test-volunteer-name]'),
+  role: text('[data-test-volunteer-role]')
 };
