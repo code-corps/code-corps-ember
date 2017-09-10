@@ -24,7 +24,7 @@ dependencies:
 
 test:
   override:
-    - yarn run test -- --silent --split=$CIRCLE_NODE_TOTAL --partition=`expr $CIRCLE_NODE_INDEX + 1`:
+    - yarn run test --silent --split=$CIRCLE_NODE_TOTAL --partition=`expr $CIRCLE_NODE_INDEX + 1`:
         parallel: true
     - ember coverage-merge
     - if [ ! ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
