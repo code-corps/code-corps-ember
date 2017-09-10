@@ -17,9 +17,10 @@ dependencies:
     - ./node_modules
     - ./bower_components
   override:
+    - yarn global add bower
     - yarn add node-sass
     - yarn install
-    - node_modules/bower/bin/bower install
+    - bower install
 
 test:
   override:
