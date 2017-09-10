@@ -3,7 +3,7 @@ machine:
     version: 8.4.0
   environment:
     YARN_VERSION: 1.0.1
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}"
 
 dependencies:
   pre:
