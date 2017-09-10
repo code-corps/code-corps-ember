@@ -14,8 +14,8 @@ dependencies:
   cache_directories:
     - ~/.yarn
     - ~/.cache/yarn
-    - ./node_modules
-    - ./bower_components
+    - /home/ubuntu/nvm/versions/node/v8.4.0/bin
+    - /home/ubuntu/nvm/versions/node/v8.4.0/lib/node_modules
   override:
     - yarn global add bower
     - yarn add node-sass
