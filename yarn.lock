@@ -2613,9 +2613,9 @@ ember-cli-broccoli-sane-watcher@^2.0.4:
     rsvp "^3.0.18"
     sane "^1.1.1"
 
-ember-cli-code-coverage@kategengler/ember-cli-code-coverage:
+ember-cli-code-coverage@^0.4.1:
   version "0.4.1"
-  resolved "https://codeload.github.com/kategengler/ember-cli-code-coverage/tar.gz/db041be952ddbbc56e9ea915f987e301bbd75301"
+  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-0.4.1.tgz#b7ece62acbca7bb10a7b0960f72126bdd636b8f2"
   dependencies:
     babel-core "^6.24.1"
     babel-plugin-transform-async-to-generator "^6.24.1"
@@ -6149,7 +6149,7 @@ node-sass@^3.4:
     request "^2.61.0"
     sass-graph "^2.1.1"
 
-node-sass@^4.1.0, node-sass@^4.5.3:
+node-sass@^4.1.0:
   version "4.5.3"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.5.3.tgz#d09c9d1179641239d1b97ffc6231fdcec53e1568"
   dependencies:

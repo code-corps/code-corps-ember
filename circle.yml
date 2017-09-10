@@ -1,8 +1,8 @@
 machine:
   node:
-    version: 6.9.4
+    version: 8.4.0
   environment:
-    YARN_VERSION: 0.18.1
+    YARN_VERSION: 1.0.1
     PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
 dependencies:
@@ -14,13 +14,12 @@ dependencies:
   cache_directories:
     - ~/.yarn
     - ~/.cache/yarn
-    - /home/ubuntu/nvm/versions/node/v6.9.4/bin
-    - /home/ubuntu/nvm/versions/node/v6.9.4/lib/node_modules
+    - ./node_modules
+    - ./bower_components
   override:
-    - yarn global add bower
     - yarn add node-sass
     - yarn install
-    - bower install
+    - node_modules/bower/bin/bower install
 
 test:
   override:
