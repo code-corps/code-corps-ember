@@ -1,9 +1,9 @@
 machine:
   node:
-    version: 6.9.4
+    version: 6.11.3
   environment:
-    YARN_VERSION: 0.18.1
-    PATH: "${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+    YARN_VERSION: 1.0.1
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}"
 
 dependencies:
   pre:
@@ -14,17 +14,16 @@ dependencies:
   cache_directories:
     - ~/.yarn
     - ~/.cache/yarn
-    - /home/ubuntu/nvm/versions/node/v6.9.4/bin
-    - /home/ubuntu/nvm/versions/node/v6.9.4/lib/node_modules
   override:
-    - yarn global add bower
-    - yarn add node-sass
     - yarn install
+    - yarn global add bower
+    - npm rebuild node-sass
     - bower install
 
 test:
   override:
-    - yarn test --silent
+    - npm run-script test --silent --split=$CIRCLE_NODE_TOTAL --partition=`expr $CIRCLE_NODE_INDEX + 1`:
+        parallel: true
     - ember coverage-merge
     - if [ ! ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
 
