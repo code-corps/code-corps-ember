@@ -1,0 +1,11 @@
+{{progress-bar-container percentage=percentage}}
+<div class="project-card__donation-progress__details">
+  <div class="project-card__donation-progress__details__percentage">
+    <div class="project-card__donation-progress__details__percentage__value">{{format-percentage percentage trimZero=true}}</div>
+    <div class="project-card__donation-progress__details__percentage__label">of {{format-currency donationGoal.amount trimZero=true}} goal</div>
+  </div>
+  <div class="project-card__donation-progress__details__amount">
+    <div class="project-card__donation-progress__details__amount__value">{{format-currency amountDonated trimZero=true}}</div>
+    <div class="project-card__donation-progress__details__amount__label">given each month</div>
+  </div>
+</div>
