@@ -13,7 +13,7 @@
 /.sass-cache
 /connect.lock
 /coverage/*
-/coverage*
+/coverage_*
 /libpeerconnection.log
 npm-debug.log*
 yarn-error.log
