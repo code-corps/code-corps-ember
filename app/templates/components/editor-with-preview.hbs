@@ -22,5 +22,9 @@
       value=input}}
   </div>
 {{else}}
-  <div class="body-preview">{{{preview}}}</div>
+  <div class="body-preview">
+    {{#highlight-syntax}}
+      {{{preview}}}
+    {{/highlight-syntax}}
+  </div>
 {{/if}}
