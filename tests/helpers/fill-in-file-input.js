@@ -14,7 +14,7 @@ export default function fillInFileInput(selector, file) {
   });
 
   // Stub readAsDataURL function
-  let stub = sinon.stub(FileReader.prototype, 'readAsDataURL', function() {
+  let stub = sinon.stub(FileReader.prototype, 'readAsDataURL').callsFake(function() {
     this.onload({ target: { result: content } });
   });
 
