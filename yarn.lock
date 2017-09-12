@@ -2632,9 +2632,9 @@ ember-cli-broccoli-sane-watcher@^2.0.4:
     rsvp "^3.0.18"
     sane "^1.1.1"
 
-ember-cli-code-coverage@kategengler/ember-cli-code-coverage:
+ember-cli-code-coverage@^0.4.1:
   version "0.4.1"
-  resolved "https://codeload.github.com/kategengler/ember-cli-code-coverage/tar.gz/88ee6572c359e289707bd93b33262b35ac7a2222"
+  resolved "https://registry.yarnpkg.com/ember-cli-code-coverage/-/ember-cli-code-coverage-0.4.1.tgz#b7ece62acbca7bb10a7b0960f72126bdd636b8f2"
   dependencies:
     babel-core "^6.24.1"
     babel-plugin-transform-async-to-generator "^6.24.1"
