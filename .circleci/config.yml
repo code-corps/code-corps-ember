@@ -95,7 +95,7 @@ jobs:
           command: |
             if [ ! ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
 
-  staging:
+  deploy-staging:
     <<: *defaults
     steps:
       - checkout
@@ -105,7 +105,7 @@ jobs:
           name: Deploy to staging
           command: 'node_modules/.bin/ember deploy staging --activate'
 
-  production:
+  deploy-production:
     <<: *defaults
     steps:
       - checkout
