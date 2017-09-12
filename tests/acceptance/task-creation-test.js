@@ -216,7 +216,7 @@ test('Navigating away from task route destroys task with prompt', function(asser
     projectTasksIndexPage.clickNewTask();
   });
 
-  let stub = sinon.stub(window, 'confirm', () => {
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
     return true;
   });
@@ -252,7 +252,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
     projectTasksIndexPage.clickNewTask();
   });
 
-  let stub = sinon.stub(window, 'confirm', () => {
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
     return false;
   });
