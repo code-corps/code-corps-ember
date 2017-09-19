@@ -27,7 +27,7 @@
   </div>
 {{else}}
   <div class="comment-info">
-    {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.insertedAt}}
+    {{user/display-username user=comment.user}} commented {{moment-from-now comment.insertedAt}}
     {{#if canEdit}}
       <a class="edit" {{action 'edit'}}>edit</a>
     {{/if}}

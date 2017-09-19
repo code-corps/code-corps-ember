@@ -2,8 +2,7 @@ import {
   clickable,
   collection,
   fillable,
-  isVisible,
-  text
+  isVisible
 } from 'ember-cli-page-object';
 
 export default {
@@ -39,5 +38,7 @@ export default {
     itemScope: '.error'
   }),
 
-  username: text('.username')
+  username: {
+    scope: '[data-test-username]'
+  }
 };
