@@ -1,0 +1,42 @@
+.loading-spinner {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin: 1em auto;
+}
+
+.loading-spinner__donut {
+  position: absolute;
+  width: 35px;
+  animation-name: cckw;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+@keyframes cckw {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner__pie {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  left: 9px;
+  top: 9px;
+  animation-name: ckw;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes ckw {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
