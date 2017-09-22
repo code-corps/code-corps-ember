@@ -65,6 +65,7 @@
 @import "layout/header";
 @import "layout/select-dropdown";
 @import "layout/select-inline";
+@import "layout/settings";
 
 @import "ember-power-select";
 
@@ -86,6 +87,7 @@
 @import "components/error-wrapper";
 @import "components/image-drop";
 @import "components/loading-bar";
+@import "components/loading-spinner";
 @import "components/member-list-item";
 @import "components/modal-confirm";
 @import "components/pager-control";

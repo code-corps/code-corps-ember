@@ -1,36 +1,36 @@
 {{title "Integrations" " « " project.title " by " project.organization.name}}
 
 <div class="container">
-  <div class="page-header">
-    <h3>GitHub</h3>
-  </div>
-
-  <div class="settings">
-    <div class="integrations__header--github">
-      <div class="integrations__description">
+  <div class="panel panel--highlighted">
+    <div class="panel__section">
+      <div class="panel__section__description">
         <h3>Sync with GitHub</h3>
-        <p>Sync issues on your GitHub repositories with tasks in your Code Corps project. We’ll automatically pull in all your new issues and comments and put them right in the Inbox column on your project’s task board. And new tasks in your project on Code Corps can be pushed to one of your GitHub repositories.</p>
+        <p>Manage the repos connected to your project.</p>
+      </div>
+      <div class="panel__section__content">
+        <div class="integrations__description">
+          <p>You can connect your project to multiple GitHub repos to sync issues with tasks automatically.</p>
+        </div>
       </div>
     </div>
+  </div>
 
-    <h3>Unconnected installations</h3>
-    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+  {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+    {{#if unconnectedInstallations}}
+      <h4>Unconnected installations</h4>
       {{#each unconnectedInstallations as |githubAppInstallation|}}
         {{github/unconnected-installation
           connect=(action 'connect' organization githubAppInstallation)
           githubAppInstallation=githubAppInstallation
           organization=organization
         }}
-      {{else}}
-        No unconnected installations found. Install one using the button below.
       {{/each}}
-    {{else}}
-      Loading..
     {{/if}}
+  {{/if}}
 
-
-    <h3>Connected installations</h3>
-    {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+  {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+    {{#if organizationGithubAppInstallations}}
+      <h4>Connected installations</h4>
       {{#each organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
         {{#if organizationGithubAppInstallation.githubAppInstallation.isLoaded}}
           {{github/connected-installation
@@ -43,26 +43,35 @@
         {{else}}
           Loading...
         {{/if}}
-      {{else}}
-        Connect one of your installation to access integration features.
       {{/each}}
-    {{else}}
-      Loading..
     {{/if}}
 
-    <h3>Not finding your installation?</h3>
-    {{#if user.githubId}}
-      <p>
-        Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.
-      </p>
-      <p>
-        The button will open a new tab, so come back here and refresh the page when you're done.
-      </p>
-      <p>
-        <a href={{githubAppUrl}} data-test-installation-link class="button button__github button__github--light default" target="_blank"><span></span>Install on GitHub</a>
-      </p>
-    {{else}}
-      Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before adding a GitHub account to the <strong>{{project.organization.name}}</strong> organization.
-    {{/if}}
-  </div>
+    <div class="panel">
+      <div class="panel__section">
+        <div class="panel__section__description">
+          <h4>Add a new installation</h4>
+          <p>Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.</p>
+        </div>
+        <div class="panel__section__content">
+          {{#if user.githubId}}
+            <p>
+              Install our GitHub app on your GitHub account to select which repositories will sync.
+            </p>
+            <p>
+              The button will open a new tab, so come back here and refresh the page when you're done.
+            </p>
+            <p>
+              <a href={{githubAppUrl}} data-test-installation-link class="button button__github button__github--light default" target="_blank"><span></span>Install on GitHub</a>
+            </p>
+            {{else}}
+              <p>
+                Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before adding a GitHub account to the <strong>{{project.organization.name}}</strong> organization.
+              </p>
+            {{/if}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{loading-spinner}}
+  {{/if}}
 </div>
