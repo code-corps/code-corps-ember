@@ -36,7 +36,11 @@
     {{/if}}
   </div>
   <div class="comment-body markdown-body">
-    {{{processedBody}}}
+    {{#if nullBody}}
+      <em class="markdown-body--empty" data-test-markdown-body-empty>No description provided.</em>
+    {{else}}
+      {{{parsedBody}}}
+    {{/if}}
   </div>
 {{/if}}
 </div>

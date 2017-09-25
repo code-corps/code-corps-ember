@@ -90,3 +90,24 @@ test('it switches between editing and viewing mode', function(assert) {
 
   assert.notOk(page.editor.isVisible, 'Component switched back to view mode.');
 });
+
+test('if the comment body is empty render null comment element', function(assert) {
+  assert.expect(1);
+
+  let comment = { isLoaded: false };
+
+  set(this, 'comment', comment);
+
+  renderPage();
+
+  // this will trigger some promise resolving, so we wrap it in a loop
+  run(this, () => {
+    setProperties(comment, {
+      body: null,
+      containsCode: true,
+      isLoaded: true,
+      user: { username: 'tester' }
+    });
+  });
+  assert.ok(page.nullCommentBody.isVisible, 'The message for no comment body is rendered');
+});
