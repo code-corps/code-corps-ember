@@ -17,7 +17,9 @@ export default {
   commentBody: {
     scope: '.comment-body'
   },
-
+  nullCommentBody:{
+    scope: '[data-test-markdown-body-empty]'
+  },
   editLink: {
     scope: '.edit'
   },

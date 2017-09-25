@@ -24,7 +24,13 @@
           {{code-theme-selector}}
         {{/if}}
       </div>
-      <div class="comment-body markdown-body">{{{taskBodyWithMentions}}}</div>
+      <div class="comment-body markdown-body">
+        {{#if taskBodyWithMentions }}
+          {{{taskBodyWithMentions}}}
+        {{else}}
+          <em class="markdown-body--empty" data-test-markdown-body-empty>No description provided.</em>
+        {{/if}}
+      </div>
     {{/if}}
   </div>
 </div>
