@@ -15,16 +15,16 @@ $code-theme--dark--yellow--dark: #E8BF6A;
 // CODE LIGHT THEME
 //
 $code-theme--light--black: #222;
-$code-theme--light--gray: #FBFBFB;
+$code-theme--light--gray: $background-gray;
 $code-theme--light--green: #229151;
 $code-theme--light--orange: #B75F25;
 
 code,
 pre {
-  background   : $code-theme--light--gray;
+  background: $code-theme--light--gray;
   border-radius: 4px;
-  font-family  : Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  font-size    : $body-font-size-small;
+  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: $body-font-size-normal;
 }
 
 pre {

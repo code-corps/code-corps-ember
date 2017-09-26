@@ -17,7 +17,7 @@
       {{/each}}
     </div>
     <div class="input-group">
-      <button class="default small right {{if isBusy "disabled"}}"
+      <button class="default right {{if isBusy "disabled"}}"
               name="save" {{action save markdown}}>Comment</button>
       {{yield}}
     </div>
@@ -25,7 +25,7 @@
 {{else}}
   <div class="comment-content comment-signup">
     <p>
-      {{#link-to "signup" class='button default small'}}Sign up for free{{/link-to}} to comment on this conversation, or {{#link-to 'login'}}sign in{{/link-to}}.
+      {{#link-to "signup" class='button default'}}Sign up for free{{/link-to}} to comment on this conversation, or {{#link-to 'login'}}sign in{{/link-to}}.
     </p>
   </div>
 {{/if}}

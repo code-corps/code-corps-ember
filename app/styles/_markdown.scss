@@ -1,0 +1,153 @@
+.markdown-body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.25;
+    margin-bottom: 16px;
+    margin-top: 24px;
+  }
+
+  h1 {
+    border-bottom: 1px solid $gray--lightest;
+    font-size: 2em;
+    padding-bottom: 0.3em;
+  }
+
+  h2 {
+    border-bottom: 1px solid $gray--lightest;
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+  }
+
+  h3 {
+    font-size: 1.25em;
+  }
+
+  h4 {
+    font-size: 1.1em;
+  }
+
+  h5 {
+    font-size: 0.95em;
+  }
+
+  h6 {
+    color: $text--light;
+    font-size: 0.9em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+
+  ol,
+  ul {
+    font-size: 1em;
+    margin: 0;
+    padding-left: 2em;
+  }
+
+  li > p {
+    margin-top: 16px;
+  }
+
+  ol li {
+    list-style-type: decimal;
+  }
+
+  ul li {
+    list-style-type: disc;
+  }
+
+  ul ul,
+  ul ol,
+  ol ul,
+  ol ol {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  ol ol,
+  ul ol {
+    list-style-type: lower-roman;
+  }
+
+  ul ul ol,
+  ul ol ol,
+  ol ul ol,
+  ol ol ol {
+    list-style-type: lower-alpha;
+  }
+
+  code {
+    font-size: $body-font-size-normal;
+  }
+
+  blockquote {
+    border-left: 0.25em solid $gray--lightest;
+    color: $text--light;
+    margin: 0;
+    padding: 0 1em;
+  }
+
+  blockquote > :first-child {
+    margin-top: 0;
+  }
+
+  blockquote > :last-child {
+    margin-bottom: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    overflow: auto;
+    width: 100%;
+  }
+
+  table th {
+    font-weight: 600;
+  }
+
+  table td,
+  table th {
+    border: 1px solid $gray--lightest;
+    padding: 6px 13px;
+  }
+
+  table tr {
+    background: white;
+    border-top: 1px solid $gray--light;
+  }
+
+  table tr:nth-child(2n) {
+    background-color: $gray--background;
+  }
+
+  blockquote,
+  dl,
+  ol,
+  p,
+  pre,
+  table,
+  ul {
+    margin-bottom: 16px;
+    margin-top: 0;
+  }
+
+  a.username {
+    color: $text--dark;
+    font-weight: 600;
+    &:hover {
+      color: $link-color;
+    }
+  }
+
+  & > *:first-child {
+    margin-top: 0 !important;
+  }
+}

@@ -9,9 +9,6 @@
     padding: 20px;
     text-align: center;
 
-    .long-description-inner {
-    }
-
     ul {
       font-size: $body-font-size-small;
       list-style-type: disc;
@@ -55,10 +52,12 @@
   }
 }
 
+.long-description-body {
+  clear: both;
+}
+
 .long-description {
-
   &, &-editor {
-
     li {
       list-style-type: disc;
       margin-left: 20px;
