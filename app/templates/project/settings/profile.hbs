@@ -1,31 +1,43 @@
-<div class="page-section">
-  {{project-settings-form project=model}}
-</div>
-
-<div class="page-section">
-  <div class="page-section__header">
-    <h2>Skills</h2>
-    <p>What skills does your project require? These will help contributors find your project.</p>
+<div class="container">
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Project details</h3>
+        <p>Manage your project's details like your icon, name, and description.</p>
+      </div>
+      <div class="panel__section__content">
+        {{project-settings-form project=model}}
+      </div>
+    </div>
   </div>
 
-  <div class="project-skills-list centered">
-  {{#each projectSkills as |projectSkill|}}
-    {{skill-button
-      alwaysShowX=true
-      iconBefore=false
-      isLoading=projectSkill.isLoading
-      remove=(action removeProjectSkill projectSkill)
-      size="normal"
-      skill=projectSkill.skill
-    }}
-  {{/each}}
-  </div>
-
-  <div class="skills-typeahead-container">
-  {{skills-typeahead
-    centered=true
-    selectSkill=(action toggleSkill)
-    skillsList=projectSkillsList
-  }}
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Skills</h3>
+        <p>What skills does your project require? These help contributors find your project and tasks that fit their skillset.</p>
+      </div>
+      <div class="panel__section__content">
+        <div class="skills-typeahead-container">
+          {{skills-typeahead
+            centered=true
+            selectSkill=(action toggleSkill)
+            skillsList=projectSkillsList
+          }}
+        </div>
+        <div class="project-skills-list">
+          {{#each projectSkills as |projectSkill|}}
+            {{skill-button
+              alwaysShowX=true
+              iconBefore=false
+              isLoading=projectSkill.isLoading
+              remove=(action removeProjectSkill projectSkill)
+              size="normal"
+              skill=projectSkill.skill
+            }}
+          {{/each}}
+        </div>
+      </div>
+    </div>
   </div>
 </div>

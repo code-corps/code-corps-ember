@@ -1,15 +1,12 @@
 export default {
   scope: '.github-repo',
 
-  name: {
-    scope: '[data-test-github-repo-name]'
+  loading: {
+    scope: '[data-test-loading]'
   },
 
-  inLoadingState: {
-    isDescriptor: true,
-    get() {
-      return this.text.indexOf('Loading') > -1;
-    }
+  name: {
+    scope: '[data-test-github-repo-name]'
   },
 
   actions: {

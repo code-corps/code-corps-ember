@@ -53,7 +53,6 @@
 @import "buttons";
 @import "code";
 @import "images";
-@import "inputs";
 @import "markdown";
 
 //
@@ -64,9 +63,12 @@
 @import "layout/footer";
 @import "layout/forms";
 @import "layout/header";
+@import "layout/loading";
 @import "layout/select-dropdown";
 @import "layout/select-inline";
 @import "layout/settings";
+
+@import "inputs";
 
 @import "ember-power-select";
 

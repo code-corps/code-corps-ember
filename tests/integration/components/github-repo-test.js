@@ -45,13 +45,13 @@ test('it changes state based on loading, presence of records', function(assert) 
   renderPage();
 
   run(() => set(this, 'model.githubRepo', { isLoaded: false }));
-  assert.equal(page.text, 'Loading...', 'With github repo loading and no project github repo, state should be loading.');
+  assert.ok(page.loading.isVisible, 'With github repo loading and no project github repo, state should be loading.');
 
   run(() => set(this, 'model.githubRepo.isLoaded', true));
   assert.equal(page.text, 'Block Content', 'With github repo loaded and no project github repo, state should be loaded.');
 
   run(() => set(this, 'model.projectGithubRepo', { isLoaded: false }));
-  assert.equal(page.text, 'Loading...', 'With project github repo loading, state should be loading.');
+  assert.ok(page.loading.isVisible, 'With project github repo loading, state should be loading.');
 
   run(() => set(this, 'model.projectGithubRepo.isLoaded', true));
   assert.equal(page.text, 'Block Content', 'With project github repo loaded, state should be loaded.');

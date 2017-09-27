@@ -83,16 +83,16 @@ test('renders correct elements for provided github app installation', function(a
   assert.equal(page.githubRepos().count, 3, 'All repos are rendered.');
 
   assert.equal(page.githubRepos(0).name.text, 'Connected Repo');
-  assert.notOk(page.githubRepos(0).inLoadingState, 'Repo is not in loading state.');
+  assert.notOk(page.githubRepos(0).loading.isVisible, 'Repo is not in loading state.');
   assert.notOk(page.githubRepos(0).actions.connect.isVisible, 'Repo is connected, so connect button is hidden.');
   assert.ok(page.githubRepos(0).actions.disconnect.isVisible, 'Repo is connected, so disconnect button is visible.');
 
   assert.equal(page.githubRepos(1).name.text, 'Unconnected Repo');
-  assert.notOk(page.githubRepos(1).inLoadingState, 'Repo is not in loading state.');
+  assert.notOk(page.githubRepos(1).loading.isVisible, 'Repo is not in loading state.');
   assert.ok(page.githubRepos(1).actions.connect.isVisible, 'Repo is unconnected, so connect button is visible.');
   assert.notOk(page.githubRepos(1).actions.disconnect.isVisible, 'Repo is unconnected, so disconnect button is hidden.');
 
-  assert.ok(page.githubRepos(2).inLoadingState, 'Repo is in loading state.');
+  assert.ok(page.githubRepos(2).loading.isVisible, 'Repo is in loading state.');
   assert.notOk(page.githubRepos(2).actions.connect.isVisible, 'Repo is in loading state. Neither button should render.');
   assert.notOk(page.githubRepos(2).actions.disconnect.isVisible, 'Repo is in loading state. Neither button should render.');
 });

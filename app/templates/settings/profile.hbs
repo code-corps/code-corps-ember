@@ -1,11 +1,15 @@
 {{title "Settings"}}
 
 <div class="container">
-  <div class="page-header">
-    <h3>Public profile</h3>
-  </div>
-
-  <div class="settings">
-    {{user-settings-form user=model}}
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Public profile</h3>
+        <p>Manage your profile details like your photo, name, and bio.</p>
+      </div>
+      <div class="panel__section__content">
+        {{user-settings-form user=model}}
+      </div>
+    </div>
   </div>
 </div>
