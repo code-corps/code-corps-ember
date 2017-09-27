@@ -19,10 +19,10 @@
   </div>
   <div class="input-group">
     {{#if comment.isSaving}}
-      <button class="default small right">Saving...</button>
+      <button class="default right">Updating...</button>
     {{else}}
-      <button {{action 'save'}} class="default small right save">Save</button>
-      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+      <button {{action 'save'}} class="default right save">Update comment</button>
+      <button {{action 'cancel'}} class="clear right cancel">Cancel</button>
     {{/if}}
   </div>
 {{else}}

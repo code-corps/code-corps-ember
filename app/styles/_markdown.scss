@@ -1,6 +1,6 @@
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 16px;
+  font-size: $body-font-size-normal;
   line-height: 1.5;
   word-wrap: break-word;
 
@@ -149,5 +149,9 @@
 
   & > *:first-child {
     margin-top: 0 !important;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0 !important;
   }
 }

@@ -33,6 +33,10 @@ $outer-border-radius: 4px;
   max-width: 100%;
   width: 100%;
 
+  .input-group {
+    margin-bottom: 0;
+  }
+
   #{$all-text-inputs} {
     border-radius: $outer-border-radius;
     float: left;
