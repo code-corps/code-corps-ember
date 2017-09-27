@@ -1,0 +1,65 @@
+.loading {
+  background: $background-gray;
+  border-radius: 4px;
+  min-height: 30px;
+
+  &--col-1 {
+    width: percentage(1/12);
+  }
+
+  &--col-2 {
+    width: percentage(2/12);
+  }
+
+  &--col-3 {
+    width: percentage(3/12);
+  }
+
+  &--col-4 {
+    width: percentage(4/12);
+  }
+
+  &--col-5 {
+    width: percentage(5/12);
+  }
+
+  &--col-6 {
+    width: percentage(6/12);
+  }
+
+  &--col-7 {
+    width: percentage(7/12);
+  }
+
+  &--col-8 {
+    width: percentage(8/12);
+  }
+
+  &--col-9 {
+    width: percentage(9/12);
+  }
+
+  &--col-10 {
+    width: percentage(10/12);
+  }
+
+  &--col-11 {
+    width: percentage(11/12);
+  }
+
+  &--col-12 {
+    width: percentage(12/12);
+  }
+
+  &--h-40 {
+    height: 40px;
+  }
+
+  &--left {
+    float: left;
+  }
+
+  &--right {
+    float: right;
+  }
+}

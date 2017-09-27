@@ -41,7 +41,11 @@
             project=project
           }}
         {{else}}
-          Loading...
+          <div class="github-app-installation">
+            <div class="github-app-installation__details">
+              <div class="loading loading--col-3 loading--h-40 loading--left"></div>
+            </div>
+          </div>
         {{/if}}
       {{/each}}
     {{/if}}
