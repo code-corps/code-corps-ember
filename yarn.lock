@@ -3011,9 +3011,9 @@ ember-cli-normalize-entity-name@^1.0.0:
   dependencies:
     silent-error "^1.0.0"
 
-ember-cli-page-object@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.9.0.tgz#26216f1aa144bceeb5ccc4e9d4bdebd03a8278cd"
+ember-cli-page-object@1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.12.0.tgz#3d433c21e38ed771e5be2b1f45bdf5cd7a62b325"
   dependencies:
     ceibo "~2.0.0"
     ember-cli-babel "^5.1.7"
@@ -3026,6 +3026,7 @@ ember-cli-page-object@1.9.0:
     ember-cli-test-info "^1.0.0"
     ember-cli-valid-component-name "^1.0.0"
     ember-cli-version-checker "^1.2.0"
+    ember-test-helpers "^0.6.3"
     rsvp "^3.2.1"
 
 ember-cli-password-strength@1.0.3:
