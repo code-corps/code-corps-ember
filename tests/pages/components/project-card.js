@@ -1,20 +1,9 @@
-import {
-  collection
-} from 'ember-cli-page-object';
-
 import projectJoinModal from 'code-corps-ember/tests/pages/components/project-join-modal';
+import projectUsers from 'code-corps-ember/tests/pages/components/project-card/project-users';
 
 export default {
   scope: '.project-card',
 
-  memberCount: {
-    scope: '.project-card-members .count'
-  },
-
-  members: collection({
-    scope: '.project-card-members',
-    itemScope: 'li.member'
-  }),
-
-  projectJoinModal
+  projectJoinModal,
+  projectUsers
 };

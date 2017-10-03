@@ -7,7 +7,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.member-list-item',
+  scope: '.user-list-item',
 
   approveButton: {
     scope: 'button.default',
@@ -40,7 +40,7 @@ export default {
   },
 
   name: {
-    scope: '.project-member__name',
+    scope: '.project-user__name',
     name: {
       scope: 'strong',
       text: text()
@@ -52,7 +52,7 @@ export default {
   },
 
   skills: collection({
-    scope: '.project-member__skills',
+    scope: '.project-user__skills',
     itemScope: 'li',
     item: {
       text: text()

@@ -32,7 +32,7 @@ export default Component.extend({
    */
   session: service(),
 
-  projectHasPendingMembers: gt('projectPendingMembersCount', 0),
-  projectPendingMembersCount: alias('projectPendingMemberships.length'),
-  projectPendingMemberships: filterBy('project.projectUsers', 'role', 'pending')
+  projectHasPendingUsers: gt('projectPendingUsersCount', 0),
+  projectPendingUsersCount: alias('projectPendingUsers.length'),
+  projectPendingUsers: filterBy('project.projectUsers', 'role', 'pending')
 });

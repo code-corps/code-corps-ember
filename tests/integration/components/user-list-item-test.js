@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/member-list-item';
+import component from 'code-corps-ember/tests/pages/components/user-list-item';
 
 const {
   get,
@@ -23,7 +23,7 @@ let user = {
   ]
 };
 
-function mockMembership(role) {
+function mockProjectUser(role) {
   return {
     role,
     destroyRecord: RSVP.resolve,
@@ -33,7 +33,7 @@ function mockMembership(role) {
 
 let page = PageObject.create(component);
 
-moduleForComponent('member-list-item', 'Integration | Component | member list item', {
+moduleForComponent('user-list-item', 'Integration | Component | user list item', {
   integration: true,
   beforeEach() {
     getOwner(this).lookup('service:flash-messages').registerTypes(['success']);
@@ -47,7 +47,7 @@ moduleForComponent('member-list-item', 'Integration | Component | member list it
 test('it renders the basic information for the user', function(assert) {
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item user=user}}`);
+  page.render(hbs`{{user-list-item user=user}}`);
 
   assert.equal(page.icon.url, user.photoThumbUrl);
   assert.equal(page.name.name.text, user.name);
@@ -63,7 +63,7 @@ test('it renders the username in the name if name is empty', function(assert) {
   set(user, 'name', '');
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item user=user}}`);
+  page.render(hbs`{{user-list-item user=user}}`);
 
   assert.equal(page.name.username.text, get(user, 'username'));
 });
@@ -71,10 +71,10 @@ test('it renders the username in the name if name is empty', function(assert) {
 test('it renders the buttons when pending', function(assert) {
   assert.expect(2);
 
-  set(this, 'membership', mockMembership('pending')); // pending
+  set(this, 'projectUser', mockProjectUser('pending')); // pending
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   assert.equal(page.approveButton.text, 'Approve');
   assert.equal(page.denyButton.text, 'Deny');
@@ -83,10 +83,10 @@ test('it renders the buttons when pending', function(assert) {
 test('it does not render the buttons when not pending', function(assert) {
   assert.expect(2);
 
-  set(this, 'membership', mockMembership('contributor'));
+  set(this, 'projectUser', mockProjectUser('contributor'));
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   assert.notOk(page.approveButton.isVisible);
   assert.notOk(page.denyButton.isVisible);
@@ -95,7 +95,7 @@ test('it does not render the buttons when not pending', function(assert) {
 test('it sends the approve action when clicking approve', function(assert) {
   assert.expect(4);
 
-  let membership = {
+  let projectUser = {
     role: 'pending',
     save() {
       assert.ok(true, 'Action was called');
@@ -103,10 +103,10 @@ test('it sends the approve action when clicking approve', function(assert) {
     }
   };
 
-  set(this, 'membership', membership);
+  set(this, 'projectUser', projectUser);
   set(this, 'user', user);
 
-  page.render(hbs`{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   page.approveButton.click();
   page.modal.confirmButton.click();
@@ -127,7 +127,7 @@ test('it sends the deny action when clicking deny', function(assert) {
 
   assert.expect(4);
 
-  let membership = {
+  let projectUser = {
     role: 'pending',
     destroyRecord() {
       assert.ok(true, 'Action was called.');
@@ -135,10 +135,10 @@ test('it sends the deny action when clicking deny', function(assert) {
     }
   };
 
-  set(this, 'membership', membership);
+  set(this, 'projectUser', projectUser);
   set(this, 'user', user);
 
-  page.render(hbs`<div id='modal-container'></div>{{member-list-item membership=membership user=user}}`);
+  page.render(hbs`<div id='modal-container'></div>{{user-list-item projectUser=projectUser user=user}}`);
   page.denyButton.click();
   page.modal.confirmButton.click();
 

@@ -53,8 +53,8 @@ test('it renders', function(assert) {
   assert.equal(this.$('ul.categories li').length, 1);
   assert.equal(this.$('p.description').text().trim(), project.description);
   assert.equal(this.$('.project-card__skills').length, 1);
-  assert.equal(this.$('ul.project-card-members li').length, 1);
-  assert.equal(this.$('ul.project-card-members li:first img').attr('src'), user.photoThumbUrl);
+  assert.equal(this.$('ul.project-card__project-users li').length, 1);
+  assert.equal(this.$('ul.project-card__project-users li:first img').attr('src'), user.photoThumbUrl);
 });
 
 test('it renders the right icon when the user is not loaded', function(assert) {
@@ -66,5 +66,5 @@ test('it renders the right icon when the user is not loaded', function(assert) {
   set(this, 'project', project);
   renderPage();
 
-  assert.equal(this.$('ul.project-card-members li:first img').length, 0);
+  assert.equal(this.$('ul.project-card__project-users li:first img').length, 0);
 });

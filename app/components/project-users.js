@@ -6,6 +6,6 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['project-members'],
+  classNames: ['project-users'],
   count: alias('users.length')
 });

@@ -1,8 +1,8 @@
 {{#each orderedTasks as |task|}}
   {{task-card
     clickedTask=clickedTask
-    members=members
     task=task
     taskUser=task.userTask.user
+    users=users
   }}
 {{/each}}

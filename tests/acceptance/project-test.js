@@ -95,7 +95,7 @@ test('A user can join the project', function(assert) {
   });
 
   andThen(() => {
-    let membership = server.schema.projectUsers.findBy({ userId: user.id,  projectId: project.id, role: 'pending' });
-    assert.ok(membership, 'Project membership was created correctly.');
+    let projectUser = server.schema.projectUsers.findBy({ userId: user.id,  projectId: project.id, role: 'pending' });
+    assert.ok(projectUser, 'Project user was created correctly.');
   });
 });

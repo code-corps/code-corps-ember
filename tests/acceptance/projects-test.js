@@ -24,7 +24,7 @@ test('visiting /projects', function(assert) {
   });
 });
 
-test('members are displayed correctly', function(assert) {
+test('contributors are displayed correctly', function(assert) {
   let project = server.create('project');
   server.createList('project-user', 10, {
     role: 'contributor',
@@ -33,8 +33,8 @@ test('members are displayed correctly', function(assert) {
 
   projectsPage.visit();
   andThen(() => {
-    assert.equal(projectsPage.projects(0).members().count, 8, '8 members are rendered');
-    assert.equal(projectsPage.projects(0).memberCount.text, '+2 more', 'The "+2 more" text is rendered');
+    assert.equal(projectsPage.projects(0).projectUsers.users().count, 8, '8 users are rendered');
+    assert.equal(projectsPage.projects(0).projectUsers.userCount.text, '+2 more', 'The "+2 more" text is rendered');
   });
 });
 

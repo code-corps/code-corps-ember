@@ -41,7 +41,7 @@ export default Component.extend({
   }),
 
   /**
-    A computed array of approved members
+    A computed array of approved project users
 
     @property approvedUsers
     @type Ember.Array
