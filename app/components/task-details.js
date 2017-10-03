@@ -128,7 +128,9 @@ export default Component.extend({
    */
   _fetchMentions(task) {
     get(this, 'mentionFetcher').fetchBodyWithMentions(task, 'task').then((body) => {
-      set(this, 'taskBodyWithMentions', body);
+      if (body) {
+        set(this, 'taskBodyWithMentions', body);
+      }
     });
   },
 
@@ -141,7 +143,8 @@ export default Component.extend({
    */
   _prefetchMentions(task) {
     let body = get(this, 'mentionFetcher').prefetchBodyWithMentions(task, 'task');
-
-    set(this, 'taskBodyWithMentions', body);
+    if (body) {
+      set(this, 'taskBodyWithMentions', body);
+    }
   }
 });
