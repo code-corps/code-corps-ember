@@ -299,7 +299,7 @@ test('Skills can be assigned to task during creation', function(assert) {
   // Possibly switching to await/async might make it nicer
   andThen(() => {
     // find skill
-    projectTasksNewPage.skillsTypeahead.fillIn('ru');
+    projectTasksNewPage.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {

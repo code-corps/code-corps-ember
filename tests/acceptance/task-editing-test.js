@@ -283,7 +283,7 @@ test('Skills can be assigned or unassigned to/from task', function(assert) {
   });
 
   andThen(() => {
-    taskPage.skillsTypeahead.fillIn('ru');
+    taskPage.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {
