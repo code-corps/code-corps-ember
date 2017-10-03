@@ -100,12 +100,11 @@ test("it allows editing of project's skills for owners", function(assert) {
   });
 
   andThen(() => {
-    projectSettingsPage.skillsTypeahead.fillIn('ru');
+    projectSettingsPage.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {
     assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`);
-    projectSettingsPage.skillsTypeahead.focus();
     assert.equal(projectSettingsPage.skillsTypeahead.inputItems(0).text, 'Ruby');
     projectSettingsPage.skillsTypeahead.inputItems(0).click();
   });
