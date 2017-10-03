@@ -14,7 +14,7 @@ references:
     global-dependency-cache-{{ checksum "package.json" }}-{{ checksum "bower.json" }}
 
   npm_cache_key: &npm_cache_key
-    dependency-cache-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
+    dependency-cache-{{ checksum "package.json" }}
 
   restore_bower_components: &restore_bower_components
     restore_cache:
