@@ -1,4 +1,4 @@
-{{#if (eq status 'required')}}
+{{#if (or (eq status 'required') (eq status 'errored'))}}
   {{#if isBusy}}
     <p>Processing...</p>
   {{else if isUploading}}
@@ -6,7 +6,7 @@
   {{else}}
     <p>We need you to upload a copy of your personal ID to verify your identity.</p>
     <p>Please upload either a PNG or JPG image. Your file should be less than 8MB.</p>
-    <div>
+    <p>
       {{payments/funds-recipient/identity-document-file-upload
         isBusy=isBusy
         stripeConnectAccount=stripeConnectAccount
@@ -15,7 +15,10 @@
         uploadDone=(action onUploadDone)
         uploadError=(action onUploadError)
         validationError=(action onValidationError)}}
-    </div>
+    </p>
+    {{#if (eq status 'errored')}}
+      <p class="error">Stripe was unable to verify your identity with the document you provided. Please try again.</p>
+    {{/if}}
     {{#if error}}
       <div class="error">{{error}}</div>
     {{/if}}
