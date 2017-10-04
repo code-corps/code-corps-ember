@@ -50,22 +50,42 @@ export default Component.extend({
   currentUser: service(),
 
   /**
-   * processedBody - Computed property
+   * parsedBody - Computed property
    *
    * Parses the provided body and "linkifies" the username mentions within it
    * using information provided in the mentions collection
    *
    * We are expected to assign mentions in the template
    *
+   * The component can load before the comment body has loaded.
+   * Computing isLoaded allows us to parse the body once the data is available.
+   *
    * NOTE: This feature is currently disabled, so the unmodified body is returned
    *
    * @property processedComment
    @ @type String
    */
-  processedBody: computed('comment.body', 'mentions', function() {
+  parsedBody: computed('comment.body', 'comment.isLoaded', 'mentions', function() {
     let body = get(this, 'comment.body');
     let mentions = get(this, 'mentions');
     return parse(body, mentions || []);
+  }),
+
+  /**
+   * nullbody - Computed property
+   *
+   * checks to see if outcome of processed content is null, indicating null
+   * comment body and returns computed property as true if body is null.
+   *
+   * It tests specifically against null because parsedBody generates other
+   * falsey outputs even when comment body is not null. For example, if the
+   * comment data is not loaded yet, parsedBody returns undefined.
+   */
+  nullBody: computed('parsedBody', function() {
+    if (get(this, 'parsedBody') === null) {
+      return true;
+    }
+    return false;
   }),
 
   /**

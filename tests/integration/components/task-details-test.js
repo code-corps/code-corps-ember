@@ -133,3 +133,29 @@ test('it saves', function(assert) {
   page.save.click();
   assert.equal(page.commentBody.text, 'A new body', 'The body is saved');
 });
+
+test('if the task body is null render the no description element', function(assert) {
+  stubService(this, 'mention-fetcher', {
+    prefetchBodyWithMentions() {
+      return null;
+    }
+  });
+
+  this.set('task', mockTask);
+
+  page.render(hbs`{{task-details task=task}}`);
+  assert.ok(page.nullCommentBody.isVisible, 'The message for no comment body is rendered');
+});
+
+test('if the task body is not null do not render the no description element', function(assert) {
+  stubService(this, 'mention-fetcher', {
+    prefetchBodyWithMentions() {
+      return 'A body';
+    }
+  });
+
+  this.set('task', mockTask);
+
+  page.render(hbs`{{task-details task=task}}`);
+  assert.notOk(page.nullCommentBody.isVisible, 'The message for no comment body is not rendered if there is data');
+});

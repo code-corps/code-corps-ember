@@ -22,7 +22,9 @@ export default {
     hasStrongText: isVisible('strong'),
     text: text()
   },
-
+  nullCommentBody:{
+    scope: '[data-test-markdown-body-empty]'
+  },
   edit: {
     scope: '.edit',
     click: clickable(),
