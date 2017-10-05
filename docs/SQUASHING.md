@@ -4,7 +4,7 @@
 
 Squashing is important to reduce the number of commits that go into `develop` and keep the history simpler. 
 
-Often a feature branch may include a number of large commits as well as a few smaller ones for minor edits (like spelling and formatting fixes). This is good: you should always commit often on your feature branch. However, once everything has been hashed out and your pull request has been approved, we do not necessarily need the history of ever commit and it's respective message. For this reason, we like to "squash" our commits into one before merging a pull request. 
+Often a feature branch may include a number of large commits as well as a few smaller ones for minor edits (like spelling and formatting fixes). This is good: you should always commit often on your feature branch. However, once everything has been hashed out and your pull request has been approved, we do not necessarily need the history of every commit and it's respective message. For this reason, we like to "squash" our commits into one before merging a pull request. 
 
 The process of "squashing" your commits is done through a rebase.
 
