@@ -21,12 +21,20 @@ export default Model.extend(ContainsCodeMixin, {
   body: attr(),
 
   /**
-    The date that the task was inserted.
+    When the task was created.
 
-    @attribute insertedAt
+    @attribute createdAt
     @type date
    */
-  insertedAt: attr('date'),
+  createdAt: attr('date'),
+
+  /**
+    Where the task was created.
+
+    @attribute createdFrom
+    @type string
+   */
+  createdFrom: attr(),
 
   /**
     The tasks markdown content.

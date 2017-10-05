@@ -43,7 +43,7 @@ test('it renders all the required elements', function(assert) {
   assert.expect(3);
 
   let task = {
-    insertedAt: moment().subtract(2, 'days'),
+    createdAt: moment().subtract(2, 'days'),
     number: 1,
     title: 'Clean the house'
   };

@@ -17,7 +17,7 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('comment', ['body', 'githubId', 'insertedAt', 'markdown']);
+testForAttributes('comment', ['body', 'createdAt', 'createdFrom', 'githubId', 'markdown']);
 testForBelongsTo('comment', 'task');
 testForBelongsTo('comment', 'user');
 testForHasMany('comment', 'commentUserMentions');

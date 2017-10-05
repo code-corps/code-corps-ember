@@ -5,6 +5,19 @@
 
 .task-timeline {
   @include span-columns(9);
+  position: relative;
+
+  &:before {
+    background-color: $border-gray;
+    bottom: 0;
+    content: "";
+    display: block;
+    left: 80px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    z-index: -1;
+  }
 }
 
 .task-sidebar {
