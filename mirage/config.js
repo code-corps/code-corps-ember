@@ -200,16 +200,20 @@ export default function() {
         user_id: matchedUser.id
       });
     } else {
-      let errorDetail = 'Your passwords do not match';
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: 'VALIDATION_ERROR',
-            title: '422',
-            detail: errorDetail,
-            status: 422
+            detail: 'Password confirmation passwords do not match',
+            source: {
+              pointer: '/data/attributes/password-confirmation'
+            },
+            status: '422',
+            title: 'passwords do not match'
           }
-        ]
+        ],
+        jsonapi: {
+          version: '1.0'
+        }
       });
     }
   });

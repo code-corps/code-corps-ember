@@ -2881,12 +2881,6 @@ ember-cli-htmlbars@^2.0.1, ember-cli-htmlbars@^2.0.3:
     json-stable-stringify "^1.0.0"
     strip-bom "^3.0.0"
 
-ember-cli-ic-ajax@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-ic-ajax/-/ember-cli-ic-ajax-1.0.0.tgz#359e885316924e3db8bedf07d77803dd39b26491"
-  dependencies:
-    ic-ajax "~2.0.1"
-
 ember-cli-import-polyfill@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-import-polyfill/-/ember-cli-import-polyfill-0.2.0.tgz#c1a08a8affb45c97b675926272fe78cf4ca166f2"
@@ -4860,10 +4854,6 @@ https-proxy-agent@1, https-proxy-agent@^1.0.0:
     agent-base "2"
     debug "2"
     extend "3"
-
-ic-ajax@~2.0.1:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/ic-ajax/-/ic-ajax-2.0.2.tgz#50c8ab1c494320fac66830ce1ee3990ab827f596"
 
 iconv-lite@0.4.18:
   version "0.4.18"
