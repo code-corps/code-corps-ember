@@ -5,8 +5,9 @@ import ContainsCodeMixin from '../mixins/contains-code';
 
 export default Model.extend(ContainsCodeMixin, {
   body: attr('string'),
+  createdAt: attr('date'),
+  createdFrom: attr(),
   githubId: attr('string'),
-  insertedAt: attr('date'),
   markdown: attr('string'),
 
   commentUserMentions: hasMany('comment-user-mention', { async: true }),

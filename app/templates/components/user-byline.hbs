@@ -1,0 +1,4 @@
+{{user/display-username user=user}} commented <span data-test-created-at>{{moment-from-now createdAt}}</span>
+<span data-test-created-from>
+  {{#if (eq createdFrom 'github')}} — from GitHub{{/if}}
+</span>
