@@ -29,3 +29,13 @@ export function isValidationError(payload) {
 export function isNonValidationError(payload) {
   return !isValidationError(payload);
 }
+
+export function formatError(error) {
+  if (!error.payload && !error.payload.errors && !error.payload.errors.length) {
+    return;
+  }
+  let { payload: { errors } } = error;
+  console.log(error);
+  errors = errors.mapBy('detail');
+  return (!errors) ? '' : errors.join(' ');
+}
