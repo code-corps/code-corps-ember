@@ -74,6 +74,22 @@ test('it cannot reposition if it does not have the ability', function(assert) {
   assert.notOk(page.canReposition, 'Cannot reposition');
 });
 
+test('it renders the GitHub issue link icon if it has an issue', function(assert) {
+  assert.expect(1);
+  let task = { githubIssueNumber: '123' };
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+  assert.ok(page.issueLink.isVisible, 'The GitHub issue link is visible');
+});
+
+test('it does not render the GitHub issue link icon if it has an issue', function(assert) {
+  assert.expect(1);
+  let task = { githubIssueNumber: null };
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+  assert.notOk(page.issueLink.isVisible, 'The GitHub issue link is visible');
+});
+
 test('it sends action if clicked and not loading', function(assert) {
   assert.expect(1);
 

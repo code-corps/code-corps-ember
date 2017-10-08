@@ -15,6 +15,15 @@
   {{/if}}
   <p class="task-card__meta">
     <span class="task-card__time" data-test-task-time>{{moment-from-now task.createdAt}}</span>
+    <span class="task-card__integrations" data-test-task-integrations>
+      {{#if task.githubIssueNumber}}
+        {{github/issue-link
+          githubRepo=task.githubRepo
+          number=task.githubIssueNumber
+          size="small"
+        }}
+      {{/if}}
+    </span>
   </p>
   {{#if canAssign}}
     {{#power-select

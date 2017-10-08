@@ -4,6 +4,10 @@
   margin: 15px 0;
   padding-left: 60px;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   .code-theme-selector {
     position: absolute;
     right: 0;

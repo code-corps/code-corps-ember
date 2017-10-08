@@ -37,6 +37,14 @@ export default Model.extend(ContainsCodeMixin, {
   createdFrom: attr(),
 
   /**
+    The GitHub issue number for the task.
+
+    @attribute githubIssueNumber
+    @type string
+   */
+  githubIssueNumber: attr(),
+
+  /**
     The tasks markdown content.
 
     @attribute markdown
