@@ -472,3 +472,29 @@ $about-support: 75px 75px $about-spriteURL -150px -76px $about-spritex2URL;
 $about-fund: 75px 75px $about-spriteURL -225px -76px $about-spritex2URL;
 $about-develop: 75px 75px $about-spriteURL -300px -76px $about-spritex2URL;
 $about-airplane: 102px 36px $about-spriteURL -375px -75px $about-spritex2URL;
+
+.size-28 {
+  width: 28px;
+  height: 28px;
+}
+
+.size-16 {
+  width: 16px;
+  height: 16px;
+}
+
+.solid-black {
+  fill: url(#solid-black);
+}
+
+.solid-blue {
+  fill: url(#solid-blue);
+}
+
+.solid-dark-blue {
+  fill: url(#solid-dark-blue);
+}
+
+.solid-light-gray {
+  fill: url(#solid-light-gray);
+}

@@ -2,6 +2,7 @@ import {
   attribute,
   hasClass
 } from 'ember-cli-page-object';
+import issueLink from 'code-corps-ember/tests/pages/components/github/issue-link';
 import taskAssignment from 'code-corps-ember/tests/pages/components/power-select';
 
 export default {
@@ -16,6 +17,8 @@ export default {
   },
 
   canReposition: hasClass('task-card--can-reposition'),
+
+  issueLink,
 
   number: {
     scope: '[data-test-task-number]'

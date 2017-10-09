@@ -73,7 +73,7 @@ jobs:
       - run:
           name: Run Ember tests
           command: |
-            COVERAGE=true node_modules/.bin/ember exam --split=$CIRCLE_NODE_TOTAL --weighted --parallel --partition=$((CIRCLE_NODE_INDEX+1))
+            COVERAGE=true node_modules/.bin/ember exam --split=$CIRCLE_NODE_TOTAL --partition=$((CIRCLE_NODE_INDEX+1)) --weighted --parallel
       - persist_to_workspace:
           root: .
           paths:

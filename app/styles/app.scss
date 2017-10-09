@@ -111,6 +111,7 @@
 //
 // COMPONENTS - GITHUB
 //
+@import "components/github/issue-link";
 @import "components/github-app-installation";
 @import "components/github-repo";
 @import "components/github-connect-state";
@@ -157,6 +158,11 @@
 // COMPONENTS - SELECTS
 //
 @import "components/select/github-repo";
+
+//
+// COMPONENTS - SVG
+//
+@import "components/svg/sprite-icon";
 
 //
 // COMPONENTS - TASK

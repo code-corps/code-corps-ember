@@ -22,7 +22,7 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['body', 'createdAt', 'createdFrom', 'markdown', 'number', 'order', 'position', 'status', 'title']);
+testForAttributes('task', ['body', 'createdAt', 'createdFrom', 'githubIssueNumber', 'markdown', 'number', 'order', 'position', 'status', 'title']);
 testForBelongsTo('task', 'githubRepo');
 testForBelongsTo('task', 'project');
 testForBelongsTo('task', 'taskList');
