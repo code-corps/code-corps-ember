@@ -71,7 +71,7 @@
     "ember-i18n": "^5.0.2",
     "ember-keyboard": "^2.1.9",
     "ember-load-initializers": "^1.0.0",
-    "ember-metrics": "^0.12.1",
+    "ember-metrics": "code-corps/ember-metrics#add-context-to-segment-adapter",
     "ember-modal-dialog": "2.3.0",
     "ember-moment": "^7.4.1",
     "ember-normalize": "1.0.0",
