@@ -27,6 +27,8 @@
     width: 25%;
 
     h3 {
+      align-items: center;
+      display: flex;
       font-size: $header-font-size-small;
       margin: 0;
     }
@@ -40,6 +42,10 @@
       font-size: $body-font-size-small;
       margin: 0.5em 0 0 0;
     }
+  }
+
+  &__header-icon {
+    margin-right: 0.25em;
   }
 
   &__content {
