@@ -1,15 +1,22 @@
 {{title "Settings"}}
 
 <div class="container">
-  <div class="page-header">
-    <h3>GitHub</h3>
-  </div>
-
-  <div class="settings">
-    {{github-connect-state
-      githubAvatarUrl=model.githubAvatarUrl
-      githubId=model.githubId
-      githubUsername=model.githubUsername
-    }}
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>
+          <span class="panel__section__header-icon">{{svg/sprite-icon icon="github-48" size="20"}}</span>
+          <span>GitHub</span>
+        </h3>
+        <p>Connect your account to GitHub.</p>
+      </div>
+      <div class="panel__section__content">
+        {{github-connect-state
+          githubAvatarUrl=model.githubAvatarUrl
+          githubId=model.githubId
+          githubUsername=model.githubUsername
+        }}
+      </div>
+    </div>
   </div>
 </div>
