@@ -12,9 +12,10 @@ export default Route.extend({
 
   async model() {
     let project = this.modelFor('project');
-    let memberPromises = await get(project, 'projectUsers').then((projectUsers) => {
-      return projectUsers.map((projectUser) => get(projectUser, 'user'));
-    });
+    let projectUsers = await get(project, 'projectUsers');
+    let memberPromises = projectUsers.mapBy('user');
+    let taskLists = get(project, 'taskLists');
+    taskLists.forEach((taskList) => get(taskList, 'tasks').reload());
     return RSVP.hash({ project, members: RSVP.all(memberPromises) });
   },
 
