@@ -1,11 +1,7 @@
-import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-
-const {
-  merge,
-  run
-} = Ember;
+import { merge } from '@ember/polyfills';
+import { run } from '@ember/runloop';
 
 export default function startApp(attrs) {
   let attributes = merge({}, config.APP);
@@ -15,7 +11,6 @@ export default function startApp(attrs) {
     let application = Application.create(attributes);
     application.setupForTesting();
     application.injectTestHelpers();
-
     return application;
   });
 }
