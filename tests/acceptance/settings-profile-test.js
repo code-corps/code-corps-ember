@@ -86,3 +86,32 @@ test('it allows editing of users image', function(assert) {
     done();
   });
 });
+
+test("it allows editing of user's skills", function(assert) {
+  assert.expect(3);
+
+  let user = server.create('user');
+  server.create('skill', { title: 'Ruby' });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  settingsProfilePage.visit();
+
+  andThen(() => {
+    settingsProfilePage.skillsTypeahead.searchFor('ru');
+  });
+
+  andThen(() => {
+    assert.equal(settingsProfilePage.skillsTypeahead.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    settingsProfilePage.skillsTypeahead.inputItems(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(settingsProfilePage.userSkillsList(0).text, 'Ruby', 'The skill was added to the list');
+    settingsProfilePage.userSkillsList(0).click();
+  });
+
+  andThen(() => {
+    assert.equal(settingsProfilePage.userSkillsList().count, 0, 'The skill was removed from the list');
+  });
+});
