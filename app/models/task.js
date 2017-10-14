@@ -111,6 +111,14 @@ export default Model.extend(ContainsCodeMixin, {
   commentUserMentions: hasMany('comment-user-mention', { async: true }),
 
   /**
+   * The GitHub issue synced with this task
+   *
+   * @attribute githubIssue
+   * @type DS.Model
+   */
+  githubIssue: belongsTo('github-issue', { async: true }),
+
+  /**
    * The github repository where an issue connected to this task exists
    *
    * @attribute githubRepo
