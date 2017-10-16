@@ -10,6 +10,14 @@ export default {
 
   isTooltipTarget: hasClass('ember-tooltip-or-popover-target'),
 
+  loadingLarge: {
+    scope: '[data-test-loading-large]'
+  },
+
+  loadingSmall: {
+    scope: '[data-test-loading-small]'
+  },
+
   mouseenter: triggerable('mouseenter'),
 
   repoName: {

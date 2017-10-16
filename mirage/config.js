@@ -152,6 +152,13 @@ export default function() {
   this.get('/github-app-installations/:id');
 
   /**
+  * Github Issues
+  */
+
+  this.get('/github-issues', { coalesce: true });
+  this.get('/github-issues/:id');
+
+  /**
   * Github Repos
   */
 

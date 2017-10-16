@@ -1,7 +1,7 @@
 .loading {
   background: $background-gray;
   border-radius: 4px;
-  min-height: 30px;
+  height: 30px;
 
   &--col-1 {
     width: percentage(1/12);
@@ -51,6 +51,10 @@
     width: percentage(12/12);
   }
 
+  &--h-20 {
+    height: 20px;
+  }
+
   &--h-40 {
     height: 40px;
   }
@@ -61,5 +65,11 @@
 
   &--right {
     float: right;
+  }
+
+  &--circle-16 {
+    border-radius: 8px;
+    height: 16px;
+    width: 16px;
   }
 }
