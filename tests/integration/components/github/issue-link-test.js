@@ -14,8 +14,8 @@ const {
 function renderPage() {
   page.render(hbs`
     {{github/issue-link
+      githubIssue=githubIssue
       githubRepo=githubRepo
-      number=number
       size=size
     }}
   `);
@@ -31,18 +31,22 @@ moduleForComponent('github/issue-link', 'Integration | Component | github/issue 
   }
 });
 
-let githubRepo = {
-  githubAccountLogin: 'code-corps',
-  name: 'code-corps-ember'
+let githubIssue = {
+  isLoaded: true,
+  number: '123'
 };
 
-let number = '123';
+let githubRepo = {
+  githubAccountLogin: 'code-corps',
+  isLoaded: true,
+  name: 'code-corps-ember'
+};
 
 test('it renders with text and no tooltip when large', function(assert) {
   assert.expect(3);
 
+  set(this, 'githubIssue', githubIssue);
   set(this, 'githubRepo', githubRepo);
-  set(this, 'number', number);
   set(this, 'size', 'large');
 
   renderPage();
@@ -55,8 +59,8 @@ test('it renders with text and no tooltip when large', function(assert) {
 test('it renders with no text and a tooltip when small', function(assert) {
   assert.expect(6);
 
+  set(this, 'githubIssue', githubIssue);
   set(this, 'githubRepo', githubRepo);
-  set(this, 'number', number);
   set(this, 'size', 'small');
 
   renderPage();
@@ -72,4 +76,28 @@ test('it renders with no text and a tooltip when small', function(assert) {
   });
 
   assert.ok(page.tooltip.isAriaVisible);
+});
+
+test('it renders with loading when large', function(assert) {
+  assert.expect(1);
+
+  set(this, 'githubIssue', { isLoaded: false });
+  set(this, 'githubRepo', { isLoaded: false });
+  set(this, 'size', 'large');
+
+  renderPage();
+
+  assert.ok(page.loadingLarge.isVisible, 'The large loading state renders.');
+});
+
+test('it renders with loading when small', function(assert) {
+  assert.expect(1);
+
+  set(this, 'githubIssue', { isLoaded: false });
+  set(this, 'githubRepo', { isLoaded: false });
+  set(this, 'size', 'small');
+
+  renderPage();
+
+  assert.ok(page.loadingSmall.isVisible, 'The small loading state renders.');
 });

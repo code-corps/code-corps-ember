@@ -2,10 +2,10 @@
   <h3>Integrations</h3>
 </div>
 
-{{#if task.githubIssueNumber}}
+{{#if task.githubIssue}}
   {{github/issue-link
+    githubIssue=task.githubIssue
     githubRepo=task.githubRepo
-    number=task.githubIssueNumber
     size="large"
   }}
 {{else}}

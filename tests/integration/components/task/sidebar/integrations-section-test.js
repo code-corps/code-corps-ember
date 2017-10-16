@@ -31,7 +31,7 @@ moduleForComponent('task/sidebar/integrations-section', 'Integration | Component
 test('when connected to a GitHub Issue', function(assert) {
   assert.expect(2);
 
-  let task = { githubIssueNumber: '123' };
+  let task = { githubIssue: { number: '123' } };
   set(this, 'task', task);
 
   renderPage();
@@ -43,7 +43,7 @@ test('when connected to a GitHub Issue', function(assert) {
 test('when not connected to a GitHub Issue', function(assert) {
   assert.expect(2);
 
-  let task = { githubIssueNumber: null };
+  let task = { githubIssue: null };
   set(this, 'task', task);
 
   renderPage();

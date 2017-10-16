@@ -1,14 +1,22 @@
-<a data-test-issue-url href={{url}}>
+{{#if (and githubIssue.isLoaded githubRepo.isLoaded)}}
+  <a data-test-issue-url href={{githubIssue.htmlUrl}}>
+    {{#if (eq size "large")}}
+      {{svg/sprite-icon icon="github-48"}} <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.name}}</span> <span class="github__issue-link__issue-number" data-test-issue-number>#{{githubIssue.number}}</span>
+    {{else if (eq size "small")}}
+      {{svg/sprite-icon icon="github-48" style="solid-light-gray"}}
+      {{#tooltip-on-component
+        effect='none'
+        side='bottom'
+        updateFor=category.isLoaded
+      }}
+        {{githubRepo.githubAccountLogin}}/{{githubRepo.name}} #{{githubIssue.number}}
+      {{/tooltip-on-component}}
+    {{/if}}
+  </a>
+{{else}}
   {{#if (eq size "large")}}
-    {{svg/sprite-icon icon="github-48"}} <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.name}}</span> <span class="github__issue-link__issue-number" data-test-issue-number>#{{number}}</span>
+    <div data-test-loading-large class="loading loading--col-12 loading--h-20"></div>
   {{else if (eq size "small")}}
-    {{svg/sprite-icon icon="github-48" style="solid-light-gray"}}
-    {{#tooltip-on-component
-      effect='none'
-      side='bottom'
-      updateFor=category.isLoaded
-    }}
-      {{githubRepo.githubAccountLogin}}/{{githubRepo.name}} #{{number}}
-    {{/tooltip-on-component}}
+    <div data-test-loading-small class="loading loading--circle-16"></div>
   {{/if}}
-</a>
+{{/if}}

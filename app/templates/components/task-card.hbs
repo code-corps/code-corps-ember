@@ -16,10 +16,10 @@
   <p class="task-card__meta">
     <span class="task-card__time" data-test-task-time>{{moment-from-now task.createdAt}}</span>
     <span class="task-card__integrations" data-test-task-integrations>
-      {{#if task.githubIssueNumber}}
+      {{#if task.githubIssue}}
         {{github/issue-link
+          githubIssue=task.githubIssue
           githubRepo=task.githubRepo
-          number=task.githubIssueNumber
           size="small"
         }}
       {{/if}}
