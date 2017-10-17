@@ -7,6 +7,8 @@ export default Model.extend({
   githubUpdatedAt: attr(),
   htmlUrl: attr(),
   merged: attr(),
+  number: attr(),
+  state: attr(),
 
   githubRepo: belongsTo('github-repo', { async: true })
 });

@@ -15,6 +15,18 @@
   p {
     margin: 0 0 7px 0;
 
+    .sprite-icon {
+      float: left;
+      margin-right: 5px;
+      margin-top: 1px;
+    }
+
+    .loading {
+      float: left;
+      margin-right: 5px;
+      margin-top: 1px;
+    }
+
     &:last-child {
       flex-direction: row;
       justify-content: flex-start;

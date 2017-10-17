@@ -1,0 +1,9 @@
+{{#if merged}}
+  {{svg/sprite-icon icon="git-merge-48" style="solid-purple"}}
+{{else if (eq state 'closed')}}
+  {{svg/sprite-icon icon="pull-request-48" style="solid-red"}}
+{{else if (eq state 'open')}}
+  {{svg/sprite-icon icon="pull-request-48" style="solid-green"}}
+{{else}}
+  <div data-test-loading class="loading loading--circle-16"></div>
+{{/if}}

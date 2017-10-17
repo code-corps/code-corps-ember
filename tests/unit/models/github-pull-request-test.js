@@ -19,7 +19,9 @@ testForAttributes('github-pull-request', [
   'githubCreatedAt',
   'githubUpdatedAt',
   'htmlUrl',
-  'merged'
+  'merged',
+  'number',
+  'state'
 ]);
 
 testForBelongsTo('github-pull-request', 'githubRepo');
