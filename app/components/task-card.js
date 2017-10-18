@@ -80,6 +80,10 @@ export default Component.extend({
   }),
 
   click(e) {
+    if (e.target instanceof SVGElement) {
+      return;
+    }
+
     // TODO: Find a better way to do this
     // Currently necessary due to the way that power select handles trigger
     let clickedIcon = e.target.className.includes(ICON_CLASS);

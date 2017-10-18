@@ -2,12 +2,9 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'code-corps-ember/tests/pages/components/github/pull-request-icon';
 import PageObject from 'ember-cli-page-object';
+import { set } from '@ember/object';
 
 let page = PageObject.create(component);
-
-const {
-  set
-} = Ember;
 
 function renderPage() {
   page.render(hbs`
