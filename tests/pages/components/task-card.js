@@ -4,6 +4,7 @@ import {
 } from 'ember-cli-page-object';
 import issueLink from 'code-corps-ember/tests/pages/components/github/issue-link';
 import taskAssignment from 'code-corps-ember/tests/pages/components/power-select';
+import pullRequestIcon from 'code-corps-ember/tests/pages/components/github/pull-request-icon';
 
 export default {
   scope: '.task-card',
@@ -30,5 +31,6 @@ export default {
     scope: '[data-test-task-title]'
   },
 
-  taskAssignment
+  taskAssignment,
+  pullRequestIcon
 };
