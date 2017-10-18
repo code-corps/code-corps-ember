@@ -6,7 +6,7 @@ $ember-power-select-focus-outline: 0 !default;
 $ember-power-select-trigger-border: none !default;
 $ember-power-select-trigger-focus-border: none !default;
 
-$icon-size: 20px;
+$icon-size: 24px;
 $icon-border-radius: $icon-size / 2;
 
 $list-height: 220px;
@@ -15,27 +15,29 @@ $list-height: 220px;
   background: $background-gray;
   border-radius: $icon-border-radius;
   height: $icon-size;
-  margin-right: 5px;
   width: $icon-size;
 }
 
-@mixin arrow-icon($color) {
-  .ember-power-select-status-icon {
-    border-color: $color transparent transparent transparent;
-  }
-}
+// |-icon-| [ |-selected-text-| or |-unselected-text-| ]
+@mixin hover-colors($icon-color: $blue, $selected-text-color: $blue, $unselected-text-color: $blue) {
+  .select-inline__selected-item {
+    &__icon {
+      opacity: .75;
+    }
 
-// |-icon-| [ |-selected-text-| or |-unselected-text-| ] |-arrow-|
-@mixin hover-colors($icon-color: $blue, $selected-text-color: $blue, $unselected-text-color: $blue, $arrow-color: $blue) {
-  @include arrow-icon($arrow-color);
-
-  .select-inline__selected-item__text {
-    color: $selected-text-color;
+    &__text {
+      color: $selected-text-color;
+    }
   }
 
   .select-inline__unselected-item {
     &__icon {
+      border-style: solid;
       border-color: $icon-color;
+
+      svg {
+        fill: url(#solid-dark-blue);
+      }
     }
 
     &__text {
@@ -58,13 +60,16 @@ $list-height: 220px;
     cursor: pointer;
     display: flex;
     justify-content: left;
+    padding: 0;
     position: relative;
 
     &:hover {
       @include hover-colors;
     }
 
-    @include arrow-icon($gray);
+    .ember-power-select-status-icon {
+      display: none;
+    }
 
     &[aria-disabled=true] {
       background: transparent;
@@ -74,7 +79,7 @@ $list-height: 220px;
       }
 
       &:hover {
-        @include hover-colors($gray, $text--dark, $text--lighter, transparent);
+        @include hover-colors($gray, $text--dark, $text--lighter);
       }
     }
   }
@@ -82,12 +87,9 @@ $list-height: 220px;
   &__loading-item, &__selected-item, &__unselected-item {
     &__icon {
       @include select-icon;
-    }
-
-    &__text {
-      color: $text--lighter;
-      font-weight: 500;
-      margin-right: 5px;
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -95,12 +97,6 @@ $list-height: 220px;
     &__icon {
       background: $background-gray;
       border: none;
-    }
-
-    &__text {
-      background: $background-gray;
-      height: 11px;
-      width: 100px;
     }
   }
 
@@ -241,15 +237,15 @@ $list-height: 220px;
   &__list-item {
     &__icon {
       float: left;
-      height: 20px;
+      height: $icon-size;
       margin: 0 7px 0 ($icon-width + 7px);
-      width: 20px;
+      width: $icon-size;
 
       img {
         border-radius: 10px;
         display: inline-block;
-        height: 20px;
-        width: 20px;
+        height: $icon-size;
+        width: $icon-size;
       }
     }
 

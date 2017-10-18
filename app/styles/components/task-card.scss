@@ -12,28 +12,18 @@
   margin-bottom: 8px;
   padding: 0.7em 1em;
 
-  p {
-    margin: 0 0 7px 0;
+  .github__pull-request-icon {
+    float: left;
+    margin-right: 5px;
+    margin-top: 1px;
+  }
 
-    .sprite-icon {
-      float: left;
-      margin-right: 5px;
-      margin-top: 1px;
-    }
-
-    .loading {
-      float: left;
-      margin-right: 5px;
-      margin-top: 1px;
-    }
-
-    &:last-child {
-      flex-direction: row;
-      justify-content: flex-start;
-      margin: 0;
-      span:nth-child(2) {
-        margin: 0 5px;
-      }
+  &__assignee {
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0;
+    span:nth-child(2) {
+      margin: 0 5px;
     }
   }
 
@@ -41,6 +31,7 @@
     align-items: center;
     display: flex;
     justify-content: space-between;
+    margin: 0 0 7px 0;
   }
 
   &__number {
@@ -51,6 +42,10 @@
   &__time {
     color: $text--lighter;
     font-size: $body-font-size-small;
+  }
+
+  &__title-group {
+    margin: 0 0 7px 0;
   }
 
   &__title {

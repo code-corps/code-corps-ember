@@ -1,4 +1,11 @@
 {{#if select.selected}}
   <img class="select-inline__selected-item__icon" src={{select.selected.photoThumbUrl}} />
-  <span class="select-inline__selected-item__text">{{select.selected.username}}</span>
+  {{#tooltip-on-component
+    class='tooltip'
+    effect='none'
+    keepInWindow=true
+    side='bottom'
+  }}
+    Assigned to {{select.selected.username}}
+  {{/tooltip-on-component}}
 {{/if}}

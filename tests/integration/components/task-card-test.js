@@ -266,7 +266,7 @@ test('assignment dropdown renders when records are still being loaded', function
 });
 
 test('assignment dropdown does not render if user has no ability', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   let task = { id: 'task' };
   let user1 = { id: 'user1', username: 'testuser1' };
@@ -291,7 +291,6 @@ test('assignment dropdown does not render if user has no ability', function(asse
 
   assert.notOk(page.taskAssignment.triggerRenders, 'Dropdown trigger for assignment does not render.');
   page.assignedUser.as((user) => {
-    assert.equal(user.text, 'testuser2');
     assert.equal(user.icon.url, 'test.png');
   });
 });

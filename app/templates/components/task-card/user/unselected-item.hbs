@@ -2,6 +2,16 @@
   <span class="select-inline__loading-item__icon"></span>
   <span class="select-inline__loading-item__text"></span>
 {{else}}
-  <span class="select-inline__unselected-item__icon"></span>
-  <span class="select-inline__unselected-item__text">No one yet</span>
+  <span data-test-unselected-icon class="select-inline__unselected-item__icon">
+    {{svg/sprite-icon icon="user-48" size="14" style="solid-light-gray"}}
+  </span>
+  {{#tooltip-on-component
+    class='tooltip'
+    effect='none'
+    enableLazyRendering=true
+    keepInWindow=true
+    side='bottom'
+  }}
+    Assign this task
+  {{/tooltip-on-component}}
 {{/if}}

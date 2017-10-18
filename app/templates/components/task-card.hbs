@@ -3,10 +3,9 @@
   <div class="short"></div>
   <div class="select-inline">
     <span class="select-inline__loading-item__icon"></span>
-    <span class="select-inline__loading-item__text"></span>
   </div>
 {{else}}
-  <p>
+  <p class="task-card__title-group">
     {{#if task.githubPullRequest}}
       {{github/pull-request-icon githubPullRequest=task.githubPullRequest}}
     {{/if}}
@@ -35,33 +34,35 @@
       {{/if}}
     </span>
   </p>
-  {{#if canAssign}}
-    {{#power-select
-      beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
-      buildSelection=(action "buildSelection")
-      class="select-inline"
-      disabled=userSelectDisabled
-      dropdownClass="select-inline-dropdown"
-      loadingMessage=""
-      matchTriggerWidth=false
-      onchange=(action "changeUser")
-      options=userOptions
-      placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
-      registerAPI=(action (mut selectRemoteController))
-      search=(action "searchUsers")
-      selected=selectedOption
-      selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
-      tagName="div"
-      as |user select|
-    }}
-      {{select-inline-dropdown/list-item
-        iconUrl=user.photoThumbUrl
-        lastSearchedText=select.lastSearchedText
-        primaryText=user.username
-        secondaryText=user.name
+  <p class="task-card__assignee">
+    {{#if canAssign}}
+      {{#power-select
+        beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
+        buildSelection=(action "buildSelection")
+        class="select-inline"
+        disabled=userSelectDisabled
+        dropdownClass="select-inline-dropdown"
+        loadingMessage=""
+        matchTriggerWidth=false
+        onchange=(action "changeUser")
+        options=userOptions
+        placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
+        registerAPI=(action (mut selectRemoteController))
+        search=(action "searchUsers")
+        selected=selectedOption
+        selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
+        tagName="div"
+        as |user select|
       }}
-    {{/power-select}}
-  {{else if taskUser}}
-    {{task-card/user/selected-item select=(hash selected = selectedOption)}}
-  {{/if}}
+        {{select-inline-dropdown/list-item
+          iconUrl=user.photoThumbUrl
+          lastSearchedText=select.lastSearchedText
+          primaryText=user.username
+          secondaryText=user.name
+        }}
+      {{/power-select}}
+    {{else if taskUser}}
+      {{task-card/user/selected-item select=(hash selected = selectedOption)}}
+    {{/if}}
+  </p>
 {{/if}}
