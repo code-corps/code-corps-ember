@@ -159,6 +159,13 @@ export default function() {
   this.get('/github-issues/:id');
 
   /**
+  * Github Pull Requests
+  */
+
+  this.get('/github-pull-requests', { coalesce: true });
+  this.get('/github-pull-requests/:id');
+
+  /**
   * Github Repos
   */
 

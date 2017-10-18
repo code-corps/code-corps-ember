@@ -37,14 +37,6 @@ export default Model.extend(ContainsCodeMixin, {
   createdFrom: attr(),
 
   /**
-    The GitHub issue number for the task.
-
-    @attribute githubIssueNumber
-    @type string
-   */
-  githubIssueNumber: attr(),
-
-  /**
     The tasks markdown content.
 
     @attribute markdown
@@ -117,6 +109,14 @@ export default Model.extend(ContainsCodeMixin, {
    * @type DS.Model
    */
   githubIssue: belongsTo('github-issue', { async: true }),
+
+  /**
+   * The GitHub pull request synced with this task
+   *
+   * @attribute githubPullRequest
+   * @type DS.Model
+   */
+  githubPullRequest: belongsTo('github-pull-request', { async: true }),
 
   /**
    * The github repository where an issue connected to this task exists

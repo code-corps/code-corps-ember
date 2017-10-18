@@ -56,6 +56,28 @@ test('it renders all the required elements', function(assert) {
   assert.equal(page.title.text, 'Clean the house', 'The title renders');
 });
 
+test('it renders a pull request icon if associated to a pull request', function(assert) {
+  assert.expect(1);
+
+  let task = { githubPullRequest: { id: 'foo' } };
+
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+
+  assert.ok(page.pullRequestIcon.isVisible, 'The pull request icon renders');
+});
+
+test('it does not render a pull request icon if not associated to a pull request', function(assert) {
+  assert.expect(1);
+
+  let task = { githubPullRequest: null };
+
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+
+  assert.notOk(page.pullRequestIcon.isVisible, 'The pull request icon does not render');
+});
+
 test('it can reposition if it has the ability', function(assert) {
   assert.expect(1);
   this.register('ability:task', Ability.extend({ canReposition: true }));

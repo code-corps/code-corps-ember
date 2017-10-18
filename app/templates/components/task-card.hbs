@@ -7,6 +7,9 @@
   </div>
 {{else}}
   <p>
+    {{#if task.githubPullRequest}}
+      {{github/pull-request-icon githubPullRequest=task.githubPullRequest}}
+    {{/if}}
     <span class="task-card__title" data-test-task-title>{{task.title}}</span>
     <span class="task-card__number" data-test-task-number>#{{task.number}}</span>
   </p>
@@ -19,6 +22,13 @@
       {{#if task.githubIssue}}
         {{github/issue-link
           githubIssue=task.githubIssue
+          githubRepo=task.githubRepo
+          size="small"
+        }}
+      {{/if}}
+      {{#if task.githubPullRequest}}
+        {{github/issue-link
+          githubIssue=task.githubPullRequest
           githubRepo=task.githubRepo
           size="small"
         }}

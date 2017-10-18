@@ -7,6 +7,8 @@ moduleForModel('task', 'Unit | Model | task', {
   needs: [
     'model:comment',
     'model:comment-user-mention',
+    'model:github-issue',
+    'model:github-pull-request',
     'model:github-repo',
     'model:project',
     'model:task-list',
@@ -22,7 +24,9 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['body', 'createdAt', 'createdFrom', 'githubIssueNumber', 'markdown', 'number', 'order', 'position', 'status', 'title']);
+testForAttributes('task', ['body', 'createdAt', 'createdFrom', 'markdown', 'number', 'order', 'position', 'status', 'title']);
+testForBelongsTo('task', 'githubIssue');
+testForBelongsTo('task', 'githubPullRequest');
 testForBelongsTo('task', 'githubRepo');
 testForBelongsTo('task', 'project');
 testForBelongsTo('task', 'taskList');
