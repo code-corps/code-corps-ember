@@ -88,12 +88,12 @@
 @import "components/image-drop";
 @import "components/loading-bar";
 @import "components/loading-spinner";
-@import "components/member-list-item";
 @import "components/modal-confirm";
 @import "components/pager-control";
 @import "components/progress-bar";
 @import "components/settings-menu";
 @import "components/signup-form";
+@import "components/user-list-item";
 
 //
 // COMPONENTS - DONATIONS
@@ -132,16 +132,20 @@
 //
 // COMPONENTS - PROJECTS
 //
-@import "components/project-card-members";
-@import "components/project-card";
-@import "components/project-card/donation-progress";
 @import "components/project-header";
 @import "components/project-item";
 @import "components/project-join-modal";
 @import "components/project-list";
 @import "components/project-long-description";
-@import "components/project-members";
+@import "components/project-users";
 @import "components/project-menu";
+
+//
+// COMPONENTS - PROJECT CARDS
+//
+@import "components/project-card";
+@import "components/project-card/donation-progress";
+@import "components/project-card/project-users";
 
 //
 // COMPONENTS - SKILLS

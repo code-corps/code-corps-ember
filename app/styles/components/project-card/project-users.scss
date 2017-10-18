@@ -1,6 +1,6 @@
 $height: 25px;
 
-.project-card-members {
+.project-card__project-users {
   height: $height;
   margin: 10px 0 0 0;
 
@@ -12,9 +12,9 @@ $height: 25px;
     line-height: $height;
     margin-right: -5px;
     vertical-align: middle;
-
-    &.count {
-      margin-left: 15px;
-    }
   }
+}
+
+.project-card__project-users__count {
+  margin-left: 15px;
 }

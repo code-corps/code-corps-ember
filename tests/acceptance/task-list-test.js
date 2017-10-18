@@ -6,10 +6,10 @@ import page from '../pages/project/tasks/index';
 moduleForAcceptance('Acceptance | Task List');
 
 function createContributor(project) {
-  return createMemberWithRole(project, 'contributor');
+  return createUserWithRole(project, 'contributor');
 }
 
-function createMemberWithRole(project, role) {
+function createUserWithRole(project, role) {
   let user = server.create('user');
   server.create('project-user', { user, project, role });
   return user;

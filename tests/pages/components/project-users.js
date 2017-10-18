@@ -6,11 +6,11 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.project-members',
+  scope: '.project-users',
 
-  memberCount: count('li'),
+  userCount: count('li'),
 
-  members: collection({
+  users: collection({
     itemScope: 'li',
     item: {
       imageSource: property('src', 'img'),

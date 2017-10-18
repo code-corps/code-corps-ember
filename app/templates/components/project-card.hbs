@@ -35,7 +35,7 @@
     {{/if}}
   </p>
   {{related-skills class="project-card__skills" overflowHidden=true skills=projectSkills}}
-  {{project-card-members members=projectUsers}}
+  {{project-card/project-users projectUsers=projectUsers}}
   {{#if project.donationsActive}}
     {{project-card/donation-progress
       amountDonated=project.totalMonthlyDonated

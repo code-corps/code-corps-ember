@@ -1,4 +1,4 @@
-.member-list-item {
+.user-list-item {
   @include outer-container;
   align-items: center;
   border-top: 1px solid $gray--lightest;
@@ -13,7 +13,7 @@
   }
 }
 
-.project-member {
+.project-user {
   &__actions {
     @include span-columns(2);
     text-align: right;
@@ -52,7 +52,7 @@
   }
 }
 
-.member-list-item {
+.user-list-item {
   h4 {
     color: $text--dark;
     font-size: $body-font-size-normal;

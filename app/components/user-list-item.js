@@ -8,7 +8,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['member-list-item'],
+  classNames: ['user-list-item'],
   tagName: 'li',
   showApprove: false,
   showDeny: false,
@@ -16,15 +16,15 @@ export default Component.extend({
   flashMessages: service(),
 
   actions: {
-    approve(membership) {
-      set(membership, 'role', 'contributor');
-      return membership.save().then(() => {
+    approve(projectUser) {
+      set(projectUser, 'role', 'contributor');
+      return projectUser.save().then(() => {
         this._flashSuccess('Membership approved');
       });
     },
 
-    deny(membership) {
-      return membership.destroyRecord().then(() => {
+    deny(projectUser) {
+      return projectUser.destroyRecord().then(() => {
         this._flashSuccess('Membership denied');
       });
     },

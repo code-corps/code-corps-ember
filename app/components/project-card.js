@@ -10,7 +10,7 @@ const {
 
 /**
   `project-card` composes a card that contains the given project's description,
-  skills, and contributing members.
+  skills, and contributing users.
 
   ## default usage
 

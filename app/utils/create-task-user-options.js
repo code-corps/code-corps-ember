@@ -3,7 +3,7 @@ import Ember from 'ember';
 const { get, isEmpty } = Ember;
 
 /**
- * Takes in a list of organization members, the current user id and,
+ * Takes in a list of project users, the current user id and,
  * if it exists, the id of the user currently assigned to the taskUserId
  *
  * Out of these parameters, it builds groups of users to be displayed on
@@ -13,7 +13,7 @@ const { get, isEmpty } = Ember;
  *
  * - current user
  * - currently assigned user
- * - other organization members
+ * - other project users
  *
  * @param {DS.ManyArray}  users
  * @param {String}  currentUserId

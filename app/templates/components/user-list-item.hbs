@@ -1,10 +1,10 @@
-<div class="project-member__avatar">
+<div class="project-user__avatar">
   {{#link-to 'slugged-route' user.username}}
     <img class="icon" src= {{user.photoThumbUrl}} />
   {{/link-to}}
 </div>
 
-<div class="project-member__name">
+<div class="project-user__name">
   <strong>
   {{#if user.name}}
     {{link-to user.name 'slugged-route' user.username}}
@@ -18,7 +18,7 @@
   </span>
 </div>
 
-<div class="project-member__skills">
+<div class="project-user__skills">
   <h4>Skills</h4>
   <ul>
     {{#each user.userSkills as |userSkill|}}
@@ -27,11 +27,11 @@
   </ul>
 </div>
 
-<div class="project-member__actions">
-  {{#if (eq membership.role 'pending')}}
+<div class="project-user__actions">
+  {{#if (eq projectUser.role 'pending')}}
     <button class="default small" {{action "showApprove"}}>Approve</button>
     <button class="danger small" {{action "showDeny"}}>Deny</button>
-    {{modal-confirm dialogText='Are you sure you want to approve their membership?' okAction=(action 'approve' membership) showDialog=showApprove}}
-    {{modal-confirm dialogText='Are you sure you want to deny their membership?' okAction=(action 'deny' membership) showDialog=showDeny}}
+    {{modal-confirm dialogText='Are you sure you want to approve their membership?' okAction=(action 'approve' projectUser) showDialog=showApprove}}
+    {{modal-confirm dialogText='Are you sure you want to deny their membership?' okAction=(action 'deny' projectUser) showDialog=showDeny}}
   {{/if}}
 </div>

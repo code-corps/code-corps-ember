@@ -1,0 +1,12 @@
+{{#each visibleUsers as |user|}}
+  <li class="project-card__project-users__user" data-test-user>
+    {{#if user.isLoaded}}
+      <img class="icon tiny circle" src={{user.photoThumbUrl}} />
+    {{else}}
+      <div class="icon tiny circle"></div>
+    {{/if}}
+  </li>
+{{/each}}
+{{#if hiddenUsersExist}}
+  <li class="project-card__project_users__count" data-test-count>+{{hiddenUsersCount}} more</li>
+{{/if}}
