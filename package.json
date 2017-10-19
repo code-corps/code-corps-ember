@@ -70,6 +70,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-i18n": "^5.0.2",
     "ember-keyboard": "^2.1.9",
+    "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-metrics": "code-corps/ember-metrics#add-context-to-segment-adapter",
     "ember-modal-dialog": "2.3.0",

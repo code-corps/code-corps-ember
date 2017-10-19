@@ -35,6 +35,23 @@
   <body>
     {{content-for "body"}}
 
+    <div class="ember-load-indicator">
+      <div class="loading-spinner loading-spinner--preload">
+        <svg width="100%" height="100%" viewBox="0 0 42 42" class="loading-spinner__donut">
+          <circle class="loading-spinner__donut__segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#FDCD00" stroke-width="3" stroke-dasharray="25 75" stroke-dashoffset="37.5"></circle>
+          <circle class="loading-spinner__donut__segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#23871E" stroke-width="3" stroke-dasharray="25 75" stroke-dashoffset="62.5"></circle>
+          <circle class="loading-spinner__donut__segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#08A8FC" stroke-width="3" stroke-dasharray="25 75" stroke-dashoffset="87.5"></circle>
+        </svg>
+        <svg width="100" height="100" viewBox="0 0 100 100" class="loading-spinner__pie">
+          <g transform="translate(50,50)">
+            <path d="M0 0-35 35A50 50 0 0 1-35-35Z" fill="#601752"/>
+            <path d="M0 0-35-35A50 50 0 0 1 35-35Z" fill="#D83058"/>
+            <path d="M0 0 35 35A50 50 0 0 1-35 35Z" fill="#75C5E0"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <script src="{{rootURL}}assets/vendor.js"></script>
     <script src="{{rootURL}}assets/code-corps-ember.js"></script>
 

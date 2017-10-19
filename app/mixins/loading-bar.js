@@ -17,6 +17,7 @@ export default Mixin.create({
       transition.promise.finally(function() {
         loadingBar.stop();
       });
+      return true;
     },
 
     error() {
