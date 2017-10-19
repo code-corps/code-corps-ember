@@ -47,8 +47,11 @@ export default {
     unassigned: {
       isDescriptor: true,
       get() {
-        return this.text === 'No one yet';
+        return this.unselectedIcon.isVisible;
       }
+    },
+    unselectedIcon: {
+      scope: '[data-test-unselected-icon]'
     }
   },
 

@@ -52,7 +52,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
     // assert assignment went through
     assert.ok(taskCard.taskAssignment.trigger.assigned, 'Task is rendered assigned.');
     let userTask = server.schema.userTasks.first();
-    assert.equal(userTask.user.username, taskCard.taskAssignment.trigger.text, 'Assigned user is rendered.');
+    assert.equal(userTask.user.photoThumbUrl, taskCard.assignedUser.icon.url, 'Assigned user is rendered.');
     taskCard.taskAssignment.trigger.open();
   });
 
@@ -64,7 +64,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
     // assert reassignment went through
     assert.ok(taskCard.taskAssignment.trigger.assigned, 'Task is rendered assigned.');
     let userTask = server.schema.userTasks.first();
-    assert.equal(userTask.user.username, taskCard.taskAssignment.trigger.text, 'Assigned user is rendered.');
+    assert.equal(userTask.user.photoThumbUrl, taskCard.assignedUser.icon.url, 'Assigned user is rendered.');
     taskCard.taskAssignment.trigger.open();
   });
 

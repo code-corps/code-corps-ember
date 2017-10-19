@@ -5,9 +5,10 @@
     {{else if (eq size "small")}}
       {{svg/sprite-icon icon="github-48" style="solid-light-gray"}}
       {{#tooltip-on-component
+        class='tooltip'
         effect='none'
+        keepInWindow=true
         side='bottom'
-        updateFor=category.isLoaded
       }}
         {{githubRepo.githubAccountLogin}}/{{githubRepo.name}} #{{githubIssue.number}}
       {{/tooltip-on-component}}
