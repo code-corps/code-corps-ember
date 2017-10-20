@@ -1,6 +1,6 @@
+import { get } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { get } from '@ember/object';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import projectCategoryItemComponent from 'code-corps-ember/tests/pages/components/project-category-item';
 import PageObject from 'ember-cli-page-object';

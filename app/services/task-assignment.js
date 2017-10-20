@@ -7,7 +7,7 @@ export default Service.extend({
   /**
     Assign a task to a user.
 
-    If there's already a user task for the task passed in, it updates th
+    If there's already a user task for the task passed in, it updates the
     existing record. Otherwise, it createes a new record.
 
     @method assign
