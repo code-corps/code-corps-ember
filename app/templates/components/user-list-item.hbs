@@ -20,11 +20,7 @@
 
 <div class="project-user__skills">
   <h4>Skills</h4>
-  <ul>
-    {{#each user.userSkills as |userSkill|}}
-      <li>{{userSkill.skill.title}}</li>
-    {{/each}}
-  </ul>
+  {{user/skills-list data-test-user-skills-list user=user}}
 </div>
 
 <div class="project-user__actions">
