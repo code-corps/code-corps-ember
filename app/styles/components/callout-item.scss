@@ -1,0 +1,63 @@
+.callout {
+  @include clearfix;
+  border: 1px solid $blue;
+  border-radius: 4px;
+  margin: 1.5em 0;
+  padding: 20px;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: #FFF;
+    background-image: -webkit-linear-gradient(#FFF, $blue--lightest);
+    background-image: linear-gradient(#FFF, $blue--lightest);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.05);
+    z-index: -99999;
+  }
+}
+
+
+.callout__content {
+  display: flex;
+
+  > div {
+    flex-grow: 1;
+  }
+}
+
+.callout--github-connect {
+  .callout__content {
+    &:before {
+      content: "";
+      $file: "/assets/images/github-sync";
+      @include background-image-retina($file, "png", 80px, 72px);
+      float: left;
+      margin: 0 30px 0 0;
+      height: 72px;
+      width: 80px;
+      min-width: 80px;
+    }
+  }
+}
+
+.callout__content p {
+  margin: 0 0 1em 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+p.callout__content {
+  &__title {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  &__description {
+    color: $gray--dark;
+    font-size: $body-font-size-small;
+  }
+}

@@ -40,7 +40,7 @@ test('it renders options', function(assert) {
 
   renderPage();
 
-  assert.equal(page.select.options(0).text, 'None (default)', 'The default option of none renders.');
+  assert.equal(page.select.options(0).text, 'Don\'t sync (default)', 'The default option of none renders.');
   assert.equal(page.select.options(1).text, 'Repo 1');
   assert.equal(page.select.options(2).text, 'Repo 2');
 });

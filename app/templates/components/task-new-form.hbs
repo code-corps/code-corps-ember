@@ -1,12 +1,24 @@
 <img class="icon" src={{task.user.photoThumbUrl}} />
 <div class="task-new-form-body">
   <div class="input-group">
-    {{input tabindex="2" name="title" type="text" placeholder="Title" value=task.title}}
+    <div class="input-label">
+      <label for="title">
+        <span class="input-label__text">Title</span>
+        <span class="required-text"></span>
+      </label>
+    </div>
+    {{input tabindex="2" name="title" type="text" value=task.title}}
     {{#each task.errors.title as |error|}}
       <p class="error">{{error.message}}</p>
     {{/each}}
   </div>
   <div class="input-group">
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Description</span>
+        <span class="required-text"></span>
+      </label>
+    </div>
     {{editor-with-preview
       tabindex="3"
       input=task.markdown
@@ -17,7 +29,41 @@
       <p class="error">{{error.message}}</p>
     {{/each}}
   </div>
+  {{#if showGithubConnectCallout}}
+    <div data-test-callout class="callout callout--github-connect">
+      <div class="callout__content">
+        <div>
+          <p class="callout__content__title">Connect with GitHub to sync tasks.</p>
+          <p class="callout__content__description">Your tasks will display on GitHub as a bot user until you connect your account.</p>
+          <p>{{github-connect target="_blank"}}</p>
+          <p class="callout__content__description">* Clicking the button will open a new window.</p>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+  {{#if hasGithubRepos}}
+    <div class="input-group">
+      <div class="input-label">
+        <label for="title">
+          {{svg/sprite-icon class="input-label__icon" icon="github-48"}}
+          <span class="input-label__text">GitHub</span>
+          <span class="recommended-text"></span>
+        </label>
+        <span>
+          <div class="input-label__help">
+            <p>The GitHub repository this task will sync with.</p>
+          </div>
+        </span>
+      </div>
+      {{select/github-repo
+        githubRepos=githubRepos
+        selectedRepo=selectedRepo
+        tabindex="4"
+        onSelected=(action (mut selectedRepo))
+      }}
+    </div>
+  {{/if}}
   <div class="input-group">
-    <input tabindex="4" class="button default right" name="submit" type="submit" value="Submit new task" {{action save}} />
+    <input tabindex="6" class="button default right" name="submit" type="submit" value="Submit new task" {{action save}} />
   </div>
 </div>
