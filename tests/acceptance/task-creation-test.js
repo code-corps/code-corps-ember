@@ -6,6 +6,7 @@ import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 import projectTasksNewPage from '../pages/project/tasks/new';
 import sinon from 'sinon';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | Task Creation');
 
@@ -36,7 +37,7 @@ test('Creating a task requires logging in', function(assert) {
   });
 });
 
-test('A task can be successfully created', function(assert) {
+test('User can create a task', function(assert) {
   assert.expect(8);
   let user = server.schema.users.create({ username: 'test_user' });
 
@@ -55,10 +56,10 @@ test('A task can be successfully created', function(assert) {
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
 
-    projectTasksNewPage.taskTitle('A task title')
-      .taskMarkdown('A task body');
-
-    projectTasksNewPage.clickSubmit();
+    projectTasksNewPage
+      .taskTitle('A task title')
+      .taskMarkdown('A task body')
+      .clickSubmit();
   });
 
   andThen(() => {
@@ -76,6 +77,37 @@ test('A task can be successfully created', function(assert) {
     assert.equal(currentRouteName(), 'project.tasks.task', 'We got redirected to the task route');
   });
 
+});
+
+test('Clicking new task button is tracked', function(assert) {
+  assert.expect(1);
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = server.create('project');
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  this.application.register('service:stubMetrics', Service.extend({
+    instantiate: false,
+    trackEvent(data) {
+      assert.deepEqual(data, {
+        event: 'Clicked New Task',
+        organization: organization.name,
+        organization_id: organization.id,
+        project: project.title,
+        project_id: project.id
+      }, 'Event tracking was called with proper attributes.');
+    }
+  }));
+  this.application.inject('controller', 'metrics', 'service:stubMetrics');
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
 });
 
 test('Task preview works during creation', function(assert) {

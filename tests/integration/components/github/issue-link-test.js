@@ -1,15 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import { get, set } from '@ember/object';
+import { run } from '@ember/runloop';
 import component from 'code-corps-ember/tests/pages/components/github/issue-link';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
-
-const {
-  run,
-  set
-} = Ember;
 
 function renderPage() {
   page.render(hbs`
@@ -100,4 +97,23 @@ test('it renders with loading when small', function(assert) {
   renderPage();
 
   assert.ok(page.loadingSmall.isVisible, 'The small loading state renders.');
+});
+
+test('it tracks clicking the link', function(assert) {
+  assert.expect(1);
+
+  let mockMetrics = {
+    trackEvent(properties) {
+      let event = get(properties, 'event');
+      assert.equal(event, 'Clicked GitHub Link for Task');
+    }
+  };
+  stubService(this, 'metrics', mockMetrics);
+
+  set(this, 'githubIssue', githubIssue);
+  set(this, 'githubRepo', githubRepo);
+
+  renderPage();
+
+  page.url.click();
 });

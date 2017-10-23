@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/github-connect';
 import setupSession from 'ember-simple-auth/initializers/setup-session';
@@ -32,4 +33,18 @@ test('binds href correctly', function(assert) {
   let session = this.container.lookup('service:session');
   let { githubState } = get(session, 'data');
   assert.equal(page.href, `${baseUrl}?scope=3098379083&client_id=ace&state=${githubState}&redirect_uri=ace.com`);
+});
+
+test('tracks click event', function(assert) {
+  assert.expect(1);
+  let mockMetrics = {
+    trackEvent(properties) {
+      let event = get(properties, 'event');
+      assert.equal(event, 'Clicked Connect with GitHub');
+    }
+  };
+  stubService(this, 'metrics', mockMetrics);
+
+  page.render(hbs`{{github-connect}}`);
+  page.click();
 });

@@ -2,6 +2,7 @@ import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import page from '../pages/project/tasks/index';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | Task List');
 
@@ -76,5 +77,43 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
     // assert unassignment went through
     assert.equal(server.schema.userTasks.all().models.length, 0, 'The record was destroyed.');
     assert.ok(taskCard.taskAssignment.trigger.unassigned, 'Task is rendered unassigned.');
+  });
+});
+
+test('clicking a task card is tracked', function(assert) {
+  assert.expect(1);
+
+  let project = server.create('project');
+  let { organization } = project;
+
+  let currentUser = createContributor(project);
+  let taskList = server.create('task-list', { project });
+  let task = server.create('task', { project, taskList });
+
+  authenticateSession(this.application, { user_id: currentUser.id });
+
+  page.visit({
+    organization: project.organization.slug,
+    project: project.slug
+  });
+
+  this.application.register('service:stubMetrics', Service.extend({
+    instantiate: false,
+    trackEvent(data) {
+      assert.deepEqual(data, {
+        event: 'Clicked on Task Card in List',
+        organization: organization.name,
+        organization_id: organization.id,
+        project: project.title,
+        project_id: project.id,
+        task: task.title,
+        task_id: task.id
+      }, 'Event tracking was called with proper attributes.');
+    }
+  }));
+  this.application.inject('route', 'metrics', 'service:stubMetrics');
+
+  andThen(() => {
+    page.taskBoard.taskLists(0).taskCards(0).title.click();
   });
 });

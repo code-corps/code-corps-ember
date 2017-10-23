@@ -65,7 +65,10 @@
               The button will open a new tab, so come back here and refresh the page when you're done.
             </p>
             <p>
-              <a href={{githubAppUrl}} data-test-installation-link class="button button__github button__github--light default" target="_blank"><span></span>Install on GitHub</a>
+              {{github/install-link
+                organization=project.organization
+                project=project
+              }}
             </p>
             {{else}}
               <p>
