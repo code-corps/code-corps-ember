@@ -12,7 +12,7 @@ const {
   ## default usage
 
   ```handlebars
-  {{modal-confirm dialogText='Confirm Text' okAction=(action 'deny' membership) showDialog=showConfirm}}
+  {{modal-confirm dialogText='Confirm Text' okAction=(action 'deny' projectUser) showDialog=showConfirm}}
   ```
   ### Testing
 
@@ -22,7 +22,7 @@ const {
   let modalDialogService = this.container.lookup('service:modal-dialog');
   modalDialogService.destinationElementId = 'modal-container';
 
-  this.render(hbs```<`div id='modal-container'`>` `<`/div`>`{{member-list-item membership=membership user=user}}``);
+  this.render(hbs```<`div id='modal-container'`>` `<`/div`>`{{user-list-item projectUser=projectUser user=user}}``);
   ```
 
   For acceptance tests using a page object you need to specify a container of **body** since is uses ember-wormhole and its container is outside of

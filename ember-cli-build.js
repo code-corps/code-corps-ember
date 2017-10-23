@@ -1,4 +1,6 @@
 /* eslint-env node */
+'use strict';
+
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
@@ -22,7 +24,7 @@ module.exports = function(defaults) {
     break;
   }
 
-  var app = new EmberApp(defaults, {
+  let app = new EmberApp(defaults, {
     'ember-cli-babel': {
       // async, await, etc.
       includePolyfill: true

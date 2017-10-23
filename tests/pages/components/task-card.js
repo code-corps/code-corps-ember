@@ -2,7 +2,9 @@ import {
   attribute,
   hasClass
 } from 'ember-cli-page-object';
+import issueLink from 'code-corps-ember/tests/pages/components/github/issue-link';
 import taskAssignment from 'code-corps-ember/tests/pages/components/power-select';
+import pullRequestIcon from 'code-corps-ember/tests/pages/components/github/pull-request-icon';
 
 export default {
   scope: '.task-card',
@@ -17,15 +19,18 @@ export default {
 
   canReposition: hasClass('task-card--can-reposition'),
 
+  issueLink,
+
   number: {
-    scope: '[data-test-selector="task number"]'
+    scope: '[data-test-task-number]'
   },
   time: {
-    scope: '[data-test-selector="task time"]'
+    scope: '[data-test-task-time]'
   },
   title: {
-    scope: '[data-test-selector="task title"]'
+    scope: '[data-test-task-title]'
   },
 
-  taskAssignment
+  taskAssignment,
+  pullRequestIcon
 };

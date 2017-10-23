@@ -1,0 +1,35 @@
+.project-card__donation-progress {
+  .progress-bar-container {
+    height: 8px;
+    margin: 1.5rem 0 0 0;
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0 0 0;
+
+    &__amount, &__percentage {
+      text-align: center;
+
+      &__label {
+        color: $text--light;
+        font-size: $body-font-size-small;
+      }
+
+      &__value {
+        font-size: $body-font-size-normal;
+        font-weight: 600;
+        line-height: 1rem;
+      }
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}

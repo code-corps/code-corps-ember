@@ -5,6 +5,7 @@ import {
 } from 'ember-cli-page-object';
 import navMenu from './components/navigation-menu';
 import siteFooter from './components/site-footer';
+import spriteMap from './components/svg/sprite-map';
 
 export default create({
   visit: visitable('/'),
@@ -12,5 +13,6 @@ export default create({
   isLightTheme: hasClass('code-theme--light', '.site-content'),
 
   navMenu,
-  siteFooter
+  siteFooter,
+  spriteMap
 });

@@ -5,6 +5,9 @@ moduleForModel('task', 'Unit | Serializer | task', {
   needs: [
     'model:comment',
     'model:comment-user-mention',
+    'model:github-issue',
+    'model:github-pull-request',
+    'model:github-repo',
     'model:project',
     'model:task-list',
     'model:task-skill',

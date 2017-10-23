@@ -1,5 +1,6 @@
 import {
   attribute,
+  collection,
   text
 } from 'ember-cli-page-object';
 import userProjectsList from 'code-corps-ember/tests/pages/components/user-projects-list';
@@ -21,6 +22,18 @@ export default {
   userProjectsList,
 
   userSidebar,
+
+  userSkillsList: {
+    scope: '[data-test-user-skills-list]',
+
+    skills: collection({
+      itemScope: '[data-test-user-skills-list-item]'
+    })
+  },
+
+  userSkillsListEmptyState: {
+    scope: '[data-test-user-skills-list-empty-state]'
+  },
 
   website: {
     scope: '.website',

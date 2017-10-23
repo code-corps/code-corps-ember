@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { formatError } from 'code-corps-ember/utils/error-utils';
 
 const {
   get,
@@ -7,7 +8,6 @@ const {
   Route
 } = Ember;
 
-const CODE_INVALID = 'The GitHub authorization code is invalid.';
 const STATE_INVALID = 'Something went wrong while connecting to GitHub. Please try again.';
 
 export default Route.extend(AuthenticatedRouteMixin, {
@@ -21,7 +21,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   ajax: service(),
   currentUser: service(),
   githubState: service(),
-  flashMessages:service(),
+  flashMessages: service(),
   store: service(),
 
   model({ code, state }) {
@@ -41,8 +41,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   actions: {
-    error() {
-      get(this, 'flashMessages').clearMessages().danger(CODE_INVALID);
+    error(error) {
+      let message = formatError(error);
+      get(this, 'flashMessages').clearMessages().danger(message);
       this.replaceWith('settings.integrations');
       return false;
     }

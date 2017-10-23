@@ -89,16 +89,9 @@ export default function() {
   * Categories
   */
 
-  // GET /categories
   this.get('/categories', { coalesce: true });
-
-  // POST /categories
   this.post('/categories');
-
-  // GET /categories/:id
   this.get('/categories/:id');
-
-  // PATCH /categories
   this.patch('/categories/:id');
 
   /**
@@ -119,10 +112,8 @@ export default function() {
   * Comments
   */
 
-  // GET /comments
   this.get('/comments', { coalesce: true });
 
-  // POST /comments
   this.post('/comments', function(schema) {
     let attrs = this.normalizedRequestAttrs();
     // the API takes takes markdown and renders body
@@ -130,10 +121,8 @@ export default function() {
     return schema.create('comment', attrs);
   });
 
-  // GET /comments/:id
   this.get('/comments/:id');
 
-  // PATCH /comments/:id
   this.patch('/comments/:id', function(schema) {
     let attrs = this.normalizedRequestAttrs();
     let comment = schema.comments.find(attrs.id);
@@ -155,26 +144,56 @@ export default function() {
   this.post('/donation-goals');
 
   /**
+  * Github App Installations
+  */
+
+  this.get('/github-app-installations', { coalesce: true });
+  this.post('/github-app-installations');
+  this.get('/github-app-installations/:id');
+
+  /**
+  * Github Issues
+  */
+
+  this.get('/github-issues', { coalesce: true });
+  this.get('/github-issues/:id');
+
+  /**
+  * Github Pull Requests
+  */
+
+  this.get('/github-pull-requests', { coalesce: true });
+  this.get('/github-pull-requests/:id');
+
+  /**
+  * Github Repos
+  */
+
+  this.get('/github-repos', { coalesce: true });
+  this.get('/github-repos/:id');
+
+  /**
   * Organizations
   */
 
-  // GET /organizations
   this.get('/organizations', { coalesce: true });
-
-  // POST /organizations
   this.post('/organizations');
-
-  // GET /organizations/:id
   this.get('/organizations/:id');
-
-  // PATCH /organizations/:id
   this.patch('/organizations/:id');
+
+  /**
+  * Organization Github App Installations
+  */
+
+  this.get('/organization-github-app-installations', { coalesce: true });
+  this.post('/organization-github-app-installations');
+  this.get('/organization-github-app-installations/:id');
+  this.delete('/organization-github-app-installations/:id');
 
   /**
   * Password
   */
 
-  // POST /password/forgot
   this.post('/password/forgot', () => {
 
     // just return something?
@@ -195,16 +214,20 @@ export default function() {
         user_id: matchedUser.id
       });
     } else {
-      let errorDetail = 'Your passwords do not match';
       return new Mirage.Response(422, {}, {
         errors: [
           {
-            id: 'VALIDATION_ERROR',
-            title: '422',
-            detail: errorDetail,
-            status: 422
+            detail: 'Password confirmation passwords do not match',
+            source: {
+              pointer: '/data/attributes/password-confirmation'
+            },
+            status: '422',
+            title: 'passwords do not match'
           }
-        ]
+        ],
+        jsonapi: {
+          version: '1.0'
+        }
       });
     }
   });
@@ -213,7 +236,6 @@ export default function() {
   * Previews
   */
 
-  // POST /previews
   this.post('/previews', function(schema) {
     let attrs = this.normalizedRequestAttrs();
     // the API takes takes markdown and renders body
@@ -225,7 +247,6 @@ export default function() {
   * Preview user mentions
   */
 
-  // GET /preview-user-mentions
   this.get('/preview-user-mentions', (schema, request) => {
     let previewId = request.queryParams.preview_id;
     let preview = schema.previews.find(previewId);
@@ -239,32 +260,27 @@ export default function() {
   * Project categories
   */
 
-  // GET /project-categories
   this.get('/project-categories', { coalesce: true });
-
-  // POST /project-categories
   this.post('/project-categories');
-
-  // GET /project-categories/:id
   this.get('/project-categories/:id');
-
-  // DELETE /project-categories/:id
   this.delete('/project-categories/:id');
+
+  /**
+  * Project Github Repos
+  */
+
+  this.get('/project-github-repos', { coalesce: true });
+  this.post('/project-github-repos');
+  this.get('/project-github-repos/:id');
+  this.delete('/project-github-repos/:id');
 
   /**
   * Project skills
   */
 
-  // GET /project-skills
   this.get('/project-skills', { coalesce: true });
-
-  // POST /project-skills
   this.post('/project-skills');
-
-  // GET /project-skills/:id
   this.get('/project-skills/:id');
-
-  // DELETE /project-skills/:id
   this.delete('/project-skills/:id');
 
   /**
@@ -281,16 +297,10 @@ export default function() {
   * Projects
   */
 
-  // GET /projects
   this.get('/projects', { coalesce: true });
-
-  // POST /projects
   this.post('/projects');
-
-  // GET /projects/:id
   this.get('/projects/:id');
 
-  // GET project/:id/tasks
   this.get('/projects/:projectId/tasks', (schema, request) => {
     let { projectId } = request.params;
     let taskStatus = request.queryParams.status;
@@ -324,7 +334,6 @@ export default function() {
     return tasksPage;
   });
 
-  // GET /projects/:id/task/:number
   this.get('/projects/:projectId/tasks/:number', (schema, request) => {
     let projectId = parseInt(request.params.projectId);
     let number = parseInt(request.params.number);
@@ -341,7 +350,6 @@ export default function() {
     return task;
   });
 
-  // PATCH /projects/:id
   this.patch('/projects/:id', function(schema) {
     // the API takes takes markdown and renders body
     let attrs = this.normalizedRequestAttrs();
@@ -354,29 +362,17 @@ export default function() {
   * Roles
   */
 
-  // GET /roles
   this.get('/roles', { coalesce: true });
-
-  // POST /roles
   this.post('/roles');
-
-  // GET /roles/:id
   this.get('/roles/:id');
 
   /**
   * Role Skills
   */
 
-  // GET /role-skills
   this.get('/role-skills', { coalesce: true });
-
-  // POST /role-skills
   this.post('/role-skills');
-
-  // GET /role-skills/:id
   this.get('/role-skills/:id');
-
-  // DELETE /role-skills/:id
   this.delete('/role-skills/:id');
 
   /**
@@ -413,13 +409,8 @@ export default function() {
   * Skills
   */
 
-  // GET /skills
   this.get('/skills', { coalesce: true });
-
-  // POST /skills
   this.post('/skills');
-
-  // GET /skills/:id
   this.get('/skills/:id');
 
   /**
@@ -493,10 +484,7 @@ export default function() {
   * Task lists
   */
 
-  // GET /task-lists
   this.get('/task-lists', { coalesce: true });
-
-  // GET /task-lists/:id
   this.get('/task-lists/:id');
 
   /**
@@ -672,37 +660,24 @@ export default function() {
   * User roles
   */
 
-  // GET /user-roles
   this.get('/user-roles', { coalesce: true });
-
-  // POST /user-roles
   this.post('/user-roles');
-
-  // GET /user-roles
   this.get('/user-roles/:id');
-
-  // DELETE /user-roles/:id
   this.delete('/user-roles/:id');
 
   /**
   * User skills
   */
 
-  // GET /user-skills
   this.get('/user-skills', { coalesce: true });
-
-  // POST /user-skills
   this.post('/user-skills');
-
-  // GET /user-skills
   this.get('/user-skills/:id');
-
-  // DELETE /user-skills/:id
   this.delete('/user-skills/:id');
 
   /**
   * User tasks
   */
+
   this.get('/user-tasks', { coalesce: true });
   this.patch('/user-tasks/:id');
   this.post('/user-tasks');

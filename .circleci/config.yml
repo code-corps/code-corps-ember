@@ -1,0 +1,140 @@
+defaults: &defaults
+  working_directory: ~/code-corps-ember
+  docker:
+    - image: circleci/node:6.11.3-browsers
+      environment:
+        CHROME_BIN: "/usr/bin/google-chrome"
+
+references:
+
+  bower_cache_key: &bower_cache_key
+    dependency-cache-{{ checksum "bower.json" }}
+
+  global_cache_key: &global_cache_key
+    global-dependency-cache-{{ checksum "package.json" }}-{{ checksum "bower.json" }}
+
+  npm_cache_key: &npm_cache_key
+    dependency-cache-{{ checksum "package.json" }}
+
+  restore_bower_components: &restore_bower_components
+    restore_cache:
+      key: *bower_cache_key
+
+  restore_global_dependencies: &restore_global_dependencies
+    restore_cache:
+      key: *global_cache_key
+
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      key: *npm_cache_key
+
+version: 2
+jobs:
+
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install global dependencies
+          command: |
+            sudo npm install -g bower \
+              ember-cli \
+              --quiet
+      - *restore_node_modules
+      - *restore_bower_components
+      - run:
+          name: Install local dependencies
+          command: yarn install && bower install
+      - run:
+          name: Rebuild node-sass
+          command: npm rebuild node-sass
+      - save_cache:
+          key: *global_cache_key
+          paths:
+            - /usr/local/bin/bower
+            - /usr/local/bin/ember
+      - save_cache:
+          key: *npm_cache_key
+          paths:
+            - node_modules
+      - save_cache:
+          key: *bower_cache_key
+          paths:
+            - bower_components
+
+  test:
+    <<: *defaults
+    parallelism: 4
+    steps:
+      - checkout
+      - *restore_node_modules
+      - *restore_bower_components
+      - run:
+          name: Run Ember tests
+          command: |
+            COVERAGE=true node_modules/.bin/ember exam --split=$CIRCLE_NODE_TOTAL --partition=$((CIRCLE_NODE_INDEX+1)) --weighted --parallel
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_*
+
+  report:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_node_modules
+      - *restore_bower_components
+      - attach_workspace:
+          at: .
+      - run:
+          name: Merge coverage
+          command: node_modules/.bin/ember coverage-merge
+      - run:
+          name: Report coverage
+          command: |
+            if [ ! ${CIRCLE_PR_USERNAME} ]; then ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info; fi
+
+  deploy-staging:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_node_modules
+      - *restore_bower_components
+      - run:
+          name: Deploy to staging
+          command: 'node_modules/.bin/ember deploy staging --activate'
+
+  deploy-production:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_node_modules
+      - *restore_bower_components
+      - run:
+          name: Deploy to production
+          command: 'node_modules/.bin/ember deploy production --activate'
+
+workflows:
+  version: 2
+  test-and-maybe-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - report:
+          requires:
+            - test
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
+      - deploy-production:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

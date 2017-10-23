@@ -1,0 +1,52 @@
+.github-repo {
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+
+  &__name {
+    &:before {
+      content: "";
+      display: inline-block;
+      margin: 0 10px 0 0;
+      vertical-align: middle;
+      @include sprite($repo);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    font-size: $body-font-size-small;
+  }
+
+  &__remove-link {
+    color: $text--lightest;
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+.github-repo--connected {
+  .github-repo__name {
+    color: $blue;
+
+    &:before {
+      @include sprite($repo-blue);
+    }
+  }
+
+  .github-repo__sync {
+    color: $blue;
+    margin-right: 10px;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      margin: -1px 5px 0 0;
+      vertical-align: middle;
+      @include sprite($sync);
+    }
+  }
+}

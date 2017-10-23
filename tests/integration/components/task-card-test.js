@@ -17,7 +17,7 @@ function renderPage() {
   page.render(hbs`
     {{task-card
       clickedTask=clickedTask
-      members=members
+      users=users
       task=task
       taskUser=taskUser
     }}`);
@@ -43,7 +43,7 @@ test('it renders all the required elements', function(assert) {
   assert.expect(3);
 
   let task = {
-    insertedAt: moment().subtract(2, 'days'),
+    createdAt: moment().subtract(2, 'days'),
     number: 1,
     title: 'Clean the house'
   };
@@ -54,6 +54,28 @@ test('it renders all the required elements', function(assert) {
   assert.equal(page.number.text, '#1', 'The number renders');
   assert.equal(page.time.text, '2 days ago', 'The time renders');
   assert.equal(page.title.text, 'Clean the house', 'The title renders');
+});
+
+test('it renders a pull request icon if associated to a pull request', function(assert) {
+  assert.expect(1);
+
+  let task = { githubPullRequest: { id: 'foo' } };
+
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+
+  assert.ok(page.pullRequestIcon.isVisible, 'The pull request icon renders');
+});
+
+test('it does not render a pull request icon if not associated to a pull request', function(assert) {
+  assert.expect(1);
+
+  let task = { githubPullRequest: null };
+
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+
+  assert.notOk(page.pullRequestIcon.isVisible, 'The pull request icon does not render');
 });
 
 test('it can reposition if it has the ability', function(assert) {
@@ -72,6 +94,23 @@ test('it cannot reposition if it does not have the ability', function(assert) {
   this.render(hbs`{{task-card task=task}}`);
 
   assert.notOk(page.canReposition, 'Cannot reposition');
+});
+
+test('it renders the GitHub issue link icon if it has an issue', function(assert) {
+  assert.expect(1);
+  let isLoaded = true;
+  let task = { githubIssue: { isLoaded }, githubRepo: { isLoaded } };
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+  assert.ok(page.issueLink.isVisible, 'The GitHub issue link is visible');
+});
+
+test('it does not render the GitHub issue link icon if it does not have an issue', function(assert) {
+  assert.expect(1);
+  let task = { githubIssue: null };
+  set(this, 'task', task);
+  this.render(hbs`{{task-card task=task}}`);
+  assert.notOk(page.issueLink.isVisible, 'The GitHub issue link is not visible');
 });
 
 test('it sends action if clicked and not loading', function(assert) {
@@ -115,9 +154,9 @@ test('assignment works if user has ability', function(assert) {
 
   let task = { id: 'task' };
   let user = { id: 'user', username: 'testuser' };
-  let members = [user];
+  let users = [user];
 
-  setProperties(this, { task, members });
+  setProperties(this, { task, users });
 
   stubService(this, 'current-user', { user });
 
@@ -145,10 +184,10 @@ test('unassignment works if user has ability', function(assert) {
 
   let task = { id: 'task' };
   let user = { id: 'user', username: 'testuser' };
-  let members = [user];
+  let users = [user];
   let taskUser = user;
 
-  setProperties(this, { task, members, taskUser });
+  setProperties(this, { task, users, taskUser });
 
   stubService(this, 'task-assignment', {
     unassign(sentTask) {
@@ -173,9 +212,9 @@ test('assignment dropdown renders if user has ability', function(assert) {
   let task = { id: 'task' };
   let user1 = { id: 'user1', username: 'testuser1' };
   let user2 = { id: 'user2', username: 'testuser2' };
-  let members = [user1, user2];
+  let users = [user1, user2];
 
-  setProperties(this, { task, members });
+  setProperties(this, { task, users });
 
   stubService(this, 'task-assignment', {
     isAssignedTo() {
@@ -210,15 +249,15 @@ test('assignment dropdown renders when records are still being loaded', function
     return PromiseObject.create({ id, promise });
   }
 
-  let members = [user1, user2].map((user) => proxify(user));
+  let users = [user1, user2].map((user) => proxify(user));
 
-  setProperties(this, { task, members });
+  setProperties(this, { task, users });
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
   renderPage();
 
-  RSVP.all(members).then(() => {
+  RSVP.all(users).then(() => {
     page.taskAssignment.trigger.open();
     assert.equal(page.taskAssignment.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
     assert.equal(page.taskAssignment.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
@@ -227,7 +266,7 @@ test('assignment dropdown renders when records are still being loaded', function
 });
 
 test('assignment dropdown does not render if user has no ability', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   let task = { id: 'task' };
   let user1 = { id: 'user1', username: 'testuser1' };
@@ -236,9 +275,9 @@ test('assignment dropdown does not render if user has no ability', function(asse
     username: 'testuser2',
     photoThumbUrl: 'test.png'
   };
-  let members = [user1, user2];
+  let users = [user1, user2];
 
-  setProperties(this, { task, members, taskUser: user2 });
+  setProperties(this, { task, users, taskUser: user2 });
 
   stubService(this, 'task-assignment', {
     isAssignedTo() {
@@ -252,7 +291,6 @@ test('assignment dropdown does not render if user has no ability', function(asse
 
   assert.notOk(page.taskAssignment.triggerRenders, 'Dropdown trigger for assignment does not render.');
   page.assignedUser.as((user) => {
-    assert.equal(user.text, 'testuser2');
     assert.equal(user.icon.url, 'test.png');
   });
 });

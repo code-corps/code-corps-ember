@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 
 const {
+  computed: { mapBy },
   Controller,
   get,
   RSVP,
@@ -10,6 +11,9 @@ const {
 
 export default Controller.extend({
   unsavedTaskSkills: [],
+
+  githubRepos: mapBy('task.project.projectGithubRepos', 'githubRepo'),
+
   actions: {
     /**
      saveTask - action
@@ -23,14 +27,16 @@ export default Controller.extend({
     */
     async saveTask(task) {
       let project = get(task, 'project');
+      let githubRepo = get(this, 'selectedRepo');
       let inboxTaskList = await this._getInboxTaskList(project);
 
       set(task, 'taskList', inboxTaskList);
+      set(task, 'githubRepo', githubRepo);
 
       return task.save()
-                 .then((task) => this._saveSkills(task))
-                 .then((task) => this.transitionToRoute('project.tasks.task', get(task, 'number')))
-                 .catch((payload) => this._handleTaskSaveError(payload));
+        .then((task) => this._saveSkills(task))
+        .then((task) => this.transitionToRoute('project.tasks.task', get(task, 'number')))
+        .catch((payload) => this._handleTaskSaveError(payload));
     },
 
     deselectTaskSkill(taskSkill) {

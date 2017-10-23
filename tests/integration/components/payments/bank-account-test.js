@@ -97,8 +97,8 @@ test('it sends properties with submit action', function(assert) {
 
   renderPage();
   page.accountNumber(input.accountNumber)
-      .routingNumber(input.routingNumber)
-      .clickSubmit();
+    .routingNumber(input.routingNumber)
+    .clickSubmit();
 });
 
 test('it disables controls when busy', function(assert) {

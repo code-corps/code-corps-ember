@@ -1,11 +1,44 @@
 {{title "Settings"}}
 
 <div class="container">
-  <div class="page-header">
-    <h3>Public profile</h3>
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Public profile</h3>
+        <p>Manage your profile details like your photo, name, and bio.</p>
+      </div>
+      <div class="panel__section__content">
+        {{user-settings-form user=user}}
+      </div>
+    </div>
   </div>
-
-  <div class="settings">
-    {{user-settings-form user=model}}
+  <div class="panel">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Skills</h3>
+        <p>What skills can you share? These help you discover new projects and tasks.</p>
+      </div>
+      <div class="panel__section__content">
+        <div class="skills-typeahead-container">
+          {{skills-typeahead
+            centered=true
+            selectSkill=(action toggleSkill)
+            skillsList=userSkillsList
+          }}
+        </div>
+        <div class="user-skills-list">
+          {{#each userSkills as |userSkill|}}
+            {{skill-button
+              alwaysShowX=true
+              iconBefore=false
+              isLoading=userSkill.isLoading
+              remove=(action removeUserSkill userSkill)
+              size="normal"
+              skill=userSkill.skill
+            }}
+          {{/each}}
+        </div>
+      </div>
+    </div>
   </div>
 </div>

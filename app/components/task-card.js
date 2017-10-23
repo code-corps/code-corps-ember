@@ -57,9 +57,9 @@ export default Component.extend({
   // We should somehow skip the update if the change is processing
   // TODO: It also fails to roll back when reassignment fails
   didReceiveAttrs() {
-    let { taskUserId, members } = getProperties(this, 'taskUserId', 'members');
-    if (members) {
-      set(this, 'selectedOption', members.findBy('id', taskUserId));
+    let { taskUserId, users } = getProperties(this, 'taskUserId', 'users');
+    if (users) {
+      set(this, 'selectedOption', users.findBy('id', taskUserId));
     }
   },
 
@@ -69,17 +69,21 @@ export default Component.extend({
 
     @property userOptions
   */
-  userOptions: computed('currentUserId', 'taskUserId', 'members', function() {
-    let { currentUserId, taskUserId, members }
-      = getProperties(this, 'currentUserId', 'taskUserId', 'members');
-    if (members) {
-      return createTaskUserOptions(members, currentUserId, taskUserId);
+  userOptions: computed('currentUserId', 'taskUserId', 'users', function() {
+    let { currentUserId, taskUserId, users }
+      = getProperties(this, 'currentUserId', 'taskUserId', 'users');
+    if (users) {
+      return createTaskUserOptions(users, currentUserId, taskUserId);
     } else {
       return [];
     }
   }),
 
   click(e) {
+    if (e.target instanceof SVGElement) {
+      return;
+    }
+
     // TODO: Find a better way to do this
     // Currently necessary due to the way that power select handles trigger
     let clickedIcon = e.target.className.includes(ICON_CLASS);

@@ -21,20 +21,20 @@ export default Model.extend(ContainsCodeMixin, {
   body: attr(),
 
   /**
-    The github issue the task is associated with.
+    When the task was created.
 
-    @attribute githubId
-    @type string
-  */
-  githubId: attr(),
-
-  /**
-    The date that the task was inserted.
-
-    @attribute insertedAt
+    @attribute createdAt
     @type date
    */
-  insertedAt: attr('date'),
+  createdAt: attr('date'),
+
+  /**
+    Where the task was created.
+
+    @attribute createdFrom
+    @type string
+   */
+  createdFrom: attr(),
 
   /**
     The tasks markdown content.
@@ -100,7 +100,31 @@ export default Model.extend(ContainsCodeMixin, {
     @attribute commentUserMentions
     @type Ember.computed
    */
-  commentUserMentions: hasMany('comment-user-mention', { asnyc: true }),
+  commentUserMentions: hasMany('comment-user-mention', { async: true }),
+
+  /**
+   * The GitHub issue synced with this task
+   *
+   * @attribute githubIssue
+   * @type DS.Model
+   */
+  githubIssue: belongsTo('github-issue', { async: true }),
+
+  /**
+   * The GitHub pull request synced with this task
+   *
+   * @attribute githubPullRequest
+   * @type DS.Model
+   */
+  githubPullRequest: belongsTo('github-pull-request', { async: true }),
+
+  /**
+   * The github repository where an issue connected to this task exists
+   *
+   * @attribute githubRepo
+   * @type DS.Model
+   */
+  githubRepo: belongsTo('github-repo', { async: true }),
 
   /**
     The task-list that the task belongs to

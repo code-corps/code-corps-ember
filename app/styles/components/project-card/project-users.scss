@@ -1,0 +1,20 @@
+$height: 25px;
+
+.project-card__project-users {
+  height: $height;
+  margin: 10px 0 0 0;
+
+  li {
+    color: $text--light;
+    display: inline-block;
+    font-size: $body-font-size-small;
+    height: $height;
+    line-height: $height;
+    margin-right: -5px;
+    vertical-align: middle;
+  }
+}
+
+.project-card__project-users__count {
+  margin-left: 15px;
+}

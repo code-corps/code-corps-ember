@@ -2,10 +2,10 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
-import projectCategoryItemCoponent from 'code-corps-ember/tests/pages/components/project-category-item';
+import projectCategoryItemComponent from 'code-corps-ember/tests/pages/components/project-category-item';
 import PageObject from 'ember-cli-page-object';
 
-let page = PageObject.create(projectCategoryItemCoponent);
+let page = PageObject.create(projectCategoryItemComponent);
 
 const {
   get,
@@ -64,7 +64,7 @@ test('it works for unselected categories', function(assert) {
     page.mouseenter();
   });
 
-  assert.ok(page.tooltip.isAriaVisible, 'Aria attribute switches out of hiden on hover.');
+  assert.ok(page.tooltip.isAriaVisible, 'Aria attribute is not hidden on hover.');
 });
 
 test('it works for selected categories', function(assert) {

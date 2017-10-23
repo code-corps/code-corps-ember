@@ -19,7 +19,7 @@ $spritePath: '/assets/images/icons/sprite';
 $spriteURL: $spritePath + '.png';
 $spritex2URL: $spritePath + '@2x.png';
 $sprite-bgiSizeW: 230px;
-$sprite-bgiSizeH: 369px;
+$sprite-bgiSizeH: 401px;
 $logo: 230px 50px $spriteURL 0px 0px $spritex2URL;
 $logo-small: 161px 35px $spriteURL 0px -50px $spritex2URL;
 $logo-small-icon-only: 35px 35px $spriteURL 0px -50px $spritex2URL;
@@ -69,6 +69,11 @@ $tiny-check: 8px 6px $spriteURL 0px -324px $spritex2URL;
 $tiny-x: 6px 6px $spriteURL -8px -324px $spritex2URL;
 $join: 25px 25px $spriteURL 0px -344px $spritex2URL;
 $joined: 25px 25px $spriteURL -25px -344px $spritex2URL;
+$github-light: 16px 16px $spriteURL 0 -369px $spritex2URL;
+$github-dark: 16px 16px $spriteURL -16px -369px $spritex2URL;
+$repo: 12px 16px $spriteURL 0 -385px $spritex2URL;
+$repo-blue: 12px 16px $spriteURL -12px -385px $spritex2URL;
+$sync: 28px 16px $spriteURL -24px -385px $spritex2URL;
 
 .box-icon {
   @include sprite($box);
@@ -467,3 +472,51 @@ $about-support: 75px 75px $about-spriteURL -150px -76px $about-spritex2URL;
 $about-fund: 75px 75px $about-spriteURL -225px -76px $about-spritex2URL;
 $about-develop: 75px 75px $about-spriteURL -300px -76px $about-spritex2URL;
 $about-airplane: 102px 36px $about-spriteURL -375px -75px $about-spritex2URL;
+
+.size-28 {
+  width: 28px;
+  height: 28px;
+}
+
+.size-20 {
+  width: 20px;
+  height: 20px;
+}
+
+.size-16 {
+  width: 16px;
+  height: 16px;
+}
+
+.size-14 {
+  width: 14px;
+  height: 14px;
+}
+
+.solid-black {
+  fill: url(#solid-black);
+}
+
+.solid-blue {
+  fill: url(#solid-blue);
+}
+
+.solid-dark-blue {
+  fill: url(#solid-dark-blue);
+}
+
+.solid-green {
+  fill: url(#solid-green);
+}
+
+.solid-light-gray {
+  fill: url(#solid-light-gray);
+}
+
+.solid-purple {
+  fill: url(#solid-purple);
+}
+
+.solid-red {
+  fill: url(#solid-red);
+}

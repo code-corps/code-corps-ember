@@ -5,7 +5,7 @@ export default Factory.extend({
   body() {
     return faker.lorem.paragraph();
   },
-  insertedAt(i) {
+  createdAt(i) {
     return moment().subtract(i, 'days');
   },
   number(i) {

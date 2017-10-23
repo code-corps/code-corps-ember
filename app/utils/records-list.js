@@ -59,8 +59,8 @@ export default {
 
         // Get the id of the found model instance and
         // get the id of the found model's relationship model instance
-        let foundId = found.belongsTo(targetModelName).id();
-        let foundRelationshipId = found.belongsTo(relationshipModelName).id();
+        let foundId = found.belongsTo(targetModelName.camelize()).id();
+        let foundRelationshipId = found.belongsTo(relationshipModelName.camelize()).id();
 
         return (foundRelationshipId === relationshipId) // relationships match
             && (foundId === targetId); // found matches target

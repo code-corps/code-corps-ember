@@ -10,6 +10,6 @@ export default Controller.extend({
   currentUser: service(),
 
   projectUsers: mapBy('project.projectUsers', 'user'),
-  usersCount: alias('members.length'),
+  usersCount: alias('users.length'),
   projectSkills: mapBy('project.projectSkills', 'skill')
 });

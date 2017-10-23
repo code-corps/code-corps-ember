@@ -1,14 +1,14 @@
 import Ember from 'ember';
+import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
 const {
   get,
   inject: { service },
-  Router,
   run
 } = Ember;
 
-let AppRouter = Router.extend({
+const Router = EmberRouter.extend({
   location: config.locationType,
   rootURL: config.rootURL,
   metrics: service(),
@@ -28,7 +28,7 @@ let AppRouter = Router.extend({
   }
 });
 
-AppRouter.map(function() {
+Router.map(function() {
   this.route('about');
 
   this.route('github', {
@@ -62,6 +62,7 @@ AppRouter.map(function() {
         this.route('goals');
         this.route('payments');
       });
+      this.route('integrations');
       this.route('profile');
     });
     this.route('tasks', function() {
@@ -106,4 +107,4 @@ AppRouter.map(function() {
   this.route('terms');
 });
 
-export default AppRouter;
+export default Router;

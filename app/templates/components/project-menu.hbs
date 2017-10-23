@@ -17,8 +17,8 @@
         <li class="contributors">
           {{#link-to 'project.settings.contributors' project}}
             Contributors
-            {{#if projectHasPendingMembers}}
-              <span class="info"><strong>{{projectPendingMembersCount}}</strong> pending</span>
+            {{#if projectHasPendingUsers}}
+              <span class="info"><strong>{{projectPendingUsersCount}}</strong> pending</span>
             {{/if}}
           {{/link-to}}
         </li>
@@ -29,6 +29,10 @@
 
         <li>
           {{link-to 'Payments' 'project.settings.donations.payments' project}}
+        </li>
+
+        <li>
+          {{link-to 'Integrations' 'project.settings.integrations' project}}
         </li>
 
         <li>

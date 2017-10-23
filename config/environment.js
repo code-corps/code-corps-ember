@@ -26,7 +26,8 @@ module.exports = function(environment) {
     cloudinary: {},
 
     github: {
-      scope: 'public_repo,user:email'
+      scope: 'public_repo,admin:org,user:email',
+      appUrl: 'https://github.com/apps/code-corps-local'
     },
 
     flashMessageDefaults: {
@@ -44,6 +45,10 @@ module.exports = function(environment) {
       // since that's the new Ember convention
       injectionFactories: [],
       preventDuplicates: true
+    },
+
+    i18n: {
+      defaultLocale: 'en-US'
     },
 
     metricsAdapters: [
@@ -189,7 +194,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
-    ENV.WEB_BASE_URL = 'http://www.codecorps.org';
+    ENV.WEB_BASE_URL = 'https://www.codecorps.org';
     ENV.cloudinary.cloud = 'dtrnlbt7o';
     ENV.cloudinary.uploadPreset = 'n5zjzoqc';
     ENV.stripe.publishableKey = 'pk_live_AieoBpMkVudxrwizI0yqwRF8';

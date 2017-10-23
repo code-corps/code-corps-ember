@@ -132,9 +132,9 @@ test('it works properly when account needs personal id information', function(as
   assert.ok(page.fundsRecipient.rendersLegalEntityPersonalIdNumberRequired, 'Personal id number subcomponent is rendered in required state.');
 
   page.fundsRecipient
-      .legalEntityPersonalIdNumber
-      .legalEntityPersonalIdNumber('1234')
-      .clickSubmit();
+    .legalEntityPersonalIdNumber
+    .legalEntityPersonalIdNumber('1234')
+    .clickSubmit();
 });
 
 test('it works properly when account needs bank account information', function(assert) {
@@ -161,9 +161,9 @@ test('it works properly when account needs bank account information', function(a
   assert.ok(page.rendersBankAccountRequired, 'Bank account component is rendered in required state.');
 
   page.bankAccount
-      .accountNumber('1234')
-      .routingNumber('4321')
-      .clickSubmit();
+    .accountNumber('1234')
+    .routingNumber('4321')
+    .clickSubmit();
 });
 
 test('it works properly when account is fully verified', function(assert) {

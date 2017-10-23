@@ -5,15 +5,15 @@ import {
   isVisible,
   text
 } from 'ember-cli-page-object';
-import memberListItem from './components/member-list-item';
+import userListItem from './components/user-list-item';
 
 function buildContributorsDefinitionForIndex(index) {
   return {
     scope: `.contributors-list:eq(${index})`,
     emptyMessageVisible: isVisible('.contributors-list--empty'),
-    members: collection({
+    contributors: collection({
       itemScope: 'li',
-      item: memberListItem
+      item: userListItem
     })
   };
 }

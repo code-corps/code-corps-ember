@@ -3,7 +3,7 @@ import Ember from 'ember';
 const {
   Component,
   computed
- } = Ember;
+} = Ember;
 
 /**
  * `categories-list` composes the list of categories

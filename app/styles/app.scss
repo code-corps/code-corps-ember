@@ -43,8 +43,6 @@
 @import "base/base";
 @import "base/helpers";
 
-
-
 //
 //
 //
@@ -53,7 +51,7 @@
 @import "buttons";
 @import "code";
 @import "images";
-@import "inputs";
+@import "markdown";
 
 //
 // LAYOUT
@@ -63,8 +61,13 @@
 @import "layout/footer";
 @import "layout/forms";
 @import "layout/header";
+@import "layout/loading";
+@import "layout/panel";
 @import "layout/select-dropdown";
 @import "layout/select-inline";
+@import "layout/tooltips";
+
+@import "inputs";
 
 @import "ember-power-select";
 
@@ -86,12 +89,13 @@
 @import "components/error-wrapper";
 @import "components/image-drop";
 @import "components/loading-bar";
-@import "components/member-list-item";
+@import "components/loading-spinner";
 @import "components/modal-confirm";
 @import "components/pager-control";
 @import "components/progress-bar";
 @import "components/settings-menu";
 @import "components/signup-form";
+@import "components/user-list-item";
 
 //
 // COMPONENTS - DONATIONS
@@ -109,6 +113,9 @@
 //
 // COMPONENTS - GITHUB
 //
+@import "components/github/issue-link";
+@import "components/github-app-installation";
+@import "components/github-repo";
 @import "components/github-connect-state";
 
 //
@@ -127,15 +134,20 @@
 //
 // COMPONENTS - PROJECTS
 //
-@import "components/project-card-members";
-@import "components/project-card";
 @import "components/project-header";
 @import "components/project-item";
 @import "components/project-join-modal";
 @import "components/project-list";
 @import "components/project-long-description";
-@import "components/project-members";
+@import "components/project-users";
 @import "components/project-menu";
+
+//
+// COMPONENTS - PROJECT CARDS
+//
+@import "components/project-card";
+@import "components/project-card/donation-progress";
+@import "components/project-card/project-users";
 
 //
 // COMPONENTS - SKILLS
@@ -147,6 +159,16 @@
 // COMPONETS - RELATED SKILLS
 //
 @import "components/related-skills";
+
+//
+// COMPONENTS - SELECTS
+//
+@import "components/select/github-repo";
+
+//
+// COMPONENTS - SVG
+//
+@import "components/svg/sprite-icon";
 
 //
 // COMPONENTS - TASK
@@ -196,9 +218,10 @@
 //
 // TEMPLATES - PROJECTS
 //
+@import "templates/project/settings/contributors";
+@import "templates/project/settings/integrations";
 @import "templates/project/settings/profile";
 @import "templates/project/settings/settings";
-@import "templates/project/settings/contributors";
 @import "templates/project/tasks/task";
 @import "templates/project/tasks/task-new";
 @import "templates/project/index";

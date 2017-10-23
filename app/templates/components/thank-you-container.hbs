@@ -1,9 +1,9 @@
-<div class="thank-you-container__project-icon" data-test-selector="project icon">
+<div class="thank-you-container__project-icon" data-test-project-icon>
   {{animated-high-five}}
 </div>
 <h3>Thank you!</h3>
 <div class="thank-you-container__message">
-  <p data-test-selector="thank you message">
+  <p data-test-thank-you-message>
     From all the volunteers on the {{project.title}} team.
   </p>
   <p>
@@ -16,6 +16,9 @@
 </div>
 <div class="thank-you-container__contributors">
   {{#each volunteers as |volunteer|}}
-    {{volunteer-headshot volunteer=volunteer data-test-selector="volunteer headshot"}}
+    {{volunteer-headshot
+      data-test-volunteer-headshot
+      volunteer=volunteer
+    }}
   {{/each}}
 </div>

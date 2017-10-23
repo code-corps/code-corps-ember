@@ -88,8 +88,8 @@ export default Controller.extend({
     saveDonationGoal(donationGoal, properties) {
       donationGoal.setProperties(properties);
       donationGoal.save()
-                  .then((donationGoal) => this._onDoneSaving(donationGoal))
-                  .catch((response) => this._onFailedSaving(response));
+        .then((donationGoal) => this._onDoneSaving(donationGoal))
+        .catch((response) => this._onFailedSaving(response));
     }
   },
 

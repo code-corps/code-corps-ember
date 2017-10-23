@@ -33,6 +33,11 @@ export default Service.extend({
     // Segment
     get(this, 'metrics').identify({
       distinctId: get(user, 'id'),
+      segmentContext: {
+        Intercom: {
+          user_hash: get(user, 'intercomUserHash')
+        }
+      },
       biography: get(user, 'biography'),
       insertedAt: get(user, 'insertedAt'),
       email: get(user, 'email'),

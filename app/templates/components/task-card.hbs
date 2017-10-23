@@ -3,46 +3,59 @@
   <div class="short"></div>
   <div class="select-inline">
     <span class="select-inline__loading-item__icon"></span>
-    <span class="select-inline__loading-item__text"></span>
   </div>
 {{else}}
-  <p>
-    <span class="task-card__title" data-test-selector="task title">{{task.title}}</span>
-    <span class="task-card__number" data-test-selector="task number">#{{task.number}}</span>
+  <p class="task-card__title-group">
+    {{#if task.githubPullRequest}}
+      {{github/pull-request-icon githubPullRequest=task.githubPullRequest}}
+    {{/if}}
+    <span class="task-card__title" data-test-task-title>{{task.title}}</span>
+    <span class="task-card__number" data-test-task-number>#{{task.number}}</span>
   </p>
   {{#if taskSkills}}
     {{related-skills class="task-card__skills" skills=taskSkills}}
   {{/if}}
   <p class="task-card__meta">
-    <span class="task-card__time" data-test-selector="task time">{{moment-from-now task.insertedAt}}</span>
+    <span class="task-card__time" data-test-task-time>{{moment-from-now task.createdAt}}</span>
+    <span class="task-card__integrations" data-test-task-integrations>
+      {{#if task.githubIssue}}
+        {{github/issue-link
+          githubIssue=task.githubIssue
+          githubRepo=task.githubRepo
+          size="small"
+        }}
+      {{/if}}
+    </span>
   </p>
-  {{#if canAssign}}
-    {{#power-select
-      beforeOptionsComponent=(component "power-select/before-options" selectRemoteController=selectRemoteController)
-      buildSelection=(action "buildSelection")
-      class="select-inline"
-      disabled=userSelectDisabled
-      dropdownClass="select-inline-dropdown"
-      loadingMessage=""
-      matchTriggerWidth=false
-      onchange=(action "changeUser")
-      options=userOptions
-      placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
-      registerAPI=(action (mut selectRemoteController))
-      search=(action "searchUsers")
-      selected=selectedOption
-      selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
-      tagName="div"
-      as |user select|
-    }}
-      {{select-inline-dropdown/list-item
-        iconUrl=user.photoThumbUrl
-        lastSearchedText=select.lastSearchedText
-        primaryText=user.username
-        secondaryText=user.name
+  <p class="task-card__assignee">
+    {{#if canAssign}}
+      {{#power-select
+        beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
+        buildSelection=(action "buildSelection")
+        class="select-inline"
+        disabled=userSelectDisabled
+        dropdownClass="select-inline-dropdown"
+        loadingMessage=""
+        matchTriggerWidth=false
+        onchange=(action "changeUser")
+        options=userOptions
+        placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
+        registerAPI=(action (mut selectRemoteController))
+        search=(action "searchUsers")
+        selected=selectedOption
+        selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
+        tagName="div"
+        as |user select|
       }}
-    {{/power-select}}
-  {{else if taskUser}}
-    {{task-card/user/selected-item select=(hash selected = selectedOption)}}
-  {{/if}}
+        {{select-inline-dropdown/list-item
+          iconUrl=user.photoThumbUrl
+          lastSearchedText=select.lastSearchedText
+          primaryText=user.username
+          secondaryText=user.name
+        }}
+      {{/power-select}}
+    {{else if taskUser}}
+      {{task-card/user/selected-item select=(hash selected = selectedOption)}}
+    {{/if}}
+  </p>
 {{/if}}

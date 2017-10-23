@@ -22,8 +22,8 @@ test('it exists', function(assert) {
 
 testForAttributes('user', [
   'biography', 'cloudinaryPublicId', 'email', 'firstName',
-  'githubAvatarUrl', 'githubId', 'githubUsername',
-  'insertedAt', 'lastName', 'name', 'password', 'photoLargeUrl',
+  'githubAvatarUrl', 'githubId', 'githubUsername', 'insertedAt',
+  'intercomUserHash', 'lastName', 'name', 'password', 'photoLargeUrl',
   'photoThumbUrl', 'signUpContext', 'state', 'stateTransition', 'twitter',
   'username', 'website'
 ]);

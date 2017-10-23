@@ -31,6 +31,7 @@
           skillsList=unsavedTaskSkills
         }}
       </div>
+
       {{project-skills-list
         onSkillClicked=(action 'toggleSkill')
         project=task.project
@@ -38,6 +39,18 @@
         showHeader=true
         header="Or click to add skills below"
       }}
+
+      <div class="task-sidebar-section">
+        <div class="task-sidebar-section__header">
+          <h2>Github</h2>
+          <p>Select a github repo to sync this task with</p>
+        </div>
+        {{select/github-repo
+          githubRepos=githubRepos
+          selectedRepo=selectedRepo
+          onSelected=(action (mut selectedRepo))
+        }}
+      </div>
     </div>
   </div>
 </div>

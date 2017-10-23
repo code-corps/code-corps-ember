@@ -53,9 +53,9 @@ export default Controller.extend({
       };
 
       RSVP.hash(promises)
-          .then(({ tokenData, stripeConnectAccount }) => this._addBankAccount(tokenData, stripeConnectAccount))
-          .catch((response) => this._handleError(response))
-          .finally(() => this._endAction());
+        .then(({ tokenData, stripeConnectAccount }) => this._addBankAccount(tokenData, stripeConnectAccount))
+        .catch((response) => this._handleError(response))
+        .finally(() => this._endAction());
     },
 
     onVerificationDocumentSubmitted(stripeFileUploadId) {
@@ -76,9 +76,9 @@ export default Controller.extend({
       };
 
       RSVP.hash(promises)
-          .then(({ tokenData, stripeConnectAccount }) => this._assignLegalEntityPersonalIdNumber(tokenData, stripeConnectAccount))
-          .catch((response) => this._handleError(response))
-          .finally(() => this._endAction());
+        .then(({ tokenData, stripeConnectAccount }) => this._assignLegalEntityPersonalIdNumber(tokenData, stripeConnectAccount))
+        .catch((response) => this._handleError(response))
+        .finally(() => this._endAction());
     }
   },
 
@@ -129,8 +129,8 @@ export default Controller.extend({
     let stripe = get(this, 'stripe');
 
     return stripe.piiData.createToken({ personalIdNumber })
-                 .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                 .catch(() => this._wrapError(PERSONAL_ID_NUMBER_TOKEN_CREATION_ERROR));
+      .then((stripeResponse) => RSVP.resolve(stripeResponse))
+      .catch(() => this._wrapError(PERSONAL_ID_NUMBER_TOKEN_CREATION_ERROR));
   },
 
   // bank account - token step
@@ -140,8 +140,8 @@ export default Controller.extend({
     let params = this._bankAccountTokenParams(accountNumber, routingNumber);
 
     return stripe.bankAccount.createToken(params)
-                 .then((stripeResponse) => RSVP.resolve(stripeResponse))
-                 .catch(() => this._wrapError(BANK_ACCOUNT_TOKEN_CREATION_ERROR));
+      .then((stripeResponse) => RSVP.resolve(stripeResponse))
+      .catch(() => this._wrapError(BANK_ACCOUNT_TOKEN_CREATION_ERROR));
   },
 
   _bankAccountTokenParams(accountNumber, routingNumber) {

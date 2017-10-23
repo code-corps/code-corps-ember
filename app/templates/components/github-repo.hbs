@@ -1,0 +1,17 @@
+{{#if (and githubRepo.isLoaded (or (not isConnected) projectGithubRepo.isLoaded))}}
+  <div class="github-repo__name" data-test-github-repo-name>{{name}}</div>
+  <div class="github-repo__actions" data-test-github-repo-actions>
+    {{#common/busy-model-wrapper
+      model=projectGithubRepo
+      onSaving='Connecting...'
+      onDeleting='Disconnecting...'
+    }}
+      {{yield}}
+    {{/common/busy-model-wrapper}}
+  </div>
+{{else}}
+  <div data-test-loading>
+    <div class="loading loading--col-2 loading--left"></div>
+    <div class="loading loading--col-1 loading--right"></div>
+  </div>
+{{/if}}

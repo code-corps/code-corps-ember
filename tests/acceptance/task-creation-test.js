@@ -6,6 +6,7 @@ import loginPage from '../pages/login';
 import projectTasksIndexPage from '../pages/project/tasks/index';
 import projectTasksNewPage from '../pages/project/tasks/new';
 import sinon from 'sinon';
+import Service from '@ember/service';
 
 moduleForAcceptance('Acceptance | Task Creation');
 
@@ -36,7 +37,7 @@ test('Creating a task requires logging in', function(assert) {
   });
 });
 
-test('A task can be successfully created', function(assert) {
+test('User can create a task', function(assert) {
   assert.expect(8);
   let user = server.schema.users.create({ username: 'test_user' });
 
@@ -55,10 +56,10 @@ test('A task can be successfully created', function(assert) {
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.new', 'Button takes us to the proper route');
 
-    projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body');
-
-    projectTasksNewPage.clickSubmit();
+    projectTasksNewPage
+      .taskTitle('A task title')
+      .taskMarkdown('A task body')
+      .clickSubmit();
   });
 
   andThen(() => {
@@ -76,6 +77,37 @@ test('A task can be successfully created', function(assert) {
     assert.equal(currentRouteName(), 'project.tasks.task', 'We got redirected to the task route');
   });
 
+});
+
+test('Clicking new task button is tracked', function(assert) {
+  assert.expect(1);
+  let user = server.schema.users.create({ username: 'test_user' });
+
+  let project = server.create('project');
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  this.application.register('service:stubMetrics', Service.extend({
+    instantiate: false,
+    trackEvent(data) {
+      assert.deepEqual(data, {
+        event: 'Clicked New Task',
+        organization: organization.name,
+        organization_id: organization.id,
+        project: project.title,
+        project_id: project.id
+      }, 'Event tracking was called with proper attributes.');
+    }
+  }));
+  this.application.inject('controller', 'metrics', 'service:stubMetrics');
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
 });
 
 test('Task preview works during creation', function(assert) {
@@ -112,8 +144,8 @@ test('When task creation succeeeds, the user is redirected to the task page for 
 
   andThen(() => {
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body')
-                       .clickSubmit();
+      .taskMarkdown('A task body')
+      .clickSubmit();
   });
 
   andThen(() => {
@@ -216,7 +248,7 @@ test('Navigating away from task route destroys task with prompt', function(asser
     projectTasksIndexPage.clickNewTask();
   });
 
-  let stub = sinon.stub(window, 'confirm', () => {
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
     return true;
   });
@@ -252,7 +284,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
     projectTasksIndexPage.clickNewTask();
   });
 
-  let stub = sinon.stub(window, 'confirm', () => {
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
     return false;
   });
@@ -292,14 +324,14 @@ test('Skills can be assigned to task during creation', function(assert) {
 
   andThen(() => {
     projectTasksNewPage.taskTitle('A task title')
-                       .taskMarkdown('A task body');
+      .taskMarkdown('A task body');
   });
 
   // NOTE: We need to be doing this async, so the code is ugly
   // Possibly switching to await/async might make it nicer
   andThen(() => {
     // find skill
-    projectTasksNewPage.skillsTypeahead.fillIn('ru');
+    projectTasksNewPage.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {
@@ -330,5 +362,43 @@ test('Skills can be assigned to task during creation', function(assert) {
     assert.equal(rubyTaskSkill.skillId, ruby.id, 'The correct skill was assigned.');
     assert.equal(cssTaskSkill.taskId, task.id, 'The correct task was assigned.');
     assert.equal(cssTaskSkill.skillId, css.id, 'The correct skill was assigned.');
+  });
+});
+
+test('A github repo can be assigned to the task during creation', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user', { username: 'test_user' });
+
+  let project = server.create('project');
+  let { organization } = project;
+  project.createTaskList({ inbox: true });
+
+  let githubRepo = server.create('githubRepo');
+  server.create('project-github-repo', { githubRepo, project });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectTasksIndexPage.visit({ organization: organization.slug, project: project.slug });
+
+  andThen(() => {
+    projectTasksIndexPage.clickNewTask();
+  });
+
+  andThen(() => {
+    projectTasksNewPage.taskTitle('A task title')
+      .taskMarkdown('A task body')
+      .githubRepo.select.fillIn(githubRepo.name);
+  });
+
+  andThen(() => {
+    projectTasksNewPage.clickSubmit();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.tasks.all().models.length, 1, 'A task has been created.');
+
+    let [task] = server.schema.tasks.all().models;
+    assert.equal(task.githubRepoId, githubRepo.id, 'The correct github repo was assigned.');
   });
 });

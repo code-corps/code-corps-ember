@@ -1,0 +1,6 @@
+{{#x-select value=selectedRepo action=onSelected as |xs|}}
+  {{#xs.option value=null}}None (default){{/xs.option}}
+  {{#each githubRepos as |githubRepo|}}
+    {{#xs.option value=githubRepo}}{{githubRepo.name}}{{/xs.option}}
+  {{/each}}
+{{/x-select}}

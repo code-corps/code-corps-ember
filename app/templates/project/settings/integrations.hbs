@@ -1,0 +1,84 @@
+{{title "Integrations" " « " project.title " by " project.organization.name}}
+
+<div class="container">
+  <div class="panel panel--highlighted">
+    <div class="panel__section">
+      <div class="panel__section__description">
+        <h3>Sync with GitHub</h3>
+        <p>Manage the repos connected to your project.</p>
+      </div>
+      <div class="panel__section__content">
+        <div class="integrations__description">
+          <p>You can connect your project to multiple GitHub repos to sync issues with tasks automatically.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+    {{#if unconnectedInstallations}}
+      <h4>Unconnected installations</h4>
+      {{#each unconnectedInstallations as |githubAppInstallation|}}
+        {{github/unconnected-installation
+          connect=(action 'connect' organization githubAppInstallation)
+          githubAppInstallation=githubAppInstallation
+          organization=organization
+        }}
+      {{/each}}
+    {{/if}}
+  {{/if}}
+
+  {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
+    {{#if organizationGithubAppInstallations}}
+      <h4>Connected installations</h4>
+      {{#each organizationGithubAppInstallations as |organizationGithubAppInstallation|}}
+        {{#if organizationGithubAppInstallation.githubAppInstallation.isLoaded}}
+          {{github/connected-installation
+            connectRepo=(action 'connectRepo')
+            disconnectRepo=(action 'disconnectRepo')
+            disconnect=(action 'disconnect' organizationGithubAppInstallation)
+            organizationGithubAppInstallation=organizationGithubAppInstallation
+            project=project
+          }}
+        {{else}}
+          <div class="github-app-installation">
+            <div class="github-app-installation__details">
+              <div class="loading loading--col-3 loading--h-40 loading--left"></div>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+
+    <div class="panel">
+      <div class="panel__section">
+        <div class="panel__section__description">
+          <h4>Add a new installation</h4>
+          <p>Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.</p>
+        </div>
+        <div class="panel__section__content">
+          {{#if user.githubId}}
+            <p>
+              Install our GitHub app on your GitHub account to select which repositories will sync.
+            </p>
+            <p>
+              The button will open a new tab, so come back here and refresh the page when you're done.
+            </p>
+            <p>
+              {{github/install-link
+                organization=project.organization
+                project=project
+              }}
+            </p>
+            {{else}}
+              <p>
+                Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before adding a GitHub account to the <strong>{{project.organization.name}}</strong> organization.
+              </p>
+            {{/if}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{loading-spinner}}
+  {{/if}}
+</div>

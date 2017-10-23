@@ -1,12 +1,7 @@
-import Ember from 'ember';
 import ENV from 'code-corps-ember/config/environment';
-
-const {
-  Component,
-  get,
-  inject: { service },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { get, set } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 const baseUrl = 'https://github.com/login/oauth/authorize';
 
@@ -31,16 +26,24 @@ export default Component.extend({
   attributeBindings: ['url:href'],
 
   githubState: service(),
+  metrics: service(),
 
   clientId: `${ENV.github.clientId}`,
   redirectUri: `${ENV.github.redirectUri}`,
   scope: `${ENV.github.scope}`,
   state: null,
+  url: null,
 
   init() {
     this._super(...arguments);
     this._initState();
     this._initUrl();
+  },
+
+  click() {
+    get(this, 'metrics').trackEvent({
+      event: 'Clicked Connect with GitHub'
+    });
   },
 
   _initState() {

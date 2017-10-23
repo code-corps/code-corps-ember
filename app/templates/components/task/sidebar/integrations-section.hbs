@@ -1,0 +1,13 @@
+<div class="task-sidebar-section__header">
+  <h3>Integrations</h3>
+</div>
+
+{{#if task.githubIssue}}
+  {{github/issue-link
+    githubIssue=task.githubIssue
+    githubRepo=task.githubRepo
+    size="large"
+  }}
+{{else}}
+  <p data-test-empty-message>None yet</p>
+{{/if}}

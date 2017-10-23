@@ -334,3 +334,25 @@ select {
     @include focus($default-color);
   }
 }
+
+.button__github {
+  span {
+    display: inline-block;
+    height: 16px;
+    margin: -3px 7px 0 0;
+    vertical-align: middle;
+    width: 16px;
+  }
+
+  &--light {
+    span {
+      @include sprite($github-light);
+    }
+  }
+
+  &--dark {
+    span {
+      @include sprite($github-dark);
+    }
+  }
+}

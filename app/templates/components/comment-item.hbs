@@ -1,33 +1,22 @@
-{{#link-to 'slugged-route' comment.user.username}}
-  {{#if comment.user.isLoaded}}
-    <img class="icon" src={{comment.user.photoThumbUrl}} />
-  {{else}}
-    <div class="icon"></div>
-  {{/if}}
-{{/link-to}}
-<div class="comment-content">
-{{#if isEditing}}
-  <div class="input-group">
-    {{editor-with-preview
-      input=comment.markdown
-      isLoading=comment.isSaving
-      modifiedSubmit=(action 'save')
-    }}
-    {{#each comment.errors.markdown as |error|}}
-      <p class="error">{{error.message}}</p>
-    {{/each}}
-  </div>
-  <div class="input-group">
-    {{#if comment.isSaving}}
-      <button class="default small right">Saving...</button>
+<div class="avatar-container timeline-comment-avatar">
+  {{#link-to 'slugged-route' comment.user.username}}
+    {{#if comment.user.isLoaded}}
+      <img class="icon avatar avatar__parent" src={{comment.user.photoThumbUrl}} />
+      {{#if (eq comment.createdFrom 'github')}}
+        <img class="avatar avatar__child" src="/assets/images/icons/integration-github@2x.png" height="20" width="20" />
+      {{/if}}
     {{else}}
-      <button {{action 'save'}} class="default small right save">Save</button>
-      <button {{action 'cancel'}} class="clear small right cancel">Cancel</button>
+      <div class="icon"></div>
     {{/if}}
-  </div>
-{{else}}
+  {{/link-to}}
+</div>
+<div class="comment-content-wrapper">
   <div class="comment-info">
-    {{#link-to 'slugged-route' comment.user.username class="username"}}{{comment.user.username}}{{/link-to}} commented {{moment-from-now comment.insertedAt}}
+    {{user-byline
+      createdAt=comment.createdAt
+      createdFrom=comment.createdFrom
+      user=comment.user
+    }}
     {{#if canEdit}}
       <a class="edit" {{action 'edit'}}>edit</a>
     {{/if}}
@@ -35,8 +24,34 @@
       {{code-theme-selector}}
     {{/if}}
   </div>
-  <div class="comment-body">
-    {{{processedBody}}}
+  <div class="comment-content">
+  {{#if isEditing}}
+    <div class="input-group">
+      {{editor-with-preview
+        input=comment.markdown
+        isLoading=comment.isSaving
+        modifiedSubmit=(action 'save')
+      }}
+      {{#each comment.errors.markdown as |error|}}
+        <p class="error">{{error.message}}</p>
+      {{/each}}
+    </div>
+    <div class="input-group">
+      {{#if comment.isSaving}}
+        <button class="default right">Updating...</button>
+      {{else}}
+        <button {{action 'save'}} class="default right save">Update comment</button>
+        <button {{action 'cancel'}} class="clear right cancel">Cancel</button>
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="comment-body markdown-body">
+      {{#if nullBody}}
+        <em class="markdown-body--empty" data-test-markdown-body-empty>No description provided.</em>
+      {{else}}
+        {{{parsedBody}}}
+      {{/if}}
+    </div>
+  {{/if}}
   </div>
-{{/if}}
 </div>

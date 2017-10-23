@@ -1,0 +1,5 @@
+{{#if username}}
+  {{#link-to data-test-username 'slugged-route' username class="username"}}{{username}}{{/link-to}}
+{{else if githubUsername}}
+  GitHub user <a data-test-github-username href={{githubUserUrl}} class="username">{{githubUsername}}</a>
+{{/if}}

@@ -86,7 +86,17 @@ test('it shows errors if any', function(assert) {
 
   renderPage();
 
-  assert.equal(page.errorText, 'Lorem ipsum', 'Error is rendered');
+  assert.equal(page.error.text, 'Lorem ipsum', 'Error is rendered');
+});
+
+test('it renders Stripe error correctly', function(assert) {
+  assert.expect(2);
+  this.set('stripeConnectAccount', { verificationDocumentStatus: 'errored' });
+
+  renderPage();
+
+  assert.ok(page.error.isVisible, 'Error is rendered');
+  assert.ok(page.rendersFileUpload, 'File upload subcomponent is rendered');
 });
 
 // TODO: Figure out how to write these

@@ -38,7 +38,7 @@ test('it renders all required comment elements properly', function(assert) {
   renderPage();
 
   assert.equal(page.commentBody.text, '', 'The body is not initially rendered, since the comment has not loaded');
-  assert.equal(page.username, '', 'The username of the comment author is not rendered, since the comment is not loaded yet');
+  assert.notOk(page.username.isVisible, 'The username of the comment author is not rendered, since the comment is not loaded yet');
   assert.notOk(page.codeThemeSelectorVisible, 'The code theme selector is hidden, since the comment is not loaded yet.');
 
   // this will trigger some promise resolving, so we wrap it in a loop
@@ -52,7 +52,7 @@ test('it renders all required comment elements properly', function(assert) {
   });
 
   assert.equal(page.commentBody.text, 'A comment', 'The body is now rendered.');
-  assert.equal(page.username, 'tester', 'The username of the comment author is now rendered.');
+  assert.equal(page.username.text, 'tester', 'The username of the comment author is now rendered.');
   assert.ok(page.codeThemeSelectorVisible, 'The code theme selector is visible, since the comment is marked as containing code.');
 });
 
@@ -91,3 +91,23 @@ test('it switches between editing and viewing mode', function(assert) {
   assert.notOk(page.editor.isVisible, 'Component switched back to view mode.');
 });
 
+test('if the comment body is empty render null comment element', function(assert) {
+  assert.expect(1);
+
+  let comment = { isLoaded: false };
+
+  set(this, 'comment', comment);
+
+  renderPage();
+
+  // this will trigger some promise resolving, so we wrap it in a loop
+  run(this, () => {
+    setProperties(comment, {
+      body: null,
+      containsCode: true,
+      isLoaded: true,
+      user: { username: 'tester' }
+    });
+  });
+  assert.ok(page.nullCommentBody.isVisible, 'The message for no comment body is rendered');
+});

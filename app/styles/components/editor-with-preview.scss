@@ -1,11 +1,12 @@
 .editor-with-preview {
   textarea {
     font-family: $body-font-family;
+    font-size: $body-font-size-normal;
     width: 100%;
   }
 
   .editor-header {
-    margin: 0 0 10px 0;
+    margin: 10px 0;
     position: relative;
   }
 

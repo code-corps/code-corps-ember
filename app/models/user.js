@@ -8,13 +8,14 @@ const { computed } = Ember;
 export default Model.extend({
   biography: attr(),
   cloudinaryPublicId: attr(),
-  insertedAt: attr('date'),
   email: attr(),
   firstName: attr(),
-  lastName: attr(),
   githubAvatarUrl: attr(),
   githubId: attr(),
   githubUsername: attr(),
+  insertedAt: attr('date'),
+  intercomUserHash: attr(),
+  lastName: attr(),
   name: attr(),
   password: attr(),
   photoLargeUrl: attr(),
@@ -26,6 +27,8 @@ export default Model.extend({
   website: attr(),
 
   stateTransition: attr(),
+
+  githubAppInstallations: hasMany('github-app-installation', { async: true }),
 
   projectUsers: hasMany('project-user', { async: true }),
 

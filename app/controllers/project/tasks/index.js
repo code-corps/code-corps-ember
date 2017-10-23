@@ -1,17 +1,13 @@
-import Ember from 'ember';
-
-const {
-  computed: { sort },
-  Controller,
-  get,
-  inject: { service },
-  RSVP,
-  setProperties
-} = Ember;
+import Controller from '@ember/controller';
+import { get, setProperties } from '@ember/object';
+import { sort } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
 
 export default Controller.extend({
   taskListsSorting: ['order:asc'],
 
+  metrics: service(),
   store: service(),
 
   dragulaconfig: {
@@ -46,6 +42,20 @@ export default Controller.extend({
       } else {
         this._moveTaskMaybeBelowTask(taskList, task, position, droppedTaskEl);
       }
+    },
+
+    trackClickNewTask(project) {
+      let organizationId = get(project, 'organization.id');
+      let organizationName = get(project, 'organization.name');
+      let projectId = get(project, 'id');
+      let projectTitle = get(project, 'title');
+      get(this, 'metrics').trackEvent({
+        event: 'Clicked New Task',
+        organization: organizationName,
+        organization_id: organizationId,
+        project: projectTitle,
+        project_id: projectId
+      });
     }
   },
 

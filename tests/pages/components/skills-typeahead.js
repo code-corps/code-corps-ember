@@ -6,6 +6,17 @@ import skillsTypeaheadResult from './skills-typeahead-result';
 export default {
   scope: '.skills-typeahead',
 
+  /**
+   * Types into the skills typeahead search box and triggers focus immediately
+   * after, so that results are shown once promises resolve.
+   *
+   * This is the most reliable way to simulate using the typeahead
+   * control.
+   */
+  searchFor(text) {
+    this.fillIn(text).focus();
+  },
+
   fillIn: fillable('input'),
   focus: triggerable('focus', 'input'),
   inputValue: value('input'),

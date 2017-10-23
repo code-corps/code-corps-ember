@@ -2,8 +2,7 @@ import {
   clickable,
   collection,
   fillable,
-  isVisible,
-  text
+  isVisible
 } from 'ember-cli-page-object';
 
 export default {
@@ -18,7 +17,9 @@ export default {
   commentBody: {
     scope: '.comment-body'
   },
-
+  nullCommentBody:{
+    scope: '[data-test-markdown-body-empty]'
+  },
   editLink: {
     scope: '.edit'
   },
@@ -39,5 +40,7 @@ export default {
     itemScope: '.error'
   }),
 
-  username: text('.username')
+  username: {
+    scope: '[data-test-username]'
+  }
 };

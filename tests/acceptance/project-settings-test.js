@@ -87,7 +87,6 @@ test("it allows editing of project's image for owners", function(assert) {
 
 test("it allows editing of project's skills for owners", function(assert) {
   assert.expect(4);
-  let done = assert.async();
 
   server.create('skill', { title: 'Ruby' });
   let { project, user } = server.create('project-user', { role: 'owner' });
@@ -100,23 +99,21 @@ test("it allows editing of project's skills for owners", function(assert) {
   });
 
   andThen(() => {
-    projectSettingsPage.skillsTypeahead.fillIn('ru');
+    projectSettingsPage.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {
-    assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`);
-    projectSettingsPage.skillsTypeahead.focus();
-    assert.equal(projectSettingsPage.skillsTypeahead.inputItems(0).text, 'Ruby');
+    assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`, 'The project settings profile page loaded');
+    assert.equal(projectSettingsPage.skillsTypeahead.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
     projectSettingsPage.skillsTypeahead.inputItems(0).click();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsPage.projectSkillsList(0).text, 'Ruby');
+    assert.equal(projectSettingsPage.projectSkillsList(0).text, 'Ruby', 'The skill was added to the list');
     projectSettingsPage.projectSkillsList(0).click();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsPage.projectSkillsList().count, 0);
-    done();
+    assert.equal(projectSettingsPage.projectSkillsList().count, 0, 'The skill was removed from the list');
   });
 });
