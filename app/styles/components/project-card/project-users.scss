@@ -12,6 +12,10 @@ $height: 25px;
     line-height: $height;
     margin-right: -5px;
     vertical-align: middle;
+
+    &:last-child {
+      padding-left: 5px;
+    }
   }
 }
 
