@@ -35,7 +35,7 @@ test('it renders link to github app installation page if user is connected to Gi
 
   andThen(() => {
     assert.notOk(projectIntegrationsPage.integrationsLink.isVisible, 'The link to user profile integrations does not render');
-    assert.ok(projectIntegrationsPage.installationLink.isVisible, 'The link to GitHub app installation renders');
+    assert.ok(projectIntegrationsPage.installLink.isVisible, 'The link to GitHub app installation renders');
   });
 });
 
@@ -54,7 +54,7 @@ test('it renders link to user integrations page if user is not connected to GitH
 
   andThen(() => {
     assert.ok(projectIntegrationsPage.integrationsLink.isVisible, 'The link to user profile integrations renders');
-    assert.notOk(projectIntegrationsPage.installationLink.isVisible, 'The link to GitHub app installation does not render');
+    assert.notOk(projectIntegrationsPage.installLink.isVisible, 'The link to GitHub app installation does not render');
   });
 });
 

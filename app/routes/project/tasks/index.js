@@ -1,13 +1,10 @@
-import Ember from 'ember';
-
-const {
-  get,
-  inject: { service },
-  Route,
-  RSVP
-} = Ember;
+import { get } from '@ember/object';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
 
 export default Route.extend({
+  metrics: service(),
   projectTaskBoard: service(),
 
   async model() {
@@ -41,6 +38,24 @@ export default Route.extend({
       let organizationSlug = get(project, 'organization.slug');
       let projectSlug = get(project, 'slug');
       let taskNumber = get(task, 'number');
+
+      let organizationId = get(project, 'organization.id');
+      let organizationName = get(project, 'organization.name');
+      let projectId = get(project, 'id');
+      let projectTitle = get(project, 'title');
+      let taskId = get(task, 'id');
+      let taskTitle = get(task, 'title');
+
+      get(this, 'metrics').trackEvent({
+        event: 'Clicked on Task Card in List',
+        organization: organizationName,
+        organization_id: organizationId,
+        project: projectTitle,
+        project_id: projectId,
+        task: taskTitle,
+        task_id: taskId
+      });
+
       this.transitionTo('project.tasks.task', organizationSlug, projectSlug, taskNumber);
     }
   }

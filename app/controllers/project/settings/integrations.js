@@ -1,17 +1,9 @@
-import Ember from 'ember';
-import ENV from 'code-corps-ember/config/environment';
-
-const {
-  Controller,
-  computed: { alias, mapBy },
-  computed,
-  get,
-  getProperties,
-  inject: { service }
-} = Ember;
+import Controller from '@ember/controller';
+import { computed, get, getProperties } from '@ember/object';
+import { alias, mapBy } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
-  githubAppUrl: ENV.github.appUrl,
   store: service(),
 
   organization: alias('project.organization'),
