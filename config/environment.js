@@ -26,8 +26,7 @@ module.exports = function(environment) {
     cloudinary: {},
 
     github: {
-      scope: 'public_repo,admin:org,user:email',
-      appUrl: 'https://github.com/apps/code-corps-local'
+      scope: 'public_repo,admin:org,user:email'
     },
 
     flashMessageDefaults: {
@@ -95,6 +94,7 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://localhost:4200';
     ENV.cloudinary.cloud = 'dlfnmtoq1';
     ENV.cloudinary.uploadPreset = 'xjyyogvi';
+    ENV.github.appUrl = 'https://github.com/apps/code-corps-local';
     ENV.github.clientId = 'Iv1.86cea3d2991aea7a';
     ENV.github.redirectUri = 'http://localhost:4200/oauth/github';
     ENV.sentry.development = true;
@@ -140,6 +140,9 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
+    ENV.github.appUrl = 'https://github.com/apps/code-corps-remote-development';
+    ENV.github.clientId = 'Iv1.a7168fece17333e4';
+    ENV.github.redirectUri = 'http://www.pbqrpbecf-qri.org/oauth/github';
     ENV.sentry.development = true;
     ENV.stripe.publishableKey = 'pk_test_WN9xr9Ly1m0D36bdPQCbAzMi';
   }
@@ -162,6 +165,9 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
+    ENV.github.appUrl = 'https://github.com/apps/code-corps-staging';
+    ENV.github.clientId = 'Iv1.c12dfe52d1750e83';
+    ENV.github.redirectUri = 'http://www.pbqrpbecf.org/oauth/github';
     ENV.sentry.dsn = 'https://c494e4250972401e84b74526fdf1182b@app.getsentry.com/82742';
     ENV.stripe.publishableKey = 'pk_test_AjQ9D0wliXnWRXH9d14DIW2E';
   }
@@ -181,6 +187,7 @@ module.exports = function(environment) {
 
     ENV.sentry.development = true;
 
+    ENV.github.appUrl = 'https://github.com/apps/code-corps-local';
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
 
     ENV['simple-auth'] = {
@@ -197,6 +204,9 @@ module.exports = function(environment) {
     ENV.WEB_BASE_URL = 'https://www.codecorps.org';
     ENV.cloudinary.cloud = 'dtrnlbt7o';
     ENV.cloudinary.uploadPreset = 'n5zjzoqc';
+    ENV.github.appUrl = 'https://github.com/apps/code-corps';
+    ENV.github.clientId = 'Iv1.05b69632e460220d';
+    ENV.github.redirectUri = 'https://www.codecorps.org/oauth/github';
     ENV.stripe.publishableKey = 'pk_live_AieoBpMkVudxrwizI0yqwRF8';
   }
 
