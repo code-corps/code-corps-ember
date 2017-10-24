@@ -23,7 +23,7 @@ const baseUrl = 'https://github.com/login/oauth/authorize';
 export default Component.extend({
   tagName: 'a',
   classNames: ['github-connect', 'button', 'default'],
-  attributeBindings: ['url:href'],
+  attributeBindings: ['url:href', 'target:target'],
 
   githubState: service(),
   metrics: service(),
@@ -32,6 +32,7 @@ export default Component.extend({
   redirectUri: `${ENV.github.redirectUri}`,
   scope: `${ENV.github.scope}`,
   state: null,
+  target: null,
   url: null,
 
   init() {

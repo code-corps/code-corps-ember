@@ -14,3 +14,11 @@
     margin: 0;
   }
 }
+
+.github-connect.button {
+  align-items: center;
+  display: inline-flex;
+  .sprite-icon {
+    padding-right: 7px;
+  }
+}

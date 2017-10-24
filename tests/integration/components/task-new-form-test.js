@@ -1,15 +1,25 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import { get, set, setProperties } from '@ember/object';
+import { run } from '@ember/runloop';
 import PageObject from 'ember-cli-page-object';
 import taskNewFormComponent from 'code-corps-ember/tests/pages/components/task-new-form';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import setupSession from 'ember-simple-auth/initializers/setup-session';
+import setupSessionService from 'ember-simple-auth/initializers/setup-session-service';
 
 let page = PageObject.create(taskNewFormComponent);
 
-const { set, setProperties } = Ember;
-
 function renderPage() {
-  page.render(hbs`{{task-new-form task=task placeholder=placeholder save=(action saveHandler task)}}`);
+  page.render(hbs`
+    {{task-new-form
+      githubRepos=githubRepos
+      placeholder=placeholder
+      save=(action saveHandler task)
+      selectedRepo=selectedRepo
+      task=task
+    }}
+  `);
 }
 
 function setHandler(context, saveHandler = function() {}) {
@@ -20,6 +30,8 @@ moduleForComponent('task-new-form', 'Integration | Component | task new form', {
   integration: true,
   beforeEach() {
     setHandler(this);
+    setupSession(this.registry);
+    setupSessionService(this.registry);
     page.setContext(this);
   },
   afterEach() {
@@ -64,4 +76,54 @@ test('it triggers an action when the task is saved', function(assert) {
   renderPage();
 
   page.saveButton.click();
+});
+
+test('it changes the selected repo when the select is changed', function(assert) {
+  assert.expect(1);
+
+  let [repo1, repo2] = [
+    { name: 'Repo 1', id: 1 },
+    { name: 'Repo 2', id: 2 }
+  ];
+
+  set(this, 'githubRepos', [repo1, repo2]);
+  stubService(this, 'current-user', { user: { githubId: '123' } });
+
+  renderPage();
+
+  run(() => page.selectGithubRepo.select.fillIn('Repo 1'));
+  run(() => {
+    assert.deepEqual(get(this, 'selectedRepo'), repo1);
+  });
+});
+
+test('it does not render the github repo selection if there are no repos', function(assert) {
+  assert.expect(1);
+  set(this, 'githubRepos', []);
+  renderPage();
+  assert.notOk(page.selectGithubRepo.isVisible);
+});
+
+test('it renders the connect to github callout if there are repos and the user is not connected to github', function(assert) {
+  assert.expect(1);
+  set(this, 'githubRepos', [{ id: 1 }]);
+  stubService(this, 'current-user', { user: { githubId: null } });
+  renderPage();
+  assert.ok(page.callout.isVisible);
+});
+
+test('it does not render the connect to github callout if there are repos and the user is connected to github', function(assert) {
+  assert.expect(1);
+  set(this, 'githubRepos', [{ id: 1 }]);
+  stubService(this, 'current-user', { user: { githubId: '123' } });
+  renderPage();
+  assert.notOk(page.callout.isVisible);
+});
+
+test('it does not render the connect to github callout if there are no repos and the user is not connected to github', function(assert) {
+  assert.expect(1);
+  set(this, 'githubRepos', []);
+  stubService(this, 'current-user', { user: { githubId: null } });
+  renderPage();
+  assert.notOk(page.callout.isVisible);
 });
