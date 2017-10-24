@@ -28,7 +28,7 @@ $outer-border-radius: 4px;
   @include clearfix;
 
   display: table;
-  margin: 0 0 10px 0;
+  margin: 0 0 1.5em 0;
   position: relative;
   max-width: 100%;
   width: 100%;
@@ -75,15 +75,6 @@ $outer-border-radius: 4px;
     justify-content: space-between;
   }
 
-  label {
-    span {
-      display: block;
-      font-size: $body-font-size-small;
-      font-weight: 700;
-      margin-bottom: 3px;
-    }
-  }
-
   .icon-input {
     padding-left: 35px;
   }
@@ -95,6 +86,49 @@ $outer-border-radius: 4px;
       top: 10px;
       left: 8px;
     }
+  }
+}
+
+.input-label {
+  label {
+    align-items: center;
+    display: flex;
+    font-size: $body-font-size-normal;
+    font-weight: 600;
+    margin-bottom: 5px;
+
+  }
+
+  &__icon, &__text {
+    padding-right: 5px;
+  }
+
+  &__help {
+    color: $gray--dark;
+    font-size: $body-font-size-small;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0 0 1em 0;
+  }
+}
+
+.recommended-text {
+  padding-right: 5px;
+  font-size: $body-font-size-tiny;
+  &:after {
+    content: '(recommended)';
+    color: $blue;
+  }
+}
+
+.required-text {
+  padding-right: 5px;
+  font-size: $body-font-size-tiny;
+  &:after {
+    content: '(required)';
+    color: $red;
   }
 }
 

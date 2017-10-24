@@ -4,6 +4,8 @@ import {
 } from 'ember-qunit';
 import { start } from 'ember-cli-qunit';
 import './helpers/flash-message';
+import loadEmberExam from 'ember-exam/test-support/load';
 
+loadEmberExam();
 setResolver(resolver);
 start();
