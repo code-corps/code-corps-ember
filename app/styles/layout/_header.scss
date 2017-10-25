@@ -25,6 +25,7 @@
   line-height: 45px;
   margin: 0;
   min-height: 45px;
+
   a {
     @include sprite($logo-small);
     display: inline-block;
@@ -68,16 +69,19 @@
     float: left;
     font-size: $body-font-size-normal;
   }
+
   a {
     border-bottom: 3px solid transparent;
     color: $text--dark;
     display: block;
     font-weight: 600;
     padding: 11px 10px;
+
     &.active, &:hover {
       border-bottom-color: $blue;
       color: $link-color;
     }
+
     &:hover {
       transition: border-bottom-color ease 0.3s;
     }
