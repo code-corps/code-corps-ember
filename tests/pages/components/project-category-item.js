@@ -15,6 +15,7 @@ export default {
   },
 
   mouseenter: triggerable('mouseenter'),
+  mouseleave: triggerable('mouseleave'),
 
   tooltip
 };
