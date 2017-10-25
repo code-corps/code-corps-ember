@@ -2,3 +2,9 @@ $xs-screen: new-breakpoint(max-width 479px);
 $sm-screen: new-breakpoint(max-width 599px);
 $md-screen: new-breakpoint(max-width 767px);
 $lg-screen: new-breakpoint(max-width 991px);
+
+.mobile-hide {
+  @include media($sm-screen) {
+    display: none !important;
+  }
+}
