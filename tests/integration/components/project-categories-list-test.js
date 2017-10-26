@@ -44,6 +44,8 @@ test('it renders the categories and sorts them by name', function(assert) {
   this.set('categories', categories);
   renderPage();
 
+  // trigger lazy rendering of tooltips
+  [0, 1, 2].forEach((index) => page.projectCategoryItems(index).mouseenter());
   assert.equal(page.projectCategoryItems().count, 3);
   assert.equal(page.projectCategoryItems(0).tooltip.text, 'Alphabets');
   assert.equal(page.projectCategoryItems(1).tooltip.text, 'Society');

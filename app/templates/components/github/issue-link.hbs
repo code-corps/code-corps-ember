@@ -1,12 +1,19 @@
 {{#if (and githubIssue.isLoaded githubRepo.isLoaded)}}
   <a data-test-issue-url href={{githubIssue.htmlUrl}} {{action "trackClick" preventDefault=false}}>
     {{#if (eq size "large")}}
-      {{svg/sprite-icon icon="github-48"}} <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.name}}</span> <span class="github__issue-link__issue-number" data-test-issue-number>#{{githubIssue.number}}</span>
+      <span class="github__issue-link__icon">
+        {{svg/sprite-icon icon="github-48"}}
+      </span>
+      <span class="github__issue-link__text">
+        <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.name}}</span>
+        <span class="github__issue-link__issue-number" data-test-issue-number>#{{githubIssue.number}}</span>
+      </span>
     {{else if (eq size "small")}}
       {{svg/sprite-icon icon="github-48" style="solid-light-gray"}}
       {{#tooltip-on-component
         class='tooltip'
         effect='none'
+        enableLazyRendering=true
         keepInWindow=true
         side='bottom'
       }}

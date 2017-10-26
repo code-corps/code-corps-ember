@@ -19,6 +19,7 @@ export default {
   },
 
   mouseenter: triggerable('mouseenter'),
+  mouseleave: triggerable('mouseleave'),
 
   repoName: {
     scope: '[data-test-repo-name]'
