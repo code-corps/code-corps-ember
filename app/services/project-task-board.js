@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 
 const {
   computed,
@@ -19,9 +20,11 @@ export default Service.extend({
 
   activate() {
     set(this, 'isViewing', true);
+    $('body').addClass('task-board-body');
   },
 
   deactivate() {
     set(this, 'isViewing', false);
+    $('body').removeClass('task-board-body');
   }
 });

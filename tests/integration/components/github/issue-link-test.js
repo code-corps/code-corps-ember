@@ -64,8 +64,10 @@ test('it renders with no text and a tooltip when small', function(assert) {
 
   assert.notOk(page.repoName.isVisible, 'The repo name does not render.');
   assert.notOk(page.issueNumber.isVisible, 'The issue number does not render.');
+  page.mouseenter(); // trigger the tooltip
   assert.ok(page.isTooltipTarget, 'There is a tooltip.');
   assert.equal(page.tooltip.text, 'code-corps/code-corps-ember #123', 'The tool tip renders with the slash notation for the repo and the issue number.');
+  page.mouseleave(); // hide the tooltip
   assert.ok(page.tooltip.isAriaHidden);
 
   run(() => {

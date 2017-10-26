@@ -1,16 +1,11 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
+import { get } from '@ember/object';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import projectCategoryItemComponent from 'code-corps-ember/tests/pages/components/project-category-item';
 import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(projectCategoryItemComponent);
-
-const {
-  get,
-  run
-} = Ember;
 
 let mockUserCategoriesService = {
   findUserCategory(category) {
@@ -56,14 +51,12 @@ test('it works for unselected categories', function(assert) {
 
   assert.ok(page.linkIcon.classContains('technology'), 'Dynamic category class is properly bound.');
   assert.notOk(page.linkIcon.classContains('selected'), 'Icon is unselected.');
+  page.mouseenter(); // trigger the tooltip for lazy rendering
+  page.mouseleave(); // hide the tooltip
   assert.ok(page.isTooltipTarget, 'Component works as a tooltip target.');
   assert.equal(page.tooltip.text, 'Technology', 'Dynamic tooltip text is properly bound.');
   assert.ok(page.tooltip.isAriaHidden, 'Aria attribute is bound as hidden by default.');
-
-  run(() => {
-    page.mouseenter();
-  });
-
+  page.mouseenter();
   assert.ok(page.tooltip.isAriaVisible, 'Aria attribute is not hidden on hover.');
 });
 
@@ -82,13 +75,11 @@ test('it works for selected categories', function(assert) {
 
   assert.ok(page.linkIcon.classContains('society'));
   assert.ok(page.linkIcon.classContains('selected'));
+  page.mouseenter(); // trigger the tooltip for lazy rendering
+  page.mouseleave(); // hide the tooltip
   assert.ok(page.isTooltipTarget);
   assert.equal(page.tooltip.text, 'Society');
   assert.ok(page.tooltip.isAriaHidden);
-
-  run(() => {
-    page.mouseenter();
-  });
-
+  page.mouseenter();
   assert.ok(page.tooltip.isAriaVisible);
 });

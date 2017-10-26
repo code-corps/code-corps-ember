@@ -1,18 +1,26 @@
 .github__issue-link {
   a {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
+  }
+
+  &__icon {
+    line-height: 1em;
+    padding-right: 5px;
+  }
+
+  &__text {
+    font-size: $body-font-size-small;
   }
 
   &__repo-name {
     color: $text--lighter;
     font-weight: 600;
-    margin-left: 5px;
+    padding-right: 2px;
   }
 
   &__issue-number {
     color: $text--lightest;
-    margin-left: 5px;
   }
 
   a:hover {
