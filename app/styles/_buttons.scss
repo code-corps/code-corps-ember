@@ -63,6 +63,7 @@
   }
 
   &.normal {
+    background: $gray--light;
     &.skill {
       font-size: $body-font-size-normal;
       padding: 8px 11px;
