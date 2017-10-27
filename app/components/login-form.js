@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  get,
-  inject: { service },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 
 /**
   `login-form` composes the login form, and makes the required calls to

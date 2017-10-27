@@ -1,13 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias },
-  get,
-  inject: { service },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { set, get, computed } from '@ember/object';
 
 /**
   The task-details component composes a task object, it's author, info,

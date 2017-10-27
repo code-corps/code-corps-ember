@@ -1,5 +1,5 @@
-import Ember from 'ember';
-const { RSVP, getOwner } = Ember;
+import RSVP from 'rsvp';
+import { getOwner } from '@ember/application';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import resetPasswordComponent from 'code-corps-ember/tests/pages/components/password/reset-password';

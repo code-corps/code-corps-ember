@@ -1,15 +1,11 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import RSVP from 'rsvp';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-long-description';
-
-const {
-  merge,
-  RSVP,
-  set
-} = Ember;
 
 let page = PageObject.create(component);
 

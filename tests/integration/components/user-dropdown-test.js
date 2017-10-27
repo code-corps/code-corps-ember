@@ -1,11 +1,7 @@
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const {
-  computed,
-  run
-} = Ember;
 
 moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
   integration: true

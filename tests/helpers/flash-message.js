@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 import FlashObject from 'ember-cli-flash/flash/object';
-
-const {
-  getOwner
-} = Ember;
 
 FlashObject.reopen({ init() {} });
 

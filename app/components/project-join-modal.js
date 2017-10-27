@@ -1,14 +1,12 @@
-import Ember from 'ember';
-import { EKMixin as EmberKeyboardMixin, keyDown } from 'ember-keyboard';
-
-const {
-  Component,
-  computed: { alias },
-  get,
-  inject: { service },
-  on,
-  set
-} = Ember;
+import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { on } from '@ember/object/evented';
+import { set, get } from '@ember/object';
+import {
+  EKMixin as EmberKeyboardMixin,
+  keyDown
+} from 'ember-keyboard';
 
 export default Component.extend(EmberKeyboardMixin, {
   classNames: ['project-join-modal-container'],

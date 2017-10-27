@@ -3,9 +3,7 @@
 // This change guaranties that async code runs with the Ember run-loop in mind.
 // To elaborate, without this, until ember-cli fully supports ecma8, we might get
 // errors along the lines of 'calling set on destroyed object'
-import Ember from 'ember';
-
-const { RSVP } = Ember;
+import RSVP from 'rsvp';
 
 export function initialize() {
   window.Promise = RSVP.Promise;

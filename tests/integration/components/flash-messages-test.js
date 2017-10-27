@@ -1,13 +1,9 @@
+import { getOwner } from '@ember/application';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/flash-messages';
-
-const {
-  getOwner,
-  run
-} = Ember;
 
 let page = PageObject.create(component);
 

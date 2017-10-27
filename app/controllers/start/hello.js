@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import { empty, or } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 import OnboardingControllerMixin from '../../mixins/onboarding-controller';
-
-const {
-  computed,
-  Controller,
-  get,
-  inject: { service },
-  set
-} = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
   /**
@@ -17,9 +12,9 @@ export default Controller.extend(OnboardingControllerMixin, {
    */
   uploadingImage: false,
 
-  firstNameIsEmpty: computed.empty('model.firstName'),
-  lastNameIsEmpty: computed.empty('model.lastName'),
-  usersNameIsEmpty: computed.or('firstNameIsEmpty', 'lastNameIsEmpty'),
+  firstNameIsEmpty: empty('model.firstName'),
+  lastNameIsEmpty: empty('model.lastName'),
+  usersNameIsEmpty: or('firstNameIsEmpty', 'lastNameIsEmpty'),
 
   flashMessages: service(),
   loadingBar: service(),

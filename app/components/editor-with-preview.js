@@ -1,3 +1,8 @@
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { set, get, computed } from '@ember/object';
 import Ember from 'ember';
 import {
   equal,
@@ -5,13 +10,6 @@ import {
 } from 'ember-computed';
 
 const {
-  Component,
-  computed,
-  get,
-  inject: { service },
-  isEmpty,
-  run,
-  set,
   String
 } = Ember;
 

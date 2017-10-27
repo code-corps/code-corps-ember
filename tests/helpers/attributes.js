@@ -1,8 +1,6 @@
+import { get } from '@ember/object';
 import { test } from 'ember-qunit';
-import Ember from 'ember';
 import 'code-corps-ember/tests/helpers/has-attributes';
-
-const { get } = Ember;
 
 // modified from gist source for relationships
 // source: https://gist.github.com/he9qi/b6354a81a0672dc63294

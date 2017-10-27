@@ -1,14 +1,10 @@
+import { setProperties, set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-skills-list';
 
 let page = PageObject.create(component);
-
-const {
-  set, setProperties
-} = Ember;
 
 function setHandler(context, clickHandler = () => {}) {
   set(context, 'clickHandler', clickHandler);

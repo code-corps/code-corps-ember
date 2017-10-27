@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import { faker } from 'ember-cli-mirage';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
@@ -6,8 +6,6 @@ import PageObject from 'ember-cli-page-object';
 import pageComponent from 'code-corps-ember/tests/pages/components/project-card/project-users';
 
 let page = PageObject.create(pageComponent);
-
-const { set } = Ember;
 
 moduleForComponent('project-card/project-users', 'Integration | Component | project card/project users', {
   integration: true,

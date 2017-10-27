@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import { or, equal, alias } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import { Ability } from 'ember-can';
-
-const {
-  computed,
-  computed: { alias, equal, or },
-  get,
-  inject: { service },
-  isEmpty
-} = Ember;
 
 export default Ability.extend({
   currentUser: service(),

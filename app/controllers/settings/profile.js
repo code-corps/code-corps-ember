@@ -1,11 +1,7 @@
-import Ember from 'ember';
-
-const {
-  computed: { alias },
-  Controller,
-  get,
-  inject: { service }
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
   userSkillsList: service(),

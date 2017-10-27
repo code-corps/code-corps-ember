@@ -1,10 +1,8 @@
+import { set, get, computed } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import userMenu from '../../pages/components/user-menu';
-
-const { computed, get, set } = Ember;
 
 let page = PageObject.create(userMenu);
 

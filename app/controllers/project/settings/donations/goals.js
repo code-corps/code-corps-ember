@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
 import { isValidationError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  Controller,
-  get,
-  inject: { service },
-  set
-} = Ember;
 
 const PROBLEM_SAVING_DONATION_GOAL = 'There was a problem saving your donation goal. Please try again.';
 

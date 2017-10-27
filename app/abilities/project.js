@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import { equal, alias } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 import { Ability } from 'ember-can';
-
-const {
-  computed,
-  computed: { alias, equal },
-  get,
-  inject: { service },
-  isEmpty
-} = Ember;
 
 /**
  * Ability object used to determine what the current user can do with a project

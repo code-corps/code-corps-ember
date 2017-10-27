@@ -1,4 +1,8 @@
-import { formatError, isValidationError, isNonValidationError } from 'code-corps-ember/utils/error-utils';
+import {
+  formatError,
+  isValidationError,
+  isNonValidationError
+} from 'code-corps-ember/utils/error-utils';
 import { module, test } from 'qunit';
 import DS from 'ember-data';
 

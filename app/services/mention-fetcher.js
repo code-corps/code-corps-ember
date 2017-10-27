@@ -1,15 +1,6 @@
-import Ember from 'ember';
-// import { parse } from 'code-corps-ember/utils/mention-parser';
-
-// NOTE: mentions are disabled until we reimplement them phoenix-side, so right now
-// this service just returns the unmodified body
-
-const {
-  get,
-  inject: { service },
-  RSVP,
-  Service
-} = Ember;
+import { get } from '@ember/object';
+import RSVP from 'rsvp';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   store: service(),

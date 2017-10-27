@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Object from '@ember/object';
 import CanAnimateMixin from 'code-corps-ember/mixins/can-animate';
 import { module, test } from 'qunit';
-
-const { Object } = Ember;
 
 module('Unit | Mixin | can animate');
 

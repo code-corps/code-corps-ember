@@ -1,11 +1,7 @@
-import Ember from 'ember';
-
-const {
-  $,
-  computed,
-  Mixin,
-  run
-} = Ember;
+import $ from 'jquery';
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
+import { run } from '@ember/runloop';
 
 export default Mixin.create({
   scrollTimeout: 100,

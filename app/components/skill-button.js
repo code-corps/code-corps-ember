@@ -1,12 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { not },
-  get,
-  set
-} = Ember;
+import Component from '@ember/component';
+import { not } from '@ember/object/computed';
+import { set, get, computed } from '@ember/object';
 
 export default Component.extend({
   alwaysShowX: false,

@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  get,
-  isPresent
-} = Ember;
+import { get } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 function parse(body, mentions) {
   if (isPresent(body) && isPresent(mentions)) {

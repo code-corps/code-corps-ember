@@ -1,10 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Controller,
-  computed: { alias },
-  get
-} = Ember;
+import Controller from '@ember/controller';
+import { alias } from '@ember/object/computed';
+import { get } from '@ember/object';
 
 export default Controller.extend({
   amount: 25,

@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { CanMixin } from 'ember-can';
-
-const {
-  get,
-  inject: { service },
-  Route
-} = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
   projectSkillsList: service(),

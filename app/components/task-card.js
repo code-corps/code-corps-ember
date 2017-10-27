@@ -1,16 +1,9 @@
+import Component from '@ember/component';
+import { mapBy, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { set, getProperties, get, computed } from '@ember/object';
 import EmberCan from 'ember-can';
-import Ember from 'ember';
 import createTaskUserOptions from 'code-corps-ember/utils/create-task-user-options';
-
-const {
-  Component,
-  computed,
-  computed: { alias, mapBy },
-  get,
-  getProperties,
-  inject: { service },
-  set
-} = Ember;
 
 const ICON_CLASS = 'ember-power-select-status-icon';
 const TRIGGER_CLASS = 'ember-power-select-trigger';

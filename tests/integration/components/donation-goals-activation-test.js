@@ -1,10 +1,6 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-
-const {
-  set
-} = Ember;
 
 function setHandlers(context, { activateDonationsHandler = function() {} } = {}) {
   set(context, 'activateDonationsHandler', activateDonationsHandler);

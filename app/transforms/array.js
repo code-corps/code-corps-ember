@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import { typeOf } from '@ember/utils';
 import DS from 'ember-data';
 
-const { typeOf } = Ember;
 const { Transform } = DS;
 
 export default Transform.extend({

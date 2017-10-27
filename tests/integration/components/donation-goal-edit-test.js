@@ -1,13 +1,10 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/donation-goal-edit';
 
 let page = PageObject.create(component);
-
-import Ember from 'ember';
-
-const { set } = Ember;
 
 let mockGoal = { amount: 20, description: 'Some description' };
 

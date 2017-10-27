@@ -1,10 +1,6 @@
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { alias, and, empty, notEmpty } from '@ember/object/computed';
-import Ember from 'ember';
-
-const {
-  Component,
-  inject: { service }
-} = Ember;
 
 /**
   The task-new-form component is used for creating new tasks. It includes

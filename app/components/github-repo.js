@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  computed: { alias, notEmpty },
-  Component
-} = Ember;
+import { notEmpty, alias } from '@ember/object/computed';
+import Component from '@ember/component';
 
 export default Component.extend({
   classNames: ['github-repo'],

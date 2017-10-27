@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import { mapBy } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import RSVP from 'rsvp';
+import { set, get } from '@ember/object';
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  computed: { mapBy },
-  Controller,
-  get,
-  RSVP,
-  set
-} = Ember;
 
 export default Controller.extend({
   unsavedTaskSkills: [],

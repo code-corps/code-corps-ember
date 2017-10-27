@@ -1,10 +1,6 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 import prettyFloat from 'code-corps-ember/utils/pretty-float';
-
-const {
-  Helper: { helper }
-} = Ember;
 
 function applyFormatting(percentage) {
   return percentage.length == 0 ? '' : `${percentage}%`;

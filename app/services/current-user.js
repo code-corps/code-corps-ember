@@ -1,13 +1,7 @@
-import Ember from 'ember';
-
-const {
-  get,
-  inject: { service },
-  isEmpty,
-  RSVP,
-  Service,
-  set
-} = Ember;
+import { isEmpty } from '@ember/utils';
+import RSVP from 'rsvp';
+import Service, { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 
 export default Service.extend({
   metrics: service(),

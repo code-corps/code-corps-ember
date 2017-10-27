@@ -1,15 +1,11 @@
+import RSVP from 'rsvp';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import skillsTypeaheadComponent from '../../pages/components/skills-typeahead';
 import wait from 'ember-test-helpers/wait';
-
-const {
-  RSVP,
-  set
-} = Ember;
 
 let page = PageObject.create(skillsTypeaheadComponent);
 

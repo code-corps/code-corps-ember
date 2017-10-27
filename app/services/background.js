@@ -1,11 +1,7 @@
-import Ember from 'ember';
-
-const {
-  $,
-  computed,
-  run,
-  Service
-} = Ember;
+import $ from 'jquery';
+import { computed } from '@ember/object';
+import { run } from '@ember/runloop';
+import Service from '@ember/service';
 
 export default Service.extend({
   reset() {

@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  get,
-  Route,
-  inject: { service },
-  set
-} = Ember;
 
 export default Route.extend(UnauthenticatedRouteMixin, {
   queryParams: { context: 'default' },

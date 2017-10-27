@@ -1,17 +1,12 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  get,
-  inject: { service },
-  RSVP,
-  Service
-} = Ember;
+import { alias } from '@ember/object/computed';
+import { get } from '@ember/object';
+import RSVP from 'rsvp';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   currentUser: service(),
 
-  user: computed.alias('currentUser.user'),
+  user: alias('currentUser.user'),
 
   fetchForProject(project) {
     let user = get(this, 'user');

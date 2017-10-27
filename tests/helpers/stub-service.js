@@ -1,9 +1,9 @@
+import Service from '@ember/service';
+import { typeOf } from '@ember/utils';
 import Ember from 'ember';
 
 const {
-  Logger: { error },
-  Service,
-  typeOf
+  Logger: { error }
 } = Ember;
 
 let stubService = (scope, name, hash = {}) => {

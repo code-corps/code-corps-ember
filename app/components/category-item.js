@@ -1,13 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { set, get, computed } from '@ember/object';
 import { notEmpty } from 'ember-computed';
-
-const {
-  Component,
-  computed,
-  get,
-  inject: { service },
-  set
-} = Ember;
 
 /**
  * `category-item` composes a category's icon, and description.

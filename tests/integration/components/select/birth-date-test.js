@@ -1,13 +1,8 @@
-import Ember from 'ember';
+import { set, getProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import selectBirthDateComponent from '../../../pages/components/select/birth-date';
 import PageObject from 'ember-cli-page-object';
-
-const {
-  getProperties,
-  set
-} = Ember;
 
 let page = PageObject.create(selectBirthDateComponent);
 

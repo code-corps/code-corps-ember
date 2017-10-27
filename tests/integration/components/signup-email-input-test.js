@@ -1,12 +1,10 @@
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import wait from 'ember-test-helpers/wait';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/signup-password-input';
-
-const { run } = Ember;
 
 let page = PageObject.create(component);
 

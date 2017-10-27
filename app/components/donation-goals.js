@@ -1,11 +1,12 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: {
-    alias, filterBy, not, notEmpty, setDiff, sort
-  }
-} = Ember;
+import Component from '@ember/component';
+import {
+  sort,
+  setDiff,
+  notEmpty,
+  not,
+  filterBy,
+  alias
+} from '@ember/object/computed';
 
 /**
  * `donation-goals` used to display and manage a project's donation goals

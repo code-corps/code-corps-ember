@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { formatError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  get,
-  inject: { service },
-  Route
-} = Ember;
 
 const STATE_INVALID = 'Something went wrong while connecting to GitHub. Please try again.';
 

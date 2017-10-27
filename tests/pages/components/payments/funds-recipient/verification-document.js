@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
 import { clickable, isVisible } from 'ember-cli-page-object';
-
-const { $, run } = Ember;
 
 export default {
   scope: '.verification-document',

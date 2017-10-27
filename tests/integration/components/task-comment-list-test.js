@@ -1,11 +1,7 @@
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
-
-const {
-  RSVP
-} = Ember;
 
 moduleForComponent('task-comment-list', 'Integration | Component | task comment list', {
   integration: true,

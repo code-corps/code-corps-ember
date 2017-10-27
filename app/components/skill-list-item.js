@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, and, notEmpty },
-  get,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { notEmpty, and, alias } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 /**
   Shows whether a user has a skill and determines whether to display the

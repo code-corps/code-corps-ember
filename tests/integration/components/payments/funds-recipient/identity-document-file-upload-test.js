@@ -1,7 +1,7 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { startMirage } from 'code-corps-ember/initializers/ember-cli-mirage';
-import Ember from 'ember';
 
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/payments/funds-recipient/identity-document-file-upload';
@@ -15,8 +15,6 @@ const template = hbs`{{
   validationError=onValidationError
   uploadError=onUploadError
 }}`;
-
-const { set } = Ember;
 
 const smallPNG = {
   name: 'file.png',

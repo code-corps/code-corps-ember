@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { Component } = Ember;
+import Component from '@ember/component';
 
 /**
   The task-header component represents the header of a task. It is composed of

@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { mapBy },
-  get,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { mapBy } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 /**
   `project-card` composes a card that contains the given project's description,

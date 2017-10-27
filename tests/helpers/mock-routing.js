@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { Service } = Ember;
+import Service from '@ember/service';
 
 const service = Service.extend({
   availableRoutes() {

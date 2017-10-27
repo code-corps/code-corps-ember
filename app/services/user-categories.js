@@ -1,17 +1,13 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  inject: { service },
-  Service
-} = Ember;
+import { empty, alias } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   currentUser: service(),
   store: service(),
 
-  isEmpty: computed.empty('userCategories'),
-  user: computed.alias('currentUser.user'),
+  isEmpty: empty('userCategories'),
+  user: alias('currentUser.user'),
 
   userCategories: computed('user.userCategories',
     'user.userCategories.@each.category',

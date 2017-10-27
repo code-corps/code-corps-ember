@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  get,
-  inject: { service },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { set, get } from '@ember/object';
 
 export default Component.extend({
   classNames: ['organization-settings-form', 'settings-form'],

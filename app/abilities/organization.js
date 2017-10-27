@@ -1,12 +1,7 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
-
-const {
-  computed,
-  computed: { alias },
-  get,
-  inject: { service }
-} = Ember;
 
 export default Ability.extend({
   currentUser: service(),

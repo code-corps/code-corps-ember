@@ -1,7 +1,5 @@
+import { get } from '@ember/object';
 import BeforeOptionsComponent from 'ember-power-select/components/power-select/before-options';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 export default BeforeOptionsComponent.extend({
   actions: {

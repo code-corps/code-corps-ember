@@ -1,13 +1,7 @@
-import Ember from 'ember';
+import { getProperties, get, computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import EmberUploader from 'ember-uploader';
 import ENV from 'code-corps-ember/config/environment';
-
-const {
-  computed,
-  get,
-  getProperties,
-  isEmpty
-} = Ember;
 
 const { Uploader } = EmberUploader;
 

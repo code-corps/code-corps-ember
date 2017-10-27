@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { get, Service, inject: { service } } = Ember;
+import { get } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
 /**
  * Converts an integer to a hex string and returns the last two characters

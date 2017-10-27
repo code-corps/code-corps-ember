@@ -1,10 +1,8 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import selectCountry from '../../../pages/components/select/country-select';
 import PageObject from 'ember-cli-page-object';
-
-const { set } = Ember;
 
 function setHandler(context, onChange = function() {}) {
   set(context, 'onChange', onChange);
