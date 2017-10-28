@@ -2,17 +2,17 @@
 
 <div class="container">
   <div class="panel panel--highlighted">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>Sync with GitHub</h3>
         <p>Manage the repos connected to your project.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         <div class="integrations__description">
           <p>You can connect your project to multiple GitHub repos to sync issues with tasks automatically.</p>
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 
   {{#if (and organization.isFulfilled organizationGithubAppInstallations.isFulfilled)}}
@@ -51,12 +51,12 @@
     {{/if}}
 
     <div class="panel">
-      <div class="panel__section">
-        <div class="panel__section__description">
+      <section>
+        <aside>
           <h4>Add a new installation</h4>
           <p>Add a GitHub account to the <strong>{{project.organization.name}}</strong> organization by installing on GitHub.</p>
-        </div>
-        <div class="panel__section__content">
+        </aside>
+        <section>
           {{#if user.githubId}}
             <p>
               Install our GitHub app on your GitHub account to select which repositories will sync.
@@ -75,8 +75,8 @@
                 Connect to GitHub in your {{link-to data-test-integrations-link 'user integration settings' 'settings.integrations'}} before adding a GitHub account to the <strong>{{project.organization.name}}</strong> organization.
               </p>
             {{/if}}
-        </div>
-      </div>
+        </section>
+      </section>
     </div>
   {{else}}
     {{loading-spinner}}

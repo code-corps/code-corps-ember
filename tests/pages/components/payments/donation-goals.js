@@ -3,11 +3,11 @@ import { hasClass, isVisible } from 'ember-cli-page-object';
 export default {
   scope: '.donation-goals',
 
-  hasPendingRequirementStatus: hasClass('account-setup__section--pending_requirement'),
-  hasRequiredStatus: hasClass('account-setup__section--required'),
-  hasVerifiedStatus: hasClass('account-setup__section--verified'),
+  hasPendingRequirementStatus: hasClass('panel'),
+  hasRequiredStatus: hasClass('panel--highlighted'),
+  hasVerifiedStatus: hasClass('panel--highlighted-green'),
 
   rendersHeader: isVisible('aside'),
   rendersLinkToDonationGoals: isVisible('a.activate-donations'),
-  rendersSection: isVisible('section')
+  rendersSection: isVisible('[data-test-section]')
 };

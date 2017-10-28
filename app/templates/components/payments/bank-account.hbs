@@ -1,34 +1,47 @@
-<aside>
-  <h1>Bank Account</h1>
-</aside>
+<section>
+  <aside>
+    <h3>Bank account</h3>
+    <p>Add the account where you'll receive payments.</p>
+  </aside>
 
-{{#if (eq status 'required')}}
-  <section>
-    <div class="bank-account__routing">
-      <label for="routing-number">Routing Number</label>
-      {{input disabled=isBusy type="text" name="routing-number" value=routingNumber}}
-    </div>
-    <div class="bank-account__account">
-      <label for="account-number">Account Number</label>
-      {{input disabled=isBusy type="text" name="account-number" value=accountNumber}}
-    </div>
-    <button {{action submit (hash accountNumber=accountNumber routingNumber=routingNumber)}} disabled={{isBusy}} class="default">Submit</button>
-  </section>
-{{/if}}
+  {{#if (eq status 'required')}}
+    <section>
+      <div class="input-group bank-account__routing">
+        <div class="input-label">
+          <label for="routing-number">Routing Number</label>
+        </div>
+        {{input disabled=isBusy type="text" name="routing-number" value=routingNumber}}
+      </div>
+      <div class="input-group bank-account__account">
+        <div class="input-label">
+          <label for="account-number">Account Number</label>
+        </div>
+        {{input disabled=isBusy type="text" name="account-number" value=accountNumber}}
+      </div>
+      <button {{action submit (hash accountNumber=accountNumber routingNumber=routingNumber)}} disabled={{isBusy}} class="default">Submit</button>
+    </section>
+  {{/if}}
 
-{{#if (eq status 'verified')}}
-  <section>
-    <div class="bank-account__bank-name">
-      <label>Bank Name</label>
-      <p>{{stripeConnectAccount.bankAccountBankName}}</p>
-    </div>
-    <div class="bank-account__routing">
-      <label>Routing Number</label>
-      <p>{{stripeConnectAccount.bankAccountRoutingNumber}}</p>
-    </div>
-    <div class="bank-account__account">
-      <label>Account Number</label>
-      <p>{{stripeConnectAccount.bankAccountLast4}}</p>
-    </div>
-  </section>
-{{/if}}
+  {{#if (eq status 'verified')}}
+    <section>
+      <div class="input-group bank-account__bank-name">
+        <div class="input-label">
+          <label>Bank Name</label>
+        </div>
+        <p>{{stripeConnectAccount.bankAccountBankName}}</p>
+      </div>
+      <div class="input-group bank-account__routing">
+        <div class="input-label">
+          <label>Routing Number</label>
+        </div>
+        <p>{{stripeConnectAccount.bankAccountRoutingNumber}}</p>
+      </div>
+      <div class="input-group bank-account__account">
+        <div class="input-label">
+          <label>Account Number</label>
+        </div>
+        <p>{{stripeConnectAccount.bankAccountLast4}}</p>
+      </div>
+    </section>
+  {{/if}}
+</section>

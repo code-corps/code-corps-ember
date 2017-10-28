@@ -9,15 +9,15 @@ export default {
   scope: '.account-setup',
 
   rendersBankAccount: isVisible('.bank-account'),
-  rendersBankAccountRequired: isVisible('.bank-account.account-setup__section--required'),
-  rendersBankAccountVerified: isVisible('.bank-account.account-setup__section--verified'),
+  rendersBankAccountRequired: isVisible('.bank-account.panel--highlighted'),
+  rendersBankAccountVerified: isVisible('.bank-account.panel--highlighted-green'),
 
   rendersCreateAccount: isVisible('.create-account'),
 
   rendersFundsRecipient: isVisible('.funds-recipient'),
-  rendersFundsRecipientRequired: isVisible('.funds-recipient.account-setup__section--required'),
-  rendersFundsRecipientVerified: isVisible('.funds-recipient.account-setup__section--verified'),
-  rendersFundsRecipientVerifying: isVisible('.funds-recipient.account-setup__section--verifying'),
+  rendersFundsRecipientRequired: isVisible('.funds-recipient.panel--highlighted'),
+  rendersFundsRecipientVerified: isVisible('.funds-recipient.panel--highlighted-green'),
+  rendersFundsRecipientVerifying: isVisible('.funds-recipient.panel'),
 
   createAccount,
   bankAccount,

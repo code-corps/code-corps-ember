@@ -30,41 +30,4 @@
   input[type="submit"] {
     margin-left: 140px;
   }
-
-  .input-section {
-    display: flex;
-    flex-direction: row;
-    margin: 20px 0;
-
-    &__label {
-      width: 140px;
-    }
-
-    &__content {
-      flex-grow: 1;
-    }
-
-    .select-country select {
-      width: 100%;
-    }
-  }
-
-  .input-line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .input--state {
-      width: 48%;
-
-      .select-state select {
-        width: 100%;
-      }
-    }
-
-    .input--state,
-    .input--zipcode {
-      width: 48%;
-    }
-  }
 }
