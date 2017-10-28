@@ -10,6 +10,10 @@ export default Model.extend({
   githubId: attr(),
   insertedAt: attr(),
   name: attr(),
+  syncState: attr(),
+  syncingCommentsCount: attr(),
+  syncingIssuesCount: attr(),
+  syncingPullRequestsCount: attr(),
   updatedAt: attr(),
 
   githubAppInstallation: belongsTo('github-app-installation', { async: true }),

@@ -24,6 +24,10 @@ testForAttributes('github-repo', [
   'githubId',
   'insertedAt',
   'name',
+  'syncState',
+  'syncingCommentsCount',
+  'syncingIssuesCount',
+  'syncingPullRequestsCount',
   'updatedAt'
 ]);
 

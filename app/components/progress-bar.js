@@ -1,15 +1,15 @@
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/string';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 
 /**
   The `progress-bar` component is used to represent progress on a given
-  workflow. (example: progress on the onboarding process)
+  workflow. (example: error when syncing)
 
   ## default usage
 
   ```Handlebars
-  {{progress-bar percentage=progressInPercent}}
+  {{progress-bar animated=false error=true percentage=progressInPercent}}
   ```
 
   @class progress-bar
@@ -19,6 +19,20 @@ import { computed } from '@ember/object';
 export default Component.extend({
   attributeBindings: ['style'],
   classNames: ['progress-bar'],
+  classNameBindings: ['animatedClass', 'errorClass'],
+
+  animated: false,
+  error: false,
+
+  animatedClass: computed('animated', function() {
+    let animated = get(this, 'animated');
+    return animated ? 'progress-bar--animated' : '';
+  }),
+
+  errorClass: computed('error', function() {
+    let error = get(this, 'error');
+    return error ? 'progress-bar--error' : '';
+  }),
 
   /**
     The `style` property consumes the current percentage to generate the style

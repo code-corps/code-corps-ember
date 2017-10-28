@@ -26,3 +26,15 @@ test('it sets the style when no percentage is set', function(assert) {
 
   assert.ok(page.displaysPercentage(0));
 });
+
+test('it renders without error by default', function(assert) {
+  page.render(hbs`{{progress-bar}}`);
+
+  assert.notOk(page.hasError);
+});
+
+test('it renders with error when passed in', function(assert) {
+  page.render(hbs`{{progress-bar error=true}}`);
+
+  assert.ok(page.hasError);
+});

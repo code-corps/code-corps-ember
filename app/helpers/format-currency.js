@@ -1,13 +1,11 @@
 import { helper } from '@ember/component/helper';
-import prettyFloat from 'code-corps-ember/utils/pretty-float';
+import { formatNumber } from 'code-corps-ember/helpers/format-number';
 
-const COMMAS_EVERY_THREE_DIGITS = /(\d)(?=(\d{3})+(?!\d))/g;
-
-function applyFormatting(dollars) {
-  if (dollars.length == 0) {
+function applyFormatting(amount) {
+  if (amount.length == 0) {
     return '';
   } else {
-    return `$${dollars.replace(COMMAS_EVERY_THREE_DIGITS, '$1,')}`;
+    return `$${amount}`;
   }
 }
 
@@ -28,7 +26,7 @@ function applyFormatting(dollars) {
  * @return {String}                    The value, formatted as currency
  */
 export function formatCurrency([dollarsAsString], { trimZero = false } = {}) {
-  let dollarsAmount = prettyFloat(dollarsAsString, { trimZero });
+  let dollarsAmount = formatNumber([dollarsAsString], { trimZero });
   return applyFormatting(dollarsAmount);
 }
 
