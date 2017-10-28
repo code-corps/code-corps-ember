@@ -1,16 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { not, bool, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { set, getProperties, get } from '@ember/object';
+import RSVP from 'rsvp';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
 import { isValidationError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  Controller,
-  computed: { alias, bool, not },
-  get,
-  getProperties,
-  inject: { service },
-  set,
-  RSVP
-} = Ember;
 
 const CUSTOMER_CREATION_ERROR = 'There was a problem in connecting your account with our payment processor. Please try again.';
 const CARD_CREATION_ERROR = 'There was a problem in using your payment information. Please try again.';

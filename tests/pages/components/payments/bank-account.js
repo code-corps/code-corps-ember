@@ -1,4 +1,11 @@
-import { clickable, fillable, is, isVisible, hasClass, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  fillable,
+  is,
+  isVisible,
+  hasClass,
+  text
+} from 'ember-cli-page-object';
 
 export default {
   scope: '.bank-account',

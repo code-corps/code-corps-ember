@@ -1,13 +1,9 @@
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task-title';
-
-const {
-  RSVP
-} = Ember;
 
 let mockCurrentUser = {
   user: {

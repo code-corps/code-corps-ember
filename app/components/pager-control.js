@@ -1,10 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, equal, gt }
-} = Ember;
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { gt, equal, alias } from '@ember/object/computed';
 
 /**
   The `PagerControlComponent` provides pagination controls, e.g. previous/next

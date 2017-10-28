@@ -1,10 +1,8 @@
+import { setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import pageComponent from 'code-corps-ember/tests/pages/components/select-inline-dropdown/list-item';
 import PageObject from 'ember-cli-page-object';
-import Ember from 'ember';
-
-const { setProperties } = Ember;
 
 let page = PageObject.create(pageComponent);
 

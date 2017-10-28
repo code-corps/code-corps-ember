@@ -1,7 +1,5 @@
+import { set } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
-
-const { set } = Ember;
 
 moduleFor('controller:start/hello', 'Unit | Controller | start/hello', {
   needs: [

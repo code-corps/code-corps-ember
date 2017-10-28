@@ -1,15 +1,11 @@
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import donationContainerComponent from '../../../pages/components/donation/donation-container';
-import Ember from 'ember';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 let page = PageObject.create(donationContainerComponent);
-
-const {
-  RSVP
-} = Ember;
 
 let visa = { id: 1, brand: 'Visa', last4: '4242' };
 

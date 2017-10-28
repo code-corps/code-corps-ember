@@ -1,17 +1,15 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, and, not, notEmpty },
-  get,
-  getProperties,
-  inject: { service },
-  isEmpty,
+import Component from '@ember/component';
+import { notEmpty, not, and, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
+import { once } from '@ember/runloop';
+import {
+  set,
   observer,
-  run: { once },
-  set
-} = Ember;
+  getProperties,
+  get,
+  computed
+} from '@ember/object';
 
 export default Component.extend({
   classNames: ['skills-typeahead'],

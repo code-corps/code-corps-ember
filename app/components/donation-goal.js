@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
 
 /**
  * `donation-goal` used to display information about a donation goal
@@ -36,6 +32,6 @@ export default Component.extend({
    */
   canEdit: false,
 
-  achieved: computed.alias('donationGoal.achieved'),
-  current: computed.alias('donationGoal.current')
+  achieved: alias('donationGoal.achieved'),
+  current: alias('donationGoal.current')
 });

@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import TextArea from '@ember/component/text-area';
+import { on } from '@ember/object/evented';
 import { EKMixin, EKOnFocusMixin, keyDown } from 'ember-keyboard';
-
-const { TextArea, on } = Ember;
 
 export default TextArea.extend(EKMixin, EKOnFocusMixin, {
   init() {

@@ -1,14 +1,10 @@
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/editor-with-preview';
 import { initialize as initializeKeyboard } from 'ember-keyboard';
-
-const {
-  RSVP
-} = Ember;
 
 let mockPreview = {
   markdown: 'A **body**',

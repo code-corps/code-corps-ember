@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
+import { not, lt, gte, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import strength from 'password-strength';
-
-const {
-  Component,
-  computed,
-  computed: { alias, gte, lt, not },
-  inject: { service }
-} = Ember;
 
 export default Component.extend({
   classNames: ['input-group'],

@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { equal },
-  get,
-  set
-} = Ember;
+import Component from '@ember/component';
+import { equal } from '@ember/object/computed';
+import { set, get } from '@ember/object';
 
 /**
   The task-status-button component is a button that is used for closing and

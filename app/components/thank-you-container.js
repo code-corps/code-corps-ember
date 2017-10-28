@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { filter, mapBy },
-  get,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { mapBy, filter } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 const MAX_VOLUNTEERS = 12;
 

@@ -1,11 +1,7 @@
+import { underscore } from '@ember/string';
+import { get } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import ApplicationAdapter from './application';
-import Ember from 'ember';
-
-const {
-  String: { underscore },
-  get,
-  isBlank
-} = Ember;
 
 export default ApplicationAdapter.extend({
   // need to delete slug and sluggedRouteSlug properties from the query.

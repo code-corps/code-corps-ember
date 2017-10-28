@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Component, set } = Ember;
+import Component from '@ember/component';
+import { set } from '@ember/object';
 
 /**
   The user-menu component is used to show/hide the user-dropdown menu

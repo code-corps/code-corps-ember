@@ -1,17 +1,13 @@
+import RSVP from 'rsvp';
+import Service from '@ember/service';
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
-import Ember from 'ember';
 import Mirage from 'ember-cli-mirage';
 
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 import projectCheckoutPage from '../pages/project/checkout';
 import signupPage from '../pages/signup';
-
-const {
-  RSVP,
-  Service
-} = Ember;
 
 // NOTE: Don't think these mocks can be moved, unless we can make them more generic than they are
 // As is, they mock specifically the `stripe` injection for the project.checkout controller

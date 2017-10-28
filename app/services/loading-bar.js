@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Service,
-  set
-} = Ember;
+import Service from '@ember/service';
+import { set } from '@ember/object';
 
 export default Service.extend({
   isLoading: false,

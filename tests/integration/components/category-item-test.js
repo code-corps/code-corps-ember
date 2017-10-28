@@ -1,23 +1,20 @@
+import { getOwner } from '@ember/application';
+import { set, getProperties, get } from '@ember/object';
+import { run } from '@ember/runloop';
+import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
-import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
+import {
+  getFlashMessageCount,
+  getFlashMessageAt
+} from 'code-corps-ember/tests/helpers/flash-message';
 
 import pageComponent from 'code-corps-ember/tests/pages/components/category-item';
 import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(pageComponent);
-
-const {
-  getOwner,
-  get,
-  getProperties,
-  set,
-  run,
-  RSVP
-} = Ember;
 
 function renderPage() {
   page.render(hbs`{{category-item category=category}}`);

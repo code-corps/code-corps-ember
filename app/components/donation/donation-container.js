@@ -1,11 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: {
-    and, empty, or
-  }
-} = Ember;
+import Component from '@ember/component';
+import { or, empty, and } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['donation-container'],

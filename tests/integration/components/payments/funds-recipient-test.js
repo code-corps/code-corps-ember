@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
@@ -6,10 +6,6 @@ import PageObject from 'ember-cli-page-object';
 import fundsRecipientComponent from '../../../pages/components/payments/funds-recipient';
 
 let page = PageObject.create(fundsRecipientComponent);
-
-const {
-  setProperties
-} = Ember;
 
 function setHandlers(context, { detailsHandler = function() {}, documentHandler = function() {}, idHandler = function() {} }) {
   setProperties(context, { detailsHandler, documentHandler, idHandler });

@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { set, get } from '@ember/object';
 import { task } from 'ember-concurrency';
 
-const {
-  Component,
-  get,
-  set
-} = Ember;
 /**
   `modal-confirm` Replaces javascript confirm with a modal built with ember-modal-dialog
 

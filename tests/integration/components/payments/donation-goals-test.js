@@ -1,13 +1,9 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 
 import paymentsDonationGoalsComponent from '../../../pages/components/payments/donation-goals';
-
-const {
-  set
-} = Ember;
 
 let page = PageObject.create(paymentsDonationGoalsComponent);
 

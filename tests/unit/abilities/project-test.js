@@ -1,10 +1,5 @@
+import { set, get } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
-
-const {
-  get,
-  set
-} = Ember;
 
 let owner = { id: 'owner' };
 let other = { id: 'other' };

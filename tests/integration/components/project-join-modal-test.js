@@ -1,13 +1,11 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import pageComponent from 'code-corps-ember/tests/pages/components/project-join-modal';
 
 let page = PageObject.create(pageComponent);
-
-const { set } = Ember;
 
 function renderPage() {
   page.render(hbs`

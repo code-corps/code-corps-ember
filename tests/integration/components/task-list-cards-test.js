@@ -1,5 +1,4 @@
-import Ember from 'ember';
-const { set } = Ember;
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';

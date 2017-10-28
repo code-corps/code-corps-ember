@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
 import CanAnimateMixin from 'code-corps-ember/mixins/can-animate';
-
-const {
-  Component,
-  String: { htmlSafe },
-  computed
-} = Ember;
 
 export default Component.extend(CanAnimateMixin, {
   attributeBindings: ['style'],

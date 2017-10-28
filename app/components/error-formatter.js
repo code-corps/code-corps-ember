@@ -1,10 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get
-} = Ember;
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 
 /**
   `error-formatter' returns a formatted error message. Place within an 'if'

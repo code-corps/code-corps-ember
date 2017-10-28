@@ -1,18 +1,13 @@
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { setProperties, set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import commentItemComponent from 'code-corps-ember/tests/pages/components/comment-item';
 
 let page = PageObject.create(commentItemComponent);
-
-const {
-  RSVP,
-  run,
-  set,
-  setProperties
-} = Ember;
 
 function renderPage() {
   page.render(hbs`{{comment-item comment=comment}}`);

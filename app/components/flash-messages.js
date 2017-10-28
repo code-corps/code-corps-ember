@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 /**
   `flash-messages` is a container for displaying flash messages. It leverages

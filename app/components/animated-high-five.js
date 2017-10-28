@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get,
-  run,
-  set
-} = Ember;
+import { setDiff } from '@ember/object/computed';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { set, get, computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['animated-high-five'],
@@ -31,7 +26,7 @@ export default Component.extend({
     run.cancel(resetTimer);
   },
 
-  availableImages: computed.setDiff('images', 'currentImageArray'),
+  availableImages: setDiff('images', 'currentImageArray'),
 
   currentImageArray: computed('currentImage', function() {
     let currentImage = get(this, 'currentImage');

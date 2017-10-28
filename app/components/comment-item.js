@@ -1,14 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { isEqual } from '@ember/utils';
+import { set, get, computed } from '@ember/object';
 import { parse } from 'code-corps-ember/utils/mention-parser';
-
-const {
-  Component,
-  computed,
-  get,
-  inject: { service },
-  isEqual,
-  set
-} = Ember;
 
 /**
   `comment-item` composes a comment

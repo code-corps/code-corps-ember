@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { Component } = Ember;
+import Component from '@ember/component';
 
 /**
   The task-comment-list component composes the list of comments for a task.

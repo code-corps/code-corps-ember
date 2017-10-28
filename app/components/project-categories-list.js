@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { sort }
-} = Ember;
+import Component from '@ember/component';
+import { sort } from '@ember/object/computed';
 
 /**
   `project-categories-list` displays a list of categories within the project,

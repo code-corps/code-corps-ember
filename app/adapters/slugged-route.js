@@ -1,7 +1,5 @@
-import Ember from 'ember';
+import { get } from '@ember/object';
 import ApplicationAdapter from './application';
-
-const { get } = Ember;
 
 export default ApplicationAdapter.extend({
   /**

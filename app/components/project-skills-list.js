@@ -1,12 +1,6 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  computed: { mapBy },
-  Component,
-  get,
-  getProperties
-} = Ember;
+import { mapBy } from '@ember/object/computed';
+import Component from '@ember/component';
+import { getProperties, get, computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['project-skills-list'],

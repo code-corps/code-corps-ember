@@ -1,13 +1,9 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import { run } from '@ember/runloop';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import ContainsCodeMixin from 'code-corps-ember/mixins/contains-code';
 import { moduleFor, test } from 'ember-qunit';
-
-const {
-  getOwner,
-  run
-} = Ember;
 
 moduleFor('mixin:contains-code', 'Unit | Mixin | contains code mixin', {
   subject(record) {

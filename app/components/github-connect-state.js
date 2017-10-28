@@ -1,10 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get
-} = Ember;
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 
 /**
   The github-connect-state component is used to display a button if not

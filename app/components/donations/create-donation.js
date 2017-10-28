@@ -1,13 +1,11 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  getProperties,
-  isEmpty,
+import Component from '@ember/component';
+import { isEmpty } from '@ember/utils';
+import {
+  set,
   observer,
-  set
-} = Ember;
+  getProperties,
+  computed
+} from '@ember/object';
 
 export default Component.extend({
   classNames: ['create-donation'],

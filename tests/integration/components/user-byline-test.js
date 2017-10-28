@@ -1,15 +1,11 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import pageComponent from 'code-corps-ember/tests/pages/components/user-byline';
 import moment from 'moment';
 
 let page = PageObject.create(pageComponent);
-
-const {
-  set
-} = Ember;
 
 function renderPage() {
   page.render(hbs`

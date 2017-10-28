@@ -1,14 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { set, getProperties, get, computed } from '@ember/object';
 import moment from 'moment';
 import { range } from 'code-corps-ember/utils/array-utils';
-
-const {
-  Component,
-  computed,
-  get,
-  getProperties,
-  set
-} = Ember;
 
 export default Component.extend({
   classNames: ['select-birth-date'],

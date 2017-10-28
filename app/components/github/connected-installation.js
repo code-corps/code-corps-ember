@@ -1,12 +1,6 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  computed: { alias },
-  Component,
-  get,
-  getProperties
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
+import { getProperties, get, computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['github-app-installation connected'],

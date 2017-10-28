@@ -1,14 +1,10 @@
-import Ember from 'ember';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import moment from 'moment';
 
 import createAccountComponent from '../../../pages/components/payments/create-account';
-
-const {
-  set
-} = Ember;
 
 let page = PageObject.create(createAccountComponent);
 

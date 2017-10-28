@@ -1,13 +1,8 @@
-import Ember from 'ember';
-
-const {
-  computed: { alias },
-  get,
-  inject: { service },
-  Route,
-  RSVP,
-  setProperties
-} = Ember;
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { setProperties, get } from '@ember/object';
 
 export default Route.extend({
   currentUser: service(),

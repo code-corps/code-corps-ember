@@ -1,19 +1,13 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  get,
-  getProperties,
-  inject: { service },
-  Mixin,
-  set
-} = Ember;
+import { alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { set, getProperties, get } from '@ember/object';
 
 export default Mixin.create({
   currentUser: service(),
   onboarding: service(),
 
-  user: computed.alias('currentUser.user'),
+  user: alias('currentUser.user'),
 
   actions: {
     continue() {

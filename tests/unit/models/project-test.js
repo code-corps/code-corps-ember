@@ -1,11 +1,7 @@
+import { run } from '@ember/runloop';
 import { moduleForModel, test } from 'ember-qunit';
 import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
 import { testForBelongsTo, testForHasMany } from '../../helpers/relationship';
-import Ember from 'ember';
-
-const {
-  run
-} = Ember;
 
 moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.

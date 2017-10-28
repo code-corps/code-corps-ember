@@ -1,10 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  String: { htmlSafe },
-  computed
-} = Ember;
+import Component from '@ember/component';
+import { htmlSafe } from '@ember/string';
+import { computed } from '@ember/object';
 
 /**
   The `progress-bar` component is used to represent progress on a given

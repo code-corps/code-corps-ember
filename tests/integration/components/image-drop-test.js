@@ -1,14 +1,10 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import fillInFileInput from '../../helpers/fill-in-file-input';
 import removeDoubleQuotes from '../../helpers/remove-double-quotes';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/image-drop';
-
-const {
-  set
-} = Ember;
 
 let page = PageObject.create(component);
 

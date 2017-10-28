@@ -1,10 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
 
 export default Component.extend({
   classNameBindings: ['statusClass'],
@@ -13,7 +9,7 @@ export default Component.extend({
   accountNumber: null,
   routingNumber: null,
 
-  status: computed.alias('stripeConnectAccount.bankAccountStatus'),
+  status: alias('stripeConnectAccount.bankAccountStatus'),
 
   statusClass: computed('status', function() {
     return `account-setup__section--${get(this, 'status')}`;

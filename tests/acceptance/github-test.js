@@ -1,11 +1,9 @@
+import { set } from '@ember/object';
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import Mirage from 'ember-cli-mirage';
 import page from '../pages/github';
-import Ember from 'ember';
-
-const { set } = Ember;
 
 const code = 'test_code';
 const state = 'test_state';

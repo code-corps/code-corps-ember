@@ -1,16 +1,7 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import Service, { inject as service } from '@ember/service';
+import { set, getProperties, get } from '@ember/object';
 import recordsList from 'code-corps-ember/utils/records-list';
-
-const {
-  computed: {
-    alias
-  },
-  get,
-  getProperties,
-  inject: { service },
-  Service,
-  set
-} = Ember;
 
 export default Service.extend({
   store: service(),

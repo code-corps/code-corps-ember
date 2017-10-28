@@ -1,12 +1,7 @@
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import AjaxService from 'ember-ajax/services/ajax';
 import ENV from 'code-corps-ember/config/environment';
-import Ember from 'ember';
-
-const {
-  computed,
-  get,
-  inject: { service }
-} = Ember;
 
 export default AjaxService.extend({
   host: ENV.API_BASE_URL,
