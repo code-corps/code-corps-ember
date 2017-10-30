@@ -15,9 +15,32 @@
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   user-select: none;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    height: 12px;
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: block;
+    height: 5px;
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #AAA;
+    border-radius: 6px;
+    opacity: 0.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #EEE;
+    border-radius: 6px;
+  }
 }
