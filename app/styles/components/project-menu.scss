@@ -7,10 +7,16 @@
     padding: 0;
     width: 100%;
 
+    @include media($sm-screen) {
+      overflow-x: scroll;
+      white-space: nowrap;
+    }
+
     li {
-      float: left;
+      display: inline-flex;
       font-size: $body-font-size-normal;
       height: 100%;
+      margin-right: -4px;
     }
 
     a {

@@ -1,28 +1,37 @@
 .donation-progress {
-  margin-bottom: 20px;
+  margin-bottom: 1em;
 
   .progress-bar-container {
     height: 8px;
-    margin: 10px 0 20px 0;
+    margin: 1em 0 1em 0;
+
+    @include media($md-screen) {
+      height: 6px;
+    }
   }
 
   &__details {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 1em 0;
 
     &__amount, &__percentage {
       text-align: center;
 
       &__label {
         color: $text--light;
-        font-size: 13px;
+        font-size: $body-font-size-small;
       }
 
       &__value {
         font-size: $header-font-size-medium;
         font-weight: 600;
         line-height: 2rem;
+
+        @include media($md-screen) {
+          font-size: $header-font-size-small;
+          line-height: 1.5rem;
+        }
       }
 
       &:first-child {
@@ -44,8 +53,13 @@
     border-radius: 4px;
     color: $text--light;
     font-size: $body-font-size-normal;
-    line-height: 22px;
+    line-height: $header-font-size-medium;
     margin: 10px 0;
     padding: 10px;
+
+    @include media($md-screen) {
+      font-size: $body-font-size-normal;
+      line-height: $header-font-size-small;
+    }
   }
 }
