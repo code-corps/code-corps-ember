@@ -1,11 +1,11 @@
 @keyframes emptyAnimation {}
 
-@-webkit-keyframes pulsate {
+@keyframes pulsate {
   25% {transform: scale(1.3, 1.3);}
   100% {transform: scale(1.0, 1.0);}
 }
 
-@-webkit-keyframes reset {
+@keyframes reset {
   100% {transform: scale(1.0, 1.0);}
 }
 
