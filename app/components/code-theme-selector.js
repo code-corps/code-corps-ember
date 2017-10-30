@@ -1,11 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { alias } from 'ember-computed';
-
-const {
-  Component,
-  get,
-  inject: { service }
-} = Ember;
 
 /**
  * The `code-theme-selector` component is used to toggle code themes on

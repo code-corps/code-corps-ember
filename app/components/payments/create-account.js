@@ -1,12 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-
-const {
-  Component,
-  computed,
-  get,
-  isEmpty
-} = Ember;
 
 export default Component.extend({
   classNameBindings: ['statusClass'],

@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  isEmpty,
-  Helper
-} = Ember;
+import { isEmpty } from '@ember/utils';
+import Helper from '@ember/component/helper';
 
 export function capitalize([string]) {
   if (isEmpty(string)) {

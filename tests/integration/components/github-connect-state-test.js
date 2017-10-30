@@ -1,3 +1,4 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
@@ -7,10 +8,6 @@ import setupSessionService from 'ember-simple-auth/initializers/setup-session-se
 
 import pageComponent from 'code-corps-ember/tests/pages/components/github-connect-state';
 import PageObject from 'ember-cli-page-object';
-
-import Ember from 'ember';
-
-const { set } = Ember;
 
 let page = PageObject.create(pageComponent);
 

@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  inject: { service },
-  observer
-} = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { observer, computed } from '@ember/object';
 
 /**
   `error-wrapper` handles http response status code errors and other server

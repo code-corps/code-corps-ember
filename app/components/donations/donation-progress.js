@@ -1,9 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 /**
  * Displays progress towards the current donation goal
@@ -36,13 +33,13 @@ export default Component.extend({
    *
    * @property {Number} amountNeeded
    */
-  amountNeeded: computed.alias('donationGoal.amount'),
+  amountNeeded: alias('donationGoal.amount'),
 
   /**
    * The description this donation goal
    * @property {String} description
    */
-  description: computed.alias('donationGoal.description'),
+  description: alias('donationGoal.description'),
 
   /**
    * A computed field. Uses fields `amountDonated` and `amountNeeded` to

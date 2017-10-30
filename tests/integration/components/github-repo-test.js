@@ -1,15 +1,11 @@
+import { set } from '@ember/object';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import PageObject from 'ember-cli-page-object';
 import githubRepoComponent from 'code-corps-ember/tests/pages/components/github-repo';
 
 let page = PageObject.create(githubRepoComponent);
-
-const {
-  set,
-  run
-} = Ember;
 
 function renderPage() {
   page.render(hbs`

@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get,
-  inject: { service },
-  set
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { set, get, computed } from '@ember/object';
 
 /**
   @class task-title
@@ -29,7 +24,7 @@ export default Component.extend({
     @property canEdit
     @type Boolean
    */
-  canEdit: computed.alias('currentUserIsTaskAuthor'),
+  canEdit: alias('currentUserIsTaskAuthor'),
 
   /**
     Returns the current user's ID.
@@ -37,7 +32,7 @@ export default Component.extend({
     @property currentUserId
     @type Number
    */
-  currentUserId: computed.alias('currentUser.user.id'),
+  currentUserId: alias('currentUser.user.id'),
 
   /**
     Returns the task author's ID.
@@ -45,7 +40,7 @@ export default Component.extend({
     @property taskAuthorId
     @type Number
    */
-  taskAuthorId: computed.alias('task.user.id'),
+  taskAuthorId: alias('task.user.id'),
 
   /**
     Consumes `currentUserId` and `taskAuthorId` and returns if the current user

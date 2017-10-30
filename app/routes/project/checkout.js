@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  get,
-  inject: { service },
-  Route,
-  RSVP,
-  set
-} = Ember;
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import RSVP from 'rsvp';
+import { set, get } from '@ember/object';
 
 const ALREADY_A_SUBSCRIBER = "You're already supporting this project.";
 

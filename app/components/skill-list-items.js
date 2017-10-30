@@ -1,12 +1,13 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, filter, setDiff, sort, union },
-  get,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import {
+  union,
+  sort,
+  setDiff,
+  filter,
+  alias
+} from '@ember/object/computed';
+import { get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNameBindings: ['overflowHidden:overflow-hidden'],

@@ -1,12 +1,6 @@
-import Ember from 'ember';
+import Service from '@ember/service';
+import { set, get, computed } from '@ember/object';
 import $ from 'jquery';
-
-const {
-  computed,
-  get,
-  Service,
-  set
-} = Ember;
 
 export default Service.extend({
   isViewing: false,

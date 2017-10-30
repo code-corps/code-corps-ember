@@ -1,6 +1,16 @@
 .project-wrapper {
+  display: flex;
+  flex-direction: column;
   min-height: 50vh;
   width: 100%;
+
+  &--index {
+    flex-direction: row;
+  }
+
+  @include media($sm-screen) {
+    flex-direction: column;
+  }
 }
 
 .project-main {
@@ -8,7 +18,8 @@
   @include media($lg-screen) {
     @include span-columns(7);
   }
-  @include media($md-screen) {
+  @include media($sm-screen) {
+    order: 2;
     @include span-columns(12);
   }
 }
@@ -18,7 +29,8 @@
   @include media($lg-screen) {
     @include span-columns(5);
   }
-  @include media($md-screen) {
+  @include media($sm-screen) {
+    order: 1;
     @include span-columns(12);
   }
 

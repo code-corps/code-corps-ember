@@ -1,11 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  get,
-  isPresent
-} = Ember;
+import { alias } from '@ember/object/computed';
+import Component from '@ember/component';
+import { get, computed } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
 /**
   The `volunteer-headshot` component presents a thumbnail of a volunteer, their
@@ -30,7 +26,7 @@ export default Component.extend({
     @property userRoles
     @type Ember.Array
    */
-  userRoles: computed.alias('volunteer.userRoles'),
+  userRoles: alias('volunteer.userRoles'),
 
   /**
     A randomly selected role from the `userRoles` property.

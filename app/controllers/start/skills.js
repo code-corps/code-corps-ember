@@ -1,12 +1,8 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { get } from '@ember/object';
+import { inject as service } from '@ember/service';
 import OnboardingControllerMixin from '../../mixins/onboarding-controller';
-
-const {
-  computed: { alias },
-  Controller,
-  get,
-  inject: { service }
-} = Ember;
 
 export default Controller.extend(OnboardingControllerMixin, {
   currentUser: service(),

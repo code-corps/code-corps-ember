@@ -1,13 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { equal },
-  get,
-  isEmpty,
-  set,
-  setProperties
-} = Ember;
+import Component from '@ember/component';
+import { equal } from '@ember/object/computed';
+import { isEmpty } from '@ember/utils';
+import { setProperties, set, get } from '@ember/object';
 
 export default Component.extend({
   classNames: ['details-form'],

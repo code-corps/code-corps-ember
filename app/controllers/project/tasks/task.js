@@ -1,14 +1,8 @@
-import Ember from 'ember';
+import { filterBy, alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { set, getProperties, get } from '@ember/object';
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
-
-const {
-  computed: { alias, filterBy },
-  Controller,
-  get,
-  getProperties,
-  inject: { service },
-  set
-} = Ember;
 
 export default Controller.extend({
 

@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { mapBy }
-} = Ember;
+import Component from '@ember/component';
+import { mapBy } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['user-details'],

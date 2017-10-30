@@ -1,7 +1,6 @@
-import Ember from 'ember';
+import { set, get } from '@ember/object';
+import TextField from '@ember/component/text-field';
 import { getCode } from 'ember-keyboard';
-
-const { get, set, TextField } = Ember;
 
 export default TextField.extend({
   tagname: 'input',

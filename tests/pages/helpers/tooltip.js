@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { $ } = Ember;
+import $ from 'jquery';
 
 /**
  * This helper is used to deal with DOM elements inserted by the

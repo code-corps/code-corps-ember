@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  Mixin
-} = Ember;
+import { computed } from '@ember/object';
+import Mixin from '@ember/object/mixin';
 
 /**
  * `contains-code` provides a computed property to the extended class

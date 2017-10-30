@@ -1,13 +1,6 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  computed: { alias, equal, mapBy, or, union },
-  get,
-  getProperties,
-  inject: { service },
-  Service
-} = Ember;
+import { union, or, mapBy, equal, alias } from '@ember/object/computed';
+import { getProperties, get, computed } from '@ember/object';
+import Service, { inject as service } from '@ember/service';
 
 export default Service.extend({
   currentUser: service(),

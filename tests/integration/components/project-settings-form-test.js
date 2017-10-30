@@ -1,11 +1,11 @@
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { getFlashMessageCount } from 'code-corps-ember/tests/helpers/flash-message';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-settings-form';
-
-const { getOwner, RSVP, set } = Ember;
 
 let page = PageObject.create(component);
 

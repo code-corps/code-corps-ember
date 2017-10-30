@@ -1,12 +1,7 @@
+import { sort } from '@ember/object/computed';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-
-import Ember from 'ember';
-
-const {
-  computed: { sort }
-} = Ember;
 
 /**
   Task-list is a collection of categorized tasks that belong to a project.

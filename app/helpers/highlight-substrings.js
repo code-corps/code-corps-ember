@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { Helper, isEmpty } = Ember;
+import Helper from '@ember/component/helper';
+import { isEmpty } from '@ember/utils';
 
 export function highlightSubstrings([string, substring]) {
   if (isEmpty(substring) || isEmpty(string)) {

@@ -1,15 +1,8 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, and, empty, not },
-  get,
-  inject: { service },
-  observer,
-  run: { cancel, debounce, once },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { not, empty, and, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { once, debounce, cancel } from '@ember/runloop';
+import { set, observer, get, computed } from '@ember/object';
 
 export default Component.extend({
   cachedEmail: '',

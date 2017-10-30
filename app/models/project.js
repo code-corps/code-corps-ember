@@ -1,9 +1,8 @@
+import { gt, filterBy } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
-import Ember from 'ember';
-
-const { computed, computed: { filterBy, gt }, get } = Ember;
 
 export default Model.extend({
   approved: attr(),

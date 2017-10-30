@@ -1,7 +1,6 @@
+import { get } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import { moduleFor, test } from 'ember-qunit';
-import Ember from 'ember';
-
-const { get, isPresent } = Ember;
 
 moduleFor('service:onboarding', 'Unit | Service | onboarding', {
   // Specify the other units that are required for this test.

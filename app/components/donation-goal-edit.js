@@ -1,11 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  get,
-  getProperties,
-  setProperties
-} = Ember;
+import Component from '@ember/component';
+import { setProperties, getProperties, get } from '@ember/object';
 
 /**
  * `donation-goal-edit` used to edit new and existing donation goals

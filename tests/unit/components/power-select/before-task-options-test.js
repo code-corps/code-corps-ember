@@ -1,7 +1,6 @@
+import Controller from '@ember/controller';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
-import Ember from 'ember';
-
-const { Controller, set } = Ember;
 
 moduleForComponent(
   'power-select/before-task-options',

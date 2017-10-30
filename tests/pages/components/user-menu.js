@@ -1,4 +1,10 @@
-import { attribute, clickable, hasClass, isVisible, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  clickable,
+  hasClass,
+  isVisible,
+  text
+} from 'ember-cli-page-object';
 
 export default {
   scope: '.user-menu',

@@ -1,18 +1,17 @@
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import { run } from '@ember/runloop';
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
-import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
+import {
+  getFlashMessageCount,
+  getFlashMessageAt
+} from 'code-corps-ember/tests/helpers/flash-message';
 
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/role-item';
-
-const {
-  getOwner,
-  RSVP,
-  run,
-  set
-} = Ember;
 
 const page = PageObject.create(component);
 const template = hbs`{{role-item role=role userRoles=userRoles}}`;

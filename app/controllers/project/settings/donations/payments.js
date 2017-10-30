@@ -1,15 +1,10 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import { inject as service } from '@ember/service';
+import { merge } from '@ember/polyfills';
+import RSVP from 'rsvp';
+import { set, get } from '@ember/object';
 import FriendlyError from 'code-corps-ember/utils/friendly-error';
-
-const {
-  computed: { alias },
-  Controller,
-  get,
-  inject: { service },
-  merge,
-  RSVP,
-  set
-} = Ember;
 
 const ACCOUNT_CREATION_ERROR = 'There was a problem with creating your account. Please check your input and try again.';
 const ACCOUNT_UPDATE_ERROR = 'There was a problem with your account information. Please check your input and try again.';

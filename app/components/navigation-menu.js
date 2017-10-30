@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 
 /**
   `navigation-menu` composes the top navigation-menu.

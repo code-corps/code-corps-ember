@@ -1,11 +1,6 @@
-import Ember from 'ember';
+import RSVP from 'rsvp';
+import { set, get } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
-
-const {
-  get,
-  RSVP,
-  set
-} = Ember;
 
 let mockStore = {
   createRecord() {

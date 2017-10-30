@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { set, get } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
@@ -7,7 +7,6 @@ import component from 'code-corps-ember/tests/pages/components/github-connect';
 import setupSession from 'ember-simple-auth/initializers/setup-session';
 import setupSessionService from 'ember-simple-auth/initializers/setup-session-service';
 
-const { get, set } = Ember;
 const baseUrl = 'https://github.com/login/oauth/authorize';
 
 let page = PageObject.create(component);

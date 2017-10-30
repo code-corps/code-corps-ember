@@ -1,10 +1,9 @@
-import Ember from 'ember';
+import { run } from '@ember/runloop';
+import { set, get } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import selectGithubRepoComponent from '../../../pages/components/select/github-repo';
 import PageObject from 'ember-cli-page-object';
-
-const { get, run, set } = Ember;
 
 let page = PageObject.create(selectGithubRepoComponent);
 

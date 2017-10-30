@@ -1,10 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { alias, gt, filterBy },
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { filterBy, gt, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 /**
   `project-menu` allows navigation within project functions. Users who

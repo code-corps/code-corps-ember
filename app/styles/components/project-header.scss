@@ -3,12 +3,21 @@
 
   @include clearfix;
 
-  $icon-size: 50px;
+  $icon-size--large: 50px;
+  $icon-size--small: 40px;
 
   &__icon {
     float: left;
-    height: $icon-size;
-    width: $icon-size;
+  }
+
+  &__icon, &__icon .icon {
+    height: $icon-size--large;
+    width: $icon-size--large;
+
+    @include media($sm-screen) {
+      height: $icon-size--small;
+      width: $icon-size--small;
+    }
   }
 
   &__details {
@@ -19,10 +28,17 @@
   &__main {
     display: flex;
     @include span-columns(8);
+    @include media($sm-screen) {
+      @include span-columns(12);
+    }
   }
 
   &__side {
     @include span-columns(4);
+    @include media($sm-screen) {
+      display: none;
+    }
+
     display: flex;
     align-items: center;
     height: 50px;
@@ -40,6 +56,10 @@
   h2 {
     margin: 10px 0;
     font-size: $header-font-size-medium;
+
+    @include media($sm-screen) {
+      font-size: $header-font-size-small;
+    }
 
     a {
       color: $hidden-link-color;

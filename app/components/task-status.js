@@ -1,9 +1,5 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { alias }
-} = Ember;
+import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
 
 /**
   A badge that presents a task's status

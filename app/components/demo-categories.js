@@ -1,11 +1,10 @@
+import Component from '@ember/component';
+import { later } from '@ember/runloop';
+import { set, get, observer } from '@ember/object';
 import Ember from 'ember';
 import { task, timeout } from 'ember-concurrency';
 
 const {
-  Component,
-  observer,
-  run: { later },
-  get, set,
   testing
 } = Ember;
 

@@ -1,19 +1,12 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { or, notEmpty, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { set, getProperties, get, computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 import EmberUploader from 'ember-uploader';
 import ENV from 'code-corps-ember/config/environment';
-
-const {
-  Component,
-  computed,
-  computed: { alias, notEmpty, or },
-  get,
-  getProperties,
-  inject: { service },
-  isEmpty,
-  run,
-  set,
-  String: { htmlSafe }
-} = Ember;
 
 const { Uploader } = EmberUploader;
 

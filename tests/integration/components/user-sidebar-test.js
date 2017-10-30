@@ -1,11 +1,9 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
 import PageObject from 'ember-cli-page-object';
-import Ember from 'ember';
 import userSidebarComponent from '../../pages/components/user-sidebar';
-
-const { set } = Ember;
 
 let page = PageObject.create(userSidebarComponent);
 

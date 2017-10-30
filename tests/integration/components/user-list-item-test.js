@@ -1,16 +1,14 @@
+import { getOwner } from '@ember/application';
+import RSVP from 'rsvp';
+import { set, get } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
-import { getFlashMessageCount, getFlashMessageAt } from 'code-corps-ember/tests/helpers/flash-message';
+import {
+  getFlashMessageCount,
+  getFlashMessageAt
+} from 'code-corps-ember/tests/helpers/flash-message';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/user-list-item';
-
-const {
-  get,
-  getOwner,
-  RSVP,
-  set
-} = Ember;
 
 let user = {
   name: 'Josh Smith',

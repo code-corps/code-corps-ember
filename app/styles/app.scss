@@ -41,7 +41,6 @@
 @import "base/mixins";
 
 @import "base/base";
-@import "base/helpers";
 
 //
 //
@@ -66,6 +65,8 @@
 @import "layout/select-dropdown";
 @import "layout/select-inline";
 @import "layout/tooltips";
+
+@import "base/helpers"; // Relies on layout
 
 @import "inputs";
 

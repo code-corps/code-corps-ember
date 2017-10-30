@@ -1,14 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { notEmpty },
-  get,
-  getProperties,
-  inject: { service },
-  set
-} = Ember;
+import Component from '@ember/component';
+import { notEmpty } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { set, getProperties, get, computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['role-item'],

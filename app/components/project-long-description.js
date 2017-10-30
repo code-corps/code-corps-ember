@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { or },
-  get,
-  isPresent,
-  set
-} = Ember;
+import Component from '@ember/component';
+import { or } from '@ember/object/computed';
+import { isPresent } from '@ember/utils';
+import { set, get } from '@ember/object';
 
 /**
   `project-long-description` displays and allows editing of the long

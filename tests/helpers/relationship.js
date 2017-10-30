@@ -1,7 +1,5 @@
+import { get } from '@ember/object';
 import { test } from 'ember-qunit';
-import Ember from 'ember';
-
-const { get } = Ember;
 
 function runAssertions(assert, store, modelName, relationshipName, relationshipKind) {
   assert.expect(2);

@@ -1,14 +1,11 @@
-import Ember from 'ember';
-
-const {
-  computed,
-  Service
-} = Ember;
+import { not } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import Service from '@ember/service';
 
 export default Service.extend({
   isLight: true,
 
-  isDark: computed.not('isLight'),
+  isDark: not('isLight'),
 
   className: computed('isLight', 'isDark', function() {
     if (this.get('isLight')) {

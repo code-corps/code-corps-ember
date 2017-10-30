@@ -8,6 +8,12 @@
   &--wide {
     padding: 0 10px;
   }
+
+  &--full-on-mobile {
+    @include media($sm-screen) {
+      padding: 0;
+    }
+  }
 }
 
 .flexbox-container {

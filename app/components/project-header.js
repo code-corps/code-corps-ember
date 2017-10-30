@@ -1,13 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias, mapBy },
-  get,
-  getProperties,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { mapBy, alias } from '@ember/object/computed';
+import { getProperties, get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 /**
   Displays information about the project and allows a user to join the project

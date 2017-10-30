@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  get,
-  inject: { service },
-  Route,
-  setProperties
-} = Ember;
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
+import { setProperties, get } from '@ember/object';
 
 export default Route.extend({
   currentUser: service(),

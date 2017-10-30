@@ -1,4 +1,9 @@
-import { clickable, fillable, isVisible, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  fillable,
+  isVisible,
+  value
+} from 'ember-cli-page-object';
 
 import donationAmountButtonComponent from './donation-amount-button';
 import Ember from 'ember';

@@ -1,6 +1,5 @@
-import Ember from 'ember';
-
-const { get, isEmpty } = Ember;
+import { get } from '@ember/object';
+import { isEmpty } from '@ember/utils';
 
 /**
  * Takes in a list of project users, the current user id and,

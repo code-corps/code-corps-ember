@@ -1,13 +1,7 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { alias },
-  computed,
-  get,
-  getProperties,
-  inject: { service }
-} = Ember;
+import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
+import { getProperties, get, computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNameBindings: ['hasSkill', 'selected:selected'],

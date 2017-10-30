@@ -1,12 +1,8 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed: { alias, and, empty, equal, not },
-  inject: { service },
-  observer,
-  run: { cancel, debounce, once }
-} = Ember;
+import Component from '@ember/component';
+import { not, equal, empty, and, alias } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import { observer } from '@ember/object';
+import { once, debounce, cancel } from '@ember/runloop';
 
 /**
   `signup-username-input` composes the username input on the signup page. It

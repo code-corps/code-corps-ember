@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import Object from '@ember/object';
 import OnboardingControllerMixin from 'code-corps-ember/mixins/onboarding-controller';
 import { module, test } from 'qunit';
-
-const { Object } = Ember;
 
 module('Unit | Mixin | onboarding controller');
 

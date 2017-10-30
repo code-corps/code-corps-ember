@@ -1,8 +1,6 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
 import recordsList from 'code-corps-ember/utils/records-list';
 import { module, test } from 'qunit';
-
-const { isEmpty } = Ember;
 
 module('Unit | Utility | records-list');
 

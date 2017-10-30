@@ -1,11 +1,6 @@
-import Ember from 'ember';
-
-const {
-  Component,
-  computed,
-  computed: { alias },
-  get
-} = Ember;
+import Component from '@ember/component';
+import { alias } from '@ember/object/computed';
+import { get, computed } from '@ember/object';
 
 export default Component.extend({
   classNameBindings: ['statusClass'],

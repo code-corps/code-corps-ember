@@ -1,14 +1,10 @@
+import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 import component from 'code-corps-ember/tests/pages/components/task/sidebar/integrations-section';
 import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
-
-const {
-  set
-} = Ember;
 
 function renderPage() {
   page.render(hbs`

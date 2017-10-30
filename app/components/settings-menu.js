@@ -1,8 +1,4 @@
-import Ember from 'ember';
-
-const {
-  Component
-} = Ember;
+import Component from '@ember/component';
 
 /**
   `settings-menu` allows navigation within a user's settings.

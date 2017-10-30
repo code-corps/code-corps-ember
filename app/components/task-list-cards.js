@@ -1,9 +1,5 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
 import EmberDragulaContainer from 'ember-dragula/components/ember-dragula-container';
-
-const {
-  computed: { alias }
-} = Ember;
 
 export default EmberDragulaContainer.extend({
   attributeBindings: ['data-model-id', 'data-model-type'],
