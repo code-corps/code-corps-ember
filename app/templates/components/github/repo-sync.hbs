@@ -1,0 +1,50 @@
+{{progress-bar-container animated=syncing error=errored percentage=percentage}}
+<p data-test-text>
+  {{#if errored}}
+    {{#if (eq state "errored_fetching_pull_requests")}}
+      {{svg/sprite-icon icon="github-pull-request-48" style="solid-red"}}
+      <span>An error occurred fetching your pull requests. You can retry the sync now.</span>
+    {{else if (eq state "errored_syncing_pull_requests")}}
+      {{svg/sprite-icon icon="github-pull-request-48" style="solid-red"}}
+      <span>An error occurred syncing your pull requests. You can retry the sync now.</span>
+    {{else if (eq state "errored_fetching_issues")}}
+      {{svg/sprite-icon icon="github-issue-48" style="solid-red"}}
+      <span>An error occurred fetching your issues. You can retry the sync now.</span>
+    {{else if (eq state "errored_syncing_issues")}}
+      {{svg/sprite-icon icon="github-issue-48" style="solid-red"}}
+      <span>An error occurred syncing your issues. You can retry the sync now.</span>
+    {{else if (eq state "errored_fetching_comments")}}
+      {{svg/sprite-icon icon="github-comments-48" style="solid-red"}}
+      <span>An error occurred fetching your comments. You can retry the sync now.</span>
+    {{else if (eq state "errored_syncing_comments")}}
+      {{svg/sprite-icon icon="github-comments-48" style="solid-red"}}
+      <span>An error occurred syncing your comments. You can retry the sync now.</span>
+    {{/if}}
+  {{else}}
+    {{#if (eq state "unsynced")}}
+      {{svg/sprite-icon icon="github-repo-clone-48" style="solid-light-gray"}}
+      <span>Starting sync...</span>
+    {{else if (eq state "fetching_pull_requests")}}
+      {{svg/sprite-icon icon="github-pull-request-48" style="solid-blue"}}
+      <span>Fetching pull requests...</span>
+    {{else if (eq state "syncing_pull_requests")}}
+      {{svg/sprite-icon icon="github-pull-request-48" style="solid-blue"}}
+      <span>Syncing <strong>{{format-number githubRepo.syncingPullRequestsCount}}</strong> pull requests...</span>
+    {{else if (eq state "fetching_issues")}}
+      {{svg/sprite-icon icon="github-issue-48" style="solid-blue"}}
+      <span>Fetching issues...</span>
+    {{else if (eq state "syncing_issues")}}
+      {{svg/sprite-icon icon="github-issue-48" style="solid-blue"}}
+      <span>Syncing <strong>{{format-number githubRepo.syncingIssuesCount}}</strong> issues...</span>
+    {{else if (eq state "fetching_comments")}}
+      {{svg/sprite-icon icon="github-comments-48" style="solid-blue"}}
+      <span>Fetching comments...</span>
+    {{else if (eq state "syncing_comments")}}
+      {{svg/sprite-icon icon="github-comments-48" style="solid-blue"}}
+      <span>Syncing <strong>{{format-number githubRepo.syncingCommentsCount}}</strong> comments...</span>
+    {{else if (eq state "receiving_webhooks")}}
+      {{svg/sprite-icon icon="github-repo-clone-48" style="solid-blue"}}
+      <span>Sync complete!</span>
+    {{/if}}
+  {{/if}}
+</p>
