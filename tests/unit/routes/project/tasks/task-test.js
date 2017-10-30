@@ -4,6 +4,8 @@ moduleFor('route:project/tasks/task', 'Unit | Route | project/tasks/task', {
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:task-skills-list'
   ]
 });

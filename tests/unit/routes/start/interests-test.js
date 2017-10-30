@@ -4,6 +4,8 @@ moduleFor('route:start/interests', 'Unit | Route | start/interests', {
   // Specify the other units that are required for this test.
   needs: [
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });

@@ -4,6 +4,8 @@ moduleFor('controller:project/settings/donations/payments', 'Unit | Controller |
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:stripe'
   ]
 });

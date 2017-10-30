@@ -4,6 +4,8 @@ moduleFor('route:project/donate', 'Unit | Route | project/donate', {
   needs: [
     'service:flash-messages',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session',
     'service:user-subscriptions'
   ]
