@@ -5,6 +5,8 @@ moduleFor('route:project/checkout', 'Unit | Route | project/checkout', {
   needs: [
     'service:metrics',
     'service:flash-messages',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session',
     'service:user-subscriptions'
   ]

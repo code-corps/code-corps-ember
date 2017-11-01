@@ -5,6 +5,8 @@ moduleFor('route:start/hello', 'Unit | Route | start/hello', {
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });

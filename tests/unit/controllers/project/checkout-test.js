@@ -5,6 +5,8 @@ moduleFor('controller:project/checkout', 'Unit | Controller | project/checkout',
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session',
     'service:stripev3'
   ]

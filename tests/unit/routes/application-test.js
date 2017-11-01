@@ -9,6 +9,8 @@ moduleFor('route:application', 'Unit | Route | application', {
     'service:loading-bar',
     'service:metrics',
     'service:onboarding',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });

@@ -5,6 +5,8 @@ moduleFor('controller:start/interests', 'Unit | Controller | start/interests', {
     'service:current-user',
     'service:metrics',
     'service:onboarding',
+    'service:router-scroll',
+    'service:scheduler',
     'service:user-categories'
   ]
 });

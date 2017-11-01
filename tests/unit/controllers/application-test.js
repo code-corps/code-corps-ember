@@ -6,6 +6,8 @@ moduleFor('controller:application', 'Unit | Controller | application', {
     'service:metrics',
     'service:onboarding',
     'service:project-task-board',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });
