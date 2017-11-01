@@ -51,6 +51,10 @@
   &:focus {
     outline: none;
     @include focus($default-color);
+
+    &.danger {
+      @include focus($danger-color);
+    }
   }
 
   &.large {
@@ -127,6 +131,10 @@
 
   &.danger {
     @include colorButton($danger-color);
+    &:disabled {
+      @include colorButton($clear-hover);
+      color: $red;
+    }
   }
 
   &.warning {
@@ -235,6 +243,10 @@
 
   &.danger {
     @include hoverButton($danger-color);
+    &:disabled {
+      @include colorButton($clear-hover);
+      color: $red;
+    }
   }
 
   &.success {

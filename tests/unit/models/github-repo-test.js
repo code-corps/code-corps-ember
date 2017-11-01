@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from '../../helpers/relationship';
 import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
-import '../../helpers/has-attributes';
+import 'code-corps-ember/tests/helpers/has-attributes';
 
 moduleForModel('github-repo', 'Unit | Model | github-repo', {
   // Specify the other units that are required for this test.
@@ -28,6 +28,7 @@ testForAttributes('github-repo', [
   'syncingCommentsCount',
   'syncingIssuesCount',
   'syncingPullRequestsCount',
+  'triggeredSync',
   'updatedAt'
 ]);
 

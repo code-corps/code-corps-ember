@@ -1,5 +1,4 @@
 import { setProperties, set } from '@ember/object';
-import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
@@ -40,8 +39,8 @@ moduleForComponent('github/connected-installation', 'Integration | Component | g
   }
 });
 
-const connectedRepo = { id: 1, name: 'Connected Repo', isLoaded: true };
-const unconnectedRepo = { id: 2, name: 'Unconnected Repo', isLoaded: true };
+const connectedRepo = { id: 1, name: 'Connected Repo', isLoaded: true, syncState: 'synced' };
+const unconnectedRepo = { id: 2, name: 'Unconnected Repo', isLoaded: true, syncState: 'unsynced' };
 const loadingRepo = { id: 3, isLoaded: false };
 
 const githubAppInstallation = {
@@ -58,6 +57,7 @@ const projectGithubRepo = {
   githubRepo: connectedRepo,
   id: 'project-github-repo',
   isLoaded: true,
+  syncState: 'synced',
   belongsTo() {
     return { id: () => 1 };
   }
@@ -70,7 +70,7 @@ const project = {
 };
 
 test('renders correct elements for provided github app installation', function(assert) {
-  assert.expect(15);
+  assert.expect(7);
 
   setProperties(this, { organizationGithubAppInstallation, project });
   renderPage();
@@ -82,18 +82,8 @@ test('renders correct elements for provided github app installation', function(a
   assert.equal(page.githubRepos().count, 3, 'All repos are rendered.');
 
   assert.equal(page.githubRepos(0).name.text, 'Connected Repo');
-  assert.notOk(page.githubRepos(0).loading.isVisible, 'Repo is not in loading state.');
-  assert.notOk(page.githubRepos(0).actions.connect.isVisible, 'Repo is connected, so connect button is hidden.');
-  assert.ok(page.githubRepos(0).actions.disconnect.isVisible, 'Repo is connected, so disconnect button is visible.');
-
   assert.equal(page.githubRepos(1).name.text, 'Unconnected Repo');
-  assert.notOk(page.githubRepos(1).loading.isVisible, 'Repo is not in loading state.');
-  assert.ok(page.githubRepos(1).actions.connect.isVisible, 'Repo is unconnected, so connect button is visible.');
-  assert.notOk(page.githubRepos(1).actions.disconnect.isVisible, 'Repo is unconnected, so disconnect button is hidden.');
-
   assert.ok(page.githubRepos(2).loading.isVisible, 'Repo is in loading state.');
-  assert.notOk(page.githubRepos(2).actions.connect.isVisible, 'Repo is in loading state. Neither button should render.');
-  assert.notOk(page.githubRepos(2).actions.disconnect.isVisible, 'Repo is in loading state. Neither button should render.');
 });
 
 test('triggers/passes out all actions action', function(assert) {
@@ -115,7 +105,11 @@ test('triggers/passes out all actions action', function(assert) {
 
   renderPage();
 
-  run(() => page.disconnect.click());
-  run(() => page.githubRepos(0).actions.disconnect.click());
-  run(() => page.githubRepos(1).actions.connect.click());
+  page.githubRepos(0).click();
+  page.githubRepos(0).callout.repoDisconnectConfirmModal.openButton.click();
+  page.githubRepos(0).callout.repoDisconnectConfirmModal.modal.input.fillIn(connectedRepo.name);
+  page.githubRepos(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
+  page.githubRepos(1).click();
+  page.githubRepos(1).callout.button.click();
+  page.disconnect.click();
 });

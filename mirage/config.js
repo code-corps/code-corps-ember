@@ -270,7 +270,15 @@ export default function() {
   */
 
   this.get('/project-github-repos', { coalesce: true });
-  this.post('/project-github-repos');
+  this.post('/project-github-repos', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    // Simulate API syncing both the repo and the project repo
+    let { githubRepoId } = attrs;
+    let githubRepo = schema.githubRepos.find(githubRepoId);
+    githubRepo.update({ syncState: 'receiving_webhooks' });
+    attrs.syncState = 'synced';
+    return schema.create('projectGithubRepo', attrs);
+  });
   this.get('/project-github-repos/:id');
   this.delete('/project-github-repos/:id');
 

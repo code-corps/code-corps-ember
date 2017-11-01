@@ -4,17 +4,27 @@ import {
 } from 'ember-cli-page-object';
 
 const ICONS = {
+  comments: 'comments-48',
   githubComments: 'github-comments-48',
   githubIssue: 'github-issue-48',
   githubLogo: 'github-48',
   githubMerge: 'github-merge-48',
   githubPullRequest: 'github-pull-request-48',
   githubRepo: 'github-repo-48',
-  githubRepoClone: 'github-repo-clone-48'
+  githubRepoClone: 'github-repo-clone-48',
+  githubRepoPull: 'github-repo-pull-48',
+  tasks: 'tasks-48'
 };
 
 export default {
   scope: '.sprite-icon',
+
+  isComments: {
+    isDescriptor: true,
+    get() {
+      return this.svg.use.xlinkHref.indexOf(ICONS.comments) > -1;
+    }
+  },
 
   isGithubComments: {
     isDescriptor: true,
@@ -62,6 +72,20 @@ export default {
     isDescriptor: true,
     get() {
       return this.svg.use.xlinkHref.indexOf(ICONS.githubRepoClone) > -1;
+    }
+  },
+
+  isGithubRepoPull: {
+    isDescriptor: true,
+    get() {
+      return this.svg.use.xlinkHref.indexOf(ICONS.githubRepoPull) > -1;
+    }
+  },
+
+  isTasks: {
+    isDescriptor: true,
+    get() {
+      return this.svg.use.xlinkHref.indexOf(ICONS.tasks) > -1;
     }
   },
 

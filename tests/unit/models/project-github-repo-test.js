@@ -1,7 +1,7 @@
 import { moduleForModel, test } from 'ember-qunit';
 import { testForBelongsTo } from '../../helpers/relationship';
 import { testForAttributes } from 'code-corps-ember/tests/helpers/attributes';
-import '../../helpers/has-attributes';
+import 'code-corps-ember/tests/helpers/has-attributes';
 
 moduleForModel('project-github-repo', 'Unit | Model | project-github-repo', {
   // Specify the other units that are required for this test.
@@ -18,6 +18,7 @@ test('it exists', function(assert) {
 
 testForAttributes('project-github-repo', [
   'insertedAt',
+  'syncState',
   'updatedAt'
 ]);
 

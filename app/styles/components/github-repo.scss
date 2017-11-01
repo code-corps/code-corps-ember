@@ -1,52 +1,64 @@
 .github-repo {
-  display: flex;
-  justify-content: space-between;
-  line-height: 30px;
-  margin-bottom: 10px;
-  vertical-align: middle;
+  border-left: 3px solid #FFF;
+  border-bottom: 1px solid $border-gray;
+  padding: 5px 20px 4px 20px;
+
+  &:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    line-height: 30px;
+    vertical-align: middle;
+  }
 
   &__name {
-    &:before {
-      content: "";
-      display: inline-block;
-      margin: 0 10px 0 0;
-      vertical-align: middle;
-      @include sprite($repo);
+    .sprite-icon {
+      padding-right: 5px;
+      svg {
+        display: inline-block;
+        fill: #000;
+        vertical-align: middle;
+      }
     }
   }
 
   &__actions {
     display: flex;
     font-size: $body-font-size-small;
+
+    a {
+      color: $text--lightest;
+    }
   }
 
-  &__remove-link {
-    color: $text--lightest;
-    &:hover {
-      color: $red;
+  &:hover {
+    background: $blue--lightest;
+    border-left: 3px solid $blue;
+    cursor: pointer;
+  }
+
+  &:hover &__actions {
+    a {
+      color: $blue;
+    }
+  }
+
+  &--connected {
+    .github-repo__name {
+      color: $blue;
+      font-weight: 600;
+      svg {
+        fill: $blue;
+      }
     }
   }
 }
 
-.github-repo--connected {
-  .github-repo__name {
-    color: $blue;
-
-    &:before {
-      @include sprite($repo-blue);
-    }
-  }
-
-  .github-repo__sync {
-    color: $blue;
-    margin-right: 10px;
-
-    &:before {
-      content: "";
-      display: inline-block;
-      margin: -1px 5px 0 0;
-      vertical-align: middle;
-      @include sprite($sync);
-    }
-  }
+.github-repo .callout {
+  margin: 10px 0;
 }
