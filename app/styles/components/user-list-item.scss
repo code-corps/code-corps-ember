@@ -28,27 +28,8 @@
     }
   }
   &__skills {
-    color: $text--lightest;
-    font-size: $body-font-size-small;
     @include span-columns(6);
-    ul {
-      margin-top: 6px;
-    }
-    li {
-      display: inline-block;
-      &:after {
-        content: ", ";
-      }
-      &:last-child {
-        // confused by the selector below
-        &:not(:first-child):before {
-          content: "and ";
-        }
-        &:after {
-          content: ".";
-        }
-      }
-    }
+    font-size: $body-font-size-small;
   }
 }
 

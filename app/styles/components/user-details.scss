@@ -4,22 +4,6 @@
 	&__main {
 		@include span-columns(9);
 	}
-
-	&__skills-list {
-		ul {
-			margin-top: 10px;
-
-			li {
-				background: #E8EBED;
-				border-radius: 2px;
-				color: #333;
-				display: inline-flex;
-				font-weight: 600;
-				margin: 0 2px 5px 0;
-				padding: 4px 7px;
-			}
-		}
-	}
 }
 
 .empty-state {
