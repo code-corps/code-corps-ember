@@ -16,6 +16,12 @@
     box-shadow: inset 0 -1px 0 rgba(0,0,0,.05);
     z-index: -99999;
   }
+
+  &--danger {
+    border-color: $red;
+    background-image: -webkit-linear-gradient(#FFF, $red--light);
+    background-image: linear-gradient(#FFF, $red--light);
+  }
 }
 
 
@@ -57,7 +63,7 @@ p.callout__content {
   }
 
   &__description {
-    color: $gray--dark;
+    color: $gray--darker;
     font-size: $body-font-size-small;
   }
 }

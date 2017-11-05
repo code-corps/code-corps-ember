@@ -113,7 +113,7 @@ test('it allows connecting and unconnecting repos for a connected installation',
   let githubAppInstallation = server.create('github-app-installation', { user });
 
   server.create('organization-github-app-installation', { organization, githubAppInstallation });
-  server.create('github-repo', { githubAppInstallation });
+  server.create('github-repo', { githubAppInstallation, name: 'code-corps-ember', syncState: 'unsynced' });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -135,6 +135,7 @@ test('it allows connecting and unconnecting repos for a connected installation',
         'Github repo is unconnected, so "connect" is visible'
       );
       installation.githubRepos(0).actions.connect.click();
+      installation.githubRepos(0).callout.button.click();
     });
   });
 
@@ -154,10 +155,13 @@ test('it allows connecting and unconnecting repos for a connected installation',
         'Github repo is now connected, so "connect" is no longer visible'
       );
       assert.ok(
-        installation.githubRepos(0).actions.disconnect.isVisible,
-        'Github repo is now connected, so "disconnect" is longer visible'
+        installation.githubRepos(0).actions.edit.isVisible,
+        'Github repo is now connected, so "edit" is visible'
       );
-      installation.githubRepos(0).actions.disconnect.click();
+      installation.githubRepos(0).click();
+      installation.githubRepos(0).callout.repoDisconnectConfirmModal.openButton.click();
+      installation.githubRepos(0).callout.repoDisconnectConfirmModal.modal.input.fillIn('code-corps-ember');
+      installation.githubRepos(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
     });
   });
 
@@ -173,11 +177,11 @@ test('it allows connecting and unconnecting repos for a connected installation',
         'Github repo is still rendered, after disconnecting it again.');
       assert.ok(
         installation.githubRepos(0).actions.connect.isVisible,
-        'Github repo is now disconnected again, so "connect" is longer visible'
+        'Github repo is now disconnected again, so "connect" is visible'
       );
       assert.notOk(
-        installation.githubRepos(0).actions.disconnect.isVisible,
-        'Github repo is now disconnected again, so "disconnect" is no longer visible'
+        installation.githubRepos(0).actions.edit.isVisible,
+        'Github repo is now disconnected again, so "edit" is no longer visible'
       );
     });
   });

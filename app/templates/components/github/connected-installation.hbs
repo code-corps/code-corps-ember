@@ -1,6 +1,6 @@
 <div class="github-app-installation__details">
   <div>
-    <img data-test-avatar src="{{githubAppInstallation.githubAccountAvatarUrl}}&amp;size=40" height="40" width="40" />
+    <img data-test-avatar src="{{iconUrl}}" height="40" width="40" />
     <h4 data-test-login>{{githubAppInstallation.githubAccountLogin}}</h4>
   </div>
   <div>
@@ -17,14 +17,13 @@
   <div class="github-app-installation__repos">
     <ul>
       {{#each repos as |repoItem|}}
-        {{#github-repo model=repoItem}}
-          {{#if repoItem.projectGithubRepo}}
-            <div class="github-repo__sync">Connected</div>
-            <a data-test-disconnect-repo {{action disconnectRepo repoItem.projectGithubRepo}} class="github-repo__remove-link">Remove</a>
-          {{else}}
-            <button data-test-connect-repo {{action connectRepo repoItem.githubRepo project}} class="clear small">Connect</button>
-          {{/if}}
-        {{/github-repo}}
+        {{github-repo
+          connectRepo=(action connectRepo)
+          disconnectRepo=(action disconnectRepo)
+          githubRepo=repoItem.githubRepo
+          project=project
+          projectGithubRepo=repoItem.projectGithubRepo
+        }}
       {{/each}}
     </ul>
   </div>

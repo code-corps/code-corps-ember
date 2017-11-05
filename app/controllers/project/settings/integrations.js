@@ -4,6 +4,7 @@ import { alias, mapBy } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Controller.extend({
+  flashMessages: service(),
   store: service(),
 
   organization: alias('project.organization'),
@@ -55,7 +56,9 @@ export default Controller.extend({
      * @param  {DS.Model} organizationGithubAppInstallation The link record that gets deleted
      */
     disconnect(organizationGithubAppInstallation) {
-      return organizationGithubAppInstallation.destroyRecord();
+      return organizationGithubAppInstallation.destroyRecord().then(() => {
+        get(this, 'flashMessages').clearMessages().success('Your installation was removed.');
+      });
     },
 
     connectRepo(githubRepo, project) {
@@ -66,7 +69,10 @@ export default Controller.extend({
     },
 
     disconnectRepo(projectGithubRepo) {
-      return projectGithubRepo.destroyRecord();
+      return projectGithubRepo.destroyRecord().then(() => {
+        get(this, 'flashMessages').clearMessages().success('Your GitHub repository is no longer syncing.');
+        window.scrollTo(0, 0);
+      });
     }
   }
 });

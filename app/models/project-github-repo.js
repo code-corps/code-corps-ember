@@ -4,6 +4,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   insertedAt: attr(),
+  syncState: attr(),
   updatedAt: attr(),
 
   githubRepo: belongsTo('github-repo', { async: true }),
