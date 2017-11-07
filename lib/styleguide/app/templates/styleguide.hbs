@@ -1,0 +1,7 @@
+<h1>Component List</h1>
+{{#power-select
+  options=componentList
+  selected=selectedComponent
+  onchange=(action (mut selectedComponent)) as |component|}}
+  {{component}}
+{{/power-select}}
