@@ -243,7 +243,7 @@ $list-height: 220px;
       width: $icon-size;
 
       img {
-        border-radius: 10px;
+        border-radius: $icon-border-radius;
         display: inline-block;
         height: $icon-size;
         width: $icon-size;
@@ -253,7 +253,7 @@ $list-height: 220px;
     &__content {
       color: $text--lightest;
       font-size: $body-font-size-tiny;
-      line-height: 18px;
+      line-height: 22px;
       padding-top: 1px;
       overflow: hidden;
       text-overflow: ellipsis;

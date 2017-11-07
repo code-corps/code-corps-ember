@@ -1,5 +1,5 @@
 import RSVP from 'rsvp';
-import { setProperties } from '@ember/object';
+import { set, setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
@@ -15,6 +15,7 @@ let page = PageObject.create(taskAssignmentComponent);
 function renderPage() {
   page.render(hbs`
     {{task-assignment
+      deferredRendering=deferredRendering
       task=task
       taskUser=taskUser
       users=users
@@ -174,6 +175,65 @@ test('assignment dropdown does not render if user has no ability', function(asse
   renderPage();
 
   assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
+  page.assignedUser.as((user) => {
+    assert.equal(user.icon.url, 'test.png');
+  });
+});
+
+test('when rendering is deffered and user does not have ability and no assigned user', function(assert) {
+  assert.expect(3);
+
+  let task = { id: 'task' };
+
+  set(this, 'task', task);
+  set(this, 'deferredRendering', true);
+  this.register('ability:task', Ability.extend({ canAssign: false }));
+
+  renderPage();
+
+  assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
+  assert.notOk(page.assignedUser.isVisible, 'Assigned user does not render.');
+  assert.notOk(page.unselectedItem.isVisible, 'Unselected item does not render.');
+});
+
+test('when rendering is deffered and user has ability and no assigned user', function(assert) {
+  assert.expect(3);
+
+  let task = { id: 'task' };
+
+  set(this, 'task', task);
+  set(this, 'deferredRendering', true);
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+
+  assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
+  assert.notOk(page.assignedUser.isVisible, 'Assigned user does not render.');
+  assert.ok(page.unselectedItem.isVisible, 'Unselected item renders.');
+});
+
+test('when rendering is deffered and user does not have ability and there is an assigned user', function(assert) {
+  assert.expect(4);
+
+  let task = { id: 'task' };
+
+  set(this, 'task', task);
+  set(this, 'deferredRendering', true);
+  let user1 = {
+    id: 'user1',
+    username: 'testuser1',
+    photoThumbUrl: 'test.png'
+  };
+
+  setProperties(this, { task, taskUser: user1 });
+
+  this.register('ability:task', Ability.extend({ canAssign: false }));
+
+  renderPage();
+
+  assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
+  assert.ok(page.assignedUser.isVisible, 'Assigned user renders.');
+  assert.notOk(page.unselectedItem.isVisible, 'Unselected item does not render.');
   page.assignedUser.as((user) => {
     assert.equal(user.icon.url, 'test.png');
   });
