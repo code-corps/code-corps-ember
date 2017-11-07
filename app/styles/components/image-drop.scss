@@ -36,9 +36,13 @@
 
   &.is-large {
     $size: 200px;
-    $border-radius: $size / 2;
     height: $size;
     width: $size;
+
+    @include media($sm-screen) {
+      height: 100px;
+      width: 100px;
+    }
   }
 
   .hover {
