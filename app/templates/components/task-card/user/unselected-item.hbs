@@ -1,3 +1,4 @@
+{{log tooltipShown}}
 {{#if task.userTask.isLoading}}
   <span class="select-inline__loading-item__icon"></span>
   <span class="select-inline__loading-item__text"></span>
@@ -9,6 +10,8 @@
     class='tooltip'
     effect='none'
     enableLazyRendering=true
+    event='none'
+    isShown=tooltipShown
     keepInWindow=true
     side='bottom'
   }}
