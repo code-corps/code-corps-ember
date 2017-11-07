@@ -17,7 +17,7 @@ function createUserWithRole(project, role) {
 }
 
 test('member can assign/reassign/unassign tasks to user', function(assert) {
-  assert.expect(7);
+  assert.expect(8);
 
   let project = server.create('project');
 
@@ -46,6 +46,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
   });
 
   andThen(() => {
+    assert.ok(find('.task-list').css('height') > '500px', 'the task-list has height of 100%');
     taskCard.taskAssignment.dropdown.options(0).select();
   });
 
