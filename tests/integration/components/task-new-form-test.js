@@ -1,6 +1,6 @@
+import { get, set, setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { get, set, setProperties } from '@ember/object';
 import { run } from '@ember/runloop';
 import PageObject from 'ember-cli-page-object';
 import taskNewFormComponent from 'code-corps-ember/tests/pages/components/task-new-form';

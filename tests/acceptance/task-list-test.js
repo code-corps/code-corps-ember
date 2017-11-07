@@ -41,42 +41,42 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
 
   andThen(() => {
     taskCard = page.taskBoard.taskLists(0).taskCards(0);
-    assert.ok(taskCard.taskAssignment.trigger.unassigned, 'Task is rendered unassigned.');
-    taskCard.taskAssignment.trigger.open();
+    assert.ok(taskCard.taskAssignment.select.trigger.unassigned, 'Task is rendered unassigned.');
+    taskCard.taskAssignment.select.trigger.open();
   });
 
   andThen(() => {
-    taskCard.taskAssignment.dropdown.options(0).select();
+    taskCard.taskAssignment.select.dropdown.options(0).select();
   });
 
   andThen(() => {
     // assert assignment went through
-    assert.ok(taskCard.taskAssignment.trigger.assigned, 'Task is rendered assigned.');
+    assert.ok(taskCard.taskAssignment.select.trigger.assigned, 'Task is rendered assigned.');
     let userTask = server.schema.userTasks.first();
-    assert.equal(userTask.user.photoThumbUrl, taskCard.assignedUser.icon.url, 'Assigned user is rendered.');
-    taskCard.taskAssignment.trigger.open();
+    assert.equal(userTask.user.photoThumbUrl, taskCard.taskAssignment.assignedUser.icon.url, 'Assigned user is rendered.');
+    taskCard.taskAssignment.select.trigger.open();
   });
 
   andThen(() => {
-    taskCard.taskAssignment.dropdown.options(1).select();
+    taskCard.taskAssignment.select.dropdown.options(1).select();
   });
 
   andThen(() => {
     // assert reassignment went through
-    assert.ok(taskCard.taskAssignment.trigger.assigned, 'Task is rendered assigned.');
+    assert.ok(taskCard.taskAssignment.select.trigger.assigned, 'Task is rendered assigned.');
     let userTask = server.schema.userTasks.first();
-    assert.equal(userTask.user.photoThumbUrl, taskCard.assignedUser.icon.url, 'Assigned user is rendered.');
-    taskCard.taskAssignment.trigger.open();
+    assert.equal(userTask.user.photoThumbUrl, taskCard.taskAssignment.assignedUser.icon.url, 'Assigned user is rendered.');
+    taskCard.taskAssignment.select.trigger.open();
   });
 
   andThen(() => {
-    taskCard.taskAssignment.dropdown.options(1).select();
+    taskCard.taskAssignment.select.dropdown.options(1).select();
   });
 
   andThen(() => {
     // assert unassignment went through
     assert.equal(server.schema.userTasks.all().models.length, 0, 'The record was destroyed.');
-    assert.ok(taskCard.taskAssignment.trigger.unassigned, 'Task is rendered unassigned.');
+    assert.ok(taskCard.taskAssignment.select.trigger.unassigned, 'Task is rendered unassigned.');
   });
 });
 

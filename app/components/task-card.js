@@ -1,9 +1,8 @@
 import Component from '@ember/component';
 import { mapBy, alias } from '@ember/object/computed';
+import { getProperties, get, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { set, getProperties, get, computed } from '@ember/object';
 import EmberCan from 'ember-can';
-import createTaskUserOptions from 'code-corps-ember/utils/create-task-user-options';
 
 const ICON_CLASS = 'ember-power-select-status-icon';
 const TRIGGER_CLASS = 'ember-power-select-trigger';
@@ -14,25 +13,24 @@ export default Component.extend({
   classNameBindings: ['canReposition:task-card--can-reposition', 'isLoading:task-card--is-loading'],
   tagName: 'div',
 
-  currentUser: service(),
   session: service(),
   store: service(),
-  taskAssignment: service(),
 
   bound: false,
   shouldShowUsers: false,
+  task: null,
+  taskUser: null,
+  users: null,
 
   // auto-assigns 'task' property from component as ability 'model'
   ability: EmberCan.computed.ability('task'),
-  canAssign: alias('ability.canAssign'),
-  canEdit: alias('ability.canEdit'),
   canReposition: alias('ability.canReposition'),
-
-  currentUserId: alias('currentUser.user.id'),
+  isLoading: alias('task.isLoading'),
+  taskSkills: mapBy('task.taskSkills', 'skill'),
 
   /**
-    For usage with data attribute bindings. Needs to be a function because it
-    needs to send 'true' and 'false' strings.
+  For usage with data attribute bindings. Needs to be a function because it
+  needs to send 'true' and 'false' strings.
   */
   'data-can-reposition': computed('canReposition', function() {
     let canReposition = get(this, 'canReposition');
@@ -40,37 +38,6 @@ export default Component.extend({
   }),
   'data-model-id': alias('task.id'),
   'data-model-type': 'task',
-
-  isLoading: alias('task.isLoading'),
-  taskSkills: mapBy('task.taskSkills', 'skill'),
-  taskUserId: alias('taskUser.id'),
-
-  // TODO: this updates selection when it changes. However, it updates while
-  // the change is still processing, and rolls back if it fails.
-  // We should somehow skip the update if the change is processing
-  // TODO: It also fails to roll back when reassignment fails
-  didReceiveAttrs() {
-    let { taskUserId, users } = getProperties(this, 'taskUserId', 'users');
-    if (users) {
-      set(this, 'selectedOption', users.findBy('id', taskUserId));
-    }
-  },
-
-  /**
-    Computed property, builds and maintains the list used to render the
-    dropdown options on task assignment
-
-    @property userOptions
-  */
-  userOptions: computed('currentUserId', 'taskUserId', 'users', function() {
-    let { currentUserId, taskUserId, users }
-      = getProperties(this, 'currentUserId', 'taskUserId', 'users');
-    if (users) {
-      return createTaskUserOptions(users, currentUserId, taskUserId);
-    } else {
-      return [];
-    }
-  }),
 
   click(e) {
     if (e.target instanceof SVGElement) {
@@ -88,37 +55,6 @@ export default Component.extend({
     let { isLoading, task } = getProperties(this, 'isLoading', 'task');
     if (!isLoading) {
       this.sendAction('clickedTask', task);
-    }
-  },
-
-  actions: {
-    buildSelection(option, select) {
-      if (option === select.selected) {
-        return null;
-      }
-      return option;
-    },
-
-    changeUser(user) {
-      let { task, taskAssignment } = getProperties(this, 'task', 'taskAssignment');
-
-      if (user) {
-        return taskAssignment.assign(task, user);
-      } else {
-        return taskAssignment.unassign(task);
-      }
-    },
-
-    searchUsers(query) {
-      let { currentUserId, store, taskUserId }
-        = getProperties(this, 'currentUserId', 'store', 'taskUserId');
-      return store.query('user', { query }).then((users) => {
-        return createTaskUserOptions(users.toArray(), currentUserId, taskUserId);
-      });
-    },
-
-    stopClickPropagation(e) {
-      e.stopPropagation();
     }
   }
 });
