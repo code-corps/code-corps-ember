@@ -1,12 +1,8 @@
 import { alias } from '@ember/object/computed';
-import EmberDragulaContainer from 'ember-dragula/components/ember-dragula-container';
+import Component from '@ember/component';
 
-export default EmberDragulaContainer.extend({
-  attributeBindings: ['data-model-id', 'data-model-type'],
+export default Component.extend({
   classNames: ['task-list-cards'],
 
-  orderedTasks: alias('taskList.orderedTasks'),
-
-  'data-model-id': alias('taskList.id'),
-  'data-model-type': 'task-list'
+  orderedTasks: alias('taskList.orderedTasks')
 });
