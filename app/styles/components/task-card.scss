@@ -10,7 +10,8 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 8px;
-  padding: 0.7em 1em;
+  max-width: 300px;
+  padding: 0.5em 0.7em;
 
   .github__pull-request-icon {
     float: left;
@@ -52,6 +53,7 @@
     cursor: pointer;
     font-weight: 600;
     margin-right: 5px;
+    word-wrap: break-word;
 
     &:hover {
       color: $blue;
