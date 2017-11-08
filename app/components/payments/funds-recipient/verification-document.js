@@ -7,6 +7,8 @@ const UPLOAD_ERROR = 'There was a problem with uploading your file. Please try a
 
 export default Component.extend({
   classNames: ['verification-document'],
+  tagName: 'section',
+
   status: alias('stripeConnectAccount.verificationDocumentStatus'),
 
   progressPercentage: 0,
