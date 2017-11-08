@@ -1,6 +1,7 @@
 import { Factory, faker } from 'ember-cli-mirage';
 
 export default Factory.extend({
+  admin: false,
   biography: faker.lorem.paragraph,
   email: faker.internet.email,
   photoLargeUrl: faker.image.avatar,

@@ -28,6 +28,12 @@ const Router = EmberRouter.extend(RouterScroll, {
 Router.map(function() {
   this.route('about');
 
+  this.route('admin', function() {
+    this.route('github-events', { path: '/github/events' }, function() {
+      this.route('github-event', { path: '/:id' });
+    });
+  });
+
   this.route('github', {
     path: '/oauth/github'
   });
