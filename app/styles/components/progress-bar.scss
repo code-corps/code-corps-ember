@@ -1,3 +1,26 @@
+@keyframes shimmer{
+  0%{
+    background-position: -1000px 0
+  }
+  100%{
+    background-position: 1000px 0
+  }
+}
+
+@mixin animated-background($color: $blue) {
+  $dark: darken($color, 15%);
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: $color;
+  background: linear-gradient(to right, $color 8%, $dark 18%, $color 33%);
+  background-size: 2000px 96px;
+  height: 96px;
+  position: relative;
+}
+
 .progress-bar-container {
   background: $clear-hover;
   border-radius: 5px;
@@ -7,8 +30,20 @@
 
 .progress-bar {
   transition: width 0.5s ease-in;
-  background: $default-color;
+  background: $blue;
   float: left;
   height: 100%;
   width: 0px;
+
+  &--animated {
+    @include animated-background;
+  }
+
+  &--error {
+    background: $red;
+  }
+
+  &--error &--animated {
+    @include animated-background($red);
+  }
 }

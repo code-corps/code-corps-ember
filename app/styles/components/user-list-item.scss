@@ -1,10 +1,13 @@
 .user-list-item {
   @include outer-container;
-  align-items: center;
   border-top: 1px solid $gray--lightest;
-  display: flex;
   padding: .7em 1em;
   position: relative;
+
+  @include media($sm-screen) {
+    padding: .7em 0;
+  }
+
   &:hover {
     background-color: #F9F9F9;
   }
@@ -14,41 +17,76 @@
 }
 
 .project-user {
+  &__user {
+    @include span-columns(4);
+
+    @include media($sm-screen) {
+      @include span-columns(12);
+
+      .icon {
+        height: 40px;
+        width: 40px;
+      }
+    }
+
+    &__avatar {
+      float: left;
+    }
+
+    &__name {
+      padding: 5px 10px 5px 60px;
+
+      @include media($sm-screen) {
+        padding: 2px 0 2px 50px;
+      }
+
+      strong {
+        font-weight: 700;
+      }
+    }
+  }
+
   &__actions {
-    @include span-columns(2);
-    text-align: right;
-  }
-  &__avatar {
-    @include span-columns(1);
-  }
-  &__name {
     @include span-columns(3);
-    strong {
-      font-weight: 700;
+
+    text-align: left;
+
+    button {
+      margin-top: 5px;
+    }
+
+    @include media($sm-screen) {
+      @include span-columns(12);
+      display: flex;
+      justify-content: space-between;
+      button {
+        flex: 1;
+        margin-right: 5px;
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
     }
   }
+
   &__skills {
-    color: $text--lightest;
+    @include span-columns(5);
+    padding-top: 5px;
+
+    @include media($sm-screen) {
+      @include span-columns(12);
+      padding-left: 50px;
+
+      h4 {
+        display: none;
+      }
+
+      .user__skills-list ul {
+        margin: 0;
+      }
+    }
+
     font-size: $body-font-size-small;
-    @include span-columns(6);
-    ul {
-      margin-top: 6px;
-    }
-    li {
-      display: inline-block;
-      &:after {
-        content: ", ";
-      }
-      &:last-child {
-        // confused by the selector below
-        &:not(:first-child):before {
-          content: "and ";
-        }
-        &:after {
-          content: ".";
-        }
-      }
-    }
   }
 }
 

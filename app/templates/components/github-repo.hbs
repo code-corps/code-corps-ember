@@ -1,17 +1,83 @@
-{{#if (and githubRepo.isLoaded (or (not isConnected) projectGithubRepo.isLoaded))}}
-  <div class="github-repo__name" data-test-github-repo-name>{{name}}</div>
-  <div class="github-repo__actions" data-test-github-repo-actions>
-    {{#common/busy-model-wrapper
-      model=projectGithubRepo
-      onSaving='Connecting...'
-      onDeleting='Disconnecting...'
-    }}
-      {{yield}}
-    {{/common/busy-model-wrapper}}
+{{#if (and githubRepo.isLoaded (or projectGithubRepo.isLoaded (not isConnected)))}}
+
+  <div class="github-repo__content">
+    <div class="github-repo__name" data-test-github-repo-name>
+      {{svg/sprite-icon icon=repoIcon}} {{name}}
+    </div>
+    {{#unless syncIncomplete}}
+      <div class="github-repo__actions" data-test-github-repo-actions>
+        {{#if showSettings}}
+          <a data-test-close-repo-settings>Collapse</a>
+        {{else}}
+          {{#if projectGithubRepo}}
+            <a data-test-open-repo-settings-edit>Edit settings</a>
+          {{else}}
+            <a data-test-open-repo-settings-connect>Connect</a>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/unless}}
   </div>
+
+  {{#if showingSettings}}
+    {{#if (and projectGithubRepo syncComplete)}}
+      <div data-test-callout class="callout callout--danger">
+        <div class="callout__content">
+          <div>
+            <p class="callout__content__title">
+              Disconnect from {{githubRepo.name}}
+            </p>
+            <p class="callout__content__description">
+              Your tasks will no longer sync between your Code Corps project and all your GitHub pull requests, issues, and comments.
+            </p>
+            <p class="callout__content__description">
+              Disconnecting is <strong>strongly</strong> discouraged.
+            </p>
+            <p>
+              {{github/repo-disconnect-confirm-modal
+                disconnect=(action "disconnectRepo" githubRepo projectGithubRepo)
+                githubRepo=githubRepo
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    {{/if}}
+
+    {{#unless projectGithubRepo}}
+      <div data-test-callout class="callout">
+        <div class="callout__content">
+          <div>
+            <p data-test-callout-title class="callout__content__title">
+              Connect to {{githubRepo.name}}
+            </p>
+            <p class="callout__content__description">
+              Your tasks will sync between your Code Corps project and all your GitHub pull requests, issues, and comments.
+            </p>
+            <p>
+              <button data-test-connect-repo {{action "connectRepo" githubRepo project}} class="default">Start syncing</button>
+            </p>
+            <p class="callout__content__description">
+              Syncing your repo could take some time. You can connect more repos while you wait.
+            </p>
+          </div>
+        </div>
+      </div>
+    {{/unless}}
+
+    {{#if syncIncomplete}}
+      {{github/repo-sync
+        githubRepo=githubRepo
+        projectGithubRepo=projectGithubRepo
+      }}
+    {{/if}}
+  {{/if}}
+
 {{else}}
-  <div data-test-loading>
+
+  <div data-test-loading class="github-repo__content">
     <div class="loading loading--col-2 loading--left"></div>
     <div class="loading loading--col-1 loading--right"></div>
   </div>
+
 {{/if}}

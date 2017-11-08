@@ -1,23 +1,23 @@
 <div class="container">
   <div class="panel">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>Project details</h3>
         <p>Manage your project's details like your icon, name, and description.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         {{project-settings-form project=model}}
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 
   <div class="panel">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>Skills</h3>
         <p>What skills does your project require? These help contributors find your project and tasks they can accomplish.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         <div class="skills-typeahead-container">
           {{skills-typeahead
             centered=true
@@ -37,7 +37,7 @@
             }}
           {{/each}}
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </div>

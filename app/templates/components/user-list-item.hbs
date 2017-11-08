@@ -1,30 +1,28 @@
-<div class="project-user__avatar">
-  {{#link-to 'slugged-route' user.username}}
-    <img class="icon" src= {{user.photoThumbUrl}} />
-  {{/link-to}}
+<div class="project-user__user">
+  <div class="project-user__user__avatar">
+    {{#link-to 'slugged-route' user.username}}
+      <img class="icon" src= {{user.photoThumbUrl}} />
+    {{/link-to}}
+  </div>
+
+  <div data-test-project-user-name class="project-user__user__name">
+    <strong>
+    {{#if user.name}}
+      {{link-to user.name 'slugged-route' user.username}}
+    {{else}}
+      {{link-to user.username 'slugged-route' user.username}}
+    {{/if}}
+    </strong>
+    <br>
+    <span>
+      {{user.username}}
+    </span>
+  </div>
 </div>
 
-<div class="project-user__name">
-  <strong>
-  {{#if user.name}}
-    {{link-to user.name 'slugged-route' user.username}}
-  {{else}}
-    {{link-to user.username 'slugged-route' user.username}}
-  {{/if}}
-  </strong>
-  <br>
-  <span>
-    {{user.username}}
-  </span>
-</div>
-
-<div class="project-user__skills">
+<div data-test-project-user-skills class="project-user__skills">
   <h4>Skills</h4>
-  <ul>
-    {{#each user.userSkills as |userSkill|}}
-      <li>{{userSkill.skill.title}}</li>
-    {{/each}}
-  </ul>
+  {{user/skills-list data-test-user-skills-list user=user}}
 </div>
 
 <div class="project-user__actions">

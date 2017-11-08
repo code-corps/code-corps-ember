@@ -5,6 +5,8 @@ moduleFor('route:start/skills', 'Unit | Route | start/skills', {
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session',
     'service:user-skills-list'
   ]

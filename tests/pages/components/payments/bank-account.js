@@ -10,9 +10,9 @@ import {
 export default {
   scope: '.bank-account',
 
-  rendersPending: hasClass('account-setup__section--pending_requirement'),
-  rendersRequired: hasClass('account-setup__section--required'),
-  rendersVerified: hasClass('account-setup__section--verified'),
+  rendersPending: hasClass('panel'),
+  rendersRequired: hasClass('panel--highlighted'),
+  rendersVerified: hasClass('panel--highlighted-green'),
 
   rendersAccountNumberField: isVisible('[name=account-number]'),
   rendersRoutingNumberField: isVisible('[name=routing-number]'),

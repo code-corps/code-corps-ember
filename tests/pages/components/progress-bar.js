@@ -1,5 +1,6 @@
 import {
-  attribute
+  attribute,
+  hasClass
 } from 'ember-cli-page-object';
 
 export default {
@@ -8,6 +9,10 @@ export default {
   displaysPercentage(n) {
     return this.style === `width: ${n}%;`;
   },
+
+  hasError: hasClass('progress-bar--error'),
+
+  isAnimated: hasClass('progress-bar--animated'),
 
   style: attribute('style')
 };

@@ -10,6 +10,11 @@ export default Component.extend({
 
   githubAppInstallation: alias('organizationGithubAppInstallation.githubAppInstallation'),
 
+  iconUrl: computed('githubAppInstallation.githubAccountAvatarUrl', function() {
+    let avatarUrl = get(this, 'githubAppInstallation.githubAccountAvatarUrl');
+    return `${avatarUrl}&size=80`;
+  }),
+
   organization: alias('project.organization'),
   githubRepos: alias('githubAppInstallation.githubRepos'),
 

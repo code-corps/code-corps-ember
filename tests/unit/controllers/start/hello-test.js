@@ -7,7 +7,9 @@ moduleFor('controller:start/hello', 'Unit | Controller | start/hello', {
     'service:flash-messages',
     'service:loading-bar',
     'service:metrics',
-    'service:onboarding'
+    'service:onboarding',
+    'service:router-scroll',
+    'service:scheduler'
   ]
 });
 

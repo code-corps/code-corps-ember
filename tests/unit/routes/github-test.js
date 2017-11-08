@@ -7,6 +7,8 @@ moduleFor('route:github', 'Unit | Route | github', {
     'service:flash-messages',
     'service:github-state',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });

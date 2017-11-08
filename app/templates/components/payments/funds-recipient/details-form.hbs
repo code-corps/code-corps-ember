@@ -1,5 +1,6 @@
 <div class="input-group details-form__recipient-type">
-  <p>Tell us whether a person or an organization will be running this project. Once your turn on donations, you cannot change your information.</p>
+  <p>Will a person or some other legal entity (company or organization) be running this project?</p>
+  <p>Once you enable donations, you cannot change your information.</p>
   {{#radio-button class="details-form__recipient-type" value="individual" groupValue=stripeConnectAccount.legalEntityType}}
     Individual
   {{/radio-button}}
@@ -10,39 +11,61 @@
 
 {{#if (eq stripeConnectAccount.legalEntityType 'company')}}
   <div class="input-section">
-    <div class="input-section__label">Legal entity</div>
+    <div class="input-section__label">
+      <label>
+        <span class="input-label__text">Legal entity</span>
+      </label>
+    </div>
     <div class="input-section__content">
       <div class="input-group">
-        <label for="legal-entity-business-name">Business name</label>
+        <div class="input-label">
+          <label for="legal-entity-business-name">
+            Business name
+          </label>
+        </div>
         {{input type="text" name="legal-entity-business-name" value=stripeConnectAccount.legalEntityBusinessName}}
       </div>
       <div class="input-group">
-        <label for="legal-entity-business-tax-id">Business EIN</label>
+        <div class="input-label">
+          <label for="legal-entity-business-tax-id">
+            Business EIN
+          </label>
+        </div>
         {{input type="text" name="legal-entity-business-tax-id" value=stripeConnectAccount.legalEntityBusinessTaxId}}
       </div>
     </div>
   </div>
 {{/if}}
 
-<label>Identity verification</label>
+<div class="input-section__label">
+  <label>Identity verification</label>
+</div>
 <p>Please verify your identity with your legal first and last name. If you're running your project as an organization, only a legal representative of the organization should complete this verification.</p>
 
 <div class="input-section">
-  <div class="input-section__label">Your name</div>
+  <div class="input-section__label">
+    <label>Your name</label>
+  </div>
   <div class="input-section__content">
     <div class="input-group">
-      <label for="legal-entity-first-name">First Name</label>
+      <div class="input-label">
+        <label for="legal-entity-first-name">First Name</label>
+      </div>
       {{input type="text" name="legal-entity-first-name" value=stripeConnectAccount.legalEntityFirstName}}
     </div>
     <div class="input-group">
-      <label for="legal-entity-last-name">Last Name</label>
+      <div class="input-label">
+        <label for="legal-entity-last-name">Last Name</label>
+      </div>
       {{input type="text" name="legal-entity-last-name" value=stripeConnectAccount.legalEntityLastName}}
     </div>
   </div>
 </div>
 
 <div class="input-section">
-  <div class="input-section__label">Birthdate</div>
+  <div class="input-label">
+    <div class="input-section__label">Birthdate</div>
+  </div>
   <div class="input-section__content">
     <div class="input-group">
       {{select/birth-date
@@ -58,15 +81,21 @@
   <div class="input-section__label">Address</div>
   <div class="input-section__content">
     <div class="input-group">
-      <label for="legal-entity-address-1">Address</label>
+      <div class="input-label">
+        <label for="legal-entity-address-1">Address</label>
+      </div>
       {{input type="text" name="legal-entity-address-1" value=stripeConnectAccount.legalEntityAddressLine1}}
     </div>
     <div class="input-group">
-      <label for="legal-entity-address-2">Address (cont)</label>
+      <div class="input-label">
+        <label for="legal-entity-address-2">Address (cont)</label>
+      </div>
       {{input type="text" name="legal-entity-address-2" value=stripeConnectAccount.legalEntityAddressLine2}}
     </div>
     <div class="input-group">
-      <label for="city">City</label>
+      <div class="input-label">
+        <label for="city">City</label>
+      </div>
       {{input type="text"
         name="legal-entity-address-city"
         value=stripeConnectAccount.legalEntityAddressCity
@@ -74,19 +103,25 @@
     </div>
     <div class="input-line">
       <div class="input-group input--state">
-        <label for="legal-entity-address-state">State</label>
+        <div class="input-label">
+          <label for="legal-entity-address-state">State</label>
+        </div>
         {{select/state-select
           state=stripeConnectAccount.legalEntityAddressState
           onChange=(action (mut stripeConnectAccount.legalEntityAddressState))
         }}
       </div>
       <div class="input-group input--zipcode">
-        <label for="zip">Postal Code</label>
+        <div class="input-label">
+          <label for="zip">Postal Code</label>
+        </div>
         {{input type="text" name="legal-entity-address-postal-code" value=stripeConnectAccount.legalEntityAddressPostalCode}}
       </div>
     </div>
     <div class="input-group">
-      <label for="country">Country</label>
+      <div class="input-label">
+        <label for="country">Country</label>
+      </div>
       {{select/country-select
         country=stripeConnectAccount.legalEntityAddressCountry
         onChange=(action (mut stripeConnectAccount.legalEntityAddressCountry))
@@ -96,9 +131,14 @@
 </div>
 
 <div class="input-section">
-  <div class="input-section__label">SSN Last 4</div>
+  <div class="input-section__label">
+      SSN Last 4
+  </div>
   <div class="input-section__content">
     <div class="input-group">
+      <div class="input-label">
+        <label for="legal-entity-ssn-last-4">SSN Last 4</label>
+      </div>
       {{input type="text" name="legal-entity-ssn-last-4" maxlength="4" value=stripeConnectAccount.legalEntitySsnLast4}}
     </div>
   </div>

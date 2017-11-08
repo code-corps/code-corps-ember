@@ -34,7 +34,7 @@ test('it renders the icon and style', function(assert) {
   renderPage();
 
   assert.equal(page.svg.use.xlinkHref, '#github-48', 'The icon xlink href value is properly bound.');
-  assert.ok(page.svg.hasClass('solid-light-gray'), 'The svg has the style class.');
+  assert.ok(page.svg.isSolidLightGray, 'The svg has the style class.');
 });
 
 test('it renders the default size', function(assert) {

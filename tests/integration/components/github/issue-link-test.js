@@ -1,7 +1,7 @@
+import { run } from '@ember/runloop';
+import { get, set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { get, set } from '@ember/object';
-import { run } from '@ember/runloop';
 import component from 'code-corps-ember/tests/pages/components/github/issue-link';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';

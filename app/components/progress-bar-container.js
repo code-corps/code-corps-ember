@@ -6,7 +6,7 @@ import Component from '@ember/component';
   ## default usage
 
   ```Handlebars
-  {{progress-bar-container percentage=percentage}}
+  {{progress-bar-container animated=animated error=error percentage=percentage}}
   ```
 
   @class progress-bar-container
@@ -14,5 +14,9 @@ import Component from '@ember/component';
   @extends Ember.Component
 */
 export default Component.extend({
-  classNames: ['progress-bar-container']
+  classNames: ['progress-bar-container'],
+
+  animated: false,
+  error: false,
+  percentage: null
 });

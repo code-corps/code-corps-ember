@@ -40,7 +40,7 @@ export default {
   },
 
   name: {
-    scope: '.project-user__name',
+    scope: '[data-test-project-user-name]',
     name: {
       scope: 'strong',
       text: text()
@@ -52,7 +52,7 @@ export default {
   },
 
   skills: collection({
-    scope: '.project-user__skills',
+    scope: '[data-test-project-user-skills]',
     itemScope: 'li',
     item: {
       text: text()

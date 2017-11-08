@@ -5,6 +5,8 @@ moduleFor('route:start/expertise', 'Unit | Route | start/expertise', {
   needs: [
     'service:current-user',
     'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
     'service:session'
   ]
 });

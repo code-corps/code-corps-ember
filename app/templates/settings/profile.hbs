@@ -2,23 +2,23 @@
 
 <div class="container">
   <div class="panel">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>Public profile</h3>
         <p>Manage your profile details like your photo, name, and bio.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         {{user-settings-form user=user}}
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
   <div class="panel">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>Skills</h3>
         <p>What skills can you share? These help you discover new projects and tasks.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         <div class="skills-typeahead-container">
           {{skills-typeahead
             centered=true
@@ -38,7 +38,7 @@
             }}
           {{/each}}
         </div>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </div>

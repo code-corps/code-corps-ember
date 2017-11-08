@@ -1,14 +1,23 @@
 {{#if (eq status 'required')}}
   <div class="input-section">
-    <div class="input-section__label">We need your full personal ID number.</div>
+    <div class="input-section__label">
+      <label>
+        <span class="input-label__text">Personal ID Number</span>
+      </label>
+    </div>
     <div class="input-section__content">
       <div class="input-group">
-        <label for="personal-id-number">Personal ID Number</label>
+        <div class="input-label">
+          <label for="personal-id-number">
+            Personal ID Number
+          </label>
+        </div>
         {{input type="text" name="legal-entity-personal-id-number" value=legalEntityPersonalIdNumber disabled=isBusy}}
+        <p>We need your full personal ID number.</p>
+        <button {{action submit legalEntityPersonalIdNumber}} disabled={{isBusy}} class="default">Submit</button>
       </div>
     </div>
   </div>
-  <button {{action submit legalEntityPersonalIdNumber}} disabled={{isBusy}} class="default">Submit</button>
 {{/if}}
 
 {{#if (eq status 'verifying')}}

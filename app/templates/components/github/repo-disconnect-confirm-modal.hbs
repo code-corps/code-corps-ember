@@ -1,0 +1,30 @@
+<button class="button danger" {{action (mut showModal) true bubbles=false}}>Disconnect</button>
+{{#if showModal}}
+  {{#modal-dialog
+     containerClassNames="modal modal--danger"
+     onClose=(action (mut showModal) false)
+     targetAttachment="center"
+     translucentOverlay=true
+  }}
+    <div class="modal__header">
+      <h2>Stop syncing this repository</h2>
+    </div>
+    <div class="modal__warning">
+      <p>Heads up! This is a potentially destructive action.</p>
+    </div>
+    <div class="modal__content">
+      <ul>
+        <li>Users may experience confusion when your repositories are disconnected.</li>
+        <li>Tasks and comments will no longer to sync to GitHub.</li>
+        <li>GitHub issues, pull requests, and other data will no longer sync to Code Corps.</li>
+      </ul>
+    </div>
+    <div class="modal__actions">
+      <p>Please type in the name of the repository to confirm.</p>
+      <div class="input-group">
+        {{input type="text" name="github-repo-name" value=typedGithubRepoName}}
+      </div>
+      <button class="button danger" disabled={{submitDisabled}} {{action "disconnect" bubbles=false}}>I understand, stop syncing this repository.</button>
+    </div>
+  {{/modal-dialog}}
+{{/if}}

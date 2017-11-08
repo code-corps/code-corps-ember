@@ -1,7 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('route:signup', 'Unit | Route | signup', {
-  needs: ['service:metrics', 'service:session']
+  needs: [
+    'service:metrics',
+    'service:router-scroll',
+    'service:scheduler',
+    'service:session'
+  ]
 });
 
 test('it exists', function(assert) {

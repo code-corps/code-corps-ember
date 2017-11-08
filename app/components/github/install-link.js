@@ -1,6 +1,6 @@
 import ENV from 'code-corps-ember/config/environment';
 import Component from '@ember/component';
-import { get } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
@@ -10,6 +10,10 @@ export default Component.extend({
 
   organization: null,
   project: null,
+
+  installUrl: computed('githubAppUrl', function() {
+    return `${get(this, 'githubAppUrl')}/installations/new`;
+  }),
 
   actions: {
     trackClick() {

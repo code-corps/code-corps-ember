@@ -1,0 +1,61 @@
+.modal {
+  padding: 0;
+  width: 400px;
+
+  h2 {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.modal--danger {
+
+}
+
+.modal__header {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.modal__warning {
+  background: $red--light;
+  border-top: 1px solid $red;
+  border-bottom: 1px solid $red;
+  padding: 0 20px;
+  margin-top: 9px;
+  margin-bottom: -10px;
+}
+
+.modal__content {
+  margin-top: 10px;
+  padding: 20px 10px;
+  border-bottom: 1px solid $border-gray;
+  border-top: 1px solid $border-gray;
+
+  ul {
+    margin-left: 30px;
+  }
+
+  li {
+    list-style-type: disc;
+    padding: 0 0 5px 0;
+  }
+}
+
+.modal__actions {
+  margin-top: 10px;
+  padding: 10px;
+
+  p {
+    margin-top: 0;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .input-group {
+    margin-bottom: 0.7em;
+  }
+}

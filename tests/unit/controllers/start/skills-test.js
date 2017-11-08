@@ -5,6 +5,8 @@ moduleFor('controller:start/skills', 'Unit | Controller | start/skills', {
     'service:current-user',
     'service:metrics',
     'service:onboarding',
+    'service:router-scroll',
+    'service:scheduler',
     'service:user-skills-list'
   ]
 });

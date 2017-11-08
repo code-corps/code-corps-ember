@@ -2,21 +2,21 @@
 
 <div class="container">
   <div class="panel">
-    <div class="panel__section">
-      <div class="panel__section__description">
+    <section>
+      <aside>
         <h3>
-          <span class="panel__section__header-icon">{{svg/sprite-icon icon="github-48" size="20"}}</span>
+          <span class="panel__aside__icon">{{svg/sprite-icon icon="github-48" size="20"}}</span>
           <span>GitHub</span>
         </h3>
         <p>Connect your account to GitHub.</p>
-      </div>
-      <div class="panel__section__content">
+      </aside>
+      <section>
         {{github-connect-state
           githubAvatarUrl=model.githubAvatarUrl
           githubId=model.githubId
           githubUsername=model.githubUsername
         }}
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </div>

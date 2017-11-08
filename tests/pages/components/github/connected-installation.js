@@ -9,10 +9,6 @@ export default {
     url: attribute('src')
   },
 
-  login: {
-    scope: '[data-test-login]'
-  },
-
   disconnect: {
     scope: '[data-test-disconnect]'
   },
@@ -20,5 +16,9 @@ export default {
   githubRepos: collection({
     itemScope: '.github-repo',
     item: githubRepo
-  })
+  }),
+
+  login: {
+    scope: '[data-test-login]'
+  }
 };

@@ -3,12 +3,20 @@ import { alias } from '@ember/object/computed';
 import { get, computed } from '@ember/object';
 
 export default Component.extend({
-  classNameBindings: ['statusClass'],
-  classNames: ['funds-recipient', 'account-setup__section'],
+  classNameBindings: ['highlightClass'],
+  classNames: ['funds-recipient', 'panel', 'panel--separated'],
 
   status: alias('stripeConnectAccount.recipientStatus'),
 
-  statusClass: computed('status', function() {
-    return `account-setup__section--${get(this, 'status')}`;
+  highlightClass: computed('status', function() {
+    let status = get(this, 'status');
+
+    if (status == 'verified') {
+      return 'panel--highlighted-green';
+    } else if (status == 'required') {
+      return 'panel--highlighted';
+    } else {
+      return '';
+    }
   })
 });

@@ -61,6 +61,7 @@
 @import "layout/forms";
 @import "layout/header";
 @import "layout/loading";
+@import "layout/modals";
 @import "layout/panel";
 @import "layout/select-dropdown";
 @import "layout/select-inline";
@@ -116,6 +117,7 @@
 // COMPONENTS - GITHUB
 //
 @import "components/github/issue-link";
+@import "components/github/repo-sync";
 @import "components/github-app-installation";
 @import "components/github-repo";
 @import "components/github-connect-state";
@@ -198,6 +200,7 @@
 @import "components/settings-menu";
 @import "components/signup-form";
 @import "components/user-details";
+@import "components/user/skills-list";
 
 @import "components/user-menu";
 // dropdown-menu has to come after user-menu for styles to work correctly

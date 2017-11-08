@@ -1,0 +1,25 @@
+.github__repo-sync {
+  padding-top: 10px;
+  text-align: center;
+  width: 100%;
+
+  .progress-bar-container {
+    height: 8px;
+  }
+
+  p {
+    align-items: center;
+    color: $text--light;
+    display: inline-flex;
+    line-height: 3em;
+    margin: 0;
+
+    span {
+      padding-right: 5px;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+  }
+}

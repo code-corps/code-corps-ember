@@ -5,6 +5,8 @@ moduleFor('controller:start/expertise', 'Unit | Controller | start/expertise', {
     'service:current-user',
     'service:metrics',
     'service:onboarding',
+    'service:router-scroll',
+    'service:scheduler',
     'service:user-roles'
   ]
 });

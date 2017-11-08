@@ -19,7 +19,7 @@
 
 <div class="input-group">
   <button class="default save" {{action save (hash amount=amount description=description)}}>
-    {{#if donationGoal.isNew}}Create Goal{{else}}Save changes{{/if}}
+    {{#if donationGoal.isNew}}Create goal{{else}}Save changes{{/if}}
   </button>
   {{#if canCancel}}
     <button class="clear cancel" {{action cancel}}>Cancel</button>
