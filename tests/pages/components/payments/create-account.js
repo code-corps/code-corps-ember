@@ -10,11 +10,11 @@ export default {
 
   countrySelectIsDisabled: is(':disabled', 'select'),
 
-  hasRequiredStatus: hasClass('account-setup__section--required'),
-  hasVerifiedStatus: hasClass('account-setup__section--verified'),
+  hasRequiredStatus: hasClass('panel--highlighted'),
+  hasVerifiedStatus: hasClass('panel--highlighted-green'),
 
   rendersHeader: isVisible('aside'),
-  rendersSection: isVisible('section'),
+  rendersSection: isVisible('[data-test-section]'),
   rendersStripeLegal: isVisible('a[href="https://stripe.com/connect-account/legal"][target="_blank"]'),
   submitButtonIsDisabled: is(':disabled', 'button')
 };

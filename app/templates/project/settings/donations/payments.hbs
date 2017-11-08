@@ -1,15 +1,17 @@
-{{payments/account-setup
-  isBusy=isBusy
-  onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
-  onCreateStripeConnectAccount=(action 'onCreateStripeConnectAccount')
-  onLegalEntityPersonalIdNumberSubmitted=(action 'onLegalEntityPersonalIdNumberSubmitted')
-  onRecipientDetailsSubmitted=(action 'onRecipientDetailsSubmitted')
-  onVerificationDocumentSubmitted=(action 'onVerificationDocumentSubmitted')
-  organizationName=project.organization.name
-  project=project
-  stripeConnectAccount=stripeConnectAccount
-}}
+<div class="container">
+  {{payments/account-setup
+    isBusy=isBusy
+    onBankAccountInformationSubmitted=(action 'onBankAccountInformationSubmitted')
+    onCreateStripeConnectAccount=(action 'onCreateStripeConnectAccount')
+    onLegalEntityPersonalIdNumberSubmitted=(action 'onLegalEntityPersonalIdNumberSubmitted')
+    onRecipientDetailsSubmitted=(action 'onRecipientDetailsSubmitted')
+    onVerificationDocumentSubmitted=(action 'onVerificationDocumentSubmitted')
+    organizationName=project.organization.name
+    project=project
+    stripeConnectAccount=stripeConnectAccount
+  }}
 
-{{#if error}}
-  {{error-formatter error=error}}
-{{/if}}
+  {{#if error}}
+    {{error-formatter error=error}}
+  {{/if}}
+</div>

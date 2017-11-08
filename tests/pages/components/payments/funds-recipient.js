@@ -16,14 +16,14 @@ export default {
   rendersLegalEntityPersonalIdNumber: isVisible('.personal-id-number'),
   rendersLegalEntityPersonalIdNumberRequired: isVisible('.personal-id-number button'),
 
-  rendersPending: hasClass('account-setup__section--pending_requirement'),
-  rendersRequired: hasClass('account-setup__section--required'),
+  rendersPending: hasClass('panel'),
+  rendersRequired: hasClass('panel--highlighted'),
 
   rendersVerificationDocument: isVisible('.verification-document'),
   rendersVerificationDocumentRequired: isVisible('.verification-document input[type=file]'),
 
-  rendersVerifying: hasClass('account-setup__section--verifying'),
-  rendersVerified: hasClass('account-setup__section--verified'),
+  rendersVerifying: hasClass('panel'),
+  rendersVerified: hasClass('panel--highlighted-green'),
 
   detailsForm,
   legalEntityPersonalIdNumber,

@@ -1,19 +1,25 @@
-<aside>
-  <h1>Stripe Account</h1>
-</aside>
+<section>
+  <aside>
+    <h3>Stripe account</h3>
+    <p>Start accepting payments with Stripe.</p>
+  </aside>
 
-{{#if (eq status 'required')}}
-  <section>
-    <div class="create-account__country">
-      <label for="country">Country</label>
-      {{select/country-select country=country onChange=(action (mut country))}}
-    </div>
-
-    <div>
-      <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
-      <button class="default" {{action 'submit'}} disabled={{isBusy}}>
-        Create Account
-      </button>
-    </div>
-  </section>
-{{/if}}
+  {{#if (eq status 'required')}}
+    <section data-test-section>
+      <div class="input-group create-account__country">
+        <div class="input-label">
+          <label for="country">
+            <span class="input-label__text">Country</span>
+          </label>
+        </div>
+        {{select/country-select country=country onChange=(action (mut country))}}
+      </div>
+      <div>
+        <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
+        <button class="default" {{action 'submit'}} disabled={{isBusy}}>
+          Create Account
+        </button>
+      </div>
+    </section>
+  {{/if}}
+</section>

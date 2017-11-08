@@ -1,27 +1,7 @@
 //
 // ACCOUNT SETUP SECTIONS
 //
-.account-setup__section {
-  align-items: center;
-  background-color: #FCFCFC;
-  border: 1px solid #DDD;
-  border-radius: 4px;
-  display: flex;
-  min-height: 4em;
-  padding: 1.5em;
-  margin-bottom: 15px;
-
-  aside {
-    @include span-columns(3);
-    align-self: baseline;
-  }
-
-  h1 {
-    font-size: 1.1em;
-    font-weight: normal;
-    margin: 0;
-  }
-
+.account-setup > section, .account-setup__section {
   label {
     display: block;
     font-weight: 600;
@@ -40,15 +20,8 @@
   @include outer-container;
 }
 
-.account-setup__section--verified {
-  background-color: $green--lighter;
-  border-color: $green;
-
-  p {
-    color: $green;
-  }
-
-  aside h1:before {
+.account-setup .panel--highlighted-green {
+  h3:before {
     content: "";
     display: block;
     float: left;
