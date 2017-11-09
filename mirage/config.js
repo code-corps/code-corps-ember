@@ -1,5 +1,6 @@
 import Mirage from 'ember-cli-mirage';
 import Ember from 'ember';
+import { paginate } from 'code-corps-ember/mirage/utils/pagination';
 
 const {
   isEmpty
@@ -69,9 +70,9 @@ function generatePreviewMentions(schema, preview) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals',
-  'organizations', 'task-lists', 'task-skills', 'task-user-mentions', 'tasks',
-  'previews', 'projects', 'project-categories', 'slugged-routes',
-  'stripe-connect-accounts', 'stripe-connect-subscriptions',
+  'github-events', 'organizations', 'task-lists', 'task-skills',
+  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
+  'slugged-routes', 'stripe-connect-accounts', 'stripe-connect-subscriptions',
   'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
   'user-categories', 'users'
 ];
@@ -150,6 +151,16 @@ export default function() {
   this.get('/github-app-installations', { coalesce: true });
   this.post('/github-app-installations');
   this.get('/github-app-installations/:id');
+
+  /**
+  * Github Events
+  */
+
+  this.get('/github-events', function(schema, request) {
+    let items = schema.githubEvents.all();
+    return paginate(items, '/github-events', request.queryParams);
+  });
+  this.get('/github-events/:id');
 
   /**
   * Github Issues
@@ -407,6 +418,12 @@ export default function() {
     let { sluggedRouteSlug, projectSlug } = request.params;
 
     let [sluggedRoute] = schema.sluggedRoutes.where({ 'slug': sluggedRouteSlug }).models;
+
+    if (!sluggedRoute) {
+      // If there's no slugged route, we likely added a new route and didn't
+      // `routes` array above.
+      console.error(`Did you add a new route under /${sluggedRouteSlug} (/${projectSlug}) without adding it to mirage/config.js?`);
+    }
 
     return sluggedRoute.organization.projects.filter((p) => {
       return p.slug === projectSlug;

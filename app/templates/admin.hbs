@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="admin-sidebar">
+    <ul>
+      <li>
+        {{#link-to "admin.index"}}
+          {{svg/sprite-icon icon="user-48" style="solid-dark-gray"}}
+          <span>Admin</span>
+        {{/link-to}}
+      </li>
+      <li>
+        {{#link-to "admin.github-events"}}
+          {{svg/sprite-icon icon="github-48" style="solid-dark-gray"}}
+          <span>GitHub Events</span>
+        {{/link-to}}
+      </li>
+    </ul>
+  </div>
+  <div class="admin-main">
+    {{outlet}}
+  </div>
+</div>

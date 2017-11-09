@@ -1,11 +1,11 @@
 import RSVP from 'rsvp';
 import { set } from '@ember/object';
+import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import skillsTypeaheadComponent from '../../pages/components/skills-typeahead';
-import wait from 'ember-test-helpers/wait';
 
 let page = PageObject.create(skillsTypeaheadComponent);
 
@@ -65,7 +65,7 @@ test('it fetches results when changing the input', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
 
@@ -92,7 +92,7 @@ test('it changes the selection when arrowing up or down', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
@@ -126,7 +126,7 @@ test('it hides and clears input when hitting esc key', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
@@ -147,7 +147,7 @@ test('it changes the selection when hovering', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
@@ -168,7 +168,7 @@ test('it selects the skill when hitting enter', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
@@ -186,7 +186,7 @@ test('it selects the skill when hitting comma', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.pressCommaKey();
@@ -203,7 +203,7 @@ test('it selects the skill when clicking it', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();
@@ -226,7 +226,7 @@ test('it does nothing when there are no results', function(assert) {
 
   page.render(hbs`{{skills-typeahead selectSkill=(action selectHandler) query=query skillsList=mockListService}}`);
 
-  wait().then(() => {
+  run(() => {
     set(this, 'query', 'ruby ra');
     page.focus();
     page.keydown();

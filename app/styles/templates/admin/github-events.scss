@@ -1,0 +1,99 @@
+.admin-main {
+  @include span-columns(10);
+}
+
+.admin-sidebar {
+  @include span-columns(2);
+  display: flex;
+
+  ul {
+    flex: 1;
+  }
+
+  li {
+    width: 100%;
+
+    a {
+      align-items: center;
+      color: #333;
+      display: flex;
+      font-weight: 600;
+      padding: 0.5em 0;
+
+      &.active, &:hover {
+        color: $blue;
+        fill: $blue;
+        transition: none;
+      }
+    }
+
+    span {
+      display: inline-flex;
+      padding-right: 7px;
+    }
+  }
+}
+
+.log-rows {
+  display: table;
+  width: 100%;
+}
+
+.log-row {
+  color: #525f7f;
+  display: table-row;
+  font-size: $body-font-size-normal;
+  position: relative;
+
+  code {
+    background: none;
+    font-size: $body-font-size-small;
+
+    &.errored {
+      background: $red;
+      color: white;
+      padding: 2px 4px;
+    }
+  }
+
+  &--header {
+    background: #F6F9FC;
+    color: $gray--darkest;
+    font-size: $body-font-size-small;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &:hover {
+    color: $gray--darkest;
+  }
+
+  &:last-child {
+    .log-cell {
+      border-bottom: 1px solid $border-gray;
+    }
+  }
+}
+
+.log-cell {
+  border-top: 1px solid $border-gray;
+  display: table-cell;
+  line-height: 22px;
+  padding: 9px 14px;
+  position: relative;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &:last-child {
+    text-align: right;
+  }
+
+  &--shrink {
+    width: 1px;
+  }
+}
+
+.log-pagination {
+  margin: 1em 0;
+  text-align: right;
+}

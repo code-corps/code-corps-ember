@@ -1,0 +1,43 @@
+<div class="log-rows">
+  <div data-test-log-row-header class="log-row log-row--header">
+    <span class="log-cell log-cell--shrink">Status</span>
+    <span class="log-cell log-cell--shrink">Type</span>
+    <span class="log-cell log-cell--shrink">Action</span>
+    <span class="log-cell">Failure reason</span>
+    <span class="log-cell log-cell--shrink">Date</span>
+  </div>
+  {{#each model as |githubEvent|}}
+    {{#link-to "admin.github-events.github-event" githubEvent data-test-log-row class="log-row"}}
+      <span data-test-status class="log-cell log-cell--shrink">
+        <code class="{{githubEvent.status}}">{{githubEvent.status}}</code>
+      </span>
+      <span data-test-event-type class="log-cell log-cell--shrink">
+        <code>{{githubEvent.eventType}}</code>
+      </span>
+      <span data-test-action class="log-cell log-cell--shrink">
+        <code>{{githubEvent.action}}</code>
+      </span>
+      <span data-test-failure-reason class="log-cell">
+        {{#if githubEvent.failureReason}}
+          <code>{{githubEvent.failureReason}}</code>
+        {{/if}}
+      </span>
+      <span data-test-time class="log-cell log-cell--shrink">
+        {{moment-format githubEvent.insertedAt 'MM/DD/YYYY hh:mm:ss'}}
+      </span>
+    {{/link-to}}
+  {{/each}}
+</div>
+
+<div class="log-pagination">
+  {{#if model.meta.pagination.prev}}
+    {{link-to "Previous" "admin.github-events.index" (query-params page=model.meta.pagination.prev.number) data-test-prev class="button small clear"}}
+  {{else}}
+    <a data-test-prev class="button small clear disabled">Previous</a>
+  {{/if}}
+  {{#if model.meta.pagination.next}}
+    {{link-to "Next" "admin.github-events.index" (query-params page=model.meta.pagination.next.number) data-test-next class="button small clear"}}
+  {{else}}
+    <a data-test-next class="button small clear disabled">Next</a>
+  {{/if}}
+</div>
