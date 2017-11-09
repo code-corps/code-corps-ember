@@ -47,14 +47,10 @@
   font-weight: 500;
   padding: 11px 14px;
   text-decoration: none;
+  user-select: none;
 
   &:focus {
     outline: none;
-    @include focus($default-color);
-
-    &.danger {
-      @include focus($danger-color);
-    }
   }
 
   &.large {
@@ -113,6 +109,10 @@
     color: $text--dark;
     font-weight: 400;
 
+    &:disabled, &.disabled {
+      background: $background-gray;
+    }
+
     &:focus {
       background: $clear-focus;
       border-color: darken($gray, 2%);
@@ -131,7 +131,7 @@
 
   &.danger {
     @include colorButton($danger-color);
-    &:disabled {
+    &:disabled, &.disabled {
       @include colorButton($clear-hover);
       color: $red;
     }
@@ -236,14 +236,14 @@
     background-image: linear-gradient(white, $clear-hover);
     border-color: $gray;
 
-    &:disabled {
-      background: white;
+    &:disabled, &.disabled {
+      background: $background-gray;
     }
   }
 
   &.danger {
     @include hoverButton($danger-color);
-    &:disabled {
+    &:disabled, &.disabled {
       @include colorButton($clear-hover);
       color: $red;
     }
@@ -263,8 +263,8 @@
     border: 1px solid $red;
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &:disabled, &.disabled {
+    cursor: default;
   }
 }
 
@@ -336,15 +336,9 @@ p {
   }
 
   &.clear {
-    &:disabled {
+    &:disabled, &.disabled {
       background: white;
     }
-  }
-}
-
-select {
-  &:focus {
-    @include focus($default-color);
   }
 }
 

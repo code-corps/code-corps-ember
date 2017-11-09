@@ -1,0 +1,20 @@
+<div>
+  <h2 data-test-event-title>{{model.eventType}} {{model.action}}</h2>
+  <div>{{moment-format model.insertedAt 'MM/DD/YYYY hh:mm:ss'}}</div>
+</div>
+
+<div>
+  <h4>Summary</h4>
+  <div>ID <code data-test-github-delivery-id>{{model.githubDeliveryId}}</code></div>
+  <div>Time <span data-test-time>{{moment-format model.insertedAt 'MM/DD/YYYY hh:mm:ss'}}</span></div>
+  <div>Status <code data-test-status>{{model.status}}</code></div>
+  {{#if model.failureReason}}
+    <div>Failure reason <code data-test-failure-reason>{{model.failureReason}}</code></div>
+  {{/if}}
+</div>
+
+<div>
+  <h4>Payload</h4>
+  {{code-theme-selector}}
+  <pre data-test-payload>{{model.prettyPayload}}</pre>
+</div>

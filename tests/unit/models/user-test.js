@@ -21,7 +21,7 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('user', [
-  'biography', 'cloudinaryPublicId', 'email', 'firstName',
+  'admin', 'biography', 'cloudinaryPublicId', 'email', 'firstName',
   'githubAvatarUrl', 'githubId', 'githubUsername', 'insertedAt',
   'intercomUserHash', 'lastName', 'name', 'password', 'photoLargeUrl',
   'photoThumbUrl', 'signUpContext', 'state', 'stateTransition', 'twitter',

@@ -6,6 +6,11 @@
     <li>{{#link-to 'settings.profile' class="profile"}}Settings{{/link-to}}</li>
     <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
   </ul>
+  {{#if user.admin}}
+    <ul class="dropdown__options">
+      <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
+    </ul>
+  {{/if}}
 </div>
 <div class="dropdown__footer">
   Signed in as <strong>{{user.username}}</strong>
