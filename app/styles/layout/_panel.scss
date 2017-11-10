@@ -62,6 +62,10 @@
       display: flex;
       font-size: $header-font-size-small;
       margin: 0;
+
+      i {
+        padding-right: 5px;
+      }
     }
 
     h4 {
