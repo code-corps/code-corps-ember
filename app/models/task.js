@@ -11,78 +11,19 @@ import ContainsCodeMixin from '../mixins/contains-code';
   @extends Ember.Model
  */
 export default Model.extend(ContainsCodeMixin, {
-
-  /**
-    The tasks body content.
-
-    @attribute body
-    @type string
-   */
+  archived: attr(),
   body: attr(),
-
-  /**
-    When the task was created.
-
-    @attribute createdAt
-    @type date
-   */
   createdAt: attr('date'),
-
-  /**
-    Where the task was created.
-
-    @attribute createdFrom
-    @type string
-   */
   createdFrom: attr(),
-
-  /**
-    The tasks markdown content.
-
-    @attribute markdown
-    @type string
-   */
   markdown: attr(),
-
-  /**
-    The tasks client facing number.
-
-    @attribute number
-    @type number
-   */
   number: attr('number'),
-
-  /**
-    Order is a read-only attribute computed from the `position` attribute
-
-    @attribute order
-    @readonly
-    @type number
-   */
   order: attr(),
-
-  /**
-    The task's status (open/closed)
-
-    @attribute status
-    @type string
-   */
   status: attr(),
-
-  /**
-    The task's title
-
-    @attribute title
-    @type string
-   */
   title: attr(),
+  updatedAt: attr('date'),
 
   /**
     Position is a virtual (write-only) attribute used to compute the `order` of the task by the server.
-
-    @attribute position
-    @virtual
-    @type number
    */
   position: attr(),
 
