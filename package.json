@@ -15,6 +15,7 @@
     "test": "ember try:one default"
   },
   "devDependencies": {
+    "@shopify/draggable": "^1.0.0-beta.3",
     "broccoli-asset-rev": "^2.4.5",
     "coveralls": "^3.0.0",
     "ember-ajax": "^3.0.0",
@@ -56,6 +57,7 @@
     "ember-cli-sass": "^7.0.0",
     "ember-cli-sentry": "^2.4.3",
     "ember-cli-shims": "^1.1.0",
+    "ember-cli-shopify-draggable-shim": "^2.0.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-test-loader": "^2.0.0",
     "ember-cli-uglify": "^2.0.0",

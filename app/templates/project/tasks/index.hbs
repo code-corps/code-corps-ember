@@ -4,22 +4,19 @@
   </div>
 </div>
 
-<div class="task-board-container">
+{{#task-board-container}}
   <div class="task-board-wrapper">
-    {{#ember-dragula class="task-board" drop="onDrop" config=dragulaconfig as |drake|}}
-      {{#each orderedTaskLists as |taskList|}}
-        <div class="task-list-container">
-          <div class="task-list">
-            <div class="task-list__name">{{taskList.name}}</div>
-            {{task-list-cards
-              clickedTask=(route-action "transitionToTask")
-              drake=drake
-              taskList=taskList
-              users=users
-            }}
-          </div>
+    {{#each orderedTaskLists as |taskList|}}
+      <div class="task-list-container">
+        <div class="task-list">
+          <div class="task-list__name">{{taskList.name}}</div>
+          {{task-list-cards
+            clickedTask=(route-action "transitionToTask")
+            taskList=taskList
+            users=users
+          }}
         </div>
-      {{/each}}
-    {{/ember-dragula}}
+      </div>
+    {{/each}}
   </div>
-</div>
+{{/task-board-container}}

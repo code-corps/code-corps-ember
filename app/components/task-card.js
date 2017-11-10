@@ -9,7 +9,7 @@ const TRIGGER_CLASS = 'ember-power-select-trigger';
 
 export default Component.extend({
   attributeBindings: ['data-can-reposition', 'data-model-id', 'data-model-type'],
-  classNames: ['task-card'],
+  classNames: ['task-card', 'draggable-source'],
   classNameBindings: ['canReposition:task-card--can-reposition', 'isLoading:task-card--is-loading'],
   tagName: 'div',
 

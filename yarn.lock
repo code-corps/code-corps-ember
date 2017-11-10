@@ -120,6 +120,10 @@
   dependencies:
     "@glimmer/util" "^0.27.0"
 
+"@shopify/draggable@1.0.0-beta.3", "@shopify/draggable@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@shopify/draggable/-/draggable-1.0.0-beta.3.tgz#b207effa1b85d31efbe1c3d8d40d785a2cb100c4"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -1654,7 +1658,7 @@ broccoli-funnel@^1.0.0, broccoli-funnel@^1.0.1, broccoli-funnel@^1.0.2, broccoli
     symlink-or-copy "^1.0.0"
     walk-sync "^0.3.1"
 
-broccoli-funnel@^2.0.0:
+broccoli-funnel@^2.0.0, broccoli-funnel@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/broccoli-funnel/-/broccoli-funnel-2.0.1.tgz#6823c73b675ef78fffa7ab800f083e768b51d449"
   dependencies:
@@ -3190,6 +3194,15 @@ ember-cli-shims@^1.1.0:
     ember-cli-babel "^6.0.0-beta.7"
     ember-cli-version-checker "^1.2.0"
     silent-error "^1.0.1"
+
+ember-cli-shopify-draggable-shim@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-shopify-draggable-shim/-/ember-cli-shopify-draggable-shim-2.0.0.tgz#511e34ab86b1e62f59855c19ff5c9174e1e1ed61"
+  dependencies:
+    "@shopify/draggable" "1.0.0-beta.3"
+    broccoli-funnel "^2.0.1"
+    broccoli-merge-trees "^2.0.0"
+    ember-cli-babel "^6.6.0"
 
 ember-cli-sri@^2.1.0:
   version "2.1.1"
