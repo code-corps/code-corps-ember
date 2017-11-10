@@ -19,13 +19,3 @@
 .account-setup__section--required {
   @include outer-container;
 }
-
-.account-setup .panel--highlighted-green {
-  h3:before {
-    content: "";
-    display: block;
-    float: left;
-    margin: 0 10px 0 0;
-    @include sprite($tick-green-large);
-  }
-}
