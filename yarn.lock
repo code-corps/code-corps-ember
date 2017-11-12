@@ -707,10 +707,6 @@ babel-plugin-filter-imports@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-filter-imports/-/babel-plugin-filter-imports-0.3.1.tgz#e7859b56886b175dd2616425d277b219e209ea8b"
 
-babel-plugin-htmlbars-inline-precompile@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-0.1.1.tgz#a878c1771224429dd6e546ba6d39c2c35073be92"
-
 babel-plugin-htmlbars-inline-precompile@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/babel-plugin-htmlbars-inline-precompile/-/babel-plugin-htmlbars-inline-precompile-0.2.3.tgz#cd365e278af409bfa6be7704c4354beee742446b"
@@ -2623,7 +2619,7 @@ ember-cli-babel@6.6.0:
     clone "^2.0.0"
     ember-cli-version-checker "^2.0.0"
 
-ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.3, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.2.1:
+ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.5, ember-cli-babel@^5.1.6, ember-cli-babel@^5.1.7, ember-cli-babel@^5.2.1:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
   dependencies:
@@ -2864,17 +2860,13 @@ ember-cli-head@^0.2.0, ember-cli-head@^0.2.1:
     ember-cli-version-checker "^1.1.6"
     fastboot-filter-initializers "^0.0.2"
 
-ember-cli-htmlbars-inline-precompile@^0.3.6:
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-0.3.13.tgz#942285711900408acd1e6ee1e7c6ce8114306edb"
+ember-cli-htmlbars-inline-precompile@^0.4.3:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-htmlbars-inline-precompile/-/ember-cli-htmlbars-inline-precompile-0.4.4.tgz#24a7617152630d64a047e553b72e00963a4f8d73"
   dependencies:
-    babel-plugin-htmlbars-inline-precompile "^0.1.0"
-    ember-cli-babel "^5.1.3"
-    ember-cli-htmlbars "^1.0.0"
+    babel-plugin-htmlbars-inline-precompile "^0.2.3"
+    ember-cli-version-checker "^2.0.0"
     hash-for-dep "^1.0.2"
-    heimdalljs-logger "^0.1.7"
-    resolve "^1.3.3"
-    semver "^5.3.0"
     silent-error "^1.1.0"
 
 ember-cli-htmlbars-inline-precompile@^1.0.0:
@@ -2896,7 +2888,7 @@ ember-cli-htmlbars@2.0.2:
     json-stable-stringify "^1.0.0"
     strip-bom "^3.0.0"
 
-ember-cli-htmlbars@^1.0.0, ember-cli-htmlbars@^1.0.1, ember-cli-htmlbars@^1.1.1, ember-cli-htmlbars@^1.3.0:
+ember-cli-htmlbars@^1.0.1, ember-cli-htmlbars@^1.1.1, ember-cli-htmlbars@^1.3.0:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-1.3.4.tgz#461289724b34af372a6a0c4b6635819156963353"
   dependencies:
@@ -3694,17 +3686,17 @@ ember-source@~2.16.0:
     simple-dom "^0.3.0"
     simple-html-tokenizer "^0.4.1"
 
-ember-stripe-elements@0.1.0-beta.7:
-  version "0.1.0-beta.7"
-  resolved "https://registry.yarnpkg.com/ember-stripe-elements/-/ember-stripe-elements-0.1.0-beta.7.tgz#700988abba6fe2b6b44c776eade361c31397340a"
+ember-stripe-elements@^0.2.0:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/ember-stripe-elements/-/ember-stripe-elements-0.2.1.tgz#290068126cd37b7f1a3adec73457fcb2fb047d1e"
   dependencies:
-    ember-cli-babel "^5.1.7"
-    ember-cli-htmlbars "^1.1.1"
-    ember-cli-htmlbars-inline-precompile "^0.3.6"
+    ember-cli-babel "^6.3.0"
+    ember-cli-htmlbars "^2.0.1"
+    ember-cli-htmlbars-inline-precompile "^0.4.3"
 
-ember-stripe-service@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ember-stripe-service/-/ember-stripe-service-6.0.0.tgz#68f088209248cf8f2813f0cdc06d85894e7f9215"
+ember-stripe-service@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ember-stripe-service/-/ember-stripe-service-7.0.0.tgz#da79bfbf1b4efe0cdeabaee90961a180884b7ab4"
   dependencies:
     ember-cli-babel "^5.1.7"
 

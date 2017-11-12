@@ -8,6 +8,7 @@ moduleFor('route:project/checkout', 'Unit | Route | project/checkout', {
     'service:router-scroll',
     'service:scheduler',
     'service:session',
+    'service:stripev3',
     'service:user-subscriptions'
   ]
 });

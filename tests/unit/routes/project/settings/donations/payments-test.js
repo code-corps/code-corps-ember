@@ -4,7 +4,8 @@ moduleFor('route:project/settings/donations/payments', 'Unit | Route | project/s
   needs: [
     'service:metrics',
     'service:router-scroll',
-    'service:scheduler'
+    'service:scheduler',
+    'service:stripe'
   ]
 });
 
