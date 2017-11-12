@@ -81,7 +81,9 @@ module.exports = function(environment) {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
 
-    stripe: {}
+    stripe: {
+      lazyLoad: true
+    }
   };
 
   if (environment === 'development') {
@@ -110,7 +112,13 @@ module.exports = function(environment) {
         "'self'",
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
-      'font-src': ["'self'", "data:", "https://fonts.gstatic.com"],
+      'font-src': [
+        "'self'",
+        "data:",
+        "https://fonts.gstatic.com",
+        "https://d3pgew4wbk2vb1.cloudfront.net",
+        "https://dawxes9syhrgg.cloudfront.net"
+      ],
       // Allow data (ajax/websocket) from api.lvh.me:4000
       'connect-src': [
         "'self'",

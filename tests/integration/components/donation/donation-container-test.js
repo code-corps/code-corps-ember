@@ -3,15 +3,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import donationContainerComponent from '../../../pages/components/donation/donation-container';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import StripeMock from 'ember-stripe-elements/utils/stripe-mock';
 
 let page = PageObject.create(donationContainerComponent);
 
 let visa = { id: 1, brand: 'Visa', last4: '4242' };
-
-function K() {
-  return true;
-}
 
 function setHandlers(context, { donateHandler = function() {}, saveAndDonateHandler = function() {} } = {}) {
   context.set('donateHandler', donateHandler);
@@ -23,6 +19,7 @@ moduleForComponent('donation/donation-container', 'Integration | Component | don
   beforeEach() {
     setHandlers(this);
     page.setContext(this);
+    window.Stripe = StripeMock;
   },
   afterEach() {
     page.removeContext();
@@ -109,16 +106,8 @@ test('it renders the card item and the "donate" button when a card exists', func
 test('it handles adding a card correctly', function(assert) {
   assert.expect(1);
 
-  stubService(this, 'stripe', {
-    card: {
-      validateCardNumber: K,
-      validateCVC: K,
-      validateExpiry: K
-    }
-  });
-
   function saveAndDonateHandler(stripeElement) {
-    assert.equal(stripeElement._componentName, 'card');
+    assert.ok(stripeElement.hasOwnProperty('mount'));
     return RSVP.resolve();
   }
 

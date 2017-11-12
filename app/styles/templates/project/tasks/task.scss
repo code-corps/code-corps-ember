@@ -41,3 +41,12 @@
     }
   }
 }
+
+.task-sidebar-action {
+  color: $gray--dark;
+  font-size: $body-font-size-small;
+
+  i {
+    font-size: $body-font-size-normal;
+  }
+}

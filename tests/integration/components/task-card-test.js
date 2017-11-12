@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Ability } from 'ember-can';
 import DS from 'ember-data';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import { initialize as initializeKeyboard } from 'ember-keyboard';
 
 const { PromiseObject } = DS;
 
@@ -17,6 +18,7 @@ function renderPage() {
   page.render(hbs`
     {{task-card
       clickedTask=clickedTask
+      keyboardActivated=keyboardActivated
       task=task
       taskUser=taskUser
       users=users
@@ -33,6 +35,7 @@ moduleForComponent('task-card', 'Integration | Component | task card', {
     page.setContext(this);
     setHandler(this);
     this.register('ability:task', Ability.extend({ canReposition: true }));
+    initializeKeyboard();
   },
   afterEach() {
     page.removeContext();
@@ -292,4 +295,98 @@ test('assignment dropdown does not render if user has no ability', function(asse
   page.taskAssignment.assignedUser.as((user) => {
     assert.equal(user.icon.url, 'test.png');
   });
+});
+
+test('it archives task when hovering and pressing C key', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  let task = {
+    archived: false,
+    save() {
+      return this;
+    },
+    then() {
+      assert.ok(true, 'Task save was called');
+      done();
+    }
+  };
+
+  set(this, 'task', task);
+  this.register('ability:task', Ability.extend({ canArchive: true }));
+
+  renderPage();
+
+  page.mouseenter();
+  page.triggerKeyDown('KeyC');
+});
+
+test('it does not archive task when not hovering and pressing C key', function(assert) {
+  assert.expect(1);
+
+  let task = {
+    archived: false,
+    save() {
+      return this;
+    },
+    then() {
+      assert.notOk(true);
+    }
+  };
+
+  set(this, 'task', task);
+  this.register('ability:task', Ability.extend({ canArchive: true }));
+  set(this, 'keyboardActivated', true); // manually activate the keyboard
+
+  renderPage();
+
+  page.triggerKeyDown('KeyC');
+  assert.ok(true);
+});
+
+test('it does not archive task when left hovering and pressing C key', function(assert) {
+  assert.expect(1);
+
+  let task = {
+    archived: false,
+    save() {
+      return this;
+    },
+    then() {
+      assert.notOk(true);
+    }
+  };
+
+  set(this, 'task', task);
+  this.register('ability:task', Ability.extend({ canArchive: true }));
+
+  renderPage();
+
+  page.mouseenter();
+  page.mouseleave();
+  page.triggerKeyDown('KeyC');
+  assert.ok(true);
+});
+
+test('it does not archive task when the user does not have the ability', function(assert) {
+  assert.expect(1);
+
+  let task = {
+    archived: false,
+    save() {
+      return this;
+    },
+    then() {
+      assert.notOk(true);
+    }
+  };
+
+  set(this, 'task', task);
+  this.register('ability:task', Ability.extend({ canArchive: false }));
+
+  renderPage();
+
+  page.mouseenter();
+  page.triggerKeyDown('KeyC');
+  assert.ok(true);
 });
