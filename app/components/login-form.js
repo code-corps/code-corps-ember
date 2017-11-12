@@ -42,7 +42,9 @@ export default Component.extend({
 
       get(this, 'session').authenticate('authenticator:jwt', credentials).catch((reason) => {
         set(this, 'isLoading', false);
-        set(this, 'errors', reason.error || reason);
+        if (reason) {
+          set(this, 'errors', reason.error || reason);
+        }
       });
     }
   }

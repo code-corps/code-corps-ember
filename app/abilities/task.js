@@ -47,6 +47,7 @@ export default Ability.extend({
   // task authors, admins and owners can edit
   canEdit: or('{userIsAuthor,userIsAdmin,userIsOwner}'),
   // task authors, contributors, admins and owners can assign and reposition
+  canArchive: alias('canAssign'),
   canAssign: or('canEdit', 'userIsContributor'),
   canReposition: alias('canAssign')
 });
