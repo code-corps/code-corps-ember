@@ -81,7 +81,9 @@ module.exports = function(environment) {
       dsn: 'https://cecdf7d399e74b72bc73dc8e4e62737d@app.getsentry.com/82741'
     },
 
-    stripe: {}
+    stripe: {
+      lazyLoad: true
+    }
   };
 
   if (environment === 'development') {

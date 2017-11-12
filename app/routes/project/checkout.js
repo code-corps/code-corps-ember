@@ -8,12 +8,14 @@ const ALREADY_A_SUBSCRIBER = "You're already supporting this project.";
 export default Route.extend({
   flashMessages: service(),
   session: service(),
+  stripev3: service(),
   userSubscriptions: service(),
 
   beforeModel(transition) {
     let session = get(this, 'session');
     if (get(session, 'isAuthenticated')) {
-      return this._super(...arguments);
+      this._super(...arguments);
+      return this.get('stripev3').load();
     } else {
       set(session, 'attemptedTransition', transition);
       let queryParams = { context: 'donation' };

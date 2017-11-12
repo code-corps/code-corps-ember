@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
 /**
  * `project.settings.donations.payments`
@@ -10,27 +11,16 @@ import Route from '@ember/routing/route';
  * @extends Ember.Route
  */
 export default Route.extend({
-  /**
-   * An Ember.Route hook
-   *
-   * Returns a promise, meaning hooks that follow the model hook will wait until
-   * it resolves
-   *
-   * @return {RSVP.Promise} A promise for reloading the project route model
-   */
+  stripe: service(),
+
+  beforeModel() {
+    return this.get('stripe').load();
+  },
+
   model() {
     return this.modelFor('project').reload();
   },
 
-  /**
-   * An Ember.Route hook
-   *
-   * Assingns the project property as model
-   *
-   * @method setupController
-   * @param  {Ember.Controller} controller
-   * @param  {DS.Model} project The currently loaded project
-   */
   setupController(controller, project) {
     controller.setProperties({ project });
   }
