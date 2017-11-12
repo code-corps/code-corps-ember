@@ -109,7 +109,7 @@ module.exports = function(environment) {
       'script-src': [
         "'self'",
       ],
-      // Allow fonts to be loaded from http://fonts.gstatic.com
+      // Allow fonts to be loaded
       'font-src': [
         "'self'",
         "data:",
@@ -117,12 +117,12 @@ module.exports = function(environment) {
         "https://d3pgew4wbk2vb1.cloudfront.net",
         "https://dawxes9syhrgg.cloudfront.net"
       ],
-      // Allow data (ajax/websocket) from api.lvh.me:4000
+      // Allow data (ajax/websocket)
       'connect-src': [
         "'self'",
         "http://api.lvh.me:4000"
       ],
-      // Allow images from the origin itself (i.e. current domain), and data
+      // Allow images
       'img-src': [
         "'self'",
         "data:",
@@ -131,7 +131,7 @@ module.exports = function(environment) {
         "http://lorempixel.com",
         "https://s3.amazonaws.com",
       ],
-      // Allow inline styles and loaded CSS from http://fonts.googleapis.com
+      // Allow inline styles
       'style-src': [
         "'self'",
         "'unsafe-inline'",
