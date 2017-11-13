@@ -14,5 +14,9 @@ export default {
     }
   },
 
-  select
+  select,
+
+  unselectedItem: {
+    scope: '.select-inline__unselected-item'
+  }
 };

@@ -99,20 +99,22 @@ test('it cannot reposition if it does not have the ability', function(assert) {
   assert.notOk(page.canReposition, 'Cannot reposition');
 });
 
-test('it renders the GitHub issue link icon if it has an issue', function(assert) {
+test('it renders the GitHub issue link icon if it has an issue and is hovering', function(assert) {
   assert.expect(1);
   let isLoaded = true;
   let task = { githubIssue: { isLoaded }, githubRepo: { isLoaded } };
   set(this, 'task', task);
   renderPage();
+  page.mouseenter();
   assert.ok(page.issueLink.isVisible, 'The GitHub issue link is visible');
 });
 
-test('it does not render the GitHub issue link icon if it does not have an issue', function(assert) {
+test('it does not render the GitHub issue link icon if it does not have an issue and is hovering', function(assert) {
   assert.expect(1);
   let task = { githubIssue: null };
   set(this, 'task', task);
   renderPage();
+  page.mouseenter();
   assert.notOk(page.issueLink.isVisible, 'The GitHub issue link is not visible');
 });
 
@@ -151,7 +153,7 @@ test('it does not send action if clicked and loading', function(assert) {
   assert.ok(true);
 });
 
-test('assignment works if user has ability', function(assert) {
+test('assignment works if user has ability and card is hovered', function(assert) {
   let done = assert.async();
   assert.expect(2);
 
@@ -176,11 +178,12 @@ test('assignment works if user has ability', function(assert) {
 
   renderPage();
 
+  page.mouseenter();
   page.taskAssignment.select.trigger.open();
   page.taskAssignment.select.dropdown.options(0).select();
 });
 
-test('unassignment works if user has ability', function(assert) {
+test('unassignment works if user has ability and card is hovered', function(assert) {
   let done = assert.async();
   assert.expect(1);
 
@@ -204,11 +207,12 @@ test('unassignment works if user has ability', function(assert) {
 
   renderPage();
 
+  page.mouseenter();
   page.taskAssignment.select.trigger.open();
   page.taskAssignment.select.dropdown.options(0).select();
 });
 
-test('assignment dropdown renders if user has ability', function(assert) {
+test('assignment dropdown renders if user has ability and card is hovered', function(assert) {
   assert.expect(2);
 
   let task = { id: 'task' };
@@ -228,12 +232,13 @@ test('assignment dropdown renders if user has ability', function(assert) {
 
   renderPage();
 
+  page.mouseenter();
   page.taskAssignment.select.trigger.open();
   assert.equal(page.taskAssignment.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
   assert.equal(page.taskAssignment.select.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
 });
 
-test('assignment dropdown renders when records are still being loaded', function(assert) {
+test('assignment dropdown renders when records are still being loaded and card  is hovered', function(assert) {
   let done = assert.async();
   assert.expect(2);
 
@@ -259,6 +264,7 @@ test('assignment dropdown renders when records are still being loaded', function
 
   renderPage();
 
+  page.mouseenter();
   RSVP.all(users).then(() => {
     page.taskAssignment.select.trigger.open();
     assert.equal(page.taskAssignment.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
@@ -267,7 +273,7 @@ test('assignment dropdown renders when records are still being loaded', function
   });
 });
 
-test('assignment dropdown does not render if user has no ability', function(assert) {
+test('assignment dropdown does not render if user has no ability and card is hovered', function(assert) {
   assert.expect(2);
 
   let task = { id: 'task' };
@@ -291,6 +297,7 @@ test('assignment dropdown does not render if user has no ability', function(asse
 
   renderPage();
 
+  page.mouseenter();
   assert.notOk(page.taskAssignment.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
   page.taskAssignment.assignedUser.as((user) => {
     assert.equal(user.icon.url, 'test.png');

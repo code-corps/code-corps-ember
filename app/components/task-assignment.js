@@ -11,6 +11,7 @@ export default Component.extend({
   currentUser: service(),
   taskAssignment: service(),
 
+  deferredRendering: null,
   task: null,
   taskUser: null,
   users: null,

@@ -1,9 +1,21 @@
 {{#if merged}}
-  {{svg/sprite-icon icon="github-merge-48" style="solid-purple"}}
+  <span class="sprite-icon">
+    <svg class="solid-purple size-16">
+      <use xlink:href="#github-merge-48"></use>
+    </svg>
+  </span>
 {{else if (eq state 'closed')}}
-  {{svg/sprite-icon icon="github-pull-request-48" style="solid-red"}}
+  <span class="sprite-icon">
+    <svg class="solid-red size-16">
+      <use xlink:href="#github-pull-request-48"></use>
+    </svg>
+  </span>
 {{else if (eq state 'open')}}
-  {{svg/sprite-icon icon="github-pull-request-48" style="solid-green"}}
+  <span class="sprite-icon">
+    <svg class="solid-green size-16">
+      <use xlink:href="#github-pull-request-48"></use>
+    </svg>
+  </span>
 {{else}}
   <div data-test-loading class="loading loading--circle-16"></div>
 {{/if}}
