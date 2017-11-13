@@ -40,6 +40,12 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
   let taskCard;
 
   andThen(() => {
+    // We need to hover the card to be able to assign the task
+    // NOTE: mouseenter doesn't trigger in the page object
+    find('.task-card:eq(0)').mouseenter();
+  });
+
+  andThen(() => {
     taskCard = page.taskBoard.taskLists(0).taskCards(0);
     assert.ok(taskCard.taskAssignment.select.trigger.unassigned, 'Task is rendered unassigned.');
     taskCard.taskAssignment.select.trigger.open();

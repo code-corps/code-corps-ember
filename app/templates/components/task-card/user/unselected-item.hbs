@@ -3,7 +3,11 @@
   <span class="select-inline__loading-item__text"></span>
 {{else}}
   <span data-test-unselected-icon class="select-inline__unselected-item__icon">
-    {{svg/sprite-icon icon="user-48" size="14" style="solid-light-gray"}}
+    <span class="sprite-icon">
+      <svg class="solid-light-gray size-14">
+        <use xlink:href="#user-48"></use>
+      </svg>
+    </span>
   </span>
   {{#tooltip-on-component
     class='tooltip'

@@ -1,31 +1,52 @@
 <p class="task-card__assignee">
-  {{#if canAssign}}
-    {{#power-select
-      beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
-      buildSelection=(action "buildSelection")
-      class="select-inline"
-      disabled=userSelectDisabled
-      dropdownClass="select-inline-dropdown"
-      loadingMessage=""
-      matchTriggerWidth=false
-      onchange=(action "changeUser")
-      options=userOptions
-      placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
-      registerAPI=(action (mut selectRemoteController))
-      search=(action "searchUsers")
-      selected=selectedOption
-      selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
-      tagName="div"
-      as |user select|
-    }}
-      {{select-inline-dropdown/list-item
-        iconUrl=user.photoThumbUrl
-        lastSearchedText=select.lastSearchedText
-        primaryText=user.username
-        secondaryText=user.name
+  {{#if deferredRendering}}
+    {{#if (and canAssign (not taskUser))}}
+      <div class="select-inline select-inline__unselected-item">
+        {{#if task.userTask.isLoading}}
+          <span class="select-inline__loading-item__icon"></span>
+          <span class="select-inline__loading-item__text"></span>
+        {{else}}
+          <span data-test-unselected-icon class="select-inline__unselected-item__icon">
+            <span class="sprite-icon">
+              <svg class="solid-light-gray size-14">
+                <use xlink:href="#user-48"></use>
+              </svg>
+            </span>
+          </span>
+        {{/if}}
+      </div>
+    {{else if taskUser}}
+      {{task-card/user/selected-item select=(hash selected = taskUser)}}
+    {{/if}}
+  {{else}}
+    {{#if canAssign}}
+      {{#power-select
+        beforeOptionsComponent=(component "power-select/before-task-options" selectRemoteController=selectRemoteController)
+        buildSelection=(action "buildSelection")
+        class="select-inline"
+        disabled=userSelectDisabled
+        dropdownClass="select-inline-dropdown"
+        loadingMessage=""
+        matchTriggerWidth=false
+        onchange=(action "changeUser")
+        options=userOptions
+        placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
+        registerAPI=(action (mut selectRemoteController))
+        search=(action "searchUsers")
+        selected=selectedOption
+        selectedItemComponent=(component "task-card/user/selected-item" click=(action "stopClickPropagation"))
+        tagName="div"
+        as |user select|
       }}
-    {{/power-select}}
-  {{else if taskUser}}
-    {{task-card/user/selected-item select=(hash selected = selectedOption)}}
+        {{select-inline-dropdown/list-item
+          iconUrl=user.photoThumbUrl
+          lastSearchedText=select.lastSearchedText
+          primaryText=user.username
+          secondaryText=user.name
+        }}
+      {{/power-select}}
+    {{else if taskUser}}
+      {{task-card/user/selected-item select=(hash selected = selectedOption)}}
+    {{/if}}
   {{/if}}
 </p>

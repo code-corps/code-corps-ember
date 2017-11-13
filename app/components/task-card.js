@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { mapBy, alias } from '@ember/object/computed';
+import { alias, mapBy } from '@ember/object/computed';
 import { computed, get, getProperties, set } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
@@ -20,6 +20,7 @@ export default Component.extend(EmberKeyboardMixin, {
   store: service(),
 
   bound: false,
+  hasHovered: false,
   hovering: false,
   shouldShowUsers: false,
   task: null,
@@ -85,6 +86,7 @@ export default Component.extend(EmberKeyboardMixin, {
   },
 
   mouseEnter() {
+    set(this, 'hasHovered', true);
     set(this, 'hovering', true);
     set(this, 'keyboardActivated', true);
   },

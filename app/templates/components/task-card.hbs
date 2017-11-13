@@ -19,15 +19,24 @@
     <span class="task-card__time" data-test-task-time>{{moment-from-now task.createdAt}}</span>
     <span class="task-card__integrations" data-test-task-integrations>
       {{#if task.githubIssue}}
-        {{github/issue-link
-          githubIssue=task.githubIssue
-          githubRepo=task.githubRepo
-          size="small"
-        }}
+        {{#if hasHovered}}
+          {{github/issue-link
+            githubIssue=task.githubIssue
+            githubRepo=task.githubRepo
+            size="small"
+          }}
+        {{else}}
+          <span class="sprite-icon">
+            <svg class="solid-light-gray size-16">
+              <use xlink:href="#github-48"></use>
+            </svg>
+          </span>
+        {{/if}}
       {{/if}}
     </span>
   </p>
   {{task-assignment
+    deferredRendering=(not hasHovered)
     task=task
     taskUser=taskUser
     users=users
