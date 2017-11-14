@@ -1,51 +1,28 @@
-import { alias } from '@ember/object/computed';
+import { alias, notEmpty } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
 import { computed, get } from '@ember/object';
 
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 10;
 
 export default Mixin.create({
   githubRepo: null,
-  projectGithubRepo: null,
-  triggeredSync: false,
 
-  errored: computed('projectRepoState', 'repoState', function() {
-    let projectRepoState = get(this, 'projectRepoState');
-    let repoState = get(this, 'repoState');
-    return (repoState && repoState.indexOf('error') > -1)
-        || (projectRepoState && projectRepoState.indexOf('error') > -1);
+  errored: computed('state', function() {
+    let state = get(this, 'state');
+    return (state && state.indexOf('error') > -1);
   }),
 
-  overallSyncState: computed('projectRepoState', 'repoState', 'triggeredSync', function() {
-    let projectRepoState = get(this, 'projectRepoState');
-    let repoState = get(this, 'repoState');
-
-    let state = projectRepoState;
-
-    if (!state
-        || state === 'unsynced'
-        || state === 'syncing_github_repo'
-        || state === 'errored_syncing_github_repo') {
-      state = repoState;
-    }
-
-    if (!projectRepoState && repoState === 'receiving_webhooks' && get(this,  'triggeredSync')) {
-      state = 'unsynced';
-    }
-
-    return state;
-  }),
+  hasProject: notEmpty('githubRepo.project.id'),
 
   percentage: computed('stepNumber', function() {
     let stepNumber = get(this, 'stepNumber');
     return (stepNumber / TOTAL_STEPS) * 100;
   }),
 
-  projectRepoState: alias('projectGithubRepo.syncState'),
-  repoState: alias('githubRepo.syncState'),
+  state: alias('githubRepo.syncState'),
 
-  stepNumber: computed('overallSyncState', function() {
-    let state = get(this, 'overallSyncState');
+  stepNumber: computed('state', function() {
+    let state = get(this, 'state');
 
     switch (state) {
       case 'unsynced':
@@ -67,16 +44,18 @@ export default Mixin.create({
         return 5;
       case 'syncing_github_comments':
       case 'errored_syncing_github_comments':
-      case 'receiving_webhooks':
         return 6;
+      case 'syncing_users':
+      case 'errored_syncing_users':
+        return 7;
       case 'syncing_tasks':
       case 'errored_syncing_tasks':
-        return 7;
+        return 8;
       case 'syncing_comments':
       case 'errored_syncing_comments':
-        return 8;
-      case 'synced':
         return 9;
+      case 'synced':
+        return 10;
       default:
         return 0;
     }
@@ -88,25 +67,14 @@ export default Mixin.create({
     return !errored && ((TOTAL_STEPS - stepNumber) >= 1);
   }),
 
-  syncComplete: computed('projectRepoState', function() {
-    let projectRepoState = get(this, 'projectRepoState');
-    return projectRepoState === 'synced';
+  syncComplete: computed('state', function() {
+    return get(this, 'state') === 'synced';
   }),
 
-  syncIncomplete: computed('repoState', 'projectRepoState', 'triggeredSync', function() {
-    let repoState = get(this, 'repoState');
-    let projectRepoState = get(this, 'projectRepoState');
-    let triggeredSync = get(this, 'triggeredSync');
+  syncInProgress: computed('hasProject', 'syncComplete', function() {
+    let hasProject = get(this, 'hasProject');
+    let syncComplete = get(this, 'syncComplete');
 
-    if (triggeredSync && projectRepoState !== 'synced') {
-      return true;
-    } else if (projectRepoState) {
-      return projectRepoState !== 'unsynced'
-          && projectRepoState !== 'synced';
-    } else if (!projectRepoState) {
-      return repoState !== 'unsynced' && repoState !== 'receiving_webhooks';
-    } else {
-      return repoState !== 'unsynced';
-    }
+    return hasProject && !syncComplete;
   })
 });

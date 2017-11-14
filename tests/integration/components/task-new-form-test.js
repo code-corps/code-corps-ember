@@ -104,6 +104,13 @@ test('it does not render the github repo selection if there are no repos', funct
   assert.notOk(page.selectGithubRepo.isVisible);
 });
 
+test('it does not render github repo selection if they are still loading', function(assert) {
+  assert.expect(1);
+  set(this, 'githubRepos', { isLoading: true });
+  renderPage();
+  assert.notOk(page.selectGithubRepo.isVisible);
+});
+
 test('it renders the connect to github callout if there are repos and the user is not connected to github', function(assert) {
   assert.expect(1);
   set(this, 'githubRepos', [{ id: 1 }]);

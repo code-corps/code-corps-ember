@@ -1,26 +1,44 @@
-{{#if (and githubRepo.isLoaded (or projectGithubRepo.isLoaded (not isConnected)))}}
-
+{{!--
+  Data needs to be fully loaded.
+  For connected repo, that means we need to load the project as well
+--}}
+{{#if (and githubRepo.isLoaded (or githubRepo.project.isLoaded (not isConnected)))}}
+  {{!-- Main 'header' UI of the github repo --}}
   <div class="github-repo__content">
     <div class="github-repo__name" data-test-github-repo-name>
-      {{svg/sprite-icon icon=repoIcon}} {{name}}
+      {{svg/sprite-icon icon=repoIcon}} {{githubRepo.name}}
     </div>
-    {{#unless syncIncomplete}}
-      <div class="github-repo__actions" data-test-github-repo-actions>
+    <div class="github-repo__actions" data-test-github-repo-actions>
+      {{!-- Not connected to a project at all --}}
+      {{#if (not isConnected)}}
         {{#if showSettings}}
           <a data-test-close-repo-settings>Collapse</a>
         {{else}}
-          {{#if projectGithubRepo}}
-            <a data-test-open-repo-settings-edit>Edit settings</a>
-          {{else}}
-            <a data-test-open-repo-settings-connect>Connect</a>
-          {{/if}}
+          <a data-test-open-repo-settings-connect>Connect</a>
         {{/if}}
-      </div>
-    {{/unless}}
+      {{/if}}
+      {{!-- Connected to this project, fully synced --}}
+      {{#if (and belongsToProject syncComplete)}}
+        {{#if showSettings}}
+          <a data-test-close-repo-settings>Collapse</a>
+        {{else}}
+          <a data-test-open-repo-settings-edit>Edit settings</a>
+        {{/if}}
+      {{/if}}
+      {{!-- Connected to some other project --}}
+      {{#if belongsToOtherProject}}
+        <div data-test-repo-project class="github-repo__project">
+          <span>Connected to</span>
+          <span><img class="icon" src={{githubRepo.project.iconThumbUrl}} /></span>
+          <span>{{githubRepo.project.title}}</span>
+        </div>
+      {{/if}}
+    </div>
   </div>
-
-  {{#if showingSettings}}
-    {{#if (and projectGithubRepo syncComplete)}}
+  {{!-- Accordion control is in the open state --}}
+  {{#if showSettings}}
+    {{!-- Repo is fully synced to this project --}}
+    {{#if (and belongsToProject syncComplete)}}
       <div data-test-callout class="callout callout--danger">
         <div class="callout__content">
           <div>
@@ -35,7 +53,7 @@
             </p>
             <p>
               {{github/repo-disconnect-confirm-modal
-                disconnect=(action "disconnectRepo" githubRepo projectGithubRepo)
+                disconnect=(action "disconnectRepo" githubRepo hasProject)
                 githubRepo=githubRepo
               }}
             </p>
@@ -43,8 +61,8 @@
         </div>
       </div>
     {{/if}}
-
-    {{#unless projectGithubRepo}}
+    {{!-- Repo is not connected to any project --}}
+    {{#if (not isConnected)}}
       <div data-test-callout class="callout">
         <div class="callout__content">
           <div>
@@ -63,21 +81,16 @@
           </div>
         </div>
       </div>
-    {{/unless}}
-
-    {{#if syncIncomplete}}
-      {{github/repo-sync
-        githubRepo=githubRepo
-        projectGithubRepo=projectGithubRepo
-      }}
     {{/if}}
   {{/if}}
-
+  {{!-- Sync is currently in progress --}}
+  {{#if (and belongsToProject syncInProgress)}}
+    {{github/repo-sync githubRepo=githubRepo}}
+  {{/if}}
 {{else}}
-
+  {{!-- Data is still loading --}}
   <div data-test-loading class="github-repo__content">
     <div class="loading loading--col-2 loading--left"></div>
     <div class="loading loading--col-1 loading--right"></div>
   </div>
-
 {{/if}}

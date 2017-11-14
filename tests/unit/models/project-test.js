@@ -7,9 +7,9 @@ moduleForModel('project', 'Unit | Model | project', {
   // Specify the other units that are required for this test.
   needs: [
     'model:donation-goal',
+    'model:github-repo',
     'model:organization',
     'model:project-category',
-    'model:project-github-repo',
     'model:project-skill',
     'model:project-user',
     'model:stripe-connect-account',
@@ -25,18 +25,31 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('project', [
-  'approved', 'canActivateDonations', 'closedTasksCount', 'cloudinaryPublicId',
-  'description', 'donationsActive', 'githubId', 'iconLargeUrl', 'iconThumbUrl',
-  'longDescriptionBody', 'longDescriptionMarkdown', 'openTasksCount',
-  'slug', 'shouldLinkExternally', 'title', 'totalMonthlyDonated', 'website'
+  'approved',
+  'canActivateDonations',
+  'closedTasksCount',
+  'cloudinaryPublicId',
+  'description',
+  'donationsActive',
+  'githubId',
+  'iconLargeUrl',
+  'iconThumbUrl',
+  'longDescriptionBody',
+  'longDescriptionMarkdown',
+  'openTasksCount',
+  'slug',
+  'shouldLinkExternally',
+  'title',
+  'totalMonthlyDonated',
+  'website'
 ]);
 
 testForBelongsTo('project', 'organization');
 testForBelongsTo('project', 'stripeConnectPlan');
 
 testForHasMany('project', 'donationGoals');
+testForHasMany('project', 'githubRepos');
 testForHasMany('project', 'projectCategories');
-testForHasMany('project', 'projectGithubRepos');
 testForHasMany('project', 'projectSkills');
 testForHasMany('project', 'projectUsers');
 testForHasMany('project', 'taskLists');

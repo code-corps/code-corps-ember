@@ -9,13 +9,12 @@ function renderPage() {
   page.render(hbs`
     {{github/repo-sync
       githubRepo=githubRepo
-      projectGithubRepo=projectGithubRepo
     }}
   `);
 }
 
 function percentForStep(number) {
-  return (number / 9) * 100;
+  return (number / 10) * 100;
 }
 
 moduleForComponent('github/repo-sync', 'Integration | Component | github/repo sync', {
@@ -30,9 +29,7 @@ moduleForComponent('github/repo-sync', 'Integration | Component | github/repo sy
 
 test('it renders everything for the default state', function(assert) {
   let githubRepo = { syncState: 'unsynced' };
-  let projectGithubRepo = { syncState: 'unsynced' };
   this.set('githubRepo', githubRepo);
-  this.set('projectGithubRepo', projectGithubRepo);
   renderPage();
   assert.ok(page.progressBar.displaysPercentage(0), 'The progress bar has not started.');
   assert.ok(page.progressBar.isAnimated, 'Progress bar is animated.');
@@ -42,8 +39,6 @@ test('it renders everything for the default state', function(assert) {
 
 test('it renders for the sync states', function(assert) {
   renderPage();
-
-  this.set('projectGithubRepo', { syncState: 'syncing_github_repo' });
 
   this.set('githubRepo', { syncState: 'fetching_pull_requests' });
   assert.ok(page.progressBar.displaysPercentage(percentForStep(1)), 'The progress bar has progressed to step 1.');
@@ -81,22 +76,26 @@ test('it renders for the sync states', function(assert) {
   assert.equal(page.progressText.text, 'Syncing 1,234 comments...', 'The progress text renders.');
   assert.ok(page.spriteIcon.isGithubComments, 'Comments icon renders.');
 
-  this.set('githubRepo', { syncState: 'receiving_webhooks' });
-
-  this.set('projectGithubRepo', { syncState: 'syncing_tasks' });
+  this.set('githubRepo', { syncState: 'syncing_users' });
   assert.ok(page.progressBar.displaysPercentage(percentForStep(7)), 'The progress bar has progressed to step 7.');
+  assert.ok(page.progressBar.isAnimated, 'Progress bar is animated.');
+  assert.equal(page.progressText.text, 'Syncing GitHub users with Code Corps users...', 'The progress text renders.');
+  assert.ok(page.spriteIcon.isUser, 'User icon renders.');
+
+  this.set('githubRepo', { syncState: 'syncing_tasks' });
+  assert.ok(page.progressBar.displaysPercentage(percentForStep(8)), 'The progress bar has progressed to step 8.');
   assert.ok(page.progressBar.isAnimated, 'Progress bar is animated.');
   assert.equal(page.progressText.text, 'Syncing your GitHub issues with your tasks...', 'The progress text renders.');
   assert.ok(page.spriteIcon.isTasks, 'Tasks icon renders.');
 
-  this.set('projectGithubRepo', { syncState: 'syncing_comments' });
-  assert.ok(page.progressBar.displaysPercentage(percentForStep(8)), 'The progress bar has progressed to step 8.');
+  this.set('githubRepo', { syncState: 'syncing_comments' });
+  assert.ok(page.progressBar.displaysPercentage(percentForStep(9)), 'The progress bar has progressed to step 9.');
   assert.ok(page.progressBar.isAnimated, 'Progress bar is animated.');
   assert.equal(page.progressText.text, 'Syncing your GitHub comments with your comments...', 'The progress text renders.');
   assert.ok(page.spriteIcon.isComments, 'Comments icon renders.');
 
-  this.set('projectGithubRepo', { syncState: 'synced' });
-  assert.ok(page.progressBar.displaysPercentage(percentForStep(9)), 'The progress bar has completed.');
+  this.set('githubRepo', { syncState: 'synced' });
+  assert.ok(page.progressBar.displaysPercentage(percentForStep(10)), 'The progress bar has completed.');
   assert.notOk(page.progressBar.isAnimated, 'Progress bar is not animated.');
   assert.equal(page.progressText.text, 'Sync complete!', 'The progress text renders.');
   assert.ok(page.spriteIcon.isGithubRepoClone, 'Repo clone icon renders.');
@@ -142,14 +141,20 @@ test('it renders for the error states', function(assert) {
 
   this.set('githubRepo', { syncState: 'receiving_webhooks' });
 
-  this.set('projectGithubRepo', { syncState: 'errored_syncing_tasks' });
+  this.set('githubRepo', { syncState: 'errored_syncing_users' });
   assert.ok(page.progressBar.displaysPercentage(percentForStep(7)), 'The progress bar has stopped at the current stage.');
+  assert.notOk(page.progressBar.isAnimated, 'Progress bar is not animated.');
+  assert.equal(page.progressText.text, 'An error occurred syncing GitHub users with Code Corps users. You can retry the sync now.', 'The progress text renders.');
+  assert.ok(page.spriteIcon.isUser, 'User icon renders.');
+
+  this.set('githubRepo', { syncState: 'errored_syncing_tasks' });
+  assert.ok(page.progressBar.displaysPercentage(percentForStep(8)), 'The progress bar has stopped at the current stage.');
   assert.notOk(page.progressBar.isAnimated, 'Progress bar is not animated.');
   assert.equal(page.progressText.text, 'An error occurred syncing your GitHub issues with your tasks. You can retry the sync now.', 'The progress text renders.');
   assert.ok(page.spriteIcon.isTasks, 'Tasks icon renders.');
 
-  this.set('projectGithubRepo', { syncState: 'errored_syncing_comments' });
-  assert.ok(page.progressBar.displaysPercentage(percentForStep(8)), 'The progress bar has stopped at the current stage.');
+  this.set('githubRepo', { syncState: 'errored_syncing_comments' });
+  assert.ok(page.progressBar.displaysPercentage(percentForStep(9)), 'The progress bar has stopped at the current stage.');
   assert.notOk(page.progressBar.isAnimated, 'Progress bar is not animated.');
   assert.equal(page.progressText.text, 'An error occurred syncing your GitHub comments with your comments. You can retry the sync now.', 'The progress text renders.');
   assert.ok(page.spriteIcon.isComments, 'Comments icon renders.');

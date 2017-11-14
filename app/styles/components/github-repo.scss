@@ -36,6 +36,22 @@
     }
   }
 
+  &__project {
+    align-items: center;
+    display: flex;
+
+    span {
+      align-items: center;
+      display: flex;
+      padding-left: 5px;
+    }
+
+    .icon {
+      height: 22px;
+      width: 22px;
+    }
+  }
+
   &:hover {
     background: $blue--lightest;
     border-left: 3px solid $blue;
@@ -48,7 +64,21 @@
     }
   }
 
-  &--connected {
+  &--belongs-to-other-project {
+    &:hover {
+      background: $gray--background;
+      border-left: 3px solid $gray;
+      cursor: default;
+    }
+
+    &:hover &__actions {
+      a {
+        color: $gray--darker;
+      }
+    }
+  }
+
+  &--belongs-to-project {
     .github-repo__name {
       color: $blue;
       font-weight: 600;

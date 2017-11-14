@@ -2,9 +2,9 @@ import { Model, belongsTo, hasMany } from 'ember-cli-mirage';
 
 export default Model.extend({
   donationGoals: hasMany('donation-goal'),
+  githubRepos: hasMany('github-repo'),
   organization: belongsTo(),
   projectCategories: hasMany('project-category'),
-  projectGithubRepos: hasMany('project-github-repo'),
   projectSkills: hasMany('project-skill'),
   projectUsers: hasMany('project-user'),
   stripeConnectPlan: belongsTo('stripe-connect-plan'),

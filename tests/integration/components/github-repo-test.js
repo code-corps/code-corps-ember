@@ -14,7 +14,6 @@ function renderPage() {
       disconnectRepo=disconnectRepoHandler
       githubRepo=githubRepo
       project=project
-      projectGithubRepo=projectGithubRepo
     }}
   `);
 }
@@ -33,69 +32,64 @@ test('it renders the github repo name', function(assert) {
   assert.expect(1);
   let githubRepo = { name: 'code-corps-ember', isLoaded: true };
   set(this, 'githubRepo', githubRepo);
-  set(this, 'projectGithubRepo', null);
   renderPage();
   assert.equal(page.name.text, 'code-corps-ember');
 });
 
-test('it changes state based on loading, presence of records', function(assert) {
-  assert.expect(4);
+test('it changes state based on loading, presence of record', function(assert) {
+  assert.expect(2);
 
   set(this, 'githubRepo', {});
 
   renderPage();
 
   run(() => set(this, 'githubRepo', { isLoaded: false }));
-  assert.ok(page.loading.isVisible, 'With github repo loading and no project github repo, state should be loading.');
+  assert.ok(page.loading.isVisible, 'With github repo loading, state should be loading.');
 
   run(() => set(this, 'githubRepo.isLoaded', true));
-  assert.ok(page.name.isVisible, 'With github repo loaded and no project github repo, state should be loaded.');
-
-  run(() => set(this, 'projectGithubRepo', { isLoaded: false }));
-  assert.ok(page.loading.isVisible, 'With project github repo loading, state should be loading.');
-
-  run(() => set(this, 'projectGithubRepo.isLoaded', true));
-  assert.ok(page.name.isVisible, 'With project github repo loaded, state should be loaded.');
+  assert.ok(page.name.isVisible, 'With github repo loaded, state should be loaded.');
 });
 
 test('it changes actions based on sync state and settings', function(assert) {
   assert.expect(7);
 
   let githubRepo = { name: 'code-corps-ember', isLoaded: true, syncState: 'unsynced' };
+  let project = { id: 1, isLoaded: true };
   set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
   renderPage();
 
-  assert.ok(page.actions.connect.text, 'Connect', 'Connect link renders.');
+  assert.equal(page.actions.connect.text, 'Connect', 'Connect link renders.');
 
-  run(() => set(this, 'githubRepo.syncState', 'fetching_comments'));
+  run(() => {
+    set(this, 'githubRepo.syncState', 'fetching_comments');
+    set(this, 'githubRepo.project', project);
+  });
+
   assert.notOk(page.actions.close.isVisible, 'Close link does not render while syncing.');
   assert.notOk(page.actions.connect.isVisible, 'Connect link does not render while syncing.');
   assert.notOk(page.actions.edit.isVisible, 'Edit link does not render while syncing.');
 
-  run(() => set(this, 'githubRepo.syncState', 'receiving_webhooks'));
-  let projectGithubRepo = { isLoaded: true, syncState: 'synced' };
-  run(() => set(this, 'projectGithubRepo', projectGithubRepo));
+  run(() => set(this, 'githubRepo.syncState', 'synced'));
 
-  assert.ok(page.actions.edit.text, 'Edit', 'Edit link renders.');
-
+  assert.ok(page.actions.edit.isVisible, 'Edit link renders.');
   page.click();
 
-  assert.ok(page.actions.close.text, 'Collapse', 'Collapse link renders.');
-
+  assert.ok(page.actions.close.isVisible, 'Collapse link renders.');
   page.click();
 
-  assert.ok(page.actions.edit.text, 'Edit', 'Edit link renders.');
+  assert.ok(page.actions.edit.isVisible, 'Edit link renders.');
 });
 
 test('it allows disconnecting', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
-  let githubRepo = { name: 'code-corps-ember', isLoaded: true, syncState: 'receiving_webhooks' };
-  let projectGithubRepo = { isLoaded: true, syncState: 'synced' };
+  let project = { id: 1, isLoaded: true };
+  let githubRepo = { name: 'code-corps-ember', isLoaded: true, project, syncState: 'synced' };
   set(this, 'githubRepo', githubRepo);
-  set(this, 'projectGithubRepo', projectGithubRepo);
-  set(this, 'disconnectRepoHandler', function(passedProjectRepo) {
-    assert.deepEqual(projectGithubRepo, passedProjectRepo);
+  set(this, 'project', project);
+  set(this, 'disconnectRepoHandler', function(passedRepo) {
+    assert.deepEqual(githubRepo, passedRepo);
   });
   renderPage();
 
@@ -103,6 +97,8 @@ test('it allows disconnecting', function(assert) {
   page.callout.repoDisconnectConfirmModal.openButton.click();
   page.callout.repoDisconnectConfirmModal.modal.input.fillIn(githubRepo.name);
   page.callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
+
+  assert.notOk(page.callout.isVisible, 'Callout has closed');
 });
 
 test('it allows connecting', function(assert) {
@@ -110,7 +106,6 @@ test('it allows connecting', function(assert) {
 
   let githubRepo = { name: 'code-corps-ember', isLoaded: true, syncState: 'unsynced' };
   set(this, 'githubRepo', githubRepo);
-  set(this, 'projectGithubRepo', null);
   set(this, 'connectRepoHandler', function(passedRepo) {
     assert.deepEqual(githubRepo, passedRepo);
   });
@@ -119,4 +114,105 @@ test('it allows connecting', function(assert) {
   page.click();
   assert.equal(page.callout.title.text, `Connect to ${githubRepo.name}`, 'Renders the callout title.');
   page.callout.button.click();
+});
+
+test('it works with repos connected to other projects properly', function(assert) {
+  assert.expect(6);
+
+  let githubRepo = {
+    name: 'code-corps-other',
+    isLoaded: true,
+    syncState: 'unsynced',
+    project: { id: 'other', title: 'CodeCorpsOther', isLoaded: true }
+  };
+
+  let project = { id: 'this', isLoaded: true };
+
+  set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
+
+  renderPage();
+
+  assert.notOk(page.actions.close.isVisible, 'Close link does not render for repo connected to other project.');
+  assert.notOk(page.actions.connect.isVisible, 'Connect link does not render for repo connected to other project.');
+  assert.notOk(page.actions.edit.isVisible, 'Edit link does not render for repo connected to other project.');
+  assert.ok(page.otherProject.isVisible, 'Other project info renders.');
+  assert.equal(page.otherProject.text, 'Connected to CodeCorpsOther', 'Other project info text renders correctly.');
+
+  run(() => set(this, 'githubRepo.syncState', 'fetching_issues'));
+
+  assert.notOk(page.repoSync.isVisible, 'Repo sync does not render for repo connected to other project.');
+});
+
+test('clicking disconnected repo expands the UI', function(assert) {
+  assert.expect(1);
+
+  let project = { id: 'foo', isLoaded: true };
+  let githubRepo = {
+    isLoaded: true,
+    project: null
+  };
+
+  set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
+  renderPage();
+  run(() => page.click());
+
+  assert.ok(page.callout.isVisible, 'Page did expand');
+});
+
+test('clicking fully synced repo connected to current project expands the UI', function(assert) {
+  assert.expect(1);
+
+  let project = { id: 'foo', isLoaded: true };
+  let githubRepo = {
+    isLoaded: true,
+    project,
+    syncState: 'synced'
+  };
+
+  set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
+  renderPage();
+
+  run(() => page.click());
+
+  assert.ok(page.callout.isVisible, 'Page did expand');
+});
+
+test('clicking repo connected to different project does nothing', function(assert) {
+  assert.expect(1);
+
+  let project = { id: 'foo', isLoaded: true };
+  let githubRepo = {
+    isLoaded: true,
+    project: { id: 'bar', isLoaded: true }
+  };
+
+  set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
+  renderPage();
+
+  run(() => page.click());
+
+  assert.notOk(page.callout.isVisible, 'Page did not expand');
+});
+
+test('clicking repo while syncing does nothing', function(assert) {
+  assert.expect(1);
+
+  let project = { id: 'foo', isLoaded: true };
+  let githubRepo = {
+    isLoaded: true,
+    project,
+    syncState: 'fetching_issues'
+  };
+
+  set(this, 'githubRepo', githubRepo);
+  set(this, 'project', project);
+  renderPage();
+
+  run(() => page.click());
+
+  assert.notOk(page.callout.isVisible, 'Page did not expand');
 });
