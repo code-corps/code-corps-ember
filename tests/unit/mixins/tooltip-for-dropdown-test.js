@@ -5,23 +5,57 @@ import { set } from '@ember/object';
 
 module('Unit | Mixin | tooltip for dropdown');
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test('default properties are set as expected', function(assert) {
+  assert.expect(2);
   let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
   let subject = TooltipForDropdownObject.create();
-  assert.ok(subject);
+  assert.equal(subject.dropdownOpen, false);
+  assert.equal(subject.tooltipShown, false);
 });
 
-test('mouseEnter dropdownOpen is true', function(assert) {
+test('when mouseEnter called and dropdownOpen is true', function(assert) {
+  assert.expect(1);
   let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
-  TooltipForDropdownObject.create();
-  set(this, 'dropdownOpen', true);
-  assert.equal(this.dropdownOpen, true);
+  let subject = TooltipForDropdownObject.create();
+  set(subject, 'dropdownOpen', true);
+  subject.mouseEnter();
+  assert.equal(subject.tooltipShown, false);
 });
 
-test('mouseEnter dropdownOpen is false', function(assert) {
+test('when mouseEnter called and dropdownOpen is false', function(assert) {
+  assert.expect(1);
   let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
-  TooltipForDropdownObject.create();
-  set(this, 'dropdownOpen', false);
-  assert.equal(this.dropdownOpen, false);
+  let subject = TooltipForDropdownObject.create();
+  set(subject, 'dropdownOpen', false);
+  subject.mouseEnter();
+  assert.equal(subject.tooltipShown, true);
+});
+
+test('when mouseLeave called', function(assert) {
+  assert.expect(1);
+  let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
+  let subject = TooltipForDropdownObject.create();
+  set(subject, 'tooltipShown', true);
+  subject.mouseLeave();
+  assert.equal(subject.tooltipShown, false);
+});
+
+test('when dropdownOpen changed to true', function(assert) {
+  assert.expect(1);
+  let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
+  let subject = TooltipForDropdownObject.create();
+  set(subject, 'dropdownOpen', false);
+  set(subject, 'tooltipShown', true);
+  set(subject, 'dropdownOpen', true);
+  assert.equal(subject.tooltipShown, false);
+});
+
+test('when dropdownOpen changed to false', function(assert) {
+  assert.expect(1);
+  let TooltipForDropdownObject = EmberObject.extend(TooltipForDropdownMixin);
+  let subject = TooltipForDropdownObject.create();
+  set(subject, 'dropdownOpen', true);
+  set(subject, 'tooltipShown', false);
+  set(subject, 'dropdownOpen', false);
+  assert.equal(subject.tooltipShown, null);
 });
