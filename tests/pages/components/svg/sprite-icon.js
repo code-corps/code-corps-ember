@@ -13,7 +13,8 @@ const ICONS = {
   githubRepo: 'github-repo-48',
   githubRepoClone: 'github-repo-clone-48',
   githubRepoPull: 'github-repo-pull-48',
-  tasks: 'tasks-48'
+  tasks: 'tasks-48',
+  user: 'user-48'
 };
 
 export default {
@@ -86,6 +87,13 @@ export default {
     isDescriptor: true,
     get() {
       return this.svg.use.xlinkHref.indexOf(ICONS.tasks) > -1;
+    }
+  },
+
+  isUser: {
+    isDescriptor: true,
+    get() {
+      return this.svg.use.xlinkHref.indexOf(ICONS.user) > -1;
     }
   },
 

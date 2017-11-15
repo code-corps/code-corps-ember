@@ -1,26 +1,36 @@
-import { computed, get, set } from '@ember/object';
-import { alias, notEmpty, or } from '@ember/object/computed';
+import { computed, get, getProperties, set } from '@ember/object';
+import { notEmpty } from '@ember/object/computed';
 import Component from '@ember/component';
 import RepoSyncProgressMixin from 'code-corps-ember/mixins/repo-sync-progress';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend(RepoSyncProgressMixin, {
   classNames: ['github-repo'],
-  classNameBindings: ['isConnected:github-repo--connected', 'showingSettings:github-repo--expanded'],
+  classNameBindings: [
+    'belongsToOtherProject:github-repo--belongs-to-other-project',
+    'belongsToProject:github-repo--belongs-to-project',
+    'isConnected:github-repo--connected',
+    'showingSettings:github-repo--expanded'
+  ],
   tagName: 'li',
 
   githubRepo: null,
   project: null,
-  projectGithubRepo: null,
   showSettings: false,
 
-  isConnected: notEmpty('projectGithubRepo'),
-  isLoading: alias('githubRepo.isLoading'),
-  name: alias('githubRepo.name'),
-  repoIcon: computed('isConnected', 'syncIncomplete', function() {
+  belongsToOtherProject: computed('githubRepo.project.id', 'project.id', function() {
+    let projectId = get(this, 'project.id');
+    let connectedProjectId = get(this, 'githubRepo.project.id');
+    return (connectedProjectId && (projectId !== connectedProjectId));
+  }),
+  belongsToProject: computed('githubRepo.project.id', 'project.id', function() {
+    return get(this, 'githubRepo.project.id') === get(this, 'project.id');
+  }),
+  isConnected: notEmpty('githubRepo.project.id'),
+  repoIcon: computed('isConnected', 'syncInProgress', function() {
     let isConnected = get(this, 'isConnected');
-    let syncIncomplete = get(this, 'syncIncomplete');
-    if (syncIncomplete) {
+    let syncInProgress = get(this, 'syncInProgress');
+    if (syncInProgress) {
       return 'github-repo-pull-48';
     } else if (isConnected) {
       return 'github-repo-clone-48';
@@ -28,49 +38,47 @@ export default Component.extend(RepoSyncProgressMixin, {
       return 'github-repo-48';
     }
   }),
-  showingSettings: or('syncIncomplete', 'showSettings'),
-  triggeredSync: alias('githubRepo.triggeredSync'),
 
   pollServerForChanges: task(function* () {
     let syncing = get(this, 'syncing');
     let syncComplete = get(this, 'syncComplete');
     let errored = get(this, 'errored');
-    let githubRepo = get(this, 'githubRepo');
-    let projectGithubRepo = get(this, 'projectGithubRepo');
-    let triggeredSync = get(this, 'triggeredSync');
-    if (!projectGithubRepo && !triggeredSync) {
+    let isConnected = get(this, 'isConnected');
+    if (!isConnected) {
       return;
     }
     while (syncing && !syncComplete && !errored) {
       yield timeout(2000);  // wait 2 seconds
-      if (githubRepo) {
+
+      let githubRepo = get(this, 'githubRepo');
+      let repoIsLoading = get(githubRepo, 'isLoading');
+
+      if (githubRepo && !repoIsLoading) {
         githubRepo.reload();
-      }
-      if (projectGithubRepo) {
-        projectGithubRepo.reload();
       }
     }
   }).on('didRender').cancelOn('willDestroyElement').restartable(),
 
   click() {
-    this.toggleProperty('showSettings');
+    let { belongsToProject, isConnected }
+      = getProperties(this, 'belongsToProject', 'isConnected');
+
+    if (!isConnected || (isConnected && belongsToProject)) {
+      this.toggleProperty('showSettings');
+    }
   },
 
   actions: {
     connectRepo(githubRepo, project) {
-      // Set the virtual attr used to decide if we should show sync progress
-      set(githubRepo, 'triggeredSync', true);
-
       // Send the action to connect
       this.sendAction('connectRepo', githubRepo, project);
     },
 
-    disconnectRepo(githubRepo, projectGithubRepo) {
-      // Unset the virtual attr used to decide if we should show sync progress
-      set(githubRepo, 'triggeredSync', false);
-
+    disconnectRepo(githubRepo) {
       // Send the action to disconnect
-      this.sendAction('disconnectRepo', projectGithubRepo);
+      this.sendAction('disconnectRepo', githubRepo);
+
+      set(this, 'showSettings', false);
     }
   }
 });

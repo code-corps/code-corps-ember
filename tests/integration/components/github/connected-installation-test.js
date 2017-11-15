@@ -49,24 +49,15 @@ const githubAppInstallation = {
   githubRepos: [connectedRepo, unconnectedRepo, loadingRepo]
 };
 
-const organizationGithubAppInstallation = { githubAppInstallation, organization };
-
 const organization = { name: 'Organization' };
 
-const projectGithubRepo = {
-  githubRepo: connectedRepo,
-  id: 'project-github-repo',
-  isLoaded: true,
-  syncState: 'synced',
-  belongsTo() {
-    return { id: () => 1 };
-  }
-};
+const organizationGithubAppInstallation = { githubAppInstallation, organization };
 
 const project = {
   id: 'project',
+  isLoaded:  true,
   organization,
-  projectGithubRepos: [projectGithubRepo]
+  githubRepos: [connectedRepo, unconnectedRepo, loadingRepo]
 };
 
 test('renders correct elements for provided github app installation', function(assert) {
@@ -86,10 +77,11 @@ test('renders correct elements for provided github app installation', function(a
   assert.ok(page.githubRepos(2).loading.isVisible, 'Repo is in loading state.');
 });
 
-test('triggers/passes out all actions action', function(assert) {
+test('triggers/passes out all actions', function(assert) {
   assert.expect(4);
 
   setProperties(this, { organizationGithubAppInstallation, project });
+  set(connectedRepo, 'project', project);
   setHandlers(this, {
     disconnect: () => {
       assert.ok('Disconnect handler was called.');
@@ -98,8 +90,8 @@ test('triggers/passes out all actions action', function(assert) {
       assert.equal(repo.id, 2, 'Correct repo was passed out on called action.');
       assert.equal(project.id, 'project', 'Correct project was passed out on called action.');
     },
-    disconnectRepo: (projectGithubRepo) => {
-      assert.equal(projectGithubRepo.id, 'project-github-repo', 'Correct repo was passed out on called action.');
+    disconnectRepo: (repo) => {
+      assert.equal(repo.id, 1, 'Correct repo was passed out on called action.');
     }
   });
 
