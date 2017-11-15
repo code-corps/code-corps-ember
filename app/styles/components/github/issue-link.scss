@@ -24,7 +24,8 @@
   }
 
   a:hover {
-    .github__issue-link__repo-name, .github__issue-link__issue-number {
+    .github__issue-link__repo-name,
+    .github__issue-link__issue-number {
       color: $link-hover-color;
     }
   }

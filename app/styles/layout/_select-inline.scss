@@ -34,6 +34,7 @@ $list-height: 220px;
     &__icon {
       border-style: solid;
       border-color: $icon-color;
+      color: $icon-color;
 
       svg {
         fill: url(#solid-dark-blue);
@@ -88,6 +89,7 @@ $list-height: 220px;
     &__icon {
       @include select-icon;
       align-items: center;
+      color: $gray;
       display: flex;
       justify-content: center;
     }
