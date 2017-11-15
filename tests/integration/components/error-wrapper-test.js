@@ -35,6 +35,26 @@ test('it renders all required elements for the 404 case', function(assert) {
   assert.notEqual($('html').css('background-color'), 'rgba(0, 0, 0, 0)', 'The html element does not have a white background');
 });
 
+test('it renders all required elements for the 503 case', function(assert) {
+  assert.expect(6);
+
+  let error = {
+    errors: [{
+      status: 503
+    }]
+  };
+
+  this.set('model', error);
+  page.render(hbs`{{error-wrapper error=model}}`);
+
+  assert.ok(page.hasMaintenanceIcon, 'The maintenance icon renders');
+  assert.equal(page.title, 'Down for maintenance', 'The title renders');
+  assert.equal(page.body, "We're currently conducting maintenance.", 'The body renders');
+  assert.equal(page.button.text, 'Go Home', 'The button renders');
+  assert.ok($('html').hasClass('warning'), 'The html element has the right class');
+  assert.notEqual($('html').css('background-color'), 'rgba(0, 0, 0, 0)', 'The html element does not have a white background');
+});
+
 test('it renders all required elements for the general error case', function(assert) {
   assert.expect(6);
 

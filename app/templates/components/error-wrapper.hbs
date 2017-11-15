@@ -7,6 +7,14 @@
       <p>
         {{#link-to 'index' class="button on-solid warning"}}Go Home{{/link-to}}
       </p>
+    {{else if is503}}
+      <div class="maintenance-icon">{{fa-icon "gears"}}</div>
+      <h1>Down for maintenance</h1>
+      <p>We're currently conducting maintenance.</p>
+      <p>Please try again shortly.</p>
+      <p>
+        {{#link-to 'index' class="button on-solid warning"}}Go Home{{/link-to}}
+      </p>
     {{else}}
       <div class="server-error-img"></div>
       <h1>Server Error</h1>

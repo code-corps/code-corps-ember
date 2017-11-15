@@ -31,6 +31,8 @@ export default Component.extend({
   errorClass: computed('is404', function() {
     if (this.get('is404')) {
       return 'warning';
+    } else if (this.get('is503')) {
+      return 'warning';
     } else {
       return 'danger';
     }
@@ -49,7 +51,7 @@ export default Component.extend({
     if (error && error.hasOwnProperty('errors')) {
       let { errors } = error;
       return errors.map(function(err) {
-        return err.status;
+        return parseInt(err.status);
       });
     } else {
       return [];
@@ -64,6 +66,17 @@ export default Component.extend({
   */
   is404: computed('httpStatusCodes', function() {
     return this.get('httpStatusCodes').includes(404);
+  }),
+
+  /**
+    Determines if an error is a 503 status or not.
+
+    @property is503
+    @type Boolean
+  */
+  is503: computed('httpStatusCodes', function() {
+    console.log(this.get('httpStatusCodes'));
+    return this.get('httpStatusCodes').includes(503);
   }),
 
   /**
