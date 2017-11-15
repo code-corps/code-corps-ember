@@ -45,10 +45,10 @@ jobs:
       - *restore_bower_components
       - run:
           name: Greenkeeper Lockfile
-          command: yarn global add greenkeeper-lockfile@1 
+          command: sudo yarn global add greenkeeper-lockfile@1 
       - run:
           name: Greenkeeper Lockfile update
-          command: greenkeeper-lockfile-update
+          command: sudo greenkeeper-lockfile-update
       - run:
           name: Install local dependencies
           command: yarn install && bower install
