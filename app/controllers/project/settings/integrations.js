@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { computed, get, getProperties } from '@ember/object';
+import { computed, get, getProperties, set } from '@ember/object';
 import { alias, mapBy } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -62,14 +62,13 @@ export default Controller.extend({
     },
 
     connectRepo(githubRepo, project) {
-      let projectGithubRepo = get(this, 'store').createRecord(
-        'project-github-repo', { project, githubRepo }
-      );
-      return projectGithubRepo.save();
+      set(githubRepo, 'project', project);
+      return githubRepo.save();
     },
 
-    disconnectRepo(projectGithubRepo) {
-      return projectGithubRepo.destroyRecord().then(() => {
+    disconnectRepo(githubRepo) {
+      set(githubRepo, 'project', null);
+      return githubRepo.save().then(() => {
         get(this, 'flashMessages').clearMessages().success('Your GitHub repository is no longer syncing.');
         window.scrollTo(0, 0);
       });

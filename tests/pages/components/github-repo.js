@@ -1,5 +1,5 @@
 import repoDisconnectConfirmModal from 'code-corps-ember/tests/pages/components/github/repo-disconnect-confirm-modal';
-
+import repoSync from 'code-corps-ember/tests/pages/components/github/repo-sync';
 export default {
   scope: '.github-repo',
 
@@ -17,6 +17,7 @@ export default {
     edit: {
       scope: '[data-test-open-repo-settings-edit]'
     }
+
   },
 
   callout: {
@@ -39,5 +40,11 @@ export default {
 
   name: {
     scope: '[data-test-github-repo-name]'
-  }
+  },
+
+  otherProject: {
+    scope: '[data-test-repo-project]'
+  },
+
+  repoSync
 };

@@ -16,13 +16,12 @@
 {{#if githubRepos}}
   <div class="github-app-installation__repos">
     <ul>
-      {{#each repos as |repoItem|}}
+      {{#each githubRepos as |githubRepo|}}
         {{github-repo
           connectRepo=(action connectRepo)
           disconnectRepo=(action disconnectRepo)
-          githubRepo=repoItem.githubRepo
+          githubRepo=githubRepo
           project=project
-          projectGithubRepo=repoItem.projectGithubRepo
         }}
       {{/each}}
     </ul>

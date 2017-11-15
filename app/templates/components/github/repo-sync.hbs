@@ -1,60 +1,66 @@
 {{progress-bar-container animated=syncing error=errored percentage=percentage}}
 <p data-test-text>
   {{#if errored}}
-    {{#if (eq repoState "errored_fetching_pull_requests")}}
+    {{#if (eq state "errored_fetching_pull_requests")}}
       {{svg/sprite-icon icon="github-pull-request-48" style="solid-red"}}
       <span>An error occurred fetching your pull requests. You can retry the sync now.</span>
-    {{else if (eq repoState "errored_syncing_github_pull_requests")}}
+    {{else if (eq state "errored_syncing_github_pull_requests")}}
       {{svg/sprite-icon icon="github-pull-request-48" style="solid-red"}}
       <span>An error occurred syncing your pull requests. You can retry the sync now.</span>
-    {{else if (eq repoState "errored_fetching_issues")}}
+    {{else if (eq state "errored_fetching_issues")}}
       {{svg/sprite-icon icon="github-issue-48" style="solid-red"}}
       <span>An error occurred fetching your issues. You can retry the sync now.</span>
-    {{else if (eq repoState "errored_syncing_github_issues")}}
+    {{else if (eq state "errored_syncing_github_issues")}}
       {{svg/sprite-icon icon="github-issue-48" style="solid-red"}}
       <span>An error occurred syncing your issues. You can retry the sync now.</span>
-    {{else if (eq repoState "errored_fetching_comments")}}
+    {{else if (eq state "errored_fetching_comments")}}
       {{svg/sprite-icon icon="github-comments-48" style="solid-red"}}
       <span>An error occurred fetching your comments. You can retry the sync now.</span>
-    {{else if (eq repoState "errored_syncing_github_comments")}}
+    {{else if (eq state "errored_syncing_github_comments")}}
       {{svg/sprite-icon icon="github-comments-48" style="solid-red"}}
       <span>An error occurred syncing your comments. You can retry the sync now.</span>
-    {{else if (eq projectRepoState "errored_syncing_tasks")}}
+    {{else if (eq state "errored_syncing_users")}}
+      {{svg/sprite-icon icon="user-48" style="solid-red"}}
+      <span>An error occurred syncing GitHub users with Code Corps users. You can retry the sync now.</span>
+    {{else if (eq state "errored_syncing_tasks")}}
       {{svg/sprite-icon icon="tasks-48" style="solid-red"}}
       <span>An error occurred syncing your GitHub issues with your tasks. You can retry the sync now.</span>
-    {{else if (eq projectRepoState "errored_syncing_comments")}}
+    {{else if (eq state "errored_syncing_comments")}}
       {{svg/sprite-icon icon="comments-48" style="solid-red"}}
       <span>An error occurred syncing your GitHub comments with your comments. You can retry the sync now.</span>
     {{/if}}
   {{else}}
-    {{#if (eq repoState "unsynced")}}
+    {{#if (eq state "unsynced")}}
       {{svg/sprite-icon icon="github-repo-pull-48" style="solid-light-gray"}}
       <span>Starting sync...</span>
-    {{else if (eq repoState "fetching_pull_requests")}}
+    {{else if (eq state "fetching_pull_requests")}}
       {{svg/sprite-icon icon="github-pull-request-48" style="solid-blue"}}
       <span>Fetching pull requests...</span>
-    {{else if (eq repoState "syncing_github_pull_requests")}}
+    {{else if (eq state "syncing_github_pull_requests")}}
       {{svg/sprite-icon icon="github-pull-request-48" style="solid-blue"}}
       <span>Syncing <strong>{{format-number githubRepo.syncingPullRequestsCount}}</strong> pull requests...</span>
-    {{else if (eq repoState "fetching_issues")}}
+    {{else if (eq state "fetching_issues")}}
       {{svg/sprite-icon icon="github-issue-48" style="solid-blue"}}
       <span>Fetching issues...</span>
-    {{else if (eq repoState "syncing_github_issues")}}
+    {{else if (eq state "syncing_github_issues")}}
       {{svg/sprite-icon icon="github-issue-48" style="solid-blue"}}
       <span>Syncing <strong>{{format-number githubRepo.syncingIssuesCount}}</strong> issues...</span>
-    {{else if (eq repoState "fetching_comments")}}
+    {{else if (eq state "fetching_comments")}}
       {{svg/sprite-icon icon="github-comments-48" style="solid-blue"}}
       <span>Fetching comments...</span>
-    {{else if (eq repoState "syncing_github_comments")}}
+    {{else if (eq state "syncing_github_comments")}}
       {{svg/sprite-icon icon="github-comments-48" style="solid-blue"}}
       <span>Syncing <strong>{{format-number githubRepo.syncingCommentsCount}}</strong> comments...</span>
-    {{else if (eq projectRepoState "syncing_tasks")}}
+    {{else if (eq state "syncing_users")}}
+      {{svg/sprite-icon icon="user-48" style="solid-blue"}}
+      <span>Syncing GitHub users with Code Corps users...</span>
+    {{else if (eq state "syncing_tasks")}}
       {{svg/sprite-icon icon="tasks-48" style="solid-blue"}}
       <span>Syncing your GitHub issues with your tasks...</span>
-    {{else if (eq projectRepoState "syncing_comments")}}
+    {{else if (eq state "syncing_comments")}}
       {{svg/sprite-icon icon="comments-48" style="solid-blue"}}
       <span>Syncing your GitHub comments with your comments...</span>
-    {{else if (eq projectRepoState "synced")}}
+    {{else if (eq state "synced")}}
       {{svg/sprite-icon icon="github-repo-clone-48" style="solid-blue"}}
       <span>Sync complete!</span>
     {{/if}}

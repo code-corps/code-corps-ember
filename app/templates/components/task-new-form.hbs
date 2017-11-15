@@ -41,7 +41,7 @@
       </div>
     </div>
   {{/if}}
-  {{#if hasGithubRepos}}
+  {{#if (and (not githubRepos.isLoading) hasGithubRepos)}}
     <div class="input-group">
       <div class="input-label">
         <label for="title">

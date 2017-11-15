@@ -182,6 +182,19 @@ export default function() {
 
   this.get('/github-repos', { coalesce: true });
   this.get('/github-repos/:id');
+  this.patch('/github-repos/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let { projectId } = attrs;
+    let githubRepo = schema.githubRepos.find(attrs.id);
+    if (projectId) {
+      // Simulate API syncing the repo
+      let project = schema.projects.find(projectId);
+      return githubRepo.update({ project, syncState: 'synced' });
+    } else {
+      // Simulate API disconnecting the repo and unsetting the state
+      return githubRepo.update({ project: null, syncState: 'unsynced' });
+    }
+  });
 
   /**
   * Organizations
@@ -275,23 +288,6 @@ export default function() {
   this.post('/project-categories');
   this.get('/project-categories/:id');
   this.delete('/project-categories/:id');
-
-  /**
-  * Project Github Repos
-  */
-
-  this.get('/project-github-repos', { coalesce: true });
-  this.post('/project-github-repos', function(schema) {
-    let attrs = this.normalizedRequestAttrs();
-    // Simulate API syncing both the repo and the project repo
-    let { githubRepoId } = attrs;
-    let githubRepo = schema.githubRepos.find(githubRepoId);
-    githubRepo.update({ syncState: 'receiving_webhooks' });
-    attrs.syncState = 'synced';
-    return schema.create('projectGithubRepo', attrs);
-  });
-  this.get('/project-github-repos/:id');
-  this.delete('/project-github-repos/:id');
 
   /**
   * Project skills

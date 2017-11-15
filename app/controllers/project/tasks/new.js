@@ -1,4 +1,4 @@
-import { mapBy } from '@ember/object/computed';
+import { alias } from '@ember/object/computed';
 import Controller from '@ember/controller';
 import RSVP from 'rsvp';
 import { set, get } from '@ember/object';
@@ -7,7 +7,7 @@ import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 export default Controller.extend({
   unsavedTaskSkills: [],
 
-  githubRepos: mapBy('task.project.projectGithubRepos', 'githubRepo'),
+  githubRepos: alias('task.project.githubRepos'),
 
   actions: {
     /**

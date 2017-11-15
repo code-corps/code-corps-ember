@@ -374,8 +374,7 @@ test('A github repo can be assigned to the task during creation', function(asser
   let { organization } = project;
   project.createTaskList({ inbox: true });
 
-  let githubRepo = server.create('githubRepo');
-  server.create('project-github-repo', { githubRepo, project });
+  let githubRepo = server.create('githubRepo', { project });
 
   authenticateSession(this.application, { user_id: user.id });
 

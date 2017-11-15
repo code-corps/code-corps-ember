@@ -233,13 +233,9 @@ export default function(server) {
     organization
   });
 
-  let githubRepo = server.create('github-repo', {
+  server.create('github-repo', {
     githubAppInstallation: connectedInstallation,
-    name: 'code-corps-api'
-  });
-
-  server.create('project-github-repo', {
-    githubRepo,
+    name: 'code-corps-api',
     project
   });
 

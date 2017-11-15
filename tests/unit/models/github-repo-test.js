@@ -7,7 +7,7 @@ moduleForModel('github-repo', 'Unit | Model | github-repo', {
   // Specify the other units that are required for this test.
   needs: [
     'model:github-app-installation',
-    'model:project-github-repo'
+    'model:project'
   ]
 });
 
@@ -33,3 +33,4 @@ testForAttributes('github-repo', [
 ]);
 
 testForBelongsTo('github-repo', 'githubAppInstallation');
+testForBelongsTo('github-repo', 'project');
