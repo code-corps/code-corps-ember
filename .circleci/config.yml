@@ -44,6 +44,12 @@ jobs:
       - *restore_node_modules
       - *restore_bower_components
       - run:
+          name: Greenkeeper Lockfile
+          command: yarn global add greenkeeper-lockfile@1 
+      - run:
+          name: Greenkeeper Lockfile update
+          command: greenkeeper-lockfile-update
+      - run:
           name: Install local dependencies
           command: yarn install && bower install
       - run:
@@ -78,6 +84,9 @@ jobs:
           root: .
           paths:
             - coverage_*
+      - run:
+          name: Greenkeeper Lockfile upload
+          command: greenkeeper-lockfile-upload
 
   report:
     <<: *defaults
