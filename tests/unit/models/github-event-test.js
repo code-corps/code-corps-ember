@@ -7,11 +7,13 @@ moduleForModel('github-event', 'Unit | Model | github event', {
 
 testForAttributes('github-event', [
   'action',
+  'error',
   'eventType',
   'failureReason',
   'githubDeliveryId',
   'insertedAt',
   'payload',
+  'recordData',
   'status',
   'updatedAt'
 ]);
