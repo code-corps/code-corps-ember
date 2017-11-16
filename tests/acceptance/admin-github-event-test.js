@@ -7,16 +7,18 @@ import moment from 'moment';
 moduleForAcceptance('Acceptance | Admin | GitHub Event | Show');
 
 test('Displays all the logged events', function(assert) {
-  assert.expect(8);
+  assert.expect(10);
 
   let user = server.create('user', { admin: true, id: 1 });
   let event = server.create('github-event', {
     action: 'labeled',
+    error: 'Error',
     eventType: 'pull_request',
     failureReason: 'not_fully_implemented',
     githubDeliveryId: '71aeab80-9e59-11e7-81ac-198364bececc',
     insertedAt: moment(),
     payload: JSON.parse('{"key": "value"}'),
+    recordData: 'Data',
     status: 'errored'
   });
 
@@ -33,5 +35,7 @@ test('Displays all the logged events', function(assert) {
     assert.equal(page.status.text, event.status);
     assert.equal(page.failureReason.text, event.failureReason);
     assert.equal(page.payload.text, '{ "key": "value" }');
+    assert.equal(page.error.text, event.error);
+    assert.equal(page.recordData.text, event.recordData);
   });
 });

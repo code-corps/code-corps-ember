@@ -1,10 +1,13 @@
 .error-wrapper {
-  width: 100%;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+
   color: white;
+  width: 100%;
 
   img {
-    width: 100%;
     border-radius: 6px;
+    width: 100%;
   }
 
   p {
@@ -17,16 +20,14 @@
 }
 
 .center-pseudo {
-  display:inline-block;
-  text-align:center;
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+}
 
-  &::before{
-    content:'';
-    display:inline-block;
-    height:100%;
-    vertical-align:middle;
-    width:0px;
-  }
+.maintenance-icon {
+  font-size: 72px;
 }
 
 .not-found-img {
