@@ -17,6 +17,7 @@ export default {
   clickLink: clickable('a'),
 
   has404Image: isVisible('.not-found-img'),
+  hasMaintenanceIcon: isVisible('.maintenance-icon'),
   hasServerErrorImage: isVisible('.server-error-img'),
 
   title: text('h1')
