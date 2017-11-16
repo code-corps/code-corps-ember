@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-import { set, get } from '@ember/object';
+import { set } from '@ember/object';
 import unselectedItemComponent from 'code-corps-ember/tests/pages/unselected-item.js';
 
 let page = PageObject.create(unselectedItemComponent);
@@ -36,6 +36,7 @@ test('mouseEnter hovers and tooltipShown', function(assert) {
   assert.ok(page.unselectedIcon.isVisable, 'the user icon renders');
   page.mouseenter(); // trigger the tooltip
   assert.ok(page.isTooltipTarget, 'There is a tooltip.');
+  assert.equal(page.dropdownOpen, false, 'Dropdown is not open.'),
   assert.equal(page.tooltip.text, 'Assign this task', 'The tooltip renders with text.');
   page.mouseleave();// hide the tooltip
   assert.ok(page.tooltip.isHidden);
