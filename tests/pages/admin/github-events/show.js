@@ -3,6 +3,10 @@ import { create, visitable } from 'ember-cli-page-object';
 export default create({
   visit: visitable('/admin/github/events/:id'),
 
+  error: {
+    scope: '[data-test-error]'
+  },
+
   eventTitle: {
     scope: '[data-test-event-title]'
   },
@@ -17,6 +21,10 @@ export default create({
 
   payload: {
     scope: '[data-test-payload]'
+  },
+
+  recordData: {
+    scope: '[data-test-record-data]'
   },
 
   status: {

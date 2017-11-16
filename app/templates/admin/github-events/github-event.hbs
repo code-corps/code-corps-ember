@@ -18,3 +18,19 @@
   {{code-theme-selector}}
   <pre data-test-payload>{{model.prettyPayload}}</pre>
 </div>
+
+{{#if model.error}}
+  <div>
+    <h4>Error</h4>
+    <p>The error that prevented the webhook from syncing.</p>
+    <pre data-test-error>{{model.error}}</pre>
+  </div>
+{{/if}}
+
+{{#if model.recordData}}
+  <div>
+    <h4>Data</h4>
+    <p>The record's data prior to the sync attempt.</p>
+    <pre data-test-record-data>{{model.recordData}}</pre>
+  </div>
+{{/if}}
