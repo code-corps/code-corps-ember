@@ -1,4 +1,4 @@
-import { create, visitable } from 'ember-cli-page-object';
+import { collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
   visit: visitable('/admin/github/events/:id'),
@@ -15,6 +15,10 @@ export default create({
     scope: '[data-test-failure-reason]'
   },
 
+  flashMessages: collection({
+    itemScope: '.flash > div'
+  }),
+
   githubDeliveryId: {
     scope: '[data-test-github-delivery-id]'
   },
@@ -25,6 +29,10 @@ export default create({
 
   recordData: {
     scope: '[data-test-record-data]'
+  },
+
+  retryButton: {
+    scope: 'button'
   },
 
   status: {

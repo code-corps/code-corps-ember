@@ -14,6 +14,8 @@ export default Model.extend({
   status: attr(),
   updatedAt: attr('date'),
 
+  retry: attr(), // virtual attr
+
   prettyPayload: computed('payload', function() {
     let payload = get(this, 'payload');
     return JSON.stringify(payload, null, 2);

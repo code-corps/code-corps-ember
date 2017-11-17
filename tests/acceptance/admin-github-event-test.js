@@ -7,7 +7,7 @@ import moment from 'moment';
 moduleForAcceptance('Acceptance | Admin | GitHub Event | Show');
 
 test('Displays all the logged events', function(assert) {
-  assert.expect(10);
+  assert.expect(12);
 
   let user = server.create('user', { admin: true, id: 1 });
   let event = server.create('github-event', {
@@ -37,5 +37,11 @@ test('Displays all the logged events', function(assert) {
     assert.equal(page.payload.text, '{ "key": "value" }');
     assert.equal(page.error.text, event.error);
     assert.equal(page.recordData.text, event.recordData);
+    page.retryButton.click();
+  });
+
+  andThen(function() {
+    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.status.text, 'reprocessing', 'The event status changes');
   });
 });
