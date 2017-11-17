@@ -25,6 +25,8 @@
         loadingMessage=""
         matchTriggerWidth=false
         onchange=(action "changeUser")
+        onclose=(action "closeDropdown")
+        onopen=(action "openDropdown")
         options=userOptions
         placeholderComponent=(component "task-card/user/unselected-item" click=(action "stopClickPropagation") task=task)
         registerAPI=(action (mut selectRemoteController))

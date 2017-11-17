@@ -6,7 +6,8 @@ moduleForComponent(
   'power-select/before-task-options',
   'Unit | Component | power select before task options',
   {
-    unit: true
+    unit: true,
+    needs: ['service:keyboard']
   }
 );
 

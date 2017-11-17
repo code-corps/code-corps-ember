@@ -337,7 +337,7 @@ test('it does not archive task when not hovering and pressing C key', function(a
       return this;
     },
     then() {
-      assert.notOk(true);
+      assert.notOk(true, 'The task should not be archived.');
     }
   };
 
@@ -349,6 +349,47 @@ test('it does not archive task when not hovering and pressing C key', function(a
 
   page.triggerKeyDown('KeyC');
   assert.ok(true);
+});
+
+test('it does not archive task when assigning a user and pressing C key', function(assert) {
+  assert.expect(2);
+
+  let user = { id: 'user', username: 'testuser1' };
+  let users = [user];
+
+  stubService(this, 'task-assignment', {
+    isAssignedTo() {
+      return RSVP.resolve(false);
+    }
+  });
+
+  let task = {
+    archived: false,
+    isLoading: false,
+    save() {
+      return this;
+    },
+    then() {
+      assert.ok(true, 'Task is only archived once.');
+    }
+  };
+
+  setProperties(this, { task, users });
+  this.register('ability:task', Ability.extend({ canArchive: true, canAssign: true }));
+  set(this, 'keyboardActivated', true); // manually activate the keyboard
+
+  renderPage();
+
+  // Hover, open the dropdown, press C key
+  page.mouseenter();
+  page.taskAssignment.select.trigger.open();
+  page.triggerKeyDown('KeyC');
+
+  // Close the dropdown, press C key
+  page.taskAssignment.select.trigger.close();
+  page.triggerKeyDown('KeyC');
+
+  assert.notOk(page.taskAssignment.select.trigger.activeElement, 'The trigger does not have focus after closing');
 });
 
 test('it does not archive task when left hovering and pressing C key', function(assert) {
