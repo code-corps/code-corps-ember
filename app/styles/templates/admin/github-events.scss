@@ -39,6 +39,12 @@
   width: 100%;
 }
 
+code.errored {
+  background: $red !important;
+  color: white !important;
+  padding: 2px 4px !important;
+}
+
 .log-row {
   color: #525f7f;
   display: table-row;
@@ -48,12 +54,6 @@
   code {
     background: none;
     font-size: $body-font-size-small;
-
-    &.errored {
-      background: $red;
-      color: white;
-      padding: 2px 4px;
-    }
   }
 
   &--header {
@@ -96,4 +96,23 @@
 .log-pagination {
   margin: 1em 0;
   text-align: right;
+}
+
+.github-event__title {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0 0 0;
+
+  h4 {
+    margin: 0;
+  }
+
+  > span {
+    align-items: center;
+    display: inline-flex;
+
+    > span {
+      padding-left: 10px;
+    }
+  }
 }

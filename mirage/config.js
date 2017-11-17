@@ -161,6 +161,32 @@ export default function() {
     return paginate(items, '/github-events', request.queryParams);
   });
   this.get('/github-events/:id');
+  this.patch('/github-events/:id', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let { retry } = attrs;
+    let githubEvent = schema.githubEvents.find(attrs.id);
+    if (retry) {
+      // Simulate API retrying the event
+      return githubEvent.update({ status: 'reprocessing' });
+    } else {
+      // Simulate API failing to retry the event
+      return new Mirage.Response(422, {}, {
+        errors: [
+          {
+            detail: 'Retry must be accepted',
+            source: {
+              pointer: '/data/attributes/retry'
+            },
+            status: '422',
+            title: 'retry must be accepted'
+          }
+        ],
+        jsonapi: {
+          version: '1.0'
+        }
+      });
+    }
+  });
 
   /**
   * Github Issues
