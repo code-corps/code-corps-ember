@@ -145,6 +145,10 @@
     @include shake;
   }
 
+  .fa {
+    padding-right: 5px;
+  }
+
   span {
     &.check-area, &.check-mark, &.x-mark {
       display: inline-block;

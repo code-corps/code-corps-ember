@@ -7,15 +7,24 @@
   <h4>Summary</h4>
   <div>ID <code data-test-github-delivery-id>{{model.githubDeliveryId}}</code></div>
   <div>Time <span data-test-time>{{moment-format model.insertedAt 'MM/DD/YYYY hh:mm:ss'}}</span></div>
-  <div>Status <code data-test-status>{{model.status}}</code></div>
+  <div>Status <code data-test-status class="{{model.status}}">{{model.status}}</code></div>
   {{#if model.failureReason}}
     <div>Failure reason <code data-test-failure-reason>{{model.failureReason}}</code></div>
   {{/if}}
 </div>
 
 <div>
-  <h4>Payload</h4>
-  {{code-theme-selector}}
+  <div class="github-event__title">
+    <span>
+      <h4>Payload</h4>
+      <span>{{code-theme-selector}}</span>
+    </span>
+    <span>
+      {{#if (eq model.status "errored")}}
+        <button class="button clear small" {{action "retry"}}>{{fa-icon "refresh"}} Retry event</button>
+      {{/if}}
+    </span>
+  </div>
   <pre data-test-payload>{{model.prettyPayload}}</pre>
 </div>
 

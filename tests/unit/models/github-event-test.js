@@ -14,6 +14,7 @@ testForAttributes('github-event', [
   'insertedAt',
   'payload',
   'recordData',
+  'retry',
   'status',
   'updatedAt'
 ]);
