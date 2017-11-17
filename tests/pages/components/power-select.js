@@ -20,6 +20,9 @@ export default {
   dropdown: {
     resetScope: true,
     testContainer: '.ember-power-select-dropdown',
+    input: {
+      scope: 'input'
+    },
     options: collection({
       itemScope: '.ember-power-select-option',
       item: {
@@ -43,6 +46,7 @@ export default {
         return !this.unassigned;
       }
     },
+    close: clickTrigger,
     open: clickTrigger,
     unassigned: {
       isDescriptor: true,

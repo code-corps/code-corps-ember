@@ -20,6 +20,7 @@ export default Component.extend(EmberKeyboardMixin, {
   store: service(),
 
   bound: false,
+  editingDetails: false,
   hasHovered: false,
   hovering: false,
   shouldShowUsers: false,
@@ -66,6 +67,14 @@ export default Component.extend(EmberKeyboardMixin, {
     this.$().trigger('mouseleave');
   },
 
+  assignmentClosed() {
+    set(this, 'editingDetails', false);
+  },
+
+  assignmentOpened() {
+    set(this, 'editingDetails', true);
+  },
+
   click(e) {
     if (e.target instanceof SVGElement) {
       return;
@@ -98,8 +107,9 @@ export default Component.extend(EmberKeyboardMixin, {
 
   triggerArchive: on(keyDown('KeyC'), function() {
     let hovering = get(this, 'hovering');
+    let editingDetails = get(this, 'editingDetails');
     let canArchive = get(this, 'canArchive');
-    if (hovering && canArchive) {
+    if (hovering && !editingDetails && canArchive) {
       get(this, 'archiveTask').perform();
     }
   })

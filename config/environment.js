@@ -26,8 +26,8 @@ module.exports = function(environment) {
 
     cloudinary: {},
 
-    github: {
-      scope: 'public_repo,admin:org,user:email'
+    emberKeyboard: {
+      propagation: true
     },
 
     flashMessageDefaults: {
@@ -45,6 +45,10 @@ module.exports = function(environment) {
       // since that's the new Ember convention
       injectionFactories: [],
       preventDuplicates: true
+    },
+
+    github: {
+      scope: 'public_repo,admin:org,user:email'
     },
 
     i18n: {

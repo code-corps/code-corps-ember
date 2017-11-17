@@ -3454,11 +3454,11 @@ ember-k-codemod@^0.1.0:
     glob "^7.1.1"
     jscodeshift "^0.3.29"
 
-ember-keyboard@^2.1.9:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-2.2.0.tgz#2632fec5c13dd01be0f74d626a2fd71de65f3294"
+ember-keyboard@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-2.3.0.tgz#6a210ccfc3ad8ca19e73cbef291ed2a0afd08ad0"
   dependencies:
-    ember-cli-babel "^6.3.0"
+    ember-cli-babel "^6.8.2"
 
 ember-link-action@^0.0.36:
   version "0.0.36"

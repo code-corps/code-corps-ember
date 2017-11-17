@@ -37,6 +37,8 @@
   </p>
   {{task-assignment
     deferredRendering=(not hasHovered)
+    onclose=(action assignmentClosed)
+    onopen=(action assignmentOpened)
     task=task
     taskUser=taskUser
     users=users

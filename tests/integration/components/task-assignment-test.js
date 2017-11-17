@@ -7,6 +7,8 @@ import taskAssignmentComponent from 'code-corps-ember/tests/pages/components/tas
 import { Ability } from 'ember-can';
 import DS from 'ember-data';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
+import wait from 'ember-test-helpers/wait';
+import { initialize as initializeKeyboard } from 'ember-keyboard';
 
 const { PromiseObject } = DS;
 
@@ -25,6 +27,7 @@ function renderPage() {
 moduleForComponent('task-assignment', 'Integration | Component | task assignment', {
   integration: true,
   beforeEach() {
+    initializeKeyboard();
     page.setContext(this);
     this.register('ability:task', Ability.extend({ canReposition: true }));
   },
@@ -236,5 +239,41 @@ test('when rendering is deffered and user does not have ability and there is an 
   assert.notOk(page.unselectedItem.isVisible, 'Unselected item does not render.');
   page.assignedUser.as((user) => {
     assert.equal(user.icon.url, 'test.png');
+  });
+});
+
+test('assignment dropdown typeahead', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  let task = { id: 'task' };
+  let user1 = { id: 'user1', username: 'testuser1' };
+  let user2 = { id: 'user2', username: 'testuser2' };
+  let users = [user1, user2];
+
+  setProperties(this, { task, users });
+
+  stubService(this, 'task-assignment', {
+    isAssignedTo() {
+      return RSVP.resolve(false);
+    }
+  });
+  stubService(this, 'store', {
+    query(type, queryParams) {
+      assert.deepEqual(queryParams, { query: 'testuser2' });
+      return RSVP.resolve([user2]);
+    }
+  });
+
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+
+  page.select.trigger.open();
+  page.select.dropdown.input.fillIn('testuser2');
+
+  wait().then(() => {
+    assert.equal(page.select.dropdown.options(0).text, 'testuser2', 'Only the second user is rendered.');
+    done();
   });
 });
