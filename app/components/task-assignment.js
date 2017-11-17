@@ -1,14 +1,18 @@
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
+import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { set, getProperties, computed } from '@ember/object';
 import EmberCan from 'ember-can';
 import createTaskUserOptions from 'code-corps-ember/utils/create-task-user-options';
 
+const TRIGGER_CLASS = '.ember-power-select-trigger';
+
 export default Component.extend({
   classNames: ['task-assignment'],
 
   currentUser: service(),
+  store: service(),
   taskAssignment: service(),
 
   deferredRendering: null,
@@ -65,6 +69,15 @@ export default Component.extend({
       } else {
         return taskAssignment.unassign(task);
       }
+    },
+
+    closeDropdown() {
+      this.sendAction('onclose');
+      run.next(() => this.$(TRIGGER_CLASS).trigger('blur'));
+    },
+
+    openDropdown() {
+      this.sendAction('onopen');
     },
 
     searchUsers(query) {
