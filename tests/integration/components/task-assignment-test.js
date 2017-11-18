@@ -17,6 +17,7 @@ let page = PageObject.create(taskAssignmentComponent);
 function renderPage() {
   page.render(hbs`
     {{task-assignment
+      canTriggerAssignment=canTriggerAssignment
       deferredRendering=deferredRendering
       task=task
       taskUser=taskUser
@@ -276,4 +277,92 @@ test('assignment dropdown typeahead', function(assert) {
     assert.equal(page.select.dropdown.options(0).text, 'testuser2', 'Only the second user is rendered.');
     done();
   });
+});
+
+test('pressing Space assigns self to task when able', function(assert) {
+  let done = assert.async();
+  assert.expect(2);
+
+  let canTriggerAssignment = true;
+  let task = { id: 'task' };
+  let user = { id: 'user', username: 'testuser' };
+  let users = [user];
+
+  setProperties(this, { canTriggerAssignment, task, users });
+
+  stubService(this, 'current-user', { user });
+
+  stubService(this, 'task-assignment', {
+    assign(sentTask, sentUser) {
+      assert.deepEqual(sentTask, task, 'Correct task was sent.');
+      assert.deepEqual(sentUser, user, 'Correct user was sent.');
+      done();
+      return RSVP.resolve();
+    }
+  });
+
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+
+  page.triggerKeyDown('Space');
+});
+
+test('pressing Space unassigns self from task when able', function(assert) {
+  let done = assert.async();
+  assert.expect(1);
+
+  let canTriggerAssignment = true;
+  let task = { id: 'task' };
+  let user = { id: 'user', username: 'testuser' };
+  let users = [user];
+  let taskUser = user;
+
+  setProperties(this, { canTriggerAssignment, task, taskUser, users });
+
+  stubService(this, 'current-user', { user });
+
+  stubService(this, 'task-assignment', {
+    unassign(sentTask) {
+      assert.deepEqual(sentTask, task, 'Correct task was sent.');
+      done();
+      return RSVP.resolve();
+    }
+  });
+
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+
+  page.triggerKeyDown('Space');
+});
+
+test('pressing A when the user has ability', function(assert) {
+  assert.expect(2);
+
+  let canTriggerAssignment = true;
+  let task = { id: 'task' };
+  setProperties(this, { canTriggerAssignment, task });
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+
+  page.triggerKeyDown('KeyA');
+  assert.ok(page.select.dropdown.isVisible, 'Dropdown renders.');
+  page.triggerKeyDown('KeyA');
+  assert.ok(page.select.dropdown.isVisible, 'Dropdown stays rendered.');
+});
+
+test('pressing A when the user does not have ability', function(assert) {
+  assert.expect(1);
+
+  let canTriggerAssignment = true;
+  let task = { id: 'task' };
+  setProperties(this, { canTriggerAssignment, task });
+  this.register('ability:task', Ability.extend({ canAssign: false }));
+
+  renderPage();
+
+  page.triggerKeyDown('KeyA');
+  assert.notOk(page.select.dropdown.isVisible, 'Dropdown does not render.');
 });
