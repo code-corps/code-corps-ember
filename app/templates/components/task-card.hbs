@@ -36,6 +36,7 @@
     </span>
   </p>
   {{task-assignment
+    canTriggerAssignment=hovering
     deferredRendering=(not hasHovered)
     onclose=(action assignmentClosed)
     onopen=(action assignmentOpened)
