@@ -8,6 +8,7 @@ export default create({
   visit: visitable('/admin'),
 
   flashMessages: collection({
-    itemScope: '.flash > div'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message'
   })
 });

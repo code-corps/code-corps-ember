@@ -3,11 +3,11 @@ import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/flash-messages';
+import component from 'code-corps-ember/tests/pages/components/flash-messages/fixed-position';
 
 let page = PageObject.create(component);
 
-moduleForComponent('flash-messages', 'Integration | Component | flash messages', {
+moduleForComponent('flash-messages/fixed-position', 'Integration | Component | flash messages/fixed position', {
   integration: true,
   beforeEach() {
     page.setContext(this);
@@ -18,7 +18,7 @@ moduleForComponent('flash-messages', 'Integration | Component | flash messages',
 });
 
 test('it renders a fixed error message', function(assert) {
-  page.render(hbs`{{flash-messages}}`);
+  page.render(hbs`{{flash-messages/fixed-position}}`);
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({
@@ -30,18 +30,5 @@ test('it renders a fixed error message', function(assert) {
     });
   });
 
-  assert.equal(page.fixed.message, 'Error message');
-});
-
-test('it renders a normal success message', function(assert) {
-  page.render(hbs`{{flash-messages}}`);
-
-  run(() => {
-    getOwner(this).lookup('service:flash-messages').add({
-      message: 'Success message',
-      type: 'success'
-    });
-  });
-
-  assert.equal(page.normal.message, 'Success message');
+  assert.equal(page.message, 'Error message');
 });

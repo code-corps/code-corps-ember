@@ -3,12 +3,14 @@ import { attribute, collection, create, visitable } from 'ember-cli-page-object'
 export default create({
   visit: visitable('/admin/projects'),
 
-  flashMessages: collection({
-    itemScope: '.flash > div'
+  flashErrors: collection({
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message.alert-danger'
   }),
 
-  flashErrors: collection({
-    itemScope: '.flash >div.alert-danger'
+  flashMessages: collection({
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message'
   }),
 
   items: collection({

@@ -16,6 +16,7 @@ export default Component.extend(EmberKeyboardMixin, {
   classNameBindings: ['canReposition:task-card--can-reposition', 'isLoading:task-card--is-loading'],
   tagName: 'div',
 
+  flashMessages: service(),
   session: service(),
   store: service(),
 
@@ -55,6 +56,10 @@ export default Component.extend(EmberKeyboardMixin, {
     set(task, 'archived', true);
     let next = this.$().next(); // get the next sibling
     yield task.save().then(() => {
+      let options = { fixed: true, icon: 'archive', sticky: false, timeout: 5000 };
+      let message = `Archived <strong>${get(task, 'title')}</strong>`;
+      get(this, 'flashMessages').success(message, options);
+
       // trigger a mouseenter since the mouse doesn't update without the user
       if (next) {
         next.trigger('mouseenter');

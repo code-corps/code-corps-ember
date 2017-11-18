@@ -4,7 +4,8 @@ export default create({
   visit: visitable('/admin/github/events'),
 
   flashErrors: collection({
-    itemScope: '.flash > div.alert-danger'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message.alert-danger'
   }),
 
   logItems: collection({
