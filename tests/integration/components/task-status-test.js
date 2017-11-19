@@ -16,23 +16,25 @@ moduleForComponent('task-status', 'Integration | Component | task status', {
 });
 
 test('it renders closed status', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   let task = { status: 'closed' };
   this.set('task', task);
   page.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isClosed);
+  assert.ok(page.iconClosed.isVisible);
   assert.equal(page.statusText, 'Closed');
 });
 
 test('it renders open status', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   let task = { status: 'open' };
   this.set('task', task);
   page.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isOpen);
+  assert.ok(page.iconOpen.isVisible);
   assert.equal(page.statusText, 'Open');
 });
