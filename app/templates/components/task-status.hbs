@@ -1,1 +1,9 @@
-<div class="task-status {{status}}">{{capitalize status}}</div>
+<div class="task-status {{status}}">
+  {{#if (eq status "open")}}
+    {{fa-icon data-test-open-icon "circle-o"}}
+  {{/if}}
+  {{#if (eq status "closed")}}
+    {{fa-icon data-test-closed-icon "times-circle"}}
+  {{/if}}
+  {{capitalize status}}
+</div>

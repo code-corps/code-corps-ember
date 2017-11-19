@@ -8,29 +8,19 @@
   border-radius: 4px;
   color: white;
   float: left;
-  padding: 5px 8px;
+  padding: 4px 8px;
 
-  &:before {
-    content: "";
-    display: inline-block;
-    margin: 0 8px -4px 0;
-    height: 20px;
-    width: 20px;
+  .fa {
+    font-size: 18px;
+    padding-right: 2px;
+    vertical-align: text-bottom;
   }
 
   &.closed {
     background: $red;
-
-    &:before {
-      @include sprite($closed-white);
-    }
   }
 
   &.open {
     background: $blue;
-
-    &:before {
-      @include sprite($open-white);
-    }
   }
 }

@@ -48,7 +48,7 @@ test('it renders with text and no tooltip when large', function(assert) {
 
   renderPage();
 
-  assert.equal(page.repoName.text, 'code-corps-ember', 'The repo name renders.');
+  assert.equal(page.repoName.text, 'code-corps/code-corps-ember', 'The full repo name renders.');
   assert.equal(page.issueNumber.text, '#123', 'The issue number renders.');
   assert.notOk(page.isTooltipTarget, 'There is no tooltip.');
 });
