@@ -5,7 +5,7 @@
         {{svg/sprite-icon icon="github-48"}}
       </span>
       <span class="github__issue-link__text">
-        <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.name}}</span>
+        <span class="github__issue-link__repo-name" data-test-repo-name>{{githubRepo.githubAccountLogin}}/{{githubRepo.name}}</span>
         <span class="github__issue-link__issue-number" data-test-issue-number>#{{githubIssue.number}}</span>
       </span>
     {{else if (eq size "small")}}
