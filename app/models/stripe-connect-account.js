@@ -3,10 +3,10 @@ import attr from 'ember-data/attr';
 import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
-  bankAccountStatus: attr(),
   bankAccountBankName: attr(),
   bankAccountLast4: attr(),
   bankAccountRoutingNumber: attr(),
+  bankAccountStatus: attr(),
   businessName: attr(),
   businessUrl: attr(),
   canAcceptDonations: attr(),
@@ -53,14 +53,14 @@ export default Model.extend({
   legalEntityVerificationDocument: attr(),
   legalEntityVerificationStatus: attr(),
   idFromStripe: attr(),
-  managed: attr(),
+  payoutsEnabled: attr(),
   personalIdNumberStatus: attr(),
   recipientStatus: attr(),
   supportEmail: attr(),
   supportPhone: attr(),
   supportUrl: attr(),
   tosAcceptanceDate: attr(),
-  transfersEnabled: attr(),
+  type: attr(),
   updatedAt: attr(),
   verificationDisabledReason: attr(),
   verificationDocumentStatus: attr(),

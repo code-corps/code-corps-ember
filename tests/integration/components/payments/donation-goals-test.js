@@ -10,8 +10,8 @@ let page = PageObject.create(paymentsDonationGoalsComponent);
 function renderPage() {
   page.render(hbs`
     {{payments/donation-goals
-      donationsActive=donationsActive
-      transfersEnabled=transfersEnabled
+      project=project
+      stripeConnectAccount=stripeConnectAccount
     }}
   `);
 }
@@ -36,8 +36,8 @@ test('it renders correctly when pending requirement', function(assert) {
 
 test('it renders correctly when required', function(assert) {
   assert.expect(3);
-  set(this, 'donationsActive', false);
-  set(this, 'transfersEnabled', true);
+  set(this, 'project', { donationsActive: false });
+  set(this, 'stripeConnectAccount', { payoutsEnabled: true });
   renderPage();
   assert.ok(page.rendersHeader, 'Renders header');
   assert.ok(page.hasRequiredStatus, 'Is required');
@@ -46,8 +46,8 @@ test('it renders correctly when required', function(assert) {
 
 test('it renders correctly when verified', function(assert) {
   assert.expect(3);
-  set(this, 'donationsActive', true);
-  set(this, 'transfersEnabled', true);
+  set(this, 'project', { donationsActive: true });
+  set(this, 'stripeConnectAccount', { payoutsEnabled: true });
   renderPage();
   assert.ok(page.rendersHeader, 'Renders header');
   assert.ok(page.hasVerifiedStatus, 'Is verified');
@@ -56,8 +56,8 @@ test('it renders correctly when verified', function(assert) {
 
 test('it renders a link to set up donation goals when possible', function(assert) {
   assert.expect(1);
-  set(this, 'transfersEnabled', true);
-  set(this, 'project', { canActivateDonations: true });
+  set(this, 'project', { canActivateDonations: true, donationsActive: false });
+  set(this, 'stripeConnectAccount', { payoutsEnabled: true });
   renderPage();
   assert.ok(page.rendersLinkToDonationGoals, 'Renders link to donation goals.');
 });

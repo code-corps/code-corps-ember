@@ -2,6 +2,7 @@
   country='US'
   isBusy=isBusy
   onCreateStripeConnectAccount=(action onCreateStripeConnectAccount)
+  project=project
   stripeConnectAccount=stripeConnectAccount
 }}
 
@@ -20,7 +21,6 @@
 }}
 
 {{payments/donation-goals
-  donationsActive=project.donationsActive
   project=project
-  transfersEnabled=stripeConnectAccount.transfersEnabled
+  stripeConnectAccount=stripeConnectAccount
 }}
