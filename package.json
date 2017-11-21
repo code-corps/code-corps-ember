@@ -75,7 +75,7 @@
     "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-metrics": "code-corps/ember-metrics#add-context-to-segment-adapter",
-    "ember-modal-dialog": "2.3.0",
+    "ember-modal-dialog": "2.4.0",
     "ember-moment": "^7.4.1",
     "ember-normalize": "1.0.0",
     "ember-page-title": "3.2.0",
