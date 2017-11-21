@@ -24,7 +24,21 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('task', ['archived', 'body', 'createdAt', 'createdFrom', 'markdown', 'number', 'order', 'position', 'status', 'title', 'updatedAt']);
+testForAttributes('task', [
+  'archived',
+  'body',
+  'createdAt',
+  'createdFrom',
+  'hasGithubPullRequest',
+  'markdown',
+  'number',
+  'order',
+  'overallStatus',
+  'position',
+  'status',
+  'title',
+  'updatedAt'
+]);
 testForBelongsTo('task', 'githubIssue');
 testForBelongsTo('task', 'githubPullRequest');
 testForBelongsTo('task', 'githubRepo');

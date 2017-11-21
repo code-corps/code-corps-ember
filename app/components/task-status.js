@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { alias } from '@ember/object/computed';
+import { alias, equal } from '@ember/object/computed';
 
 /**
   A badge that presents a task's status
@@ -17,5 +17,13 @@ import { alias } from '@ember/object/computed';
 export default Component.extend({
   classNames: ['task-status-badge'],
 
-  status: alias('task.status')
+  task: null,
+
+  hasGithubPullRequest: alias('task.hasGithubPullRequest'),
+
+  closed: equal('task.overallStatus', 'closed'),
+  merged: equal('task.overallStatus', 'merged'),
+  open: equal('task.overallStatus', 'open'),
+
+  status: alias('task.overallStatus')
 });
