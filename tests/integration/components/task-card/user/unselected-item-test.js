@@ -3,7 +3,9 @@ import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import {
   assertTooltipRendered,
-  triggerTooltipTargetEvent
+  assertTooltipNotRendered,
+  assertTooltipNotVisible,
+  assertTooltipVisible
 } from 'code-corps-ember/tests/helpers/ember-tooltips';
 import unselectedItem from 'code-corps-ember/tests/pages/components/task-card/user/unselected-item';
 
@@ -13,10 +15,8 @@ function renderPage() {
   page.render(hbs`
     {{task-card/user/unselected-item
       task=task
-      select-inline__unselected-item__icon= 'has-assign-tooltip'}}
-
-     {{tooltip-on-element}}
-   `);
+    }}
+  `);
 }
 
 moduleForComponent('task-card/user/unselected-item', 'Integration | Component | task card/user/unselected item', {
@@ -45,35 +45,19 @@ test('the default state when user task is loaded', function(assert) {
   assert.notOk(page.isTooltipTarget, 'There is no tooltip because it lazy renders.');
 });
 
-// Tooltip won't be rendered in the DOM yet because enableLazyRendering delays the rendering until the user interacts with the target.
+test('when mousing over and out again', function(assert) {
+  assert.expect(5);
 
-test('mouseEnter enters', function(assert) {
   renderPage();
-  triggerTooltipTargetEvent($(this), 'mouseenter');
+  assertTooltipNotRendered(assert);
+
+  page.mouseenter();
+
   assertTooltipRendered(assert);
+  assertTooltipVisible(assert);
+
+  page.mouseleave();
+
+  assertTooltipRendered(assert);
+  assertTooltipNotVisible(assert);
 });
-
-test('mouseLeave leaves', function(assert) {
-  assert.expect(1);
-  let mouseLeave = function() {
-    this.triggerAction({
-      action: 'mouseLeave',
-      target: this.get('tooltipShown')
-    });
-
-    renderPage();
-    triggerTooltipTargetEvent($(this), 'mouseenter');
-    mouseLeave();
-    assert.equal(page.tooltipShown, 'false', 'there is no tooltip');
-  };
-});
-
-// test('when hovering', function(assert) {
-//
-//   renderPage();
-//   assert.ok(page.isTooltipTarget, 'There is a tooltip.');
-//   assert.equal(page.dropdownOpen, false, 'Dropdown is not open.'),
-//   assert.equal(page.tooltip.text, 'Assign this task', 'The tooltip renders with text.');
-//   page.mouseleave();// hide the tooltip
-//   assert.ok(page.tooltip.isHidden);
-// });
