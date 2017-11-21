@@ -2,10 +2,12 @@ import { triggerable, hasClass } from 'ember-cli-page-object';
 import tooltip from 'code-corps-ember/tests/pages/helpers/tooltip';
 
 export default {
-  scope: '.select-inline__unselected-item',
+  scope: '.select-inline__selected-item',
 
-  loadingIcon: {
-    scope: '[data-test-loading-icon]'
+  selectedIcon: {
+    icon: {
+      imageSource: property('src', 'img'),
+    }
   },
 
   mouseenter: triggerable('mouseenter'),
