@@ -5,19 +5,38 @@
 }
 
 .task-status {
+  align-items: center;
   border-radius: 4px;
   color: white;
+  display: flex;
   float: left;
   padding: 4px 8px;
 
+  .fa, .sprite-icon {
+    padding-right: 5px;
+  }
+
+  .sprite-icon {
+    align-items: center;
+    display: flex;
+    margin-top: -2px;
+
+    svg {
+      display: inline;
+    }
+  }
+
   .fa {
     font-size: 18px;
-    padding-right: 2px;
     vertical-align: text-bottom;
   }
 
   &.closed {
     background: $red;
+  }
+
+  &.merged {
+    background: $purple--github;
   }
 
   &.open {

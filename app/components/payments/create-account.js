@@ -1,12 +1,16 @@
 import Component from '@ember/component';
 import { get, computed } from '@ember/object';
-import { empty } from '@ember/object/computed';
+import { alias, empty } from '@ember/object/computed';
 import moment from 'moment';
 
 export default Component.extend({
   classNameBindings: ['highlightClass'],
   classNames: ['create-account', 'panel'],
 
+  project: null,
+  stripeConnectAccount: null,
+
+  isLoading: alias('project.organization.isLoading'),
   required: empty('stripeConnectAccount.id'),
 
   status: computed('required', function() {

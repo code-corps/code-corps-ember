@@ -1,25 +1,27 @@
 <section>
   <aside>
-    <h3>{{#if (eq status 'verified')}}{{fa-icon "check-circle"}}{{/if}} Stripe account</h3>
+    <h3>{{#if (eq status 'verified')}}{{fa-icon "check-circle"}}{{else}}{{fa-icon "cc-stripe"}}{{/if}} Stripe account</h3>
     <p>Start accepting payments with Stripe.</p>
   </aside>
 
-  {{#if (eq status 'required')}}
-    <section data-test-section>
-      <div class="input-group create-account__country">
-        <div class="input-label">
-          <label for="country">
-            <span class="input-label__text">Country</span>
-          </label>
+  {{#unless isLoading}}
+    {{#if (eq status 'required')}}
+      <section data-test-section>
+        <div class="input-group create-account__country">
+          <div class="input-label">
+            <label for="country">
+              <span class="input-label__text">Country</span>
+            </label>
+          </div>
+          {{select/country-select country=country onChange=(action (mut country))}}
         </div>
-        {{select/country-select country=country onChange=(action (mut country))}}
-      </div>
-      <div>
-        <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
-        <button class="default" {{action 'submit'}} disabled={{isBusy}}>
-          Create Account
-        </button>
-      </div>
-    </section>
-  {{/if}}
+        <div>
+          <p>By registering your account, you agree to our {{link-to "Terms of Use" "terms"}} and the <a href="https://stripe.com/connect-account/legal" target="_blank">Stripe Connected Account Agreement.</a></p>
+          <button class="default" {{action 'submit'}} disabled={{isBusy}}>
+            Create Account
+          </button>
+        </div>
+      </section>
+    {{/if}}
+  {{/unless}}
 </section>

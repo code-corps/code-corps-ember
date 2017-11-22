@@ -1,9 +1,25 @@
 <div class="task-status {{status}}">
-  {{#if (eq status "open")}}
-    {{fa-icon data-test-open-icon "circle-o"}}
-  {{/if}}
-  {{#if (eq status "closed")}}
-    {{fa-icon data-test-closed-icon "times-circle"}}
+  {{#if hasGithubPullRequest}}
+    {{#if merged}}
+      <span data-test-pull-request-merged-icon class="sprite-icon">
+        <svg class="solid-white size-16">
+          <use xlink:href="#github-merge-48"></use>
+        </svg>
+      </span>
+    {{else}}
+      <span data-test-pull-request-icon class="sprite-icon">
+        <svg class="solid-white size-16">
+          <use xlink:href="#github-pull-request-48"></use>
+        </svg>
+      </span>
+    {{/if}}
+  {{else}}
+    {{#if open}}
+      {{fa-icon data-test-open-icon "circle-o"}}
+    {{/if}}
+    {{#if closed}}
+      {{fa-icon data-test-closed-icon "check-circle-o"}}
+    {{/if}}
   {{/if}}
   {{capitalize status}}
 </div>

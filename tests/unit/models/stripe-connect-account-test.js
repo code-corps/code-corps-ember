@@ -12,10 +12,10 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('stripe-connect-account', [
-  'bankAccountStatus',
   'bankAccountBankName',
   'bankAccountLast4',
   'bankAccountRoutingNumber',
+  'bankAccountStatus',
   'businessName',
   'businessUrl',
   'canAcceptDonations',
@@ -62,14 +62,14 @@ testForAttributes('stripe-connect-account', [
   'legalEntityVerificationDocument',
   'legalEntityVerificationStatus',
   'idFromStripe',
-  'managed',
+  'payoutsEnabled',
   'personalIdNumberStatus',
   'recipientStatus',
   'supportEmail',
   'supportPhone',
   'supportUrl',
   'tosAcceptanceDate',
-  'transfersEnabled',
+  'type',
   'updatedAt',
   'verificationDisabledReason',
   'verificationDocumentStatus',
