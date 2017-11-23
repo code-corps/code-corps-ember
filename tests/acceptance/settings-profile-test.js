@@ -87,6 +87,34 @@ test('it allows editing of users image', function(assert) {
   });
 });
 
+test("it allows editing of project's categories for owners", function(assert) {
+  assert.expect(5);
+
+  let user = server.create('user');
+  let category = server.create('category', { name: 'Technology' });
+  let params = { userId: user.id, categoryId: category.id };
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  settingsProfilePage.visit();
+
+  andThen(() => {
+    assert.equal(settingsProfilePage.categoryCheckboxes.checkboxes(0).label.name, 'Technology', 'The checkbox renders');
+    settingsProfilePage.categoryCheckboxes.checkboxes(0).label.click();
+  });
+
+  andThen(() => {
+    assert.ok(settingsProfilePage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was added.');
+    assert.ok(server.schema.userCategories.findBy(params), 'User category was created.');
+    settingsProfilePage.categoryCheckboxes.checkboxes(0).label.click();
+  });
+
+  andThen(() => {
+    assert.notOk(settingsProfilePage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was removed.');
+    assert.notOk(server.schema.userCategories.findBy(params), 'User category was deleted.');
+  });
+});
+
 test("it allows editing of user's skills", function(assert) {
   assert.expect(3);
 

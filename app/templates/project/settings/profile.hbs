@@ -14,6 +14,22 @@
   <div class="panel">
     <section>
       <aside>
+        <h3>Categories</h3>
+        <p>Change your project's categories.</p>
+      </aside>
+      <section>
+        {{category-checkboxes
+          options=categories
+          selection=project.categories
+          updateCategories=(action updateCategories)
+        }}
+      </section>
+    </section>
+  </div>
+
+  <div class="panel">
+    <section>
+      <aside>
         <h3>Skills</h3>
         <p>What skills does your project require? These help contributors find your project and tasks they can accomplish.</p>
       </aside>

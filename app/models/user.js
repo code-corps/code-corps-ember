@@ -27,14 +27,12 @@ export default Model.extend({
 
   stateTransition: attr(),
 
+  categories: hasMany('category', { async: true }),
   githubAppInstallations: hasMany('github-app-installation', { async: true }),
-
   projectUsers: hasMany('project-user', { async: true }),
-
   stripeConnectSubscriptions: hasMany('stripe-connect-subscription', { async: true }),
   stripePlatformCard: belongsTo('stripe-platform-card', { async: true }),
   stripePlatformCustomer: belongsTo('stripe-platform-customer', { async: true }),
-
   userCategories: hasMany('user-category', { async: true }),
   userRoles: hasMany('user-role', { async: true }),
   userSkills: hasMany('user-skill', { async: true }),

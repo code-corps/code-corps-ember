@@ -5,11 +5,15 @@ import {
   text,
   visitable
 } from 'ember-cli-page-object';
+import categoryCheckboxes from '../../components/category-checkboxes';
 import projectSettingsForm from '../../components/project-settings-form';
 import skillsTypeahead from '../../components/skills-typeahead';
 
 export default create({
   visit: visitable(':organization/:project/settings/profile'),
+
+  categoryCheckboxes,
+  projectSettingsForm,
 
   projectSkillsList: collection({
     scope: '.project-skills-list',
@@ -20,11 +24,10 @@ export default create({
     }
   }),
 
+  skillsTypeahead,
+
   successAlert: {
     scope: '.alert-success',
     message: text('p')
-  },
-
-  projectSettingsForm,
-  skillsTypeahead
+  }
 });
