@@ -11,7 +11,6 @@ export default Model.extend({
   cloudinaryPublicId: attr(),
   description: attr(),
   donationsActive: attr(),
-  githubId: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),
   longDescriptionBody: attr(),
