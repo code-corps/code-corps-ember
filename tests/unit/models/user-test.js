@@ -29,8 +29,11 @@ testForAttributes('user', [
 ]);
 
 testForBelongsTo('user', 'stripePlatformCard');
+testForBelongsTo('user', 'stripePlatformCustomer');
 
-testForHasMany('project', 'projectUsers');
+testForHasMany('user', 'categories');
+testForHasMany('user', 'githubAppInstallations');
+testForHasMany('user', 'projectUsers');
 testForHasMany('user', 'stripeConnectSubscriptions');
 testForHasMany('user', 'userCategories');
 testForHasMany('user', 'userRoles');

@@ -26,3 +26,29 @@ input {
     font-size: 16px !important;
   }
 }
+
+.checkboxes {
+  &--inline {
+    li {
+      display: inline-block;
+
+      &.selected {
+        font-weight: 600;
+      }
+    }
+
+    label {
+      align-items: center;
+      display: flex;
+      padding: 5px 8px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    input {
+      margin-right: 5px;
+    }
+  }
+}

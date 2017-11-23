@@ -3535,6 +3535,13 @@ ember-moment@^7.4.1:
     ember-getowner-polyfill "^2.0.1"
     ember-macro-helpers "^0.15.1"
 
+ember-multiselect-checkboxes@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/ember-multiselect-checkboxes/-/ember-multiselect-checkboxes-0.10.3.tgz#4f994b29383c1e8e65ccf67ec57ddff1be526369"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+    ember-runtime-enumerable-includes-polyfill "^1.0.1"
+
 ember-native-dom-helpers@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.5.4.tgz#0bc1506a643fb7adc0abf1d09c44a7914459296b"
@@ -3622,6 +3629,13 @@ ember-router-scroll@^0.4.0:
     ember-app-scheduler "^0.2.0"
     ember-cli-babel "^6.6.0"
     ember-getowner-polyfill "^2.0.1"
+
+ember-runtime-enumerable-includes-polyfill@^1.0.1:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ember-runtime-enumerable-includes-polyfill/-/ember-runtime-enumerable-includes-polyfill-1.0.4.tgz#16a7612e347a2edf07da8b2f2f09dbfee70deba0"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-cli-version-checker "^1.1.6"
 
 ember-runtime-enumerable-includes-polyfill@^2.0.0:
   version "2.0.0"

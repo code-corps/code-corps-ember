@@ -22,15 +22,17 @@ export default Model.extend({
   totalMonthlyDonated: attr('dollar-cents'),
   website: attr(),
 
+  organization: belongsTo('organization', { async: true }),
+  stripeConnectPlan: belongsTo('stripe-connect-plan', { async: true }),
+
+  categories: hasMany('category', { async: true }),
   donationGoals: hasMany('donation-goal', { async: true }),
   githubRepos: hasMany('github-repo', { async: true }),
-  organization: belongsTo('organization', { async: true }),
-  taskLists: hasMany('task-list', { async: true }),
-  tasks: hasMany('tasks', { async: true }),
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
   projectUsers: hasMany('project-user', { async: true }),
-  stripeConnectPlan: belongsTo('stripe-connect-plan', { async: true }),
+  taskLists: hasMany('task-list', { async: true }),
+  tasks: hasMany('tasks', { async: true }),
 
   currentDonationGoal: computed('_currentGoals', function() {
     return get(this, '_currentGoals.firstObject');

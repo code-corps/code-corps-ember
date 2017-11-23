@@ -8,5 +8,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model() {
     let userId = this.get('currentUser.user.id');
     return this.store.find('user', userId);
+  },
+
+  setupController(controller, model) {
+    controller.set('user', model);
   }
 });

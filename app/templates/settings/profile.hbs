@@ -12,6 +12,23 @@
       </section>
     </section>
   </div>
+
+  <div class="panel">
+    <section>
+      <aside>
+        <h3>{{fa-icon "thumbs-o-up"}} Interests</h3>
+        <p>What kind of projects are you interested in?</p>
+      </aside>
+      <section>
+        {{category-checkboxes
+          options=categories
+          selection=user.categories
+          updateCategories=(action updateCategories)
+        }}
+      </section>
+    </section>
+  </div>
+
   <div class="panel">
     <section>
       <aside>
