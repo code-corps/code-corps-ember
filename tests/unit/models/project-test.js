@@ -31,7 +31,6 @@ testForAttributes('project', [
   'cloudinaryPublicId',
   'description',
   'donationsActive',
-  'githubId',
   'iconLargeUrl',
   'iconThumbUrl',
   'longDescriptionBody',
@@ -47,6 +46,7 @@ testForAttributes('project', [
 testForBelongsTo('project', 'organization');
 testForBelongsTo('project', 'stripeConnectPlan');
 
+testForHasMany('project', 'categories');
 testForHasMany('project', 'donationGoals');
 testForHasMany('project', 'githubRepos');
 testForHasMany('project', 'projectCategories');

@@ -85,6 +85,38 @@ test("it allows editing of project's image for owners", function(assert) {
   });
 });
 
+test("it allows editing of project's categories for owners", function(assert) {
+  assert.expect(6);
+
+  let category = server.create('category', { name: 'Technology' });
+  let { project, user } = server.create('project-user', { role: 'owner' });
+  let params = { projectId: project.id, categoryId: category.id };
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  projectSettingsPage.visit({
+    organization: project.organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`, 'The project settings profile page loaded');
+    assert.equal(projectSettingsPage.categoryCheckboxes.checkboxes(0).label.name, 'Technology', 'The checkbox renders');
+    projectSettingsPage.categoryCheckboxes.checkboxes(0).label.click();
+  });
+
+  andThen(() => {
+    assert.ok(projectSettingsPage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was added.');
+    assert.ok(server.schema.projectCategories.findBy(params), 'Project category was created.');
+    projectSettingsPage.categoryCheckboxes.checkboxes(0).label.click();
+  });
+
+  andThen(() => {
+    assert.notOk(projectSettingsPage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was removed.');
+    assert.notOk(server.schema.projectCategories.findBy(params), 'Project category was deleted.');
+  });
+});
+
 test("it allows editing of project's skills for owners", function(assert) {
   assert.expect(4);
 

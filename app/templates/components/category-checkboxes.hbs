@@ -1,0 +1,14 @@
+{{#multiselect-checkboxes
+  labelProperty="name"
+  onchange=(action updateCategories)
+  options=options
+  selection=selection
+  as |category isSelected|
+}}
+  <li class="{{if isSelected "selected"}}">
+    <label>
+      {{input type="checkbox" checked=isSelected}}
+      {{category.name}}
+    </label>
+  </li>
+{{/multiselect-checkboxes}}

@@ -21,11 +21,17 @@
 
   &__issue-number {
     color: $text--lightest;
+    padding-right: 5px;
+  }
+
+  &__external-icon {
+    color: $text--lightest;
   }
 
   a:hover {
     .github__issue-link__repo-name,
-    .github__issue-link__issue-number {
+    .github__issue-link__issue-number,
+    .github__issue-link__external-icon {
       color: $link-hover-color;
     }
   }
