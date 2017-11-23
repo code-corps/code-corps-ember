@@ -1,0 +1,12 @@
+{{#unless selectedCategories.isLoading}}
+  {{#power-select-multiple
+    options=categoryOptions
+    selected=selectedCategories
+    placeholder="Select some categories..."
+    onchange=(action selectCategories)
+    searchField="name"
+    as |selectedCategories|
+  }}
+    {{selectedCategories.name}}
+  {{/power-select-multiple}}
+{{/unless}}
