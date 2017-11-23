@@ -31,7 +31,6 @@ testForAttributes('project', [
   'cloudinaryPublicId',
   'description',
   'donationsActive',
-  'githubId',
   'iconLargeUrl',
   'iconThumbUrl',
   'longDescriptionBody',
