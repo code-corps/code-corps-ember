@@ -23,6 +23,7 @@ export default Model.extend({
   totalMonthlyDonated: attr('dollar-cents'),
   website: attr(),
 
+  categories: hasMany('category', { async: true }),
   donationGoals: hasMany('donation-goal', { async: true }),
   githubRepos: hasMany('github-repo', { async: true }),
   organization: belongsTo('organization', { async: true }),
