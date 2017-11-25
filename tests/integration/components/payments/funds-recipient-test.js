@@ -85,7 +85,7 @@ test('it renders correctly when "verified"', function(assert) {
   assert.equal(page.individualNameText, 'Joe Individual', 'Component renders the name of the registered individual.');
 });
 
-test('it renders correctly when "verified" for business', function(assert) {
+test('it renders correctly when "verified" for company', function(assert) {
   assert.expect(3);
 
   let stripeConnectAccount = {
@@ -93,7 +93,7 @@ test('it renders correctly when "verified" for business', function(assert) {
     legalEntityFirstName: 'Joe',
     legalEntityLastName: 'Individual',
     legalEntityBusinessName: 'Company Inc.',
-    legalEntityType: 'business'
+    legalEntityType: 'company'
   };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
@@ -101,7 +101,7 @@ test('it renders correctly when "verified" for business', function(assert) {
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.ok(page.individualNameText, 'Joe Individual', 'Component renders the name of the registered individual.');
-  assert.ok(page.legalEntityBusinessNameText, 'Company Inc.', 'Component renders the name of the registered business.');
+  assert.ok(page.legalEntityBusinessNameText, 'Company Inc.', 'Component renders the name of the registered company.');
 });
 
 test('it passes out submit action from details subcomponent', function(assert) {
