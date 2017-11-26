@@ -4,7 +4,7 @@
 </div>
 
 <div class="start__skills">
-  <div class="skills__list">
+  <div data-test-user-skills-list class="skills__list skills__list--main">
     {{#each userSkills as |userSkill|}}
       {{skill-button
         hasCheck=true
@@ -25,6 +25,17 @@
       skillsList=userSkillsList
     }}
   </div>
+
+  {{#if selectablePopularSkills}}
+    <div data-test-popular-skills-list class="skills__list">
+      <p>Or choose from some popular skills:</p>
+      {{#each selectablePopularSkills as |skill|}}
+        <button class="clear" {{action selectSkill skill}}>
+          {{skill.title}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
 </div>
 
 <div class="start__footer">

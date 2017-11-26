@@ -8,6 +8,13 @@ export default Route.extend({
   userSkillsList: service(),
 
   model() {
-    return get(this, 'currentUser.user');
+    let user = get(this, 'currentUser.user');
+    let popularSkills = this.store.query('skill', { limit: 20, popular: true });
+    return { popularSkills, user };
+  },
+
+  setupController(controller, { popularSkills, user }) {
+    controller.set('popularSkills', popularSkills);
+    controller.set('user', user);
   }
 });

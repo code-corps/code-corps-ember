@@ -55,6 +55,15 @@ export default create({
     }
   },
 
+  popularSkillsList: collection({
+    scope: '[data-test-popular-skills-list]',
+    itemScope: 'button',
+    item: {
+      text: text(),
+      click: clickable()
+    }
+  }),
+
   roleColumns: collection({
     itemScope: '.expertise__column',
 
@@ -81,7 +90,7 @@ export default create({
   }),
 
   userSkillsList: collection({
-    scope: '.skills__list',
+    scope: '[data-test-user-skills-list]',
     itemScope: 'button',
     item: {
       text: text(),
