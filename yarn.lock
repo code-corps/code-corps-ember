@@ -683,7 +683,7 @@ babel-plugin-debug-macros@^0.1.10, babel-plugin-debug-macros@^0.1.11:
   dependencies:
     semver "^5.3.0"
 
-babel-plugin-ember-modules-api-polyfill@^1.4.1:
+babel-plugin-ember-modules-api-polyfill@^1.4.1, babel-plugin-ember-modules-api-polyfill@^1.4.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-ember-modules-api-polyfill/-/babel-plugin-ember-modules-api-polyfill-1.6.0.tgz#abd1afa4237b3121cb51222f9bf3283cad8990aa"
   dependencies:
@@ -2565,12 +2565,12 @@ ember-auto-focus@^2.0.1:
     ember-cli-babel "6.6.0"
     ember-cli-htmlbars "2.0.2"
 
-ember-autoresize@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.6.0.tgz#e1cffd9e9e42318e61ae424732c9eff32c367659"
+ember-autoresize@0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ember-autoresize/-/ember-autoresize-0.6.1.tgz#8150f7cc03c03dcef9e3d2116f64959d242bb904"
   dependencies:
     dom-ruler "^0.2.5"
-    ember-cli-babel "^5.1.7"
+    ember-cli-babel "^6.8.2"
     ember-cli-node-assets "^0.2.2"
 
 ember-basic-dropdown@^0.33.1:
@@ -2805,9 +2805,9 @@ ember-cli-deploy-slack@1.0.0:
     rsvp "^3.5.0"
     silent-error "^1.0.0"
 
-ember-cli-deploy@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy/-/ember-cli-deploy-1.0.1.tgz#6024c4fa0d8f8c09dfa57d251a7aca14e0ae2226"
+ember-cli-deploy@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy/-/ember-cli-deploy-1.0.2.tgz#9ab39188c882b57937418db5b3da6fc65b16b916"
   dependencies:
     chalk "^1.1.3"
     core-object "^2.0.0"
@@ -3037,9 +3037,9 @@ ember-cli-normalize-entity-name@^1.0.0:
   dependencies:
     silent-error "^1.0.0"
 
-ember-cli-page-object@1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.12.0.tgz#3d433c21e38ed771e5be2b1f45bdf5cd7a62b325"
+ember-cli-page-object@1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.12.1.tgz#6c91a4bd5a01443289c86946a5168e489c369217"
   dependencies:
     ceibo "~2.0.0"
     ember-cli-babel "^5.1.7"
@@ -3300,11 +3300,12 @@ ember-cookies@^0.0.13:
     ember-cli-babel "^5.1.7"
     ember-getowner-polyfill "^1.2.2"
 
-ember-data@~2.16.2:
-  version "2.16.3"
-  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.16.3.tgz#0853ed86bf813fcdbc97319d2c22abccf87b5093"
+ember-data@~2.17:
+  version "2.17.0"
+  resolved "https://registry.yarnpkg.com/ember-data/-/ember-data-2.17.0.tgz#d952cf98d7461abf41ed6d248cf2a5836c623276"
   dependencies:
     amd-name-resolver "0.0.7"
+    babel-plugin-ember-modules-api-polyfill "^1.4.2"
     babel-plugin-feature-flags "^0.3.1"
     babel-plugin-filter-imports "^0.3.1"
     babel-plugin-transform-es2015-block-scoping "^6.24.1"
@@ -3353,9 +3354,9 @@ ember-dragula@1.9.3:
     ember-cli-babel "^5.1.5"
     rsvp "^3.2.1"
 
-ember-exam@0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-0.8.1.tgz#40b8feec3c6bd50bdc197041f3a3fda60f19586e"
+ember-exam@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-exam/-/ember-exam-1.0.0.tgz#dd750ea407c05b01e74ee27ba42edb58585ae06b"
   dependencies:
     chalk "^2.1.0"
     cli-table2 "^0.2.0"
@@ -3460,11 +3461,11 @@ ember-keyboard@^2.3.0:
   dependencies:
     ember-cli-babel "^6.8.2"
 
-ember-link-action@^0.0.36:
-  version "0.0.36"
-  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.36.tgz#e30d143a979592196f3f6400dfee12c51e4aa684"
+ember-link-action@^0.0.37:
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.37.tgz#22f2644ac19b7567f45e3da129f8c5ae808ea08c"
   dependencies:
-    ember-cli-babel "^6.6.0"
+    ember-cli-babel "^6.8.2"
 
 ember-load-initializers@^1.0.0:
   version "1.0.0"
@@ -3518,12 +3519,13 @@ ember-metrics@code-corps/ember-metrics#add-context-to-segment-adapter:
     ember-getowner-polyfill "^2.0.0"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
-ember-modal-dialog@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-2.3.0.tgz#7adf8e19f225ad637e8d4de5a7f69262149e2066"
+ember-modal-dialog@2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-2.4.0.tgz#f4da380a24ad94fb42aa019df22f9d13108bd209"
   dependencies:
-    ember-cli-babel "^6.1.0"
+    ember-cli-babel "^6.8.2"
     ember-cli-htmlbars "^2.0.1"
+    ember-cli-version-checker "^2.1.0"
     ember-ignore-children-helper "^1.0.0"
     ember-wormhole "^0.5.1"
 
@@ -3750,13 +3752,7 @@ ember-tooltips@^2.9.0-beta:
     ember-hash-helper-polyfill "^0.1.1"
     ember-tether "^0.4.1"
 
-ember-truth-helpers@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/ember-truth-helpers/-/ember-truth-helpers-1.3.0.tgz#6ed9f83ce9a49f52bb416d55e227426339a64c60"
-  dependencies:
-    ember-cli-babel "^5.1.6"
-
-ember-truth-helpers@^2.0.0:
+ember-truth-helpers@2.0.0, ember-truth-helpers@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ember-truth-helpers/-/ember-truth-helpers-2.0.0.tgz#f3e2eef667859197f1328bb4f83b0b35b661c1ac"
   dependencies:
