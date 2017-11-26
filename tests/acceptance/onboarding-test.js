@@ -27,6 +27,9 @@ test('A user can onboard as expected', function(assert) {
   server.create('skill', {
     title: 'Ruby'
   });
+  server.create('skill', {
+    title: 'CSS'
+  });
 
   authenticateSession(this.application, { user_id: user.id });
 
@@ -113,7 +116,8 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.userSkillsList().count, 0);
+    assert.equal(onboardingPage.userSkillsList().count, 0, 'No skills have been added yet');
+    assert.equal(onboardingPage.popularSkillsList().count, 2, 'Popular skills are listed');
     onboardingPage.skillsTypeahead.searchFor('r');
   });
 
@@ -123,6 +127,8 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
+    assert.equal(onboardingPage.userSkillsList().count, 1, 'A user skill was added');
+    assert.equal(onboardingPage.popularSkillsList().count, 1, 'The popular skills were updated');
     onboardingPage.startFooterButton.click();
   });
 
