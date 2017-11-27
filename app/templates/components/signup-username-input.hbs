@@ -1,5 +1,10 @@
+<div class="input-label">
+  <label for="username">
+    <span class="input-label__text">Pick a username</span>
+  </label>
+</div>
 {{#auto-focus}}
-  {{input name="username" autocapitalize="off" autofocus=true tabindex=0 type="text" placeholder="Pick a username" value=user.username key-down="keyDown"}}
+  {{input name="username" autocapitalize="off" autofocus=true tabindex=0 type="text" value=user.username key-down="keyDown"}}
 {{/auto-focus}}
 <div class="suggestions">
 {{#if canShowValidations}}

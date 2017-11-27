@@ -71,6 +71,10 @@ $outer-border-radius: 4px;
   max-width: 100%;
   width: 100%;
 
+  &--centered {
+    text-align: center;
+  }
+
   .input-group {
     margin-bottom: 0;
   }
@@ -135,6 +139,7 @@ $outer-border-radius: 4px;
 .input-label {
   label {
     align-items: center;
+    color: $text--dark;
     display: flex;
     font-size: $body-font-size-normal;
     font-weight: 600;
@@ -218,12 +223,13 @@ form {
     font-family: $body-font-family;
     font-size: $header-font-size-large;
     font-weight: 500;
+    margin-bottom: 1em;
   }
 }
 
 .error {
   color: $red;
-  margin: 5px 0;
+  margin: 1em 0;
 }
 
 .login-form, .signup-form, .reset-password-form, .forgot-password-form {
@@ -282,7 +288,7 @@ form {
 .strength {
   position: absolute;
   right: 10px;
-  top: 16px;
+  top: 40px;
   width: 50px;
 
   .progress-bar-container {

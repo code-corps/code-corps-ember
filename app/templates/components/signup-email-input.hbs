@@ -1,4 +1,9 @@
-{{input name="email" autocapitalize="off" type="text" placeholder='Your email' value=user.email key-down="keyDown"}}
+<div class="input-label">
+  <label for="email">
+    <span class="input-label__text">Your email</span>
+  </label>
+</div>
+{{input name="email" autocapitalize="off" type="text" value=user.email key-down="keyDown"}}
 <div class="suggestions">
 {{#if canShowValidations}}
   {{#if isOkay}}
