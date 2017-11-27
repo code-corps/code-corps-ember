@@ -7,6 +7,8 @@ export default Model.extend({
   description: attr(),
   iconLargeUrl: attr(),
   iconThumbUrl: attr(),
+  // virtual, used to create the organization via invite
+  inviteCode: attr(),
   name: attr(),
   slug: attr(),
 

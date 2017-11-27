@@ -70,11 +70,12 @@ function generatePreviewMentions(schema, preview) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals',
-  'github-events', 'organizations', 'task-lists', 'task-skills',
-  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'stripe-connect-accounts', 'stripe-connect-subscriptions',
-  'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
-  'user-categories', 'users'
+  'github-events', 'organizations', 'organization-invites', 'task-lists',
+  'task-skills', 'task-user-mentions', 'tasks', 'previews', 'projects',
+  'project-categories', 'slugged-routes', 'stripe-connect-accounts',
+  'stripe-connect-subscriptions', 'stripe-connect-plans',
+  'stripe-platform-cards', 'stripe-platform-customers', 'user-categories',
+  'users'
 ];
 
 export default function() {
@@ -239,6 +240,20 @@ export default function() {
   this.post('/organization-github-app-installations');
   this.get('/organization-github-app-installations/:id');
   this.delete('/organization-github-app-installations/:id');
+
+  /**
+  * Organization Github App Installations
+  */
+
+  this.get('/organization-invites', function(schema, request) {
+    let { queryParams } = request;
+    let { code } = queryParams;
+    if (code) {
+      return schema.organizationInvites.where({ code });
+    } else {
+      return schema.organizationInvites.all();
+    }
+  });
 
   /**
   * Password

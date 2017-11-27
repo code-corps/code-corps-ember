@@ -75,6 +75,10 @@ $outer-border-radius: 4px;
     text-align: center;
   }
 
+  &--hidden:not(.has-error) {
+    display: none;
+  }
+
   .input-group {
     margin-bottom: 0;
   }
@@ -84,6 +88,14 @@ $outer-border-radius: 4px;
     float: left;
     max-width: 100%;
     width: 100%;
+
+    &.input-control {
+      max-width: 440px;
+
+      &--medium {
+        max-width: 300px;
+      }
+    }
 
     &:first-child {
       border-bottom-left-radius: $outer-border-radius;
@@ -134,6 +146,11 @@ $outer-border-radius: 4px;
       left: 8px;
     }
   }
+}
+
+.input-group.has-error {
+  input { border-color: $red; }
+  .input-label label { color: $red; }
 }
 
 .input-label {
@@ -218,6 +235,18 @@ textarea {
   min-height: 100px;
 }
 
+.input-explain {
+  margin: 0.5em 0 1em 0;
+
+  p {
+    color: $gray--dark !important;
+    font-size: $body-font-size-small !important;
+    font-weight: 500;
+    margin: 0 0 5px 0;
+    width: 100%;
+  }
+}
+
 form {
   h2 {
     font-family: $body-font-family;
@@ -230,6 +259,14 @@ form {
 .error {
   color: $red;
   margin: 1em 0;
+}
+
+p.input-error {
+  color: $red !important;
+  float: left;
+  font-size: $body-font-size-small !important;
+  margin: 0.5em 0;
+  width: 100%;
 }
 
 .login-form, .signup-form, .reset-password-form, .forgot-password-form {
@@ -303,33 +340,6 @@ select {
   height: 41px;
   padding: 0 16px;
   cursor: pointer;
-}
-
-.task-type {
-  select {
-    border: none;
-    height: 34px;
-    width: 100px;
-
-    &:focus {
-      outline: none;
-    }
-
-    &.issue {
-      background: $red;
-      color: white;
-    }
-
-    &.task {
-      background: $blue;
-      color: white;
-    }
-
-    &.idea {
-      background: $yellow;
-      color: $text--dark;
-    }
-  }
 }
 
 .settings-form {

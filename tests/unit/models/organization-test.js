@@ -22,6 +22,7 @@ testForAttributes('organization', [
   'description',
   'iconLargeUrl',
   'iconThumbUrl',
+  'inviteCode',
   'name',
   'slug'
 ]);

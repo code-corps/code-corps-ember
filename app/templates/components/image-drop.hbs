@@ -2,15 +2,9 @@
 <div class="hover">
   <p>{{hoverText}}</p>
 </div>
-<div class="text">
-  <p class="help-text">{{helpText}}</p>
-</div>
+{{#if (and helpText (not hasImage))}}
+  <div class="text">
+    <p class="help-text">{{helpText}}</p>
+  </div>
+{{/if}}
 <input type="file" onchange={{action filesDidChange value="target.files"}}>
-{{!-- {{image-upload
-  fileInputChange=(action fileInputChange)
-  files=files
-  uploadStarted=(action onUploadStarted)
-  uploadProgress=(action onUploadProgress)
-  uploadDone=(action onUploadDone)
-  uploadError=(action onUploadError)
-}} --}}
