@@ -103,7 +103,7 @@
   }
 
   &--active {
-    background: $blue--lighter !important;
+    background: $blue--background !important;
 
     &:before {
       border-color: $blue--dark;

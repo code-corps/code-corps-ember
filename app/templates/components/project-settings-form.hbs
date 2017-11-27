@@ -13,13 +13,28 @@
 
 <div class="settings-form__form">
   <div class="input-group">
-    {{input type="text" name="title" value=project.title placeholder="Title"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Project title</span>
+      </label>
+    </div>
+    {{input type="text" name="title" value=project.title}}
   </div>
   <div class="input-group">
-    {{input type="text" name="description" value=project.description placeholder="Description"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Description</span>
+      </label>
+    </div>
+    {{input type="text" name="description" value=project.description}}
   </div>
   <div class="input-group">
-    {{input type="text" name="website" value=project.website placeholder="Website"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Website</span>
+      </label>
+    </div>
+    {{input type="text" name="website" value=project.website}}
   </div>
 
   <div class="input-group">

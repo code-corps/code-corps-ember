@@ -13,10 +13,20 @@
 
 <div class="settings-form__form">
   <div class="input-group">
-    {{input type="text" name="name" value=organization.name placeholder="Organization Name"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Organization name</span>
+      </label>
+    </div>
+    {{input type="text" name="name" value=organization.name}}
   </div>
   <div class="input-group">
-    {{input type="text" name="description" value=organization.description placeholder="Description"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Description</span>
+      </label>
+    </div>
+    {{input type="text" name="description" value=organization.description}}
   </div>
 
   <div class="input-group">

@@ -1,6 +1,5 @@
 <div class="container">
   <form>
-
     {{#if (eq user.signUpContext 'donation')}}
       <h2>Join Code Corps to continue.</h2>
     {{else}}
@@ -23,5 +22,10 @@
       {{error-formatter error=error}}
     {{/if}}
 
+    <div class="input-group input-group--centered">
+      {{#link-to "login"}}
+        Already have an account?
+      {{/link-to}}
+    </div>
   </form>
 </div>

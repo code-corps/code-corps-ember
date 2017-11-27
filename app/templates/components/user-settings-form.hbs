@@ -13,20 +13,47 @@
 
 <div class="settings-form__form">
   <div class="input-group">
-    {{input type="text" name="firstName" value=user.firstName placeholder="First name"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">First name</span>
+      </label>
+    </div>
+    {{input type="text" name="firstName" value=user.firstName}}
   </div>
   <div class="input-group">
-    {{input type="text" name="lastName" value=user.lastName placeholder="Last name"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Last name</span>
+      </label>
+    </div>
+    {{input type="text" name="lastName" value=user.lastName}}
   </div>
   <div class="input-group">
-    <span class="input-group-addon">@</span>
-    {{input type="text" name="twitter" value=user.twitter placeholder="Twitter"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Twitter</span>
+      </label>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">@</span>
+      {{input type="text" name="twitter" value=user.twitter}}
+    </div>
   </div>
   <div class="input-group">
-    {{input type="text" name="website" value=user.website placeholder="Website"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Website</span>
+      </label>
+    </div>
+    {{input type="text" name="website" value=user.website}}
   </div>
   <div class="input-group">
-    {{input type="text" name="biography" value=user.biography placeholder="Bio"}}
+    <div class="input-label">
+      <label>
+        <span class="input-label__text">Biography</span>
+      </label>
+    </div>
+    {{input type="text" name="biography" value=user.biography}}
   </div>
 
   <div class="input-group">
