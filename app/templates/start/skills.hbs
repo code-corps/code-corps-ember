@@ -7,6 +7,7 @@
   <div data-test-user-skills-list class="skills__list skills__list--main">
     {{#each userSkills as |userSkill|}}
       {{skill-button
+        class="default"
         hasCheck=true
         isLoading=userSkill.isLoading
         remove=(action removeUserSkill userSkill)
@@ -40,5 +41,5 @@
 
 <div class="start__footer">
   <p>Finished adding your skills?</p>
-  <button class="{{if userSkills.isEmpty "clear" "default"}}" disabled={{userSkills.isEmpty}} {{action 'continue'}}>Find Projects</button>
+  <button class="{{if userSkills.isEmpty "clear" "default"}}" disabled={{userSkills.isEmpty}} {{action 'continue'}}>Find projects</button>
 </div>

@@ -21,7 +21,7 @@ export default Component.extend({
     'active:image-drop--active',
     'circle:image-drop--circle',
     'isDraggingOnApp:image-drop--drag',
-    'hasImage',
+    'hasImage:has-image',
     'large:is-large'
   ],
   droppedImage: null,
