@@ -4,13 +4,15 @@
     seem to be used as hooks for testing only }}
     <li>{{#link-to 'slugged-route' user.username class="slugged-route"}}Your profile{{/link-to}}</li>
     <li>{{#link-to 'settings.profile' class="profile"}}Settings{{/link-to}}</li>
-    <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
   </ul>
   {{#if user.admin}}
     <ul class="dropdown__options">
-      <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
+      <li>{{#link-to 'admin'}}{{fa-icon "terminal"}} Admin{{/link-to}}</li>
     </ul>
   {{/if}}
+  <ul class="dropdown__options">
+    <li><a class="logout" {{action 'invalidateSession'}}>Log out</a></li>
+  </ul>
 </div>
 <div class="dropdown__footer">
   Signed in as <strong>{{user.username}}</strong>

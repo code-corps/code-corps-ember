@@ -68,13 +68,13 @@
 }
 
 .dropdown__body {
-  padding: 10px 15px;
+  padding: 0 5px;
 }
 
 .dropdown__options {
   border-bottom: 1px solid $border-gray;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
+  padding-bottom: 3px;
+  margin-bottom: 3px;
 
   &:last-child {
     border-bottom: none;
@@ -85,14 +85,27 @@
   li {
     display: block;
     float: none;
-    padding: 3px 0;
+    padding: 1px 0;
   }
+
   a {
     // having problems with "navigation__options a"
     // overwriting the properties below
     border: 0;
-    color: #08A8FC;
     font-weight: normal;
-    padding: 0;
+    padding: 8px 11px;
+
+    .fa {
+      padding-right: 5px;
+    }
+
+    &.active {
+      font-weight: 600;
+    }
+
+    &.active, &:hover {
+      background: $blue--background;
+      color: $blue;
+    }
   }
 }

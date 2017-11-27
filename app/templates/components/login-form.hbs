@@ -1,13 +1,23 @@
 <form {{action "authenticate" on="submit"}}>
   <h2>Sign in</h2>
   <div class="input-group">
+    <div class="input-label">
+      <label for="email">
+        <span class="input-label__text">Email</span>
+      </label>
+    </div>
     {{#auto-focus}}
-      {{input name="email" id="identification" autofocus=true tabindex=0 placeholder="Email" value=identification}}
+      {{input name="email" id="identification" autofocus=true tabindex=0 value=identification}}
     {{/auto-focus}}
   </div>
 
   <div class="input-group">
-    {{input name="password" id="password" placeholder="Password" type="password" value=password}}
+    <div class="input-label">
+      <label for="password">
+        <span class="input-label__text">Password</span>
+      </label>
+    </div>
+    {{input name="password" id="password" type="password" value=password}}
   </div>
 
   <div class="input-group">
@@ -20,14 +30,15 @@
     </button>
   </div>
 
-  {{#link-to 'password.forgot' classNames="t-forgot-password"}}
-    Forgot your password?
-  {{/link-to}}
-
   {{#if errors}}
     {{#each errors.errors as |error|}}
       <p class="error">{{error.detail}}</p>
     {{/each}}
   {{/if}}
 
+  <div class="input-group input-group--centered">
+    {{#link-to 'password.forgot' classNames="t-forgot-password"}}
+      Forgot your password?
+    {{/link-to}}
+  </div>
 </form>
