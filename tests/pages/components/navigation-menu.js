@@ -12,10 +12,6 @@ export default {
     scope: '.header-navigation__options li a:contains("Projects")'
   },
 
-  blogLink: {
-    scope: '.header-navigation__options li a:contains("Blog")'
-  },
-
   signInLink: {
     scope: '.header-navigation__options li a:contains("Sign in")'
   },
