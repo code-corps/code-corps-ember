@@ -7,9 +7,9 @@ img[src=""] {
 }
 
 .icon {
-  width: 50px;
-  height: 50px;
   border-radius: 4px;
+  height: 50px;
+  width: 50px;
 
   &.circle {
     border-radius: 25px;
@@ -33,7 +33,12 @@ img[src=""] {
     }
   }
 
-  &.tiny {
+  &--small {
+    height: 35px;
+    width: 35px;
+  }
+
+  &.tiny, &--tiny {
     width: 25px;
     height: 25px;
 

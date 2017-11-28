@@ -3,6 +3,7 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
+  approved: attr(),
   cloudinaryPublicId: attr(),
   description: attr(),
   iconLargeUrl: attr(),
