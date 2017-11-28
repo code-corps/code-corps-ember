@@ -45,6 +45,7 @@ Router.map(function() {
   });
 
   this.route('organizations', function() {
+    this.route('new');
     this.route('slugged-route', {
       path: '/:slugged_route_slug'
     }, function() {

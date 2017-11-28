@@ -34,6 +34,12 @@
   background-repeat: no-repeat;
   position: relative;
 
+  @include outside-border(2px, solid, transparent);
+
+  &:not(.has-image) {
+    background: $gray--light;
+  }
+
   &.is-large {
     $size: 200px;
     height: $size;
@@ -47,6 +53,12 @@
 
   .hover {
     border-radius: 5px;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  .hover, .text {
     display: none;
     position: absolute;
     top: 0;
@@ -54,9 +66,6 @@
     left: 0;
     right: 0;
     padding: 5px;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 2;
 
     p {
       &:before {
@@ -74,6 +83,11 @@
       text-align: center;
       width: 100%;
     }
+  }
+
+  &:not(.image-drop--active) .text {
+    align-items: center;
+    display: flex;
   }
 
   &--circle {
@@ -120,37 +134,19 @@
     &.image-drop--circle {
       @include outside-border(2px, solid, $blue--dark, $border-radius);
     }
+  }
 
-    .hover {
-      display: flex;
-      align-items: center;
-    }
+  &:hover:not(.image-drop--active):not(.image-drop--drag) .hover {
+    align-items: center;
+    display: flex;
   }
 }
 
 .image-drop p {
   color: #a9a9a9;
   display: none;
-  width: 80%;
   text-align: center;
-}
-
-.image-drop p.help-text {
-  font-size: $body-font-size-normal;
-  line-height: 22px;
-  margin: 0 auto;
-}
-
-.image-drop .text {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-
+  width: 80%;
 }
 
 .image-drop input[type=file] {

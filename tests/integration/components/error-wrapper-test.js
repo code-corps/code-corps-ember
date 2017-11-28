@@ -30,7 +30,7 @@ test('it renders all required elements for the 404 case', function(assert) {
   assert.ok(page.has404Image, 'The 404 image renders');
   assert.equal(page.title, '404 Error', 'The title renders');
   assert.equal(page.body, "We can't find the page you're looking for.", 'The body renders');
-  assert.equal(page.button.text, 'Go Home', 'The button renders');
+  assert.equal(page.button.text, 'Go home', 'The button renders');
   assert.ok($('html').hasClass('warning'), 'The html element has the right class');
   assert.notEqual($('html').css('background-color'), 'rgba(0, 0, 0, 0)', 'The html element does not have a white background');
 });
@@ -50,7 +50,7 @@ test('it renders all required elements for the 503 case', function(assert) {
   assert.ok(page.hasMaintenanceIcon, 'The maintenance icon renders');
   assert.equal(page.title, 'Down for maintenance', 'The title renders');
   assert.equal(page.body, "We're currently conducting maintenance.", 'The body renders');
-  assert.equal(page.button.text, 'Go Home', 'The button renders');
+  assert.equal(page.button.text, 'Go home', 'The button renders');
   assert.ok($('html').hasClass('warning'), 'The html element has the right class');
   assert.notEqual($('html').css('background-color'), 'rgba(0, 0, 0, 0)', 'The html element does not have a white background');
 });
@@ -70,7 +70,7 @@ test('it renders all required elements for the general error case', function(ass
   assert.ok(page.hasServerErrorImage, 'The general error image renders');
   assert.equal(page.title, 'Server Error', 'The title renders');
   assert.equal(page.body, 'Something went wrong. Try again and if the problem persists, please report your problem and mention what caused it.', 'The body renders');
-  assert.equal(page.button.text, 'Go Home', 'The button renders');
+  assert.equal(page.button.text, 'Go home', 'The button renders');
   assert.ok($('html').hasClass('danger'), 'The html element has the right class');
   assert.notEqual($('html').css('background-color'), 'rgba(0, 0, 0, 0)', 'The html element does not have a white background');
 });

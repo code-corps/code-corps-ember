@@ -5,7 +5,7 @@ import { set, get, computed } from '@ember/object';
 export default Component.extend({
   alwaysShowX: false,
   attributeBindings: ['isLoading:disabled'],
-  classNames: ['default', 'has-spinner', 'skill'],
+  classNames: ['has-spinner', 'skill'],
   classNameBindings: ['isHovering:can-delete', 'size', 'type'],
   hasCheck: false,
   iconAfter: not('iconBefore'),

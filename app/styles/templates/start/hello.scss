@@ -42,10 +42,9 @@
   @include media($sm-screen) {
     width: 100%;
   }
-}
-
-.image-drop {
-  margin: 0 auto;
+  .image-drop {
+    margin: 0 auto;
+  }
 }
 
 .hello__column--name-input {
