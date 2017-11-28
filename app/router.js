@@ -15,6 +15,7 @@ const Router = EmberRouter.extend(RouterScroll, {
     this._trackPage();
   },
 
+  // Track the page view in Segment when it renders
   _trackPage() {
     run.scheduleOnce('afterRender', this, () => {
       let page = document.location.pathname;
@@ -34,6 +35,7 @@ Router.map(function() {
     });
   });
 
+  // GitHub OAuth redirection route
   this.route('github', {
     path: '/oauth/github'
   });
@@ -58,8 +60,8 @@ Router.map(function() {
   this.route('privacy');
 
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
-    this.route('checkout');
-    this.route('donate');
+    this.route('checkout'); // Where you enter your credit card details
+    this.route('donate'); // Where you choose your donation amount
     this.route('settings', function() {
       this.route('contributors');
       this.route('donations', function() {
@@ -73,9 +75,10 @@ Router.map(function() {
       this.route('new');
       this.route('task', { path: '/:number' });
     });
-    this.route('thank-you');
+    this.route('thank-you'); // When your donation successfully processed
   });
 
+  // Organization's projects
   this.route('projects', {
     path: '/:slugged_route_slug/projects'
   });
@@ -89,6 +92,7 @@ Router.map(function() {
     this.route('forgot');
   });
 
+  // User settings
   this.route('settings', function() {
     this.route('profile');
     this.route('integrations');
@@ -96,10 +100,13 @@ Router.map(function() {
 
   this.route('signup');
 
+  // User *or* organization routes
+  // e.g. /code-corps or /joshsmith
   this.route('slugged-route', {
     path: '/:slugged_route_slug'
   });
 
+  // Onboarding routes
   this.route('start', function() {
     this.route('hello');
     this.route('interests');
