@@ -19,7 +19,7 @@
     "coveralls": "^3.0.0",
     "ember-ajax": "^3.0.0",
     "ember-auto-focus": "^2.0.1",
-    "ember-autoresize": "0.6.1",
+    "ember-autoresize": "1.0.0",
     "ember-can": "^0.8.4",
     "ember-cli": "~2.16.2",
     "ember-cli-app-version": "^3.0.0",
