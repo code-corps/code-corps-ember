@@ -1,0 +1,36 @@
+<section data-test-invite-form>
+  <div class="input-group {{if organizationInvite.errors.organizationName "has-error"}}">
+    <div class="input-label">
+      <label for="organizationName">
+        <span class="input-label__text">Organization name</span>
+      </label>
+    </div>
+    <div class="input-explain">
+      <p>Can be changed by the organization later.</p>
+    </div>
+    {{input class="input-control" type="text" name="organizationName" value=organizationInvite.organizationName}}
+    {{#each organizationInvite.errors.organizationName as |error|}}
+      <p class="input-error">{{error.message}}</p>
+    {{/each}}
+  </div>
+
+  <div class="input-group {{if organizationInvite.errors.email "has-error"}}">
+    <div class="input-label">
+      <label for="email">
+        <span class="input-label__text">Email</span>
+      </label>
+    </div>
+    <div class="input-explain">
+      <p>Does not need to be associated with a user.</p>
+      <p>They <em>will</em> need to login with an account to accept the invite.</p>
+    </div>
+    {{input class="input-control input-control--medium" type="email" name="email" value=organizationInvite.email}}
+    {{#each organizationInvite.errors.email as |error|}}
+      <p class="input-error">{{error.message}}</p>
+    {{/each}}
+  </div>
+
+  <div class="input-group">
+    <button class="save default" {{action "sendInvite"}} data-test-submit>Send invite</button>
+  </div>
+</section>

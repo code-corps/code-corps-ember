@@ -12,5 +12,8 @@ test('it exists', function(assert) {
   assert.ok(!!model);
 });
 
-testForAttributes('organizationInvite', ['organizationName']);
+testForAttributes('organizationInvite', [
+  'email',
+  'organizationName'
+]);
 testForBelongsTo('organizationInvite', 'organization');

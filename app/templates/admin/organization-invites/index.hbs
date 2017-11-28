@@ -1,0 +1,61 @@
+<div class="log-rows">
+  <div data-test-log-row-header class="log-row log-row--header">
+    <span class="log-cell log-cell--shrink"></span>
+    <span class="log-cell log-cell--shrink">Organization</span>
+    <span class="log-cell log-cell--shrink">Invitee Email</span>
+    <span class="log-cell">Status</span>
+    <span class="log-cell log-cell--shrink">Approval</span>
+  </div>
+
+  {{#each model as |organizationInvite|}}
+    <div data-test-log-row class="log-row">
+      <span data-test-icon class="log-cell log-cell--shrink">
+        {{#if organizationInvite.organization.iconThumbUrl}}
+          {{#link-to 'slugged-route' organizationInvite.organization.slug}}
+            <img class="icon icon--small" width="35" height="35" src="{{organizationInvite.organization.iconThumbUrl}}" />
+          {{/link-to}}
+        {{else}}
+          <div class="icon icon--small"></div>
+        {{/if}}
+      </span>
+      <span data-test-name class="log-cell log-cell--shrink">
+        {{#if organizationInvite.organization}}
+          {{#if organizationInvite.organization.isLoading}}
+            {{organizationInvite.organizationName}}
+          {{else}}
+            {{#link-to 'slugged-route' organizationInvite.organization.slug}}
+              {{organizationInvite.organization.name}}
+            {{/link-to}}
+          {{/if}}
+        {{else}}
+          {{organizationInvite.organizationName}}
+        {{/if}}
+      </span>
+      <span data-test-email class="log-cell log-cell--shrink">
+        {{organizationInvite.email}}
+      </span>
+      <span data-test-approval-status class="log-cell">
+        {{#if organizationInvite.organization}}
+          {{#if organizationInvite.organization.isLoading}}
+            {{fa-icon "ellipsis-h"}} Fetching data...
+          {{else if organizationInvite.organization.approved}}
+            <span class="log-data--success">
+              {{fa-icon "check-circle"}} Approved
+            </span>
+          {{else}}
+            {{fa-icon "question-circle"}} Pending approval
+          {{/if}}
+        {{else}}
+          {{fa-icon "envelope-o"}} Invite sent
+        {{/if}}
+      </span>
+      <span data-test-actions class="log-cell log-cell--shrink">
+        {{#if organizationInvite.organization.isLoaded}}
+          {{#unless organizationInvite.organization.approved}}
+            <button {{action approve organizationInvite}} class="default small">Approve</button>
+          {{/unless}}
+        {{/if}}
+      </span>
+    </div>
+  {{/each}}
+</div>

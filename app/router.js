@@ -33,6 +33,9 @@ Router.map(function() {
     this.route('github-events', { path: '/github/events' }, function() {
       this.route('github-event', { path: '/:id' });
     });
+    this.route('organization-invites', function() {
+      this.route('new');
+    });
   });
 
   // GitHub OAuth redirection route
