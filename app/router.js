@@ -35,6 +35,8 @@ Router.map(function() {
     });
   });
 
+  this.route('freestyle');
+
   // GitHub OAuth redirection route
   this.route('github', {
     path: '/oauth/github'
