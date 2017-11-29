@@ -242,7 +242,7 @@ export default function() {
   this.delete('/organization-github-app-installations/:id');
 
   /**
-  * Organization Github App Installations
+  * Organization invites
   */
 
   this.get('/organization-invites', function(schema, request) {
@@ -254,6 +254,7 @@ export default function() {
       return schema.organizationInvites.all();
     }
   });
+  this.post('/organization-invites');
 
   /**
   * Password
