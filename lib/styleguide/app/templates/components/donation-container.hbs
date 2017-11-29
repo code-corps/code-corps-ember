@@ -1,0 +1,14 @@
+{{#freestyle-note "donation-container--notes"}}
+  ```
+  card: {
+    id: 1, brand: 'Visa', last4: 4242, expMonth: '01', expYear: '2022'
+  },
+  saveAndDonateHandler() {},
+  donateHandler() {},
+  ```
+{{/freestyle-note}}
+{{#freestyle-usage "donation-container" title="Donation Container"}}
+  {{donation/donation-container
+    card=card donate=donateHandler donationAmount=100
+    isProcessing=isProcessing projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
+{{/freestyle-usage}}

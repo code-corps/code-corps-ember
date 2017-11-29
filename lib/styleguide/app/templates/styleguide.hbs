@@ -1,0 +1,28 @@
+{{#freestyle-guide
+  title="Ember Freestyle"
+  subtitle="Living Style Guide"
+  }}
+
+  {{#freestyle-section name="Donation" as |section|}}
+
+    {{#section.subsection name="Card Item"}}
+      {{card-item}}
+    {{/section.subsection}}
+
+    {{#section.subsection name="Card Logos"}}
+      {{card-logos}}
+    {{/section.subsection}}
+
+    {{#section.subsection name="Donation Container"}}
+      {{donation-container}}
+    {{/section.subsection}}
+
+    {{#section.subsection name="Project Header"}}
+      {{styleguide-project-header}}
+      {{!-- {{#freestyle-usage "project-header" title="Project Header"}}
+        {{donation/project-header project=project}}
+      {{/freestyle-usage}} --}}
+    {{/section.subsection}}
+
+  {{/freestyle-section}}
+{{/freestyle-guide}}
