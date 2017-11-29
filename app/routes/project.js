@@ -1,4 +1,5 @@
 import Route from '@ember/routing/route';
+import { get } from '@ember/object';
 
 export default Route.extend({
   model(params) {
@@ -10,8 +11,8 @@ export default Route.extend({
 
   serialize(model) {
     return {
-      slugged_route_slug: model.get('organization.slug'),
-      project_slug: model.get('slug')
+      slugged_route_slug: get(model, 'organization.slug'),
+      project_slug: get(model, 'slug')
     };
   }
 });
