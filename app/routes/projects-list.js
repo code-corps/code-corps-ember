@@ -1,8 +1,16 @@
 import Route from '@ember/routing/route';
 
 export default Route.extend({
-  model() {
-    return this.store.findAll('project');
+  queryParams: {
+    approved: {
+      refreshModel: true
+    }
+  },
+
+  model(params) {
+    return this.store.query('project', {
+      approved: params.approved
+    });
   },
 
   setupController(controller, model) {

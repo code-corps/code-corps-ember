@@ -1,4 +1,4 @@
-.project-card {
+.project-card-wrapper {
   @include omega(3n);
   @include span-columns(4);
 
@@ -11,11 +11,17 @@
     @include omega(1n);
     @include span-columns(12);
   }
+}
 
+.project-card {
   border: 1px solid $gray--lightest;
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
+
+  &:hover {
+    border-color: $blue;
+  }
 
   .icon-container {
     text-align: center;
@@ -38,6 +44,7 @@
   p {
     color: $text--light;
     font-size: $body-font-size-small;
+    margin-bottom: 1em;
   }
 
   .organization {
@@ -74,6 +81,14 @@
   }
 
   &__actions {
-    text-align: center;
+    ul {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    li {
+      padding: 0 3px;
+    }
   }
 }

@@ -36,7 +36,7 @@
   }
 }
 
-#{$all-buttons}, .button {
+#{$all-buttons}, .button, a.button {
   background: $gray--light;
   border-color: $gray--light;
   border-radius: 4px;
@@ -44,6 +44,7 @@
   border-width: 1px;
   color: white;
   display: inline-block;
+  line-height: 1em;
   font-family: $body-font-family;
   font-size: $body-font-size-normal;
   font-weight: 500;

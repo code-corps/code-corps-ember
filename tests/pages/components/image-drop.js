@@ -19,6 +19,11 @@ export default {
       return removeDoubleQuotes(backgroundImageData);
     },
 
+    backgroundImageUrl() {
+      let url = this.backgroundImageData();
+      return url.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    },
+
     dropFile(content) {
       fillInFileInput(`${this.scope} input[type=file]`, { name: 'file.png', content });
     },

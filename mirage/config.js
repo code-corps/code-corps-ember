@@ -228,7 +228,12 @@ export default function() {
   */
 
   this.get('/organizations', { coalesce: true });
-  this.post('/organizations');
+  this.post('/organizations', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let organization = schema.create('organization', attrs);
+    schema.create('sluggedRoute', { slug: attrs.slug, organization });
+    return organization;
+  });
   this.get('/organizations/:id');
   this.patch('/organizations/:id');
 
@@ -355,7 +360,24 @@ export default function() {
   */
 
   this.get('/projects', { coalesce: true });
-  this.post('/projects');
+  this.post('/projects', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let project = schema.create('project', attrs);
+
+    if (attrs.categoryIds) {
+      attrs.categoryIds.forEach((categoryId) => {
+        schema.create('project-category', { categoryId, project });
+      });
+    }
+
+    if (attrs.skillIds) {
+      attrs.skillIds.forEach((skillId) => {
+        schema.create('project-skill', { skillId, project });
+      });
+    }
+
+    return project;
+  });
   this.get('/projects/:id');
 
   this.get('/projects/:projectId/tasks', (schema, request) => {

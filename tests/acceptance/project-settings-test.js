@@ -74,13 +74,13 @@ test("it allows editing of project's image for owners", function(assert) {
   });
 
   andThen(() => {
-    projectSettingsPage.projectSettingsForm.imageDrop.dropFile(droppedImageString);
+    projectSettingsPage.projectSettingsForm.imageDrop.dropZone.dropFile(droppedImageString);
   });
 
   andThen(() => {
     assert.ok(projectSettingsPage.successAlert.isVisible);
     assert.equal(projectSettingsPage.successAlert.message, 'Project icon uploaded successfully');
-    assert.equal(projectSettingsPage.projectSettingsForm.imageDrop.backgroundImageData(), `url(${droppedImageString})`);
+    assert.equal(projectSettingsPage.projectSettingsForm.imageDrop.dropZone.backgroundImageUrl(), droppedImageString);
     done();
   });
 });

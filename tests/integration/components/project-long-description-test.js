@@ -6,6 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/project-long-description';
+import projectUser from 'code-corps-ember/tests/helpers/project-user';
 
 let page = PageObject.create(component);
 
@@ -24,19 +25,19 @@ let owner = { id: 'owner' };
 let projectWithDescription = {
   longDescriptionBody: 'A <strong>body</strong>',
   longDescriptionMarkdown: 'A **body**',
-  projectUsers: [{ user: owner, role: 'owner' }]
+  projectUsers: [projectUser(owner)]
 };
 
 let projectWithListedDescription = {
   longDescriptionBody: 'Todo list: <ul><li>list item 1</li></ul>',
   longDescriptionMarkdown: 'Todo list: \n *   list item 1',
-  projectUsers: [{ user: owner, role: 'owner' }]
+  projectUsers: [projectUser(owner)]
 };
 
 let blankProject = {
   longDescriptionBody: null,
   longDescriptionMarkdown: null,
-  projectUsers: [{ user: owner, role: 'owner' }]
+  projectUsers: [projectUser(owner)]
 };
 
 test('it renders properly when decription is blank and the user cannot add to it', function(assert) {

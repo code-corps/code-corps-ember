@@ -1,7 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:projects', 'Unit | Route | projects', {
-  // Specify the other units that are required for this test.
+moduleFor('controller:projects-list', 'Unit | Controller | projects list', {
   needs: [
     'service:metrics',
     'service:router-scroll',
@@ -9,7 +8,8 @@ moduleFor('route:projects', 'Unit | Route | projects', {
   ]
 });
 
+// Replace this with your real tests.
 test('it exists', function(assert) {
-  let route = this.subject();
-  assert.ok(route);
+  let controller = this.subject();
+  assert.ok(controller);
 });
