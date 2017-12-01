@@ -142,9 +142,23 @@ $outer-border-radius: 4px;
     &:before {
       content: '';
       position: absolute;
-      top: 10px;
+      top: 9px;
       left: 8px;
     }
+  }
+}
+
+.input-control-group {
+  position: relative;
+
+  &__prefix {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+  }
+
+  #{$all-text-inputs} {
+    padding-left: 25px;
   }
 }
 
