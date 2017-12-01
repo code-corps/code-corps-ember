@@ -1,5 +1,5 @@
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 
 export default Route.extend({
   model(params) {
@@ -14,5 +14,14 @@ export default Route.extend({
       slugged_route_slug: get(model, 'organization.slug'),
       project_slug: get(model, 'slug')
     };
+  },
+
+  actions: {
+    submitForReview(project) {
+      set(project, 'approvalRequested', true);
+      project
+        .save()
+        .catch(() => project.rollbackAttributes());
+    }
   }
 });
