@@ -50,6 +50,12 @@ export default {
         let targetModelName = get(target, 'constructor.modelName')
                            || get(target, 'content.constructor.modelName');
 
+        // If the relationship isn't there yet
+        if (!relationshipId && relationshipModelName && targetId && targetModelName) {
+          let foundId = found.belongsTo(targetModelName.camelize()).id();
+          return foundId == targetId;
+        }
+
         // Exit early with `false` if we're missing values
         if (!(relationshipId && relationshipModelName && targetId && targetModelName)) {
           return false;

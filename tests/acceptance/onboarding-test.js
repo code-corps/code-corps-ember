@@ -301,12 +301,12 @@ test('it allows editing of users image and disabled btn while uploading', functi
 
   andThen(() => {
     assert.equal(onboardingPage.startButton.isDisabled, undefined, 'start button is not disabled after filling in user names');
-    onboardingPage.imageDrop.dropFile(droppedImageString);
+    onboardingPage.imageDrop.dropZone.dropFile(droppedImageString);
     assert.equal(onboardingPage.startButton.isDisabled, 'disabled', 'start button is disabled while uploading image');
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.imageDrop.backgroundImageData(), `url(${droppedImageString})`);
+    assert.equal(onboardingPage.imageDrop.dropZone.backgroundImageUrl(), droppedImageString);
     assert.equal(onboardingPage.startButton.isDisabled, undefined, 'start button is not disabled after filling in user names and uploading of image is done');
     done();
   });

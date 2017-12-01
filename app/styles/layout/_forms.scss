@@ -149,7 +149,7 @@ $outer-border-radius: 4px;
 }
 
 .input-group.has-error {
-  input { border-color: $red; }
+  input, textarea { border-color: $red; }
   .input-label label { color: $red; }
 }
 

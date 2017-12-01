@@ -22,6 +22,11 @@
     background-image: -webkit-linear-gradient(#FFF, $red--light);
     background-image: linear-gradient(#FFF, $red--light);
   }
+
+  // When the callout comes first in a block of content
+  &--lead-in {
+    margin-top: 0;
+  }
 }
 
 

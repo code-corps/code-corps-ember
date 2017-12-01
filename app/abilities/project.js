@@ -1,8 +1,7 @@
-import { equal, alias } from '@ember/object/computed';
-import { get, computed } from '@ember/object';
+import { alias, equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
 import { Ability } from 'ember-can';
+import projectMember from 'code-corps-ember/macros/project-member';
 
 /**
  * Ability object used to determine what the current user can do with a project
@@ -22,23 +21,10 @@ export default Ability.extend({
    */
   canManage: alias('userIsOwner'),
 
-  // TODO: Similar code is defined in
-  // - `components/project-header.js`
-  // - `abilities/task.js`
-  projectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
-    let currentUserId = get(this, 'currentUser.user.id');
+  project: alias('model'),
 
-    if (isEmpty(currentUserId)) {
-      return false;
-    } else {
-      return get(this, 'project.projectUsers').find((item) => {
-        return get(item, 'user.id') === currentUserId;
-      });
-    }
-  }),
+  projectMembership: projectMember('project.projectUsers', 'currentUser.user'),
 
   userRole: alias('projectMembership.role'),
-  userIsOwner: equal('userRole', 'owner'),
-
-  project: alias('model')
+  userIsOwner: equal('userRole', 'owner')
 });

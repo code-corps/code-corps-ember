@@ -82,7 +82,7 @@ test('it allows editing of users image', function(assert) {
   andThen(() => {
     assert.ok(settingsProfilePage.successAlert.isVisible);
     assert.equal(settingsProfilePage.successAlert.message, 'Photo uploaded successfully');
-    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.dropZone.backgroundImageData(), `url(${droppedImageString})`);
+    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.dropZone.backgroundImageUrl(), droppedImageString);
     done();
   });
 });

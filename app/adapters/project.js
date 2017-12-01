@@ -53,7 +53,8 @@ export default ApplicationAdapter.extend({
 
       return url;
     } else {
-      return this._super.apply(arguments);
+      console.log(query);
+      return this._super(...arguments);
     }
   },
 

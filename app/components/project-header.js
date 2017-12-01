@@ -1,7 +1,8 @@
 import Component from '@ember/component';
 import { mapBy, alias } from '@ember/object/computed';
-import { getProperties, get, computed } from '@ember/object';
+import { getProperties } from '@ember/object';
 import { inject as service } from '@ember/service';
+import projectMember from 'code-corps-ember/macros/project-member';
 
 /**
   Displays information about the project and allows a user to join the project
@@ -46,17 +47,7 @@ export default Component.extend({
    */
   user: alias('currentUser.user'),
 
-  // TODO: Similar code is defined in
-  // - `abilities/project.js`
-  // - `abilities/task.js`
-  currentProjectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
-    let projectUsers = get(this, 'project.projectUsers');
-    let currentUserId = get(this, 'currentUser.user.id');
-
-    return projectUsers.find((item) => {
-      return get(item, 'user.id') === currentUserId;
-    });
-  }),
+  currentProjectMembership: projectMember('project.projectUsers', 'currentUser.user'),
 
   projectSkills: mapBy('project.projectSkills', 'skill'),
 

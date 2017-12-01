@@ -6,7 +6,7 @@
         <p>Manage your project's details like your icon, name, and description.</p>
       </aside>
       <section>
-        {{project-settings-form project=model}}
+        {{project-settings-form project=project}}
       </section>
     </section>
   </div>
@@ -42,7 +42,7 @@
           }}
         </div>
         <div class="project-skills-list">
-          {{#each projectSkills as |projectSkill|}}
+          {{#each project.projectSkills as |projectSkill|}}
             {{skill-button
               alwaysShowX=true
               iconBefore=false
