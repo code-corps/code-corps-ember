@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="component-list-container">
+    {{#power-select
+      placeholder="Please select component"
+      options=componentList
+      selected=selectedComponent
+      onchange=(action "selectComponent") as |component|}}
+      {{component}}
+    {{/power-select}}
+  </div>
+  <div class="flexbox-spacer"></div>
+  <div class="component-display-container">
+    {{outlet}}
+  </div>
+
+</div>

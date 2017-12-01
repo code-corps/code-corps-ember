@@ -18,9 +18,11 @@ module.exports = function(defaults) {
     break;
     case 'staging':
       fingerprintOptions.prepend = 'https://d3onq9263d8on4.cloudfront.net/';
+      options.addons.blacklist.push('styleguide');
     break;
     case 'production':
       fingerprintOptions.prepend = 'https://d3pgew4wbk2vb1.cloudfront.net/';
+      options.addons.blacklist.push('styleguide');
     break;
   }
 
