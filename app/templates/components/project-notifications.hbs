@@ -1,0 +1,45 @@
+<div class="container">
+  {{#unless project.approved}}
+    <div data-test-callout class="callout">
+      <div class="callout__content">
+        <div>
+          <p class="callout__content__title callout__content__title--default">
+            {{fa-icon "check-circle"}} <span class="is-completed">Create your project</span>
+          </p>
+
+          {{#if project.longDescriptionBody}}
+            <p data-test-description-added class="callout__content__title callout__content__title--default">
+              {{fa-icon "check-circle"}} <span class="is-completed">Write your description</span>
+            </p>
+          {{else}}
+            <p data-test-description-needed class="callout__content__title">
+              {{fa-icon "arrow-circle-right"}} Write your description
+            </p>
+            <p class="callout__content__description">
+              Before we can approve your project, you'll need to add a detailed description on {{#link-to 'project.index' project}}the About page{{/link-to}}.
+            </p>
+          {{/if}}
+
+          {{#if project.approvalRequested}}
+            <p data-test-review-added class="callout__content__title callout__content__title">
+              {{fa-icon "question-circle"}} Pending review
+            </p>
+            <p class="callout__content__description">
+              You'll get an email once your project has been approved. In the meantime, you can continue to set up your project.
+            </p>
+          {{else if project.longDescriptionBody}}
+            <p data-test-review-needed class="callout__content__title callout__content__title">
+              {{fa-icon "arrow-circle-right"}} Submit for review
+            </p>
+            <p class="callout__content__description">
+              After your project is approved it will become visible on Code Corps. This may take a few business days.
+            </p>
+            <p>
+              <button {{action submitForReview}} data-test-submit-review class="default">Submit for review</button>
+            </p>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  {{/unless}}
+</div>

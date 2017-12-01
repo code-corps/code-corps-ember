@@ -25,6 +25,7 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('project', [
+  'approvalRequested',
   'approved',
   'canActivateDonations',
   'closedTasksCount',
