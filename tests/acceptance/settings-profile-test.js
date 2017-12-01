@@ -130,8 +130,8 @@ test("it allows editing of user's skills", function(assert) {
   });
 
   andThen(() => {
-    assert.equal(settingsProfilePage.skillsTypeahead.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    settingsProfilePage.skillsTypeahead.inputItems(0).click();
+    assert.equal(settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {

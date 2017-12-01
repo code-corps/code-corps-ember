@@ -39,14 +39,6 @@ export default Component.extend({
   }),
 
   actions: {
-    blur() {
-      set(this, 'hidden', true);
-    },
-
-    focus() {
-      set(this, 'hidden', false);
-    },
-
     hoverSkill(skill) {
       get(this, 'results').forEach((item, index) => {
         if (item === skill) {
@@ -86,8 +78,16 @@ export default Component.extend({
       }
     },
 
+    hideDropdown() {
+      set(this, 'hidden', true);
+    },
+
     selectSkill(skill) {
       this._selectSkill(skill);
+    },
+
+    showDropdown() {
+      set(this, 'hidden', false);
     }
   },
 
