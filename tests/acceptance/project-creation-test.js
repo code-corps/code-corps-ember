@@ -5,6 +5,7 @@ import Mirage from 'ember-cli-mirage';
 import sinon from 'sinon';
 import loginPage from 'code-corps-ember/tests/pages/login';
 import page from 'code-corps-ember/tests/pages/projects/new';
+import { focus } from 'ember-native-dom-helpers';
 
 moduleForAcceptance('Acceptance | Project Creation');
 
@@ -181,8 +182,9 @@ test('A user can create a project', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(page.projectForm.skillsTypeahead.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    page.projectForm.skillsTypeahead.inputItems(0).click();
+    focus('input');
+    assert.equal(page.projectForm.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    page.projectForm.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {

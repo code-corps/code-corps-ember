@@ -106,8 +106,8 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.skillsTypeahead.inputItems(0).text, 'Ruby');
-    onboardingPage.skillsTypeahead.inputItems(0).click();
+    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby');
+    onboardingPage.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {
@@ -122,8 +122,8 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.skillsTypeahead.inputItems(0).text, 'Ruby');
-    onboardingPage.skillsTypeahead.inputItems(0).click();
+    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby');
+    onboardingPage.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {
