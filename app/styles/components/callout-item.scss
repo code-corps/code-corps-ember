@@ -23,6 +23,12 @@
     background-image: linear-gradient(#FFF, $red--light);
   }
 
+  &--warning {
+    border-color: $yellow;
+    background-image: -webkit-linear-gradient(#FFF, $yellow--light);
+    background-image: linear-gradient(#FFF, $yellow--light);
+  }
+
   // When the callout comes first in a block of content
   &--lead-in {
     margin-top: 0;
@@ -65,6 +71,14 @@ p.callout__content {
   &__title {
     font-weight: 600;
     margin-bottom: 5px;
+
+    &--default {
+      color: $blue;
+    }
+
+    &--success {
+      color: $green;
+    }
   }
 
   &__description {

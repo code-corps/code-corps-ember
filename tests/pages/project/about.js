@@ -3,6 +3,7 @@ import donationProgress from '../components/donations/donation-progress';
 import donationStatus from '../components/donations/donation-status';
 import editorWithPreview from '../components/editor-with-preview';
 import projectLongDescription from '../components/project-long-description';
+import projectNotifications from '../components/project-notifications';
 
 export default create({
   visit: visitable(':organization/:project'),
@@ -10,5 +11,6 @@ export default create({
   donationProgress,
   donationStatus,
   editorWithPreview,
-  projectLongDescription
+  projectLongDescription,
+  projectNotifications
 });

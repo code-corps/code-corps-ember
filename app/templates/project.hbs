@@ -4,4 +4,13 @@
 
 {{project-menu project=model}}
 
+{{#if session.isAuthenticated}}
+  {{#if (can "manage project" model)}}
+    {{project-notifications
+      project=model
+      submitForReview=(route-action "submitForReview" model)
+    }}
+  {{/if}}
+{{/if}}
+
 {{outlet}}
