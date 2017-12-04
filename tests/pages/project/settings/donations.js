@@ -29,7 +29,7 @@ export default create({
       clickSave: clickable('.save'),
       clickCancel: clickable('.cancel'),
       validationErrors: collection({
-        itemScope: '.error',
+        itemScope: '.input-error',
         item: {
           message: text('')
         }
