@@ -1,4 +1,4 @@
-import { triggerable, hasClass } from 'ember-cli-page-object';
+import { triggerable } from 'ember-cli-page-object';
 import tooltip from 'code-corps-ember/tests/pages/helpers/tooltip';
 
 export default {

@@ -29,7 +29,7 @@ moduleForComponent('task-card/user/unselected-item', 'Integration | Component | 
   }
 });
 
-test('the default state when user task is loading', function(assert) {
+test('the tooltip is not rendered initially', function(assert) {
   let task = { userTask: { isLoading: true } };
   this.set('task', task);
   renderPage();
@@ -45,7 +45,7 @@ test('the default state when user task is loaded', function(assert) {
   assert.notOk(page.isTooltipTarget, 'There is no tooltip because it lazy renders.');
 });
 
-test('when mousing over and out again', function(assert) {
+test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
   assert.expect(5);
 
   renderPage();
