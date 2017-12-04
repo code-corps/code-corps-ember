@@ -6,6 +6,32 @@ import moment from 'moment';
 
 moduleForAcceptance('Acceptance | Admin | GitHub Event | Show');
 
+test('The page requires logging in', function(assert) {
+  assert.expect(1);
+
+  let event = server.create('github-event');
+  page.visit({ id: event.id });
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'login', 'Got redirected to login');
+  });
+});
+
+test('The page requires user to be admin', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user', { admin: false, id: 1 });
+  authenticateSession(this.application, { user_id: user.id });
+
+  let event = server.create('github-event');
+  page.visit({ id: event.id });
+
+  andThen(() => {
+    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
+  });
+});
+
 test('Displays all the logged events', function(assert) {
   assert.expect(12);
 

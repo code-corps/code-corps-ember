@@ -36,6 +36,7 @@ Router.map(function() {
     this.route('organization-invites', function() {
       this.route('new');
     });
+    this.route('projects', function() {});
   });
 
   // GitHub OAuth redirection route

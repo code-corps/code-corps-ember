@@ -3,6 +3,10 @@ import { collection, create, hasClass, visitable } from 'ember-cli-page-object';
 export default create({
   visit: visitable('/admin/github/events'),
 
+  flashErrors: collection({
+    itemScope: '.flash > div.alert-danger'
+  }),
+
   logItems: collection({
     itemScope: '[data-test-log-row]',
     item: {
