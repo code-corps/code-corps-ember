@@ -26,8 +26,8 @@ export default Route.extend({
     }
   },
 
-  setupController(controller, models) {
-    controller.setProperties(models);
+  setupController(controller, { project, subscription }) {
+    controller.setProperties({ project, subscription });
   },
 
   renderTemplate() {

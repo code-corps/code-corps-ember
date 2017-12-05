@@ -1,15 +1,18 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 
 export default Route.extend({
+  currentUser: service(),
   userSubscriptions: service(),
 
-  model() {
-    return this.modelFor('project').reload().then((project) => {
-      let subscription = this.get('userSubscriptions').fetchForProject(project);
-      return RSVP.hash({ project, subscription });
-    });
+  async model() {
+    let project = await this.modelFor('project').reload();
+    let subscription = await this.get('userSubscriptions').fetchForProject(project);
+
+    // Fetch the project users to load abilities
+    await project.get('projectUsers');
+
+    return { project, subscription };
   },
 
   setupController(controller, { project, subscription }) {

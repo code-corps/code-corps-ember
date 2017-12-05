@@ -1,5 +1,6 @@
+/* eslint-env node */
 module.exports = {
-  command: "ember exam --split=3 --weighted --parallel",
+  command: 'ember exam --split=3 --weighted --parallel',
   scenarios: [
     {
       name: 'default',

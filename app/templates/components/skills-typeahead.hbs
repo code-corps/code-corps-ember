@@ -1,23 +1,30 @@
 {{skills-textfield
   autofocus=autofocus
-  focus-in="focus"
-  focus-out="blur"
+  focus-in=(action "showDropdown")
+  focus-out=(action "hideDropdown")
   getKeyDown=(action "getKeyDown")
+  id="skills-textfield"
   placeholder="Search skills"
   tabindex=tabindex
   value=query
 }}
 
-{{#if canShow}}
-  <div class="dropdown-menu">
-    {{#each results as |skill index|}}
-      {{skills-typeahead-result
-        hover="hoverSkill"
-        query=query
-        selectSkill="selectSkill"
-        skill=skill
-        skillsList=skillsList
-      }}
-    {{/each}}
-  </div>
-{{/if}}
+{{#ember-tether
+  target='#skills-textfield'
+  targetAttachment='bottom left'
+  attachment='top left'
+}}
+  {{#if canShow}}
+    <div class="dropdown-menu">
+      {{#each results as |skill index|}}
+        {{skills-typeahead-result
+          hover="hoverSkill"
+          query=query
+          selectSkill="selectSkill"
+          skill=skill
+          skillsList=skillsList
+        }}
+      {{/each}}
+    </div>
+  {{/if}}
+{{/ember-tether}}

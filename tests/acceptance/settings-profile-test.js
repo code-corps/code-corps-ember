@@ -82,7 +82,7 @@ test('it allows editing of users image', function(assert) {
   andThen(() => {
     assert.ok(settingsProfilePage.successAlert.isVisible);
     assert.equal(settingsProfilePage.successAlert.message, 'Photo uploaded successfully');
-    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.dropZone.backgroundImageData(), `url(${droppedImageString})`);
+    assert.equal(settingsProfilePage.userSettingsForm.imageDrop.dropZone.backgroundImageUrl(), droppedImageString);
     done();
   });
 });
@@ -130,8 +130,8 @@ test("it allows editing of user's skills", function(assert) {
   });
 
   andThen(() => {
-    assert.equal(settingsProfilePage.skillsTypeahead.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    settingsProfilePage.skillsTypeahead.inputItems(0).click();
+    assert.equal(settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {

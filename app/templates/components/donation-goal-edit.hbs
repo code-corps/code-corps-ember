@@ -1,21 +1,35 @@
-<div class="amount-group">
-  <span class="currency">$</span>
-  {{input class="amount" name="amount" type="number" min="0" step="1" placeholder="Custom amount" value=amount}}
-  <span class="period">per month</span>
+<div class="input-group {{if donationGoal.errors.amount "has-error"}}">
+  <div class="input-label">
+    <label for="amount">
+      <span class="input-label__text">Amount</span>
+    </label>
+  </div>
+  <div class="input-explain">
+    <p>Per month.</p>
+  </div>
+  <div class="input-control-group">
+    <span class="input-control-group__prefix">{{fa-icon "dollar"}}</span>
+    {{input class="input-control--medium amount" name="amount" type="number" min="0" step="1" value=amount}}
+  </div>
+  {{#each donationGoal.errors.amount as |error|}}
+    <p class="input-error">{{error.message}}</p>
+  {{/each}}
 </div>
-{{#each donationGoal.errors.amount as |error|}}
-  <p class="error">{{error.message}}</p>
-{{/each}}
-<div class="input-group">
-  {{textarea
-    class="description"
-    name="description"
-    placeholder="Tell your donors what this goal will allow you to do. Be specific, but make it interesting!"
-    value=description}}
+
+<div class="input-group {{if donationGoal.errors.description "has-error"}}">
+  <div class="input-label">
+    <label for="description">
+      <span class="input-label__text">Description</span>
+    </label>
+  </div>
+  <div class="input-explain">
+    <p>Tell your donors what this goal will allow you to do. Be specific, but make it interesting!</p>
+  </div>
+  {{textarea class="description" name="description" value=description}}
+  {{#each donationGoal.errors.description as |error|}}
+    <p class="input-error">{{error.message}}</p>
+  {{/each}}
 </div>
-{{#each donationGoal.errors.description as |error|}}
-  <p class="error">{{error.message}}</p>
-{{/each}}
 
 <div class="input-group">
   <button class="default save" {{action save (hash amount=amount description=description)}}>

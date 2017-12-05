@@ -1,10 +1,11 @@
 import { set, get } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
+import projectUser from 'code-corps-ember/tests/helpers/project-user';
 
 let owner = { id: 'owner' };
 let other = { id: 'other' };
 let project = {
-  projectUsers: [{ user: owner, role: 'owner' }]
+  projectUsers: [projectUser(owner)]
 };
 
 moduleFor('ability:project', 'Unit | Ability | project', {

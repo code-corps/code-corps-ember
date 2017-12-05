@@ -12,12 +12,22 @@
 }
 
 .page-header {
-  margin-bottom: 20px;
   border-bottom: 1px solid $gray--lightest;
+  margin-bottom: 20px;
 
   h2 {
     font-weight: 500;
     margin: 10px 0;
+  }
+
+  h3 {
+    align-items: center;
+    display: flex;
+    margin: 0.5em 0;
+  }
+
+  .icon {
+    margin-right: 10px;
   }
 }
 
@@ -116,4 +126,8 @@ h4 span {
   .skill {
     margin-bottom: 5px;
   }
+}
+
+.is-completed {
+  text-decoration: line-through;
 }

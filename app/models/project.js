@@ -5,6 +5,7 @@ import attr from 'ember-data/attr';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
+  approvalRequested: attr(),
   approved: attr(),
   canActivateDonations: attr(),
   closedTasksCount: attr('number'),
@@ -31,6 +32,7 @@ export default Model.extend({
   projectCategories: hasMany('project-category', { async: true }),
   projectSkills: hasMany('project-skill', { async: true }),
   projectUsers: hasMany('project-user', { async: true }),
+  skills: hasMany('skill', { async: true }),
   taskLists: hasMany('task-list', { async: true }),
   tasks: hasMany('tasks', { async: true }),
 

@@ -1,4 +1,3 @@
-import { alias } from '@ember/object/computed';
 import Controller from '@ember/controller';
 import { get, getProperties } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -8,8 +7,7 @@ export default Controller.extend({
   projectSkillsList: service(),
   store: service(),
 
-  project: alias('model'),
-  projectSkills: alias('project.projectSkills'),
+  project: null,
 
   addCategory(category) {
     let { project, store } = getProperties(this, 'project', 'store');

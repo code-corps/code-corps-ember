@@ -34,6 +34,9 @@ Router.map(function() {
     this.route('github-events', { path: '/github/events' }, function() {
       this.route('github-event', { path: '/:id' });
     });
+    this.route('organization-invites', function() {
+      this.route('new');
+    });
   });
 
   // GitHub OAuth redirection route
@@ -79,11 +82,6 @@ Router.map(function() {
     this.route('thank-you'); // When your donation successfully processed
   });
 
-  // Organization's projects
-  this.route('projects', {
-    path: '/:slugged_route_slug/projects'
-  });
-
   this.route('projects-list', {
     path: '/projects'
   });
@@ -103,8 +101,12 @@ Router.map(function() {
 
   // User *or* organization routes
   // e.g. /code-corps or /joshsmith
-  this.route('slugged-route', {
-    path: '/:slugged_route_slug'
+  this.route('slugged-route', { path: '/:slugged_route_slug' });
+
+  // Projects for an organization
+  this.route('projects', { path: '/:slugged_route_slug/projects' }, function() {
+    this.route('index', { path: '/' });
+    this.route('new', { path: '/new' });
   });
 
   // Onboarding routes

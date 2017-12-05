@@ -1,11 +1,11 @@
-import resolver from './helpers/resolver';
-import {
-  setResolver
-} from 'ember-qunit';
-import { start } from 'ember-cli-qunit';
+import Application from '../app';
+import { setApplication } from '@ember/test-helpers';
+import { start } from 'ember-qunit';
 import './helpers/flash-message';
 import loadEmberExam from 'ember-exam/test-support/load';
 
 loadEmberExam();
-setResolver(resolver);
+
+setApplication(Application.create({ autoboot: false }));
+
 start();

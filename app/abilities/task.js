@@ -1,8 +1,9 @@
 import { or, equal, alias } from '@ember/object/computed';
-import { get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { Ability } from 'ember-can';
+import projectMember from 'code-corps-ember/macros/project-member';
 
 export default Ability.extend({
   currentUser: service(),
@@ -20,20 +21,7 @@ export default Ability.extend({
     }
   }),
 
-  // TODO: Similar code is defined in
-  // - `components/project-header.js`
-  // - `abilities/project.js`
-  projectMembership: computed('task.project.projectUsers', 'currentUser.user.id', function() {
-    let currentUserId = get(this, 'currentUser.user.id');
-
-    if (isEmpty(currentUserId)) {
-      return false;
-    } else {
-      return get(this, 'task.project.projectUsers').find((item) => {
-        return get(item, 'user.id') === currentUserId;
-      });
-    }
-  }),
+  projectMembership: projectMember('task.project.projectUsers', 'currentUser.user'),
 
   userRole: alias('projectMembership.role'),
   userIsContributor: equal('userRole', 'contributor'),
