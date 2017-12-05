@@ -28,6 +28,7 @@ const Router = EmberRouter.extend(RouterScroll, {
 
 Router.map(function() {
   this.route('about');
+  this.route('freestyle');
 
   this.route('admin', function() {
     this.route('github-events', { path: '/github/events' }, function() {

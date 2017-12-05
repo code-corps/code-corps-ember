@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
+  projectTitle: 'Your Project Here',
   card: {
     brand: 'Visa',
     expMonth: '01',
@@ -8,7 +9,6 @@ export default Component.extend({
     id: 1,
     last4: 4242
   },
-
   donateHandler() {},
   saveAndDonateHandler() {}
 });

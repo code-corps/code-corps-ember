@@ -6,6 +6,6 @@ export default Component.extend({
   project: {
     description: 'Test project description',
     title: 'Test Project',
-    iconThumbUrl: 'icon.png'
+    iconThumbUrl: '/assets/images/icons/categories.png'
   }
 });
