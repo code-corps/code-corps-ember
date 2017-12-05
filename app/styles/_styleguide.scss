@@ -18,4 +18,17 @@
   .donation-container {
     float: inherit;
   }
+
+  .FreestyleSubsection {
+    ul {
+      padding-left: 40px;
+      li {
+        list-style-type: disc;
+      }
+    }
+  }
+
+  .FreestyleUsage-usage, .FreestyleUsage-notes {
+    padding: 1rem 1rem 0;
+  }
 }
