@@ -10,6 +10,12 @@ import DS from 'ember-data';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import { initialize as initializeKeyboard } from 'ember-keyboard';
 
+import {
+  assertTooltipNotRendered,
+  assertTooltipNotVisible
+} from 'code-corps-ember/tests/helpers/ember-tooltips';
+
+
 const { PromiseObject } = DS;
 
 let page = PageObject.create(taskCardComponent);
@@ -304,6 +310,27 @@ test('assignment dropdown does not render if user has no ability and card is hov
   });
 });
 
+test('assignment dropdown assigns selected user', function(assert) {
+  let task = { id: 'task' };
+  let user1 = {
+    id: 'user1',
+    username: 'testuser1',
+    photoThumbUrl: 'test1.png'
+  };
+  let user2 = {
+    id: 'user2',
+    username: 'testuser2',
+    photoThumbUrl: 'test2.png'
+  };
+  let users = [user1, user2];
+
+  setProperties(this, { task, users });
+  set(this, 'selectedOption', { user1 });
+  renderPage();
+  assertTooltipNotVisible(assert),
+  assertTooltipNotRendered(assert);
+});
+
 test('it archives task when hovering and pressing C key', function(assert) {
   let done = assert.async();
   assert.expect(1);
@@ -437,4 +464,3 @@ test('it does not archive task when the user does not have the ability', functio
   page.mouseenter();
   page.triggerKeyDown('KeyC');
   assert.ok(true);
-});

@@ -63,7 +63,6 @@ test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
   };
 
   set(this, 'selectedOption', { mockUser });
-
   renderPage();
   assertTooltipNotRendered(assert);
 
