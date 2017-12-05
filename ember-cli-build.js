@@ -37,6 +37,9 @@ module.exports = function(defaults) {
       includePolyfill: true
     },
     fingerprint: fingerprintOptions,
+    freestyle: {
+      snippetSearchPaths: ['lib/styleguide/app']
+    },
     emberCLIDeploy: {
       // runOnPostBuild: (env === 'development') ? 'development-postbuild' : false,
       // shouldActivate: true
