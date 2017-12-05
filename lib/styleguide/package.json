@@ -1,0 +1,10 @@
+{
+  "name": "styleguide",
+  "dependencies": {
+    "ember-cli-babel": "^6.6.0",
+    "ember-cli-sass": "^7.0.0"
+  },
+  "keywords": [
+    "ember-addon"
+  ]
+}
