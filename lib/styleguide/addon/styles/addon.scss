@@ -1,24 +1,8 @@
 .FreestyleGuide {
-  .card-logo {
-    &__container {
-      top: inherit;
-      left: inherit;
-      position: inherit;
-    }
-
-    &__inner {
-      position: inherit;
-    }
-  }
-
   code {
     background: none;
   }
-
-  .donation-container {
-    float: inherit;
-  }
-
+  
   .FreestyleSubsection {
     ul {
       padding-left: 40px;
@@ -32,3 +16,6 @@
     padding: 1rem 1rem 0;
   }
 }
+
+@import 'donation';
+@import 'donations';

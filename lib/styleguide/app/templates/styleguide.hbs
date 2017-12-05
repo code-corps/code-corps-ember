@@ -5,19 +5,29 @@
 
   {{#freestyle-section name='Donation' as |section|}}
     {{#section.subsection name='Card Item'}}
-      {{styleguide/donation--card-item}}
+      {{styleguide/donation/card-item}}
     {{/section.subsection}}
 
     {{#section.subsection name='Card Logos'}}
-      {{styleguide/donation--card-logos}}
+      {{styleguide/donation/card-logos}}
     {{/section.subsection}}
 
     {{#section.subsection name="Donation Container"}}
-      {{styleguide/donation--donation-container}}
+      {{styleguide/donation/donation-container}}
     {{/section.subsection}}
 
     {{#section.subsection name="Project Header"}}
-      {{styleguide/donation--project-header}}
+      {{styleguide/donation/project-header}}
+    {{/section.subsection}}
+  {{/freestyle-section}}
+
+  {{#freestyle-section name='Donations' as |section|}}
+    {{#section.subsection name="Create Donation"}}
+      {{styleguide/donations/create-donation}}
+    {{/section.subsection}}
+
+    {{#section.subsection name="Donation Amount Button"}}
+      {{styleguide/donations/donation-amount-button}}
     {{/section.subsection}}
   {{/freestyle-section}}
 

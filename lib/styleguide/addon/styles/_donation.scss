@@ -1,0 +1,19 @@
+.FreestyleGuide {
+  .card-logo {
+    &__container {
+      top: inherit;
+      left: inherit;
+      position: inherit;
+    }
+
+    &__inner {
+      position: inherit;
+    }
+  }
+
+
+
+  .donation-container {
+    float: inherit;
+  }
+}
