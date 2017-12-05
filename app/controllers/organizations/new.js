@@ -76,9 +76,8 @@ export default Controller.extend({
 
       let onCreated = (organization) => {
         get(this, 'flashMessages').clearMessages().success('Organization created successfully');
-        // TODO: Need a projects.new route to transition to
         this.transitionToRoute(
-          'slugged-route',
+          'projects.new',
           { slugged_route_slug: get(organization, 'slug') }
         );
       };

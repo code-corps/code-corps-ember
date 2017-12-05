@@ -31,9 +31,9 @@ let user = {
 };
 
 let project = {
+  categories: [{ title: 'Test category' }],
   description: 'Test description',
   iconLargeUrl: 'http://lorempixel.com/500/500/',
-  projectCategories: [{ title: 'Test category' }],
   projectUsers: [{ user }],
   title: 'Test Project'
 };
@@ -48,10 +48,10 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
-  assert.equal(this.$('ul.categories li').length, 1);
+  assert.equal(this.$('ul.categories li').length, 1, 'It renders categories.');
   assert.equal(this.$('p.description').text().trim(), project.description);
-  assert.equal(this.$('.project-card__skills').length, 1);
-  assert.equal(this.$('ul.project-card__project-users li').length, 1);
+  assert.equal(this.$('.project-card__skills').length, 1, 'It renders skills.');
+  assert.equal(this.$('ul.project-card__project-users li').length, 1, 'It renders users.');
   assert.equal(this.$('ul.project-card__project-users li:first img').attr('src'), user.photoThumbUrl);
 });
 

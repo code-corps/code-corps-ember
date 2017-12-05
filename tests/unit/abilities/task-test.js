@@ -1,5 +1,6 @@
 import { set, get } from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
+import projectUser from 'code-corps-ember/tests/helpers/project-user';
 
 moduleFor('ability:task', 'Unit | Ability | task', {
   needs: [
@@ -22,10 +23,10 @@ let model = {
   project: {
     owner,
     projectUsers: [
-      { user: pending, role: 'pending' },
-      { user: contributor, role: 'contributor' },
-      { user: admin, role: 'admin' },
-      { user: owner, role: 'owner' }
+      projectUser(pending, 'pending'),
+      projectUser(contributor, 'contributor'),
+      projectUser(admin, 'admin'),
+      projectUser(owner, 'owner')
     ]
   }
 };

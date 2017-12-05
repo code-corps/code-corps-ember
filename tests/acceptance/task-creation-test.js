@@ -336,7 +336,7 @@ test('Skills can be assigned to task during creation', function(assert) {
 
   andThen(() => {
     // add skill
-    projectTasksNewPage.skillsTypeahead.inputItems(0).click();
+    projectTasksNewPage.skillsTypeahead.dropdown.inputItems(0).click();
   });
 
   andThen(() => {

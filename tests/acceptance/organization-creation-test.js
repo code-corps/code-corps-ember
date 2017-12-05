@@ -202,7 +202,7 @@ test('A user with a valid invite can create an organization', function(assert) {
   andThen(() => {
     assert.equal(page.organizationForm.name, organizationName, 'Organization name was prefiled');
     page.organizationForm.imageDrop.dropZone.dropFile(droppedImageString);
-    assert.equal(page.organizationForm.imageDrop.dropZone.backgroundImageData(), `url(${droppedImageString})`, 'Image dropped successfully');
+    assert.equal(page.organizationForm.imageDrop.dropZone.backgroundImageUrl(), droppedImageString, 'Image dropped successfully');
     page.organizationForm
       .inputName('Bar')
       .inputDescription('Baz')
@@ -210,7 +210,7 @@ test('A user with a valid invite can create an organization', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(currentRouteName(), 'slugged-route', 'User was redirected correctly');
+    assert.equal(currentRouteName(), 'projects.new', 'User was redirected correctly');
     let organization = server.schema.organizations.findBy({ name: 'Bar', description: 'Baz' });
     assert.ok(organization, 'Organization was created.');
     assert.ok(organization.cloudinaryPublicId, 'Organization has image.');
