@@ -12,9 +12,10 @@ import { initialize as initializeKeyboard } from 'ember-keyboard';
 
 import {
   assertTooltipNotRendered,
+  assertTooltipVisible,
+  assertTooltipRendered,
   assertTooltipNotVisible
 } from 'code-corps-ember/tests/helpers/ember-tooltips';
-
 
 const { PromiseObject } = DS;
 
@@ -310,25 +311,49 @@ test('assignment dropdown does not render if user has no ability and card is hov
   });
 });
 
-test('assignment dropdown assigns selected user', function(assert) {
+test('the selected-item component is visable when a task has a user assigned ', function(assert) {
+  assert.expect(5);
+
   let task = { id: 'task' };
-  let user1 = {
-    id: 'user1',
-    username: 'testuser1',
-    photoThumbUrl: 'test1.png'
-  };
-  let user2 = {
-    id: 'user2',
-    username: 'testuser2',
-    photoThumbUrl: 'test2.png'
-  };
-  let users = [user1, user2];
+  let user = { id: 'user', username: 'testuser', photoThumbUrl: 'test.png' };
+  let users = [user];
+  let taskUser = user;
+
+  setProperties(this, { task, users, taskUser });
+
+  renderPage();
+  assert.equal(page.selectedItem.selectedIcon.src, taskUser.photoThumbUrl, 'the selected user photo icon renders');
+  assert.notOk(page.tooltip, 'there is no tooltip because mouse is not hovering.');
+  assertTooltipNotRendered(assert);
+
+  page.selectedItem.mouseenter();
+
+  assertTooltipVisible(assert);
+  assert.equal(page.selectedItem.tooltip.text, `Assigned to ${taskUser.username}`, 'the tooltip renders the correct text.');
+});
+
+test('the unselected-item component is visable when a task has a user assigned ', function(assert) {
+  assert.expect(4);
+  let task = { userTask: { isLoading: false }, id: 'task' };
+  let user = { id: 'user', username: 'testuser' };
+  let users = [user];
 
   setProperties(this, { task, users });
-  set(this, 'selectedOption', { user1 });
+
   renderPage();
-  assertTooltipNotVisible(assert),
+  assert.ok(page.unselectedItem.unselectedIcon.isVisible, 'the unselected user icon renders.');
+  assert.notOk(page.tooltip, 'there is no tooltip because mouse is not hovering.');
   assertTooltipNotRendered(assert);
+
+  page.unselectedItem.mouseenter();
+
+  assertTooltipVisible(assert);
+  assert.equal(page.unselectedItem.tooltip.text, 'Assigned this task', 'the tooltip renders the correct text.');
+
+  page.unselectedItem.mouseleave();
+
+  assertTooltipRendered(assert);
+  assertTooltipNotVisible(assert);
 });
 
 test('it archives task when hovering and pressing C key', function(assert) {
@@ -464,3 +489,4 @@ test('it does not archive task when the user does not have the ability', functio
   page.mouseenter();
   page.triggerKeyDown('KeyC');
   assert.ok(true);
+});

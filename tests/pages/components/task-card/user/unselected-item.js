@@ -8,6 +8,10 @@ export default {
     scope: '[data-test-loading-icon]'
   },
 
+  unselectedIcon: {
+    scope: '[data-test-unselected-icon]'
+  },
+
   mouseenter: triggerable('mouseenter'),
   mouseleave: triggerable('mouseleave'),
 
