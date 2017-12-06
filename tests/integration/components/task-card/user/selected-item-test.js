@@ -39,30 +39,29 @@ test('the default state when user task is loaded', function(assert) {
   assert.notOk(page.isTooltipTarget, 'There is no tooltip because it lazy renders.');
 });
 
-test('the selected user is rendered', function(assert) {
+test('the selected user is rendered as an icon', function(assert) {
+  assert.expect(1);
 
   let mockUser = {
-
     photoThumbUrl: 'test.png',
-    userName: 'testuser'
+    username: 'testuser'
   };
 
-  set(this, 'selectedOption', { mockUser });
+  set(this, 'selectedOption', mockUser);
   renderPage();
-  assert.equal(mockUser.userName, 'testuser');
-  assert.equal(mockUser.photoThumbUrl, 'test.png');
+  assert.equal(page.selectedIcon.src, mockUser.photoThumbUrl, 'the user photo was rendered in the icon.');
 });
 
 test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
-  assert.expect(5);
+  assert.expect(6);
 
   let mockUser = {
 
     photoThumbUrl: 'test.png',
-    userName: 'testuser'
+    username: 'testuser'
   };
 
-  set(this, 'selectedOption', { mockUser });
+  set(this, 'selectedOption', mockUser);
   renderPage();
   assertTooltipNotRendered(assert);
 
@@ -70,6 +69,7 @@ test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
 
   assertTooltipRendered(assert);
   assertTooltipVisible(assert);
+  assert.equal(page.tooltip.text, `Assigned to ${mockUser.username}`, 'the tooltip renders the correct text.');
 
   page.mouseleave();
 
