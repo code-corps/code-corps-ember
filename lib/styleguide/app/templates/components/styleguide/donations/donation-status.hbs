@@ -1,0 +1,13 @@
+{{#freestyle-collection title="Donation Statuses " defaultKey="None" inline=false as |collection|}}
+  {{#collection.variant key="None"}}
+    {{#freestyle-usage 'donations--donation-status-no-subscribe' title='Donation Status'}}
+      {{donations/donation-status}}
+    {{/freestyle-usage}}
+  {{/collection.variant}}
+
+  {{#collection.variant key="subscription"}}
+    {{#freestyle-usage 'donations--donation-status' title='Donation Status'}}
+      {{donations/donation-status subscription=subscription}}
+    {{/freestyle-usage}}
+  {{/collection.variant}}
+{{/freestyle-collection}}
