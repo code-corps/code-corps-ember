@@ -7,11 +7,7 @@ import userDropdownComponent from 'code-corps-ember/tests/pages/component/user-d
 let page = PageObject.create(userDropdownComponent);
 
 function renderPage() {
-  page.render(hbs`
-{{user-dropdown
-  user=user
-  action='hide'
-   }}`);
+  page.render(hbs`{{user-dropdown user=user action='hide'}}`);
 }
 
 moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
