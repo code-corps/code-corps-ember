@@ -2,7 +2,7 @@ import { computed } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import PageObject from 'ember-cli-page-object';
 import hbs from 'htmlbars-inline-precompile';
-import userDropdownComponent from 'code-corps-ember/tests/pages/components/user-dropdown';
+import userDropdownComponent from 'code-corps-ember/tests/pages/component/user-dropdown';
 
 let page = PageObject.create(userDropdownComponent);
 
@@ -15,7 +15,13 @@ function renderPage() {
 }
 
 moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
-  integration: true
+  integration: true,
+  beforeEach() {
+    page.setContext(this);
+  },
+  afterEach() {
+    page.removeContext();
+  }
 });
 
 const stubUser = {
@@ -38,7 +44,7 @@ test('it renders', function(assert) {
   this.set('user', stubUser);
   renderPage();
 
-  assert.equal(page.length, 1, 'The component renders');
+  assert.ok(page.isVisible, 'The component renders');
 });
 
 test('it triggers the hide action when clicked', function(assert) {
