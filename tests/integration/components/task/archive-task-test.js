@@ -3,6 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/task/archive-task';
 import { Ability } from 'ember-can';
+import sinon from 'sinon';
 
 let page = PageObject.create(component);
 
@@ -26,7 +27,12 @@ moduleForComponent('task/archive-task', 'Integration | Component | task/archive 
 });
 
 test('can archive if user has ability', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
+
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
+    assert.ok(true, 'Confirmation prompt was called.');
+    return true;
+  });
 
   let task = { archived: false };
   this.set('task', task);
@@ -39,6 +45,8 @@ test('can archive if user has ability', function(assert) {
   renderPage();
 
   page.archiveLink.click();
+
+  stub.restore();
 });
 
 test('cannot archive if user does not have ability', function(assert) {
