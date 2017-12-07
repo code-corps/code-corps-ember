@@ -16,7 +16,6 @@ export default {
 
   mouseenter: triggerable('mouseenter'),
   mouseleave: triggerable('mouseleave'),
-  unselectedItem,
 
   number: {
     scope: '[data-test-task-number]'
@@ -25,6 +24,7 @@ export default {
   pullRequestIcon,
 
   selectedItem,
+  unselectedItem,
 
   taskAssignment,
 
@@ -36,5 +36,6 @@ export default {
 
   title: {
     scope: '[data-test-task-title]'
-  }
+  },
+
 };
