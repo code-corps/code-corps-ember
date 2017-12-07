@@ -320,9 +320,8 @@ test('the selected-item component is visable when a task has a user assigned ', 
 
 test('the unselected-item component is visible when a task has no user assigned', function(assert) {
   assert.expect(1);
-  let task = { id: 'task' };
 
-  setProperties(this, { task });
+  this.register('ability:task', Ability.extend({ canAssign: true }));
 
   renderPage();
   assert.ok(page.unselectedItem.isVisible, 'the unselected item component renders.');
