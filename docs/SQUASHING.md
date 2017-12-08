@@ -111,7 +111,7 @@ The first commit I did
 The second commit I did
 ```
 
-You'll want to remove or comment out everything except for the first message, which you can edit to be a more complete summary of your changes. Once again, save and close teh file.
+You'll want to remove or comment out everything except for the first message, which you can edit to be a more complete summary of your changes. Once again, save and close the file.
 
 To finish, you'll force push this new commit with the following command:
 
