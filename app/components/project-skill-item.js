@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { getProperties } from '@ember/object';
 
 export default Component.extend({
-  classNames: ['skill', 'has-spinner', 'default', 'small'],
+  classNames: ['skill', 'has-spinner', 'small'],
   tagName: 'button',
 
   click() {

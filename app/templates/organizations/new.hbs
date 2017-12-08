@@ -1,0 +1,119 @@
+<div class="container">
+  <h2>Let's get started</h2>
+
+  <div class="panel {{if isValid "panel--highlighted-green" "panel--highlighted"}}">
+    <section>
+      <aside>
+        {{#if isValid}}
+          <h3>{{fa-icon "check-circle"}} Your invite's verified!</h3>
+          <p>Your invite code looks good: <strong>{{code}}</strong></p>
+        {{else}}
+          <h3>{{fa-icon "lock"}} Verify your invite</h3>
+          <p>Check the short code you got in your email.</p>
+        {{/if}}
+      </aside>
+
+      {{#if isInvalid}}
+        <section data-test-invite-code-form>
+          <div class="input-group has-error">
+            <div class="input-label">
+              <label for="slug">
+                <span class="input-label__text">Invite code</span>
+              </label>
+            </div>
+            <div class="input-explain">
+              <p>The invite code you got in your email.</p>
+            </div>
+            {{input class="input-control input-control--medium" type="text" name="code" value=code}}
+            {{#if inviteError}}
+              <p class="input-error">{{inviteError}}</p>
+            {{/if}}
+          </div>
+
+          <div class="input-group">
+            <button class="save default" {{action 'verifyInvite'}} data-test-submit>Verify invite</button>
+          </div>
+        </section>
+      {{/if}}
+    </section>
+  </div>
+
+  <div class="panel">
+    <section>
+      <aside>
+        <h3>{{fa-icon "address-card"}} Create your organization</h3>
+        <p>Organizations allow you to host multiple projects on Code Corps.</p>
+      </aside>
+
+      {{#if isValid}}
+        <section data-test-organization-form>
+          <div class="input-group {{if organization.errors.name "has-error"}}">
+            <div class="input-label">
+              <label for="name">
+                <span class="input-label__text">Organization name</span>
+              </label>
+            </div>
+            <div class="input-explain">
+              <p>Your organization's name on Code Corps.</p>
+              <p>If you only plan to create a single project, just use your project name here.</p>
+            </div>
+            {{input class="input-control input-control--medium" type="text" name="name" value=organization.name}}
+            {{#each organization.errors.name as |error|}}
+              <p class="input-error">{{error.message}}</p>
+            {{/each}}
+          </div>
+          
+          <div class="input-group {{if organization.errors.cloudinaryPublicId "has-error"}}">
+            {{image-drop
+              helpText="Upload your logo."
+              hoverText="Upload your logo."
+              large=true
+              onDone=(action uploadDone)
+              onError=(action uploadErrored)
+              onStart=(action uploadStarted)
+              originalImage=organization.iconLargeUrl
+            }}
+            {{#each organization.errors.cloudinaryPublicId as |error|}}
+              <p class="input-error">{{error.message}}</p>
+            {{/each}}
+          </div>
+
+          <div class="input-group {{if organization.errors.slug "has-error"}}">
+            <div class="input-label">
+              <label for="slug">
+                <span class="input-label__text">Vanity URL</span>
+              </label>
+            </div>
+            <div class="input-explain">
+              <p>Your organization's page at https://codecorps.org/<strong>{{organization.slug}}</strong>.</p>
+            </div>
+            {{input class="input-control input-control--medium" type="text" name="slug" value=organization.slug}}
+            {{#each organization.errors.slug as |error|}}
+              <p class="input-error">{{error.message}}</p>
+              <p class="input-error">If your URL is already taken, you can change your organization name or just change the slug from <strong>{{organization.slug}}</strong> to something else.</p>
+            {{/each}}
+          </div>
+
+          <div class="input-group {{if organization.errors.description "has-error"}}">
+            <div class="input-label">
+              <label for="description">
+                <span class="input-label__text">Description</span>
+              </label>
+            </div>
+            <div class="input-explain">
+              <p>What your organization does in a few words.</p>
+            </div>
+            {{textarea class="input-control" type="text" name="description" value=organization.description}}
+            {{#each organization.errors.description as |error|}}
+              <p class="input-error">{{error.message}}</p>
+            {{/each}}
+          </div>
+
+          <div class="input-group">
+            <button class="save default" {{action 'save'}} data-test-submit>Create organization</button>
+          </div>
+        </section>
+      {{/if}}
+    </section>
+  </div>
+</div>

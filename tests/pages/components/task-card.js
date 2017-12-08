@@ -4,6 +4,9 @@ import pullRequestIcon from 'code-corps-ember/tests/pages/components/github/pull
 import taskAssignment from 'code-corps-ember/tests/pages/components/task-assignment';
 import { triggerKeyDown } from 'ember-keyboard';
 
+import selectedItem from 'code-corps-ember/tests/pages/components/task-card/user/selected-item';
+import unselectedItem from 'code-corps-ember/tests/pages/components/task-card/user/unselected-item';
+
 export default {
   scope: '.task-card',
 
@@ -19,6 +22,9 @@ export default {
   },
 
   pullRequestIcon,
+
+  selectedItem,
+  unselectedItem,
 
   taskAssignment,
 

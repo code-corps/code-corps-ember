@@ -1,5 +1,5 @@
 {{#if task.userTask.isLoading}}
-  <span class="select-inline__loading-item__icon"></span>
+  <span data-test-loading-icon class="select-inline__loading-item__icon"></span>
   <span class="select-inline__loading-item__text"></span>
 {{else}}
   <span data-test-unselected-icon class="select-inline__unselected-item__icon">
@@ -9,6 +9,8 @@
     class='tooltip'
     effect='none'
     enableLazyRendering=true
+    event='none'
+    isShown=tooltipShown
     keepInWindow=true
     side='bottom'
   }}

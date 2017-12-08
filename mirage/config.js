@@ -70,11 +70,12 @@ function generatePreviewMentions(schema, preview) {
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
   'categories', 'comment-user-mentions', 'comments', 'donation-goals',
-  'github-events', 'organizations', 'task-lists', 'task-skills',
-  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
-  'slugged-routes', 'stripe-connect-accounts', 'stripe-connect-subscriptions',
-  'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
-  'user-categories', 'users'
+  'github-events', 'organizations', 'organization-invites', 'task-lists',
+  'task-skills', 'task-user-mentions', 'tasks', 'previews', 'projects',
+  'project-categories', 'slugged-routes', 'stripe-connect-accounts',
+  'stripe-connect-subscriptions', 'stripe-connect-plans',
+  'stripe-platform-cards', 'stripe-platform-customers', 'user-categories',
+  'users'
 ];
 
 export default function() {
@@ -227,7 +228,12 @@ export default function() {
   */
 
   this.get('/organizations', { coalesce: true });
-  this.post('/organizations');
+  this.post('/organizations', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let organization = schema.create('organization', attrs);
+    schema.create('sluggedRoute', { slug: attrs.slug, organization });
+    return organization;
+  });
   this.get('/organizations/:id');
   this.patch('/organizations/:id');
 
@@ -239,6 +245,21 @@ export default function() {
   this.post('/organization-github-app-installations');
   this.get('/organization-github-app-installations/:id');
   this.delete('/organization-github-app-installations/:id');
+
+  /**
+  * Organization invites
+  */
+
+  this.get('/organization-invites', function(schema, request) {
+    let { queryParams } = request;
+    let { code } = queryParams;
+    if (code) {
+      return schema.organizationInvites.where({ code });
+    } else {
+      return schema.organizationInvites.all();
+    }
+  });
+  this.post('/organization-invites');
 
   /**
   * Password
@@ -339,7 +360,24 @@ export default function() {
   */
 
   this.get('/projects', { coalesce: true });
-  this.post('/projects');
+  this.post('/projects', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    let project = schema.create('project', attrs);
+
+    if (attrs.categoryIds) {
+      attrs.categoryIds.forEach((categoryId) => {
+        schema.create('project-category', { categoryId, project });
+      });
+    }
+
+    if (attrs.skillIds) {
+      attrs.skillIds.forEach((skillId) => {
+        schema.create('project-skill', { skillId, project });
+      });
+    }
+
+    return project;
+  });
   this.get('/projects/:id');
 
   this.get('/projects/:projectId/tasks', (schema, request) => {

@@ -2,6 +2,8 @@
 
 <div class="container">
   {{#each projects as |project|}}
-    {{project-card project=project}}
+    {{#link-to 'project' project.organization.slug project.slug class="project-card-wrapper"}}
+      {{project-card project=project}}
+    {{/link-to}}
   {{/each}}
 </div>

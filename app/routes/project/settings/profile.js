@@ -1,19 +1,19 @@
 import { get, setProperties } from '@ember/object';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import RSVP from 'rsvp';
 
 export default Route.extend({
   store: service(),
 
-  model() {
+  async model() {
     let project = this.modelFor('project');
-    let categories = this.get('store').findAll('category');
-    let projectCategories = get(project, 'projectCategories');
-    return RSVP.hash({ project, categories, projectCategories });
+    let categories = await this.get('store').findAll('category');
+    let projectCategories = await get(project, 'projectCategories');
+    let projectSkills = await get(project, 'projectSkills');
+    return { project, categories, projectCategories, projectSkills };
   },
 
-  setupController(controller, { project, categories, projectCategories }) {
-    setProperties(controller, { project, categories, projectCategories });
+  setupController(controller, { project, categories, projectCategories, projectSkills }) {
+    setProperties(controller, { project, categories, projectCategories, projectSkills });
   }
 });

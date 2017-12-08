@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { mapBy } from '@ember/object/computed';
-import { get, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import projectMember from 'code-corps-ember/macros/project-member';
 
 /**
   `project-card` composes a card that contains the given project's description,
@@ -23,19 +23,7 @@ export default Component.extend({
   currentUser: service(),
   session: service(),
 
-  // TODO: Similar code is defined in
-  // - `abilities/project.js`
-  // - `abilities/task.js`
-  currentProjectMembership: computed('project.projectUsers', 'currentUser.user.id', function() {
-    let projectUsers = get(this, 'project.projectUsers');
-    let currentUserId = get(this, 'currentUser.user.id');
+  currentProjectMembership: projectMember('project.projectUsers', 'currentUser.user'),
 
-    return projectUsers.find((item) => {
-      return get(item, 'user.id') === currentUserId;
-    });
-  }),
-
-  projectCategories: mapBy('project.projectCategories', 'category'),
-  projectSkills: mapBy('project.projectSkills', 'skill'),
   projectUsers: mapBy('project.projectUsers', 'user')
 });

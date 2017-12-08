@@ -4,13 +4,14 @@
   border-radius: 4px;
   box-shadow: 0px 10px 41px -16px rgba(0,0,0,0.75);
   float: left;
-  margin-top: 5px;
+  margin-top: 10px;
   min-width: 15em;
   padding: 5px 0;
   position: absolute;
   text-align: left;
   top: 100%;
   z-index: 99999;
+
   &--right {
     float: none;
     right: 0;

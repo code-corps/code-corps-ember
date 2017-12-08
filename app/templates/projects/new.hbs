@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="page-header">
+    <h3><img class="icon" src="{{organization.iconThumbUrl}}" /> {{organization.name}}</h3>
+  </div>
+  <h2>{{#if isFirstProject}}Create your first project{{else}}Create a  new project{{/if}}</h2>
+
+  <div class="panel">
+    <section>
+      <aside>
+        <h3>{{fa-icon "address-card"}} Your project's details</h3>
+        <p>Projects are where you'll find volunteers, manage tasks, and accept donations.</p>
+      </aside>
+
+      <section data-test-project-form>
+        {{#if (and showCallout isFirstProject)}}
+          <div data-test-callout class="callout callout--lead-in">
+            <div class="callout__content">
+              <div>
+                <p data-test-callout-title class="callout__content__title">
+                  Looks like this is your first project! Congrats.
+                </p>
+                <p class="callout__content__description">
+                  You can copy over your logo, title, and vanity URL from your organization if the details will be the same.
+                </p>
+                <p>
+                  <button data-test-copy {{action (pipe (action "copyOrganizationData") (action "dismissCallout") (action "flashCopySuccess")) organization}} class="default">Copy details from <strong>{{organization.name}}</strong></button>
+                  <button data-test-dismiss {{action "dismissCallout"}} class="clear">No thanks</button>
+                </p>
+              </div>
+            </div>
+          </div>
+        {{/if}}
+
+        <div class="input-group {{if project.errors.title "has-error"}}">
+          <div class="input-label">
+            <label for="name">
+              <span class="input-label__text">Project title</span>
+            </label>
+          </div>
+          <div class="input-explain">
+            <p>Your project's title.</p>
+          </div>
+          {{input class="input-control input-control--medium" type="text" name="title" value=project.title}}
+          {{#each project.errors.title as |error|}}
+            <p class="input-error">{{error.message}}</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group {{if project.errors.cloudinaryPublicId "has-error"}}">
+          {{image-drop
+            helpText="Upload your logo."
+            hoverText="Upload your logo."
+            large=true
+            onDone=(action uploadDone)
+            onError=(action uploadErrored)
+            onStart=(action uploadStarted)
+            originalImage=project.iconLargeUrl
+          }}
+          {{#each project.errors.cloudinaryPublicId as |error|}}
+            <p class="input-error">{{error.message}}</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group {{if project.errors.slug "has-error"}}">
+          <div class="input-label">
+            <label for="slug">
+              <span class="input-label__text">Vanity URL</span>
+            </label>
+          </div>
+          <div class="input-explain">
+            <p>Your project's page at https://codecorps.org/{{project.organization.slug}}/<strong>{{project.slug}}</strong>.</p>
+          </div>
+          {{input class="input-control input-control--medium" type="text" name="slug" value=project.slug}}
+          {{#each project.errors.slug as |error|}}
+            <p class="input-error">{{error.message}}</p>
+            <p class="input-error">If your URL is already taken, you can change your project title or just change the slug from <strong>{{project.slug}}</strong> to something else.</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group {{if project.errors.description "has-error"}}">
+          <div class="input-label">
+            <label for="description">
+              <span class="input-label__text">Description</span>
+            </label>
+          </div>
+          <div class="input-explain">
+            <p>What your project is about in a few words.</p>
+          </div>
+          {{textarea class="input-control" type="text" name="description" value=project.description}}
+          {{#each project.errors.description as |error|}}
+            <p class="input-error">{{error.message}}</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group {{if project.errors.categories "has-error"}}">
+          <div class="input-label">
+            <label for="categories">
+              <span class="input-label__text">Categories</span>
+            </label>
+          </div>
+          <div class="input-explain">
+            <p>Choose any that fit.</p>
+          </div>
+          {{category-checkboxes
+            options=categories
+            selection=project.categories
+            updateCategories=(action updateCategories)
+          }}
+          {{#each project.errors.categories as |error|}}
+            <p class="input-error">{{error.message}}</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group {{if project.errors.skills "has-error"}}">
+          <div class="input-label">
+            <label for="skills">
+              <span class="input-label__text">Skills</span>
+            </label>
+          </div>
+          <div class="input-explain">
+            <p>What skills do you need from volunteers?</p>
+          </div>
+          <div class="skills-typeahead-container">
+            {{skills-typeahead
+              centered=true
+              selectSkill=(action toggleSkill)
+              skillsList=projectSkillsList
+            }}
+          </div>
+          {{#each project.errors.skills as |error|}}
+            <p class="input-error">{{error.message}}</p>
+          {{/each}}
+        </div>
+
+        <div class="input-group">
+          <div class="project-skills-list">
+            {{#each projectSkills as |projectSkill|}}
+              {{skill-button
+                alwaysShowX=true
+                iconBefore=false
+                isLoading=projectSkill.isLoading
+                remove=(action toggleSkill projectSkill.skill)
+                size="normal"
+                skill=projectSkill.skill
+              }}
+            {{/each}}
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-explain">
+            <p>Ready to submit your project?</p>
+          </div>
+          <button class="save default" {{action 'save'}} data-test-submit>Create project</button>
+          {{#if project.errors}}
+            <p class="input-error">There were some errors when trying to create the project.</p>
+          {{/if}}
+        </div>
+      </section>
+    </section>
+  </div>
+</div>

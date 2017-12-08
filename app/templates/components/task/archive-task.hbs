@@ -1,5 +1,5 @@
 {{#if task.archived}}
   <span class="task-sidebar-action">{{fa-icon "archive"}} Archived</span>
 {{else if canArchive}}
-  <a class="task-sidebar-action" {{action (action archiveTask)}}>{{fa-icon "archive"}} Archive</a>
+  <a class="task-sidebar-action" {{action (action "archiveTask")}}>{{fa-icon "archive"}} Archive</a>
 {{/if}}

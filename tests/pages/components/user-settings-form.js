@@ -1,13 +1,11 @@
 import {
   clickable,
   fillable,
-  findElement,
   isVisible,
   value
 } from 'ember-cli-page-object';
 
-import fillInFileInput from '../../helpers/fill-in-file-input';
-import removeDoubleQuotes from '../../helpers/remove-double-quotes';
+import imageDrop from 'code-corps-ember/tests/pages/components/image-drop';
 
 export default {
   scope: '.user-settings-form',
@@ -28,17 +26,5 @@ export default {
 
   clickSave: clickable('.save'),
 
-  imageDrop: {
-    scope: '.image-drop',
-
-    backgroundImageData() {
-      let $el = findElement(this);
-      let backgroundImageData = $el.css('background-image');
-      return removeDoubleQuotes(backgroundImageData);
-    },
-
-    dropFile(content) {
-      fillInFileInput(`${this.scope} input[type=file]`, { name: 'file.png', content });
-    }
-  }
+  imageDrop
 };

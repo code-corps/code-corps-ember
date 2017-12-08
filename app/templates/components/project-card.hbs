@@ -9,32 +9,41 @@
       {{project.title}}
     {{/link-to}}
   </h4>
-  {{project-categories-list categories=projectCategories}}
+  {{project-categories-list categories=project.categories}}
   <p class="description">
     {{project.description}}
   </p>
   <p class="project-card__actions">
-    {{#if project.shouldLinkExternally}}
-      <a class="button default small external-link" href="{{project.website}}">Join project<span></span></a>
-    {{else}}
-      {{#if session.isAuthenticated}}
-        {{#if currentProjectMembership.isLoaded}}
-          {{#if (eq currentProjectMembership.role 'pending')}}
-            <button class="clear small" disabled>Request sent</button>
+    <ul>
+      <li>
+        {{#if project.shouldLinkExternally}}
+          <a class="button default external-link" href="{{project.website}}">Join project<span></span></a>
+        {{else}}
+          {{#if session.isAuthenticated}}
+            {{#if currentProjectMembership.isLoaded}}
+              {{#if (eq currentProjectMembership.role 'pending')}}
+                <button class="clear" disabled>Request sent</button>
+              {{else}}
+                <button class="clear" disabled>Member</button>
+              {{/if}}
+            {{/if}}
+
+            {{#unless currentProjectMembership}}
+              {{project-join-modal project=project skills=project.skills}}
+            {{/unless}}
           {{else}}
-            <button class="clear small" disabled>Member</button>
+            {{link-to "Join project" "signup" class="button default"}}
           {{/if}}
         {{/if}}
-
-        {{#unless currentProjectMembership}}
-          {{project-join-modal project=project skills=projectSkills}}
-        {{/unless}}
-      {{else}}
-        {{link-to "Join project" "signup" class="button default small"}}
-      {{/if}}
-    {{/if}}
+      </li>
+      <li>
+        {{#if project.donationsActive}}
+          {{#link-to 'project.donate' project class="button clear"}}Donate{{/link-to}}
+        {{/if}}
+      </li>
+    </ul>
   </p>
-  {{related-skills class="project-card__skills" overflowHidden=true skills=projectSkills}}
+  {{related-skills class="project-card__skills" overflowHidden=true skills=project.skills}}
   {{project-card/project-users projectUsers=projectUsers}}
   {{#if project.donationsActive}}
     {{project-card/donation-progress

@@ -18,10 +18,12 @@ test('it exists', function(assert) {
 });
 
 testForAttributes('organization', [
+  'approved',
   'cloudinaryPublicId',
   'description',
   'iconLargeUrl',
   'iconThumbUrl',
+  'inviteCode',
   'name',
   'slug'
 ]);

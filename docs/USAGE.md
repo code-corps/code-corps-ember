@@ -22,7 +22,7 @@ Don't want to worry about setting up an API? This is best for work that's happen
 You can use our [`ember-cli-mirage`](http://www.ember-cli-mirage.com/) server by running:
 
 ```shell
-ember server --environment=mirage-development
+ember serve --environment=mirage-development
 ```
 
 (Be careful about copying and pasting this line, as on some machines the `--` might get converted into a `–`).
@@ -36,7 +36,7 @@ Want to work directly with a Code Corps API running on your machine?
 You can work with our [Elixir API](https://github.com/code-corps/code-corps-api/) server by running
 
 ```shell
-ember server
+ember serve
 ```
 
 Doing so will try to connect to the API under the port settings found under the API's documentation.
@@ -48,7 +48,7 @@ Want to work with an environment that's similar to staging?
 You can use our remote development server by running:
 
 ```shell
-ember server --environment=remote-development
+ember serve --environment=remote-development
 ```
 
 (Be careful about copying and pasting this line, as on some machines the `--` might get converted into a `–`).
@@ -63,11 +63,11 @@ Note that Ember is able to live-reload as changes are made to the codebase. Embe
 
 Need to stop the Ember server? `Ctrl+C` will do the trick.
 
-To start the server again run `ember server`, with whichever environment flag you prefer.
+To start the server again run `ember serve`, with whichever environment flag you prefer.
 
 ## Rebuilding Ember
 
-To rebuild, simply run `ember server`. You can clear cached dependencies with `npm cache clean`, `bower cache clean`, then reinstall.
+To rebuild, simply run `ember serve`. You can clear cached dependencies with `npm cache clean`, `bower cache clean`, then reinstall.
 
 Or, more simply, use [nombom](https://www.npmjs.com/package/nombom) which automates this process as one command: `nombom`.
 
@@ -94,7 +94,7 @@ The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for
 
 When contributing to the documentation please follow our [style guide](docs/STYLEGUIDE.md) and [YUIDoc's syntax guidelines](http://yui.github.io/yuidoc/syntax/index.html).
 
-To compile documentation from accross the app, install and run YUIDoc:
+To compile documentation from across the app, install and run YUIDoc:
 
 ```shell
 npm install -g yuidocjs

@@ -58,7 +58,6 @@
     order: 3;
   }
 }
-
 .header-navigation__options {
   display: flex;
   justify-content: flex-end;
@@ -76,6 +75,13 @@
     display: block;
     font-weight: 600;
     padding: 11px 10px;
+
+    &.header-navigation__icon-link {
+      color: $gray;
+      font-size: 24px;
+      margin: 0 5px;
+      padding: 5px 10px;
+    }
 
     &.active, &:hover {
       border-bottom-color: $blue;
