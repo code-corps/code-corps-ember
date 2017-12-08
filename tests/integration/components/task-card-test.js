@@ -304,6 +304,29 @@ test('assignment dropdown does not render if user has no ability and card is hov
   });
 });
 
+test('the selected-item component is visable when a task has a user assigned ', function(assert) {
+  assert.expect(1);
+
+  let task = { id: 'task' };
+  let user = { id: 'user', username: 'testuser', photoThumbUrl: 'test.png' };
+  let users = [user];
+  let taskUser = user;
+
+  setProperties(this, { task, users, taskUser });
+
+  renderPage();
+  assert.ok(page.selectedItem.isVisible, 'the selected item component is rendered');
+});
+
+test('the unselected-item component is visible when a task has no user assigned', function(assert) {
+  assert.expect(1);
+
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
+  renderPage();
+  assert.ok(page.unselectedItem.isVisible, 'the unselected item component renders.');
+});
+
 test('it archives task when hovering and pressing C key', function(assert) {
   let done = assert.async();
   assert.expect(1);
