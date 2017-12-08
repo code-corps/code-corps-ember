@@ -36,6 +36,5 @@ export default {
 
   title: {
     scope: '[data-test-task-title]'
-  },
-
+  }
 };
