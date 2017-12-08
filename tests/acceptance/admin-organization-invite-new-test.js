@@ -7,6 +7,30 @@ import page from 'code-corps-ember/tests/pages/admin/organization-invites/new';
 
 moduleForAcceptance('Acceptance | Admin | Organization Invites | New');
 
+test('The page requires logging in', function(assert) {
+  assert.expect(1);
+
+  page.visit();
+
+  andThen(() => {
+    assert.equal(currentRouteName(), 'login', 'Got redirected to login');
+  });
+});
+
+test('The page requires user to be admin', function(assert) {
+  assert.expect(2);
+
+  let user = server.create('user', { admin: false, id: 1 });
+  authenticateSession(this.application, { user_id: user.id });
+
+  page.visit();
+
+  andThen(() => {
+    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
+  });
+});
+
 test('An admin can create and send an organization invite', function(assert) {
   assert.expect(3);
 

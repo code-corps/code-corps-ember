@@ -1,36 +1,34 @@
-import { collection, create, visitable } from 'ember-cli-page-object';
+import { attribute, collection, create, visitable } from 'ember-cli-page-object';
 
 export default create({
-  visit: visitable('/admin/organization-invites'),
+  visit: visitable('/admin/projects'),
 
   flashMessages: collection({
     itemScope: '.flash > div'
   }),
 
   flashErrors: collection({
-    itemScope: '.flash > div.alert-danger'
+    itemScope: '.flash >div.alert-danger'
   }),
 
-  logItems: collection({
+  items: collection({
     itemScope: '[data-test-log-row]',
     item: {
       actions: {
         scope: '[data-test-actions]',
-        button: {
+        approve: {
           scope: 'button'
         }
       },
       approvalStatus: {
         scope: '[data-test-approval-status]'
       },
-      email: {
-        scope: '[data-test-email]'
-      },
       icon: {
-        scope: '[data-test-icon]'
+        scope: '[data-test-icon]',
+        src: attribute('src', 'img')
       },
-      name: {
-        scope: '[data-test-name]'
+      title: {
+        scope: '[data-test-title]'
       }
     }
   })

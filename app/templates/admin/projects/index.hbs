@@ -1,0 +1,51 @@
+<div class="log-rows">
+  <div data-test-log-row-header class="log-row log-row--header">
+    <span class="log-cell log-cell--shrink"></span>
+    <span class="log-cell log-cell--shrink">Project</span>
+    <span class="log-cell log-cell--shrink">Organization</span>
+    <span class="log-cell">Status</span>
+    <span class="log-cell log-cell--shrink">Approval</span>
+  </div>
+
+  {{#each model as |project|}}
+    <div data-test-log-row class="log-row">
+      <span data-test-icon class="log-cell log-cell--shrink">
+        {{#if project.iconThumbUrl}}
+          {{#link-to 'project' project.organization.slug project.slug}}
+            <img class="icon icon--small" width="35" height="35" src="{{project.iconThumbUrl}}" />
+          {{/link-to}}
+        {{else}}
+          <div class="icon icon--small"></div>
+        {{/if}}
+      </span>
+      <span data-test-title class="log-cell log-cell--shrink">
+        {{#link-to 'project' project.organization.slug project.slug}}
+          {{project.title}}
+        {{/link-to}}
+      </span>
+      <span data-test-organization class="log-cell log-cell--shrink">
+        {{#link-to 'slugged-route' project.organization.slug}}
+          {{project.organization.name}}
+        {{/link-to}}
+      </span>
+      <span data-test-approval-status class="log-cell">
+        {{#if project.isSaving}}
+          {{fa-icon "ellipsis-h"}} Saving...
+        {{else if project.approved}}
+          <span class="log-data--success">
+            {{fa-icon "check-circle"}} Approved
+          </span>
+        {{else if project.approvalRequested}}
+          {{fa-icon "question-circle"}} Pending approval
+        {{else}}
+          {{fa-icon "asterisk"}} Created
+        {{/if}}
+      </span>
+      <span data-test-actions class="log-cell log-cell--shrink">
+        {{#if (and project.approvalRequested (not project.approved))}}
+          <button {{action approve project}} class="default small">Approve</button>
+        {{/if}}
+      </span>
+    </div>
+  {{/each}}
+</div>

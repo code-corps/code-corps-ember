@@ -13,6 +13,10 @@ export default create({
     itemScope: '.flash > div'
   }),
 
+  flashErrors: collection({
+    itemScope: '.flash > div.alert-danger'
+  }),
+
   inviteForm: {
     scope: '[data-test-invite-form]',
 
