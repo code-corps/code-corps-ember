@@ -22,7 +22,7 @@ code-corps-ember/    # → Root folder for this project
     ├── abilities/   # → Used by `ember-can` to manage user access
     ├── components/  # → Specialized components used by routes
     ├── controllers/ # → Handles UI Behavior
-    ├── models/      # → persitent data
+    ├── models/      # → persistent data
     ├── routes/      # → Routes for URL handling
     ├── styles/      # → Style Sheets (we use Sass)
     ├── templates/   # → HTMLbars templates
@@ -78,7 +78,7 @@ npm ERR! Please make sure you have the correct access rights
 npm ERR! and the repository exists.
 ```
 
-you will need to [associate your ssh key with github](https://help.github.com/articles/generating-an-ssh-key/)
+you will need to [associate your ssh key with GitHub](https://help.github.com/articles/generating-an-ssh-key/)
 
 ## Verify it worked
 

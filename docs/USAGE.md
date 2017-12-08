@@ -94,7 +94,7 @@ The Code Corps Ember application uses [YUIDoc](http://yui.github.io/yuidoc/) for
 
 When contributing to the documentation please follow our [style guide](docs/STYLEGUIDE.md) and [YUIDoc's syntax guidelines](http://yui.github.io/yuidoc/syntax/index.html).
 
-To compile documentation from accross the app, install and run YUIDoc:
+To compile documentation from across the app, install and run YUIDoc:
 
 ```shell
 npm install -g yuidocjs
