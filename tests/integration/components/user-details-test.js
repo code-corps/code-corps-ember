@@ -17,16 +17,7 @@ moduleForComponent('user-details', 'Integration | Component | user details', {
 });
 
 test('it renders subcomponents', function(assert) {
-  assert.expect(2);
-
-  page.render(hbs`{{user-details}}`);
-
-  assert.ok(page.userProjectsList.isVisible);
-  assert.ok(page.userSidebar.isVisible);
-});
-
-test('it renders the user skills list when the user has skills', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   let user = {
     userSkills: [
@@ -41,18 +32,7 @@ test('it renders the user skills list when the user has skills', function(assert
 
   page.render(hbs`{{user-details user=user}}`);
 
+  assert.ok(page.userProjectsList.isVisible);
+  assert.ok(page.userSidebar.isVisible);
   assert.ok(page.userSkillsList.isVisible);
-  assert.equal(page.userSkillsList.skills(0).text, 'Ember.js');
-});
-
-test('it renders the empty state when the user has no skills', function(assert) {
-  assert.expect(2);
-
-  let user = { userSkills: [] };
-  set(this, 'user', user);
-
-  page.render(hbs`{{user-details user=user}}`);
-
-  assert.notOk(page.userSkillsList.isVisible);
-  assert.ok(page.userSkillsListEmptyState.isVisible);
 });

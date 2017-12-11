@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import { set, get, computed } from '@ember/object';
+import { computed, get, set } from '@ember/object';
 import $ from 'jquery';
 
 export default Service.extend({
@@ -8,7 +8,7 @@ export default Service.extend({
   className: computed('isViewing', function() {
     let isViewing = get(this, 'isViewing');
     if (isViewing) {
-      return 'for-project-tasks';
+      return 'fill-height';
     }
   }),
 

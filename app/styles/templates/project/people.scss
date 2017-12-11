@@ -1,11 +1,11 @@
-.contributors-list {
+.people-list {
   @include span-columns(12);
   &:last-child {
     margin-bottom: 0;
   }
 }
 
-.contributors-list__header {
+.people-list__header {
   margin-bottom: 1em;
   p {
     font-size: $body-font-size-normal;
@@ -13,7 +13,18 @@
   }
 }
 
-.contributors-list--empty {
+.people-list__content {
+  background: $gray--background;
+  padding: 1em;
+
+  ul {
+    background: white;
+    border: 1px solid $gray--lightest;
+    border-radius: 4px;
+  }
+}
+
+.people-list--empty {
   background: $background-gray;
   border-radius: 4px;
   padding: 5px 20px;

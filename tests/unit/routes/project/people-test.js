@@ -1,11 +1,13 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:project/settings/contributors', 'Unit | Route | project/settings/contributors', {
+moduleFor('route:project/people', 'Unit | Route | project/people', {
   // Specify the other units that are required for this test.
   needs: [
+    'service:can',
     'service:metrics',
     'service:router-scroll',
-    'service:scheduler'
+    'service:scheduler',
+    'service:session'
   ]
 });
 

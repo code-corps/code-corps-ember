@@ -1,62 +1,70 @@
 .user-list-item {
   @include outer-container;
   border-top: 1px solid $gray--lightest;
-  padding: .7em 1em;
+  display: flex;
   position: relative;
 
   @include media($sm-screen) {
     padding: .7em 0;
   }
 
-  &:hover {
-    background-color: #F9F9F9;
+  &:first-child {
+    border-top: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
   }
+
   &:last-child {
-    border-bottom: 1px solid $gray--lightest;
+    border-bottom: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }
 
 .project-user {
   &__user {
-    @include span-columns(4);
-
-    @include media($sm-screen) {
-      @include span-columns(12);
-
-      .icon {
-        height: 40px;
-        width: 40px;
-      }
-    }
+    min-width: 300px;
+    padding: .7em 1em;
 
     &__avatar {
       float: left;
+
+      a {
+        display: flex;
+      }
     }
 
     &__name {
-      padding: 5px 10px 5px 60px;
+      padding: 3px 10px 3px 35px;
 
       @include media($sm-screen) {
-        padding: 2px 0 2px 50px;
+        padding: 3px 0 3px 35px;
       }
 
-      strong {
-        font-weight: 700;
+      a {
+        color: $text--dark;
+
+        &:hover {
+          color: $blue;
+          text-decoration: underline;
+        }
       }
     }
   }
 
-  &__actions {
-    @include span-columns(3);
+  &__conversation {
+    width: 50px;
+  }
 
+  &__actions {
+    padding: .7em 1em;
     text-align: left;
 
     button {
-      margin-top: 5px;
+      margin-top: 2px;
     }
 
     @include media($sm-screen) {
-      @include span-columns(12);
       display: flex;
       justify-content: space-between;
       button {
@@ -67,26 +75,6 @@
         }
       }
     }
-  }
-
-  &__skills {
-    @include span-columns(5);
-    padding-top: 5px;
-
-    @include media($sm-screen) {
-      @include span-columns(12);
-      padding-left: 50px;
-
-      h4 {
-        display: none;
-      }
-
-      .user__skills-list ul {
-        margin: 0;
-      }
-    }
-
-    font-size: $body-font-size-small;
   }
 }
 

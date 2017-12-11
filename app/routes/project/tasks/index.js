@@ -20,16 +20,16 @@ export default Route.extend({
     controller.setProperties(models);
   },
 
+  deactivate() {
+    this._super(...arguments);
+    get(this, 'projectTaskBoard').deactivate();
+    return true;
+  },
+
   actions: {
     didTransition() {
       this._super(...arguments);
       get(this, 'projectTaskBoard').activate();
-      return true;
-    },
-
-    willTransition() {
-      this._super(...arguments);
-      get(this, 'projectTaskBoard').deactivate();
       return true;
     },
 

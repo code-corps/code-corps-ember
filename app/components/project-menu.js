@@ -3,9 +3,9 @@ import { filterBy, gt, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 /**
-  `project-menu` allows navigation within project functions. Users who
-  manage an organization can also view contributors and project settings through
-  additional menu items.
+  `project-menu` allows navigation within project functions.
+
+  Users who manage the project can view additional menu items.
 
   ## Default usage
   ```Handlebars

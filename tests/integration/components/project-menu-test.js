@@ -43,28 +43,29 @@ test('when authenticated, and user cannot manage project, it renders properly', 
 });
 
 test('when authenticated, and user can manage project, it renders properly', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:project', Ability.extend({ canManage: true }));
+  this.register('ability:project', Ability.extend({ canAdminister: true, canManage: true }));
 
   page.render(hbs`{{project-menu}}`);
 
-  assert.equal(page.links().count, 7, 'The correct number of links render');
+  assert.equal(page.links().count, 8, 'The correct number of links render');
   assert.equal(page.links(0).text, 'About', 'The about link is rendered');
   assert.equal(page.links(1).text, 'Tasks', 'The tasks link is rendered');
-  assert.equal(page.links(2).text, 'Contributors', 'The contributors link is rendered');
-  assert.equal(page.links(3).text, 'Donations', 'The donations link is rendered');
-  assert.equal(page.links(4).text, 'Payments', 'The payments link is rendered');
-  assert.equal(page.links(5).text, 'Integrations', 'The integrations link is rendered');
-  assert.equal(page.links(6).text, 'Settings', 'The settings link is rendered');
+  assert.equal(page.links(2).text, 'People', 'The people link is rendered');
+  assert.equal(page.links(3).text, 'Conversations', 'The conversations link is rendered');
+  assert.equal(page.links(4).text, 'Donations', 'The donations link is rendered');
+  assert.equal(page.links(5).text, 'Payments', 'The payments link is rendered');
+  assert.equal(page.links(6).text, 'Integrations', 'The integrations link is rendered');
+  assert.equal(page.links(7).text, 'Settings', 'The settings link is rendered');
 });
 
 test('when authenticated, and user can manage project, and project has pending members', function(assert) {
   assert.expect(1);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:project', Ability.extend({ canManage: true }));
+  this.register('ability:project', Ability.extend({ canAdminister: true, canManage: true }));
   let project = {
     projectUsers: [
       { role: 'pending' }
@@ -81,7 +82,7 @@ test('when authenticated, and user can manage project, and project has no pendin
   assert.expect(1);
 
   stubService(this, 'session', { isAuthenticated: true });
-  this.register('ability:project', Ability.extend({ canManage: true }));
+  this.register('ability:project', Ability.extend({ canAdminister: true, canManage: true }));
   let project = {
     projectUsers: [
       { role: 'contributor' }

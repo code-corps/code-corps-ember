@@ -1,0 +1,18 @@
+.conversation-composer {
+  background: white;
+  border: 1px solid $gray--lighter;
+  border-radius: 4px;
+
+  textarea {
+    border: none;
+    resize: none;
+    width: 100%;
+  }
+
+  &__footer {
+    border-top: 1px solid $gray--lighter;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0.5em;
+  }
+}
