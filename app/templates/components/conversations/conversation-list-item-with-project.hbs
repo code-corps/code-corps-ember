@@ -1,0 +1,15 @@
+{{#link-to "conversations.conversation" conversation.id class="conversation-list-item conversation-list-item--with-project"}}
+  <div class="conversation-list-item__avatar">
+    <img data-test-project-icon class="icon" src={{conversation.message.project.iconThumbUrl}} />
+  </div>
+  <div class="conversation-list-item__info">
+    <p data-test-project-title class="conversation-list-item__name">
+      <strong>
+        {{conversation.message.project.title}}
+      </strong>
+    </p>
+    <p data-test-updated-at class="conversation-list-item__timestamp">
+      {{moment-from-now conversation.updatedAt}}
+    </p>
+  </div>
+{{/link-to}}

@@ -1,0 +1,28 @@
+{{#link-to "project.conversations.conversation" conversation.id class="conversation-list-item conversation-list-item--with-user"}}
+  <div class="conversation-list-item__avatar">
+    <img data-test-target-photo class="icon" src={{conversation.user.photoThumbUrl}} />
+  </div>
+  <div class="conversation-list-item__info">
+    <p data-test-target-name class="conversation-list-item__name">
+      <strong>
+        {{#if conversation.user.name}}
+          {{conversation.user.name}}
+        {{else}}
+          {{conversation.user.username}}
+        {{/if}}
+      </strong>
+    </p>
+    <p data-test-target-username class="conversation-list-item__username">
+      {{conversation.user.username}}
+    </p>
+    <p data-test-updated-at class="conversation-list-item__timestamp">
+      {{moment-from-now conversation.updatedAt}}
+    </p>
+    {{#if (eq conversation.status 'open')}}
+      {{!-- bubbles=false to prevent bubbling to wrapping link-to element --}}
+      <span data-test-close-link class="conversation-list-item__close-link" {{action close conversation bubbles=false}}>
+        {{fa-icon "check"}}<span>Close</span>
+      </span>
+    {{/if}}
+  </div>
+{{/link-to}}

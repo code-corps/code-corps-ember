@@ -1,0 +1,16 @@
+<div class="conversation-composer__input">
+  {{submittable-textarea
+    data-test-body
+    autoresize=true
+    classNameBindings="textareaFocused:focused"
+    max-height=350
+    modifiedSubmit=(action (pipe (action send body) (action (mut body) null)))
+    name="markdown"
+    onBlur="blurTextarea"
+    placeholder=placeholder
+    tabindex=tabindex
+    value=body}}
+</div>
+<div class="conversation-composer__footer">
+  <button {{action (pipe (action send body) (action (mut body) null))}} disabled={{submitDisabled}} class="button default {{if submitDisabled "disabled"}}" data-test-submit-button>{{fa-icon "paper-plane"}} Send</button>
+</div>

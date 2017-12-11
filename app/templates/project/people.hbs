@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="people-list people-list--pending">
+    <div class="people-list__header">
+      <h3>Pending</h3>
+      <p>People who want to join your project.</p>
+    </div>
+    <div class="people-list__content">
+      <ul>
+      {{#each (filter-by 'role' 'pending' model.projectUsers) as |projectUser|}}
+        {{user-list-item projectUser=projectUser user=projectUser.user}}
+      {{else}}
+        <div class="people-list--empty">
+          <p>No one's waiting to be approved. Good work!</p>
+        </div>
+      {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="people-list people-list--owner">
+    <div class="people-list__header">
+      <h3>Owners</h3>
+      <p>Have complete control over your project.</p>
+    </div>
+    <div class="people-list__content">
+      <ul>
+      {{#each (filter-by 'role' 'owner' model.projectUsers) as |projectUser|}}
+        {{user-list-item projectUser=projectUser user=projectUser.user}}
+      {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="people-list people-list--admin">
+    <div class="people-list__header">
+      <h3>Admins</h3>
+      <p>Can approve and message volunteers, along with other administrative tasks.</p>
+    </div>
+    <div class="people-list__content">
+      <ul>
+      {{#each (filter-by 'role' 'admin' model.projectUsers) as |projectUser|}}
+        {{user-list-item projectUser=projectUser user=projectUser.user}}
+      {{else}}
+        <div class="people-list--empty">
+          <p>You don't have any admins in your project.</p>
+          <p>They can help lighten your load, so consider promoting someone you trust.</p>
+        </div>
+      {{/each}}
+      </ul>
+    </div>
+  </div>
+
+  <div class="people-list people-list--contributor">
+    <div class="people-list__header">
+      <h3>Everyone else</h3>
+      <p>Can manage tasks in your project.</p>
+    </div>
+    <div class="people-list__content">
+      <ul>
+      {{#each (filter-by 'role' 'contributor' model.projectUsers) as |projectUser|}}
+        {{user-list-item projectUser=projectUser user=projectUser.user}}
+      {{else}}
+        <div class="people-list--empty">
+          <p>You don't have any other contributors yet.</p>
+          <p>Share the link to your project and encourage friends and colleagues to join.</p>
+        </div>
+      {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>

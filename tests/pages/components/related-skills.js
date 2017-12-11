@@ -3,6 +3,7 @@ import skillListItems from 'code-corps-ember/tests/pages/components/skill-list-i
 
 export default {
   scope: '.related-skills',
+
   expander: {
     scope: '.expander',
     hidden: hasClass('hidden'),

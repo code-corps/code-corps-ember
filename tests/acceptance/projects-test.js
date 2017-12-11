@@ -1,3 +1,4 @@
+
 import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import projectsPage from '../pages/projects';
@@ -24,7 +25,7 @@ test('visiting /projects', function(assert) {
   });
 });
 
-test('contributors are displayed correctly', function(assert) {
+test('project users are displayed correctly', function(assert) {
   let project = server.create('project');
   server.createList('project-user', 10, {
     role: 'contributor',
@@ -38,7 +39,7 @@ test('contributors are displayed correctly', function(assert) {
   });
 });
 
-test('an authenticated user can quicly join a project', function(assert) {
+test('an authenticated user can quickly join a project', function(assert) {
   assert.expect(1);
 
   let projectId = server.create('project').id;

@@ -79,6 +79,12 @@
 @import "addons/ember-stripe-elements/stripe-element";
 
 //
+// SHARED
+//
+@import "shared/conversation.scss";
+@import "shared/conversations.scss";
+
+//
 // COMPONENTS
 //
 @import "components/animated-high-five";
@@ -99,6 +105,14 @@
 @import "components/settings-menu";
 @import "components/signup-form";
 @import "components/user-list-item";
+
+//
+// COMPONENTS - CONVERSATIONS
+//
+@import "components/conversations/conversation-composer";
+@import "components/conversations/conversation-list-item";
+@import "components/conversations/conversation-part";
+@import "components/conversations/new-conversation-modal";
 
 //
 // COMPONENTS - DONATIONS
@@ -229,13 +243,13 @@
 //
 // TEMPLATES - PROJECTS
 //
-@import "templates/project/settings/contributors";
+@import "templates/project/index";
+@import "templates/project/people";
 @import "templates/project/settings/integrations";
 @import "templates/project/settings/profile";
 @import "templates/project/settings/settings";
 @import "templates/project/tasks/task";
 @import "templates/project/tasks/task-new";
-@import "templates/project/index";
 @import "templates/project/tasks/index";
 @import "templates/project/thank-you";
 

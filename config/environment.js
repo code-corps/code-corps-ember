@@ -98,6 +98,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV.API_BASE_URL = 'http://api.lvh.me:4000';
+    ENV.SOCKETS_BASE_URL = 'ws://localhost:4000/socket';
     ENV.WEB_BASE_URL = 'http://localhost:4200';
     ENV.cloudinary.cloud = 'dlfnmtoq1';
     ENV.cloudinary.uploadPreset = 'xjyyogvi';
@@ -150,6 +151,7 @@ module.exports = function(environment) {
 
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
+    ENV.SOCKETS_BASE_URL = 'wss://pbqrpbecf-qri.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
@@ -175,6 +177,7 @@ module.exports = function(environment) {
 
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
+    ENV.SOCKETS_BASE_URL = 'wss://pbqrpbecf.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
@@ -196,6 +199,7 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
 
     ENV.API_BASE_URL = '';
+    ENV.SOCKETS_BASE_URL = '';
     ENV.WEB_BASE_URL = '';
 
     ENV.sentry.development = true;
@@ -214,6 +218,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
+    ENV.SOCKETS_BASE_URL = 'wss://codecorps.org/socket';
     ENV.WEB_BASE_URL = 'https://www.codecorps.org';
     ENV.cloudinary.cloud = 'dtrnlbt7o';
     ENV.cloudinary.uploadPreset = 'n5zjzoqc';

@@ -13,12 +13,7 @@ import component from 'code-corps-ember/tests/pages/components/user-list-item';
 let user = {
   name: 'Josh Smith',
   username: 'joshsmith',
-  photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg',
-  userSkills: [
-    { skill: { title: 'Ember.js' } },
-    { skill: { title: 'Rails' } },
-    { skill: { title: 'Ruby' } }
-  ]
+  photoThumbUrl: 'http://lorempixel.com/image_output/people-q-c-50-50-4.jpg'
 };
 
 function mockProjectUser(role) {
@@ -43,27 +38,27 @@ moduleForComponent('user-list-item', 'Integration | Component | user list item',
 });
 
 test('it renders the basic information for the user', function(assert) {
+  assert.expect(4);
+
   set(this, 'user', user);
 
   page.render(hbs`{{user-list-item user=user}}`);
 
   assert.equal(page.icon.url, user.photoThumbUrl);
   assert.equal(page.name.name.text, user.name);
-  assert.equal(page.name.username.text, user.username);
-  assert.equal(page.skills(0).text, 'Ember.js');
-  assert.equal(page.skills(1).text, 'Rails');
-  assert.equal(page.skills(2).text, 'Ruby');
   assert.notOk(page.approveButton.isVisible);
   assert.notOk(page.denyButton.isVisible);
 });
 
 test('it renders the username in the name if name is empty', function(assert) {
+  assert.expect(1);
+
   set(user, 'name', '');
   set(this, 'user', user);
 
   page.render(hbs`{{user-list-item user=user}}`);
 
-  assert.equal(page.name.username.text, get(user, 'username'));
+  assert.equal(page.name.name.text, get(user, 'username'));
 });
 
 test('it renders the buttons when pending', function(assert) {

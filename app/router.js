@@ -39,6 +39,10 @@ Router.map(function() {
     this.route('projects', function() {});
   });
 
+  this.route('conversations', function() {
+    this.route('conversation', { path: '/:id' });
+  });
+
   // GitHub OAuth redirection route
   this.route('github', {
     path: '/oauth/github'
@@ -65,9 +69,12 @@ Router.map(function() {
 
   this.route('project', { path: '/:slugged_route_slug/:project_slug' }, function() {
     this.route('checkout'); // Where you enter your credit card details
+    this.route('conversations', function() {
+      this.route('conversation', { path: '/:id' });
+    });
     this.route('donate'); // Where you choose your donation amount
+    this.route('people');
     this.route('settings', function() {
-      this.route('contributors');
       this.route('donations', function() {
         this.route('goals');
         this.route('payments');

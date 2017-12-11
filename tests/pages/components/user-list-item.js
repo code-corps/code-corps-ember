@@ -1,23 +1,23 @@
 import {
   attribute,
   clickable,
-  collection,
   isVisible,
   text
 } from 'ember-cli-page-object';
+import newConversationModal from 'code-corps-ember/tests/pages/components/conversations/new-conversation-modal';
 
 export default {
   scope: '.user-list-item',
 
   approveButton: {
-    scope: 'button.default',
+    scope: '[data-test-approve]',
     click: clickable(),
     isVisible: isVisible(),
     text: text()
   },
 
   denyButton: {
-    scope: 'button.danger',
+    scope: '[data-test-deny]',
     click: clickable(),
     isVisible: isVisible(),
     text: text()
@@ -26,6 +26,13 @@ export default {
   icon: {
     scope: '.icon',
     url: attribute('src')
+  },
+
+  messageButton: {
+    scope: '[data-test-message]',
+    click: clickable(),
+    isVisible: isVisible(),
+    text: text()
   },
 
   modal: {
@@ -42,20 +49,10 @@ export default {
   name: {
     scope: '[data-test-project-user-name]',
     name: {
-      scope: 'strong',
-      text: text()
-    },
-    username: {
-      scope: 'span',
+      scope: 'a',
       text: text()
     }
   },
 
-  skills: collection({
-    scope: '[data-test-project-user-skills]',
-    itemScope: 'li',
-    item: {
-      text: text()
-    }
-  })
+  newConversationModal
 };

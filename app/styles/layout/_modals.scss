@@ -9,8 +9,12 @@
   }
 }
 
-.modal--danger {
-
+.modal-close {
+  color: white;
+  cursor: pointer;
+  font-size: $header-font-size-small;
+  position: absolute;
+  top: -25px; left: -20px;
 }
 
 .modal__header {

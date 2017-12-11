@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { set, get } from '@ember/object';
+import { get, set } from '@ember/object';
+import { alias } from '@ember/object/computed';
 
 export default Component.extend({
   classNames: ['user-list-item'],
@@ -9,6 +10,11 @@ export default Component.extend({
   showDeny: false,
 
   flashMessages: service(),
+
+  projectUser: null,
+  user: null,
+
+  project: alias('projectUser.project'),
 
   actions: {
     approve(projectUser) {
