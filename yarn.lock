@@ -2874,11 +2874,11 @@ ember-cli-is-package-missing@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-is-package-missing/-/ember-cli-is-package-missing-1.0.0.tgz#6e6184cafb92635dd93ca6c946b104292d4e3390"
 
-ember-cli-jwt-decode@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-jwt-decode/-/ember-cli-jwt-decode-0.0.3.tgz#8257165665b9d2061fed7a4151b8e623930fddc0"
+ember-cli-jwt-decode@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-jwt-decode/-/ember-cli-jwt-decode-0.1.0.tgz#e80e708a49b436200312d7f086d3dd5f2cc6d144"
   dependencies:
-    ember-cli-babel "^5.1.5"
+    ember-cli-babel "^6.6.0"
 
 ember-cli-legacy-blueprints@^0.1.2:
   version "0.1.5"
