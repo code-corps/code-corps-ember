@@ -2805,7 +2805,7 @@ ember-cli-get-dependency-depth@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-get-dependency-depth/-/ember-cli-get-dependency-depth-1.0.0.tgz#e0afecf82a2d52f00f28ab468295281aec368d11"
 
-ember-cli-head@^0.2.0, ember-cli-head@^0.2.1:
+ember-cli-head@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.2.2.tgz#819c7bf17ef72a46b12416240a8a8b3227e99b8d"
   dependencies:
@@ -2814,6 +2814,13 @@ ember-cli-head@^0.2.0, ember-cli-head@^0.2.1:
     ember-cli-htmlbars "^1.3.0"
     ember-cli-version-checker "^1.1.6"
     fastboot-filter-initializers "^0.0.2"
+
+ember-cli-head@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-0.3.1.tgz#a407df4880f235280371c437bb5b0b5cbdaea646"
+  dependencies:
+    ember-cli-babel "^6.1.0"
+    ember-cli-htmlbars "^2.0.1"
 
 ember-cli-htmlbars-inline-precompile@^0.4.3:
   version "0.4.4"
@@ -2910,12 +2917,12 @@ ember-cli-lodash-subset@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-cli-lodash-subset/-/ember-cli-lodash-subset-2.0.1.tgz#20cb68a790fe0fde2488ddfd8efbb7df6fe766f2"
 
-ember-cli-meta-tags@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-meta-tags/-/ember-cli-meta-tags-3.1.0.tgz#6b2f3fd02dd7f5c55ba41368d79da6819ee966a3"
+ember-cli-meta-tags@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-meta-tags/-/ember-cli-meta-tags-4.0.0.tgz#38140f7b96f5b26834b531e6093e5370bab575a3"
   dependencies:
     ember-cli-babel "^6.0.0"
-    ember-cli-head "^0.2.0"
+    ember-cli-head "^0.3.0"
     ember-cli-htmlbars "^1.1.1"
     ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
