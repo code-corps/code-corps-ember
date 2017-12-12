@@ -2,8 +2,9 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get, setProperties } from '@ember/object';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import Confirm from 'code-corps-ember/mixins/confirm';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend(AuthenticatedRouteMixin, Confirm, {
   currentUser: service(),
   flashMessages: service(),
   projectSkillsList: service(),
@@ -27,20 +28,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   _initProject(organization) {
     return get(this, 'store').createRecord('project', { organization });
-  },
-
-  actions: {
-    willTransition(transition) {
-      let project = get(this, 'controller.project');
-      // prompt to confirm if the user did not save
-      if (get(project, ('isNew'))) {
-        let confirmed = window.confirm('You will lose any unsaved information if you leave this page. Are you sure?');
-        if (confirmed) {
-          project.destroyRecord();
-        } else {
-          transition.abort();
-        }
-      }
-    }
   }
 });

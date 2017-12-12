@@ -7,6 +7,7 @@ export default Controller.extend({
   flashMessages: service(),
   store: service(),
 
+  modelName: 'organizationInvite',
   organizationInvite: null,
 
   actions: {

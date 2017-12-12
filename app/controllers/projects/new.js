@@ -14,6 +14,7 @@ export default Controller.extend({
   projectSkillsList: service(),
   store: service(),
 
+  modelName: 'project',
   categories: null,
   project: null,
   showCallout: true,

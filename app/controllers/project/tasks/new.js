@@ -7,6 +7,7 @@ import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 export default Controller.extend({
   unsavedTaskSkills: [],
 
+  modelName: 'task',
   githubRepos: alias('task.project.githubRepos'),
 
   actions: {
