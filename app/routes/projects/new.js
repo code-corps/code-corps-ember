@@ -5,6 +5,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import Confirm from 'code-corps-ember/mixins/confirm';
 
 export default Route.extend(AuthenticatedRouteMixin, Confirm, {
+  modelName: 'project',
+
   currentUser: service(),
   flashMessages: service(),
   projectSkillsList: service(),

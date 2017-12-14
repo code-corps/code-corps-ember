@@ -7,6 +7,8 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import Confirm from 'code-corps-ember/mixins/confirm';
 
 export default Route.extend(AuthenticatedRouteMixin, Confirm, {
+  modelName: 'task',
+
   currentUser: service(),
 
   ability: EmberCan.computed.ability('organization', 'membership'),

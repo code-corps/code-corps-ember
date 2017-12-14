@@ -8,7 +8,7 @@ export default Mixin.create({
 
   actions: {
     willTransition(transition) {
-      let modelName = get(this, 'controller.modelName');
+      let modelName = get(this, 'modelName');
       if (isPresent(modelName)) {
         let model = get(this, `controller.${modelName}`);
         if (get(model, 'isNew')) {
