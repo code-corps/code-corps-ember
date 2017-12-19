@@ -8,6 +8,10 @@ export default {
   },
 
   // navigation
+  conversationsLink: {
+    scope: '[data-test-conversations-link]'
+  },
+
   projectsLink: {
     scope: '.header-navigation__options li a:contains("Projects")'
   },

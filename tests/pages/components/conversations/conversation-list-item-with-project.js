@@ -5,18 +5,14 @@ import {
 export default {
   scope: '.conversation-list-item',
 
-  target: {
-    name: {
-      scope: '[data-test-target-name]'
-    },
-
+  project: {
     photo: {
-      scope: '[data-test-target-photo]',
+      scope: '[data-test-project-icon]',
       url: attribute('src')
     },
 
-    username: {
-      scope: '[data-test-target-username]'
+    title: {
+      scope: '[data-test-project-title]'
     }
   },
 

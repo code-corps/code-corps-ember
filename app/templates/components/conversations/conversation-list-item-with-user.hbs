@@ -1,4 +1,4 @@
-{{#link-to "project.conversations.conversation" conversation.id class="conversation-list-item"}}
+{{#link-to "project.conversations.conversation" conversation.id class="conversation-list-item conversation-list-item--with-user"}}
   <div class="conversation-list-item__avatar">
     <img data-test-target-photo class="icon" src={{conversation.user.photoThumbUrl}} />
   </div>
@@ -18,8 +18,11 @@
     <p data-test-updated-at class="conversation-list-item__timestamp">
       {{moment-from-now conversation.updatedAt}}
     </p>
-    <span data-test-close-link class="conversation-list-item__close-link">
-      {{fa-icon "check"}} <span>Close</span>
-    </span>
+    {{#if (eq conversation.status 'open')}}
+      {{!-- bubbles=false to prevent bubbling to wrapping link-to element --}}
+      <span data-test-close-link class="conversation-list-item__close-link" {{action close conversation bubbles=false}}>
+        {{fa-icon "check"}}<span>Close</span>
+      </span>
+    {{/if}}
   </div>
 {{/link-to}}

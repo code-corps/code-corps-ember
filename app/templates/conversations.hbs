@@ -1,17 +1,10 @@
-{{title "Conversations" " « " project.title " by " project.organization.name}}
-
-<div class="container--wide">
-  {{project-header project=project}}
-</div>
-
-{{project-menu project=project wide=true}}
+{{title "Conversations"}}
 
 <div class="conversations">
   <aside>
     {{#each conversations as |conversation|}}
-      {{conversations/conversation-list-item-with-user
+      {{conversations/conversation-list-item-with-project
         conversation=conversation
-        close=(action 'close')
       }}
     {{else}}
       <div class="conversations__empty">
@@ -19,10 +12,6 @@
           {{fa-icon "comment"}}
         </p>
         <p><strong>You haven't had any conversations yet.</strong></p>
-        <p>Go start one with someone in your project!</p>
-        <p>
-          {{link-to 'See your users' 'project.people' class="button default"}}
-        </p>
       </div>
     {{/each}}
   </aside>

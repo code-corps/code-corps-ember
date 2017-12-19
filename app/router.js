@@ -39,6 +39,10 @@ Router.map(function() {
     this.route('projects', function() {});
   });
 
+  this.route('conversations', function() {
+    this.route('conversation', { path: '/:id' });
+  });
+
   // GitHub OAuth redirection route
   this.route('github', {
     path: '/oauth/github'

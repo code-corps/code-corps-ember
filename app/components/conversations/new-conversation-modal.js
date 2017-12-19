@@ -4,7 +4,7 @@ import { and, not, notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 
-const SAVE_SUCCESS = 'Your message is queued to send.';
+const SAVE_SUCCESS = 'Your message is sending now.';
 
 export default Component.extend({
   classNames: ['new-conversation-modal-container'],

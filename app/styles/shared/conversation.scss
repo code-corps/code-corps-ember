@@ -23,6 +23,7 @@
 }
 
 .conversation-details {
+  overflow-y: auto;
   position: absolute;
   top: 0; bottom: 0; right: 0;
   width: 33%;
@@ -41,13 +42,31 @@
     }
   }
 
-  &__user {
+  &__project, &__user {
     text-align: center;
 
     p {
       margin: 0.5em 0;
     }
+  }
 
+  &__project {
+    &__title {
+      font-size: $header-font-size-small;
+    }
+
+    &__description {
+      color: $text--lighter;
+      font-size: $body-font-size-small;
+    }
+
+    &__categories {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__user {
     &__username {
       color: $text--lighter;
       font-size: $body-font-size-small;
