@@ -11,7 +11,8 @@ moduleFor('route:application', 'Unit | Route | application', {
     'service:onboarding',
     'service:router-scroll',
     'service:scheduler',
-    'service:session'
+    'service:session',
+    'service:socket'
   ]
 });
 

@@ -10,7 +10,8 @@ moduleFor('route:conversations/conversation', 'Unit | Route | conversations/conv
     'service:metrics',
     'service:router-scroll',
     'service:scheduler',
-    'service:session'
+    'service:session',
+    'service:socket'
   ]
 });
 

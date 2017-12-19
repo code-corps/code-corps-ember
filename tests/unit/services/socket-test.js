@@ -1,10 +1,8 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:conversation-channel', 'Unit | Service | conversation channel', {
+moduleFor('service:socket', 'Unit | Service | socket', {
   // Specify the other units that are required for this test.
-  needs: [
-    'service:socket'
-  ]
+  needs: ['service:session']
 });
 
 // Replace this with your real tests.

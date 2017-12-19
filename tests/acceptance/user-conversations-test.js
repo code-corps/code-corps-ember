@@ -72,7 +72,7 @@ test('System is notified of new conversation part', function(assert) {
   andThen(() => {
     assert.equal(page.conversationThread.conversationParts().count, 1, 'No notification yet, so new part was not rendered.');
     let conversationChannelService = this.application.__container__.lookup('service:conversation-channel');
-    let socket = get(conversationChannelService, 'socket');
+    let socket = get(conversationChannelService, 'socket.socket');
     let [channel] = socket.channels;
     channel.trigger('new:conversation-part', {});
   });
