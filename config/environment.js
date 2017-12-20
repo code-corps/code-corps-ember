@@ -151,7 +151,7 @@ module.exports = function(environment) {
 
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
-    ENV.SOCKETS_BASE_URL = 'wss://pbqrpbecf-qri.org/socket';
+    ENV.SOCKETS_BASE_URL = 'ws://pbqrpbecf-qri.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
@@ -177,7 +177,7 @@ module.exports = function(environment) {
 
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
-    ENV.SOCKETS_BASE_URL = 'wss://pbqrpbecf.org/socket';
+    ENV.SOCKETS_BASE_URL = 'ws://pbqrpbecf.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
