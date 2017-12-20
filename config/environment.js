@@ -151,7 +151,7 @@ module.exports = function(environment) {
 
   if (environment === 'remote-development') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf-qri.org';
-    ENV.SOCKETS_BASE_URL = 'ws://pbqrpbecf-qri.org/socket';
+    ENV.SOCKETS_BASE_URL = 'ws://www.pbqrpbecf-qri.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf-qri.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
@@ -177,7 +177,7 @@ module.exports = function(environment) {
 
   if (environment === 'staging') {
     ENV.API_BASE_URL = 'http://api.pbqrpbecf.org';
-    ENV.SOCKETS_BASE_URL = 'ws://pbqrpbecf.org/socket';
+    ENV.SOCKETS_BASE_URL = 'ws://www.pbqrpbecf.org/socket';
     ENV.WEB_BASE_URL = 'http://www.pbqrpbecf.org';
     ENV.cloudinary.cloud = 'dlcthdxrt';
     ENV.cloudinary.uploadPreset = 'gp6mt4v3';
@@ -218,7 +218,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.API_BASE_URL = 'https://api.codecorps.org';
-    ENV.SOCKETS_BASE_URL = 'wss://codecorps.org/socket';
+    ENV.SOCKETS_BASE_URL = 'wss://www.codecorps.org/socket';
     ENV.WEB_BASE_URL = 'https://www.codecorps.org';
     ENV.cloudinary.cloud = 'dtrnlbt7o';
     ENV.cloudinary.uploadPreset = 'n5zjzoqc';
