@@ -1,0 +1,68 @@
+<a class="new-conversation-modal__button" {{action (pipe (action createConversation) (action (mut showModal) true)) bubbles=false}} data-test-open-button>
+  {{fa-icon "comment"}}
+</a>
+
+{{#if showModal}}
+  {{#modal-dialog
+    containerClassNames="new-conversation-modal"
+    onClose=(action (pipe (action discardConversation) (action (mut showModal) false)))
+    targetAttachment="center"
+    translucentOverlay=true
+  }}
+    <span {{action (pipe (action discardConversation) (action (mut showModal) false))}} class="modal-close">
+      {{fa-icon "close"}}
+    </span>
+
+    <h3>New Conversation</h3>
+
+    <form data-test-message-form>
+      <div class="new-conversation-modal__to-field">
+        <span>
+          <img data-test-target-photo class="icon icon--tiny" src={{user.photoThumbUrl}} />
+        </span>
+        <span>
+          <strong>
+            {{#if user.name}}
+              {{user.name}}
+            {{else}}
+              {{user.username}}
+            {{/if}}
+          </strong>
+        </span>
+        <span class="new-conversation-modal__to-field__username">
+          {{user.username}}
+        </span>
+      </div>
+      <div class="input-group {{if message.errors.subject "has-error"}}" data-test-subject>
+        <div class="input-label">
+          <label for="subject">
+            <span class="input-label__text">Subject</span>
+          </label>
+        </div>
+        <div class="input-explain">
+          <p>The email subject line.</p>
+        </div>
+        {{input class="input-control" type="text" name="subject" value=message.subject}}
+        {{#each message.errors.subject as |error|}}
+          <p class="input-error">{{error.message}}</p>
+        {{/each}}
+      </div>
+
+      <div class="input-group {{if message.errors.body "has-error"}}" data-test-body>
+        <div class="input-label">
+          <label for="body">
+            <span class="input-label__text">Body</span>
+          </label>
+        </div>
+        {{textarea class="input-control" type="text" name="body" value=message.body}}
+        {{#each message.errors.body as |error|}}
+          <p class="input-error">{{error.message}}</p>
+        {{/each}}
+      </div>
+
+      <div class="input-group">
+        <button {{action (pipe (action 'send' message) (action (mut showModal) false))}} disabled={{submitDisabled}} data-test-submit class="save default {{if submitDisabled "disabled"}}">{{fa-icon "paper-plane"}} Send</button>
+      </div>
+    </form>
+  {{/modal-dialog}}
+{{/if}}

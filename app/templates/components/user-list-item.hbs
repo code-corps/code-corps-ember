@@ -1,34 +1,31 @@
 <div class="project-user__user">
   <div class="project-user__user__avatar">
     {{#link-to 'slugged-route' user.username}}
-      <img class="icon" src= {{user.photoThumbUrl}} />
+      <img class="icon icon--tiny" height="25" width="25" src={{user.photoThumbUrl}} />
     {{/link-to}}
   </div>
 
   <div data-test-project-user-name class="project-user__user__name">
-    <strong>
     {{#if user.name}}
       {{link-to user.name 'slugged-route' user.username}}
     {{else}}
       {{link-to user.username 'slugged-route' user.username}}
     {{/if}}
-    </strong>
-    <br>
-    <span>
-      {{user.username}}
-    </span>
   </div>
 </div>
 
-<div data-test-project-user-skills class="project-user__skills">
-  <h4>Skills</h4>
-  {{user/skills-list data-test-user-skills-list user=user}}
+<div class="project-user__conversation">
+  {{conversations/new-conversation-modal
+    initiatedBy="admin"
+    project=project
+    user=user
+  }}
 </div>
 
 <div class="project-user__actions">
   {{#if (eq projectUser.role 'pending')}}
-    <button class="default small" {{action "showApprove"}}>Approve</button>
-    <button class="danger small" {{action "showDeny"}}>Deny</button>
+    <button class="default small" {{action "showApprove"}} data-test-approve>Approve</button>
+    <button class="danger small" {{action "showDeny"}} data-test-deny>Deny</button>
     {{modal-confirm dialogText='Are you sure you want to approve their membership?' okAction=(action 'approve' projectUser) showDialog=showApprove}}
     {{modal-confirm dialogText='Are you sure you want to deny their membership?' okAction=(action 'deny' projectUser) showDialog=showDeny}}
   {{/if}}

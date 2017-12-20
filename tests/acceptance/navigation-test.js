@@ -31,6 +31,23 @@ test('Logged out, can sign in', function(assert) {
   });
 });
 
+test('Logged in, can visit conversations', function(assert) {
+  assert.expect(1);
+
+  let user = server.create('user');
+  authenticateSession(this.application, { user_id: user.id });
+
+  indexPage.visit();
+
+  andThen(function() {
+    indexPage.navMenu.conversationsLink.click();
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), '/conversations', 'Link went to conversations');
+  });
+});
+
 test('Logged in, from user menu can visit profile', function(assert) {
   assert.expect(2);
 

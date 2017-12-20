@@ -1,0 +1,39 @@
+.conversations {
+  display: flex;
+  flex-grow: 1;
+  flex: auto;
+  margin-top: -10px;
+  position: relative;
+
+  aside {
+    border-right: 1px solid $gray--lighter;
+    overflow-y: scroll;
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 25%;
+  }
+
+  section {
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 75%;
+  }
+
+  &__empty {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    p {
+      color: $text--lightest;
+      font-size: $body-font-size-small;
+      margin: 1em 0 0 0;
+    }
+  }
+}
+
+p.conversations__empty__icon {
+  font-size: $header-font-size-large;
+  margin: 1em 0 0 0;
+}

@@ -21,7 +21,7 @@ moduleForComponent('navigation-menu', 'Integration | Component | navigation menu
 });
 
 test('it renders elements for the default menu when logged out', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   renderPage();
 
@@ -29,6 +29,7 @@ test('it renders elements for the default menu when logged out', function(assert
   assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
   assert.ok(page.signUpLink.isVisible, 'The link to signup route is rendered');
   assert.ok(page.signInLink.isVisible, 'The link to login route is rendered');
+  assert.notOk(page.conversationsLink.isVisible, 'The link to conversations is not shown');
   assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
   assert.notOk(page.onboarding.status.isVisible, 'The onboarding status text is not rendered.');
   assert.notOk(page.onboarding.progressBar.isVisible, 'The onboarding progress bar is not rendered.');
@@ -36,7 +37,7 @@ test('it renders elements for the default menu when logged out', function(assert
 });
 
 test('it renders elements for the default menu when logged in', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   stubService(this, 'session', { isAuthenticated: true });
 
@@ -44,6 +45,7 @@ test('it renders elements for the default menu when logged in', function(assert)
 
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
+  assert.ok(page.conversationsLink.isVisible, 'The link to conversations route is rendered');
   assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered');
   assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered');
   assert.ok(page.userMenu.isVisible, 'User menu is shown.');
@@ -53,7 +55,7 @@ test('it renders elements for the default menu when logged in', function(assert)
 });
 
 test('it renders elements for the onboarding menu correctly when on onboarding route', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
 
   stubService(this, 'navigation-menu', {
     isOnboarding: true,
@@ -71,6 +73,7 @@ test('it renders elements for the onboarding menu correctly when on onboarding r
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered.');
 
+  assert.notOk(page.conversationsLink.isVisible, 'The link to conversations is not shown');
   assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
   assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered.');
   assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered.');
@@ -83,7 +86,7 @@ test('it renders elements for the onboarding menu correctly when on onboarding r
 });
 
 test('it renders elements for the onboarding menu correctly when on project.thank-you route', function(assert) {
-  assert.expect(8);
+  assert.expect(9);
 
   stubService(this, 'navigation-menu', {
     // on project.thank-you route
@@ -98,6 +101,7 @@ test('it renders elements for the onboarding menu correctly when on project.than
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered');
 
+  assert.notOk(page.conversationsLink.isVisible, 'The link to conversations is not shown');
   assert.notOk(page.userMenu.isVisible, 'User menu is not shown.');
   assert.notOk(page.signUpLink.isVisible, 'The link to signup route is rendered');
   assert.notOk(page.signInLink.isVisible, 'The link to login route is rendered');

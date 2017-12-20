@@ -10,9 +10,10 @@ import LoadingBar from 'code-corps-ember/mixins/loading-bar';
 export default Route.extend(ApplicationRouteMixin, LoadingBar, {
   currentUser: service(),
   flashMessages: service(),
+  i18n: service(),
   metrics: service(),
   onboarding: service(),
-  i18n: service(),
+  socket: service(),
 
   isOnboarding: alias('onboarding.isOnboarding'),
   onboardingRoute: alias('onboarding.routeForCurrentStep'),
@@ -158,6 +159,11 @@ export default Route.extend(ApplicationRouteMixin, LoadingBar, {
         }
       })
       .catch(() => this._invalidateSession());
+  },
+
+  model() {
+    get(this, 'socket').toggleConnection();
+    return this._super(...arguments);
   },
 
   afterModel() {

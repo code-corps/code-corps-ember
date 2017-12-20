@@ -69,13 +69,13 @@ function generatePreviewMentions(schema, preview) {
 
 // The set of routes we have defined; needs updated when adding new routes
 const routes = [
-  'categories', 'comment-user-mentions', 'comments', 'donation-goals',
-  'github-events', 'organizations', 'organization-invites', 'task-lists',
-  'task-skills', 'task-user-mentions', 'tasks', 'previews', 'projects',
-  'project-categories', 'slugged-routes', 'stripe-connect-accounts',
-  'stripe-connect-subscriptions', 'stripe-connect-plans',
-  'stripe-platform-cards', 'stripe-platform-customers', 'user-categories',
-  'users'
+  'categories', 'comment-user-mentions', 'comments', 'conversations',
+  'conversation-parts', 'donation-goals', 'github-events', 'messages',
+  'organizations', 'organization-invites', 'task-lists', 'task-skills',
+  'task-user-mentions', 'tasks', 'previews', 'projects', 'project-categories',
+  'slugged-routes', 'stripe-connect-accounts', 'stripe-connect-subscriptions',
+  'stripe-connect-plans', 'stripe-platform-cards', 'stripe-platform-customers',
+  'user-categories', 'users'
 ];
 
 export default function() {
@@ -135,6 +135,22 @@ export default function() {
     comment.commentUserMentions.models.forEach((mention) => mention.destroy());
     return comment.update(attrs);
   });
+
+  /**
+   * Conversations
+   */
+
+  this.get('/conversations', { coalesce: true });
+  this.get('/conversations/:id');
+  this.patch('/conversations/:id');
+
+  /**
+   * Conversation parts
+   */
+
+  this.get('/conversation-parts', { coalesce: true });
+  this.get('/conversation-parts/:id');
+  this.post('/conversation-parts');
 
   /**
    * Donation goals
@@ -222,6 +238,14 @@ export default function() {
       return githubRepo.update({ project: null, syncState: 'unsynced' });
     }
   });
+
+  /**
+  * Messages
+  */
+
+  this.get('/messages', { coalesce: true });
+  this.post('/messages');
+  this.get('/messages/:id');
 
   /**
   * Organizations

@@ -5,6 +5,7 @@ import {
 
 export default {
   scope: '.start__interests',
+
   items: collection({
     itemScope: '.category-item',
     item: {

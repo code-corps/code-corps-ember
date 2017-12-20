@@ -1,22 +1,24 @@
 <div class="{{if wide "container--wide" "container"}} container--full-on-mobile">
   <ul>
     <li>
-      {{link-to 'About' 'project.index' project}}
+      {{#link-to 'project.index' project}}
+        {{fa-icon "info-circle"}} About
+      {{/link-to}}
     </li>
 
     {{#unless project.shouldLinkExternally}}
     <li>
       {{#link-to 'project.tasks' project}}
-        Tasks
+        {{fa-icon "columns"}} Tasks
       {{/link-to}}
     </li>
     {{/unless}}
 
     {{#if session.isAuthenticated}}
-      {{#if (can "manage project" project)}}
-        <li class="contributors">
-          {{#link-to 'project.settings.contributors' project}}
-            Contributors
+      {{#if (can "administer project" project)}}
+        <li data-test-project-people-link>
+          {{#link-to 'project.people' project}}
+            {{fa-icon "users"}} People
             {{#if projectHasPendingUsers}}
               <span class="info"><strong>{{projectPendingUsersCount}}</strong> pending</span>
             {{/if}}
@@ -24,19 +26,35 @@
         </li>
 
         <li>
-          {{link-to 'Donations' 'project.settings.donations.goals' project}}
+          {{#link-to 'project.conversations' project}}
+            {{fa-icon "comment"}} Conversations
+          {{/link-to}}
+        </li>
+      {{/if}}
+
+      {{#if (can "manage project" project)}}
+        <li>
+          {{#link-to 'project.settings.donations.goals' project}}
+            {{fa-icon "money"}} Donations
+          {{/link-to}}
         </li>
 
         <li>
-          {{link-to 'Payments' 'project.settings.donations.payments' project}}
+          {{#link-to 'project.settings.donations.payments' project}}
+            {{fa-icon "credit-card"}} Payments
+          {{/link-to}}
         </li>
 
         <li>
-          {{link-to 'Integrations' 'project.settings.integrations' project}}
+          {{#link-to 'project.settings.integrations' project}}
+            {{fa-icon "podcast"}} Integrations
+          {{/link-to}}
         </li>
 
         <li>
-          {{link-to 'Settings' 'project.settings.profile' project}}
+          {{#link-to 'project.settings.profile' project}}
+            {{fa-icon "gear"}} Settings
+          {{/link-to}}
         </li>
       {{/if}}
     {{/if}}

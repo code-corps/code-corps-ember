@@ -5,13 +5,7 @@
 
     <div class="user-details__skills-list">
       <h3>Skills</h3>
-      {{#if user.userSkills}}
-        {{user/skills-list data-test-user-skills-list user=user}}
-      {{else}}
-        <p data-test-user-skills-list-empty-state class="empty-state">
-          <strong>{{user.username}}</strong> hasn't added any skills yet.
-        </p>
-      {{/if}}
+      {{user/skills-list data-test-user-skills-list user=user}}
     </div>
   </div>
 </div>

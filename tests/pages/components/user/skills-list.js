@@ -5,7 +5,11 @@ import {
 export default {
   scope: '.user__skills-list',
 
-  listItems: collection({
+  emptyState: {
+    scope: '[data-test-user-skills-list-empty-state]'
+  },
+
+  skills: collection({
     itemScope: '[data-test-user-skills-list-item]'
   })
 };

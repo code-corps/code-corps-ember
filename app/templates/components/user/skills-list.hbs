@@ -1,5 +1,11 @@
-<ul>
-  {{#each user.userSkills as |userSkill|}}
-    <li data-test-user-skills-list-item>{{userSkill.skill.title}}</li>
-  {{/each}}
-</ul>
+{{#if user.userSkills}}
+  <ul>
+    {{#each user.userSkills as |userSkill|}}
+      <li data-test-user-skills-list-item>{{userSkill.skill.title}}</li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p data-test-user-skills-list-empty-state class="empty-state">
+    <strong>{{user.username}}</strong> hasn't added any skills yet.
+  </p>
+{{/if}}
