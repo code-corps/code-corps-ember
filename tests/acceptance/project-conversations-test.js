@@ -4,6 +4,8 @@ import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-accep
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import page from 'code-corps-ember/tests/pages/project/conversations';
 
+const hour = 3600 * 1000;
+
 function createConversations(count, project, user) {
   return [...Array(count)].map(() => {
     let message = server.create('message', { project });
@@ -45,12 +47,22 @@ test('Page requires current user to be admin', function(assert) {
 });
 
 test('Project admin can view list of conversations', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
   authenticateSession(this.application, { user_id: user.id });
 
-  createConversations(3, project, user);
+  let [message1, message2, message3] = server.createList('message', 3, { project });
+
+  let [date1, date2, date3] = [
+    Date.now(),
+    Date.now() - 5 * hour,
+    Date.now() - 1 * hour
+  ];
+
+  server.create('conversation', { message:  message1, user, updatedAt: date1 });
+  server.create('conversation', { message:  message2, user, updatedAt: date2 });
+  server.create('conversation', { message:  message3, user, updatedAt: date3 });
 
   page.visit({
     organization: project.organization.slug,
@@ -59,6 +71,23 @@ test('Project admin can view list of conversations', function(assert) {
 
   andThen(() => {
     assert.equal(page.conversations().count, 3, 'Conversations are rendered');
+    let renderedTimeStampOrder = [
+      page.conversations(0).updatedAt.text,
+      page.conversations(1).updatedAt.text,
+      page.conversations(2).updatedAt.text
+    ];
+
+    let expectedTimeStampOrder = [
+      'a few seconds ago',
+      'an hour ago',
+      '5 hours ago'
+    ];
+
+    assert.deepEqual(
+      renderedTimeStampOrder,
+      expectedTimeStampOrder,
+      'Items are rendered in correct order with properly formatted timestamps.'
+    );
   });
 });
 
