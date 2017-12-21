@@ -46,6 +46,8 @@
     text-align: center;
 
     p {
+      display: flex;
+      justify-content: center;
       margin: 0.5em 0;
     }
   }
@@ -63,6 +65,11 @@
     &__categories {
       display: flex;
       justify-content: center;
+
+      li {
+        display: inline-block;
+        margin: 0 5px 5px 5px;
+      }
     }
   }
 
