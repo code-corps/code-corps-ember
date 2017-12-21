@@ -8,7 +8,7 @@
 
 <div class="conversations">
   <aside>
-    {{#each conversations as |conversation|}}
+    {{#each (sort-by "updatedAt:desc" conversations) as |conversation|}}
       {{conversations/conversation-list-item-with-user
         conversation=conversation
         close=(action 'close')
