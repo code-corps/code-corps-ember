@@ -4,8 +4,8 @@ import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
 export default Component.extend({
-  classNames: ['conversation-part-comment'],
-  classNameBindings: ['isSelf:conversation-part-comment--is-self'],
+  classNames: ['conversation-part'],
+  classNameBindings: ['isSelf:conversation-part--is-self'],
 
   author: null,
   body: null,

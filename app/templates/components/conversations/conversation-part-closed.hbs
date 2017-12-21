@@ -1,9 +1,9 @@
 <div class="coversation-part-closed__message-wrapper">
   {{#if currentUser}}
-    You closed this at...
+  You closed this at... You closed this at {{moment-format conversationPart.updatedAt 'MM/DD/YYYY hh:mm:ss'}}
   {{else}}
-    <div class="conversation-part-closed__message-wrapper">
-      {{author.username}} closed this at...
-      {{/if}}
-    </div>
+  <div class="conversation-part-closed__message-wrapper">
+    {{author.username}} closed this at {{moment-format conversationPart.updatedAt 'MM/DD/YYYY hh:mm:ss'}}
+    {{/if}}
   </div>
+</div>

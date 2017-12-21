@@ -1,4 +1,4 @@
-<div class="conversation-part-comment__avatar">
+<div class="conversation-part__avatar">
   <span data-test-target-photo-container>
     <img id="{{avatarId}}" data-test-target-photo class="icon icon--small" src={{author.photoThumbUrl}} />
     {{#tooltip-on-element
@@ -12,14 +12,14 @@
     {{/tooltip-on-element}}
   </span>
 </div>
-<div class="conversation-part-comment__message">
-  <div class="conversation-part-comment__bubble-wrapper">
+<div class="conversation-part__message">
+  <div class="conversation-part__bubble-wrapper">
     <div data-test-body class="conversation-part__bubble">
       {{body}}
     </div>
   </div>
-  <div class="conversation-part-comment__timestamps-wrapper">
-    <div class="conversation-part-comment__timestamps">
+  <div class="conversation-part__timestamps-wrapper">
+    <div class="conversation-part__timestamps">
       <span data-test-sent-at>
         {{#if sentAt}}
           {{moment-from-now sentAt interval=60000}}
