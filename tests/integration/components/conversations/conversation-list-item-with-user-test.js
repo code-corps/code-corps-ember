@@ -55,7 +55,30 @@ test('it renders the conversation details', function(assert) {
   assert.equal(page.closeButton.text, 'Close', 'Close button text is correct');
 });
 
-test('it does not render close button when conversation is closed', function(assert) {
+test('it renders close button when conversation is open', function(assert) {
+  assert.expect(3);
+
+  let user = {
+    username: 'testuser'
+  };
+
+  let conversation = {
+    status: 'open',
+    user
+  };
+
+  set(this, 'conversation', conversation);
+
+  renderPage();
+
+  // we use isPresent because the buttons only display on hover and are
+  // otherwise set to `display: none;`
+  assert.ok(page.closeButton.isPresent, 'Close button is rendered');
+  assert.notOk(page.reopenButton.isPresent, 'Reopen button is not rendered');
+  assert.equal(page.closeButton.text, 'Close', 'Close button text is correct');
+});
+
+test('it renders reopen button when conversation is closed', function(assert) {
   assert.expect(3);
 
   let user = {
@@ -71,8 +94,10 @@ test('it does not render close button when conversation is closed', function(ass
 
   renderPage();
 
-  assert.notOk(page.closeButton.isVisible, 'Close button is hidden');
-  assert.ok(page.reopenButton.isVisible, 'Reopen button is visible');
+  // we use isPresent because the buttons only display on hover and are
+  // otherwise set to `display: none;`
+  assert.notOk(page.closeButton.isPresent, 'Close button is not rendered');
+  assert.ok(page.reopenButton.isPresent, 'Reopen button is rendered');
   assert.equal(page.reopenButton.text, 'Reopen', 'Reopen button text is correct');
 });
 
