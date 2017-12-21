@@ -6,6 +6,11 @@ export default Controller.extend({
     close(conversation) {
       set(conversation, 'status', 'closed');
       return conversation.save();
+    },
+
+    reopen(conversation) {
+      set(conversation, 'status', 'open');
+      return conversation.save();
     }
   }
 });

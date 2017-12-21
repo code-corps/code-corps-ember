@@ -23,6 +23,10 @@
       <span data-test-close-link class="conversation-list-item__close-link" {{action close conversation bubbles=false}}>
         {{fa-icon "check"}}<span>Close</span>
       </span>
+    {{else if (eq conversation.status 'closed')}}
+      <span data-test-reopen-link class="conversation-list-item__reopen-link" {{action reopen conversation bubbles=false}}>
+        {{fa-icon "inbox"}}<span>Reopen</span>
+      </span>
     {{/if}}
   </div>
 {{/link-to}}
