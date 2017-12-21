@@ -170,3 +170,26 @@ test('Project admin can close a conversation', function(assert) {
     assert.equal(server.schema.conversations.first().status, 'closed', 'Conversation was closed.');
   });
 });
+
+test('Project admin can reopen a conversation', function(assert) {
+  assert.expect(1);
+
+  let { project, user } = server.create('project-user', { role: 'admin' });
+  authenticateSession(this.application, { user_id: user.id });
+
+  let message = server.create('message', { project });
+  server.create('conversation', { status: 'closed', message, user });
+
+  page.visit({
+    organization: project.organization.slug,
+    project: project.slug
+  });
+
+  andThen(() => {
+    page.conversations(0).reopenButton.click();
+  });
+
+  andThen(() => {
+    assert.equal(server.schema.conversations.first().status, 'open', 'Conversation was reopened.');
+  });
+});
