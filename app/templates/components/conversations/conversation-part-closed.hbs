@@ -1,9 +1,9 @@
-<div class="conversation-part-closed">
-  <div class="coversation-part-closed__message-wrapper">
-    {{if currentUser}}
+<div class="coversation-part-closed__message-wrapper">
+  {{#if currentUser}}
     You closed this at...
-    {{else}}
+  {{else}}
     <div class="conversation-part-closed__message-wrapper">
       {{author.username}} closed this at...
+      {{/if}}
+    </div>
   </div>
-</div>

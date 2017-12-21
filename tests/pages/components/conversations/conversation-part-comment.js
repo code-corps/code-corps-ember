@@ -5,7 +5,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.conversation-part',
+  scope: '.conversation-part-comment',
 
   body: {
     scope: '[data-test-body]'

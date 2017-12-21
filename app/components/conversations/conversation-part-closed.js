@@ -12,9 +12,7 @@ export default Component.extend({
   isSelf: computed('author', 'user', function() {
     return get(this, 'author.id') === get(this, 'user.id');
 
-    closedUser: computed ('isSelf', 'currentUser', function() {
-      if 
-    })
+  
   })
   })
 });
