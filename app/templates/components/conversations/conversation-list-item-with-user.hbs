@@ -16,7 +16,7 @@
       {{conversation.user.username}}
     </p>
     <p data-test-updated-at class="conversation-list-item__timestamp">
-      {{moment-from-now conversation.updatedAt}}
+      {{moment-from-now conversation.updatedAt interval=60000}}
     </p>
     {{#if (eq conversation.status 'open')}}
       {{!-- bubbles=false to prevent bubbling to wrapping link-to element --}}
