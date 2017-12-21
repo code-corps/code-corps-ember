@@ -17,7 +17,8 @@
   &:hover {
     background: $blue--background;
 
-    .conversation-list-item__close-link {
+    .conversation-list-item__close-link,
+    .conversation-list-item__reopen-link {
       display: block;
     }
   }
@@ -34,7 +35,8 @@
     .conversation-list-item__name,
     .conversation-list-item__username,
     .conversation-list-item__timestamp,
-    .conversation-list-item__close-link {
+    .conversation-list-item__close-link,
+    .conversation-list-item__reopen-link {
       color: white;
     }
   }
@@ -76,7 +78,7 @@
     margin: 0;
   }
 
-  &__close-link {
+  &__close-link, &__reopen-link {
     display: none;
     font-size: $body-font-size-normal;
     padding: 0.5em;
