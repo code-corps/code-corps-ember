@@ -1,7 +1,7 @@
 .page-menu, .project__menu, .organization-menu {
   &--horizontal {
     @include clearfix;
-    border-bottom: 1px solid $blue--background;
+    border-bottom: 1px solid darken($blue--lighter, 10%);
     list-style-type: none;
     margin-bottom: 10px;
     padding: 0;
@@ -44,6 +44,10 @@
 
       &:hover {
         transition: border-bottom-color ease 0.3s;
+      }
+
+      i {
+        padding-right: 3px;
       }
 
       span.info {

@@ -3,6 +3,7 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('controller:application', 'Unit | Controller | application', {
   needs: [
     'service:code-theme',
+    'service:conversations',
     'service:metrics',
     'service:onboarding',
     'service:project-task-board',

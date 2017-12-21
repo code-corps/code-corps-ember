@@ -1,0 +1,15 @@
+<div class="conversation-details__section conversation-details__project">
+  <p><img class="icon" src={{project.iconThumbUrl}} /></p>
+  <p class="conversation-details__project__title" data-test-title>
+    <strong>
+      {{project.title}}
+    </strong>
+  </p>
+  <p class="conversation-details__project__categories">
+    {{project-categories-list categories=project.categories}}
+  </p>
+  <p class="conversation-details__project__description" data-test-description>
+    {{project.description}}
+  </p>
+  {{related-skills class="project-card__skills" overflowHidden=true skills=project.skills}}
+</div>

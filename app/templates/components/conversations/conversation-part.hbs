@@ -1,0 +1,41 @@
+<div class="conversation-part__avatar">
+  <span data-test-target-photo-container>
+    <img id="{{avatarId}}" data-test-target-photo class="icon icon--small" src={{author.photoThumbUrl}} />
+    {{#tooltip-on-element
+      class='tooltip'
+      effect='none'
+      enableLazyRendering=true
+      keepInWindow=true
+      side=avatarTooltipSide
+    }}
+      {{author.username}}
+    {{/tooltip-on-element}}
+  </span>
+</div>
+<div class="conversation-part__message">
+  <div class="conversation-part__bubble-wrapper">
+    <div data-test-body class="conversation-part__bubble">
+      {{body}}
+    </div>
+  </div>
+  <div class="conversation-part__timestamps-wrapper">
+    <div class="conversation-part__timestamps">
+      <span data-test-sent-at>
+        {{#if sentAt}}
+          {{moment-from-now sentAt interval=60000}}
+        {{else}}
+          Sending...
+        {{/if}}
+      </span>
+      {{!-- {{#if (and sentAt isSelf)}}
+        <span data-test-delivery-status>
+          {{#if readAt}}
+            {{fa-icon "check" class="is-read"}}
+          {{else}}
+            {{fa-icon "check"}}
+          {{/if}}
+        </span>
+      {{/if}} --}}
+    </div>
+  </div>
+</div>

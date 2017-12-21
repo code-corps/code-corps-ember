@@ -130,6 +130,9 @@
 
   &.default {
     @include colorButton($default-color);
+    &:disabled, &.disabled {
+      opacity: 0.5;
+    }
   }
 
   &.success {

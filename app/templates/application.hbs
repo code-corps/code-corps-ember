@@ -13,7 +13,7 @@ isn't this here mainly for updating a user's image? }}
     'navigation-menu' to 'site-header' }}
     {{navigation-menu}}
     {{flash-messages}}
-    <div class="site-content {{if isOnboarding "site-content--start"}} {{codeTheme.className}} {{projectTaskBoard.className}}">
+    <div class="site-content {{if isOnboarding "site-content--start"}} {{codeTheme.className}} {{conversations.className}} {{projectTaskBoard.className}}">
       {{outlet}}
     </div>
     {{#if shouldShowSpacer}}

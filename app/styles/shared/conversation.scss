@@ -1,0 +1,82 @@
+.conversation-thread {
+  background: $clear-focus;
+  border-right: 1px solid $gray--lighter;
+  overflow-y: auto;
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 67%;
+}
+
+.conversation-thread-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.conversation-thread__messages {
+  flex-grow: 1;
+  padding: 1em;
+}
+
+.conversation-thread__composer {
+  padding: 0 1em 1em 1em;
+}
+
+.conversation-details {
+  overflow-y: auto;
+  position: absolute;
+  top: 0; bottom: 0; right: 0;
+  width: 33%;
+
+  &__section {
+    border-top: 1px solid $gray--lighter;
+    padding: 1em;
+
+    h4 {
+      font-size: 16px;
+      margin: 0 0 0.5em 0;
+    }
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+
+  &__project, &__user {
+    text-align: center;
+
+    p {
+      display: flex;
+      justify-content: center;
+      margin: 0.5em 0;
+    }
+  }
+
+  &__project {
+    &__title {
+      font-size: $header-font-size-small;
+    }
+
+    &__description {
+      color: $text--lighter;
+      font-size: $body-font-size-small;
+    }
+
+    &__categories {
+      display: flex;
+      justify-content: center;
+
+      li {
+        display: inline-block;
+        margin: 0 5px 5px 5px;
+      }
+    }
+  }
+
+  &__user {
+    &__username {
+      color: $text--lighter;
+      font-size: $body-font-size-small;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div class="conversation-details__section conversation-details__user">
+  <p><img class="icon" src={{user.photoThumbUrl}} /></p>
+  <p data-test-name>
+    <strong>
+      {{#if user.name}}
+        {{user.name}}
+      {{else}}
+        {{user.username}}
+      {{/if}}
+    </strong>
+  </p>
+  <p data-test-username class="conversation-details__user__username">{{user.username}}</p>
+</div>
+
+<div class="conversation-details__section">
+  <h4>Skills</h4>
+  {{user/skills-list data-test-user-skills-list user=user}}
+</div>

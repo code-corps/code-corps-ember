@@ -25,6 +25,9 @@
   {{#if navigationMenu.isDefault}}
     {{#if session.isAuthenticated}}
       <nav class="header-navigation--right">
+        <ul class="header-navigation__options">
+          <li>{{#link-to "conversations" data-test-conversations-link class="header-navigation__icon-link"}}{{fa-icon "comments"}}{{/link-to}}</li>
+        </ul>
         {{user-menu user=currentUser.user class="header-navigation__options" }}
       </nav>
     {{else}}
