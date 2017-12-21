@@ -4,7 +4,7 @@ import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-accep
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import page from 'code-corps-ember/tests/pages/project/conversations';
 
-const hourOfMiliseconds = 3600 * 1000;
+const hour = 3600 * 1000;
 
 function createConversations(count, project, user) {
   return [...Array(count)].map(() => {
@@ -56,8 +56,8 @@ test('Project admin can view list of conversations', function(assert) {
 
   let [date1, date2, date3] = [
     Date.now(),
-    Date.now() - 5 * hourOfMiliseconds,
-    Date.now() - 1 * hourOfMiliseconds
+    Date.now() - 5 * hour,
+    Date.now() - 1 * hour
   ];
 
   server.create('conversation', { message:  message1, user, updatedAt: date1 });
