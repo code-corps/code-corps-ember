@@ -22,7 +22,7 @@ test('Task comments are displayed correctly', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(taskPage.comments().count, 4, 'The correct number of task comments is rendered');
+    assert.equal(taskPage.taskCommentList.comments().count, 4, 'The correct number of task comments is rendered');
   });
 });
 
@@ -50,7 +50,7 @@ test('A comment can be added to a task', function(assert) {
 
   andThen(() => {
     assert.equal(server.schema.comments.all().models.length, 1, 'A new comment was created');
-    assert.equal(taskPage.comments().count, 1, 'The comment is being rendered');
+    assert.equal(taskPage.taskCommentList.comments().count, 1, 'The comment is being rendered');
     let [comment] = server.schema.comments.all().models;
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
