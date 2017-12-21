@@ -1,0 +1,5 @@
+{{#each (sort-by "updatedAt:desc" conversations) as |conversation|}}
+  {{yield 'item' conversation}}
+{{else}}
+  {{yield 'empty'}}
+{{/each}}
