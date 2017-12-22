@@ -1,3 +1,9 @@
+.conversation__loading {
+  background: $clear-focus;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+
 .conversation-thread {
   background: $clear-focus;
   border-right: 1px solid $gray--lighter;

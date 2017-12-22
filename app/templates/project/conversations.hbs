@@ -8,28 +8,46 @@
 
 <div class="conversations">
   <aside>
-    {{#each (sort-by "updatedAt:desc" conversations) as |conversation|}}
-      {{conversations/conversation-list-item-with-user
-        conversation=conversation
-        close=(action 'close')
-        reopen=(action 'reopen')
+    <div class="conversations__list-actions">
+      {{conversations/status-select
+        status=status
       }}
+    </div>
+    {{#if currentlyLoading}}
+      {{loading-spinner}}
     {{else}}
-      <div class="conversations__empty">
-        <p class="conversations__empty__icon">
-          {{fa-icon "comment"}}
-        </p>
-        <p><strong>You haven't had any conversations yet.</strong></p>
-        <p>Go start one with someone in your project!</p>
-        <p>
-          {{link-to 'See your users' 'project.people' class="button default"}}
-        </p>
-      </div>
-    {{/each}}
+      {{#each (sort-by "updatedAt:desc" (filter-by "status" status conversations)) as |conversation|}}
+        {{conversations/conversation-list-item-with-user
+          conversation=conversation
+          close=(action 'close')
+          reopen=(action 'reopen')
+        }}
+      {{else}}
+        <div class="conversations__empty">
+          <p class="conversations__empty__icon">
+            {{fa-icon "comment"}}
+          </p>
+          {{#if (eq status "open")}}
+            <p><strong>You don't have any open conversations.</strong></p>
+            <p>Go start one with someone in your project!</p>
+            <p>
+              {{link-to 'See your users' 'project.people' class="button default"}}
+            </p>
+          {{else if (eq status "closed")}}
+            <p><strong>You don't have any closed conversations.</strong></p>
+          {{/if}}
+        </div>
+      {{/each}}
+    {{/if}}
   </aside>
   <section>
     <div class="conversation">
-      {{outlet}}
+      {{#if currentlyLoading}}
+        <div class="conversation__loading">
+        </div>
+      {{else}}
+        {{outlet}}
+      {{/if}}
     </div>
   </section>
 </div>

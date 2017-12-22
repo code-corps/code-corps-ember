@@ -21,15 +21,21 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
     }
   },
 
-  async model() {
+  async model(params) {
     let project = this.modelFor('project');
     let projectId = get(project, 'id');
     let store = get(this, 'store');
-    // peekAll returns a live array, so it will alse render any newly created
-    // messages, causing the list to update properly on project.messages.new
-    await store.query('conversation', { project_id: projectId });
-    let conversations = store.peekAll('conversation');
+    let conversations = await store.query('conversation', {
+      project_id: projectId,
+      status: params.status
+    });
     return { conversations, project };
+  },
+
+  queryParams: {
+    status: {
+      refreshModel: true
+    }
   },
 
   renderTemplate() {
@@ -64,6 +70,15 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
       this._super(...arguments);
       get(this, 'conversations').activate();
       return true;
+    },
+
+    loading(transition) {
+      let controller = this.controllerFor('project.conversations');
+      controller.set('currentlyLoading', true);
+      transition.promise.finally(() => {
+        controller.set('currentlyLoading', false);
+        this.transitionTo('project.conversations.index');
+      });
     }
   }
 });

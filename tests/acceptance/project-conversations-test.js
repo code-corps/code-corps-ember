@@ -30,23 +30,21 @@ test('Page requires authentication', function(assert) {
   });
 });
 
-test('Page requires current user to be admin', function(assert) {
+test('Page requires current user to be admin', async function(assert) {
   assert.expect(1);
 
   let { project, user } = server.create('project-user', { role: 'contributor' });
   authenticateSession(this.application, { user_id: user.id });
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    assert.equal(currentRouteName(), 'project.index', 'User was redirected to base project route.');
-  });
+  assert.equal(currentRouteName(), 'project.index', 'User was redirected to base project route.');
 });
 
-test('Project admin can view list of conversations', function(assert) {
+test('Project admin can view list of conversations', async function(assert) {
   assert.expect(2);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
@@ -64,34 +62,32 @@ test('Project admin can view list of conversations', function(assert) {
   server.create('conversation', { message:  message2, user, updatedAt: date2 });
   server.create('conversation', { message:  message3, user, updatedAt: date3 });
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    assert.equal(page.conversations().count, 3, 'Conversations are rendered');
-    let renderedTimeStampOrder = [
-      page.conversations(0).updatedAt.text,
-      page.conversations(1).updatedAt.text,
-      page.conversations(2).updatedAt.text
-    ];
+  assert.equal(page.conversations().count, 3, 'Conversations are rendered');
+  let renderedTimeStampOrder = [
+    page.conversations(0).updatedAt.text,
+    page.conversations(1).updatedAt.text,
+    page.conversations(2).updatedAt.text
+  ];
 
-    let expectedTimeStampOrder = [
-      'a few seconds ago',
-      'an hour ago',
-      '5 hours ago'
-    ];
+  let expectedTimeStampOrder = [
+    'a few seconds ago',
+    'an hour ago',
+    '5 hours ago'
+  ];
 
-    assert.deepEqual(
-      renderedTimeStampOrder,
-      expectedTimeStampOrder,
-      'Items are rendered in correct order with properly formatted timestamps.'
-    );
-  });
+  assert.deepEqual(
+    renderedTimeStampOrder,
+    expectedTimeStampOrder,
+    'Items are rendered in correct order with properly formatted timestamps.'
+  );
 });
 
-test('Project admin can view single conversations', function(assert) {
+test('Project admin can view single conversations', async function(assert) {
   assert.expect(1);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
@@ -99,21 +95,17 @@ test('Project admin can view single conversations', function(assert) {
 
   createConversations(3, project, user);
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    page.conversations(1).click();
-  });
+  page.conversations(1).click();
 
-  andThen(() => {
-    assert.equal(currentRouteName(), 'project.conversations.conversation');
-  });
+  assert.equal(currentRouteName(), 'project.conversations.conversation');
 });
 
-test('System is notified of new conversation part', function(assert) {
+test('System is notified of new conversation part', async function(assert) {
   assert.expect(3);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
@@ -121,34 +113,28 @@ test('System is notified of new conversation part', function(assert) {
 
   let [conversation] = createConversations(1, project, user);
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    page.conversations(0).click();
-  });
+  page.conversations(0).click();
 
-  andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 1, 'Just the message head is rendered.');
-    server.create('conversation-part', { conversation });
-  });
+  assert.equal(page.conversationThread.conversationParts().count, 1, 'Just the message head is rendered.');
+  server.create('conversation-part', { conversation });
 
-  andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 1, 'No notification yet, so new part was not rendered.');
-    let conversationChannelService = this.application.__container__.lookup('service:conversation-channel');
-    let socket = get(conversationChannelService, 'socket.socket');
-    let [channel] = socket.channels;
-    channel.trigger('new:conversation-part', {});
-  });
+  assert.equal(page.conversationThread.conversationParts().count, 1, 'No notification yet, so new part was not rendered.');
+  let conversationChannelService = this.application.__container__.lookup('service:conversation-channel');
+  let socket = get(conversationChannelService, 'socket.socket');
+  let [channel] = socket.channels;
+  channel.trigger('new:conversation-part', {});
 
   andThen(() => {
     assert.equal(page.conversationThread.conversationParts().count, 2, 'Notification was sent. New part is rendered.');
   });
 });
 
-test('Project admin can post to a conversation', function(assert) {
+test('Project admin can post to a conversation', async function(assert) {
   assert.expect(2);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
@@ -156,20 +142,16 @@ test('Project admin can post to a conversation', function(assert) {
 
   createConversations(1, project, user);
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    page.conversations(0).click();
-  });
+  page.conversations(0).click();
 
-  andThen(() => {
-    page.conversationThread.conversationComposer.as((composer) => {
-      composer.submittableTextarea.fillIn('Foo');
-      composer.submitButton.click();
-    });
+  page.conversationThread.conversationComposer.as((composer) => {
+    composer.submittableTextarea.fillIn('Foo');
+    composer.submitButton.click();
   });
 
   andThen(() => {
@@ -178,7 +160,7 @@ test('Project admin can post to a conversation', function(assert) {
   });
 });
 
-test('Project admin can close a conversation', function(assert) {
+test('Project admin can close a conversation', async function(assert) {
   assert.expect(1);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
@@ -186,22 +168,18 @@ test('Project admin can close a conversation', function(assert) {
 
   createConversations(1, project, user);
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    page.conversations(0).closeButton.click();
-  });
+  await page.conversations(0).closeButton.click();
 
-  andThen(() => {
-    assert.equal(server.schema.conversations.first().status, 'closed', 'Conversation was closed.');
-  });
+  assert.equal(server.schema.conversations.first().status, 'closed', 'Conversation was closed.');
 });
 
-test('Project admin can reopen a conversation', function(assert) {
-  assert.expect(1);
+test('Project admin can reopen a conversation', async function(assert) {
+  assert.expect(2);
 
   let { project, user } = server.create('project-user', { role: 'admin' });
   authenticateSession(this.application, { user_id: user.id });
@@ -209,16 +187,17 @@ test('Project admin can reopen a conversation', function(assert) {
   let message = server.create('message', { project });
   server.create('conversation', { status: 'closed', message, user });
 
-  page.visit({
+  await page.visit({
     organization: project.organization.slug,
     project: project.slug
   });
 
-  andThen(() => {
-    page.conversations(0).reopenButton.click();
-  });
+  await page.statusSelect.openButton.click();
+  await page.statusSelect.closedLink.click();
+  await page.conversations(0).reopenButton.click();
+  await page.statusSelect.closedButton.click();
+  await page.statusSelect.openLink.click();
 
-  andThen(() => {
-    assert.equal(server.schema.conversations.first().status, 'open', 'Conversation was reopened.');
-  });
+  assert.ok(page.conversations(0).isVisible, 'The conversation is in the open list.');
+  assert.equal(server.schema.conversations.first().status, 'open', 'Conversation was reopened.');
 });
