@@ -2,6 +2,7 @@ import { get, set } from '@ember/object';
 import { alias, readOnly } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
 import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
 export default Mixin.create({
   conversationChannel: service(),
@@ -41,48 +42,60 @@ export default Mixin.create({
     let message = await get(conversation, 'message');
     let isAdminMessage = get(message, 'initiatedBy') === 'admin';
     let userIsTarget = userId === targetId;
+    let userIsAdmin = !userIsTarget;
 
-    if (conversationReadAt) {
-      // The conversation is read, so check to see if there are unread
-      // conversation parts
-      get(conversation, 'conversationParts').then((conversationParts) => {
-        // Remove all parts where the user is the author
-        let otherParts = conversationParts.rejectBy('authorId', userId);
-
-        // Get the most recent part
-        let latestPart = get(otherParts, 'lastObject');
-
-        if (get(latestPart, 'readAt')) {
-          return; // Exit early since the most recent part is already read
-        }
-
-        let authorId = get(latestPart, 'authorId');
-        let userIsNotAuthor = authorId !== userId;
-        let authorIsTarget = authorId === targetId;
-
-        if (userIsTarget && userIsNotAuthor) {
-          // The user is the target and the part was not written by them
-          this.markAsRead(conversation);
-        }
-
-        if (!userIsTarget && authorIsTarget) {
-          // The user is a project admin and the part was written by the target
-          this.markAsRead(conversation);
-        }
-      });
-    } else {
+    if (!conversationReadAt) {
       if (isAdminMessage) {
         if (userIsTarget) {
           // The message was sent by an admin and the user is the target
           this.markAsRead(conversation);
+          return;
         }
       } else {
-        if (userId !== get(message, 'authorId')) {
+        if (userId !== get(message, 'author.id')) {
           // The message was sent to the project and the user did not author it
           this.markAsRead(conversation);
+          return;
         }
       }
     }
+
+    get(conversation, 'conversationParts').then((conversationParts) => {
+      // Remove all parts where the user is the author
+      let otherParts = conversationParts.rejectBy('author.id', userId);
+
+      if (userIsAdmin) {
+        // Filter the parts down to just the target
+        otherParts = otherParts.filterBy('author.id', targetId);
+      }
+
+      if (isEmpty(otherParts)) {
+        return;
+      }
+
+      // Get the most recent part
+      let latestPart = get(otherParts, 'lastObject');
+
+      if (get(latestPart, 'readAt')) {
+        return; // Exit early since the most recent part is already read
+      }
+
+      let authorId = get(latestPart, 'author.id');
+      let userIsNotAuthor = authorId !== userId;
+      let authorIsTarget = authorId === targetId;
+
+      if (userIsTarget && userIsNotAuthor) {
+        // The user is the target and the part was not written by them
+        this.markAsRead(conversation);
+        return;
+      }
+
+      if (userIsAdmin && authorIsTarget) {
+        // The user is a project admin and the part was written by the target
+        this.markAsRead(conversation);
+        return;
+      }
+    });
   },
 
   idleHandler(isIdle) {
