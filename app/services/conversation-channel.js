@@ -13,17 +13,11 @@ export default Service.extend({
     let id = get(conversation, 'id');
     let channel = socket.joinChannel(`conversation:${id}`);
 
-    channel.on('new:conversation-part', () => this._onNewMessage(conversation));
+    return channel;
   },
 
   leave(conversation) {
     let id = get(conversation, 'id');
     return get(this, 'socket').leaveChannel(`conversation:${id}`);
-  },
-
-  _onNewMessage(conversation) {
-    let store = get(this, 'store');
-    let id = get(conversation, 'id');
-    return store.findRecord('conversation', id);
   }
 });

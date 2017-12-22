@@ -8,6 +8,8 @@ export default Model.extend({
   status: attr(),
   updatedAt: attr(),
 
+  read: attr(), // virtual attr
+
   conversationParts: hasMany('conversation-part', { async: true }),
   message: belongsTo('message', { async: true }),
   user: belongsTo('user', { async: true })
