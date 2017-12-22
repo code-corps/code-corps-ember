@@ -37,27 +37,42 @@ export default Mixin.create({
     let conversation = this.modelFor(this.routeName);
     let conversationReadAt = get(conversation, 'readAt');
     let userId = get(this, 'user.id');
+    let targetId = get(conversation, 'user.id');
+    let message = await get(conversation, 'message');
+    let isAdminMessage = get(message, 'initiatedBy') === 'admin';
+    let userIsTarget = userId === targetId;
 
     if (conversationReadAt) {
       // The conversation is read, so check to see if there are unread
       // conversation parts
       get(conversation, 'conversationParts').then((conversationParts) => {
+        // Remove all parts where the user is the author
         let otherParts = conversationParts.rejectBy('authorId', userId);
-        let latestPart = get(otherParts, 'lastObject');
-        let readAt = get(latestPart, 'readAt');
-        let authorId = get(latestPart, 'authorId');
 
-        if (!readAt && authorId !== userId) {
-          // The conversation part is unread and the user is not the author
+        // Get the most recent part
+        let latestPart = get(otherParts, 'lastObject');
+
+        if (get(latestPart, 'readAt')) {
+          return; // Exit early since the most recent part is already read
+        }
+
+        let authorId = get(latestPart, 'authorId');
+        let userIsNotAuthor = authorId !== userId;
+        let authorIsTarget = authorId === targetId;
+
+        if (userIsTarget && userIsNotAuthor) {
+          // The user is the target and the part was not written by them
+          this.markAsRead(conversation);
+        }
+
+        if (!userIsTarget && authorIsTarget) {
+          // The user is a project admin and the part was written by the target
           this.markAsRead(conversation);
         }
       });
     } else {
-      let message = await get(conversation, 'message');
-      let isAdminMessage = get(message, 'initiatedBy') === 'admin';
-
       if (isAdminMessage) {
-        if (userId === get(conversation, 'user.id')) {
+        if (userIsTarget) {
           // The message was sent by an admin and the user is the target
           this.markAsRead(conversation);
         }
