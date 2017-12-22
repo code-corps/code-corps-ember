@@ -3,6 +3,7 @@ import { set } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/conversations/conversation-thread';
+import { resolve } from 'rsvp';
 
 let page = PageObject.create(component);
 
@@ -10,7 +11,7 @@ function renderPage() {
   page.render(hbs`
     {{conversations/conversation-thread
       conversation=conversation
-      send=onSend
+      send=send
     }}
   `);
 }
@@ -19,7 +20,9 @@ moduleForComponent('conversations/conversation-thread', 'Integration | Component
   integration: true,
   beforeEach() {
     page.setContext(this);
-    set(this, 'onSend', () => {});
+    set(this, 'send', () => {
+      return resolve();
+    });
   },
   afterEach() {
     page.removeContext();
@@ -91,8 +94,9 @@ test('it delays rendering conversation parts not yet loaded', function(assert) {
 test('it delegates send action from composer', function(assert) {
   assert.expect(1);
 
-  set(this, 'onSend', (body) => {
+  set(this, 'send', (body) => {
     assert.equal(body, 'foo', 'Correct value was send with action.');
+    return resolve();
   });
 
   renderPage();

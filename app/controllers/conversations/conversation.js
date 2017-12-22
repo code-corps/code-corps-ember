@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { get } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { reject } from 'rsvp';
 
 export default Controller.extend({
   currentUser: service(),
@@ -15,6 +16,13 @@ export default Controller.extend({
     let user = get(this, 'user');
 
     let params = { author: user, body, conversation };
-    return store.createRecord('conversation-part', params).save();
+    let part = store.createRecord('conversation-part', params);
+
+    let onFailedSave = (reason) => {
+      part.deleteRecord();
+      return reject(reason);
+    };
+
+    return part.save().catch(onFailedSave);
   }
 });

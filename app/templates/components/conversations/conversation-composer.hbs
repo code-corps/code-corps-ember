@@ -4,7 +4,7 @@
     autoresize=true
     classNameBindings="textareaFocused:focused"
     max-height=350
-    modifiedSubmit=(action (pipe (action send body) (action (mut body) null)))
+    modifiedSubmit=(action send body)
     name="markdown"
     onBlur="blurTextarea"
     placeholder=placeholder
@@ -12,5 +12,5 @@
     value=body}}
 </div>
 <div class="conversation-composer__footer">
-  <button {{action (pipe (action send body) (action (mut body) null))}} disabled={{submitDisabled}} class="button default {{if submitDisabled "disabled"}}" data-test-submit-button>{{fa-icon "paper-plane"}} Send</button>
+  <button {{action send body}} disabled={{submitDisabled}} class="button default {{if submitDisabled "disabled"}}" data-test-submit-button>{{fa-icon "paper-plane"}} Send</button>
 </div>
