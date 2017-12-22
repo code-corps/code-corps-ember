@@ -21,7 +21,7 @@
   </div>
   <div class="conversation-thread__composer">
     {{conversations/conversation-composer
-      send=(pipe (action send) (action scrollBottom))
+      onSend=(pipe (action send) (action scrollBottom))
     }}
   </div>
 </div>

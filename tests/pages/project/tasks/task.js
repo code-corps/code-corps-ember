@@ -10,19 +10,16 @@ import {
 import commentItem from '../../components/comment-item';
 import createCommentForm from '../../components/create-comment-form';
 import skillsTypeahead from 'code-corps-ember/tests/pages/components/skills-typeahead';
+import taskCommentList from 'code-corps-ember/tests/pages/components/task-comment-list';
 
 export default create({
   commentItem,
   createCommentForm,
+  taskCommentList,
 
   visit: visitable(':organization/:project/tasks/:number'),
 
   clickSave: clickable('.save'),
-
-  comments: collection({
-    scope: '.task-comment-list',
-    itemScope: '.comment-item'
-  }),
 
   editor: {
     scope: '.editor-with-preview',
