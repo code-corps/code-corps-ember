@@ -33,7 +33,7 @@ moduleForComponent('conversations/new-conversation-modal', 'Integration | Compon
   }
 });
 
-test('It initiates a conversation and opens the modal when open button is clicked', function(assert) {
+test('it initiates a conversation and opens the modal when open button is clicked', function(assert) {
   assert.expect(6);
 
   let store = get(this, 'store');
@@ -59,7 +59,7 @@ test('It initiates a conversation and opens the modal when open button is clicke
   assert.equal(get(message, 'initiatedBy'), 'admin');
 });
 
-test('It keeps the modal open and retains the records when close button is clicked and prompt canceled', function(assert) {
+test('it keeps the modal open and retains the records when close button is clicked and prompt canceled', async function(assert) {
   assert.expect(6);
 
   let store = get(this, 'store');
@@ -86,7 +86,10 @@ test('It keeps the modal open and retains the records when close button is click
   assert.equal(get(messages, 'length'), 1, 'A message was initialized');
   assert.equal(get(conversations, 'length'), 1, 'A conversation was initialized');
 
-  page.modal.close();
+  page.modal.subject.fillIn('Test message');
+  page.modal.body.fillIn('Lorem ipsum');
+
+  await page.modal.close();
 
   assert.equal(get(messages, 'length'), 1, 'The message was kept');
   assert.equal(get(conversations, 'length'), 1, 'The conversation was kept');
@@ -95,7 +98,36 @@ test('It keeps the modal open and retains the records when close button is click
   stub.restore();
 });
 
-test('It discards the conversation and closes the modal when close button is clicked and prompt confirmed', function(assert) {
+test('it does not prompt when close button is clicked and the form has no data', async function(assert) {
+  assert.expect(5);
+
+  let store = get(this, 'store');
+
+  run(() => {
+    set(this, 'initiatedBy', 'admin');
+    set(this, 'project', store.createRecord('project', { id: 'foo' }));
+    set(this, 'user', store.createRecord('user', { id: 'bar' }));
+    set(this, 'currentUser.user', store.createRecord('user', { id: 'baz' }));
+  });
+
+  let messages = store.peekAll('message');
+  let conversations = store.peekAll('conversation');
+
+  renderPage();
+
+  page.openButton.click();
+
+  assert.equal(get(messages, 'length'), 1, 'A message was initialized');
+  assert.equal(get(conversations, 'length'), 1, 'A conversation was initialized');
+
+  await page.modal.close();
+
+  assert.equal(get(messages, 'length'), 0, 'The message was discarded');
+  assert.equal(get(conversations, 'length'), 0, 'The conversation was discarded');
+  assert.notOk(page.modal.isVisible, 'Modal was closed');
+});
+
+test('it discards the conversation and closes the modal when close button is clicked and prompt confirmed', async function(assert) {
   assert.expect(6);
 
   let store = get(this, 'store');
@@ -122,7 +154,10 @@ test('It discards the conversation and closes the modal when close button is cli
   assert.equal(get(messages, 'length'), 1, 'A message was initialized');
   assert.equal(get(conversations, 'length'), 1, 'A conversation was initialized');
 
-  page.modal.close();
+  page.modal.subject.fillIn('Test message');
+  page.modal.body.fillIn('Lorem ipsum');
+
+  await page.modal.close();
 
   assert.equal(get(messages, 'length'), 0, 'The message was discarded');
   assert.equal(get(conversations, 'length'), 0, 'The conversation was discarded');
@@ -131,7 +166,7 @@ test('It discards the conversation and closes the modal when close button is cli
   stub.restore();
 });
 
-test('It saves the conversation and closes the modal when send button is clicked', function(assert) {
+test('it saves the conversation and closes the modal when send button is clicked', function(assert) {
   assert.expect(3);
 
   let store = get(this, 'store');
@@ -166,7 +201,7 @@ test('It saves the conversation and closes the modal when send button is clicked
   assert.equal(get(conversations, 'length'), 1, 'The conversation "saved" conversation was kept. The duplicate was discarded');
 });
 
-test('It renders validation errors', function(assert) {
+test('it renders validation errors', function(assert) {
   assert.expect(7);
 
   let store = get(this, 'store');

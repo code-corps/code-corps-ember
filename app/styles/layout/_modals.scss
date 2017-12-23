@@ -33,9 +33,18 @@
 
 .modal__content {
   margin-top: 10px;
-  padding: 20px 10px;
+  padding: 1em;
   border-bottom: 1px solid $border-gray;
   border-top: 1px solid $border-gray;
+
+  &--no-vertical-padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &--without-top-border {
+    border-top: none;
+  }
 
   ul {
     margin-left: 30px;
@@ -47,8 +56,26 @@
   }
 }
 
+.modal__target-user {
+  align-items: center;
+  background: $gray--background;
+  border-bottom: 1px solid $gray--lighter;
+  border-top: 1px solid $gray--lighter;
+  display: flex;
+  margin: 0 -1em 1em -1em;
+  padding: 1em;
+
+  span {
+    padding-right: 5px;
+  }
+
+  &__username {
+    color: $text--lightest;
+    font-size: $body-font-size-small;
+  }
+}
+
 .modal__actions {
-  margin-top: 10px;
   padding: 10px;
 
   p {

@@ -1,4 +1,4 @@
-<a class="new-conversation-modal__button" {{action (pipe (action createConversation) (action (mut showModal) true)) bubbles=false}} data-test-open-button>
+<a class="project-user__button" {{action (pipe (action createConversation) (action (mut showModal) true)) bubbles=false}} data-test-open-button>
   {{fa-icon "comment"}}
 </a>
 
@@ -16,7 +16,7 @@
     <h3>New Conversation</h3>
 
     <form data-test-message-form>
-      <div class="new-conversation-modal__to-field">
+      <div class="modal__target-user">
         <span>
           <img data-test-target-photo class="icon icon--tiny" src={{user.photoThumbUrl}} />
         </span>
