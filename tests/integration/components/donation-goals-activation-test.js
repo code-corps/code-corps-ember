@@ -1,6 +1,19 @@
 import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import PageObject from 'ember-cli-page-object';
+import donationGoalsActivation from 'code-corps-ember/tests/pages/component/donation-goals-activation';
+
+let page = PageObject.create(donationGoalsActivation);
+
+function renderPage() {
+  page.render(hbs`
+    {{donation-goals-activation
+      activateDonations=activateDonationsHandler
+      canActivateDonations=canActivateDonations
+    }}
+  `);
+}
 
 function setHandlers(context, { activateDonationsHandler = function() {} } = {}) {
   set(context, 'activateDonationsHandler', activateDonationsHandler);
@@ -9,7 +22,11 @@ function setHandlers(context, { activateDonationsHandler = function() {} } = {})
 moduleForComponent('donation-goals-activation', 'Integration | Component | donation goals activation', {
   integration: true,
   beforeEach() {
+    page.setContext(this);
     setHandlers(this);
+  },
+  afterEach() {
+    page.removeContext();
   }
 });
 
@@ -23,16 +40,11 @@ test('it allows activating donations if canActivateDonations is true', function(
   setHandlers(this, { activateDonationsHandler });
   set(this, 'canActivateDonations', true);
 
-  this.render(hbs`
-    {{donation-goals-activation
-      activateDonations=activateDonationsHandler
-      canActivateDonations=canActivateDonations
-    }}
-  `);
+  renderPage();
 
-  assert.equal(this.$('.activate-donations').length, 1, 'The "activate donations" button is rendered');
+  assert.ok(page.activateDonationsButton.isVisible, 'The "activate donations" button is rendered');
 
-  this.$('.activate-donations').click();
+  page.activateDonationsButton.click();
 });
 
 test('it prevents activating donations if canActivateDonations is false', function(assert) {
@@ -40,11 +52,7 @@ test('it prevents activating donations if canActivateDonations is false', functi
 
   set(this, 'canActivateDonations', false);
 
-  this.render(hbs`
-    {{donation-goals-activation
-      canActivateDonations=canActivateDonations
-    }}
-  `);
+  renderPage();
 
-  assert.equal(this.$('.activate-donations').length, 0, 'The "activate donations" button is not rendered');
+  assert.notOk(page.activateDonationsButton.isVisible, 'The "activate donations" button is not rendered');
 });
