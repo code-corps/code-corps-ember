@@ -173,6 +173,7 @@ module.exports = function(environment) {
     ENV['simple-auth'] = {
       store: 'simple-auth-session-store:ephemeral'
     };
+    ENV.SOCKETS_BASE_URL = '';
   }
 
   if (environment === 'staging') {
