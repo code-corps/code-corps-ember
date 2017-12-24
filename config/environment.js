@@ -164,6 +164,7 @@ module.exports = function(environment) {
 
   if (environment === 'mirage-development') {
     ENV.API_BASE_URL = '';
+    ENV.SOCKETS_BASE_URL = '';
     ENV.WEB_BASE_URL = '';
     ENV.sentry.development = true;
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';

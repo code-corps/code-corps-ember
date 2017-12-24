@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'code-corps-ember/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'code-corps-ember/tests/helpers/ember-simple-auth';
 import page from 'code-corps-ember/tests/pages/project/people';
+import sinon from 'sinon';
 
 function buildURLParts(project_organization_slug, project_slug) {
   return {
@@ -74,8 +75,8 @@ test('Lists owner when owner is the only contributor.', function(assert) {
   });
 });
 
-test('Lists multiple contributors if they exists.', function(assert) {
-  assert.expect(16);
+test('lists multiple contributors if they exist', function(assert) {
+  assert.expect(18);
 
   let { project, user } = server.create('project-user', { role: 'owner' });
 
@@ -88,6 +89,10 @@ test('Lists multiple contributors if they exists.', function(assert) {
   authenticateSession(this.application, { user_id: user.id });
 
   page.visit(urlParts.args);
+
+  let stub = sinon.stub(window, 'confirm').callsFake(() => {
+    return true;
+  });
 
   andThen(function() {
     assert.equal(currentURL(), urlParts.url);
@@ -106,7 +111,6 @@ test('Lists multiple contributors if they exists.', function(assert) {
     assert.notOk(page.pendingContributors().isEmpty, 'Pending contributors list is not empty');
     assert.equal(page.pendingContributors().count, 2, 'Pending contributors has 2 users listed');
     page.pendingContributors(0).approveButton.click();
-    page.pendingContributors(0).modal.confirmButton.click();
   });
 
   andThen(function() {
@@ -115,13 +119,22 @@ test('Lists multiple contributors if they exists.', function(assert) {
     assert.equal(page.others().count, 2, 'Others has 2 users listed');
 
     page.pendingContributors(0).denyButton.click();
-    page.pendingContributors(0).modal.confirmButton.click();
   });
 
   andThen(function() {
     assert.notOk(page.projectMenu.peopleLink.infoVisible);
     assert.equal(page.pendingContributors().count, 0, 'Pending contributors has no users listed');
     assert.equal(page.others().count, 2, 'Others has 2 users listed');
+
+    page.others(0).projectUserRoleModal.openButton.click();
+    page.others(0).projectUserRoleModal.modal.radioGroupAdmin.radioButton.click();
+    page.others(0).projectUserRoleModal.modal.save();
+  });
+
+  andThen(function() {
+    assert.equal(page.admins().count, 2, 'Admins has 2 users listed');
+    assert.equal(page.others().count, 1, 'Others has 1 user listed');
+    stub.restore();
   });
 });
 

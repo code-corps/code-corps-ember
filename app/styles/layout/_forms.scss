@@ -75,8 +75,21 @@ $outer-border-radius: 4px;
     text-align: center;
   }
 
+  &--disabled {
+    opacity: 0.5;
+  }
+
   &--hidden:not(.has-error) {
     display: none;
+  }
+
+  &--radio {
+    margin-bottom: 0.5em;
+
+    input {
+      float: left;
+      margin: 3px 8px 3px 0;
+    }
   }
 
   .input-group {
