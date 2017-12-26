@@ -13,6 +13,4 @@ export default Factory.extend({
   updatedAt(i) {
     return moment().subtract(i, 'days');
   }
-  // author: belongsTo('user', { async: true }),
-  // conversation: belongsTo('conversation', { async: true })
 });
