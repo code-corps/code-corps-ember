@@ -4,7 +4,7 @@
 
 {{#if showModal}}
   {{#modal-dialog
-    containerClassNames="new-conversation-modal"
+    containerClassNames="modal new-conversation-modal"
     onClose=(action (pipe (action discardConversation) (action (mut showModal) false)))
     targetAttachment="center"
     translucentOverlay=true
@@ -13,7 +13,9 @@
       {{fa-icon "close"}}
     </span>
 
-    <h3>New Conversation</h3>
+    <div class="modal__header">
+      <h3>New Conversation</h3>
+    </div>
 
     <form data-test-message-form>
       <div class="modal__target-user">
