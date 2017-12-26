@@ -17,4 +17,5 @@ test('it exists', function(assert) {
 
 testForAttributes('conversation', ['insertedAt', 'readAt', 'status', 'updatedAt']);
 testForBelongsTo('conversation', 'message');
+testForBelongsTo('conversation', 'project');
 testForBelongsTo('conversation', 'user');

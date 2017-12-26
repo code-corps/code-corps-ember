@@ -10,5 +10,6 @@ export default Model.extend({
 
   conversationParts: hasMany('conversation-part', { async: true }),
   message: belongsTo('message', { async: true }),
+  project: belongsTo('project', { async: true }),
   user: belongsTo('user', { async: true })
 });
