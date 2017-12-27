@@ -8,7 +8,7 @@
         sentAt=conversation.message.insertedAt
       }}
     {{/if}}
-    {{#each conversation.conversationParts as |conversationPart|}}
+    {{#each (sort-by "insertedAt:asc" conversation.conversationParts) as |conversationPart|}}
       {{#if conversationPart.isLoaded}}
         {{conversations/conversation-part
           author=conversationPart.author
