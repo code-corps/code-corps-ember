@@ -17,7 +17,7 @@ export default create({
   clickSave: clickable('.save'),
 
   successAlerts: collection({
-    scope: '.alert-success',
+    scope: '.flash-messages--full-width .alert-success',
     item: {
       scope: 'p'
     }

@@ -14,6 +14,22 @@
           animation: fadeInDown $duration;
 }
 
+@mixin moveInLeft($duration: 2s) {
+  -webkit-animation: moveInLeft $duration; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: moveInLeft $duration; /* Firefox < 16 */
+      -ms-animation: moveInLeft $duration; /* Internet Explorer */
+       -o-animation: moveInLeft $duration; /* Opera < 12.1 */
+          animation: moveInLeft $duration;
+}
+
+@mixin moveOutLeft($duration: 2s) {
+  -webkit-animation: moveOutLeft $duration; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: moveOutLeft $duration; /* Firefox < 16 */
+      -ms-animation: moveOutLeft $duration; /* Internet Explorer */
+       -o-animation: moveOutLeft $duration; /* Opera < 12.1 */
+          animation: moveOutLeft $duration;
+}
+
 @mixin fadeInUp($duration: 2s) {
   -webkit-animation: fadeInUp $duration; /* Safari, Chrome and Opera > 12.1 */
      -moz-animation: fadeInUp $duration; /* Firefox < 16 */
@@ -28,6 +44,14 @@
       -ms-animation: fadeOut $duration; /* Internet Explorer */
        -o-animation: fadeOut $duration; /* Opera < 12.1 */
           animation: fadeOut $duration;
+}
+
+@mixin fadeOutUp($duration: 2s) {
+  -webkit-animation: fadeOutUp $duration; /* Safari, Chrome and Opera > 12.1 */
+     -moz-animation: fadeOutUp $duration; /* Firefox < 16 */
+      -ms-animation: fadeOutUp $duration; /* Internet Explorer */
+       -o-animation: fadeOutUp $duration; /* Opera < 12.1 */
+          animation: fadeOutUp $duration;
 }
 
 @mixin shake {
@@ -51,6 +75,16 @@
   to { opacity: 1; transform: none; }
 }
 
+@keyframes moveInLeft {
+  from { opacity: 1; transform: translate3d(-100%, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes moveOutLeft {
+  from { opacity: 1; transform: none; }
+  to { opacity: 1; transform: translate3d(-100%, 0, 0);; }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translate3d(0, 50%, 0); }
   to { opacity: 1; transform: none; }
@@ -59,6 +93,11 @@
 @keyframes fadeOut {
   from { opacity: 1; }
   to   { opacity: 0; }
+}
+
+@keyframes fadeOutUp {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translate3d(0, -100%, 0); }
 }
 
 @keyframes shake {

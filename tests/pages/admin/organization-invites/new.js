@@ -10,11 +10,13 @@ export default create({
   visit: visitable('admin/organization-invites/new'),
 
   flashMessages: collection({
-    itemScope: '.flash > div'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message'
   }),
 
   flashErrors: collection({
-    itemScope: '.flash > div.alert-danger'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message.alert-danger'
   }),
 
   inviteForm: {

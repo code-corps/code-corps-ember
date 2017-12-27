@@ -12,7 +12,8 @@ isn't this here mainly for updating a user's image? }}
     {{! it'd be nice for the sake of consistency to rename
     'navigation-menu' to 'site-header' }}
     {{navigation-menu}}
-    {{flash-messages}}
+    {{flash-messages/full-width}}
+    {{flash-messages/fixed-position}}
     <div class="site-content {{if isOnboarding "site-content--start"}} {{codeTheme.className}} {{conversations.className}} {{projectTaskBoard.className}}">
       {{outlet}}
     </div>

@@ -187,5 +187,5 @@ test('it changes the role when editing', function(assert) {
   let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
   let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'success' };
   assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-  assert.ok(flash.message.indexOf('Role changed to admin') !== -1, 'Message includes proper text');
+  assert.ok(flash.message.indexOf('changed to admin') !== -1, 'Message includes proper text');
 });

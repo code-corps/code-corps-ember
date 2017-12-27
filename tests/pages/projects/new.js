@@ -17,7 +17,8 @@ export default create({
   visit: visitable(':organization/projects/new'),
 
   flashMessages: collection({
-    itemScope: '.flash > div'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message'
   }),
 
   navigationMenu,
