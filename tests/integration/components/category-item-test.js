@@ -4,7 +4,6 @@ import { run } from '@ember/runloop';
 import RSVP from 'rsvp';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import {
   getFlashMessageCount,
@@ -96,9 +95,7 @@ let selectedCategory = {
   description: 'You want to help society.'
 };
 
-test('it works for selecting unselected categories', function(assert) {
-  let done = assert.async();
-
+test('it works for selecting unselected categories', async function(assert) {
   assert.expect(5);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
@@ -111,17 +108,12 @@ test('it works for selecting unselected categories', function(assert) {
   assert.equal(page.description.text, 'You want to help technology.', 'Correct description is rendered.');
   assert.equal(page.button.text, 'Technology', 'Button text is rendered correctly');
 
-  page.button.click();
+  await page.button.click();
 
-  wait().then(() => {
-    assert.ok(page.icon.classContains('technology--selected'), 'is selected');
-    done();
-  });
+  assert.ok(page.icon.classContains('technology--selected'), 'is selected');
 });
 
 test('it works for removing selected categories', function(assert) {
-  let done = assert.async();
-
   assert.expect(3);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
@@ -134,15 +126,10 @@ test('it works for removing selected categories', function(assert) {
 
   page.button.click();
 
-  wait().then(() => {
-    assert.ok(page.icon.classContains('society'), 'is unselected');
-    done();
-  });
+  assert.ok(page.icon.classContains('society'), 'is unselected');
 });
 
 test('it creates a flash message on an error when adding', function(assert) {
-  let done = assert.async();
-
   assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
@@ -152,25 +139,17 @@ test('it creates a flash message on an error when adding', function(assert) {
 
   page.button.click();
 
-  wait().then(() => {
-    assert.ok(page.button.unchecked, 'Operation failed. Button is rendered as unchecked.');
+  assert.ok(page.button.unchecked, 'Operation failed. Button is rendered as unchecked.');
 
-    assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
-
-    let flash = getFlashMessageAt(0, this);
-    let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
-    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
-    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-
-    assert.ok(flash.message.indexOf(unselectedCategory.name) !== -1, 'Message text includes the category name');
-
-    done();
-  });
+  assert.equal(getFlashMessageCount(this), 1, 'One message is shown');
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf(unselectedCategory.name) !== -1, 'Message text includes the category name');
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
-  let done = assert.async();
-
   assert.expect(4);
 
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
@@ -180,25 +159,17 @@ test('it creates a flash message on an error when removing', function(assert) {
 
   page.button.click();
 
-  wait().then(() => {
-    assert.ok(page.button.checked, 'Operation failed. Button is rendered as checked.');
+  assert.ok(page.button.checked, 'Operation failed. Button is rendered as checked.');
 
-    assert.equal(getFlashMessageCount(this), 1, 'One message is shown.');
-
-    let flash = getFlashMessageAt(0, this);
-    let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
-    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
-    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-
-    assert.ok(flash.message.indexOf(selectedCategory.name) !== -1, 'Message text includes the category name');
-
-    done();
-  });
+  assert.equal(getFlashMessageCount(this), 1, 'One message is shown.');
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = getProperties(flash, 'fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf(selectedCategory.name) !== -1, 'Message text includes the category name');
 });
 
-test('it sets and unsets loading state when adding', function(assert) {
-  let done = assert.async();
-
+test('it sets and unsets loading state when adding', async function(assert) {
   assert.expect(2);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
@@ -206,19 +177,16 @@ test('it sets and unsets loading state when adding', function(assert) {
 
   renderPage();
 
-  page.button.click();
+  let result = page.button.click();
 
   assert.ok(page.button.spinning, 'Button is rendering as busy.');
 
-  wait().then(() => {
-    assert.ok(page.button.checked, 'Operation worked. Button is rendered as checked.');
-    done();
-  });
+  await result;
+
+  assert.ok(page.button.checked, 'Operation worked. Button is rendered as checked.');
 });
 
-test('it sets and unsets loading state when removing', function(assert) {
-  let done = assert.async();
-
+test('it sets and unsets loading state when removing', async function(assert) {
   assert.expect(2);
 
   stubService(this, 'user-categories', mockUserCategoriesService);
@@ -226,12 +194,11 @@ test('it sets and unsets loading state when removing', function(assert) {
 
   renderPage();
 
-  page.button.click();
+  let result = page.button.click();
 
   assert.ok(page.button.spinning, 'Button is rendering as busy.');
 
-  wait().then(() => {
-    assert.ok(page.button.unchecked, 'Operation worked. Button is rendered as unchecked.');
-    done();
-  });
+  await result;
+
+  assert.ok(page.button.unchecked, 'Operation worked. Button is rendered as unchecked.');
 });

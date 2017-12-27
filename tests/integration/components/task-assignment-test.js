@@ -7,7 +7,6 @@ import taskAssignmentComponent from 'code-corps-ember/tests/pages/components/tas
 import { Ability } from 'ember-can';
 import DS from 'ember-data';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
-import wait from 'ember-test-helpers/wait';
 import { initialize as initializeKeyboard } from 'ember-keyboard';
 
 const { PromiseObject } = DS;
@@ -244,7 +243,6 @@ test('when rendering is deffered and user does not have ability and there is an 
 });
 
 test('assignment dropdown typeahead', function(assert) {
-  let done = assert.async();
   assert.expect(2);
 
   let task = { id: 'task' };
@@ -273,10 +271,7 @@ test('assignment dropdown typeahead', function(assert) {
   page.select.trigger.open();
   page.select.dropdown.input.fillIn('testuser2');
 
-  wait().then(() => {
-    assert.equal(page.select.dropdown.options(0).text, 'testuser2', 'Only the second user is rendered.');
-    done();
-  });
+  assert.equal(page.select.dropdown.options(0).text, 'testuser2', 'Only the second user is rendered.');
 });
 
 test('pressing Space assigns self to task when able', function(assert) {
