@@ -16,7 +16,7 @@ export default create({
   skillsTypeahead,
 
   successAlert: {
-    scope: '.alert-success',
+    scope: '.flash-messages--full-width .alert-success',
     message: text('p')
   },
 

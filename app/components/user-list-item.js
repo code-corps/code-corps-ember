@@ -36,9 +36,11 @@ export default Component.extend({
         return RSVP.resolve();
       }
 
+      let username = get(projectUser, 'user.username');
+
       set(projectUser, 'role', role);
       return projectUser.save().then(() => {
-        this._flashSuccess(`Role changed to ${role}`);
+        this._flashSuccess(`Role for <strong>${username}</strong> changed to ${role}`);
       });
     },
 
@@ -55,7 +57,7 @@ export default Component.extend({
   },
 
   _flashSuccess(message) {
-    let options = { fixed: true, sticky: false, timeout: 5000 };
-    get(this, 'flashMessages').clearMessages().success(message, options);
+    let options = { icon: 'check', fixed: true, sticky: false, timeout: 5000, extendedTimeout: 600, preventDuplicates: false };
+    get(this, 'flashMessages').success(message, options);
   }
 });

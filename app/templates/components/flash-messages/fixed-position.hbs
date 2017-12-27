@@ -1,0 +1,9 @@
+{{#each (filter-by 'fixed' true flashMessages.queue) as |flash|}}
+  {{#flash-message flash=flash as |component flash|}}
+    <div class="fixed-flash">
+      <div class="fixed-flash-inner">
+        <p>{{#if flash.icon}}{{fa-icon flash.icon}} {{/if}}{{{flash.message}}}</p>
+      </div>
+    </div>
+  {{/flash-message}}
+{{/each}}
