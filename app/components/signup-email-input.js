@@ -2,7 +2,14 @@ import Component from '@ember/component';
 import { not, empty, and, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { once, debounce, cancel } from '@ember/runloop';
-import { set, observer, get, computed } from '@ember/object';
+import { set, get, computed } from '@ember/object';
+import Ember from 'ember';
+
+const {
+  testing
+} = Ember;
+
+const DEBOUNCE_TIMER = testing ? 0 : 500;
 
 export default Component.extend({
   cachedEmail: '',
@@ -50,10 +57,6 @@ export default Component.extend({
     });
   },
 
-  emailChanged: observer('email', function() {
-    once(this, '_check');
-  }),
-
   sendRequest(email) {
     return get(this, 'ajax').request('/users/email_available', {
       method: 'GET',
@@ -65,6 +68,7 @@ export default Component.extend({
 
   actions: {
     keyDown() {
+      once(this, '_check');
       if (get(this, 'isNotSameEmail')) {
         set(this, 'isChecking', true);
       }
@@ -78,7 +82,7 @@ export default Component.extend({
       cancel(get(this, 'timer'));
       let deferredAction = debounce(this, function() {
         this.checkAvailable();
-      }, 500);
+      }, DEBOUNCE_TIMER);
       set(this, 'timer', deferredAction);
     } else if (get(this, 'isSameEmail') && get(this, 'isNotEmpty')) {
       this.sendAction('emailValidated', get(this, 'canSubmit'));

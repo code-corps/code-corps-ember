@@ -2,7 +2,6 @@ import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
-import wait from 'ember-test-helpers/wait';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/signup-username-input';
 
@@ -29,104 +28,95 @@ test('it shows nothing when empty', function(assert) {
   assert.notOk(page.suggestionsArea.visible);
 });
 
-test('it shows suggestions when invalid', function(assert) {
-  let done = assert.async();
+test('it shows suggestions when invalid', async function(assert) {
   assert.expect(5);
 
   server.get('/users/username_available', () => {
     return { valid: false, available: true };
   });
 
-  this.on('usernameValidated', (result) => {
+  this.set('usernameValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
-  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  this.set('user', { username: null });
+  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
-  this.set('user', { username: 'lots--of--hypens' });
+  page.fillIn('lots--of--hypens');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.ok);
-    assert.ok(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 1);
-    assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a username with only letters, numbers, or underscores.');
-    done();
-  });
+  assert.notOk(page.suggestionsArea.ok);
+  assert.ok(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 1);
+  assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a username with only letters, numbers, or underscores.');
 });
 
-test('it shows suggestions when unavailable', function(assert) {
-  let done = assert.async();
+test('it shows suggestions when unavailable', async function(assert) {
   assert.expect(5);
 
   server.get('/users/username_available', () => {
     return { valid: true, available: false };
   });
 
-  this.on('usernameValidated', (result) => {
+  this.set('usernameValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
-  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  this.set('user', { username: null });
+  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
-  this.set('user', { username: 'taken' });
+  page.fillIn('taken');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.ok);
-    assert.ok(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 1);
-    assert.equal(page.suggestionsArea.suggestions(0).text, 'This username is already registered. Want to login?');
-    done();
-  });
+  assert.notOk(page.suggestionsArea.ok);
+  assert.ok(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 1);
+  assert.equal(page.suggestionsArea.suggestions(0).text, 'This username is already registered. Want to login?');
 });
 
-test('it shows ok when valid and available', function(assert) {
-  let done = assert.async();
+test('it shows ok when valid and available', async function(assert) {
   assert.expect(4);
 
   server.get('/users/username_available', () => {
     return { valid: true, available: true };
   });
 
-  this.on('usernameValidated', (result) => {
+  this.set('usernameValidated', (result) => {
     run.next(() => {
       assert.ok(result);
     });
   });
-  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  this.set('user', { username: null });
+  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
-  this.set('user', { username: 'available' });
+  page.fillIn('available');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.ok(page.suggestionsArea.ok);
-    assert.notOk(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 0);
-    done();
-  });
+  assert.ok(page.suggestionsArea.ok);
+  assert.notOk(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 0);
 });
 
-test('it resets to show nothing when cleared', function(assert) {
-  let done = assert.async();
+test('it resets to show nothing when cleared', async function(assert) {
   assert.expect(3);
 
   server.get('/users/username_available', () => {
     return { valid: true, available: true };
   });
 
-  this.on('usernameValidated', (result) => {
+  this.set('usernameValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
   this.set('user', { username: 'available' });
-  page.render(hbs`{{signup-username-input user=user usernameValidated="usernameValidated"}}`);
+  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
-  this.set('user', { username: '' });
+  page.fillIn('');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.visible);
-    assert.notOk(page.suggestionsArea.visible);
-    done();
-  });
+  assert.notOk(page.suggestionsArea.visible);
+  assert.notOk(page.suggestionsArea.visible);
 });

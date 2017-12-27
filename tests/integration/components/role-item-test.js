@@ -4,7 +4,6 @@ import { run } from '@ember/runloop';
 import { set } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
-import wait from 'ember-test-helpers/wait';
 import {
   getFlashMessageCount,
   getFlashMessageAt
@@ -130,7 +129,6 @@ test('it calls proper action on service when clicking an unselected role', funct
 });
 
 test('it creates a flash message on an error when adding', function(assert) {
-  let done = assert.async();
   assert.expect(3);
 
   set(this, 'userRoles', mockUserRolesServiceForErrors);
@@ -140,21 +138,16 @@ test('it creates a flash message on an error when adding', function(assert) {
 
   page.button.click(),
 
-  wait().then(() => {
-    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+  assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
-    let flash = getFlashMessageAt(0, this);
-    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
-    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
-    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-    assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
-
-    done();
-  });
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
 });
 
 test('it creates a flash message on an error when removing', function(assert) {
-  let done = assert.async();
   assert.expect(3);
 
   set(this, 'userRoles', mockUserRolesServiceForErrors);
@@ -162,23 +155,19 @@ test('it creates a flash message on an error when removing', function(assert) {
 
   renderPage();
 
-  run(() => this.$('button').click());
+  page.button.click(),
 
-  wait().then(() => {
-    assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
+  assert.equal(getFlashMessageCount(this), 1, 'One flash message is rendered');
 
-    let flash = getFlashMessageAt(0, this);
-    let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
-    let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
-    assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
-    assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
+  let flash = getFlashMessageAt(0, this);
+  let actualOptions = flash.getProperties('fixed', 'sticky', 'timeout', 'type');
+  let expectedOptions = { fixed: true, sticky: false, timeout: 5000, type: 'danger' };
+  assert.deepEqual(actualOptions, expectedOptions, 'Proper message was set');
+  assert.ok(flash.message.indexOf(mobileDeveloper.name) !== -1, 'Message text includes the role name');
 
-    done();
-  });
 });
 
-test('it sets and unsets loading state when adding', function(assert) {
-  let done = assert.async();
+test('it sets and unsets loading state when adding', async function(assert) {
   assert.expect(2);
 
   let userRoles = {
@@ -200,16 +189,12 @@ test('it sets and unsets loading state when adding', function(assert) {
 
   renderPage();
 
-  page.button.click();
+  await page.button.click();
 
-  wait().then(() => {
-    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
-    done();
-  });
+  assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
 });
 
-test('it sets and unsets loading state on error when adding', function(assert) {
-  let done = assert.async();
+test('it sets and unsets loading state on error when adding', async function(assert) {
   assert.expect(2);
 
   let userRoles = {
@@ -231,16 +216,12 @@ test('it sets and unsets loading state on error when adding', function(assert) {
 
   renderPage();
 
-  page.button.click();
+  await page.button.click();
 
-  wait().then(() => {
-    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
-    done();
-  });
+  assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
 });
 
-test('it sets and unsets loading state when removing', function(assert) {
-  let done = assert.async();
+test('it sets and unsets loading state when removing', async function(assert) {
   assert.expect(2);
 
   let userRoles = {
@@ -262,16 +243,12 @@ test('it sets and unsets loading state when removing', function(assert) {
 
   renderPage();
 
-  page.button.click();
+  await page.button.click();
 
-  wait().then(() => {
-    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
-    done();
-  });
+  assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
 });
 
-test('it sets and unsets loading state on error when removing', function(assert) {
-  let done = assert.async();
+test('it sets and unsets loading state on error when removing', async function(assert) {
   assert.expect(2);
 
   let userRoles = {
@@ -293,10 +270,7 @@ test('it sets and unsets loading state on error when removing', function(assert)
 
   renderPage();
 
-  page.button.click();
+  await page.button.click();
 
-  wait().then(() => {
-    assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
-    done();
-  });
+  assert.notOk(page.icon.isLoading, 'Component is no longer in the loading state.');
 });

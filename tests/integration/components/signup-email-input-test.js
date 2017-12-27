@@ -2,9 +2,8 @@ import { run } from '@ember/runloop';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import startMirage from '../../helpers/setup-mirage-for-integration';
-import wait from 'ember-test-helpers/wait';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/signup-password-input';
+import component from 'code-corps-ember/tests/pages/components/signup-email-input';
 
 let page = PageObject.create(component);
 
@@ -27,104 +26,95 @@ test('it shows nothing when empty', function(assert) {
   assert.notOk(page.suggestionsArea.visible);
 });
 
-test('it shows suggestions when invalid', function(assert) {
-  let done = assert.async();
+test('it shows suggestions when invalid', async function(assert) {
   assert.expect(5);
 
   server.get('/users/email_available', () => {
     return { valid: false, available: true };
   });
 
-  this.on('emailValidated', (result) => {
+  this.set('emailValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
-  page.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
+  this.set('user', { email: null });
+  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
-  this.set('user', { email: 'incomplete@' });
+  page.fillIn('incomplete@');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.ok);
-    assert.ok(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 1);
-    assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a valid email.');
-    done();
-  });
+  assert.notOk(page.suggestionsArea.ok);
+  assert.ok(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 1);
+  assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a valid email.');
 });
 
-test('it shows suggestions when unavailable', function(assert) {
-  let done = assert.async();
+test('it shows suggestions when unavailable', async function(assert) {
   assert.expect(5);
 
   server.get('/users/email_available', () => {
     return { valid: true, available: false };
   });
 
-  this.on('emailValidated', (result) => {
+  this.set('emailValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
-  page.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
+  this.set('user', { email: null });
+  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
-  this.set('user', { email: 'taken@gmail.com' });
+  page.fillIn('taken@gmail.com');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.ok);
-    assert.ok(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 1);
-    assert.equal(page.suggestionsArea.suggestions(0).text, 'This email is already registered. Want to login?');
-    done();
-  });
+  assert.notOk(page.suggestionsArea.ok);
+  assert.ok(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 1);
+  assert.equal(page.suggestionsArea.suggestions(0).text, 'This email is already registered. Want to login?');
 });
 
-test('it shows ok when valid and available', function(assert) {
-  let done = assert.async();
+test('it shows ok when valid and available', async function(assert) {
   assert.expect(4);
 
   server.get('/users/email_available', () => {
     return { valid: true, available: true };
   });
 
-  this.on('emailValidated', (result) => {
+  this.set('emailValidated', (result) => {
     run.next(() => {
       assert.ok(result);
     });
   });
-  page.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
+  this.set('user', { email: null });
+  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
-  this.set('user', { email: 'available@gmail.com' });
+  page.fillIn('available@gmail.com');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.ok(page.suggestionsArea.ok);
-    assert.notOk(page.suggestionsArea.notOk);
-    assert.equal(page.suggestionsArea.suggestions().count, 0);
-    done();
-  });
+  assert.ok(page.suggestionsArea.ok);
+  assert.notOk(page.suggestionsArea.notOk);
+  assert.equal(page.suggestionsArea.suggestions().count, 0);
 });
 
-test('it resets to invalid when deleted', function(assert) {
-  let done = assert.async();
+test('it resets to invalid when deleted', async function(assert) {
   assert.expect(3);
 
   server.get('/users/email_available', () => {
     return { valid: true, available: true };
   });
 
-  this.on('emailValidated', (result) => {
+  this.set('emailValidated', (result) => {
     run.next(() => {
       assert.notOk(result);
     });
   });
   this.set('user', { email: 'available@gmail.com' });
-  page.render(hbs`{{signup-email-input user=user emailValidated="emailValidated"}}`);
+  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
-  this.set('user', { email: '' });
+  page.fillIn('');
+  await page.keydown();
 
-  wait().then(() => {
-    assert.notOk(page.suggestionsArea.visible);
-    assert.notOk(page.suggestionsArea.visible);
-    done();
-  });
+  assert.notOk(page.suggestionsArea.visible);
+  assert.notOk(page.suggestionsArea.visible);
 });
