@@ -29,6 +29,9 @@ module.exports = function(defaults) {
       // async, await, etc.
       includePolyfill: true
     },
+    'ember-cli-password-strength': {
+      bundleZxcvbn: true
+    },
     fingerprint: fingerprintOptions,
     emberCLIDeploy: {
       // runOnPostBuild: (env === 'development') ? 'development-postbuild' : false,
