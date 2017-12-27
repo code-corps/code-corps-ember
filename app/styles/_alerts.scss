@@ -58,6 +58,10 @@
     transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
     width: 310px;
 
+    i {
+      padding-right: 5px;
+    }
+
     p {
       margin: 5px 0;
     }

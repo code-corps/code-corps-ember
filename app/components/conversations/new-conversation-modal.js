@@ -9,6 +9,7 @@ const SAVE_SUCCESS = 'Your message is sending now.';
 export default Component.extend({
   classNames: ['new-conversation-modal-container'],
 
+  flashOptions: { fixed: true, icon: 'comment', sticky: false, timeout: 5000 },
   initiatedBy: null,
   message: null,
   project: null,
@@ -73,7 +74,7 @@ export default Component.extend({
       let unsavedConversation = get(message, 'conversations.firstObject');
 
       let onSaved = () => {
-        get(this, 'flashMessages').clearMessages().success(SAVE_SUCCESS);
+        get(this, 'flashMessages').success(SAVE_SUCCESS, get(this, 'flashOptions'));
         get(this, 'store').unloadRecord(unsavedConversation);
       };
 
