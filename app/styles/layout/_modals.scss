@@ -95,3 +95,41 @@
     margin-bottom: 0.7em;
   }
 }
+
+.invite-users-modal {
+}
+
+.table-rows {
+  display: table;
+  width: 100%;
+}
+
+.table-row {
+  display: table-row;
+  position: relative;
+
+  &--header {
+    font-weight: 700;
+    .table-cell {
+      padding-bottom: 0.5em;
+    }
+  }
+}
+
+.table-cell {
+  display: table-cell;
+  line-height: 22px;
+  padding: 0 5px 0 0;
+  position: relative;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  &:last-child {
+    padding-right: 0;
+    text-align: left;
+  }
+
+  &--shrink {
+    width: 1px;
+  }
+}
