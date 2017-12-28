@@ -1,34 +1,17 @@
 import Component from '@ember/component';
-import { or, empty, and } from '@ember/object/computed';
+import { alias, and, empty, or } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
   classNames: ['donation-container'],
-
-  cardOptions: {
-    hidePostalCode: true,
-
-    // Other styles are in `app/styles/addons/ember-stripe-elements`
-    style: {
-      base: {
-        color: '#333',
-        fontFamily: '"Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
-        fontSize: '14px',
-        '::placeholder': {
-          color: '#666'
-        },
-        lineHeight: '24px'
-      },
-      invalid: {
-        color: '#C0392B',
-        iconColor: '#C0392B'
-      }
-    }
-  },
 
   donationAmount: 0,
   projectTitle: null,
   wasNewCard: true,
 
+  creditCard: service(),
+
+  cardOptions: alias('creditCard.cardOptions'),
   /**
    * If there is no card for the user, this might be an ObjectProxy
    * that has `null` content. This `card.id` approach was the least

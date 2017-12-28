@@ -1,0 +1,70 @@
+{{log card}}
+{{#if card}}
+  {{#if card.isLoading}}
+    Loading card...
+  {{else}}
+    {{#if isEditing}}
+      <div class="card-form">
+        <div class="card-form__details">
+          <div class="card-item__info">
+            {{donation/card-logo brand=card.brand}}
+            <p>
+              <span class="card-item__brand">{{card.brand}}</span> ending in {{card.last4}}
+            </p>
+          </div>
+        </div>
+        <div class="card-form__date">
+          {{select/cc-expiry
+            month=card.expMonth
+            year=card.expYear
+          }}
+        </div>
+        <div class="card-form__actions">
+          <button {{action "update"}} class="button default">Save</button>
+          <button {{action (mut isEditing) false}} class="button clear">Cancel</button>
+        </div>
+      </div>
+    {{else if isReplacing}}
+      <div class="card-form">
+        {{#stripe-card autofocus=true options=cardOptions as |stripeElement|}}
+          <div class="card-form__actions">
+            <button {{action "replace" stripeElement}} class="button default">Save</button>
+            <button {{action (mut isReplacing) false}} class="button clear">Cancel</button>
+          </div>
+        {{/stripe-card}}
+      </div>
+    {{else}}
+      <div class="card-item {{if cardHasExpired "card-item--error"}} {{if cardWillExpire "card-item--warning"}}">
+        <div class="card-item__info">
+          {{donation/card-logo brand=card.brand}}
+          <p>
+            <span class="card-item__brand">{{card.brand}}</span> ending in {{card.last4}}
+          </p>
+        </div>
+        <div class="card-item__details">
+          <span class="card-item__expiry">{{expiresText}}{{card.expMonth}}/{{card.expYear}}</span>
+          <span>
+            <a {{action (mut isEditing) true}}>{{fa-icon "pencil"}} Update</a>
+          </span>
+          <span>
+            <a {{action (mut isReplacing) true}}>{{fa-icon "undo"}} Replace</a>
+          </span>
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+{{else}}
+  {{#stripe-card autofocus=true options=cardOptions as |stripeElement stripeError|}}
+    {{#if stripeError}}
+      <p class="error">{{stripeError.message}}</p>
+    {{/if}}
+
+    {{!-- <button {{action saveAndDonate stripeElement}} class="button {{unless (or error isProcessing) "default"}} large submit-card" disabled={{if (or error isProcessing) true}}>
+      {{#if isProcessing}}
+        Processing...
+      {{else}}
+        Donate
+      {{/if}}
+    </button> --}}
+  {{/stripe-card}}
+{{/if}}
