@@ -1,0 +1,60 @@
+<a class="button default" {{action (mut showModal) true bubbles=false}} data-test-open-button>
+  {{fa-icon "paper-plane"}} Invite users
+</a>
+
+{{#if showModal}}
+  {{#modal-dialog
+    containerClassNames="modal invite-users-modal"
+    onClose=(action (mut showModal) false)
+    targetAttachment="center"
+    translucentOverlay=true
+  }}
+    <span {{action (mut showModal) false}} class="modal-close">
+      {{fa-icon "close"}}
+    </span>
+
+    <div class="modal__header">
+      <h3>Invite users</h3>
+    </div>
+
+    <div class="modal__content">
+      <div class="table-rows">
+        <div class="table-row table-row--header">
+          <span class="table-cell table-cell--shrink">
+            Email
+          </span>
+          <span class="table-cell">
+            Full name
+          </span>
+          <span class="table-cell table-cell--shrink">
+            Role
+          </span>
+        </div>
+          <div class="table-row table-row--header">
+          <span class="table-cell table-cell--shrink">
+            {{input type="text" placeholder="name@example.com"}}
+          </span>
+          <span class="table-cell">
+            {{input type="text" placeholder="Optional"}}
+          </span>
+          <span class="table-cell table-cell--shrink">
+            {{#x-select value=role as |xs|}}
+              {{#xs.option value="contributor"}}Contributor{{/xs.option}}
+              {{#xs.option value="admin"}}Admin{{/xs.option}}
+              {{#xs.option value="owner"}}Owner{{/xs.option}}
+            {{/x-select}}
+          </span>
+        </div>
+      </div>
+      <div>
+        <a>{{fa-icon "plus"}} Add another</a>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <a class="button default">
+        {{fa-icon "paper-plane"}} Send invites
+      </a>
+    </div>
+  {{/modal-dialog}}
+{{/if}}
