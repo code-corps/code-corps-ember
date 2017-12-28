@@ -61,9 +61,9 @@ export default Component.extend({
     };
 
     let promise = get(this, 'user').save().then(() => {
-      get(this, 'signIn')(credentials);
+      return get(this, 'signIn')(credentials);
     }).catch((error) => {
-      get(this, 'handleErrors')(error);
+      return get(this, 'handleErrors')(error);
     });
 
     yield promise;

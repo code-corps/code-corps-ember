@@ -60,21 +60,21 @@ test('it delays rendering head until loaded', function(assert) {
   assert.equal(page.conversationParts().count, 0, 'No part is rendered.');
 });
 
-test('it renders each conversation part', function(assert) {
+test('it renders each conversation part, sorted by insertedAt', function(assert) {
   assert.expect(4);
 
   let conversationParts = [
-    { isLoaded: true, body: 'foo 1' },
-    { isLoaded: true, body: 'foo 2' },
-    { isLoaded: true, body: 'foo 3' }
+    { isLoaded: true, body: 'foo 1', insertedAt: new Date('2017-11-01') },
+    { isLoaded: true, body: 'foo 2', insertedAt: new Date('2017-12-01') },
+    { isLoaded: true, body: 'foo 3', insertedAt: new Date('2017-10-01') }
   ];
   set(this, 'conversation', { conversationParts });
   renderPage();
 
   assert.equal(page.conversationParts().count, 3, 'Each part is rendered.');
-  assert.equal(page.conversationParts(0).body.text, 'foo 1', 'Part 1 is rendered correctly.');
-  assert.equal(page.conversationParts(1).body.text, 'foo 2', 'Part 2 is rendered correctly.');
-  assert.equal(page.conversationParts(2).body.text, 'foo 3', 'Part 3 is rendered correctly.');
+  assert.equal(page.conversationParts(1).body.text, 'foo 1', 'Part 1 is rendered second to last.');
+  assert.equal(page.conversationParts(2).body.text, 'foo 2', 'Part 2 is rendered last (newest).');
+  assert.equal(page.conversationParts(0).body.text, 'foo 3', 'Part 3 is rendered first (earliest date).');
 });
 
 test('it delays rendering conversation parts not yet loaded', function(assert) {
