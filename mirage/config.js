@@ -176,9 +176,7 @@ export default function() {
   this.get('/github-events', function(schema, request) {
     let events = schema.githubEvents.all();
 
-    let action = request.queryParams.action;
-    let status = request.queryParams.status;
-    let type = request.queryParams.type;
+    let { action, status, type } = request.queryParams;
 
     if (action) {
       events = events.filter((e) => e.action === action);
