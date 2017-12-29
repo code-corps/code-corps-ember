@@ -66,3 +66,51 @@ test('Displays all the logged events', function(assert) {
     assert.notOk(page.next.isDisabled, 'Next button is not disabled.');
   });
 });
+
+test('Filters the logged events', function(assert) {
+  assert.expect(17);
+
+  let user = server.create('user', { admin: true, id: 1 });
+  server.create('github-event');
+  let expectedEvent = server.create('github-event', { action: 'opened', status: 'errored', eventType: 'issues' });
+
+  authenticateSession(this.application, { user_id: user.id });
+
+  page.visit();
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 2, 'There are 2 log rows by default.');
+    page.filterStatus.fillIn('errored');
+    assert.notOk(page.filterAction.isVisible, 'Action filter is not visible.');
+  });
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    assert.notOk(page.filterAction.isVisible, 'Action filter is not visible.');
+    page.filterType.fillIn('issues');
+  });
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    assert.ok(page.filterAction.isVisible, 'Action filter is visible.');
+    page.filterStatus.fillIn('opened');
+  });
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    page.clear.click();
+  });
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 2, 'All items are listed again after clearing filters.');
+  });
+});
