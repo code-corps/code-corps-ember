@@ -2,16 +2,32 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   model(params) {
-    return this.store.query('github-event', {
+    let queryParams = {
       page: {
         page: params.page,
         'page-size': params.size
       },
-      status: params.status
-    });
+    };
+
+    if (params.eventAction) {
+      queryParams.action = params.eventAction;
+    }
+
+    if (params.status) {
+      queryParams.status = params.status;
+    }
+
+    if (params.type) {
+      queryParams.type = params.type;
+    }
+
+    return this.store.query('github-event', queryParams);
   },
 
   queryParams: {
+    eventAction: {
+      refreshModel: true
+    },
     page: {
       refreshModel: true
     },
@@ -19,6 +35,9 @@ export default Route.extend({
       refreshModel: true
     },
     status: {
+      refreshModel: true
+    },
+    type: {
       refreshModel: true
     }
   }

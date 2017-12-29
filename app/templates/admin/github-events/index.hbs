@@ -1,14 +1,32 @@
 <div class="log-actions">
-  {{fa-icon "filter"}}
+  <span>{{fa-icon "filter"}}</span>
+
   {{#x-select value=status action=(action "changeStatus") as |xs|}}
-    <option>Filter status...</option>
-    {{#xs.option value="errored"}}Errored{{/xs.option}}
-    {{#xs.option value="processing"}}Processing{{/xs.option}}
-    {{#xs.option value="processed"}}Processed{{/xs.option}}
-    {{#xs.option value="reprocessing"}}Reprocessing{{/xs.option}}
-    {{#xs.option value="unprocessed"}}Unprocessed{{/xs.option}}
-    {{#xs.option value="unsupported"}}Unsupported{{/xs.option}}
+    <option value=''>Status</option>
+    {{#each statuses as |status|}}
+      {{#xs.option value=status}}{{status}}{{/xs.option}}
+    {{/each}}
   {{/x-select}}
+
+  {{#x-select value=type action=(action "changeType") as |xs|}}
+    <option value=''>Event Type</option>
+    {{#each types as |type|}}
+      {{#xs.option value=type}}{{type}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+
+  {{#if type}}
+    {{#x-select value=eventAction action=(action "changeAction") as |xs|}}
+      <option value=''>Action</option>
+      {{#each selectableActions as |eventAction|}}
+        {{#xs.option value=eventAction}}{{eventAction}}{{/xs.option}}
+      {{/each}}
+    {{/x-select}}
+  {{/if}}
+
+  {{#if (or status type)}}
+    <a {{action "clearFilters"}} class="button clear">{{fa-icon "remove"}} Clear</a>
+  {{/if}}
 </div>
 
 <div class="log-rows">
