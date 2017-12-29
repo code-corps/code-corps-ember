@@ -68,7 +68,7 @@ test('Displays all the logged events', function(assert) {
 });
 
 test('Filters the logged events', function(assert) {
-  assert.expect(16);
+  assert.expect(17);
 
   let user = server.create('user', { admin: true, id: 1 });
   server.create('github-event');
@@ -107,5 +107,10 @@ test('Filters the logged events', function(assert) {
     assert.equal(page.logItems(0).action.text, expectedEvent.action);
     assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
     assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    page.clear.click();
+  });
+
+  andThen(() => {
+    assert.equal(page.logItems().count, 2, 'All items are listed again after clearing filters.');
   });
 });

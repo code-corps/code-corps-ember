@@ -3,6 +3,10 @@ import { collection, create, fillable, hasClass, visitable } from 'ember-cli-pag
 export default create({
   visit: visitable('/admin/github/events'),
 
+  clear: {
+    scope: '[data-test-clear-filters]'
+  },
+
   filterAction: {
     scope: '[data-test-filter-action]',
     fillIn: fillable()
