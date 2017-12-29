@@ -6,7 +6,8 @@ export default Route.extend({
       page: {
         page: params.page,
         'page-size': params.size
-      }
+      },
+      status: params.status
     });
   },
 
@@ -15,6 +16,9 @@ export default Route.extend({
       refreshModel: true
     },
     size: {
+      refreshModel: true
+    },
+    status: {
       refreshModel: true
     }
   }

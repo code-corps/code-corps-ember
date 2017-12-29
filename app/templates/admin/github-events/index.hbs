@@ -1,3 +1,16 @@
+<div class="log-actions">
+  {{fa-icon "filter"}}
+  {{#x-select value=status action=(action "changeStatus") as |xs|}}
+    <option>Filter status...</option>
+    {{#xs.option value="errored"}}Errored{{/xs.option}}
+    {{#xs.option value="processing"}}Processing{{/xs.option}}
+    {{#xs.option value="processed"}}Processed{{/xs.option}}
+    {{#xs.option value="reprocessing"}}Reprocessing{{/xs.option}}
+    {{#xs.option value="unprocessed"}}Unprocessed{{/xs.option}}
+    {{#xs.option value="unsupported"}}Unsupported{{/xs.option}}
+  {{/x-select}}
+</div>
+
 <div class="log-rows">
   <div data-test-log-row-header class="log-row log-row--header">
     <span class="log-cell log-cell--shrink">Status</span>
