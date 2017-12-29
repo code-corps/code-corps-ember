@@ -174,8 +174,25 @@ export default function() {
   */
 
   this.get('/github-events', function(schema, request) {
-    let items = schema.githubEvents.all();
-    return paginate(items, '/github-events', request.queryParams);
+    let events = schema.githubEvents.all();
+
+    let action = request.queryParams.action;
+    let status = request.queryParams.status;
+    let type = request.queryParams.type;
+
+    if (action) {
+      events = events.filter((e) => e.action === action);
+    }
+
+    if (status) {
+      events = events.filter((e) => e.status === status);
+    }
+
+    if (type) {
+      events = events.filter((e) => e.eventType === type);
+    }
+
+    return paginate(events, '/github-events', request.queryParams);
   });
   this.get('/github-events/:id');
   this.patch('/github-events/:id', function(schema) {

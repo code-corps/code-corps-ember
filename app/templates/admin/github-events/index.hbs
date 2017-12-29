@@ -1,14 +1,14 @@
 <div class="log-actions">
   <span>{{fa-icon "filter"}}</span>
 
-  {{#x-select value=status action=(action "changeStatus") as |xs|}}
+  {{#x-select data-test-filter-status value=status action=(action "changeStatus") as |xs|}}
     <option value=''>Status</option>
     {{#each statuses as |status|}}
       {{#xs.option value=status}}{{status}}{{/xs.option}}
     {{/each}}
   {{/x-select}}
 
-  {{#x-select value=type action=(action "changeType") as |xs|}}
+  {{#x-select data-test-filter-type value=type action=(action "changeType") as |xs|}}
     <option value=''>Event Type</option>
     {{#each types as |type|}}
       {{#xs.option value=type}}{{type}}{{/xs.option}}
@@ -16,7 +16,7 @@
   {{/x-select}}
 
   {{#if type}}
-    {{#x-select value=eventAction action=(action "changeAction") as |xs|}}
+    {{#x-select data-test-filter-action value=eventAction action=(action "changeAction") as |xs|}}
       <option value=''>Action</option>
       {{#each selectableActions as |eventAction|}}
         {{#xs.option value=eventAction}}{{eventAction}}{{/xs.option}}
@@ -25,7 +25,7 @@
   {{/if}}
 
   {{#if (or status type)}}
-    <a {{action "clearFilters"}} class="button clear">{{fa-icon "remove"}} Clear</a>
+    <a data-test-clear-filters {{action "clearFilters"}} class="button clear">{{fa-icon "remove"}} Clear</a>
   {{/if}}
 </div>
 

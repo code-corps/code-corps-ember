@@ -6,7 +6,7 @@ export default Route.extend({
       page: {
         page: params.page,
         'page-size': params.size
-      },
+      }
     };
 
     if (params.eventAction) {
