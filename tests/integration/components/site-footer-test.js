@@ -2,8 +2,26 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/site-footer';
+import { setBreakpointForIntegrationTest } from 'code-corps-ember/tests/helpers/responsive';
+import stubService from 'code-corps-ember/tests/helpers/stub-service';
 
 let page = PageObject.create(component);
+
+function renderPage() {
+  page.render(hbs`{{site-footer media=media}}`);
+}
+
+function assertReducedFooter(assert) {
+  assert.equal(page.rows().count, 6);
+
+  assert.equal(page.rows(0).text, 'About');
+  assert.equal(page.rows(1).text, 'Team');
+  assert.equal(page.rows(2).text, 'Help');
+  assert.equal(page.rows(2).link.href, 'https://help.codecorps.org');
+  assert.equal(page.rows(3).text, 'Terms');
+  assert.equal(page.rows(4).text, 'Privacy');
+  assert.equal(page.rows(5).text, 'Blog');
+}
 
 moduleForComponent('site-footer', 'Integration | Component | site footer', {
   integration: true,
@@ -15,8 +33,11 @@ moduleForComponent('site-footer', 'Integration | Component | site footer', {
   }
 });
 
-test('it renders all elements', function(assert) {
-  page.render(hbs`{{site-footer}}`);
+test('it renders all elements when showing the full footer', function(assert) {
+  setBreakpointForIntegrationTest(this, 'full');
+  stubService(this, 'site-footer', { isReduced: false });
+
+  renderPage();
 
   assert.equal(page.columns().count, 4);
 
@@ -49,4 +70,22 @@ test('it renders all elements', function(assert) {
     assert.equal(column.rows(3).text, 'Facebook');
     assert.equal(column.rows(3).link.href, 'https://www.facebook.com/thecodecorps');
   });
+});
+
+test('it renders only the horizontal elements when showing the reduced footer', function(assert) {
+  setBreakpointForIntegrationTest(this, 'full');
+  stubService(this, 'site-footer', { isReduced: true });
+
+  renderPage();
+
+  assertReducedFooter(assert);
+});
+
+test('it renders only the horizontal elements for the medium breakpoint', function(assert) {
+  setBreakpointForIntegrationTest(this, 'medium');
+  stubService(this, 'site-footer', { isReduced: false });
+
+  renderPage();
+
+  assertReducedFooter(assert);
 });

@@ -5,6 +5,10 @@
     margin: 7px 0;
     white-space: nowrap;
   }
+
+  &--is-medium {
+    padding: 1em 0 !important;
+  }
 }
 
 .footer-logo {
@@ -67,6 +71,19 @@
     &.slack:before {
       @include footer-icon;
       @include sprite($slack-footer);
+    }
+  }
+
+  &--horizontal {
+    li {
+      display: inline-block;
+      float: none;
+      margin: 0;
+      width: auto;
+
+      a {
+        padding: 0.5em;
+      }
     }
   }
 }
