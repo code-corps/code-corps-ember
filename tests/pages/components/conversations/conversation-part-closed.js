@@ -1,7 +1,15 @@
 import {
-  text
+  hasClass
 } from 'ember-cli-page-object';
 
 export default {
-  title: text('h1')
+
+  scope: '.conversation-part-closed',
+
+  closedAt: {
+    scope: '[data-test-closed-at]'
+  },
+
+  sentByCurrentUser: hasClass('conversation-part-closed--is-self')
+
 };
