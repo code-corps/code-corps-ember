@@ -259,7 +259,14 @@ export default function() {
   */
 
   this.get('/messages', { coalesce: true });
-  this.post('/messages');
+  this.post('/messages', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    // b/c conversation was created w/o an id, need to delete to avoid error in
+    // mirage converting association id to string
+    delete attrs.conversationIds;
+    let message = schema.create('message', attrs);
+    return message;
+  });
   this.get('/messages/:id');
 
   /**
