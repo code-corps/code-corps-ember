@@ -20,7 +20,7 @@ test('it renders an item for each member in the list', function(assert) {
   assert.expect(2);
 
   let mockUsers = [];
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 19; i++) {
     mockUsers.push({
       id: i,
       isLoaded: true,
@@ -31,7 +31,7 @@ test('it renders an item for each member in the list', function(assert) {
   set(this, 'users', mockUsers);
   page.render(hbs`{{project-users users=users}}`);
 
-  assert.equal(page.userCount, 3, 'The correct number of users are rendered');
+  assert.equal(page.userCount, 18, 'The correct number of users are rendered');
   assert.ok(page.users(0).imageSource.indexOf('image_1.png') > -1, 'The correct photo renders');
 });
 
