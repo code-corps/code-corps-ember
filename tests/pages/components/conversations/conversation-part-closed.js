@@ -10,6 +10,5 @@ export default {
     scope: '[data-test-closed-at]'
   },
 
-  sentByCurrentUser: hasClass('conversation-part-closed--is-self')
-
+  closedByCurrentUser: hasClass('conversation-part-closed--is-self')
 };

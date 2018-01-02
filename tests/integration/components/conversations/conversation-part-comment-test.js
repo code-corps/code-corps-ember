@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import { set } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part';
+import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-comment';
 import moment from 'moment';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import {
@@ -16,7 +16,7 @@ let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
-    {{conversations/conversation-part
+    {{conversations/conversation-part-comment
       author=author
       body=body
       sentAt=sentAt
@@ -24,7 +24,7 @@ function renderPage() {
   `);
 }
 
-moduleForComponent('conversations/conversation-part', 'Integration | Component | conversations/conversation part', {
+moduleForComponent('conversations/conversation-part-comment', 'Integration | Component | conversations/conversation part', {
   integration: true,
   beforeEach() {
     page.setContext(this);

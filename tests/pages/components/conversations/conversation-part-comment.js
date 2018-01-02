@@ -5,7 +5,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.conversation-part',
+  scope: '.conversation-part-comment',
 
   body: {
     scope: '[data-test-body]'
@@ -25,5 +25,5 @@ export default {
     scope: '[data-test-sent-at]'
   },
 
-  sentByCurrentUser: hasClass('conversation-part--is-self')
+  sentByCurrentUser: hasClass('conversation-part-comment--is-self')
 };

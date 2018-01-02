@@ -1,20 +1,20 @@
 <div class="conversation-thread-inner">
   <div class="conversation-thread__messages">
     {{#if conversation.message.isLoaded}}
-      {{conversations/conversation-part
+      {{conversations/conversation-part-comment
         author=conversation.message.author
         body=conversation.message.body
         readAt=conversation.message.readAt
         sentAt=conversation.message.insertedAt
       }}
     {{/if}}
-    {{#each conversation.conversationParts as |conversationPart|}}
-      {{#if conversationPart.isLoaded}}
-        {{conversations/conversation-part
-          author=conversationPart.author
-          body=conversationPart.body
-          readAt=conversationPart.readAt
-          sentAt=conversationPart.insertedAt
+    {{#each conversation.conversationPartComments as |conversationPart|}}
+      {{#if conversationPartComment.isLoaded}}
+        {{conversations/conversation-part-comment
+          author=conversationPartComment.author
+          body=conversationPartComment.body
+          readAt=conversationPartComment.readAt
+          sentAt=conversationPartComment.insertedAt
         }}
       {{/if}}
     {{/each}}
