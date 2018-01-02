@@ -5,7 +5,8 @@ moduleFor('route:about', 'Unit | Route | about', {
   needs: [
     'service:metrics',
     'service:router-scroll',
-    'service:scheduler'
+    'service:scheduler',
+    'service:site-footer'
   ]
 });
 
