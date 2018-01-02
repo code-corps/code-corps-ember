@@ -5,11 +5,11 @@ moduleFor('service:site-footer', 'Unit | Service | site footer', {
   // needs: ['service:foo']
 });
 
-test('it reduces and enlarges its size', function(assert) {
+test('it shrinks and enlarges its size', function(assert) {
   let service = this.subject();
-  assert.ok(service.get('isReduced'), 'Is reduced by default');
+  assert.ok(service.get('isShrunken'), 'Is shrunken by default');
   service.enlarge();
-  assert.notOk(service.get('isReduced'), 'Is not reduced after enlarging');
-  service.reduce();
-  assert.ok(service.get('isReduced'), 'Is reduced after reducing');
+  assert.notOk(service.get('isShrunken'), 'Is not shrunken after enlarging');
+  service.shrink();
+  assert.ok(service.get('isShrunken'), 'Is shrunken after shrinking');
 });

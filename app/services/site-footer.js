@@ -2,13 +2,13 @@ import { set } from '@ember/object';
 import Service from '@ember/service';
 
 export default Service.extend({
-  isReduced: true,
+  isShrunken: true,
 
   enlarge() {
-    set(this, 'isReduced', false);
+    set(this, 'isShrunken', false);
   },
 
-  reduce() {
-    set(this, 'isReduced', true);
+  shrink() {
+    set(this, 'isShrunken', true);
   }
 });

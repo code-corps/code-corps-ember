@@ -35,7 +35,7 @@ moduleForComponent('site-footer', 'Integration | Component | site footer', {
 
 test('it renders all elements when showing the full footer', function(assert) {
   setBreakpointForIntegrationTest(this, 'full');
-  stubService(this, 'site-footer', { isReduced: false });
+  stubService(this, 'site-footer', { isShrunken: false });
 
   renderPage();
 
@@ -72,9 +72,9 @@ test('it renders all elements when showing the full footer', function(assert) {
   });
 });
 
-test('it renders only the horizontal elements when showing the reduced footer', function(assert) {
+test('it renders only the horizontal elements when showing the shrunken footer', function(assert) {
   setBreakpointForIntegrationTest(this, 'full');
-  stubService(this, 'site-footer', { isReduced: true });
+  stubService(this, 'site-footer', { isShrunken: true });
 
   renderPage();
 
@@ -83,7 +83,7 @@ test('it renders only the horizontal elements when showing the reduced footer', 
 
 test('it renders only the horizontal elements for the medium breakpoint', function(assert) {
   setBreakpointForIntegrationTest(this, 'medium');
-  stubService(this, 'site-footer', { isReduced: false });
+  stubService(this, 'site-footer', { isShrunken: false });
 
   renderPage();
 

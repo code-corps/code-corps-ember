@@ -12,7 +12,7 @@ export default Mixin.create({
     },
 
     willTransition() {
-      get(this, 'siteFooter').reduce();
+      get(this, 'siteFooter').shrink();
       return true;
     }
   }
