@@ -27,7 +27,7 @@ moduleForComponent('conversations/conversation-part-closed', 'Integration | Comp
   }
 });
 
-test('if user closes message, "You closed this at" is rendered', function(assert) {
+test('if current user closes message, "You closed this at" is rendered', function(assert) {
   assert.expect(1);
 
   let user = {
