@@ -3,9 +3,9 @@
     <div class="conversation-part-closed__timestamps">
       <span data-test-closed-at>
   {{#if isSelf}}
-    You closed this at {{moment-format conversationPart.updatedAt 'MM/DD/YYYY hh:mm:ss'}}
+    You closed this on {{moment-format conversationPart.closedAt 'MM/DD/YYYY hh:mm:ss'}}
   {{else}}
-    {{author.username}} closed this at {{moment-format conversationPart.updatedAt 'MM/DD/YYYY hh:mm:ss'}}
+    {{author.username}} closed this on {{moment-format conversationPart.closedAt 'MM/DD/YYYY hh:mm:ss'}}
   {{/if}}
       </span>
     </div>

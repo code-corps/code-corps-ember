@@ -8,10 +8,13 @@
         sentAt=conversation.message.insertedAt
       }}
     {{/if}}
-    {{#each conversation.conversationPart as |conversationPart|}}
+    {{#each conversation.conversationParts as |conversationPart|}}
       {{#if conversationPart.isLoaded}}
         {{#if (eq conversationPart.partType 'Closed')}}
-          {{conversation/converation-part-closed}}
+          {{conversation/conversation-part-closed
+          author=conversationPart.author
+          closedAt=conversationPart.insertedAt
+          }}
         {{else}}
           {{conversations/conversation-part-comment
           author=conversationPart.author

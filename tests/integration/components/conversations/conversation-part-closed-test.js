@@ -27,18 +27,42 @@ moduleForComponent('conversations/conversation-part-closed', 'Integration | Comp
   }
 });
 
-test('if current user closes message, "You closed this at" is rendered', function(assert) {
+test('if current user closes message, "You closed this" is rendered', function(assert) {
   assert.expect(1);
 
   let user = {
-    id: 1
+    id: 1,
+    username: 'testuser'
   };
 
+  let closedAt = 'MM/DD/YYYY hh:mm:ss';
+
   set(this, 'author', user);
-  set(this, 'closedAt', moment().subtract(2, 'days'));
+  set(this, 'closedAt', moment().fromNow());
   stubService(this, 'current-user', { user: { id: 1 } });
 
   renderPage();
+  assert.equal(page.closedAt.text, 'You closed this on', 'The closed at timestamp is rendered');
 
-  assert.ok(page.closedAt.text, 'You closed this two days ago', 'The closed at timestamp is rendered');
+});
+
+test('if someone other than the current user closes the message, "Author.username closed this at" is rendered', function(assert) {
+  assert.expect(1);
+
+  let user = {
+    id: 1,
+    username: 'currentuser'
+  };
+
+  let user1 = {
+    id: 2,
+    username: 'authoruser'
+  };
+
+  set(this, 'author', { user1 });
+  set(this, 'closedAt', moment().from());
+  stubService(this, 'current-user', { user });
+
+  renderPage();
+  assert.equal(page.closedAt.text, 'authoruser closed this on', 'The closed at timestamp is rendered');
 });
