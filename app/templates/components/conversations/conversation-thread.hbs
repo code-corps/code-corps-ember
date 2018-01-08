@@ -15,6 +15,11 @@
           author=conversationPart.author
           closedAt=conversationPart.insertedAt
           }}
+            {{#if (eq conversationPart.partType 'Reopened')}}
+              {{conversations/conversation-part-reopened
+              author=conversationPart.author
+              reopenedAt=conversationPart.insertedAt
+              }}
         {{else}}
           {{conversations/conversation-part-comment
           author=conversationPart.author
@@ -22,6 +27,7 @@
           readAt=conversationPart.readAt
           sentAt=conversationPart.insertedAt
           }}
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/each}}

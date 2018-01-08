@@ -8,6 +8,7 @@ export default Model.extend({
   readAt: attr(),
   updatedAt: attr(),
   closedAt: attr(),
+  reopenedAt: attr(),
 
   author: belongsTo('user', { async: true }),
   conversation: belongsTo('conversation', { async: true })

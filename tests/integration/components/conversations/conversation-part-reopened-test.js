@@ -10,14 +10,14 @@ let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
-    {{conversations/conversation-part-closed
+    {{conversations/conversation-part-reopened
       author=author
-      closedAt=closedAt
+      reopenedAt=reopenedAt
     }}
   `);
 }
 
-moduleForComponent('conversations/conversation-part-closed', 'Integration | Component | conversations/conversation part closed', {
+moduleForComponent('conversations/conversation-part-reopened', 'Integration | Component | conversations/conversation part closed', {
   integration: true,
   beforeEach() {
     page.setContext(this);
@@ -27,7 +27,7 @@ moduleForComponent('conversations/conversation-part-closed', 'Integration | Comp
   }
 });
 
-test('if current user closes message, "You closed this" is rendered', function(assert) {
+test('if current user reopens message, "You reopened this" is rendered', function(assert) {
   assert.expect(1);
 
   let user = {
@@ -39,15 +39,15 @@ test('if current user closes message, "You closed this" is rendered', function(a
 
   let twoMinutesAgo = moment().subtract(2, 'minutes');
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
-  set(this, 'closedAt', twoMinutesAgo);
+  set(this, 'reopenedAt', twoMinutesAgo);
 
   renderPage();
 
-  let text = `You closed this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
+  let text = `You reopened this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.reopenedAt.text, text, 'The reopened at timestamp is rendered');
 });
 
-test('if someone other than the current user closes the message, "Author.username closed this at" is rendered', function(assert) {
+test('if someone other than the current user reopens the message, "Author.username closed this at" is rendered', function(assert) {
   assert.expect(1);
 
   let user = {
@@ -64,10 +64,10 @@ test('if someone other than the current user closes the message, "Author.usernam
 
   let twoMinutesAgo = moment().subtract(2, 'minutes');
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
-  set(this, 'closedAt', twoMinutesAgo);
+  set(this, 'reopenedAt', twoMinutesAgo);
 
   renderPage();
 
-  let text = `${author.username} closed this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
+  let text = `${author.username} reopened this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.reopenedAt.text, text, 'The reopened at timestamp is rendered');
 });
