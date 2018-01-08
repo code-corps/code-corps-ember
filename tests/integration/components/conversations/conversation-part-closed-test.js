@@ -1,6 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { set } from '@ember/object';
+import { run } from '@ember/runloop';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-closed';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
@@ -34,16 +35,17 @@ test('if current user closes message, "You closed this" is rendered', function(a
     id: 1,
     username: 'testuser'
   };
-
-  let closedAt = 'MM/DD/YYYY hh:mm:ss';
-
   set(this, 'author', user);
-  set(this, 'closedAt', moment().fromNow());
-  stubService(this, 'current-user', { user: { id: 1 } });
+  stubService(this, 'current-user', { user });
+
+  let twoMinutesAgo = moment().subtract(2, 'minutes');
+  let twoMinutesAgoFriendly = twoMinutesAgo.from();
+  set(this, 'closedAt', twoMinutesAgo);
 
   renderPage();
-  assert.equal(page.closedAt.text, 'You closed this on', 'The closed at timestamp is rendered');
 
+  let text = `You closed this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
 });
 
 test('if someone other than the current user closes the message, "Author.username closed this at" is rendered', function(assert) {
@@ -53,16 +55,20 @@ test('if someone other than the current user closes the message, "Author.usernam
     id: 1,
     username: 'currentuser'
   };
+  stubService(this, 'current-user', { user });
 
-  let user1 = {
+  let author = {
     id: 2,
     username: 'authoruser'
   };
+  set(this, 'author', author);
 
-  set(this, 'author', { user1 });
-  set(this, 'closedAt', moment().from());
-  stubService(this, 'current-user', { user });
+  let twoMinutesAgo = moment().subtract(2, 'minutes');
+  let twoMinutesAgoFriendly = twoMinutesAgo.from();
+  set(this, 'closedAt', twoMinutesAgo);
 
   renderPage();
-  assert.equal(page.closedAt.text, 'authoruser closed this on', 'The closed at timestamp is rendered');
+
+  let text = `${author.username} closed this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
 });

@@ -61,9 +61,9 @@ test('it renders each conversation part', function(assert) {
   assert.expect(4);
 
   let conversationParts = [
-    { isLoaded:true, body: 'foo 1' },
-    { isLoaded:true, body: 'foo 2' },
-    { isLoaded:true, body: 'foo 3' }
+    { isLoaded: true, body: 'foo 1' },
+    { isLoaded: true, body: 'foo 2' },
+    { isLoaded: true, body: 'foo 3' }
   ];
   set(this, 'conversation', { conversationParts });
   renderPage();
