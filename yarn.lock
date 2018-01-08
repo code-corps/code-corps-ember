@@ -2973,7 +2973,7 @@ ember-cli-neat@^0.0.6:
     broccoli-merge-trees "^1.2.4"
     ember-cli-babel "^5.1.7"
 
-ember-cli-node-assets@^0.1.2, ember-cli-node-assets@^0.1.4, ember-cli-node-assets@^0.1.6:
+ember-cli-node-assets@^0.1.4, ember-cli-node-assets@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.1.6.tgz#6488a2949048c801ad6d9e33753c7bce32fc1146"
   dependencies:
@@ -2984,29 +2984,34 @@ ember-cli-node-assets@^0.1.2, ember-cli-node-assets@^0.1.4, ember-cli-node-asset
     lodash "^4.5.1"
     resolve "^1.1.7"
 
+ember-cli-node-assets@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-node-assets/-/ember-cli-node-assets-0.2.2.tgz#d2d55626e7cc6619f882d7fe55751f9266022708"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    broccoli-merge-trees "^1.1.1"
+    broccoli-source "^1.1.0"
+    debug "^2.2.0"
+    lodash "^4.5.1"
+    resolve "^1.1.7"
+
 ember-cli-normalize-entity-name@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-normalize-entity-name/-/ember-cli-normalize-entity-name-1.0.0.tgz#0b14f7bcbc599aa117b5fddc81e4fd03c4bad5b7"
   dependencies:
     silent-error "^1.0.0"
 
-ember-cli-page-object@1.12.1:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.12.1.tgz#6c91a4bd5a01443289c86946a5168e489c369217"
+ember-cli-page-object@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-page-object/-/ember-cli-page-object-1.13.0.tgz#9ac9342d9f90a363c429fbb14f3ad5c0be11827a"
   dependencies:
     ceibo "~2.0.0"
-    ember-cli-babel "^5.1.7"
-    ember-cli-get-component-path-option "^1.0.0"
-    ember-cli-is-package-missing "^1.0.0"
-    ember-cli-node-assets "^0.1.2"
-    ember-cli-normalize-entity-name "^1.0.0"
-    ember-cli-path-utils "^1.0.0"
-    ember-cli-string-utils "^1.0.0"
-    ember-cli-test-info "^1.0.0"
-    ember-cli-valid-component-name "^1.0.0"
-    ember-cli-version-checker "^1.2.0"
+    ember-cli-babel "^6.6.0"
+    ember-cli-node-assets "^0.2.2"
+    ember-native-dom-helpers "^0.5.3"
     ember-test-helpers "^0.6.3"
-    rsvp "^3.2.1"
+    jquery "^3.2.1"
+    rsvp "^4.7.0"
 
 ember-cli-password-strength@^2.0.0:
   version "2.0.0"
@@ -3505,6 +3510,13 @@ ember-multiselect-checkboxes@^0.10.3:
   dependencies:
     ember-cli-babel "^5.1.7"
     ember-runtime-enumerable-includes-polyfill "^1.0.1"
+
+ember-native-dom-helpers@^0.5.3:
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/ember-native-dom-helpers/-/ember-native-dom-helpers-0.5.10.tgz#9c7172e4ddfa5dd86830c46a936e2f8eca3e5896"
+  dependencies:
+    broccoli-funnel "^1.1.0"
+    ember-cli-babel "^6.6.0"
 
 ember-native-dom-helpers@^0.5.4:
   version "0.5.4"
