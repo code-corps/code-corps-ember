@@ -11,16 +11,21 @@
     {{#each conversation.conversationParts as |conversationPart|}}
       {{#if conversationPart.isLoaded}}
         {{#if (eq conversationPart.partType 'Closed')}}
-          {{conversation/conversation-part-closed
-          author=conversationPart.author
-          closedAt=conversationPart.insertedAt
+          {{conversations/conversation-part-closed
+            author=conversationPart.author
+            closedAt=conversationPart.insertedAt
+          }}
+        {{else if (eq conversationPart.partType 'Reopened')}}
+          {{conversations/conversation-part-reopened
+            author=conversationPart.author
+            reopenedAt=conversationPart.insertedAt
           }}
         {{else}}
           {{conversations/conversation-part-comment
-          author=conversationPart.author
-          body=conversationPart.body
-          readAt=conversationPart.readAt
-          sentAt=conversationPart.insertedAt
+            author=conversationPart.author
+            body=conversationPart.body
+            readAt=conversationPart.readAt
+            sentAt=conversationPart.insertedAt
           }}
         {{/if}}
       {{/if}}
