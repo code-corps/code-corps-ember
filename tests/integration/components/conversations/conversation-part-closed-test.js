@@ -1,7 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { set } from '@ember/object';
-import { run } from '@ember/runloop';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-closed';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
@@ -44,8 +43,8 @@ test('if current user closes message, "You closed this" is rendered', function(a
 
   renderPage();
 
-  let text = `You closed this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
+  let expectedText = `You closed this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.closedAt.text, expectedText, 'The closed at timestamp is rendered');
 });
 
 test('if someone other than the current user closes the message, "Author.username closed this at" is rendered', function(assert) {
@@ -69,6 +68,6 @@ test('if someone other than the current user closes the message, "Author.usernam
 
   renderPage();
 
-  let text = `${author.username} closed this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.closedAt.text, text, 'The closed at timestamp is rendered');
+  let expectedText = `${author.username} closed this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.closedAt.text, expectedText, 'The closed at timestamp is rendered');
 });
