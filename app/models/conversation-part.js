@@ -4,10 +4,10 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   body: attr(),
+  closedAt: attr(),
   insertedAt: attr(),
   readAt: attr(),
   updatedAt: attr(),
-  closedAt: attr(),
 
   author: belongsTo('user', { async: true }),
   conversation: belongsTo('conversation', { async: true })
