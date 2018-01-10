@@ -1,4 +1,4 @@
-import { Factory } from 'ember-cli-mirage';
+import { Factory, trait } from 'ember-cli-mirage';
 import moment from 'moment';
 
 export default Factory.extend({
@@ -19,5 +19,11 @@ export default Factory.extend({
       conversation.message = server.create('message');
       conversation.save();
     }
-  }
+  },
+
+  withConversationParts: trait({
+    afterCreate(conversation, server) {
+      server.createList('conversation-part', 10, { conversation });
+    }
+  })
 });
