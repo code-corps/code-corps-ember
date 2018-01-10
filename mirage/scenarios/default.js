@@ -303,4 +303,6 @@ We can make regular, ongoing improvements with two full-time developers and one 
 `,
     project
   });
+
+  server.createList('conversation', 3, 'withConversationParts');
 }
