@@ -1,12 +1,12 @@
-<div class="coversation-part-closed__message-wrapper">
-  <div class="conversation-part-closed__timestamps-wrapper">
-    <div class="conversation-part-closed__timestamps">
+<div class="coversation-part__message-wrapper">
+  <div class="conversation-part__timestamps-wrapper">
+    <div class="conversation-part__timestamps">
       <span data-test-closed-at>
-  {{#if isSelf}}
-    You closed this {{moment-from-now closedAt interval=60000}}
-  {{else}}
-    {{author.username}} closed this {{moment-from-now closedAt interval=60000}}
-  {{/if}}
+        {{#if isSelf}}
+        You closed this {{moment-from-now closedAt interval=60000}}
+        {{else}}
+        {{author.username}} closed this {{moment-from-now closedAt interval=60000}}
+        {{/if}}
       </span>
     </div>
   </div>

@@ -5,10 +5,14 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.conversation-part-comment',
+  scope: '.conversation-part--comment',
 
   body: {
     scope: '[data-test-body]'
+  },
+
+  closedAt: {
+    scope: '[data-test-closed-at]'
   },
 
   photo: {
@@ -25,5 +29,7 @@ export default {
     scope: '[data-test-sent-at]'
   },
 
-  sentByCurrentUser: hasClass('conversation-part-comment--is-self')
+  isComment: hasClass('conversation-part--comment'),
+  isClosed: hasClass('conversation-part--closed'),
+  isByCurrentUser: hasClass('conversation-part--is-self')
 };

@@ -10,7 +10,7 @@
     {{/if}}
     {{#each conversation.conversationParts as |conversationPart|}}
       {{#if conversationPart.isLoaded}}
-        {{#if (eq conversationPart.partType 'Closed')}}
+        {{#if (eq conversationPart.partType 'isClosed')}}
           {{conversation/conversation-part-closed
           author=conversationPart.author
           closedAt=conversationPart.insertedAt

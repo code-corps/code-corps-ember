@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import { set } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-comment';
+import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part';
 import moment from 'moment';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import {
@@ -24,7 +24,7 @@ function renderPage() {
   `);
 }
 
-moduleForComponent('conversations/conversation-part-comment', 'Integration | Component | conversations/conversation part', {
+moduleForComponent('conversations/conversation-part-comment', 'Integration | Component | conversations/conversation part comment', {
   integration: true,
   beforeEach() {
     page.setContext(this);
@@ -53,7 +53,7 @@ test('it renders all the details', function(assert) {
 
   assert.equal(page.body.text, body, 'The body renders in the chat bubble');
   assert.equal(page.sentAt.text, '2 days ago', 'The sent at timestamp renders');
-  assert.notOk(page.sentByCurrentUser, 'Does not have the current user styles');
+  assert.notOk(page.isByCurrentUser, 'Does not have the current user styles');
   assert.equal(page.photo.url, user.photoThumbUrl, 'The user photo renders');
   assertTooltipNotRendered(assert);
 
@@ -82,7 +82,7 @@ test('when the current user did not send the message', function(assert) {
 
   renderPage();
 
-  assert.notOk(page.sentByCurrentUser, 'Does not have the current user styles');
+  assert.notOk(page.isByCurrentUser, 'Does not have the current user styles');
 });
 
 test('when the current user sent the message', function(assert) {
@@ -93,5 +93,5 @@ test('when the current user sent the message', function(assert) {
 
   renderPage();
 
-  assert.ok(page.sentByCurrentUser, 'Has the current user styles');
+  assert.ok(page.isByCurrentUser, 'Has the current user styles');
 });

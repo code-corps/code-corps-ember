@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { set } from '@ember/object';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-closed';
+import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import moment from 'moment';
 
