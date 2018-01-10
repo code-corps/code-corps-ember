@@ -5,7 +5,7 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  scope: '.conversation-part--comment',
+  scope: '.conversation-part',
 
   body: {
     scope: '[data-test-body]'
@@ -14,6 +14,10 @@ export default {
   closedAt: {
     scope: '[data-test-closed-at]'
   },
+
+  isComment: hasClass('conversation-part--comment'),
+  isClosed: hasClass('conversation-part--closed'),
+  isByCurrentUser: hasClass('conversation-part--is-self'),
 
   photo: {
     scope: '[data-test-target-photo]',
@@ -27,9 +31,5 @@ export default {
 
   sentAt: {
     scope: '[data-test-sent-at]'
-  },
-
-  isComment: hasClass('conversation-part--comment'),
-  isClosed: hasClass('conversation-part--closed'),
-  isByCurrentUser: hasClass('conversation-part--is-self')
+  }
 };

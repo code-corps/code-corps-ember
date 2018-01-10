@@ -7,7 +7,7 @@ export default Component.extend({
 
   author: null,
 
-  classNames: ['conversation-part-closed'],
+  classNames: ['conversation-part', 'conversation-part--closed'],
   classNameBindings: ['isSelf:conversation-part-closed--is-self'],
 
   closedAt: null,
