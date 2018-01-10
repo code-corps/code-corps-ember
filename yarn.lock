@@ -3548,11 +3548,11 @@ ember-page-title@3.2.0:
     ember-cli-head "^0.2.1"
     ember-cli-htmlbars "^2.0.1"
 
-ember-phoenix@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/ember-phoenix/-/ember-phoenix-0.1.6.tgz#b5f1cb77dfeafe8f2e9c16b740e3efc3f38c46c7"
+ember-phoenix@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/ember-phoenix/-/ember-phoenix-0.1.7.tgz#06fd9b4bc31e6597093bf56d351e59706a3dde6f"
   dependencies:
-    ember-cli-babel "^5.1.6"
+    ember-cli-babel "^6.6.0"
 
 ember-power-select@^1.9.5:
   version "1.9.11"
