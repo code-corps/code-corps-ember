@@ -66,14 +66,12 @@ export default Component.extend({
     });
   },
 
-  actions: {
-    keyDown() {
-      once(this, '_check');
-      if (get(this, 'isNotSameEmail')) {
-        set(this, 'isChecking', true);
-      }
+  validateEmail: function() {
+    once(this, '_check');
+    if (get(this, 'isNotSameEmail')) {
+      set(this, 'isChecking', true);
     }
-  },
+  }.observes('email'),
 
   _check() {
     set(this, 'isChecking', true);
