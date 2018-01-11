@@ -10,7 +10,7 @@ let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
-    {{conversations/conversation-part-reopened
+    {{conversations/conversation-part--reopened
       author=author
       reopenedAt=reopenedAt
     }}

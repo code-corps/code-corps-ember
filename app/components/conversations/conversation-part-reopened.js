@@ -7,7 +7,7 @@ export default Component.extend({
 
   author: null,
 
-  classNames: ['conversation-part-reopened'],
+  classNames: ['conversation-part', 'conversation-part--reopened'],
   classNameBindings: ['isSelf:conversation-part-reopened--is-self'],
 
   reopenedAt: null,
