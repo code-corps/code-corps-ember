@@ -1,0 +1,13 @@
+<div class="conversation-part-reopened__message-wrapper">
+  <div class="conversation-part-reopened__timestamps-wrapper">
+    <div class="conversation-part-reopened__timestamps">
+      <span data-test-reopened-at>
+  {{#if isSelf}}
+    You reopened this {{moment-from-now reopendAt interval=60000}}
+  {{else}}
+    {{author.username}} reopened this {{moment-from-now reopenedAt interval=60000}}
+  {{/if}}
+      </span>
+    </div>
+  </div>
+</div>
