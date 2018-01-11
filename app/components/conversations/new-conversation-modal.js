@@ -36,7 +36,7 @@ export default Component.extend({
       project
     });
 
-    let conversation = store.createRecord('conversation', { user });
+    let conversation = store.createRecord('conversation', { user, project });
 
     get(message, 'conversations').pushObject(conversation);
 
