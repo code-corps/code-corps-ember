@@ -29,6 +29,10 @@ export default {
     mouseenter: triggerable('mouseenter')
   },
 
+  reopenedAt: {
+    scope: '[data-test-reopened-at]'
+  },
+
   sentAt: {
     scope: '[data-test-sent-at]'
   }

@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { set } from '@ember/object';
 import PageObject from 'ember-cli-page-object';
-import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part-reopened';
+import component from 'code-corps-ember/tests/pages/components/conversations/conversation-part';
 import stubService from 'code-corps-ember/tests/helpers/stub-service';
 import moment from 'moment';
 
@@ -10,7 +10,7 @@ let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
-    {{conversations/conversation-part--reopened
+    {{conversations/conversation-part-reopened
       author=author
       reopenedAt=reopenedAt
     }}
@@ -43,8 +43,8 @@ test('if current user reopens message, "You reopened this" is rendered', functio
 
   renderPage();
 
-  let text = `You reopened this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.reopenedAt.text, text, 'The reopened at timestamp is rendered');
+  let expectedText = `You reopened this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.reopenedAt.text, expectedText, 'The reopened at timestamp is rendered');
 });
 
 test('if someone other than the current user reopens the message, "Author.username reopened this at" is rendered', function(assert) {
@@ -68,6 +68,6 @@ test('if someone other than the current user reopens the message, "Author.userna
 
   renderPage();
 
-  let text = `${author.username} reopened this ${twoMinutesAgoFriendly}`;
-  assert.equal(page.reopenedAt.text, text, 'The reopened at timestamp is rendered');
+  let expectedText = `${author.username} reopened this ${twoMinutesAgoFriendly}`;
+  assert.equal(page.reopenedAt.text, expectedText, 'The reopened at timestamp is rendered');
 });
