@@ -15,18 +15,18 @@
             author=conversationPart.author
             closedAt=conversationPart.insertedAt
           }}
-    {{else}}
-      {{conversations/conversation-part-comment
-        author=conversationPart.author
-        body=conversationPart.body
-        readAt=conversationPart.readAt
-        sentAt=conversationPart.insertedAt
-      }}
-    {{/if}}
-  {{/if}}
-{{/each}}
+          {{else}}
+          {{conversations/conversation-part-comment
+            author=conversationPart.author
+            body=conversationPart.body
+            readAt=conversationPart.readAt
+            sentAt=conversationPart.insertedAt
+          }}
+        {{/if}}
+      {{/if}}
+    {{/each}}
   </div>
-  <div class="conversation-thread__composer">
+<div class="conversation-thread__composer">
     {{conversations/conversation-composer
       send=(pipe (action send) (action scrollBottom))
     }}
