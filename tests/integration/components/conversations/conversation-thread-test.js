@@ -10,7 +10,7 @@ let page = PageObject.create(component);
 function renderPage() {
   page.render(hbs`
     {{conversations/conversation-thread
-      conversationParts=conversation.conversationParts
+      sortedConversationParts=conversation.sortedConversationParts
       conversation=conversation
       send=send
     }}
@@ -64,12 +64,12 @@ test('it delays rendering head until loaded', function(assert) {
 test('it renders each conversation part', function(assert) {
   assert.expect(4);
 
-  let conversationParts = [
+  let sortedConversationParts = [
     { isLoaded: true, body: 'foo 1', insertedAt: new Date('2017-11-01') },
     { isLoaded: true, body: 'foo 2', insertedAt: new Date('2017-12-01') },
     { isLoaded: true, body: 'foo 3', insertedAt: new Date('2017-10-01') }
   ];
-  set(this, 'conversation', { conversationParts });
+  set(this, 'conversation', { sortedConversationParts });
   renderPage();
 
   assert.equal(page.conversationParts().count, 3, 'Each part is rendered.');
@@ -81,12 +81,12 @@ test('it renders each conversation part', function(assert) {
 test('it delays rendering conversation parts not yet loaded', function(assert) {
   assert.expect(1);
 
-  let conversationParts = [
+  let sortedConversationParts = [
     { isLoaded: true, body: 'foo 1' },
     { isLoaded: false, body: 'foo 2' },
     { isLoaded: false, body: 'foo 3' }
   ];
-  set(this, 'conversation', { conversationParts });
+  set(this, 'conversation', { sortedConversationParts });
   renderPage();
 
   assert.equal(page.conversationParts().count, 1, 'Only loaded parts are rendered.');

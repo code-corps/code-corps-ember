@@ -21,10 +21,10 @@ test('sortedConversationParts sorts insertedAt by asc', function(assert) {
   let model = this.subject({ conversationParts: [laterPart, earlierPart] });
   assert.equal(model.get('sortedConversationParts.length'), 2);
   assert.equal(model.get('sortedConversationParts').get('firstObject').get('body'),
-    'foo',
+    earlierPart.get('body'),
     'the first conversation part is the earlier one');
   assert.equal(model.get('sortedConversationParts').get('lastObject').get('body'),
-    'wat',
+    laterPart.get('body'),
     'the secont conversation part is the later one');
 });
 
