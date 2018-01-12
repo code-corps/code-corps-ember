@@ -34,7 +34,7 @@ moduleForComponent('conversations/new-conversation-modal', 'Integration | Compon
 });
 
 test('it initiates a conversation and opens the modal when open button is clicked', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   let store = get(this, 'store');
 
@@ -55,6 +55,7 @@ test('it initiates a conversation and opens the modal when open button is clicke
 
   assert.equal(get(message, 'project.id'), 'foo');
   assert.equal(get(message, 'conversations.firstObject.user.id'), 'bar');
+  assert.equal(get(message, 'conversations.firstObject.project.id'), 'foo');
   assert.equal(get(message, 'author.id'), 'baz');
   assert.equal(get(message, 'initiatedBy'), 'admin');
 });
