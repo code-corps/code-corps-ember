@@ -16,12 +16,16 @@
       {{conversation.user.username}}
     </p>
     <p data-test-updated-at class="conversation-list-item__timestamp">
-      {{moment-from-now conversation.updatedAt}}
+      {{moment-from-now conversation.updatedAt interval=60000}}
     </p>
     {{#if (eq conversation.status 'open')}}
       {{!-- bubbles=false to prevent bubbling to wrapping link-to element --}}
       <span data-test-close-link class="conversation-list-item__close-link" {{action close conversation bubbles=false}}>
-        {{fa-icon "check"}}<span>Close</span>
+        {{fa-icon "check"}} <span>Close</span>
+      </span>
+    {{else if (eq conversation.status 'closed')}}
+      <span data-test-reopen-link class="conversation-list-item__reopen-link" {{action reopen conversation bubbles=false}}>
+        {{fa-icon "inbox"}} <span>Reopen</span>
       </span>
     {{/if}}
   </div>

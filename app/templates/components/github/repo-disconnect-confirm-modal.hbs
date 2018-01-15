@@ -6,8 +6,12 @@
      targetAttachment="center"
      translucentOverlay=true
   }}
+    <span {{action (mut showModal) false}} class="modal-close">
+      {{fa-icon "close"}}
+    </span>
+
     <div class="modal__header">
-      <h2>Stop syncing this repository</h2>
+      <h3>Stop syncing this repository</h3>
     </div>
     <div class="modal__warning">
       <p>Heads up! This is a potentially destructive action.</p>

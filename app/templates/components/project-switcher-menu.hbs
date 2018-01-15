@@ -1,0 +1,33 @@
+{{#modal-dialog
+   containerClassNames="sheet"
+   targetAttachment="none"
+   translucentOverlay=true
+}}
+  <div data-test-project-menu class="project-menu">
+    <div class="project-menu-wrapper">
+      <div class="project-menu-content">
+        <div class="project-switcher-menu">
+          {{#each user.organizations as |organization|}}
+            <ul>
+              <li data-test-organization class="project-switcher-menu__option--title">{{organization.name}}</li>
+              {{#each organization.projects as |project|}}
+                {{#unless project.isNew}}
+                  <li data-test-project>
+                    {{#link-to 'project' project.organization.slug project.slug}}
+                      <img data-test-icon class="icon icon--tiny" width="25" height="25" src="{{project.iconThumbUrl}}" /> {{project.title}}
+                    {{/link-to}}
+                  </li>
+                {{/unless}}
+              {{/each}}
+              {{#if (can 'manage organization' organization)}}
+                <li data-test-new-project class="project-switcher-menu__new">
+                  {{#link-to 'projects.new' organization.slug}}<span class="project-switcher-menu__new__icon">{{fa-icon "plus"}}</span> New project{{/link-to}}
+                </li>
+              {{/if}}
+            </ul>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/modal-dialog}}

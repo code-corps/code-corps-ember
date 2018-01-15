@@ -119,6 +119,6 @@ test('A flash error renders when project approval fails', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'FLash error is rendered.');
+    assert.equal(page.flashErrors().count, 1, 'Flash error is rendered.');
   });
 });

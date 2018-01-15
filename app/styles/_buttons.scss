@@ -116,6 +116,10 @@
     color: $text--dark;
     font-weight: 400;
 
+    .fa {
+      color: $text--lighter;
+    }
+
     &:disabled, &.disabled {
       background: $background-gray;
     }
@@ -156,7 +160,9 @@
   }
 
   .fa {
-    padding-right: 5px;
+    &:last-child {
+      padding-right: 5px;
+    }
   }
 
   span {

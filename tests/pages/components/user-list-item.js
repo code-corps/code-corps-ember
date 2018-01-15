@@ -4,7 +4,9 @@ import {
   isVisible,
   text
 } from 'ember-cli-page-object';
+
 import newConversationModal from 'code-corps-ember/tests/pages/components/conversations/new-conversation-modal';
+import projectUserRoleModal from 'code-corps-ember/tests/pages/components/project-user-role-modal';
 
 export default {
   scope: '.user-list-item',
@@ -12,38 +14,18 @@ export default {
   approveButton: {
     scope: '[data-test-approve]',
     click: clickable(),
-    isVisible: isVisible(),
-    text: text()
+    isVisible: isVisible()
   },
 
   denyButton: {
     scope: '[data-test-deny]',
     click: clickable(),
-    isVisible: isVisible(),
-    text: text()
+    isVisible: isVisible()
   },
 
   icon: {
     scope: '.icon',
     url: attribute('src')
-  },
-
-  messageButton: {
-    scope: '[data-test-message]',
-    click: clickable(),
-    isVisible: isVisible(),
-    text: text()
-  },
-
-  modal: {
-    resetScope: true,
-    testContainer: '.ember-modal-dialog',
-    confirmButton: {
-      scope: 'button.default',
-      click: clickable(),
-      isVisible: isVisible(),
-      text: text()
-    }
   },
 
   name: {
@@ -54,5 +36,7 @@ export default {
     }
   },
 
-  newConversationModal
+  newConversationModal,
+
+  projectUserRoleModal
 };

@@ -38,6 +38,10 @@
   }
 }
 
+.log-actions {
+  margin: 0.7em 0;
+}
+
 .log-rows {
   display: table;
   width: 100%;
@@ -76,6 +80,10 @@ code.errored {
     .log-cell {
       border-bottom: 1px solid $border-gray;
     }
+  }
+
+  &__empty {
+    text-align: center;
   }
 }
 

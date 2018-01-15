@@ -1,8 +1,13 @@
+import Ember from 'ember';
 import Component from '@ember/component';
 import { gte, and, alias } from '@ember/object/computed';
 import { later } from '@ember/runloop';
 import { set, get, computed } from '@ember/object';
 import { task } from 'ember-concurrency';
+
+const { testing } = Ember;
+
+const SHAKE_DELAY = testing ? 0 : 1000;
 
 export default Component.extend({
   classNames: ['form--centered', 'signup-form'],
@@ -45,7 +50,7 @@ export default Component.extend({
       set(this, 'hasError', true);
       later(this, function() {
         set(this, 'hasError', false);
-      }, 1000);
+      }, SHAKE_DELAY);
     }
   },
 
@@ -56,9 +61,9 @@ export default Component.extend({
     };
 
     let promise = get(this, 'user').save().then(() => {
-      get(this, 'signIn')(credentials);
+      return get(this, 'signIn')(credentials);
     }).catch((error) => {
-      get(this, 'handleErrors')(error);
+      return get(this, 'handleErrors')(error);
     });
 
     yield promise;

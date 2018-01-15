@@ -52,29 +52,58 @@
     }
   }
 
-  &__conversation {
+  &__conversation, &__button-container {
+    border-right: 1px solid $gray--lightest;
     width: 50px;
+
+    &:first-child {
+      border-left: 1px solid $gray--lightest;
+    }
+
+    &:focus, span:focus {
+      outline: none;
+    }
+  }
+
+  &__button {
+    align-items: center;
+    color: $text--light;
+    display: flex;
+    font-size: $header-font-size-small;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+
+    &:hover {
+      background: $blue--background;
+      color: $blue;
+      transition: none;
+    }
+
+    &--default {
+      &:hover {
+        background: $gray--background;
+        color: $gray--darkest;
+      }
+    }
+
+    &--success {
+      &:hover {
+        background: $green--lighter;
+        color: $green;
+      }
+    }
+
+    &--danger {
+      &:hover {
+        background: $red--light;
+        color: $red;
+      }
+    }
   }
 
   &__actions {
-    padding: .7em 1em;
-    text-align: left;
-
-    button {
-      margin-top: 2px;
-    }
-
-    @include media($sm-screen) {
-      display: flex;
-      justify-content: space-between;
-      button {
-        flex: 1;
-        margin-right: 5px;
-        &:last-of-type {
-          margin-right: 0;
-        }
-      }
-    }
+    display: flex;
   }
 }
 

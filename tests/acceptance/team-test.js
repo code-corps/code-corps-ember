@@ -11,7 +11,7 @@ test('visiting /team', function(assert) {
     assert.equal(currentURL(), '/team');
     assert.equal(teamPage.company.header, 'Our Team');
     assert.equal(teamPage.company.items().count, 3);
-    assert.equal(teamPage.contributors.header, 'Our Contributors');
+    assert.equal(teamPage.contributors.header, 'Our Volunteers');
     assert.equal(teamPage.contributors.items().count, 29);
   });
 });

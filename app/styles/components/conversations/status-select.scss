@@ -1,0 +1,34 @@
+.conversations__status-select {
+  position: relative;
+
+  .dropdown-menu {
+    margin-top: 0.5em;
+  }
+
+  &__selector {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 0.2em 0.5em;
+
+    &.active, &:hover {
+      border: 1px solid $gray--lightest;
+      background: $clear-hover;
+      background-image: linear-gradient(white, $clear-hover);
+      color: $text--dark;
+    }
+  }
+
+  a {
+    color: $text--lightest;
+
+    i {
+      &:first-child {
+        padding-right: 2px;
+      }
+
+      &:last-child:not(:first-child) {
+        padding-left: 5px;
+      }
+    }
+  }
+}

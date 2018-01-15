@@ -3,10 +3,17 @@ import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  redirect() {
+  redirect(model, transition) {
     let { conversations } = this.modelFor('project.conversations');
-    if (get(conversations, 'length') > 0) {
-      this.transitionTo('project.conversations.conversation', get(conversations, 'firstObject'));
+
+    // If status changed on one conversation, the model did not update
+    // We filter here to ensure the statuses are filtered
+    let status = transition.queryParams.status || 'open';
+    let filteredConversations = conversations.filterBy('status', status);
+
+    if (get(filteredConversations, 'length') > 0) {
+      let sortedConversations = filteredConversations.sortBy('updatedAt');
+      this.transitionTo('project.conversations.conversation',  get(sortedConversations, 'lastObject'));
     }
   }
 });

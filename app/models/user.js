@@ -29,6 +29,7 @@ export default Model.extend({
 
   categories: hasMany('category', { async: true }),
   githubAppInstallations: hasMany('github-app-installation', { async: true }),
+  organizations: hasMany('organization', { async: true }),
   projectUsers: hasMany('project-user', { async: true }),
   stripeConnectSubscriptions: hasMany('stripe-connect-subscription', { async: true }),
   stripePlatformCard: belongsTo('stripe-platform-card', { async: true }),
