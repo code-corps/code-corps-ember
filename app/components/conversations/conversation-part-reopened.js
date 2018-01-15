@@ -5,18 +5,18 @@ import { alias } from '@ember/object/computed';
 
 export default Component.extend({
 
-  author: null,
-
-  classNames: ['conversation-part', 'conversation-part--reopened'],
+  classNames: ['conversation-part-reopened'],
   classNameBindings: ['isSelf:conversation-part-reopened--is-self'],
-
-  reopenedAt: null,
 
   currentUser: service(),
 
+  author: null,
+  reopenedAt: null,
+
+  user: alias('currentUser.user'),
+
   isSelf: computed('author', 'user', function() {
     return get(this, 'author.id') === get(this, 'user.id');
-  }),
+  })
 
-  user: alias('currentUser.user')
 });
