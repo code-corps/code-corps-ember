@@ -5,12 +5,13 @@ import { alias } from '@ember/object/computed';
 
 export default Component.extend({
 
-  classNames: ['conversation-part-reopened'],
+  classNames: ['conversation-part', 'conversation-part--reopened'],
   classNameBindings: ['isSelf:conversation-part-reopened--is-self'],
 
   currentUser: service(),
 
   author: null,
+
   reopenedAt: null,
 
   user: alias('currentUser.user'),
