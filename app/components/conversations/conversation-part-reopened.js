@@ -10,7 +10,6 @@ export default Component.extend({
   currentUser: service(),
 
   author: null,
-
   reopenedAt: null,
 
   user: alias('currentUser.user'),
