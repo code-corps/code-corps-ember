@@ -10,10 +10,17 @@
     {{/if}}
     {{#each sortedConversationParts as |conversationPart|}}
       {{#if conversationPart.isLoaded}}
-        {{#if (eq conversationPart.partType 'isClosed')}}
+        {{#if (eq conversationPart.partType 'closed')}}
           {{conversation/conversation-part-closed
             author=conversationPart.author
             closedAt=conversationPart.insertedAt
+          }}
+        {{else if (eq conversationPart.partType 'reopened')}}
+          {{conversations/conversation-part-comment
+            author=conversationPart.author
+            body=conversationPart.body
+            readAt=conversationPart.readAt
+            sentAt=conversationPart.insertedAt
           }}
         {{else}}
           {{conversations/conversation-part-comment

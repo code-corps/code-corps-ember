@@ -4,6 +4,7 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
   body: attr(),
+  closedAt: attr(),
   insertedAt: attr(),
   readAt: attr(),
   updatedAt: attr(),
