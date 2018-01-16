@@ -4,7 +4,6 @@ import { computed, get } from '@ember/object';
 import { alias } from '@ember/object/computed';
 
 export default Component.extend({
-
   classNames: ['conversation-part', 'conversation-part--reopened'],
   classNameBindings: ['isSelf:conversation-part-reopened--is-self'],
 
