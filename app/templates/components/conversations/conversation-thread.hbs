@@ -15,7 +15,7 @@
             author=conversationPart.author
             closedAt=conversationPart.insertedAt
           }}
-        {{else if (eq conversationPart.partType 'reopened'}}
+        {{else if (eq conversationPart.partType 'reopened')}}
           {{conversations/conversation-part-comment
             author=conversationPart.author
             body=conversationPart.body
