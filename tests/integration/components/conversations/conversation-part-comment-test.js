@@ -16,7 +16,7 @@ let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
-    {{conversations/conversation-part
+    {{conversations/conversation-part-comment
       author=author
       body=body
       sentAt=sentAt
@@ -24,7 +24,7 @@ function renderPage() {
   `);
 }
 
-moduleForComponent('conversations/conversation-part', 'Integration | Component | conversations/conversation part', {
+moduleForComponent('conversations/conversation-part-comment', 'Integration | Component | conversations/conversation part comment', {
   integration: true,
   beforeEach() {
     page.setContext(this);
@@ -53,7 +53,7 @@ test('it renders all the details', function(assert) {
 
   assert.equal(page.body.text, body, 'The body renders in the chat bubble');
   assert.equal(page.sentAt.text, '2 days ago', 'The sent at timestamp renders');
-  assert.notOk(page.sentByCurrentUser, 'Does not have the current user styles');
+  assert.notOk(page.isByCurrentUser, 'Does not have the current user styles');
   assert.equal(page.photo.url, user.photoThumbUrl, 'The user photo renders');
   assertTooltipNotRendered(assert);
 
@@ -82,7 +82,7 @@ test('when the current user did not send the message', function(assert) {
 
   renderPage();
 
-  assert.notOk(page.sentByCurrentUser, 'Does not have the current user styles');
+  assert.notOk(page.isByCurrentUser, 'Does not have the current user styles');
 });
 
 test('when the current user sent the message', function(assert) {
@@ -93,5 +93,5 @@ test('when the current user sent the message', function(assert) {
 
   renderPage();
 
-  assert.ok(page.sentByCurrentUser, 'Has the current user styles');
+  assert.ok(page.isByCurrentUser, 'Has the current user styles');
 });

@@ -11,6 +11,14 @@ export default {
     scope: '[data-test-body]'
   },
 
+  closedAt: {
+    scope: '[data-test-closed-at]'
+  },
+
+  isComment: hasClass('conversation-part--comment'),
+  isClosed: hasClass('conversation-part--closed'),
+  isByCurrentUser: hasClass('conversation-part--is-self'),
+
   photo: {
     scope: '[data-test-target-photo]',
     url: attribute('src')
@@ -23,7 +31,5 @@ export default {
 
   sentAt: {
     scope: '[data-test-sent-at]'
-  },
-
-  sentByCurrentUser: hasClass('conversation-part--is-self')
+  }
 };
