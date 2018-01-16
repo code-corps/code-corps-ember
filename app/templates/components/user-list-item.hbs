@@ -14,19 +14,60 @@
   </div>
 </div>
 
-<div class="project-user__conversation">
-  {{conversations/new-conversation-modal
-    initiatedBy="admin"
-    project=project
-    user=user
-  }}
-</div>
-
 <div class="project-user__actions">
+  <div class="project-user__conversation project-user__button-container">
+    {{conversations/new-conversation-modal
+      initiatedBy="admin"
+      project=project
+      user=user
+    }}
+    {{#tooltip-on-element
+      class='tooltip'
+      effect='none'
+      enableLazyRendering=true
+      keepInWindow=true
+      side='bottom'
+    }}
+      New conversation
+    {{/tooltip-on-element}}
+  </div>
+
+  {{#unless (eq projectUser.role 'pending')}}
+    <div class="project-user__button-container">
+      {{project-user-role-modal
+        project=project
+        projectUser=projectUser
+        save=(action 'changeRole')
+        showModal=showRoleModal
+      }}
+    </div>
+  {{/unless}}
+
   {{#if (eq projectUser.role 'pending')}}
-    <button class="default small" {{action "showApprove"}} data-test-approve>Approve</button>
-    <button class="danger small" {{action "showDeny"}} data-test-deny>Deny</button>
-    {{modal-confirm dialogText='Are you sure you want to approve their membership?' okAction=(action 'approve' projectUser) showDialog=showApprove}}
-    {{modal-confirm dialogText='Are you sure you want to deny their membership?' okAction=(action 'deny' projectUser) showDialog=showDeny}}
+    <div class="project-user__button-container">
+      <a class="project-user__button project-user__button--success" {{action "approve" projectUser}} data-test-approve>{{fa-icon "check"}}</a>
+      {{#tooltip-on-element
+        class='tooltip'
+        effect='none'
+        enableLazyRendering=true
+        keepInWindow=true
+        side='bottom'
+      }}
+        Approve
+      {{/tooltip-on-element}}
+    </div>
+
+    <div class="project-user__button-container">
+      <a class="project-user__button project-user__button--danger" {{action "deny" projectUser}} data-test-deny>{{fa-icon "close"}}</a>
+      {{#tooltip-on-element
+        class='tooltip'
+        effect='none'
+        enableLazyRendering=true
+        keepInWindow=true
+        side='bottom'
+      }}
+        Deny
+      {{/tooltip-on-element}}
+    </div>
   {{/if}}
 </div>

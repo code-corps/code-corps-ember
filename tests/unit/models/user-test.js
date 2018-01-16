@@ -33,6 +33,7 @@ testForBelongsTo('user', 'stripePlatformCustomer');
 
 testForHasMany('user', 'categories');
 testForHasMany('user', 'githubAppInstallations');
+testForHasMany('user', 'organizations');
 testForHasMany('user', 'projectUsers');
 testForHasMany('user', 'stripeConnectSubscriptions');
 testForHasMany('user', 'userCategories');

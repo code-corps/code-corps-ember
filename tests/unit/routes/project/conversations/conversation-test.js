@@ -7,11 +7,13 @@ moduleFor('route:project/conversations/conversation', 'Unit | Route | project/co
     'service:can',
     'service:conversation-channel',
     'service:conversations',
+    'service:current-user',
     'service:metrics',
     'service:router-scroll',
     'service:scheduler',
     'service:session',
-    'service:socket'
+    'service:socket',
+    'service:sounds'
   ]
 });
 

@@ -1,10 +1,30 @@
-import { collection, create, hasClass, visitable } from 'ember-cli-page-object';
+import { collection, create, fillable, hasClass, visitable } from 'ember-cli-page-object';
 
 export default create({
   visit: visitable('/admin/github/events'),
 
+  clear: {
+    scope: '[data-test-clear-filters]'
+  },
+
+  filterAction: {
+    scope: '[data-test-filter-action]',
+    fillIn: fillable()
+  },
+
+  filterStatus: {
+    scope: '[data-test-filter-status]',
+    fillIn: fillable()
+  },
+
+  filterType: {
+    scope: '[data-test-filter-type]',
+    fillIn: fillable()
+  },
+
   flashErrors: collection({
-    itemScope: '.flash > div.alert-danger'
+    scope: '.flash-messages--full-width',
+    itemScope: '.flash-message.alert-danger'
   }),
 
   logItems: collection({

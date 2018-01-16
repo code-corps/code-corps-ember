@@ -24,6 +24,10 @@ export default {
     scope: '[data-test-close-link]'
   },
 
+  reopenButton: {
+    scope: '[data-test-reopen-link]'
+  },
+
   updatedAt: {
     scope: '[data-test-updated-at]'
   }

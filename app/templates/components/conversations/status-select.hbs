@@ -1,0 +1,26 @@
+{{#click-outside action=(action (mut showDropdown) false)}}
+  {{#if (eq status 'open')}}
+    <a data-test-open-selector class="conversations__status-select__selector {{if showDropdown "active"}}" {{action (toggle "showDropdown" this)}}>{{fa-icon "inbox"}} Open {{fa-icon "angle-down"}}</a>
+  {{else if (eq status 'closed')}}
+    <a data-test-closed-selector class="conversations__status-select__selector {{if showDropdown "active"}}" {{action (toggle "showDropdown" this)}}>{{fa-icon "check"}} Closed {{fa-icon "angle-down"}}</a>
+  {{/if}}
+{{/click-outside}}
+
+{{#if showDropdown}}
+  <div class="dropdown-menu">
+    <div class="dropdown__body">
+      <ul class="dropdown__options">
+        <li>
+          <a data-test-open-link class="{{if (eq status "open") "active"}}" {{action (action (mut status) "open")}}>
+            {{fa-icon "inbox"}} Open
+          </a>
+        </li>
+        <li>
+          <a data-test-closed-link class="{{if (eq status "closed") "active"}}" {{action (action (mut status) "closed")}}>
+            {{fa-icon "check"}} Closed
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+{{/if}}

@@ -1,0 +1,82 @@
+<a class="project-user__button project-user__button--default" {{action (mut showModal) true bubbles=false}} data-test-open-button>
+  {{fa-icon "gear"}}
+</a>
+{{#tooltip-on-element
+  class='tooltip'
+  effect='none'
+  enableLazyRendering=true
+  keepInWindow=true
+  side='bottom'
+}}
+  Change role
+{{/tooltip-on-element}}
+{{#if showModal}}
+  {{#modal-dialog
+     containerClassNames="modal project-user-role-modal"
+     onClose=(action (mut showModal) false)
+     targetAttachment="center"
+     translucentOverlay=true
+  }}
+    <span {{action (mut showModal) false}} class="modal-close" data-test-modal-close>
+      {{fa-icon "close"}}
+    </span>
+
+    <div class="modal__header">
+      <h3>Change role</h3>
+    </div>
+    <div class="modal__content modal__content--no-vertical-padding modal__content--without-top-border">
+      <div class="modal__target-user">
+        <span>
+          <img data-test-target-photo class="icon icon--tiny" src={{projectUser.user.photoThumbUrl}} />
+        </span>
+        <span>
+          <strong>
+            {{#if projectUser.user.name}}
+              {{projectUser.user.name}}
+            {{else}}
+              {{projectUser.user.username}}
+            {{/if}}
+          </strong>
+        </span>
+        <span class="new-conversation-modal__to-field__username">
+          {{projectUser.user.username}}
+        </span>
+      </div>
+
+      {{#if (can "manage project" project)}}
+        <div class="input-group input-group--radio" data-test-radio-group-owner>
+          {{#radio-button value='owner' groupValue=selectedRole}}
+            <strong>Owner</strong>
+          {{/radio-button}}
+          <div class="input-explain">
+            <p>Has complete control over your project.</p>
+            {{#if isSelf}}
+              <p data-test-admin-cannot-remove>You cannot remove yourself as an owner.</p>
+            {{/if}}
+          </div>
+        </div>
+      {{/if}}
+
+      <div class="input-group input-group--radio {{if demotionDisabled "input-group--disabled"}}" data-test-radio-group-admin>
+        {{#radio-button value='admin' groupValue=selectedRole disabled=demotionDisabled}}
+          <strong>Admin</strong>
+        {{/radio-button}}
+        <div class="input-explain">
+          <p>Can approve and message volunteers, along with other administrative tasks.</p>
+        </div>
+      </div>
+
+      <div class="input-group input-group--radio {{if demotionDisabled "input-group--disabled"}}" data-test-radio-group-contributor>
+        {{#radio-button value='contributor' groupValue=selectedRole disabled=demotionDisabled}}
+          <strong>Contributor</strong>
+        {{/radio-button}}
+        <div class="input-explain">
+          <p>Can manage tasks in your project.</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal__actions">
+      <a class="button default" {{action save projectUser selectedRole}} data-test-submit-button>Save</a>
+    </div>
+  {{/modal-dialog}}
+{{/if}}

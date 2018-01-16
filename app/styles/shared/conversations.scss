@@ -37,3 +37,8 @@ p.conversations__empty__icon {
   font-size: $header-font-size-large;
   margin: 1em 0 0 0;
 }
+
+.conversations__list-actions {
+  border-bottom: 1px solid $gray--lighter;
+  padding: 1em;
+}

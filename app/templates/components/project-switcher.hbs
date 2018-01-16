@@ -1,0 +1,9 @@
+{{#click-outside action=(action "hide")}}
+  <a data-test-menu-link class="header-navigation__icon-link" {{action "show"}}>
+    {{fa-icon "folder"}}
+  </a>
+{{/click-outside}}
+
+{{#unless hidden}}
+  {{project-switcher-menu user=user}}
+{{/unless}}

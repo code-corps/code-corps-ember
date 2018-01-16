@@ -3,14 +3,16 @@ import { set } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/conversations/conversation-thread';
+import { resolve } from 'rsvp';
 
 let page = PageObject.create(component);
 
 function renderPage() {
   page.render(hbs`
     {{conversations/conversation-thread
+      sortedConversationParts=conversation.sortedConversationParts
       conversation=conversation
-      send=onSend
+      send=send
     }}
   `);
 }
@@ -19,7 +21,9 @@ moduleForComponent('conversations/conversation-thread', 'Integration | Component
   integration: true,
   beforeEach() {
     page.setContext(this);
-    set(this, 'onSend', () => {});
+    set(this, 'send', () => {
+      return resolve();
+    });
   },
   afterEach() {
     page.removeContext();
@@ -60,29 +64,29 @@ test('it delays rendering head until loaded', function(assert) {
 test('it renders each conversation part', function(assert) {
   assert.expect(4);
 
-  let conversationParts = [
-    { isLoaded: true, body: 'foo 1' },
-    { isLoaded: true, body: 'foo 2' },
-    { isLoaded: true, body: 'foo 3' }
+  let sortedConversationParts = [
+    { isLoaded: true, body: 'foo 1', insertedAt: new Date('2017-11-01') },
+    { isLoaded: true, body: 'foo 2', insertedAt: new Date('2017-12-01') },
+    { isLoaded: true, body: 'foo 3', insertedAt: new Date('2017-10-01') }
   ];
-  set(this, 'conversation', { conversationParts });
+  set(this, 'conversation', { sortedConversationParts });
   renderPage();
 
   assert.equal(page.conversationParts().count, 3, 'Each part is rendered.');
-  assert.equal(page.conversationParts(0).body.text, 'foo 1', 'Part 1 is rendered correctly.');
-  assert.equal(page.conversationParts(1).body.text, 'foo 2', 'Part 2 is rendered correctly.');
-  assert.equal(page.conversationParts(2).body.text, 'foo 3', 'Part 3 is rendered correctly.');
+  assert.equal(page.conversationParts(0).body.text, 'foo 1', 'Part 1 is rendered first');
+  assert.equal(page.conversationParts(1).body.text, 'foo 2', 'Part 2 is rendered second');
+  assert.equal(page.conversationParts(2).body.text, 'foo 3', 'Part 3 is rendered last');
 });
 
 test('it delays rendering conversation parts not yet loaded', function(assert) {
   assert.expect(1);
 
-  let conversationParts = [
+  let sortedConversationParts = [
     { isLoaded: true, body: 'foo 1' },
     { isLoaded: false, body: 'foo 2' },
     { isLoaded: false, body: 'foo 3' }
   ];
-  set(this, 'conversation', { conversationParts });
+  set(this, 'conversation', { sortedConversationParts });
   renderPage();
 
   assert.equal(page.conversationParts().count, 1, 'Only loaded parts are rendered.');
@@ -91,8 +95,9 @@ test('it delays rendering conversation parts not yet loaded', function(assert) {
 test('it delegates send action from composer', function(assert) {
   assert.expect(1);
 
-  set(this, 'onSend', (body) => {
+  set(this, 'send', (body) => {
     assert.equal(body, 'foo', 'Correct value was send with action.');
+    return resolve();
   });
 
   renderPage();

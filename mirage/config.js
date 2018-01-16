@@ -174,8 +174,23 @@ export default function() {
   */
 
   this.get('/github-events', function(schema, request) {
-    let items = schema.githubEvents.all();
-    return paginate(items, '/github-events', request.queryParams);
+    let events = schema.githubEvents.all();
+
+    let { action, status, type } = request.queryParams;
+
+    if (action) {
+      events = events.filter((e) => e.action === action);
+    }
+
+    if (status) {
+      events = events.filter((e) => e.status === status);
+    }
+
+    if (type) {
+      events = events.filter((e) => e.eventType === type);
+    }
+
+    return paginate(events, '/github-events', request.queryParams);
   });
   this.get('/github-events/:id');
   this.patch('/github-events/:id', function(schema) {
@@ -244,7 +259,14 @@ export default function() {
   */
 
   this.get('/messages', { coalesce: true });
-  this.post('/messages');
+  this.post('/messages', function(schema) {
+    let attrs = this.normalizedRequestAttrs();
+    // b/c conversation was created w/o an id, need to delete to avoid error in
+    // mirage converting association id to string
+    delete attrs.conversationIds;
+    let message = schema.create('message', attrs);
+    return message;
+  });
   this.get('/messages/:id');
 
   /**

@@ -1,12 +1,14 @@
-.modal {
-  padding: 0;
-  width: 400px;
+.ember-modal-overlay.translucent {
+  background: rgba(0,0,0, 0.70)
+}
 
-  h2 {
-    font-size: 1.2em;
-    font-weight: 500;
-    margin: 0;
-  }
+.ember-modal-dialog {
+  border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.modal {
+  padding: 0 1em;
 }
 
 .modal-close {
@@ -18,8 +20,11 @@
 }
 
 .modal__header {
-  margin-top: 10px;
-  padding: 10px;
+  h3 {
+    font-size: $header-font-size-small;
+    margin: 0.7em;
+    text-align: center;
+  }
 }
 
 .modal__warning {
@@ -27,15 +32,23 @@
   border-top: 1px solid $red;
   border-bottom: 1px solid $red;
   padding: 0 20px;
-  margin-top: 9px;
-  margin-bottom: -10px;
+  margin: 9px -1em -10px -1em;
 }
 
 .modal__content {
-  margin-top: 10px;
-  padding: 20px 10px;
   border-bottom: 1px solid $border-gray;
   border-top: 1px solid $border-gray;
+  margin: 10px -1em 0 -1em;
+  padding: 1em;
+
+  &--no-vertical-padding {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &--without-top-border {
+    border-top: none;
+  }
 
   ul {
     margin-left: 30px;
@@ -47,9 +60,28 @@
   }
 }
 
+.modal__target-user {
+  align-items: center;
+  background: $gray--background;
+  border-bottom: 1px solid $gray--lighter;
+  border-top: 1px solid $gray--lighter;
+  display: flex;
+  margin: 0 -1em 1em -1em;
+  padding: 1em;
+
+  span {
+    display: flex;
+    padding-right: 5px;
+  }
+
+  &__username {
+    color: $text--lightest;
+    font-size: $body-font-size-small;
+  }
+}
+
 .modal__actions {
-  margin-top: 10px;
-  padding: 10px;
+  padding: 10px 0;
 
   p {
     margin-top: 0;

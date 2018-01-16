@@ -1,8 +1,15 @@
 import Component from '@ember/component';
-import { not, equal, empty, and, alias } from '@ember/object/computed';
+import { computed, get, set } from '@ember/object';
+import { alias, and, empty, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { observer } from '@ember/object';
 import { once, debounce, cancel } from '@ember/runloop';
+import Ember from 'ember';
+
+const {
+  testing
+} = Ember;
+
+const DEBOUNCE_TIMER = testing ? 0 : 500;
 
 /**
   `signup-username-input` composes the username input on the signup page. It
@@ -173,16 +180,16 @@ export default Component.extend({
     @property isSameUsername
     @type Boolean
    */
-  isSameUsername: equal('cachedUsername', 'username'),
-
-  /**
-    Checks the username whenever it is changed.
-
-    @method usernameChanged
-   */
-  usernameChanged: observer('username', function() {
-    once(this, '_check');
+  isSameUsername: computed('cachedUsername', 'username', function() {
+    return get(this, 'cachedUsername') === get(this, 'username');
   }),
+
+  validateUsername: function() {
+    once(this, '_check');
+    if (get(this, 'isNotSameUsername')) {
+      set(this, 'isChecking', true);
+    }
+  }.observes('username'),
 
   /**
     Checks if the username is valid and available. Caches the username so that
@@ -191,18 +198,18 @@ export default Component.extend({
     @method checkAvailable
    */
   checkAvailable() {
-    let username = this.get('username');
+    let username = get(this, 'username');
     this.sendRequest(username).then((result) => {
       let { available, valid } = result;
       let validation = valid && available;
 
-      this.set('cachedUsername', this.get('username'));
-      this.set('hasCheckedOnce', true);
-      this.set('isChecking', false);
-      this.set('isAvailableOnServer', available);
-      this.set('isValid', valid);
+      set(this, 'cachedUsername', get(this, 'username'));
+      set(this, 'hasCheckedOnce', true);
+      set(this, 'isChecking', false);
+      set(this, 'isAvailableOnServer', available);
+      set(this, 'isValid', valid);
 
-      this.set('canSubmit', validation);
+      set(this, 'canSubmit', validation);
       this.sendAction('usernameValidated', validation);
     });
   },
@@ -214,7 +221,7 @@ export default Component.extend({
     @return Promise
    */
   sendRequest(username) {
-    return this.get('ajax').request('/users/username_available', {
+    return get(this, 'ajax').request('/users/username_available', {
       method: 'GET',
       data: {
         username
@@ -222,36 +229,21 @@ export default Component.extend({
     });
   },
 
-  actions: {
-
-    /**
-      Action that fires on key down. If the username is not the cached username,
-      it sets `isChecking` to true.
-
-      @method keyDown
-     */
-    keyDown() {
-      if (this.get('isNotSameUsername')) {
-        this.set('isChecking', true);
-      }
-    }
-  },
-
   _check() {
-    this.set('isChecking', true);
+    set(this, 'isChecking', true);
 
-    if (this.get('canCheck')) {
-      cancel(this.get('timer'));
+    if (get(this, 'canCheck')) {
+      cancel(get(this, 'timer'));
       let deferredAction = debounce(this, function() {
         this.checkAvailable();
-      }, 500);
-      this.set('timer', deferredAction);
-    } else if (this.get('isSameUsername') && this.get('isNotEmpty')) {
-      this.sendAction('usernameValidated', this.get('canSubmit'));
-      this.set('isChecking', false);
+      }, DEBOUNCE_TIMER);
+      set(this, 'timer', deferredAction);
+    } else if (get(this, 'isSameUsername') && get(this, 'isNotEmpty')) {
+      this.sendAction('usernameValidated', get(this, 'canSubmit'));
+      set(this, 'isChecking', false);
     } else {
       this.sendAction('usernameValidated', false);
-      this.set('isChecking', false);
+      set(this, 'isChecking', false);
     }
   }
 });

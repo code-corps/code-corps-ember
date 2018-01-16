@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { get, getProperties, set } from '@ember/object';
 import { and, not, notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
@@ -9,11 +9,10 @@ const SAVE_SUCCESS = 'Your message is sending now.';
 export default Component.extend({
   classNames: ['new-conversation-modal-container'],
 
-  showModal: false,
-
   initiatedBy: null,
   message: null,
   project: null,
+  showModal: false,
   user: null,
 
   currentUser: service(),
@@ -37,7 +36,7 @@ export default Component.extend({
       project
     });
 
-    let conversation = store.createRecord('conversation', { user });
+    let conversation = store.createRecord('conversation', { user, project });
 
     get(message, 'conversations').pushObject(conversation);
 
@@ -45,15 +44,25 @@ export default Component.extend({
   },
 
   discardConversation() {
+    let message = get(this, 'message');
+    let { body, subject } = getProperties(message, 'body', 'subject');
+
+    if (!body && !subject) {
+      return this._discardConversation(message);
+    }
+
     let confirmed =  window.confirm('You will lose any unsaved information if you close. Are you sure?');
     if (confirmed) {
-      let message = get(this, 'message');
-      get(message, 'conversations.firstObject').destroyRecord();
-      message.destroyRecord();
+      return this._discardConversation(message);
     } else {
       // Stop the pipe by rejecting
       return RSVP.reject();
     }
+  },
+
+  _discardConversation(message) {
+    get(message, 'conversations.firstObject').destroyRecord();
+    return message.destroyRecord();
   },
 
   actions: {

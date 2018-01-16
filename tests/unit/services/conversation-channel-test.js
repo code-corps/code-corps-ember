@@ -3,7 +3,9 @@ import { moduleFor, test } from 'ember-qunit';
 moduleFor('service:conversation-channel', 'Unit | Service | conversation channel', {
   // Specify the other units that are required for this test.
   needs: [
-    'service:socket'
+    'service:current-user',
+    'service:socket',
+    'service:sounds'
   ]
 });
 

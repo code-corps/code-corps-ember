@@ -7,6 +7,7 @@ import {
 
 export default {
   scope: '.site-footer',
+
   clickAboutLink: clickable('ul > li:eq(0) li:eq(0) a'),
   clickTeamLink: clickable('ul > li:eq(0) li:eq(1) a'),
 
@@ -24,6 +25,17 @@ export default {
           text: text()
         }
       })
+    }
+  }),
+
+  rows: collection({
+    itemScope: 'ul.footer-links > li',
+    item: {
+      link: {
+        scope: 'a',
+        href: attribute('href')
+      },
+      text: text()
     }
   })
 };
