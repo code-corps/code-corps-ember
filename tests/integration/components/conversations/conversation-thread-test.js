@@ -2,6 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import { set } from '@ember/object';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
+import { Ability } from 'ember-can';
 import component from 'code-corps-ember/tests/pages/components/conversations/conversation-thread';
 import { resolve } from 'rsvp';
 
@@ -13,6 +14,7 @@ function renderPage() {
       sortedConversationParts=conversation.sortedConversationParts
       conversation=conversation
       send=send
+      project=project
     }}
   `);
 }
@@ -61,18 +63,29 @@ test('it delays rendering head until loaded', function(assert) {
   assert.equal(page.conversationParts().count, 0, 'No part is rendered.');
 });
 
-test('it renders each conversation part', function(assert) {
+test('it renders each conversation part if user can administer', function(assert) {
   assert.expect(4);
+
+  this.register('ability:project', Ability.extend({ canAdminister: true }));
 
   let sortedConversationParts = [
     { isLoaded: true, body: 'foo 1', insertedAt: new Date('2017-11-01') },
     { isLoaded: true, body: 'foo 2', insertedAt: new Date('2017-12-01') },
     { isLoaded: true, body: 'foo 3', insertedAt: new Date('2017-10-01') }
   ];
+
+  let project = {
+    projectUsers: [
+      { role: 'admin' }
+    ]
+  };
+
   set(this, 'conversation', { sortedConversationParts });
+  set(this, 'project', project);
+
   renderPage();
 
-  assert.equal(page.conversationParts().count, 3, 'Each part is rendered.');
+  assert.equal(page.conversationParts().count, 3, 'Each part is rendered if user can administer.');
   assert.equal(page.conversationParts(0).body.text, 'foo 1', 'Part 1 is rendered first');
   assert.equal(page.conversationParts(1).body.text, 'foo 2', 'Part 2 is rendered second');
   assert.equal(page.conversationParts(2).body.text, 'foo 3', 'Part 3 is rendered last');
@@ -86,6 +99,7 @@ test('it delays rendering conversation parts not yet loaded', function(assert) {
     { isLoaded: false, body: 'foo 2' },
     { isLoaded: false, body: 'foo 3' }
   ];
+
   set(this, 'conversation', { sortedConversationParts });
   renderPage();
 
@@ -104,4 +118,22 @@ test('it delegates send action from composer', function(assert) {
 
   page.conversationComposer.submittableTextarea.fillIn('foo');
   page.conversationComposer.submitButton.click();
+});
+
+test('conversation part filtering works if user has ability', function(assert) {
+  assert.expect(2);
+
+  this.register('ability:project', Ability.extend({ canAdminister: true }));
+
+  let sortedConversationParts = [
+    { isComment: true, isLoaded: true, body: 'foo 1' },
+    { isClosed: true, isLoaded: true, body: 'foo 2'  },
+    { isReopened:true, isLoaded: true, body: 'foo 3' }
+  ];
+
+  set(this, 'conversation', { sortedConversationParts });
+
+  renderPage();
+
+  assert.equal(page.conversationParts().count, 3, 'all conversation parts are rendered.');
 });
