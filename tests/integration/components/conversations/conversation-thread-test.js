@@ -137,3 +137,5 @@ test('conversation part filtering works if user has ability', function(assert) {
 
   assert.equal(page.conversationParts().count, 3, 'all conversation parts are rendered.');
 });
+
+// test('only comment parts are shown if user cannot administer')
