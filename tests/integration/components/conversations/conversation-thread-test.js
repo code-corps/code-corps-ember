@@ -11,7 +11,7 @@ let page = PageObject.create(component);
 function renderPage() {
   page.render(hbs`
     {{conversations/conversation-thread
-      sortedConversationParts=conversation.sortedConversationParts
+      sortedConversationParts=sortedConversationParts
       conversation=conversation
       send=send
       project=project
@@ -26,6 +26,8 @@ moduleForComponent('conversations/conversation-thread', 'Integration | Component
     set(this, 'send', () => {
       return resolve();
     });
+    set(this, 'conversation', { });
+    set(this, 'sortedConversationParts', []);
   },
   afterEach() {
     page.removeContext();
@@ -34,6 +36,7 @@ moduleForComponent('conversations/conversation-thread', 'Integration | Component
 
 test('it renders composer', function(assert) {
   assert.expect(1);
+
   renderPage();
   assert.ok(page.conversationComposer.isVisible, 'Composer is rendered');
 });
@@ -63,44 +66,17 @@ test('it delays rendering head until loaded', function(assert) {
   assert.equal(page.conversationParts().count, 0, 'No part is rendered.');
 });
 
-test('it renders each conversation part if user can administer', function(assert) {
-  assert.expect(4);
-
-  this.register('ability:project', Ability.extend({ canAdminister: true }));
-
-  let sortedConversationParts = [
-    { isLoaded: true, body: 'foo 1', insertedAt: new Date('2017-11-01') },
-    { isLoaded: true, body: 'foo 2', insertedAt: new Date('2017-12-01') },
-    { isLoaded: true, body: 'foo 3', insertedAt: new Date('2017-10-01') }
-  ];
-
-  let project = {
-    projectUsers: [
-      { role: 'admin' }
-    ]
-  };
-
-  set(this, 'conversation', { sortedConversationParts });
-  set(this, 'project', project);
-
-  renderPage();
-
-  assert.equal(page.conversationParts().count, 3, 'Each part is rendered if user can administer.');
-  assert.equal(page.conversationParts(0).body.text, 'foo 1', 'Part 1 is rendered first');
-  assert.equal(page.conversationParts(1).body.text, 'foo 2', 'Part 2 is rendered second');
-  assert.equal(page.conversationParts(2).body.text, 'foo 3', 'Part 3 is rendered last');
-});
-
 test('it delays rendering conversation parts not yet loaded', function(assert) {
   assert.expect(1);
 
   let sortedConversationParts = [
-    { isLoaded: true, body: 'foo 1' },
-    { isLoaded: false, body: 'foo 2' },
-    { isLoaded: false, body: 'foo 3' }
+    { partType: 'comment', isLoaded: true, body: 'foo 1' },
+    { partType: 'comment', isLoaded: false, body: 'foo 2' },
+    { partType: 'comment', isLoaded: false, body: 'foo 3' }
   ];
 
-  set(this, 'conversation', { sortedConversationParts });
+  set(this, 'sortedConversationParts', sortedConversationParts);
+
   renderPage();
 
   assert.equal(page.conversationParts().count, 1, 'Only loaded parts are rendered.');
@@ -120,22 +96,36 @@ test('it delegates send action from composer', function(assert) {
   page.conversationComposer.submitButton.click();
 });
 
-test('conversation part filtering works if user has ability', function(assert) {
-  assert.expect(2);
-
+test('it shows all parts if user has ability', function(assert) {
+  assert.expect(1);
   this.register('ability:project', Ability.extend({ canAdminister: true }));
 
   let sortedConversationParts = [
-    { isComment: true, isLoaded: true, body: 'foo 1' },
-    { isClosed: true, isLoaded: true, body: 'foo 2'  },
-    { isReopened:true, isLoaded: true, body: 'foo 3' }
+    { partType: 'closed', isLoaded: true, body: 'foo 1' },
+    { partType: 'reopened', isLoaded: true, body: 'foo 2' },
+    { partType: 'comment', isLoaded: true, body: 'foo 3' }
   ];
 
-  set(this, 'conversation', { sortedConversationParts });
+  set(this, 'sortedConversationParts', sortedConversationParts);
 
   renderPage();
 
   assert.equal(page.conversationParts().count, 3, 'all conversation parts are rendered.');
 });
 
-// test('only comment parts are shown if user cannot administer')
+test('it shows only comment parts if user has no ability', function(assert) {
+  assert.expect(1);
+  this.register('ability:project', Ability.extend({ canAdminister: false }));
+
+  let sortedConversationParts = [
+    { partType: 'closed', isLoaded: true, body: 'foo 1' },
+    { partType: 'reopened', isLoaded: true, body: 'foo 2' },
+    { partType: 'comment', isLoaded: true, body: 'foo 3' }
+  ];
+
+  set(this, 'sortedConversationParts', sortedConversationParts);
+
+  renderPage();
+
+  assert.equal(page.conversationParts().count, 1, 'only comment parts are rendered.');
+});
