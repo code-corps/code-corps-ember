@@ -11,6 +11,15 @@ export default {
     scope: '[data-test-body]'
   },
 
+  closedAt: {
+    scope: '[data-test-closed-at]'
+  },
+
+  isByCurrentUser: hasClass('conversation-part--is-self'),
+  isComment: hasClass('conversation-part--comment'),
+  isClosed: hasClass('conversation-part--closed'),
+  isReopened: hasClass('conversation-part--reopened'),
+
   photo: {
     scope: '[data-test-target-photo]',
     url: attribute('src')
@@ -21,9 +30,11 @@ export default {
     mouseenter: triggerable('mouseenter')
   },
 
-  sentAt: {
-    scope: '[data-test-sent-at]'
+  reopenedAt: {
+    scope: '[data-test-reopened-at]'
   },
 
-  sentByCurrentUser: hasClass('conversation-part--is-self')
+  sentAt: {
+    scope: '[data-test-sent-at]'
+  }
 };

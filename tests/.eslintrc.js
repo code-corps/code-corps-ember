@@ -5,4 +5,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8
   },
+  globals: {
+    setBreakpoint: true
+  }
 };

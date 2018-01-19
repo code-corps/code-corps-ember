@@ -26,9 +26,19 @@
     {{#if session.isAuthenticated}}
       <nav class="header-navigation--right">
         <ul class="header-navigation__options">
+          {{#if currentUser.user.organizations}}
+            <li>
+              {{project-switcher
+                user=currentUser.user
+              }}
+            </li>
+          {{/if}}
           <li>{{#link-to "conversations" data-test-conversations-link class="header-navigation__icon-link"}}{{fa-icon "comments"}}{{/link-to}}</li>
         </ul>
-        {{user-menu user=currentUser.user class="header-navigation__options" }}
+        {{user-menu
+          user=currentUser.user
+          class="header-navigation__options"
+        }}
       </nav>
     {{else}}
       <nav class="header-navigation--right">

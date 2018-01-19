@@ -6,7 +6,8 @@ moduleFor('route:index', 'Unit | Route | index', {
     'service:metrics',
     'service:router-scroll',
     'service:scheduler',
-    'service:session'
+    'service:session',
+    'service:site-footer'
   ]
 });
 

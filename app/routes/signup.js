@@ -1,10 +1,11 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { set, get } from '@ember/object';
+import MarketingRouteMixin from 'code-corps-ember/mixins/marketing-route-mixin';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 import { isNonValidationError } from 'code-corps-ember/utils/error-utils';
 
-export default Route.extend(UnauthenticatedRouteMixin, {
+export default Route.extend(MarketingRouteMixin, UnauthenticatedRouteMixin, {
   queryParams: { context: 'default' },
 
   session: service(),
