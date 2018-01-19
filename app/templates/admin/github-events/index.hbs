@@ -1,3 +1,34 @@
+<div class="log-actions">
+  <span>{{fa-icon "filter"}}</span>
+
+  {{#x-select data-test-filter-status value=status action=(action "changeStatus") as |xs|}}
+    <option value=''>Status</option>
+    {{#each statuses as |status|}}
+      {{#xs.option value=status}}{{status}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+
+  {{#x-select data-test-filter-type value=type action=(action "changeType") as |xs|}}
+    <option value=''>Event Type</option>
+    {{#each types as |type|}}
+      {{#xs.option value=type}}{{type}}{{/xs.option}}
+    {{/each}}
+  {{/x-select}}
+
+  {{#if type}}
+    {{#x-select data-test-filter-action value=eventAction action=(action "changeAction") as |xs|}}
+      <option value=''>Action</option>
+      {{#each selectableActions as |eventAction|}}
+        {{#xs.option value=eventAction}}{{eventAction}}{{/xs.option}}
+      {{/each}}
+    {{/x-select}}
+  {{/if}}
+
+  {{#if (or status type)}}
+    <a data-test-clear-filters {{action "clearFilters"}} class="button clear">{{fa-icon "remove"}} Clear</a>
+  {{/if}}
+</div>
+
 <div class="log-rows">
   <div data-test-log-row-header class="log-row log-row--header">
     <span class="log-cell log-cell--shrink">Status</span>

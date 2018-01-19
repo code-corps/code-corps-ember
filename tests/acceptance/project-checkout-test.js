@@ -148,9 +148,11 @@ test('Allows signing up and donating', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'signup', 'User was redirected to signup.');
-    signupPage.form.email(email);
-    signupPage.form.password('password');
     signupPage.form.username('joeuser');
+    signupPage.form.keydownUsername();
+    signupPage.form.email(email);
+    signupPage.form.keydownEmail();
+    signupPage.form.password('password');
     signupPage.form.save();
   });
 

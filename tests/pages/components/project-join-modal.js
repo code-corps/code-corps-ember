@@ -1,6 +1,7 @@
-import { isVisible, triggerable } from 'ember-cli-page-object';
+import { isVisible } from 'ember-cli-page-object';
 import { clickable } from 'code-corps-ember/tests/pages/helpers/clickable-native';
 import relatedSkills from 'code-corps-ember/tests/pages/components/related-skills';
+import { triggerKeyDown } from 'ember-keyboard';
 
 export default {
   scope: '.project-join-modal-container',
@@ -16,7 +17,11 @@ export default {
     joinProjectButton: {
       scope: 'button'
     },
-    hitEscape: triggerable('keydown', '', { eventProperties: { keyCode: 27 } }),
+
+    hitEscape() {
+      triggerKeyDown('Escape');
+    },
+
     relatedSkills
   },
 

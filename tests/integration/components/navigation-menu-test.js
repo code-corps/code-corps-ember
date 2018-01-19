@@ -110,3 +110,37 @@ test('it renders elements for the onboarding menu correctly when on project.than
   assert.notOk(page.onboarding.progressBar.isVisible, 'Onboarding progress bar is not rendered.');
   assert.ok(page.onboarding.finishSigningUp.isVisible, 'The link to finish signing up is rendered.');
 });
+
+test('it renders the project switcher menu when the user has organizations', function(assert) {
+  assert.expect(1);
+
+  stubService(this, 'current-user', {
+    user: {
+      organizations: [
+        {
+          id: 1
+        }
+      ]
+    }
+  });
+  stubService(this, 'session', { isAuthenticated: true });
+
+  renderPage();
+
+  assert.ok(page.projectSwitcher.isVisible, 'The project switcher is rendered.');
+});
+
+test('it does not render the project switcher menu when the user has no organizations', function(assert) {
+  assert.expect(1);
+
+  stubService(this, 'current-user', {
+    user: {
+      organizations: []
+    }
+  });
+  stubService(this, 'session', { isAuthenticated: true });
+
+  renderPage();
+
+  assert.notOk(page.projectSwitcher.isVisible, 'The project switcher is not rendered.');
+});

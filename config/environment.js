@@ -1,4 +1,3 @@
-/* eslint-env node */
 'use strict';
 
 module.exports = function(environment) {
@@ -31,9 +30,8 @@ module.exports = function(environment) {
     },
 
     flashMessageDefaults: {
-      // flash message defaults
       timeout: 2000,
-      extendedTimeout: 0,
+      extendedTimeout: 600,
       priority: 200,
       sticky: true,
       showProgress: true,
@@ -69,7 +67,7 @@ module.exports = function(environment) {
         config: {
           key: 'Nz7hL2eY2yHzuIwUbExfDanbJp2q0IO0'
         }
-      },
+      }
     ],
 
     moment: {
@@ -78,7 +76,7 @@ module.exports = function(environment) {
 
     pageTitle: {
       prepend: true,
-      separator: " — "
+      separator: ' — '
     },
 
     sentry: {
@@ -114,39 +112,39 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
       'script-src': [
-        "'self'",
+        "'self'"
       ],
       // Allow fonts to be loaded from http://fonts.gstatic.com
       'font-src': [
         "'self'",
-        "data:",
-        "https://fonts.gstatic.com",
-        "https://d3pgew4wbk2vb1.cloudfront.net",
-        "https://dawxes9syhrgg.cloudfront.net"
+        'data:',
+        'https://fonts.gstatic.com',
+        'https://d3pgew4wbk2vb1.cloudfront.net',
+        'https://dawxes9syhrgg.cloudfront.net'
       ],
       // Allow data (ajax/websocket) from api.lvh.me:4000
       'connect-src': [
         "'self'",
-        "http://api.lvh.me:4000"
+        'http://api.lvh.me:4000'
       ],
       // Allow images from the origin itself (i.e. current domain), and data
       'img-src': [
         "'self'",
-        "data:",
-        "https://d3pgew4wbk2vb1.cloudfront.net",
-        "https://dawxes9syhrgg.cloudfront.net",
-        "http://lorempixel.com",
-        "https://s3.amazonaws.com",
+        'data:',
+        'https://d3pgew4wbk2vb1.cloudfront.net',
+        'https://dawxes9syhrgg.cloudfront.net',
+        'http://lorempixel.com',
+        'https://s3.amazonaws.com'
       ],
       // Allow inline styles and loaded CSS from http://fonts.googleapis.com
       'style-src': [
         "'self'",
-        "'unsafe-inline'",
+        "'unsafe-inline'"
       ],
       // `media-src` will be omitted from policy
       // Browser will fallback to default-src for media resources (which is to deny, see above).
       'media-src': null
-    }
+    };
   }
 
   if (environment === 'remote-development') {
@@ -164,6 +162,7 @@ module.exports = function(environment) {
 
   if (environment === 'mirage-development') {
     ENV.API_BASE_URL = '';
+    ENV.SOCKETS_BASE_URL = '';
     ENV.WEB_BASE_URL = '';
     ENV.sentry.development = true;
     ENV.stripe.publishableKey = 'pk_test_uulykWQvn6axvKzslwN8lqby';
@@ -191,6 +190,8 @@ module.exports = function(environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.locationType = 'none';
+
+    ENV.APP.autoboot = false;
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -229,9 +230,9 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth-token'] = {
-    serverTokenEndpoint: ENV.API_BASE_URL + '/token',
-    serverTokenRefreshEndpoint: ENV.API_BASE_URL + '/token/refresh',
-    refreshLeeway: 300, // 5 minutes before expiry
+    serverTokenEndpoint: `${ENV.API_BASE_URL}/token`,
+    serverTokenRefreshEndpoint: `${ENV.API_BASE_URL}/token/refresh`,
+    refreshLeeway: 300 // 5 minutes before expiry
   };
 
   return ENV;

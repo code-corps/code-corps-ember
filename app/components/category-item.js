@@ -122,6 +122,6 @@ export default Component.extend({
    */
   _flashError(message) {
     let options = { fixed: true, sticky: false, timeout: 5000 };
-    get(this, 'flashMessages').clearMessages().danger(message, options);
+    get(this, 'flashMessages').danger(message, options);
   }
 });

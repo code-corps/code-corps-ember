@@ -1,13 +1,13 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { not, lt, gte, alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import strength from 'password-strength';
 
 export default Component.extend({
   classNames: ['input-group'],
 
   ajax: service(),
+  passwordStrength: service(),
 
   canShowValidations: alias('isNotEmpty'),
   isEmpty: lt('passwordLength', 1),
@@ -19,23 +19,23 @@ export default Component.extend({
   suggestions: alias('strength.feedback.suggestions'),
 
   password: computed('user.password', function() {
-    return this.get('user.password') || '';
+    return get(this, 'user.password') || '';
   }),
 
   strength: computed('password', function() {
-    let password = this.get('password') || '';
-    return strength(password);
+    let passwordStrength = get(this, 'passwordStrength');
+    return passwordStrength.strengthSync(get(this, 'password'));
   }),
 
   strengthPercentage: computed('isValid', 'passwordLength', 'strength', function() {
-    let isValid = this.get('isValid');
+    let isValid = get(this, 'isValid');
     let percentage = 0;
 
     if (isValid) {
-      let score = this.get('strength.score');
+      let score = get(this, 'strength.score');
       percentage = (score / 4) * 100;
     } else {
-      percentage = this.get('passwordLength');
+      percentage = get(this, 'passwordLength');
     }
 
     return percentage;

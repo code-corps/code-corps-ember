@@ -1,4 +1,5 @@
 import progressBar from 'code-corps-ember/tests/pages/components/progress-bar';
+import projectSwitcher from 'code-corps-ember/tests/pages/components/project-switcher';
 import userMenu from 'code-corps-ember/tests/pages/components/user-menu';
 
 export default {
@@ -11,6 +12,8 @@ export default {
   conversationsLink: {
     scope: '[data-test-conversations-link]'
   },
+
+  projectSwitcher,
 
   projectsLink: {
     scope: '.header-navigation__options li a:contains("Projects")'

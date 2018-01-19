@@ -26,7 +26,13 @@ test('Successful signup', function(assert) {
   signupPage.visit();
 
   andThen(function() {
-    signupPage.form.username('username').email('email@example.com').password('password').save();
+    signupPage.form
+      .username('username')
+      .keydownUsername()
+      .email('email@example.com')
+      .keydownEmail()
+      .password('password')
+      .save();
   });
 
   let signUpDone = assert.async();

@@ -160,11 +160,8 @@
   }
 
   .fa {
-    &:first-child {
-      padding-right: 5px;
-    }
     &:last-child {
-      padding-left: 5px;
+      padding-right: 5px;
     }
   }
 
