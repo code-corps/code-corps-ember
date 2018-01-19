@@ -104,3 +104,24 @@ test('Logged in, from user menu can log out', function(assert) {
     assert.ok(indexPage.navMenu.signInLink.isVisible, 'Page contains sign in link.');
   });
 });
+
+test('Logged in, user with organizations can navigate to projects', function(assert) {
+  assert.expect(1);
+
+  let user = server.create('user');
+  let organization = server.create('organization', { owner: user });
+  let project = server.create('project', { organization });
+  server.create('project-user', { project, role: 'owner', user });
+  authenticateSession(this.application, { user_id: user.id });
+
+  indexPage.visit();
+  andThen(function() {
+    indexPage.navMenu.projectSwitcher.menuLink.click();
+  });
+  andThen(function() {
+    indexPage.navMenu.projectSwitcher.projectSwitcherMenu.menu.projects(0).icon.click();
+  });
+  andThen(function() {
+    assert.equal(currentRouteName(), 'project.index');
+  });
+});

@@ -5,7 +5,8 @@ moduleFor('route:signup', 'Unit | Route | signup', {
     'service:metrics',
     'service:router-scroll',
     'service:scheduler',
-    'service:session'
+    'service:session',
+    'service:site-footer'
   ]
 });
 

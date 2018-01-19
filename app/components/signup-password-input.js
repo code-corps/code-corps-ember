@@ -19,7 +19,7 @@ export default Component.extend({
   suggestions: alias('strength.feedback.suggestions'),
 
   password: computed('user.password', function() {
-    return this.get('user.password') || '';
+    return get(this, 'user.password') || '';
   }),
 
   strength: computed('password', function() {
@@ -28,14 +28,14 @@ export default Component.extend({
   }),
 
   strengthPercentage: computed('isValid', 'passwordLength', 'strength', function() {
-    let isValid = this.get('isValid');
+    let isValid = get(this, 'isValid');
     let percentage = 0;
 
     if (isValid) {
-      let score = this.get('strength.score');
+      let score = get(this, 'strength.score');
       percentage = (score / 4) * 100;
     } else {
-      percentage = this.get('passwordLength');
+      percentage = get(this, 'passwordLength');
     }
 
     return percentage;

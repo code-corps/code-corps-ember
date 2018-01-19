@@ -1,5 +1,6 @@
-import { fillable, is, isVisible, triggerable } from 'ember-cli-page-object';
+import { fillable, is, isVisible } from 'ember-cli-page-object';
 import { clickable } from 'code-corps-ember/tests/pages/helpers/clickable-native';
+import { triggerKeyDown } from 'ember-keyboard';
 
 export default {
   scope: '.github__repo-disconnect-confirm-modal',
@@ -19,7 +20,9 @@ export default {
       isDisabled: is(':disabled')
     },
 
-    hitEscape: triggerable('keydown', '', { eventProperties: { keyCode: 27 } }),
+    hitEscape() {
+      triggerKeyDown('Escape');
+    },
 
     input: {
       scope: 'input',

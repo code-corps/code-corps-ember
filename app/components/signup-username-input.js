@@ -184,6 +184,13 @@ export default Component.extend({
     return get(this, 'cachedUsername') === get(this, 'username');
   }),
 
+  validateUsername: function() {
+    once(this, '_check');
+    if (get(this, 'isNotSameUsername')) {
+      set(this, 'isChecking', true);
+    }
+  }.observes('username'),
+
   /**
     Checks if the username is valid and available. Caches the username so that
     it doesn't have to request more than once.
@@ -220,22 +227,6 @@ export default Component.extend({
         username
       }
     });
-  },
-
-  actions: {
-
-    /**
-      Action that fires on key down. If the username is not the cached username,
-      it sets `isChecking` to true.
-
-      @method keyDown
-     */
-    keyDown() {
-      once(this, '_check');
-      if (get(this, 'isNotSameUsername')) {
-        set(this, 'isChecking', true);
-      }
-    }
   },
 
   _check() {

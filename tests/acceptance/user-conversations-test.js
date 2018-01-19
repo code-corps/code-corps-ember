@@ -59,12 +59,13 @@ test('User can view list of their own conversations', function(assert) {
 });
 
 test('User can view single conversations', function(assert) {
-  assert.expect(1);
+  assert.expect(5);
 
+  let store = this.application.__container__.lookup('service:store');
   let user = server.create('user');
   authenticateSession(this.application, { user_id: user.id });
 
-  server.create('conversation', { user });
+  server.create('conversation', { user }, 'withConversationParts');
 
   page.visit();
 
@@ -74,6 +75,14 @@ test('User can view single conversations', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'conversations.conversation');
+
+    let conversation = store.peekRecord('conversation', server.db.conversations[0].id);
+    let firstPart = conversation.get('sortedConversationParts').get('firstObject');
+    let lastPart = conversation.get('sortedConversationParts').get('lastObject');
+    assert.equal(page.conversationThread.conversationParts().count, 11, 'Message head and conversation parts rendered');
+    assert.equal(page.conversationThread.conversationParts(1).body.text, firstPart.get('body'), 'first conversation part is rendered correctly');
+    assert.equal(page.conversationThread.conversationParts(10).body.text, lastPart.get('body'), 'last conversation part is rendered correctly');
+    assert.ok(firstPart.get('insertedAt') < lastPart.get('insertedAt'), 'conversations are sorted correctly');
   });
 });
 
