@@ -15,8 +15,9 @@ export default Factory.extend({
       conversation.save();
     }
 
-    if (!conversation.message) {
-      conversation.message = server.create('message');
+    if (!conversation.message.project) {
+      conversation.message.project = server.create('message');
+      server.create('project');
       conversation.save();
     }
   },
