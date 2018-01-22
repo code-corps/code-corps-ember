@@ -2487,9 +2487,13 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-dotenv@^1.0.0, dotenv@^1.2.0:
+dotenv@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-1.2.0.tgz#7cd73e16e07f057c8072147a5bc3a8677f0ab5c6"
+
+dotenv@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
 ecc-jsbn@~0.1.1:
   version "0.1.1"
@@ -2804,12 +2808,13 @@ ember-cli-deploy@1.0.2:
     rsvp "^3.3.3"
     silent-error "^1.0.0"
 
-ember-cli-dotenv@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-dotenv/-/ember-cli-dotenv-1.2.0.tgz#11aab75ee3d98305799778dad58072fca97c57f1"
+ember-cli-dotenv@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-dotenv/-/ember-cli-dotenv-2.0.0.tgz#2c09fc5f8b60f690c9e02428b4f4e3f0b8c64421"
   dependencies:
-    dotenv "^1.0.0"
-    exists-sync "0.0.3"
+    dotenv "^4.0.0"
+    ember-cli-babel "^6.6.0"
+    minimist "^1.2.0"
 
 ember-cli-eslint@^4.2.1:
   version "4.2.2"
@@ -3299,13 +3304,6 @@ ember-data@~2.18.0:
     semver "^5.1.0"
     silent-error "^1.0.0"
 
-ember-deferred-content@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ember-deferred-content/-/ember-deferred-content-0.2.0.tgz#bc92bc99ff7b66c0bf10bedb343bff49a88d9956"
-  dependencies:
-    ember-cli-babel "^5.1.5"
-    ember-cli-htmlbars "^1.0.1"
-
 ember-disable-proxy-controllers@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ember-disable-proxy-controllers/-/ember-disable-proxy-controllers-1.0.1.tgz#1254eeec0ba025c24eb9e8da611afa7b38754281"
@@ -3426,9 +3424,9 @@ ember-keyboard@^3.0.0:
   dependencies:
     ember-cli-babel "^6.8.2"
 
-ember-link-action@^0.0.37:
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.37.tgz#22f2644ac19b7567f45e3da129f8c5ae808ea08c"
+ember-link-action@^0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.38.tgz#95398d6cabc4cf5012f4fef99323882a03bbc693"
   dependencies:
     ember-cli-babel "^6.8.2"
 
