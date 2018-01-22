@@ -58,9 +58,9 @@ test('Project admin can view list of conversations', async function(assert) {
     Date.now() - 1 * hour
   ];
 
-  server.create('conversation', { message:  message1, user, updatedAt: date1 });
-  server.create('conversation', { message:  message2, user, updatedAt: date2 });
-  server.create('conversation', { message:  message3, user, updatedAt: date3 });
+  server.create('conversation', 'withConversationParts', { partType: 'comment', message:  message1, user, updatedAt: date1 });
+  server.create('conversation', 'withConversationParts', { message:  message2, user, updatedAt: date2 });
+  server.create('conversation', 'withConversationParts', { message:  message3, user, updatedAt: date3 });
 
   await page.visit({
     organization: project.organization.slug,
