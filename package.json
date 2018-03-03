@@ -77,7 +77,7 @@
     "ember-macro-helpers": "^0.17.0",
     "ember-macro-test-helpers": "^3.1.0",
     "ember-metrics": "code-corps/ember-metrics#add-context-to-segment-adapter",
-    "ember-modal-dialog": "2.4.1",
+    "ember-modal-dialog": "3.0.0-beta.0",
     "ember-moment": "^7.4.1",
     "ember-multiselect-checkboxes": "^0.10.3",
     "ember-native-dom-helpers": "^0.6.1",
