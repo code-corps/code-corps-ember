@@ -99,18 +99,18 @@ test("it allows editing of project's categories for owners", function(assert) {
   settingsProfilePage.visit();
 
   andThen(() => {
-    assert.equal(settingsProfilePage.categoryCheckboxes.checkboxes(0).label.name, 'Technology', 'The checkbox renders');
-    settingsProfilePage.categoryCheckboxes.checkboxes(0).label.click();
+    assert.equal(settingsProfilePage.categoryCheckboxes.checkboxes.objectAt(0).label.name, 'Technology', 'The checkbox renders');
+    settingsProfilePage.categoryCheckboxes.checkboxes.objectAt(0).label.click();
   });
 
   andThen(() => {
-    assert.ok(settingsProfilePage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was added.');
+    assert.ok(settingsProfilePage.categoryCheckboxes.checkboxes.objectAt(0).isChecked, 'The category was added.');
     assert.ok(server.schema.userCategories.findBy(params), 'User category was created.');
-    settingsProfilePage.categoryCheckboxes.checkboxes(0).label.click();
+    settingsProfilePage.categoryCheckboxes.checkboxes.objectAt(0).label.click();
   });
 
   andThen(() => {
-    assert.notOk(settingsProfilePage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was removed.');
+    assert.notOk(settingsProfilePage.categoryCheckboxes.checkboxes.objectAt(0).isChecked, 'The category was removed.');
     assert.notOk(server.schema.userCategories.findBy(params), 'User category was deleted.');
   });
 });
@@ -130,16 +130,16 @@ test("it allows editing of user's skills", function(assert) {
   });
 
   andThen(() => {
-    assert.equal(settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    settingsProfilePage.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(settingsProfilePage.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    settingsProfilePage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(settingsProfilePage.userSkillsList(0).text, 'Ruby', 'The skill was added to the list');
-    settingsProfilePage.userSkillsList(0).click();
+    assert.equal(settingsProfilePage.userSkillsList.objectAt(0).text, 'Ruby', 'The skill was added to the list');
+    settingsProfilePage.userSkillsList.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(settingsProfilePage.userSkillsList().count, 0, 'The skill was removed from the list');
+    assert.equal(settingsProfilePage.userSkillsList.length, 0, 'The skill was removed from the list');
   });
 });

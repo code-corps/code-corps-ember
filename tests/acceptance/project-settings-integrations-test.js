@@ -75,31 +75,31 @@ test('it allows connecting and unconnecting installations', function(assert) {
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.unconnectedInstallations().count, 1,
+      projectIntegrationsPage.unconnectedInstallations.length, 1,
       'Installation is initially rendered as unconnected.'
     );
-    projectIntegrationsPage.unconnectedInstallations(0).connect.click();
+    projectIntegrationsPage.unconnectedInstallations.objectAt(0).connect.click();
   });
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.unconnectedInstallations().count, 0,
+      projectIntegrationsPage.unconnectedInstallations.length, 0,
       'Upon hitting "connect", installation is no longer rendered as unconnected.'
     );
     assert.equal(
-      projectIntegrationsPage.connectedInstallations().count, 1,
+      projectIntegrationsPage.connectedInstallations.length, 1,
       'Upon hitting "connect", installation is now rendered as connected.'
     );
-    projectIntegrationsPage.connectedInstallations(0).disconnect.click();
+    projectIntegrationsPage.connectedInstallations.objectAt(0).disconnect.click();
   });
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.connectedInstallations().count, 0,
+      projectIntegrationsPage.connectedInstallations.length, 0,
       'Upon hitting "disconnect", installation is no longer rendered as connected.'
     );
     assert.equal(
-      projectIntegrationsPage.unconnectedInstallations().count, 1,
+      projectIntegrationsPage.unconnectedInstallations.length, 1,
       'Upon hitting "disconnect", innstallation is now rendered as unconnected again.'
     );
   });
@@ -124,63 +124,63 @@ test('it allows connecting and unconnecting repos for a connected installation',
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.connectedInstallations().count, 1,
+      projectIntegrationsPage.connectedInstallations.length, 1,
       'Installation is initially rendered as connected.'
     );
 
-    projectIntegrationsPage.connectedInstallations(0).as((installation) => {
-      assert.equal(installation.githubRepos().count, 1, 'Github repo is rendered');
+    projectIntegrationsPage.connectedInstallations.objectAt(0).as((installation) => {
+      assert.equal(installation.githubRepos.length, 1, 'Github repo is rendered');
       assert.ok(
-        installation.githubRepos(0).actions.connect.isVisible,
+        installation.githubRepos.objectAt(0).actions.connect.isVisible,
         'Github repo is unconnected, so "connect" is visible'
       );
-      installation.githubRepos(0).actions.connect.click();
-      installation.githubRepos(0).callout.button.click();
+      installation.githubRepos.objectAt(0).actions.connect.click();
+      installation.githubRepos.objectAt(0).callout.button.click();
     });
   });
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.connectedInstallations().count, 1,
+      projectIntegrationsPage.connectedInstallations.length, 1,
       'Installation is still rendered as connected, after connecting repo.'
     );
 
-    projectIntegrationsPage.connectedInstallations(0).as((installation) => {
+    projectIntegrationsPage.connectedInstallations.objectAt(0).as((installation) => {
       assert.equal(
-        installation.githubRepos().count, 1,
+        installation.githubRepos.length, 1,
         'Github repo is still rendered after connecting it.'
       );
       assert.notOk(
-        installation.githubRepos(0).actions.connect.isVisible,
+        installation.githubRepos.objectAt(0).actions.connect.isVisible,
         'Github repo is now connected, so "connect" is no longer visible'
       );
       assert.ok(
-        installation.githubRepos(0).actions.edit.isVisible,
+        installation.githubRepos.objectAt(0).actions.edit.isVisible,
         'Github repo is now connected, so "edit" is visible'
       );
-      installation.githubRepos(0).click();
-      installation.githubRepos(0).callout.repoDisconnectConfirmModal.openButton.click();
-      installation.githubRepos(0).callout.repoDisconnectConfirmModal.modal.input.fillIn('code-corps-ember');
-      installation.githubRepos(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
+      installation.githubRepos.objectAt(0).click();
+      installation.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.openButton.click();
+      installation.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.modal.input.fillIn('code-corps-ember');
+      installation.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
     });
   });
 
   andThen(() => {
     assert.equal(
-      projectIntegrationsPage.connectedInstallations().count, 1,
+      projectIntegrationsPage.connectedInstallations.length, 1,
       'Installation is still rendered as connected, after disconnecting again.'
     );
 
-    projectIntegrationsPage.connectedInstallations(0).as((installation) => {
+    projectIntegrationsPage.connectedInstallations.objectAt(0).as((installation) => {
       assert.equal(
-        installation.githubRepos().count, 1,
+        installation.githubRepos.length, 1,
         'Github repo is still rendered, after disconnecting it again.');
       assert.ok(
-        installation.githubRepos(0).actions.connect.isVisible,
+        installation.githubRepos.objectAt(0).actions.connect.isVisible,
         'Github repo is now disconnected again, so "connect" is visible'
       );
       assert.notOk(
-        installation.githubRepos(0).actions.edit.isVisible,
+        installation.githubRepos.objectAt(0).actions.edit.isVisible,
         'Github repo is now disconnected again, so "edit" is no longer visible'
       );
     });

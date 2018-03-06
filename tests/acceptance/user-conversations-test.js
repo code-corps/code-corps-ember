@@ -37,11 +37,11 @@ test('User can view list of their own conversations', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.conversations().count, 3, 'Conversations are rendered');
+    assert.equal(page.conversations.length, 3, 'Conversations are rendered');
     let renderedTimeStampOrder = [
-      page.conversations(0).updatedAt.text,
-      page.conversations(1).updatedAt.text,
-      page.conversations(2).updatedAt.text
+      page.conversations.objectAt(0).updatedAt.text,
+      page.conversations.objectAt(1).updatedAt.text,
+      page.conversations.objectAt(2).updatedAt.text
     ];
 
     let expectedTimeStampOrder = [
@@ -70,7 +70,7 @@ test('User can view single conversations', function(assert) {
   page.visit();
 
   andThen(() => {
-    page.conversations(0).click();
+    page.conversations.objectAt(0).click();
   });
 
   andThen(() => {
@@ -79,9 +79,9 @@ test('User can view single conversations', function(assert) {
     let conversation = store.peekRecord('conversation', server.db.conversations[0].id);
     let firstPart = conversation.get('sortedConversationParts').get('firstObject');
     let lastPart = conversation.get('sortedConversationParts').get('lastObject');
-    assert.equal(page.conversationThread.conversationParts().count, 11, 'Message head and conversation parts rendered');
-    assert.equal(page.conversationThread.conversationParts(1).body.text, firstPart.get('body'), 'first conversation part is rendered correctly');
-    assert.equal(page.conversationThread.conversationParts(10).body.text, lastPart.get('body'), 'last conversation part is rendered correctly');
+    assert.equal(page.conversationThread.conversationParts.length, 11, 'Message head and conversation parts rendered');
+    assert.equal(page.conversationThread.conversationParts.objectAt(1).body.text, firstPart.get('body'), 'first conversation part is rendered correctly');
+    assert.equal(page.conversationThread.conversationParts.objectAt(10).body.text, lastPart.get('body'), 'last conversation part is rendered correctly');
     assert.ok(firstPart.get('insertedAt') < lastPart.get('insertedAt'), 'conversations are sorted correctly');
   });
 });
@@ -97,16 +97,16 @@ test('System is notified of new conversation part', function(assert) {
   page.visit();
 
   andThen(() => {
-    page.conversations(0).click();
+    page.conversations.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 1, 'Just the message head is rendered.');
+    assert.equal(page.conversationThread.conversationParts.length, 1, 'Just the message head is rendered.');
     server.create('conversation-part', { conversation });
   });
 
   andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 1, 'No notification yet, so new part was not rendered.');
+    assert.equal(page.conversationThread.conversationParts.length, 1, 'No notification yet, so new part was not rendered.');
     let conversationChannelService = this.application.__container__.lookup('service:conversation-channel');
     let socket = get(conversationChannelService, 'socket.socket');
     let [channel] = socket.channels;
@@ -114,7 +114,7 @@ test('System is notified of new conversation part', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 2, 'Notification was sent. New part is rendered.');
+    assert.equal(page.conversationThread.conversationParts.length, 2, 'Notification was sent. New part is rendered.');
   });
 });
 
@@ -129,7 +129,7 @@ test('User can post to a conversation', function(assert) {
   page.visit();
 
   andThen(() => {
-    page.conversations(0).click();
+    page.conversations.objectAt(0).click();
   });
 
   andThen(() => {

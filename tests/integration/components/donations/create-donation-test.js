@@ -7,12 +7,6 @@ import createDonationComponent from '../../../pages/components/donations/create-
 
 let page = PageObject.create(createDonationComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
-  `);
-}
-
 moduleForComponent('donations/create-donation', 'Integration | Component | donations/create donation', {
   integration: true,
   beforeEach() {
@@ -28,7 +22,9 @@ moduleForComponent('donations/create-donation', 'Integration | Component | donat
 test('it renders properly', function(assert) {
   assert.expect(6);
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   assert.ok(page.setTo10.isRendered, 'Button for preset amount of 10 is rendered.');
   assert.ok(page.setTo15.isRendered, 'Button for preset amount of 15 is rendered.');
@@ -41,7 +37,9 @@ test('it renders properly', function(assert) {
 test('unsetting the input value resets to the fallback amount', function(assert) {
   assert.expect(2);
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   page.setTo10.clickButton();
   page.customAmount(12.5);
@@ -55,7 +53,9 @@ test('unsetting the input value resets to the fallback amount', function(assert)
 test('preset amount buttons unset the input value', function(assert) {
   assert.expect(1);
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   page.setTo10.clickButton();
   assert.equal(page.customAmountValue, '', 'The custom value was unset.');
@@ -68,7 +68,9 @@ test('clicking "continue" calls action with preset amount as argument', function
     assert.equal(amount, 15, 'Proper amount was sent via action.');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   page.setTo15.clickButton();
   page.clickContinue();
@@ -81,7 +83,9 @@ test('clicking "continue" calls action with custom amount as argument', function
     assert.equal(amount, 22, 'Proper amount was sent via action.');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   page.customAmount(22);
   page.clickContinue();
@@ -90,7 +94,9 @@ test('clicking "continue" calls action with custom amount as argument', function
 test('buttons do not activate when custom amount is set to preset value', function(assert) {
   assert.expect(1);
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   page.customAmount(50);
   assert.ok(page.setTo50.isActive, 'Related button should be active.');
@@ -105,7 +111,7 @@ test('calls action when custom amount changes', function(assert) {
     assert.equal(changedAmount, filledInAmount, 'The correct amount was sent.');
   });
 
-  page.render(hbs`
+  this.render(hbs`
     {{donations/create-donation amount=amount continue=onContinue onAmountChanged=onAmountChanged}}
   `);
 
@@ -115,7 +121,9 @@ test('calls action when custom amount changes', function(assert) {
 test('preselects one of the buttons if amount is externally set to appropriate value.', function(assert) {
   assert.expect(16);
 
-  renderPage();
+  this.render(hbs`
+    {{donations/create-donation amount=amount continue=onContinue onAmountChanged=(action (mut amount))}}
+  `);
 
   [10, '10', 10.0, '10.0'].forEach((amount) => {
     run(() => set(this, 'amount', amount));

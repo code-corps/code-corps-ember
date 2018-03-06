@@ -11,16 +11,6 @@ function setHandler(context, submitHandler = function() {}) {
   context.set('submitHandler', submitHandler);
 }
 
-function renderPage() {
-  page.render(hbs`
-    {{payments/bank-account
-      isBusy=isBusy
-      stripeConnectAccount=stripeConnectAccount
-      submit=submitHandler
-    }}
-  `);
-}
-
 moduleForComponent('payments/bank-account', 'Integration | Component | payments/bank account', {
   integration: true,
   beforeEach() {
@@ -38,7 +28,13 @@ test('it renders correctly for "pending" status', function(assert) {
   let stripeConnectAccount = { bankAccountStatus: 'pending_requirement' };
   set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
 
   assert.ok(page.rendersPending, 'Component is rendered in pending status.');
 });
@@ -49,7 +45,13 @@ test('it renders correctly for "required" status', function(assert) {
   let stripeConnectAccount = { bankAccountStatus: 'required' };
   set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
 
   assert.ok(page.rendersRequired, 'Component is rendered in required mode.');
   assert.ok(page.rendersAccountNumberField, 'Renders the account number field.');
@@ -68,7 +70,13 @@ test('it renders correctly for "verified" status', function(assert) {
   };
   set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.equal(page.bankNameText, 'Wells Fargo', 'Renders bank account name.');
@@ -91,7 +99,14 @@ test('it sends properties with submit action', function(assert) {
     assert.deepEqual({ accountNumber, routingNumber }, input, 'Correct parameters were sent out with action.');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
+
   page.accountNumber(input.accountNumber)
     .routingNumber(input.routingNumber)
     .clickSubmit();
@@ -104,7 +119,13 @@ test('it disables controls when busy', function(assert) {
   set(this, 'isBusy', true);
   set(this, 'stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/bank-account
+      isBusy=isBusy
+      stripeConnectAccount=stripeConnectAccount
+      submit=submitHandler
+    }}
+  `);
 
   assert.ok(page.accountNumberFieldIsDisabled, 'Account number field is disabled when busy.');
   assert.ok(page.routingNumberFieldIsDisabled, 'Routing number field is disabled when buys.');

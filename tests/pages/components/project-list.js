@@ -6,13 +6,6 @@ import {
 
 export default {
   scope: '.project-list',
-
   isVisible: isVisible(),
-
-  items: collection({
-    itemScope: '.project-item',
-    item: {
-      href: attribute('href', 'a:eq(0)')
-    }
-  })
+  items: collection('.project-item', { href: attribute('href', 'a:eq(0)') })
 };

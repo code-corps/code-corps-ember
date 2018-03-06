@@ -4,12 +4,6 @@ import {
 
 export default {
   scope: '.project-card__project-users',
-
-  userCount: {
-    scope: '[data-test-count]'
-  },
-
-  users: collection({
-    itemScope: '[data-test-user]'
-  })
+  userCount: { scope: '[data-test-count]' },
+  users: collection('[data-test-user]')
 };

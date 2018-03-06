@@ -6,12 +6,6 @@ import donationAmountButtonComponent from '../../../pages/components/donations/d
 
 let page = PageObject.create(donationAmountButtonComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{donations/donation-amount-button presetAmount=presetAmount selected=selected}}
-  `);
-}
-
 moduleForComponent('donations/donation-amount-button', 'Integration | Component | donations/donation amount button', {
   integration: true,
   beforeEach() {
@@ -27,7 +21,7 @@ test('it renders preset value as part of button text', function(assert) {
 
   set(this, 'presetAmount', 5);
 
-  renderPage();
+  this.render(hbs`{{donations/donation-amount-button presetAmount=presetAmount selected=selected}}`);
 
   assert.equal(page.text, 'Donate $5', 'Value is rendered properly.');
 });
@@ -37,7 +31,7 @@ test('it shows as active if button is selected', function(assert) {
 
   set(this, 'selected', true);
 
-  renderPage();
+  this.render(hbs`{{donations/donation-amount-button presetAmount=presetAmount selected=selected}}`);
 
   assert.ok(page.isActive, 'Button is rendered as active');
 });
@@ -47,7 +41,7 @@ test('it shows as inactive if button is not selected', function(assert) {
 
   set(this, 'selected', false);
 
-  renderPage();
+  this.render(hbs`{{donations/donation-amount-button presetAmount=presetAmount selected=selected}}`);
 
   assert.ok(page.isInactive, 'Button is rendered as inActive');
 });

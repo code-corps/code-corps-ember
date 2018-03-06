@@ -16,25 +16,25 @@ moduleForComponent('progress-bar-container', 'Integration | Component | progress
 });
 
 test('it propagates the right width', function(assert) {
-  page.render(hbs`{{progress-bar-container percentage=100}}`);
+  this.render(hbs`{{progress-bar-container percentage=100}}`);
 
   assert.ok(page.progressBar.displaysPercentage(100));
 });
 
 test('it renders as animated', function(assert) {
-  page.render(hbs`{{progress-bar-container animated=true}}`);
+  this.render(hbs`{{progress-bar-container animated=true}}`);
 
   assert.ok(page.progressBar.isAnimated);
 });
 
 test('it renders without error by default', function(assert) {
-  page.render(hbs`{{progress-bar-container}}`);
+  this.render(hbs`{{progress-bar-container}}`);
 
   assert.notOk(page.progressBar.hasError);
 });
 
 test('it renders with error when passed in', function(assert) {
-  page.render(hbs`{{progress-bar-container error=true}}`);
+  this.render(hbs`{{progress-bar-container error=true}}`);
 
   assert.ok(page.progressBar.hasError);
 });

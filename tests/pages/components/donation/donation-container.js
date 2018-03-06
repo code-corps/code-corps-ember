@@ -20,10 +20,7 @@ export default {
   donationAmountText: text('.donation-container__amount'),
   paymentInformationText: text('.donation-container__information'),
 
-  cards: collection({
-    itemScope: '.card-item',
-    item: cardItem
-  }),
+  cards: collection('.card-item', cardItem),
 
   submitButtonIsVisible: isVisible('button'),
   submitButtonText: text('button'),

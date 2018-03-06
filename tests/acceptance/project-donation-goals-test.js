@@ -45,7 +45,7 @@ test('it renders existing donation goals', function(assert) {
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 3, 'All project donation goals are rendered');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 3, 'All project donation goals are rendered');
   });
 });
 
@@ -59,8 +59,8 @@ test('it sets up a new unsaved donation goal if there are no donation goals, whi
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.editedDonationGoals().count, 1, 'A single edited donation goal form is rendered');
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    assert.equal(projectSettingsDonationsPage.editedDonationGoals.length, 1, 'A single edited donation goal form is rendered');
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
 
     form.amount(200);
     form.description('Lorem ipsum');
@@ -68,7 +68,7 @@ test('it sets up a new unsaved donation goal if there are no donation goals, whi
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 1, 'A single donation goal is rendered.');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 1, 'A single donation goal is rendered.');
     assert.equal(server.schema.donationGoals.all().models.length, 1, 'Donation goal has been saved.');
     // mirage doesn't support custom transforms, so we search by cents amount
     assert.ok(server.schema.donationGoals.findBy({ amount: 20000, description: 'Lorem ipsum' }), 'Attributes have been saved properly');
@@ -87,7 +87,7 @@ test('it is possible to add a donation goal when donation goals already exists',
 
   andThen(() => {
     projectSettingsDonationsPage.clickAddNew();
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
 
     form.amount(200);
     form.description('Lorem ipsum');
@@ -95,7 +95,7 @@ test('it is possible to add a donation goal when donation goals already exists',
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 2, 'Both donation goals are rendered.');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 2, 'Both donation goals are rendered.');
     assert.equal(server.schema.donationGoals.all().models.length, 2, 'Donation goal has been saved.');
     // mirage doesn't support custom transforms, so we search by cents amount
     assert.ok(server.schema.donationGoals.findBy({ amount: 20000, description: 'Lorem ipsum' }), 'Attributes have been saved properly');
@@ -113,16 +113,16 @@ test('it allows editing of existing donation goals', function(assert) {
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    projectSettingsDonationsPage.donationGoals(0).clickEdit();
+    projectSettingsDonationsPage.donationGoals.objectAt(0).clickEdit();
 
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
     form.amount(200.50);
     form.description('Lorem ipsum');
     form.clickSave();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 1, 'A single donation goal is rendered.');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 1, 'A single donation goal is rendered.');
     assert.equal(server.schema.donationGoals.all().models.length, 1, 'Donation goal has been saved as update.');
     // mirage doesn't support custom transforms, so we search by cents amount
     assert.ok(server.schema.donationGoals.findBy({ amount: 20050, description: 'Lorem ipsum' }), 'Attributes have been saved properly');
@@ -142,12 +142,12 @@ test('cancelling edit of an unsaved new goal removes that goal from the list', f
   andThen(() => {
     projectSettingsDonationsPage.clickAddNew();
 
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
     form.clickCancel();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 1, 'New goal is not rendered anymore.');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 1, 'New goal is not rendered anymore.');
   });
 });
 
@@ -162,14 +162,14 @@ test('cancelling edit of an unsaved existing goal keeps that goal in the list', 
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    projectSettingsDonationsPage.donationGoals(0).clickEdit();
+    projectSettingsDonationsPage.donationGoals.objectAt(0).clickEdit();
 
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
     form.clickCancel();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.donationGoals().count, 1, 'Existing goal is still rendered.');
+    assert.equal(projectSettingsDonationsPage.donationGoals.length, 1, 'Existing goal is still rendered.');
   });
 });
 
@@ -256,16 +256,16 @@ test('it renders validation errors', function(assert) {
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
     form.clickSave();
   });
 
   andThen(() => {
-    let form = projectSettingsDonationsPage.editedDonationGoals(0);
+    let form = projectSettingsDonationsPage.editedDonationGoals.objectAt(0);
 
-    assert.equal(form.validationErrors().count, 2, 'Both validation errors are rendered.');
-    assert.equal(form.validationErrors(0).message, 'Amount is required');
-    assert.equal(form.validationErrors(1).message, 'Description is required');
+    assert.equal(form.validationErrors.length, 2, 'Both validation errors are rendered.');
+    assert.equal(form.validationErrors.objectAt(0).message, 'Amount is required');
+    assert.equal(form.validationErrors.objectAt(1).message, 'Description is required');
   });
 });
 
@@ -293,10 +293,10 @@ test('it renders other errors', function(assert) {
   projectSettingsDonationsPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(() => {
-    projectSettingsDonationsPage.editedDonationGoals(0).clickSave();
+    projectSettingsDonationsPage.editedDonationGoals.objectAt(0).clickSave();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsDonationsPage.errorFormatter.errors().count, 1, 'The error is displayed');
+    assert.equal(projectSettingsDonationsPage.errorFormatter.errors.length, 1, 'The error is displayed');
   });
 });

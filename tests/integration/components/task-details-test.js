@@ -68,7 +68,7 @@ test('it renders all the ui elements properly bound', function(assert) {
     }
   });
 
-  page.render(hbs`{{task-details task=task}}`);
+  this.render(hbs`{{task-details task=task}}`);
 
   assert.equal(page.commentBody.text, 'A body', 'Body is correctly bound and rendered');
   assert.ok(page.codeThemeSelector.isVisible);
@@ -83,7 +83,7 @@ test('the task body is rendered as unescaped html', function(assert) {
 
   this.set('task', mockTask);
 
-  page.render(hbs`{{task-details task=task}}`);
+  this.render(hbs`{{task-details task=task}}`);
   assert.ok(page.commentBody.hasStrongText, 'An html element within the body element is rendered unescaped');
 });
 
@@ -93,7 +93,7 @@ test('user can switch between view and edit mode for task body', function(assert
 
   stubService(this, 'mention-fetcher', mockMentionFetcher);
 
-  page.render(hbs`{{task-details task=task}}`);
+  this.render(hbs`{{task-details task=task}}`);
   assert.ok(page.edit.isVisible, 'The edit button is rendered');
 
   page.edit.click();
@@ -121,7 +121,7 @@ test('it saves', function(assert) {
     return RSVP.resolve(task);
   });
 
-  page.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
+  this.render(hbs`{{task-details task=task saveTask=(action 'route-save')}}`);
   assert.equal(page.commentBody.text, 'A body', 'The original body is correct');
 
   page.edit.click();
@@ -139,7 +139,7 @@ test('if the task body is null render the no description element', function(asse
 
   this.set('task', mockTask);
 
-  page.render(hbs`{{task-details task=task}}`);
+  this.render(hbs`{{task-details task=task}}`);
   assert.ok(page.nullCommentBody.isVisible, 'The message for no comment body is rendered');
 });
 
@@ -152,6 +152,6 @@ test('if the task body is not null do not render the no description element', fu
 
   this.set('task', mockTask);
 
-  page.render(hbs`{{task-details task=task}}`);
+  this.render(hbs`{{task-details task=task}}`);
   assert.notOk(page.nullCommentBody.isVisible, 'The message for no comment body is not rendered if there is data');
 });

@@ -7,12 +7,6 @@ import detailsFormComponent from 'code-corps-ember/tests/pages/components/paymen
 
 let page = PageObject.create(detailsFormComponent);
 
-function renderPage() {
-  page.render(
-    hbs`{{payments/funds-recipient/details-form stripeConnectAccount=stripeConnectAccount onSubmit=onSubmit}}`
-  );
-}
-
 moduleForComponent('payments/funds-recipient/details-form', 'Integration | Component | payments/funds recipient/details form', {
   integration: true,
   beforeEach() {
@@ -50,7 +44,9 @@ test('it keeps the business properties when submitting in business mode', functi
 
   this.set('stripeConnectAccount', account);
 
-  renderPage();
+  this.render(
+    hbs`{{payments/funds-recipient/details-form stripeConnectAccount=stripeConnectAccount onSubmit=onSubmit}}`
+  );
 
   page.selectCompany()
     .legalEntityBusinessName(account.legalEntityBusinessName)
@@ -99,7 +95,9 @@ test('it unsets the business properties when submitting in individual mode', fun
 
   this.set('stripeConnectAccount', account);
 
-  renderPage();
+  this.render(
+    hbs`{{payments/funds-recipient/details-form stripeConnectAccount=stripeConnectAccount onSubmit=onSubmit}}`
+  );
 
   page.selectIndividual()
     .legalEntityFirstName(account.legalEntityFirstName)

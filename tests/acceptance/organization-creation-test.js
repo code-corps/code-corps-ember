@@ -149,7 +149,7 @@ test('Creating an organization can fail with validation errors', function(assert
     page.organizationForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.organizationForm.errors().count, 4));
+  andThen(() => assert.equal(page.organizationForm.errors.length, 4));
 });
 
 test('Creating an organization can fail with an unknown error', function(assert) {
@@ -183,7 +183,7 @@ test('Creating an organization can fail with an unknown error', function(assert)
     page.organizationForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.flashMessages().count, 1, 'A flash was displayed'));
+  andThen(() => assert.equal(page.flashMessages.length, 1, 'A flash was displayed'));
 });
 
 test('A user with a valid invite can create an organization', function(assert) {

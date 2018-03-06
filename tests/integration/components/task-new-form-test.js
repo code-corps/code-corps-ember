@@ -1,4 +1,4 @@
-import { get, set, setProperties } from '@ember/object';
+import { get, setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { run } from '@ember/runloop';
@@ -9,18 +9,6 @@ import setupSession from 'ember-simple-auth/initializers/setup-session';
 import setupSessionService from 'ember-simple-auth/initializers/setup-session-service';
 
 let page = PageObject.create(taskNewFormComponent);
-
-function renderPage() {
-  page.render(hbs`
-    {{task-new-form
-      githubRepos=githubRepos
-      placeholder=placeholder
-      save=(action saveHandler task)
-      selectedRepo=selectedRepo
-      task=task
-    }}
-  `);
-}
 
 function setHandler(context, saveHandler = function() {}) {
   context.set('saveHandler', saveHandler);
@@ -42,16 +30,11 @@ moduleForComponent('task-new-form', 'Integration | Component | task new form', {
 test('it renders proper ui elements, properly bound', function(assert) {
   assert.expect(3);
 
-  let task = {
-    title: 'A task',
-    markdown: 'A body'
-  };
-
+  let task = { title: 'A task', markdown: 'A body' };
   let placeholder = 'Test placeholder';
+  setProperties(this, { placeholder, task, onSave: () => {} });
 
-  setProperties(this, { placeholder, task });
-
-  renderPage();
+  this.render(hbs`{{task-new-form placeholder=placeholder save=onSave task=task}}`);
 
   assert.equal(page.title.value, 'A task', 'Title is properly bound and rendered.');
   page.markdown.as((markdown) => {
@@ -66,14 +49,15 @@ test('it triggers an action when the task is saved', function(assert) {
   let taskList = { id: 1, inbox: true, name: 'Inbox' };
   let task = { id: 1, taskList };
 
-  set(this, 'task', task);
-  setHandler(this, (task) => {
+  function onSave(task) {
     assert.ok(true, 'Action has been called');
     assert.equal(task.id, 1, 'Task parameter has been passed in');
     assert.equal(task.taskList, taskList, 'Task list has been passed in');
-  });
+  }
 
-  renderPage();
+  setProperties(this, { task, onSave });
+
+  this.render(hbs`{{task-new-form save=(action onSave task) task=task}}`);
 
   page.saveButton.click();
 });
@@ -81,15 +65,18 @@ test('it triggers an action when the task is saved', function(assert) {
 test('it changes the selected repo when the select is changed', function(assert) {
   assert.expect(1);
 
+  stubService(this, 'current-user', { user: { githubId: '123' } });
+
   let [repo1, repo2] = [
     { name: 'Repo 1', id: 1 },
     { name: 'Repo 2', id: 2 }
   ];
 
-  set(this, 'githubRepos', [repo1, repo2]);
-  stubService(this, 'current-user', { user: { githubId: '123' } });
+  let githubRepos = [repo1, repo2];
 
-  renderPage();
+  setProperties(this, { githubRepos, onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave selectedRepo=selectedRepo}}`);
 
   run(() => page.selectGithubRepo.select.fillIn('Repo 1'));
   run(() => {
@@ -99,38 +86,56 @@ test('it changes the selected repo when the select is changed', function(assert)
 
 test('it does not render the github repo selection if there are no repos', function(assert) {
   assert.expect(1);
-  set(this, 'githubRepos', []);
-  renderPage();
+
+  setProperties(this, { githubRepos: [], onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave}}`);
+
   assert.notOk(page.selectGithubRepo.isVisible);
 });
 
 test('it does not render github repo selection if they are still loading', function(assert) {
   assert.expect(1);
-  set(this, 'githubRepos', { isLoading: true });
-  renderPage();
+
+  setProperties(this, { githubRepos: { isLoading: true }, onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave}}`);
+
   assert.notOk(page.selectGithubRepo.isVisible);
 });
 
 test('it renders the connect to github callout if there are repos and the user is not connected to github', function(assert) {
   assert.expect(1);
-  set(this, 'githubRepos', [{ id: 1 }]);
+
   stubService(this, 'current-user', { user: { githubId: null } });
-  renderPage();
+
+  setProperties(this, { githubRepos: [{ id: 1 }], onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave}}`);
+
   assert.ok(page.callout.isVisible);
 });
 
 test('it does not render the connect to github callout if there are repos and the user is connected to github', function(assert) {
   assert.expect(1);
-  set(this, 'githubRepos', [{ id: 1 }]);
+
   stubService(this, 'current-user', { user: { githubId: '123' } });
-  renderPage();
+
+  setProperties(this, { githubRepos: [{ id: 1 }], onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave}}`);
+
   assert.notOk(page.callout.isVisible);
 });
 
 test('it does not render the connect to github callout if there are no repos and the user is not connected to github', function(assert) {
   assert.expect(1);
-  set(this, 'githubRepos', []);
+
   stubService(this, 'current-user', { user: { githubId: null } });
-  renderPage();
+
+  setProperties(this, { githubRepos: [], onSave: () => {} });
+
+  this.render(hbs`{{task-new-form githubRepos=githubRepos save=onSave}}`);
+
   assert.notOk(page.callout.isVisible);
 });

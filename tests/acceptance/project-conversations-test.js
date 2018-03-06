@@ -67,11 +67,11 @@ test('Project admin can view list of conversations', async function(assert) {
     project: project.slug
   });
 
-  assert.equal(page.conversations().count, 3, 'Conversations are rendered');
+  assert.equal(page.conversations.length, 3, 'Conversations are rendered');
   let renderedTimeStampOrder = [
-    page.conversations(0).updatedAt.text,
-    page.conversations(1).updatedAt.text,
-    page.conversations(2).updatedAt.text
+    page.conversations.objectAt(0).updatedAt.text,
+    page.conversations.objectAt(1).updatedAt.text,
+    page.conversations.objectAt(2).updatedAt.text
   ];
 
   let expectedTimeStampOrder = [
@@ -101,7 +101,7 @@ test('Project admin can view single conversations', async function(assert) {
     project: project.slug
   });
 
-  await page.conversations(1).click();
+  await page.conversations.objectAt(1).click();
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.conversations.conversation');
@@ -109,9 +109,9 @@ test('Project admin can view single conversations', async function(assert) {
     let conversation = store.peekRecord('conversation', server.db.conversations[1].id);
     let firstPart = conversation.get('sortedConversationParts').get('firstObject');
     let lastPart = conversation.get('sortedConversationParts').get('lastObject');
-    assert.equal(page.conversationThread.conversationParts().count, 11, 'Message head and conversation parts rendered');
-    assert.equal(page.conversationThread.conversationParts(1).body.text, firstPart.get('body'), 'first conversation part is rendered correctly');
-    assert.equal(page.conversationThread.conversationParts(10).body.text, lastPart.get('body'), 'last conversation part is rendered correctly');
+    assert.equal(page.conversationThread.conversationParts.length, 11, 'Message head and conversation parts rendered');
+    assert.equal(page.conversationThread.conversationParts.objectAt(1).body.text, firstPart.get('body'), 'first conversation part is rendered correctly');
+    assert.equal(page.conversationThread.conversationParts.objectAt(10).body.text, lastPart.get('body'), 'last conversation part is rendered correctly');
     assert.ok(firstPart.get('insertedAt') < lastPart.get('insertedAt'), 'conversations are sorted correctly');
   });
 });
@@ -129,19 +129,19 @@ test('System is notified of new conversation part', async function(assert) {
     project: project.slug
   });
 
-  page.conversations(0).click();
+  page.conversations.objectAt(0).click();
 
-  assert.equal(page.conversationThread.conversationParts().count, 11, 'Just the message head and conversation parts is rendered.');
+  assert.equal(page.conversationThread.conversationParts.length, 11, 'Just the message head and conversation parts is rendered.');
   server.create('conversation-part', { conversation });
 
-  assert.equal(page.conversationThread.conversationParts().count, 11, 'No notification yet, so new part was not rendered.');
+  assert.equal(page.conversationThread.conversationParts.length, 11, 'No notification yet, so new part was not rendered.');
   let conversationChannelService = this.application.__container__.lookup('service:conversation-channel');
   let socket = get(conversationChannelService, 'socket.socket');
   let [channel] = socket.channels;
   channel.trigger('new:conversation-part', {});
 
   andThen(() => {
-    assert.equal(page.conversationThread.conversationParts().count, 12, 'Notification was sent. New part is rendered.');
+    assert.equal(page.conversationThread.conversationParts.length, 12, 'Notification was sent. New part is rendered.');
   });
 });
 
@@ -158,7 +158,7 @@ test('Project admin can post to a conversation', async function(assert) {
     project: project.slug
   });
 
-  page.conversations(0).click();
+  page.conversations.objectAt(0).click();
 
   page.conversationThread.conversationComposer.as((composer) => {
     composer.submittableTextarea.fillIn('Foo');
@@ -184,7 +184,7 @@ test('Project admin can close a conversation', async function(assert) {
     project: project.slug
   });
 
-  await page.conversations(0).closeButton.click();
+  await page.conversations.objectAt(0).closeButton.click();
 
   assert.equal(server.schema.conversations.first().status, 'closed', 'Conversation was closed.');
 });
@@ -205,10 +205,10 @@ test('Project admin can reopen a conversation', async function(assert) {
 
   await page.statusSelect.openButton.click();
   await page.statusSelect.closedLink.click();
-  await page.conversations(0).reopenButton.click();
+  await page.conversations.objectAt(0).reopenButton.click();
   await page.statusSelect.closedButton.click();
   await page.statusSelect.openLink.click();
 
-  assert.ok(page.conversations(0).isVisible, 'The conversation is in the open list.');
+  assert.ok(page.conversations.objectAt(0).isVisible, 'The conversation is in the open list.');
   assert.equal(server.schema.conversations.first().status, 'open', 'Conversation was reopened.');
 });

@@ -13,10 +13,6 @@ function setHandlers(context, toggleHandler = function() {}) {
   context.set('toggleHandler', toggleHandler);
 }
 
-function renderPage() {
-  page.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
-}
-
 moduleForComponent('skill-list-item-link', 'Integration | Component | skill list item link', {
   integration: true,
   beforeEach() {
@@ -32,7 +28,7 @@ test('it renders correctly for skill', function(assert) {
   assert.expect(1);
 
   set(this, 'skill', { title: 'Ember.js' });
-  renderPage();
+  this.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
 
   assert.equal(page.skillTitle.text, 'Ember.js', 'The skill title renders');
 });
@@ -49,14 +45,14 @@ test('it toggles the action when clicked and authenticated', function(assert) {
     assert.deepEqual(skill, toggledSkill);
   }
   setHandlers(this, toggleHandler);
-  renderPage();
+  this.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
 
   page.click();
 });
 
 test('it does not have clicked or removed classes at first', function(assert) {
   assert.expect(2);
-  renderPage();
+  this.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
   assert.notOk(page.hasJustClicked, 'Does not have clicked class');
   assert.notOk(page.hasJustRemoved, 'Does not have removed class');
 });
@@ -65,7 +61,7 @@ test('it correctly adds and removes clicked class', function(assert) {
   assert.expect(2);
 
   stubService(this, 'session', mockSession);
-  renderPage();
+  this.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
 
   page.mouseenter();
   page.click();
@@ -95,7 +91,7 @@ test('it does not add removed class when unmatched', function(assert) {
 
   stubService(this, 'session', mockSession);
   set(this, 'matched', false);
-  renderPage();
+  this.render(hbs`{{skill-list-item-link skill=skill matched=matched toggleSkill=toggleHandler}}`);
 
   page.mouseenter();
 

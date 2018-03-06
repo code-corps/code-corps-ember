@@ -7,10 +7,6 @@ import component from 'code-corps-ember/tests/pages/components/signup-form';
 
 const page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`{{signup-form user=user}}`);
-}
-
 moduleForComponent('signup-form', 'Integration | Component | signup form', {
   integration: true,
   beforeEach() {
@@ -24,7 +20,7 @@ moduleForComponent('signup-form', 'Integration | Component | signup form', {
 test('it renders required ui elements', function(assert) {
   assert.expect(4);
 
-  renderPage();
+  this.render(hbs`{{signup-form user=user}}`);
 
   assert.ok(page.usernameInput.isVisible, 'The username field renders');
   assert.ok(page.emailInput.isVisible, 'The email field renders');
@@ -35,7 +31,7 @@ test('it renders required ui elements', function(assert) {
 test('renders different title if user is donating', function(assert) {
   assert.expect(2);
 
-  renderPage();
+  this.render(hbs`{{signup-form user=user}}`);
 
   let normalUser = { signUpContext: null };
   let donatingUser = { signUpContext: 'donation' };

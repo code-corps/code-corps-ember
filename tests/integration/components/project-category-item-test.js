@@ -15,10 +15,6 @@ let mockUserCategoriesService = {
   }
 };
 
-function renderPage() {
-  page.render(hbs`{{project-category-item category=category}}`);
-}
-
 moduleForComponent('project-category-item', 'Integration | Component | project category item', {
   integration: true,
   beforeEach() {
@@ -47,7 +43,8 @@ test('it works for unselected categories', function(assert) {
   };
 
   this.set('category', category);
-  renderPage();
+
+  this.render(hbs`{{project-category-item category=category}}`);
 
   assert.ok(page.linkIcon.classContains('technology'), 'Dynamic category class is properly bound.');
   assert.notOk(page.linkIcon.classContains('selected'), 'Icon is unselected.');
@@ -71,7 +68,8 @@ test('it works for selected categories', function(assert) {
   };
 
   this.set('category', category);
-  renderPage();
+
+  this.render(hbs`{{project-category-item category=category}}`);
 
   assert.ok(page.linkIcon.classContains('society'));
   assert.ok(page.linkIcon.classContains('selected'));

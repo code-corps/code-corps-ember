@@ -14,8 +14,6 @@ export default {
       return this;
     },
 
-    options: collection({
-      itemScope: 'option'
-    })
+    options: collection('option')
   }
 };

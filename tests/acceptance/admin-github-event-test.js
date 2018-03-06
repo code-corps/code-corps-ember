@@ -27,7 +27,7 @@ test('The page requires user to be admin', function(assert) {
   page.visit({ id: event.id });
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(page.flashErrors.length, 1, 'Flash error was rendered');
     assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
   });
 });
@@ -67,7 +67,7 @@ test('Displays all the logged events', function(assert) {
   });
 
   andThen(function() {
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
     assert.equal(page.status.text, 'reprocessing', 'The event status changes');
   });
 });

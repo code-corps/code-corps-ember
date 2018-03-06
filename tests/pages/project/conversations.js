@@ -6,10 +6,7 @@ import statusSelect from 'code-corps-ember/tests/pages/components/conversations/
 export default create({
   visit: visitable(':organization/:project/conversations'),
 
-  conversations: collection({
-    itemScope: '.conversation-list-item',
-    item: conversationListItem
-  }),
+  conversations: collection('.conversation-list-item', conversationListItem),
 
   conversationThread,
 

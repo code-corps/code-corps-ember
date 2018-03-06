@@ -54,22 +54,22 @@ test('it renders the skills sorted by match and then alphabetically', function(a
 
   assert.equal(page.listItemCount, 4, 'Renders the correct number of skills');
 
-  page.listItems(0).as((item) => {
+  page.listItems.objectAt(0).as((item) => {
     assert.equal(item.skillListItemSpan.text, 'HTML');
     assert.ok(item.skillListItemSpan.hasMatched);
   });
 
-  page.listItems(1).as((item) => {
+  page.listItems.objectAt(1).as((item) => {
     assert.equal(item.skillListItemSpan.text, 'Ember.js');
     assert.notOk(item.skillListItemSpan.hasMatched);
   });
 
-  page.listItems(2).as((item) => {
+  page.listItems.objectAt(2).as((item) => {
     assert.equal(item.skillListItemSpan.text, 'Rails');
     assert.notOk(item.skillListItemSpan.hasMatched);
   });
 
-  page.listItems(3).as((item) => {
+  page.listItems.objectAt(3).as((item) => {
     assert.equal(item.skillListItemSpan.text, 'Ruby');
     assert.notOk(item.skillListItemSpan.hasMatched);
   });

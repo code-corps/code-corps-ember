@@ -41,47 +41,31 @@ export default create({
 
   imageDrop,
 
-  popularSkillsList: collection({
-    scope: '[data-test-popular-skills-list]',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  popularSkillsList: collection('[data-test-popular-skills-list] button', {
+    text: text(),
+    click: clickable()
   }),
 
-  roleColumns: collection({
-    itemScope: '.expertise__column',
+  roleColumns: collection('.expertise__column', {
+    hasClass,
 
-    item: {
-      hasClass,
+    header: {
+      scope: 'h3',
+      title: text()
+    },
 
-      header: {
-        scope: 'h3',
-        title: text()
-      },
-
-      roles: collection({
-        itemScope: '.role-item',
-
-        item: {
-          button: {
-            scope: 'button',
-            text: text(),
-            hasClass
-          }
-        }
-      })
-    }
+    roles: collection('.role-item', {
+      button: {
+        scope: 'button',
+        text: text(),
+        hasClass
+      }
+    })
   }),
 
-  userSkillsList: collection({
-    scope: '[data-test-user-skills-list]',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  userSkillsList: collection('[data-test-user-skills-list] button', {
+    text: text(),
+    click: clickable()
   }),
 
   // select and manipulate .skills-typeahead and various site-chrome nodes to

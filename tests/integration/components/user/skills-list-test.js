@@ -35,11 +35,11 @@ test('it renders each skill in the list', function(assert) {
 
   this.set('user', user);
 
-  page.render(hbs`{{user/skills-list user=user}}`);
+  this.render(hbs`{{user/skills-list user=user}}`);
 
-  assert.equal(page.skills().count, 2);
-  assert.equal(page.skills(0).text, 'Ember.js');
-  assert.equal(page.skills(1).text, 'JavaScript');
+  assert.equal(page.skills.length, 2);
+  assert.equal(page.skills.objectAt(0).text, 'Ember.js');
+  assert.equal(page.skills.objectAt(1).text, 'JavaScript');
 });
 
 test('it renders the empty state when no skills', function(assert) {
@@ -52,7 +52,7 @@ test('it renders the empty state when no skills', function(assert) {
 
   this.set('user', user);
 
-  page.render(hbs`{{user/skills-list user=user}}`);
+  this.render(hbs`{{user/skills-list user=user}}`);
 
   assert.ok(page.emptyState.isVisible);
 });

@@ -12,16 +12,6 @@ function setHandler(context, submitHandler = function() {}) {
   context.set('submitHandler', submitHandler);
 }
 
-function renderPage() {
-  page.render(hbs`
-    {{payments/create-account
-      isBusy=isBusy
-      onCreateStripeConnectAccount=submitHandler
-      stripeConnectAccount=stripeConnectAccount
-    }}
-  `);
-}
-
 moduleForComponent('payments/create-account', 'Integration | Component | payments/create account', {
   integration: true,
   beforeEach() {
@@ -36,7 +26,15 @@ moduleForComponent('payments/create-account', 'Integration | Component | payment
 test('it renders correctly when there is no stripeConnectAccount', function(assert) {
   assert.expect(3);
   set(this, 'stripeConnectAccount', null);
-  renderPage();
+
+  this.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
+
   assert.ok(page.rendersHeader, 'Renders header');
   assert.ok(page.hasRequiredStatus, 'Is required');
   assert.ok(page.rendersSection, 'Renders section');
@@ -45,7 +43,15 @@ test('it renders correctly when there is no stripeConnectAccount', function(asse
 test('it renders correctly when there is a stripeConnectAccount', function(assert) {
   assert.expect(3);
   set(this, 'stripeConnectAccount', { id: 1 });
-  renderPage();
+
+  this.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
+
   assert.ok(page.rendersHeader, 'Renders header');
   assert.ok(page.hasVerifiedStatus, 'Is verified');
   assert.notOk(page.rendersSection, 'Does not render section');
@@ -54,7 +60,13 @@ test('it renders correctly when there is a stripeConnectAccount', function(asser
 test('it renders "Terms of Service" acceptance info', function(assert) {
   assert.expect(2);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
 
   // This is some pretty specific testing we have here, but I think, for legal purposes, it makes sense for tests to ensure
   // no one clears the element containing this text by accident.
@@ -77,7 +89,14 @@ test('it sends properties with submit action', function(assert) {
     assert.equal(diff, 0, 'The timestamp uses seconds and not milliseconds');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
+
   page.countrySelect.country.fillIn('US');
   page.clickSubmit();
 });
@@ -87,6 +106,13 @@ test('it disables controls when busy', function(assert) {
 
   set(this, 'isBusy', true);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/create-account
+      isBusy=isBusy
+      onCreateStripeConnectAccount=submitHandler
+      stripeConnectAccount=stripeConnectAccount
+    }}
+  `);
+
   assert.ok(page.submitButtonIsDisabled, 'Submit button is disabled when busy.');
 });

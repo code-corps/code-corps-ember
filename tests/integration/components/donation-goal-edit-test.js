@@ -28,7 +28,7 @@ moduleForComponent('donation-goal-edit', 'Integration | Component | donation goa
 test('it renders cancel button, when canCancel is true', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=cancelHandler save=saveHandler}}`);
+  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=cancelHandler save=saveHandler}}`);
 
   assert.ok(page.cancelButtonIsVisible);
 });
@@ -36,7 +36,7 @@ test('it renders cancel button, when canCancel is true', function(assert) {
 test('it does not render cancel button, when canCancel is false', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=false save=saveHandler}}`);
+  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=false save=saveHandler}}`);
 
   assert.notOk(page.cancelButtonIsVisible);
 });
@@ -52,7 +52,7 @@ test('it sends save action, with user input properties as argument, when save bu
 
   setHandlers(this, { saveHandler });
 
-  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
+  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal save=(action saveHandler donationGoal)}}`);
 
   page.fillInAmount(mockProperties.amount)
     .fillInDescription(mockProperties.description)
@@ -68,7 +68,7 @@ test('it sends cancel action, when cancel button is clicked', function(assert) {
 
   setHandlers(this, { cancelHandler });
 
-  page.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=(action cancelHandler donationGoal) save=saveHandler}}`);
+  this.render(hbs`{{donation-goal-edit donationGoal=donationGoal canCancel=true cancel=(action cancelHandler donationGoal) save=saveHandler}}`);
 
   page.clickCancel();
 });

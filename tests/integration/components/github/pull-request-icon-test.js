@@ -6,14 +6,6 @@ import { set } from '@ember/object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/pull-request-icon
-      githubPullRequest=githubPullRequest
-    }}
-  `);
-}
-
 moduleForComponent('github/pull-request-icon', 'Integration | Component | github/pull request icon', {
   integration: true,
   beforeEach() {
@@ -26,31 +18,43 @@ moduleForComponent('github/pull-request-icon', 'Integration | Component | github
 
 test('it renders a purple merge icon if pull request merged', function(assert) {
   assert.expect(2);
+
   set(this, 'githubPullRequest', { merged: true });
-  renderPage();
+
+  this.render(hbs`{{github/pull-request-icon githubPullRequest=githubPullRequest}}`);
+
   assert.ok(page.spriteIcon.svg.hasClass('github-merge-48'), 'The svg renders a merge icon.');
   assert.ok(page.spriteIcon.svg.hasClass('solid-purple'), 'The svg renders a purple icon.');
 });
 
 test('it renders a red PR icon if pull request closed', function(assert) {
   assert.expect(2);
+
   set(this, 'githubPullRequest', { merged: false, state: 'closed' });
-  renderPage();
+
+  this.render(hbs`{{github/pull-request-icon githubPullRequest=githubPullRequest}}`);
+
   assert.ok(page.spriteIcon.svg.hasClass('github-pull-request-48'), 'The svg renders a PR icon.');
   assert.ok(page.spriteIcon.svg.hasClass('solid-red'), 'The svg renders a red icon.');
 });
 
 test('it renders a green PR icon if pull request open', function(assert) {
   assert.expect(2);
+
   set(this, 'githubPullRequest', { merged: false, state: 'open' });
-  renderPage();
+
+  this.render(hbs`{{github/pull-request-icon githubPullRequest=githubPullRequest}}`);
+
   assert.ok(page.spriteIcon.svg.hasClass('github-pull-request-48'), 'The svg renders a PR icon.');
   assert.ok(page.spriteIcon.svg.hasClass('solid-green'), 'The svg renders a green icon.');
 });
 
 test('it renders a loading icon in all other cases', function(assert) {
   assert.expect(1);
+
   set(this, 'githubPullRequest', null);
-  renderPage();
+
+  this.render(hbs`{{github/pull-request-icon githubPullRequest=githubPullRequest}}`);
+
   assert.ok(page.loadingIcon.isVisible, 'The loading icon renders.');
 });

@@ -49,10 +49,10 @@ test('it sorts the list by id', function(assert) {
   });
 
   set(this, 'projects', mockProjects);
-  page.render(hbs`{{project-list projects=projects}}`);
+  this.render(hbs`{{project-list projects=projects}}`);
 
   for (let i = 0; i < 3; i++) {
     let id = i + 1;
-    assert.equal(page.items(i).text, `Project ${id}`);
+    assert.equal(page.items.objectAt(i).text, `Project ${id}`);
   }
 });

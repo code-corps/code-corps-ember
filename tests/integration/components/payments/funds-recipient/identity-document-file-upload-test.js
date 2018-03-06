@@ -58,10 +58,6 @@ moduleForComponent(
   }
 );
 
-function renderPage() {
-  page.render(template);
-}
-
 test('it renders', function(assert) {
   assert.expect(1);
   this.render(hbs`{{payments/funds-recipient/identity-document-file-upload}}`);
@@ -86,7 +82,7 @@ test('it sends uploadStarted, uploadProgress, uploadDone actions on valid upload
     done();
   });
 
-  renderPage();
+  this.render(template);
 
   // we specify timing, so that the underlying pretender instance will do
   // progress updates as well
@@ -105,7 +101,7 @@ test('it sends a validationError action if file is larger than 8mb', function(as
     done();
   });
 
-  renderPage();
+  this.render(template);
 
   page.selectFile(largePNG);
 });
@@ -121,7 +117,7 @@ test('it sends a validationError action if file not a jpg or a png', function(as
     done();
   });
 
-  renderPage();
+  this.render(template);
 
   this.server.post('https://uploads.stripe.com/v1/files', { id: 'ok' });
 
@@ -140,7 +136,7 @@ test('it sends uploadError when there is a server issue', function(assert) {
     done();
   });
 
-  renderPage();
+  this.render(template);
 
   // we specify timing, so that the underlying pretender instance will do
   // progress updates as well

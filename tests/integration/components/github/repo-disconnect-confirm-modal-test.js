@@ -6,16 +6,6 @@ import pageComponent from 'code-corps-ember/tests/pages/components/github/repo-d
 
 let page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/repo-disconnect-confirm-modal
-      disconnect=disconnect
-      githubRepo=githubRepo
-      showModal=showModal
-    }}
-  `);
-}
-
 moduleForComponent('github/repo-disconnect-confirm-modal', 'Integration | Component | github/repo disconnect confirm modal', {
   integration: true,
   beforeEach() {
@@ -30,7 +20,13 @@ moduleForComponent('github/repo-disconnect-confirm-modal', 'Integration | Compon
 test('when button is clicked, modal opens', function(assert) {
   assert.expect(2);
 
-  renderPage();
+  this.render(hbs`
+    {{github/repo-disconnect-confirm-modal
+      disconnect=disconnect
+      githubRepo=githubRepo
+      showModal=showModal
+    }}
+  `);
 
   assert.notOk(page.modal.isVisible, 'Modal is initially hidden.');
   page.openButton.click();
@@ -41,7 +37,14 @@ test('when clicking outside the modal, the modal closes', function(assert) {
   assert.expect(2);
 
   set(this, 'showModal', true);
-  renderPage();
+
+  this.render(hbs`
+    {{github/repo-disconnect-confirm-modal
+      disconnect=disconnect
+      githubRepo=githubRepo
+      showModal=showModal
+    }}
+  `);
 
   assert.ok(page.modal.isVisible, 'Modal is initially visible.');
   page.overlay.click();
@@ -52,7 +55,14 @@ test('when hitting escape, the modal closes', function(assert) {
   assert.expect(2);
 
   set(this, 'showModal', true);
-  renderPage();
+
+  this.render(hbs`
+    {{github/repo-disconnect-confirm-modal
+      disconnect=disconnect
+      githubRepo=githubRepo
+      showModal=showModal
+    }}
+  `);
 
   assert.ok(page.modal.isVisible, 'Modal is initially visible.');
   page.modal.hitEscape();
@@ -69,7 +79,14 @@ test('when the name in the input matches the repo name', function(assert) {
     assert.ok(true, 'The disconnect action was called.');
   });
   set(this, 'showModal', true);
-  renderPage();
+
+  this.render(hbs`
+    {{github/repo-disconnect-confirm-modal
+      disconnect=disconnect
+      githubRepo=githubRepo
+      showModal=showModal
+    }}
+  `);
 
   page.modal.input.fillIn(githubRepo.name);
   page.modal.disconnectButton.click();
@@ -85,7 +102,14 @@ test('when the name in the input does not match the repo name', function(assert)
     assert.ok(true, 'The disconnect action was called.');
   });
   set(this, 'showModal', true);
-  renderPage();
+
+  this.render(hbs`
+    {{github/repo-disconnect-confirm-modal
+      disconnect=disconnect
+      githubRepo=githubRepo
+      showModal=showModal
+    }}
+  `);
 
   page.modal.input.fillIn('Tes');
   assert.ok(page.modal.disconnectButton.isDisabled, 'The button is disabled.');

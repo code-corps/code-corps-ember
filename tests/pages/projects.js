@@ -7,9 +7,5 @@ import projectCard from './components/project-card';
 
 export default create({
   visit: visitable('/projects'),
-
-  projects: collection({
-    itemScope: '.project-card',
-    item: projectCard
-  })
+  projects: collection('.project-card', projectCard)
 });

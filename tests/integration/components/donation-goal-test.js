@@ -30,7 +30,7 @@ moduleForComponent('donation-goal', 'Integration | Component | donation goal', {
 test('it displays the donation goal info', function(assert) {
   assert.expect(2);
 
-  page.render(hbs`{{donation-goal donationGoal=donationGoal}}`);
+  this.render(hbs`{{donation-goal donationGoal=donationGoal}}`);
 
   assert.equal(page.amount.text, '$500.00', 'Correct amount is rendered');
   assert.equal(page.description.text, 'A test goal', 'Correct description is rendered');
@@ -39,7 +39,7 @@ test('it displays the donation goal info', function(assert) {
 test('it renders the edit link, if canEdit flag is set to true', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donation-goal canEdit=true edit=editHandler donationGoal=donationGoal}}`);
+  this.render(hbs`{{donation-goal canEdit=true edit=editHandler donationGoal=donationGoal}}`);
 
   assert.ok(page.editButton.isVisible);
 });
@@ -47,7 +47,7 @@ test('it renders the edit link, if canEdit flag is set to true', function(assert
 test('it does not render the edit link, if canEdit flag is set to false', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donation-goal canEdit=false donationGoal=donationGoal}}`);
+  this.render(hbs`{{donation-goal canEdit=false donationGoal=donationGoal}}`);
 
   assert.notOk(page.editButton.isVisible);
 });

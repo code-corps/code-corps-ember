@@ -8,15 +8,6 @@ import moment from 'moment';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-part-reopened
-      author=author
-      reopenedAt=reopenedAt
-    }}
-  `);
-}
-
 moduleForComponent('conversations/conversation-part-reopened', 'Integration | Component | conversations/conversation part reopened', {
   integration: true,
   beforeEach() {
@@ -41,7 +32,12 @@ test('if current user reopens message, "You reopened this" is rendered', functio
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
   set(this, 'reopenedAt', twoMinutesAgo);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-reopened
+      author=author
+      reopenedAt=reopenedAt
+    }}
+  `);
 
   let expectedText = `You reopened this ${twoMinutesAgoFriendly}`;
   assert.equal(page.reopenedAt.text, expectedText, 'The reopened at timestamp is rendered');
@@ -66,7 +62,12 @@ test('if someone other than the current user reopens the message, "Author.userna
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
   set(this, 'reopenedAt', twoMinutesAgo);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-reopened
+      author=author
+      reopenedAt=reopenedAt
+    }}
+  `);
 
   let expectedText = `${author.username} reopened this ${twoMinutesAgoFriendly}`;
   assert.equal(page.reopenedAt.text, expectedText, 'The reopened at timestamp is rendered');

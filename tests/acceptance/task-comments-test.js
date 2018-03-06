@@ -22,7 +22,7 @@ test('Task comments are displayed correctly', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(taskPage.taskCommentList.comments().count, 4, 'The correct number of task comments is rendered');
+    assert.equal(taskPage.taskCommentList.comments.length, 4, 'The correct number of task comments is rendered');
   });
 });
 
@@ -50,7 +50,7 @@ test('A comment can be added to a task', function(assert) {
 
   andThen(() => {
     assert.equal(server.schema.comments.all().models.length, 1, 'A new comment was created');
-    assert.equal(taskPage.taskCommentList.comments().count, 1, 'The comment is being rendered');
+    assert.equal(taskPage.taskCommentList.comments.length, 1, 'The comment is being rendered');
     let [comment] = server.schema.comments.all().models;
 
     assert.equal(comment.markdown, 'Test markdown', 'New comment has the correct markdown');
@@ -170,7 +170,7 @@ test('When comment creation fails due to validation, validation errors are displ
   });
 
   andThen(() => {
-    assert.equal(taskPage.createCommentForm.errors().count, 2, 'Validation errors are rendered');
+    assert.equal(taskPage.createCommentForm.errors.length, 2, 'Validation errors are rendered');
   });
 });
 
@@ -210,8 +210,8 @@ test('When comment creation fails due to non-validation issues, the error is dis
   });
 
   andThen(() => {
-    assert.equal(taskPage.errors().count, 1);
-    assert.equal(taskPage.errors(0).text, 'An unknown error: Something happened', 'The  error is rendered');
+    assert.equal(taskPage.errors.length, 1);
+    assert.equal(taskPage.errors.objectAt(0).text, 'An unknown error: Something happened', 'The  error is rendered');
   });
 });
 

@@ -21,7 +21,7 @@ test('it renders proper information', function(assert) {
 
   this.set('amount', 22.500);
 
-  page.render(hbs`{{donations/show-donation amount=amount}}`);
+  this.render(hbs`{{donations/show-donation amount=amount}}`);
 
   assert.equal(page.infoText, 'You pledged $22.50 each month.', 'Proper text is rendered.');
 });

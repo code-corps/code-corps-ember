@@ -11,8 +11,5 @@ export default create({
   // but it doesn't really seem that flexible for testing
   // this gives us a collection, so we can check count, as well as text for
   // each of them.
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  })
+  flashMessages: collection('.flash-messages--full-width .flash-message')
 });

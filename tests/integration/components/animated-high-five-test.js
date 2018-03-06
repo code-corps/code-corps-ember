@@ -16,7 +16,7 @@ moduleForComponent('animated-high-five', 'Integration | Component | animated hig
 });
 
 test('it changes the initial and follow on animation classes when clicked', function(assert) {
-  page.render(hbs`{{animated-high-five}}`);
+  this.render(hbs`{{animated-high-five}}`);
 
   assert.ok(page.isInitialAnimation);
   assert.notOk(page.isFollowOnAnimation);

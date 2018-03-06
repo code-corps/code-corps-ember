@@ -37,14 +37,14 @@ moduleForComponent('task-list-cards', 'Integration | Component | task list', {
 test('it renders all tasks', function(assert) {
   assert.expect(1);
   set(this, 'taskList', taskList);
-  page.render(hbs`{{task-list-cards taskList=taskList}}`);
-  assert.equal(page.taskCards().count, 2);
+  this.render(hbs`{{task-list-cards taskList=taskList}}`);
+  assert.equal(page.taskCards.length, 2);
 });
 
 test('it renders tasks in the correct order', function(assert) {
   assert.expect(2);
   set(this, 'taskList', taskList);
-  page.render(hbs`{{task-list-cards taskList=taskList}}`);
-  assert.equal(page.taskCards(0).number.text, '#2');
-  assert.equal(page.taskCards(1).number.text, '#1');
+  this.render(hbs`{{task-list-cards taskList=taskList}}`);
+  assert.equal(page.taskCards.objectAt(0).number.text, '#2');
+  assert.equal(page.taskCards.objectAt(1).number.text, '#1');
 });

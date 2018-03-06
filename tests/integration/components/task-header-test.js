@@ -28,7 +28,7 @@ moduleForComponent('task-header', 'Integration | Component | task header', {
 test('it renders all the ui elements properly bound', function(assert) {
   assert.expect(1);
   this.set('task', mockTask);
-  page.render(hbs`{{task-header task=task}}`);
+  this.render(hbs`{{task-header task=task}}`);
 
   assert.equal(page.taskTitle.title.text, 'A task #12', 'Title is correctly bound and rendered');
 });

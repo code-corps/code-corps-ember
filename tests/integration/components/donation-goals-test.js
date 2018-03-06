@@ -31,9 +31,9 @@ test('it renders loading goals when not loaded', function(assert) {
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
-  assert.equal(page.donationGoalLoadings().count, 1, 'Renders correct number of donation-goal-loading elements');
+  assert.equal(page.donationGoalLoadings.length, 1, 'Renders correct number of donation-goal-loading elements');
 });
 
 test('it renders the correct number of subcomponents', function(assert) {
@@ -47,9 +47,9 @@ test('it renders the correct number of subcomponents', function(assert) {
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
-  assert.equal(page.donationGoals().count, 3, 'Renders correct number of donation-goal components');
+  assert.equal(page.donationGoals.length, 3, 'Renders correct number of donation-goal components');
 });
 
 test('it renders the correct number of subcomponents in view or edit mode', function(assert) {
@@ -63,10 +63,10 @@ test('it renders the correct number of subcomponents in view or edit mode', func
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
-  assert.equal(page.donationGoals().count, 2, 'Renders correct number of donation-goal components');
-  assert.equal(page.donationGoalEdits().count, 1, 'Renders correct number of donation-goal-edit components');
+  assert.equal(page.donationGoals.length, 2, 'Renders correct number of donation-goal components');
+  assert.equal(page.donationGoalEdits.length, 1, 'Renders correct number of donation-goal-edit components');
 });
 
 test('it sends "cancel" action with donation goal as parameter when cancel button is clicked', function(assert) {
@@ -84,7 +84,7 @@ test('it sends "cancel" action with donation goal as parameter when cancel butto
 
   setHandlers(this, { cancelHandler });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
 
   page.cancel.click();
 });
@@ -103,9 +103,9 @@ test('it sends "edit" action with donation goal as parameter when clicked', func
   };
   setHandlers(this, { editHandler });
 
-  page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
-  page.donationGoals(0).click();
+  page.donationGoals.objectAt(0).click();
 });
 
 test('it sends "save" action with donation goal curried first, and values second when save button is clicked', function(assert) {
@@ -123,7 +123,7 @@ test('it sends "save" action with donation goal curried first, and values second
   };
   setHandlers(this, { saveHandler });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
 
   page.save.click();
 });
@@ -137,7 +137,7 @@ test('it does not allow cancelling an edited record if that record is the only o
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler project=project}}`);
 
   assert.notOk(page.cancel.isVisible);
 });
@@ -151,7 +151,7 @@ test('it allows cancelling an edited record if that record is the only one and n
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler save=saveHandler edit=editHandler project=project}}`);
 
   assert.ok(page.cancel.isVisible);
 });
@@ -166,7 +166,7 @@ test('it allows cancelling an edited record if that record is new, but there are
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
   assert.ok(page.cancel.isVisible);
 });
@@ -181,7 +181,7 @@ test('it only allows editing a single record at a time', function(assert) {
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
   assert.notOk(page.edit.isVisible);
 });
@@ -193,7 +193,7 @@ test('it does not allow adding a record if a record is being edited', function(a
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
   assert.notOk(page.add.isVisible);
 });
@@ -205,7 +205,7 @@ test('it does not allow adding a record if a record is being added', function(as
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
+  this.render(hbs`{{donation-goals cancel=cancelHandler edit=editHandler save=saveHandler project=project}}`);
 
   assert.notOk(page.add.isVisible);
 });
@@ -217,7 +217,7 @@ test('it allows adding a record if no record is being added or edited', function
 
   set(this, 'project', { donationGoals: mockGoals });
 
-  page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
   assert.ok(page.add.isVisible);
 });
@@ -235,7 +235,7 @@ test('it calls provided "add" action with project as parameter when add button i
   };
   setHandlers(this, { addHandler });
 
-  page.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
+  this.render(hbs`{{donation-goals add=addHandler edit=editHandler project=project}}`);
 
   page.add.click();
 });

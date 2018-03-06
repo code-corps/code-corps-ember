@@ -25,7 +25,7 @@ test('it renders all required elements for the 404 case', function(assert) {
   };
 
   this.set('model', error);
-  page.render(hbs`{{error-wrapper error=model}}`);
+  this.render(hbs`{{error-wrapper error=model}}`);
 
   assert.ok(page.has404Image, 'The 404 image renders');
   assert.equal(page.title, '404 Error', 'The title renders');
@@ -45,7 +45,7 @@ test('it renders all required elements for the 503 case', function(assert) {
   };
 
   this.set('model', error);
-  page.render(hbs`{{error-wrapper error=model}}`);
+  this.render(hbs`{{error-wrapper error=model}}`);
 
   assert.ok(page.hasMaintenanceIcon, 'The maintenance icon renders');
   assert.equal(page.title, 'Down for maintenance', 'The title renders');
@@ -65,7 +65,7 @@ test('it renders all required elements for the general error case', function(ass
   };
 
   this.set('model', error);
-  page.render(hbs`{{error-wrapper error=model}}`);
+  this.render(hbs`{{error-wrapper error=model}}`);
 
   assert.ok(page.hasServerErrorImage, 'The general error image renders');
   assert.equal(page.title, 'Server Error', 'The title renders');

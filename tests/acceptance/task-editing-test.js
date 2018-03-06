@@ -287,19 +287,19 @@ test('Skills can be assigned or unassigned to/from task', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(taskPage.skillsTypeahead.dropdown.inputItems().count, 1);
-    assert.equal(taskPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby');
-    taskPage.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(taskPage.skillsTypeahead.dropdown.inputItems.length, 1);
+    assert.equal(taskPage.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby');
+    taskPage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(taskPage.taskSkillsList().count, 1);
-    assert.equal(taskPage.taskSkillsList(0).text, 'Ruby');
-    taskPage.taskSkillsList(0).click();
+    assert.equal(taskPage.taskSkillsList.length, 1);
+    assert.equal(taskPage.taskSkillsList.objectAt(0).text, 'Ruby');
+    taskPage.taskSkillsList.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(taskPage.taskSkillsList().count, 0);
+    assert.equal(taskPage.taskSkillsList.length, 0);
     done();
   });
 });

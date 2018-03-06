@@ -15,8 +15,8 @@ test('It renders navigation properly', function(assert) {
   projectTasksIndexPage.visit({ organization: project.organization.slug, project: project.slug });
 
   andThen(function() {
-    assert.equal(projectTasksIndexPage.projectMenu.links(0).href, aboutURL, 'Link to about is properly rendered');
-    assert.equal(projectTasksIndexPage.projectMenu.links(1).href, tasksURL, 'Link to tasks is properly rendered');
+    assert.equal(projectTasksIndexPage.projectMenu.links.objectAt(0).href, aboutURL, 'Link to about is properly rendered');
+    assert.equal(projectTasksIndexPage.projectMenu.links.objectAt(1).href, tasksURL, 'Link to tasks is properly rendered');
   });
 });
 
@@ -44,17 +44,17 @@ test('Navigation works', function(assert) {
 
   andThen(function() {
     assert.equal(currentRouteName(), 'project.tasks.index');
-    assert.ok(projectTasksIndexPage.projectMenu.links(1).isActive, 'Tasks link is active');
-    projectTasksIndexPage.projectMenu.links(0).click();
+    assert.ok(projectTasksIndexPage.projectMenu.links.objectAt(1).isActive, 'Tasks link is active');
+    projectTasksIndexPage.projectMenu.links.objectAt(0).click();
   });
   andThen(() => {
     assert.equal(currentRouteName(), 'project.index');
-    assert.ok(projectTasksIndexPage.projectMenu.links(0).isActive, 'About link is active');
-    projectTasksIndexPage.projectMenu.links(1).click();
+    assert.ok(projectTasksIndexPage.projectMenu.links.objectAt(0).isActive, 'About link is active');
+    projectTasksIndexPage.projectMenu.links.objectAt(1).click();
   });
   andThen(() => {
     assert.equal(currentRouteName(), 'project.tasks.index');
-    assert.ok(projectTasksIndexPage.projectMenu.links(1).isActive, 'Tasks link is active');
+    assert.ok(projectTasksIndexPage.projectMenu.links.objectAt(1).isActive, 'Tasks link is active');
   });
 });
 

@@ -22,8 +22,8 @@ function setHandlers(context, {
   });
 }
 
-function renderPage() {
-  page.render(hbs`
+function renderPage(testContext) {
+  testContext.render(hbs`
     {{payments/account-setup
       isBusy=isBusy
       onBankAccountInformationSubmitted=onBankAccountInformationSubmitted
@@ -62,7 +62,7 @@ test('it works properly when account needs to be created', function(assert) {
   }
 
   setHandlers(this, { onCreateStripeConnectAccount });
-  renderPage();
+  renderPage(this);
 
   // ensure correct component is rendered
   assert.ok(page.rendersCreateAccount, 'Create account form is rendered');
@@ -81,7 +81,7 @@ test('it works properly when account needs fund recipient information', function
   }
 
   setHandlers(this, { onRecipientDetailsSubmitted });
-  renderPage();
+  renderPage(this);
 
   assert.ok(page.rendersFundsRecipientRequired, 'Funds recipient component is rendered.');
   assert.ok(page.fundsRecipient.rendersDetailsFormRequired, 'Funds recipient details subcomponent is rendered.');
@@ -101,7 +101,7 @@ test('it works properly when account needs a document', function(assert) {
   }
 
   setHandlers(this, { onVerificationDocumentSubmitted });
-  renderPage();
+  renderPage(this);
 
   assert.ok(page.rendersFundsRecipientVerifying, 'Funds recipient component is rendered in verifying state.');
   assert.ok(page.fundsRecipient.rendersVerificationDocumentRequired, 'Document form is rendered.');
@@ -126,7 +126,7 @@ test('it works properly when account needs personal id information', function(as
   }
 
   setHandlers(this, { onLegalEntityPersonalIdNumberSubmitted });
-  renderPage();
+  renderPage(this);
 
   assert.ok(page.rendersFundsRecipientVerifying, 'Funds recipinet component is rendered in verifying state.');
   assert.ok(page.fundsRecipient.rendersLegalEntityPersonalIdNumberRequired, 'Personal id number subcomponent is rendered in required state.');
@@ -155,7 +155,7 @@ test('it works properly when account needs bank account information', function(a
   }
 
   setHandlers(this, { onBankAccountInformationSubmitted });
-  renderPage();
+  renderPage(this);
 
   assert.ok(page.rendersFundsRecipientVerified, 'Funds recipient component is rendered in verified state.');
   assert.ok(page.rendersBankAccountRequired, 'Bank account component is rendered in required state.');
@@ -177,7 +177,7 @@ test('it works properly when account is fully verified', function(assert) {
     bankAccountStatus: 'verified'
   });
 
-  renderPage();
+  renderPage(this);
 
   assert.ok(page.rendersFundsRecipientVerified, 'Funds recipient component is rendered in verified state.');
   assert.ok(page.rendersBankAccountVerified, 'Bank account component is rendered in verified state.');

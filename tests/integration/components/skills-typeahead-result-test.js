@@ -41,7 +41,7 @@ test('it renders as selected with the highlighted string', function(assert) {
   set(this, 'skill', skill);
   set(this, 'query', query);
 
-  page.render(hbs`
+  this.render(hbs`
     {{skills-typeahead-result
       query=query
       skill=skill
@@ -51,9 +51,9 @@ test('it renders as selected with the highlighted string', function(assert) {
 
   assert.ok(page.listItemIsSelected);
 
-  assert.equal(page.highlightedStrings(0).text, 'Ru');
-  assert.equal(page.highlightedStrings(1).text, 'on');
-  assert.equal(page.highlightedStrings(2).text, 'R');
+  assert.equal(page.highlightedStrings.objectAt(0).text, 'Ru');
+  assert.equal(page.highlightedStrings.objectAt(1).text, 'on');
+  assert.equal(page.highlightedStrings.objectAt(2).text, 'R');
 });
 
 test('it sends the hover action on mouseEnter', function(assert) {
@@ -65,7 +65,7 @@ test('it sends the hover action on mouseEnter', function(assert) {
   this.on('hover', (hoveredSkill) => {
     assert.deepEqual(skill, hoveredSkill);
   });
-  page.render(hbs`
+  this.render(hbs`
     {{skills-typeahead-result
       hover="hover"
       query=query
@@ -86,7 +86,7 @@ test('it sends the selectSkill action on mouseDown', function(assert) {
     assert.ok(true);
   });
 
-  page.render(hbs`
+  this.render(hbs`
     {{skills-typeahead-result
       hover="hover"
       query=query

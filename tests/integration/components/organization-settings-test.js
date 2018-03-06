@@ -21,7 +21,7 @@ moduleForComponent('organization-settings', 'Integration | Component | organizat
 test('it renders properly', function(assert) {
   assert.expect(2);
 
-  page.render(hbs`{{organization-settings}}`);
+  this.render(hbs`{{organization-settings}}`);
 
   assert.ok(page.organizationHeader.isVisible);
   assert.ok(page.organizationMenu.isVisible);

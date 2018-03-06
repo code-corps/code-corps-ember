@@ -33,7 +33,7 @@ test('it renders form elements properly', function(assert) {
 
   set(this, 'user', user);
 
-  page.render(hbs`{{user-settings-form user=user}}`);
+  this.render(hbs`{{user-settings-form user=user}}`);
 
   assert.equal(page.biographyValue, 'A test user');
   assert.equal(page.firstNameValue, 'Test');
@@ -54,7 +54,7 @@ test('it calls save on user when save button is clicked', function(assert) {
 
   set(this, 'user', user);
 
-  page.render(hbs`{{user-settings-form user=user}}`);
+  this.render(hbs`{{user-settings-form user=user}}`);
 
   page.clickSave();
 

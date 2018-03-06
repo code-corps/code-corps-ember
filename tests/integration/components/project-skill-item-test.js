@@ -10,10 +10,6 @@ function setHandler(context, clickHandler = () => {}) {
   set(context, 'clickHandler', clickHandler);
 }
 
-function renderPage() {
-  page.render(hbs`{{project-skill-item skill=skill onClicked=clickHandler}}`);
-}
-
 moduleForComponent('project-skill-item', 'Integration | Component | project skill item', {
   integration: true,
   beforeEach() {
@@ -27,21 +23,28 @@ moduleForComponent('project-skill-item', 'Integration | Component | project skil
 
 test('it renders loading spinnner if skill is loading', function(assert) {
   assert.expect(2);
+
   set(this, 'skill', { isLoading: true, title: 'Test' });
-  renderPage();
+
+  this.render(hbs`{{project-skill-item skill=skill onClicked=clickHandler}}`);
+
   assert.ok(page.isLoading, 'Component is rendered as loading');
   assert.equal(page.text, '', 'Title is not rendered');
 });
 
 test('it renders skill title if skill is loaded', function(assert) {
   assert.expect(1);
+
   set(this, 'skill', { title: 'Test' });
-  renderPage();
+
+  this.render(hbs`{{project-skill-item skill=skill onClicked=clickHandler}}`);
+
   assert.equal(page.text, 'Test', 'Title is rendered');
 });
 
 test('it calls action on click', function(assert) {
   assert.expect(1);
+
   let mockSkill = { id: 'skill', title: 'Skill' };
   set(this, 'skill', mockSkill);
 
@@ -49,6 +52,7 @@ test('it calls action on click', function(assert) {
     assert.deepEqual(skill, mockSkill, 'The sent skill matches the assigned skill.');
   });
 
-  renderPage();
+  this.render(hbs`{{project-skill-item skill=skill onClicked=clickHandler}}`);
+
   page.click();
 });

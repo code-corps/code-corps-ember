@@ -26,10 +26,7 @@ export default {
     scope: '.dropdown-menu',
     resetScope: true,
 
-    inputItems: collection({
-      item: skillsTypeaheadResult,
-      itemScope: skillsTypeaheadResult.scope
-    }),
+    inputItems: collection(skillsTypeaheadResult.scope, skillsTypeaheadResult),
 
     mousedownSecondItem: triggerable('mousedown', 'li:eq(1)'),
     mouseenterSecondItem: triggerable('mouseenter', 'li:eq(1)')

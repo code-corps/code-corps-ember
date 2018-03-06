@@ -16,12 +16,7 @@ export default create({
   description: fillable('[name=description]'),
   clickSave: clickable('.save'),
 
-  successAlerts: collection({
-    scope: '.flash-messages--full-width .alert-success',
-    item: {
-      scope: 'p'
-    }
-  }),
+  successAlerts: collection('.flash-messages--full-width .alert-success', { scope: 'p' }),
 
   clickSettingsMenuItem: clickable('.organization-menu li a:contains("Settings")'),
 
@@ -49,12 +44,8 @@ export default create({
     scope: 'p.description'
   },
 
-  projectListItems: collection({
-    scope: '.project-list .project-item',
-    itemScope: 'h4 a',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  projectListItems: collection('.project-list .project-item h4 a', {
+    text: text(),
+    click: clickable()
   })
 });

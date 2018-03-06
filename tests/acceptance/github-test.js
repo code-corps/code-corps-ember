@@ -35,7 +35,7 @@ test('if state is invalid, goes back to ingtegrations page with a flash error', 
       'User was redirected back to integrations.'
     );
 
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
   });
 });
 
@@ -93,6 +93,6 @@ test('if connect request fails, redirects to integrations with a flash error', f
       'User was redirected to the integrations page.'
     );
 
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
   });
 });

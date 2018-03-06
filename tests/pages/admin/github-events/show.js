@@ -3,10 +3,7 @@ import { collection, create, visitable } from 'ember-cli-page-object';
 export default create({
   visit: visitable('/admin/github/events/:id'),
 
-  flashErrors: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message.alert-danger'
-  }),
+  flashErrors: collection('.flash-messages--full-width .flash-message.alert-danger'),
 
   error: {
     scope: '[data-test-error]'
@@ -20,10 +17,7 @@ export default create({
     scope: '[data-test-failure-reason]'
   },
 
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  }),
+  flashMessages: collection('.flash-messages--full-width .flash-message'),
 
   githubDeliveryId: {
     scope: '[data-test-github-delivery-id]'

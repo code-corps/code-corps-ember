@@ -6,9 +6,5 @@ import {
 
 export default create({
   visit: visitable('/admin'),
-
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  })
+  flashMessages: collection('.flash-messages--full-width .flash-message')
 });

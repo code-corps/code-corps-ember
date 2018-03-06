@@ -30,7 +30,7 @@ test('it renders form elements', function(assert) {
 
   set(this, 'organization', organization);
 
-  page.render(hbs`{{organization-settings-form organization=organization}}`);
+  this.render(hbs`{{organization-settings-form organization=organization}}`);
 
   assert.equal(page.name.value, 'Test Organization');
   assert.equal(page.description.value, 'A test organization');
@@ -47,7 +47,7 @@ test('it calls save on organization when save button is clicked', function(asser
 
   set(this, 'organization', organization);
 
-  page.render(hbs`{{organization-settings-form organization=organization}}`);
+  this.render(hbs`{{organization-settings-form organization=organization}}`);
 
   page.save.click();
 

@@ -49,7 +49,7 @@ test('it renders all required elements', function(assert) {
   let user = mockUser();
   set(this, 'user', user);
 
-  page.render(hbs`{{user-sidebar user=user}}`);
+  this.render(hbs`{{user-sidebar user=user}}`);
 
   assert.equal(page.name, 'Josh Smith', 'Their name renders');
   assert.equal(page.username, 'JoshSmith', 'Their username renders');
@@ -66,7 +66,7 @@ test('it does not show some details if blank', function(assert) {
   let user = {};
   set(this, 'user', user);
 
-  page.render(hbs`{{user-sidebar user=user}}`);
+  this.render(hbs`{{user-sidebar user=user}}`);
 
   assert.ok(page.biographyIsHidden);
   assert.ok(page.twitterHandleHidden);
@@ -81,7 +81,7 @@ test('it sets the name to username if name is blank', function(assert) {
   };
   set(this, 'user', user);
 
-  page.render(hbs`{{user-sidebar user=user}}`);
+  this.render(hbs`{{user-sidebar user=user}}`);
 
   assert.equal(page.name, 'joshsmith');
 });

@@ -19,7 +19,7 @@ moduleForComponent('settings-menu', 'Integration | Component | settings menu', {
 test('it renders correct links', function(assert) {
   assert.expect(2);
 
-  page.render(hbs`{{settings-menu}}`);
+  this.render(hbs`{{settings-menu}}`);
 
   assert.ok(page.profileLink.isVisible, 'Profile link is rendered.');
   assert.ok(page.integrationsLink.isVisible, 'Integrations link is rendered.');

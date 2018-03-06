@@ -7,14 +7,6 @@ import moment from 'moment';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-list-item-with-project
-      conversation=conversation
-    }}
-  `);
-}
-
 moduleForComponent('conversations/conversation-list-item-with-project', 'Integration | Component | conversations/conversation list item with project', {
   integration: true,
   beforeEach() {
@@ -44,7 +36,11 @@ test('it renders the conversation details', function(assert) {
 
   set(this, 'conversation', conversation);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-project
+      conversation=conversation
+    }}
+  `);
 
   assert.equal(page.project.photo.url, project.iconThumbUrl, 'The project icon renders');
   assert.equal(page.project.title.text, project.title, 'The project title renders');

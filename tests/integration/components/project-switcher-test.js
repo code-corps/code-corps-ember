@@ -5,10 +5,6 @@ import component from 'code-corps-ember/tests/pages/components/project-switcher'
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`{{project-switcher user=user}}`);
-}
-
 moduleForComponent('project-switcher', 'Integration | Component | project switcher', {
   integration: true,
   beforeEach() {
@@ -22,7 +18,7 @@ moduleForComponent('project-switcher', 'Integration | Component | project switch
 test('it hides and shows', async function(assert) {
   assert.expect(12);
 
-  renderPage();
+  this.render(hbs`{{project-switcher user=user}}`);
 
   assert.ok(page.hasHiddenClass, 'Has the hidden class by default.');
   assert.notOk(page.hasVisibleClass, 'Does not have the visible class by default.');

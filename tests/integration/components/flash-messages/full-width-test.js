@@ -18,7 +18,7 @@ moduleForComponent('flash-messages/full-width', 'Integration | Component | flash
 });
 
 test('it renders a normal success message', function(assert) {
-  page.render(hbs`{{flash-messages/full-width}}`);
+  this.render(hbs`{{flash-messages/full-width}}`);
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({

@@ -11,14 +11,6 @@ export default create({
   },
 
   installLink,
-
-  connectedInstallations: collection({
-    itemScope: '.github-app-installation.connected',
-    item: connectedInstallation
-  }),
-
-  unconnectedInstallations: collection({
-    itemScope: '.github-app-installation.unconnected',
-    item: unconnectedInstallation
-  })
+  connectedInstallations: collection('.github-app-installation.connected', connectedInstallation),
+  unconnectedInstallations: collection('.github-app-installation.unconnected', unconnectedInstallation)
 });

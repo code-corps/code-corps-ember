@@ -23,7 +23,7 @@ moduleForComponent('volunteer-headshot', 'Integration | Component | volunteer he
       userRoles
     });
     page.setContext(this);
-    page.render(hbs`{{volunteer-headshot volunteer=user}}`);
+    this.render(hbs`{{volunteer-headshot volunteer=user}}`);
   }
 });
 

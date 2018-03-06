@@ -31,7 +31,7 @@ test('it renders the correct UI elements', function(assert) {
     title: 'A project',
     description: 'A description'
   });
-  page.render(hbs`{{project-item project=project}}`);
+  this.render(hbs`{{project-item project=project}}`);
 
   assert.equal(page.icon.src, 'icon.png', 'The project icon is properly bound');
   assert.equal(page.title, 'A project', 'The project title is properly bound');

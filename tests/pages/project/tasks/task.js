@@ -35,9 +35,7 @@ export default create({
     }
   },
 
-  errors: collection({
-    itemScope: '.error'
-  }),
+  errors: collection('.error'),
 
   skillsTypeahead,
 
@@ -65,13 +63,9 @@ export default create({
     }
   },
 
-  taskSkillsList: collection({
-    scope: '.task-skills-list',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  taskSkillsList: collection('.task-skills-list button', {
+    text: text(),
+    click: clickable()
   }),
 
   taskTitle: {

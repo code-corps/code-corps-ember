@@ -14,17 +14,6 @@ import { Ability } from 'ember-can';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{project-user-role-modal
-      project=project
-      projectUser=projectUser
-      save=save
-      showModal=showModal
-    }}
-  `);
-}
-
 moduleForComponent('project-user-role-modal', 'Integration | Component | project user role modal', {
   integration: true,
   beforeEach() {
@@ -40,7 +29,14 @@ moduleForComponent('project-user-role-modal', 'Integration | Component | project
 test('it shows and hides', function(assert) {
   assert.expect(3);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assert.notOk(page.modal.isVisible, 'Modal is hidden');
   page.openButton.click();
@@ -52,7 +48,14 @@ test('it shows and hides', function(assert) {
 test('it renders a tooltip on the button', function(assert) {
   assert.expect(5);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assertTooltipNotRendered(assert);
 
@@ -84,7 +87,14 @@ test('it does not allow an owner to demote themselves', function(assert) {
   this.register('ability:project', Ability.extend({ canManage: true }));
   set(this, 'showModal', true);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assert.ok(page.modal.radioGroupOwner.adminCannotRemove.isVisible, 'Admin cannot remove text is visible');
   assert.ok(page.modal.radioGroupOwner.radioButton.isChecked, 'Admin radio button is checked');
@@ -111,7 +121,14 @@ test('it allows an owner to demote a different owner', function(assert) {
   this.register('ability:project', Ability.extend({ canManage: true }));
   set(this, 'showModal', true);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assert.notOk(page.modal.radioGroupOwner.adminCannotRemove.isVisible, 'Admin cannot remove text is hidden');
   assert.ok(page.modal.radioGroupOwner.radioButton.isChecked, 'Admin radio button is checked');
@@ -138,7 +155,14 @@ test('it changes the role when the radio buttons are selected', function(assert)
   this.register('ability:project', Ability.extend({ canManage: true }));
   set(this, 'showModal', true);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assert.notOk(page.modal.radioGroupAdmin.radioButton.isChecked);
   assert.ok(page.modal.radioGroupContributor.radioButton.isChecked);
@@ -163,7 +187,14 @@ test('it does not show owner option when cannot manage', function(assert) {
   this.register('ability:project', Ability.extend({ canManage: false }));
   set(this, 'showModal', true);
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   assert.notOk(page.modal.radioGroupOwner.isVisible);
 });
@@ -188,7 +219,14 @@ test('it sends the project user on save', function(assert) {
     assert.deepEqual(r, 'admin');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{project-user-role-modal
+      project=project
+      projectUser=projectUser
+      save=save
+      showModal=showModal
+    }}
+  `);
 
   page.modal.radioGroupAdmin.radioButton.click();
   page.modal.save();

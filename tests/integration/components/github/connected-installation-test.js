@@ -6,18 +6,6 @@ import component from 'code-corps-ember/tests/pages/components/github/connected-
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/connected-installation
-      disconnect=(action disconnect)
-      connectRepo=(action connectRepo)
-      disconnectRepo=(action disconnectRepo)
-      organizationGithubAppInstallation=organizationGithubAppInstallation
-      project=project
-    }}
-  `);
-}
-
 function setHandlers(context, {
   disconnect = () => {},
   connectRepo = () => {},
@@ -64,17 +52,26 @@ test('renders correct elements for provided github app installation', function(a
   assert.expect(7);
 
   setProperties(this, { organizationGithubAppInstallation, project });
-  renderPage();
+
+  this.render(hbs`
+    {{github/connected-installation
+      disconnect=(action disconnect)
+      connectRepo=(action connectRepo)
+      disconnectRepo=(action disconnectRepo)
+      organizationGithubAppInstallation=organizationGithubAppInstallation
+      project=project
+    }}
+  `);
 
   assert.ok(page.avatar.url.indexOf('foo-url') > -1, 'Avatar url is rendered.');
   assert.equal(page.login.text, 'foo-login', 'Account login is rendered.');
   assert.ok(page.disconnect.text.indexOf(organization.name, 'Organization name is rendered on button.') > -1);
 
-  assert.equal(page.githubRepos().count, 3, 'All repos are rendered.');
+  assert.equal(page.githubRepos.length, 3, 'All repos are rendered.');
 
-  assert.equal(page.githubRepos(0).name.text, 'Connected Repo');
-  assert.equal(page.githubRepos(1).name.text, 'Unconnected Repo');
-  assert.ok(page.githubRepos(2).loading.isVisible, 'Repo is in loading state.');
+  assert.equal(page.githubRepos.objectAt(0).name.text, 'Connected Repo');
+  assert.equal(page.githubRepos.objectAt(1).name.text, 'Unconnected Repo');
+  assert.ok(page.githubRepos.objectAt(2).loading.isVisible, 'Repo is in loading state.');
 });
 
 test('triggers/passes out all actions', function(assert) {
@@ -95,13 +92,21 @@ test('triggers/passes out all actions', function(assert) {
     }
   });
 
-  renderPage();
+  this.render(hbs`
+    {{github/connected-installation
+      disconnect=(action disconnect)
+      connectRepo=(action connectRepo)
+      disconnectRepo=(action disconnectRepo)
+      organizationGithubAppInstallation=organizationGithubAppInstallation
+      project=project
+    }}
+  `);
 
-  page.githubRepos(0).click();
-  page.githubRepos(0).callout.repoDisconnectConfirmModal.openButton.click();
-  page.githubRepos(0).callout.repoDisconnectConfirmModal.modal.input.fillIn(connectedRepo.name);
-  page.githubRepos(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
-  page.githubRepos(1).click();
-  page.githubRepos(1).callout.button.click();
+  page.githubRepos.objectAt(0).click();
+  page.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.openButton.click();
+  page.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.modal.input.fillIn(connectedRepo.name);
+  page.githubRepos.objectAt(0).callout.repoDisconnectConfirmModal.modal.disconnectButton.click();
+  page.githubRepos.objectAt(1).click();
+  page.githubRepos.objectAt(1).callout.button.click();
   page.disconnect.click();
 });

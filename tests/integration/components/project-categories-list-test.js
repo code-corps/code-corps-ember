@@ -7,10 +7,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`{{project-categories-list categories=categories}}`);
-}
-
 moduleForComponent('project-categories-list', 'Integration | Component | project categories list', {
   integration: true,
   beforeEach() {
@@ -42,12 +38,13 @@ test('it renders the categories and sorts them by name', function(assert) {
   stubService(this, 'user-categories', { findUserCategory() {} });
 
   this.set('categories', categories);
-  renderPage();
+
+  this.render(hbs`{{project-categories-list categories=categories}}`);
 
   // trigger lazy rendering of tooltips
-  [0, 1, 2].forEach((index) => page.projectCategoryItems(index).mouseenter());
-  assert.equal(page.projectCategoryItems().count, 3);
-  assert.equal(page.projectCategoryItems(0).tooltip.text, 'Alphabets');
-  assert.equal(page.projectCategoryItems(1).tooltip.text, 'Society');
-  assert.equal(page.projectCategoryItems(2).tooltip.text, 'Zoology');
+  [0, 1, 2].forEach((index) => page.projectCategoryItems.objectAt(index).mouseenter());
+  assert.equal(page.projectCategoryItems.length, 3);
+  assert.equal(page.projectCategoryItems.objectAt(0).tooltip.text, 'Alphabets');
+  assert.equal(page.projectCategoryItems.objectAt(1).tooltip.text, 'Society');
+  assert.equal(page.projectCategoryItems.objectAt(2).tooltip.text, 'Zoology');
 });

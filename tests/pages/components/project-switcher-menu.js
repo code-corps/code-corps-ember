@@ -15,18 +15,12 @@ export default {
       scope: '[data-test-new-project]'
     },
 
-    organizations: collection({
-      itemScope: '[data-test-organization]'
-    }),
+    organizations: collection('[data-test-organization]'),
 
-    projects: collection({
-      itemScope: '[data-test-project]',
-
-      item: {
-        icon: {
-          scope: '[data-test-icon]',
-          url: attribute('src')
-        }
+    projects: collection('[data-test-project]', {
+      icon: {
+        scope: '[data-test-icon]',
+        url: attribute('src')
       }
     })
   }

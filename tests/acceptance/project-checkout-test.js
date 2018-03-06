@@ -205,8 +205,8 @@ test('Shows stripe errors when creating a card token fails', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.checkout');
-    assert.equal(projectCheckoutPage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectCheckoutPage.errorFormatter.errors(0).message, stripeCardError.error.message, 'Correct error is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.length, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.objectAt(0).message, stripeCardError.error.message, 'Correct error is displayed.');
   });
 });
 
@@ -244,8 +244,8 @@ test('Shows error indicating problem with stripe customer if that part of the pr
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.checkout');
-    assert.equal(projectCheckoutPage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectCheckoutPage.errorFormatter.errors(0).message, 'There was a problem in connecting your account with our payment processor. Please try again.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.length, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.objectAt(0).message, 'There was a problem in connecting your account with our payment processor. Please try again.');
   });
 });
 
@@ -283,8 +283,8 @@ test('Shows error indicating problem with stripe card if that part of the proces
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.checkout');
-    assert.equal(projectCheckoutPage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectCheckoutPage.errorFormatter.errors(0).message, 'There was a problem in using your payment information. Please try again.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.length, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.objectAt(0).message, 'There was a problem in using your payment information. Please try again.');
   });
 });
 
@@ -325,8 +325,8 @@ test('Shows subscription validation errors if that part of the process fails due
   andThen(() => {
     assert.notOk(server.schema.stripeConnectSubscriptions.findBy({ quantity: 1000 }), 'Subscription was not created.');
     assert.equal(currentRouteName(), 'project.checkout');
-    assert.equal(projectCheckoutPage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectCheckoutPage.errorFormatter.errors(0).message, "The amount you've set for your monthly donation is invalid.", 'Correct error is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.length, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.objectAt(0).message, "The amount you've set for your monthly donation is invalid.", 'Correct error is displayed.');
   });
 });
 
@@ -364,7 +364,7 @@ test('Shows error indicating problem with creating subscription if that part of 
 
   andThen(() => {
     assert.equal(currentRouteName(), 'project.checkout');
-    assert.equal(projectCheckoutPage.errorFormatter.errors().count, 1, 'Correct number of errors is displayed.');
-    assert.equal(projectCheckoutPage.errorFormatter.errors(0).message, 'There was a problem in setting up your monthly donation. Please try again.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.length, 1, 'Correct number of errors is displayed.');
+    assert.equal(projectCheckoutPage.errorFormatter.errors.objectAt(0).message, 'There was a problem in setting up your monthly donation. Please try again.');
   });
 });

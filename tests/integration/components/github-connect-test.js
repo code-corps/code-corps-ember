@@ -27,7 +27,7 @@ test('binds href correctly', function(assert) {
   set(this, 'scope', '3098379083');
   set(this, 'clientId', 'ace');
   set(this, 'redirectUri', 'ace.com');
-  page.render(hbs`{{github-connect scope=scope clientId=clientId state=state redirectUri=redirectUri}}`);
+  this.render(hbs`{{github-connect scope=scope clientId=clientId state=state redirectUri=redirectUri}}`);
 
   let session = this.container.lookup('service:session');
   let { githubState } = get(session, 'data');
@@ -44,6 +44,6 @@ test('tracks click event', function(assert) {
   };
   stubService(this, 'metrics', mockMetrics);
 
-  page.render(hbs`{{github-connect}}`);
+  this.render(hbs`{{github-connect}}`);
   page.click();
 });

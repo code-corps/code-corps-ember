@@ -13,19 +13,14 @@ import navigationMenu from 'code-corps-ember/tests/pages/components/navigation-m
 export default create({
   visit: visitable('organizations/new'),
 
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  }),
+  flashMessages: collection('.flash-messages--full-width .flash-message'),
 
   inviteCodeForm: {
     scope: '[data-test-invite-code-form]',
 
     clickSubmit: clickable('[data-test-submit]'),
 
-    errors: collection({
-      itemScope: '.input-group.has-error'
-    }),
+    errors: collection('.input-group.has-error'),
 
     inputCode: fillable('[name=code]')
   },
@@ -37,9 +32,7 @@ export default create({
 
     clickSubmit: clickable('[data-test-submit]'),
 
-    errors: collection({
-      itemScope: '.input-group.has-error'
-    }),
+    errors: collection('.input-group.has-error'),
 
     imageDrop,
 

@@ -12,16 +12,6 @@ import selectedItem from 'code-corps-ember/tests/pages/components/task-card/user
 
 let page = PageObject.create(selectedItem);
 
-function renderPage() {
-  page.render(hbs`
-    {{
-      task-card/user/selected-item
-      select=(hash selected = selectedOption)
-      task=task
-    }}
-  `);
-}
-
 moduleForComponent('task-card/user/selected-item', 'Integration | Component | task card/user/selected item', {
   integration: true,
   beforeEach() {
@@ -32,14 +22,16 @@ moduleForComponent('task-card/user/selected-item', 'Integration | Component | ta
   }
 });
 
-test('the default state when user task is loaded', function(assert) {
+test('lazy renders as unselected by default', function(assert) {
   assert.expect(2);
-  renderPage();
+
+  this.render(hbs`{{task-card/user/selected-item}}`);
+
   assert.notOk(page.selectedIcon.isVisible, 'The selected icon does not render.');
   assert.notOk(page.isTooltipTarget, 'There is no tooltip because it lazy renders.');
 });
 
-test('the selected user is rendered as an icon', function(assert) {
+test('renders selected user as an icon', function(assert) {
   assert.expect(1);
 
   let mockUser = {
@@ -47,8 +39,10 @@ test('the selected user is rendered as an icon', function(assert) {
     username: 'testuser'
   };
 
-  set(this, 'selectedOption', mockUser);
-  renderPage();
+  set(this, 'select', { selected: mockUser });
+
+  page.render(hbs`{{task-card/user/selected-item select=select}}`);
+
   assert.equal(page.selectedIcon.src, mockUser.photoThumbUrl, 'the user photo was rendered in the icon.');
 });
 
@@ -56,13 +50,14 @@ test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
   assert.expect(6);
 
   let mockUser = {
-
     photoThumbUrl: 'test.png',
     username: 'testuser'
   };
 
-  set(this, 'selectedOption', mockUser);
-  renderPage();
+  set(this, 'select', { selected: mockUser });
+
+  page.render(hbs`{{task-card/user/selected-item select=select}}`);
+
   assertTooltipNotRendered(assert);
 
   page.mouseenter();

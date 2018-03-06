@@ -119,7 +119,7 @@ test('Logged in, user with organizations can navigate to projects', function(ass
     indexPage.navMenu.projectSwitcher.menuLink.click();
   });
   andThen(function() {
-    indexPage.navMenu.projectSwitcher.projectSwitcherMenu.menu.projects(0).icon.click();
+    indexPage.navMenu.projectSwitcher.projectSwitcherMenu.menu.projects.objectAt(0).icon.click();
   });
   andThen(function() {
     assert.equal(currentRouteName(), 'project.index');

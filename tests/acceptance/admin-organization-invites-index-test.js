@@ -24,7 +24,7 @@ test('The page requires user to be admin', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(page.flashErrors.length, 1, 'Flash error was rendered');
     assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
   });
 });
@@ -47,32 +47,32 @@ test('Displays all the invites', function(assert) {
   andThen(() => {
     assert.equal(currentURL(), '/admin/organization-invites');
     assert.equal(currentRouteName(), 'admin.organization-invites.index');
-    assert.equal(page.logItems().count, 3, 'There are 3 rows.');
+    assert.equal(page.logItems.length, 3, 'There are 3 rows.');
 
-    assert.ok(page.logItems(0).icon.isVisible);
-    assert.equal(page.logItems(0).name.text, invites[0].organization.name);
-    assert.equal(page.logItems(0).email.text, invites[0].email);
-    assert.equal(page.logItems(0).approvalStatus.text, 'Pending approval');
-    assert.ok(page.logItems(0).actions.button.isVisible, 'The approve button renders');
+    assert.ok(page.logItems.objectAt(0).icon.isVisible);
+    assert.equal(page.logItems.objectAt(0).name.text, invites[0].organization.name);
+    assert.equal(page.logItems.objectAt(0).email.text, invites[0].email);
+    assert.equal(page.logItems.objectAt(0).approvalStatus.text, 'Pending approval');
+    assert.ok(page.logItems.objectAt(0).actions.button.isVisible, 'The approve button renders');
 
-    assert.ok(page.logItems(1).icon.isVisible);
-    assert.equal(page.logItems(1).name.text, invites[1].organization.name);
-    assert.equal(page.logItems(1).email.text, invites[1].email);
-    assert.equal(page.logItems(1).approvalStatus.text, 'Approved');
-    assert.notOk(page.logItems(1).actions.button.isVisible, 'The approve button does not render');
+    assert.ok(page.logItems.objectAt(1).icon.isVisible);
+    assert.equal(page.logItems.objectAt(1).name.text, invites[1].organization.name);
+    assert.equal(page.logItems.objectAt(1).email.text, invites[1].email);
+    assert.equal(page.logItems.objectAt(1).approvalStatus.text, 'Approved');
+    assert.notOk(page.logItems.objectAt(1).actions.button.isVisible, 'The approve button does not render');
 
-    assert.ok(page.logItems(2).icon.isVisible);
-    assert.equal(page.logItems(2).name.text, invites[2].organizationName);
-    assert.equal(page.logItems(2).email.text, invites[2].email);
-    assert.equal(page.logItems(2).approvalStatus.text, 'Invite sent');
-    assert.notOk(page.logItems(2).actions.button.isVisible, 'The approve button does not render');
+    assert.ok(page.logItems.objectAt(2).icon.isVisible);
+    assert.equal(page.logItems.objectAt(2).name.text, invites[2].organizationName);
+    assert.equal(page.logItems.objectAt(2).email.text, invites[2].email);
+    assert.equal(page.logItems.objectAt(2).approvalStatus.text, 'Invite sent');
+    assert.notOk(page.logItems.objectAt(2).actions.button.isVisible, 'The approve button does not render');
 
-    page.logItems(0).actions.button.click();
+    page.logItems.objectAt(0).actions.button.click();
   });
 
   andThen(() => {
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
-    assert.equal(page.logItems(0).approvalStatus.text, 'Approved');
-    assert.notOk(page.logItems(0).actions.button.isVisible, 'The approve button does not render');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
+    assert.equal(page.logItems.objectAt(0).approvalStatus.text, 'Approved');
+    assert.notOk(page.logItems.objectAt(0).actions.button.isVisible, 'The approve button does not render');
   });
 });

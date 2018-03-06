@@ -12,10 +12,5 @@ export default {
   notOk: hasClass('not-ok'),
   visible: isVisible(),
 
-  suggestions: collection({
-    itemScope: 'li',
-    item: {
-      text: text()
-    }
-  })
+  suggestions: collection('li', { text: text() })
 };

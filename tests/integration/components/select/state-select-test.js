@@ -10,10 +10,6 @@ function setHandler(context, onChange = function() {}) {
   set(context, 'onChange', onChange);
 }
 
-function renderPage() {
-  page.render(hbs`{{select/state-select state=state onChange=onChange}}`);
-}
-
 moduleForComponent('select/state-select', 'Integration | Component | select/state select', {
   integration: true,
   beforeEach() {
@@ -33,7 +29,7 @@ test('it triggers action on selection change', function(assert) {
     assert.equal(newState, 'NY', 'Action was triggered with expected value');
   });
 
-  renderPage();
+  this.render(hbs`{{select/state-select state=state onChange=onChange}}`);
 
   page.state.fillIn('NY');
 });

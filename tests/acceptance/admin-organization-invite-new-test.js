@@ -26,7 +26,7 @@ test('The page requires user to be admin', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(page.flashErrors.length, 1, 'Flash error was rendered');
     assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
   });
 });
@@ -50,7 +50,7 @@ test('An admin can create and send an organization invite', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'admin.organization-invites.index', 'We get redirected to the index');
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
   });
 });
 
@@ -88,7 +88,7 @@ test('Sending an invite can fail with validation errors', function(assert) {
     page.inviteForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.inviteForm.errors().count, 2));
+  andThen(() => assert.equal(page.inviteForm.errors.length, 2));
 });
 
 test('Sending an invite can fail with an unknown error', function(assert) {
@@ -120,7 +120,7 @@ test('Sending an invite can fail with an unknown error', function(assert) {
     page.inviteForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.flashMessages().count, 1, 'A flash was displayed'));
+  andThen(() => assert.equal(page.flashMessages.length, 1, 'A flash was displayed'));
 });
 
 test('Navigation is successful if user answers positively to prompt', function(assert) {

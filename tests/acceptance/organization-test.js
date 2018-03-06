@@ -22,7 +22,7 @@ test("it displays the organization's details", function(assert) {
     assert.ok(organizationPage.projectList.isVisible, 'The projects list component renders');
     assert.equal(organizationPage.orgTitle.text, organization.name, 'The organization title renders');
     assert.equal(organizationPage.orgDescription.text, organization.description, 'The organization description renders');
-    assert.equal(organizationPage.projectListItems().count, 3, 'The projects render');
+    assert.equal(organizationPage.projectListItems.length, 3, 'The projects render');
   });
 });
 
@@ -64,8 +64,8 @@ test('anyone can navigate to projects', function(assert) {
   organizationPage.visitIndex({ organization: organization.slug });
 
   andThen(() => {
-    assert.equal(organizationPage.projectListItems(0).text, project.title, 'The project in the list is correct');
-    organizationPage.projectListItems(0).click();
+    assert.equal(organizationPage.projectListItems.objectAt(0).text, project.title, 'The project in the list is correct');
+    organizationPage.projectListItems.objectAt(0).click();
   });
 
   andThen(() => {

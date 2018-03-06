@@ -36,9 +36,7 @@ export default {
     markdown: fillable('textarea[name=markdown]')
   },
 
-  errors: collection({
-    itemScope: '.error'
-  }),
+  errors: collection('.error'),
 
   username: {
     scope: '[data-test-username]'

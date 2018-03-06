@@ -11,17 +11,6 @@ function setHandlers(context, { detailsHandler = function() {}, documentHandler 
   setProperties(context, { detailsHandler, documentHandler, idHandler });
 }
 
-function renderPage() {
-  page.render(hbs`
-    {{payments/funds-recipient
-      stripeConnectAccount=stripeConnectAccount
-      onRecipientDetailsSubmitted=detailsHandler
-      onVerificationDocumentSubmitted=documentHandler
-      onLegalEntityPersonalIdNumberSubmitted=idHandler
-    }}
-  `);
-}
-
 moduleForComponent('payments/funds-recipient', 'Integration | Component | payments/funds recipient', {
   integration: true,
   beforeEach() {
@@ -39,7 +28,14 @@ test('it renders correctly when "pending"', function(assert) {
   let stripeConnectAccount = { recipientStatus: 'pending_requirement' };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   assert.ok(page.rendersPending, 'Component is rendered in pending mode.');
 });
@@ -50,7 +46,14 @@ test('it renders correctly when "required"', function(assert) {
   let stripeConnectAccount = { recipientStatus: 'required' };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   assert.ok(page.rendersRequired, 'Component is rendered in required mode.');
   assert.ok(page.rendersDetailsForm, 'Component renders the details form subcomponent.');
@@ -62,7 +65,14 @@ test('it renders correctly when "verifying" and document status "required"', fun
   let stripeConnectAccount = { recipientStatus: 'verifying' };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   assert.ok(page.rendersVerifying, 'Component is rendered in verifying mode.');
   assert.ok(page.rendersVerificationDocument, 'Component renders the verification document subcomponent.');
@@ -79,7 +89,14 @@ test('it renders correctly when "verified"', function(assert) {
   };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.equal(page.individualNameText, 'Joe Individual', 'Component renders the name of the registered individual.');
@@ -97,7 +114,14 @@ test('it renders correctly when "verified" for company', function(assert) {
   };
   this.set('stripeConnectAccount', stripeConnectAccount);
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   assert.ok(page.rendersVerified, 'Component is rendered in verified mode.');
   assert.ok(page.individualNameText, 'Joe Individual', 'Component renders the name of the registered individual.');
@@ -115,7 +139,14 @@ test('it passes out submit action from details subcomponent', function(assert) {
   }
   setHandlers(this, { detailsHandler });
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   page.detailsForm.clickSubmit();
 });
@@ -133,7 +164,14 @@ test('it passes out submit action from details subcomponent', function(assert) {
 //   };
 //   setHandlers(this, { documentHandler });
 
-//   renderPage();
+// this.render(hbs`
+//   {{payments/funds-recipient
+//     stripeConnectAccount=stripeConnectAccount
+//     onRecipientDetailsSubmitted=detailsHandler
+//     onVerificationDocumentSubmitted=documentHandler
+//     onLegalEntityPersonalIdNumberSubmitted=idHandler
+//   }}
+// `);
 
 //   page.verificationDocument.pickFile(this);
 // });
@@ -149,7 +187,14 @@ test('it passes out submit action from personal id number subcomponent', functio
   }
   setHandlers(this, { idHandler });
 
-  renderPage();
+  this.render(hbs`
+    {{payments/funds-recipient
+      stripeConnectAccount=stripeConnectAccount
+      onRecipientDetailsSubmitted=detailsHandler
+      onVerificationDocumentSubmitted=documentHandler
+      onLegalEntityPersonalIdNumberSubmitted=idHandler
+    }}
+  `);
 
   page.legalEntityPersonalIdNumber.clickSubmit();
 });

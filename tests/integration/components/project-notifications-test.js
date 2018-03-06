@@ -5,15 +5,6 @@ import component from 'code-corps-ember/tests/pages/components/project-notificat
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{project-notifications
-      project=project
-      submitForReview=submitForReview
-    }}
-  `);
-}
-
 moduleForComponent('project-notifications', 'Integration | Component | project notifications', {
   integration: true,
   beforeEach() {
@@ -29,7 +20,7 @@ test('when the project is approved', function(assert) {
 
   this.set('project', { approved: true });
 
-  renderPage();
+  this.render(hbs`{{project-notifications project=project submitForReview=submitForReview}}`);
 
   assert.notOk(page.callout.isVisible, 'Callout is not visible.');
 });
@@ -39,7 +30,7 @@ test('when the project is not approved and has no description', function(assert)
 
   this.set('project', { approved: false, longDescriptionBody: null, approvalRequested: false });
 
-  renderPage();
+  this.render(hbs`{{project-notifications project=project submitForReview=submitForReview}}`);
 
   assert.ok(page.callout.isVisible, 'Callout is visible.');
   assert.ok(page.callout.descriptionNeeded.isVisible, 'Description is needed');
@@ -58,7 +49,7 @@ test('when the project is not approved and has a description but no review', fun
   this.set('project', { approved: false, longDescriptionBody: 'Body', approvalRequested: false });
   this.set('submitForReview', submitForReview);
 
-  renderPage();
+  this.render(hbs`{{project-notifications project=project submitForReview=submitForReview}}`);
 
   assert.ok(page.callout.isVisible, 'Callout is visible.');
   assert.notOk(page.callout.descriptionNeeded.isVisible, 'Description is already added');
@@ -74,7 +65,7 @@ test('when the project is not approved and is awaiting approval', function(asser
 
   this.set('project', { approved: false, longDescriptionBody: 'Body', approvalRequested: true });
 
-  renderPage();
+  this.render(hbs`{{project-notifications project=project submitForReview=submitForReview}}`);
 
   assert.ok(page.callout.isVisible, 'Callout is visible.');
   assert.notOk(page.callout.descriptionNeeded.isVisible, 'Description is already added');

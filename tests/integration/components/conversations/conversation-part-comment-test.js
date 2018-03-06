@@ -14,16 +14,6 @@ import {
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-part-comment
-      author=author
-      body=body
-      sentAt=sentAt
-    }}
-  `);
-}
-
 moduleForComponent('conversations/conversation-part-comment', 'Integration | Component | conversations/conversation part comment', {
   integration: true,
   beforeEach() {
@@ -49,7 +39,13 @@ test('it renders all the details', function(assert) {
   set(this, 'sentAt', moment().subtract(2, 'days'));
   stubService(this, 'current-user', { user: { id: 2 } });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-comment
+      author=author
+      body=body
+      sentAt=sentAt
+    }}
+  `);
 
   assert.equal(page.body.text, body, 'The body renders in the chat bubble');
   assert.equal(page.sentAt.text, '2 days ago', 'The sent at timestamp renders');
@@ -69,7 +65,13 @@ test('when the message has not been sent yet', function(assert) {
 
   set(this, 'sentAt', null);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-comment
+      author=author
+      body=body
+      sentAt=sentAt
+    }}
+  `);
 
   assert.equal(page.sentAt.text, 'Sending...', 'The message says sending');
 });
@@ -80,7 +82,13 @@ test('when the current user did not send the message', function(assert) {
   set(this, 'author', { id: 1 });
   stubService(this, 'current-user', { user: { id: 2 } });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-comment
+      author=author
+      body=body
+      sentAt=sentAt
+    }}
+  `);
 
   assert.notOk(page.isByCurrentUser, 'Does not have the current user styles');
 });
@@ -91,7 +99,13 @@ test('when the current user sent the message', function(assert) {
   set(this, 'author', { id: 1 });
   stubService(this, 'current-user', { user: { id: 1 } });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-comment
+      author=author
+      body=body
+      sentAt=sentAt
+    }}
+  `);
 
   assert.ok(page.isByCurrentUser, 'Has the current user styles');
 });
