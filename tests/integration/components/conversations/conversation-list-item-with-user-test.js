@@ -7,16 +7,6 @@ import moment from 'moment';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-list-item-with-user
-      close=onClose
-      reopen=onReopen
-      conversation=conversation
-    }}
-  `);
-}
-
 moduleForComponent('conversations/conversation-list-item-with-user', 'Integration | Component | conversations/conversation list item with user', {
   integration: true,
   beforeEach() {
@@ -46,7 +36,13 @@ test('it renders the conversation details', function(assert) {
 
   set(this, 'conversation', conversation);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-user
+      close=onClose
+      reopen=onReopen
+      conversation=conversation
+    }}
+  `);
 
   assert.equal(page.target.photo.url, user.photoThumbUrl, 'The target user photo renders');
   assert.equal(page.target.name.text, user.name, 'The target user name renders');
@@ -69,7 +65,13 @@ test('it renders close button when conversation is open', function(assert) {
 
   set(this, 'conversation', conversation);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-user
+      close=onClose
+      reopen=onReopen
+      conversation=conversation
+    }}
+  `);
 
   // we use isPresent because the buttons only display on hover and are
   // otherwise set to `display: none;`
@@ -92,7 +94,13 @@ test('it renders reopen button when conversation is closed', function(assert) {
 
   set(this, 'conversation', conversation);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-user
+      close=onClose
+      reopen=onReopen
+      conversation=conversation
+    }}
+  `);
 
   // we use isPresent because the buttons only display on hover and are
   // otherwise set to `display: none;`
@@ -120,7 +128,13 @@ test('it calls bound action when clicking close button', function(assert) {
     assert.equal(c, conversation, 'Action was called with correct argument');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-user
+      close=onClose
+      reopen=onReopen
+      conversation=conversation
+    }}
+  `);
 
   page.closeButton.click();
 });
@@ -144,7 +158,13 @@ test('it calls bound action when clicking reopen button', function(assert) {
     assert.equal(c, conversation, 'Action was called with correct argument');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-list-item-with-user
+      close=onClose
+      reopen=onReopen
+      conversation=conversation
+    }}
+  `);
 
   page.reopenButton.click();
 });

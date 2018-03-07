@@ -6,14 +6,6 @@ import component from 'code-corps-ember/tests/pages/components/conversations/sta
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/status-select
-      status=status
-    }}
-  `);
-}
-
 moduleForComponent('conversations/status-select', 'Integration | Component | conversations/status select', {
   integration: true,
   beforeEach() {
@@ -29,7 +21,7 @@ test('it opens, closes, and renders the correct states', async function(assert) 
 
   set(this, 'status', 'open');
 
-  renderPage();
+  this.render(hbs`{{conversations/status-select status=status}}`);
 
   assert.ok(page.openButton.isVisible, 'The open button is visible');
 

@@ -34,14 +34,14 @@ test('it renders new card form when there is no card to begin with', function(as
   this.set('projectTitle', 'CodeCorps');
   this.set('card', { content: null, isFulfilled: true });
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card donate=donateHandler donationAmount=amount
       isProcessing=isProcessing projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   assert.ok(page.cardFormIsVisible, 'The new card form is rendered automatically.');
-  assert.notOk(page.cards(0).isVisible, 'The card item is not visible.');
+  assert.notOk(page.cards.objectAt(0).isVisible, 'The card item is not visible.');
 });
 
 test('it renders new card form when the card is added and is processing', function(assert) {
@@ -52,7 +52,7 @@ test('it renders new card form when the card is added and is processing', functi
   this.set('projectTitle', 'CodeCorps');
   this.set('card', { content: null, isFulfilled: true });
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card
       donate=donateHandler
@@ -65,7 +65,7 @@ test('it renders new card form when the card is added and is processing', functi
   this.set('isProcessing', true);
 
   assert.ok(page.cardFormIsVisible, 'The new card form is rendered.');
-  assert.notOk(page.cards(0).isVisible, 'The card item is not visible.');
+  assert.notOk(page.cards.objectAt(0).isVisible, 'The card item is not visible.');
 });
 
 test('it renders the card item if there is a card and the form is processing', function(assert) {
@@ -74,7 +74,7 @@ test('it renders the card item if there is a card and the form is processing', f
   this.set('card', visa);
   this.set('isProcessing', true);
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card
       donate=donateHandler
@@ -85,7 +85,7 @@ test('it renders the card item if there is a card and the form is processing', f
 
   assert.notOk(page.cardFormIsVisible, 'The new card form is not rendered.');
   assert.ok(page.donationButtonIsVisible, 'Donation button is rendered.');
-  assert.ok(page.cards(0).isVisible, 'The card item is visible.');
+  assert.ok(page.cards.objectAt(0).isVisible, 'The card item is visible.');
 });
 
 test('it renders the card item and the "donate" button when a card exists', function(assert) {
@@ -93,13 +93,13 @@ test('it renders the card item and the "donate" button when a card exists', func
 
   this.set('card', visa);
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
 
   assert.notOk(page.cardFormIsVisible, 'Credit card form component is not rendered.');
-  assert.ok(page.cards(0).isVisible, 'Credit card item is rendered.');
+  assert.ok(page.cards.objectAt(0).isVisible, 'Credit card item is rendered.');
   assert.ok(page.donationButtonIsVisible, 'Donation button is rendered.');
 });
 
@@ -115,7 +115,7 @@ test('it handles adding a card correctly', function(assert) {
 
   this.set('card', null);
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);
@@ -135,7 +135,7 @@ test('it handles donating correctly', function(assert) {
 
   setHandlers(this, { donateHandler });
 
-  page.render(hbs`
+  this.render(hbs`
     {{donation/donation-container
       card=card donate=donateHandler donationAmount=amount projectTitle=projectTitle saveAndDonate=saveAndDonateHandler }}
   `);

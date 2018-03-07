@@ -14,9 +14,9 @@ test('It renders all the required ui elements', function(assert) {
 
   andThen(function() {
     assert.ok(organizationProjects.project.isVisible, 'project-list component is rendered');
-    assert.equal(organizationProjects.project.items().count, 5, 'correct number of project-items is rendered');
+    assert.equal(organizationProjects.project.items.length, 5, 'correct number of project-items is rendered');
 
-    let firstProjectHref = organizationProjects.project.items(0).href;
+    let firstProjectHref = organizationProjects.project.items.objectAt(0).href;
     assert.ok(firstProjectHref.indexOf(`/${organization.slug}/${projects[0].slug}`) > -1, 'The link to a project is properly rendered');
   });
 });

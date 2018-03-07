@@ -8,16 +8,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/issue-link
-      githubIssue=githubIssue
-      githubRepo=githubRepo
-      size=size
-    }}
-  `);
-}
-
 moduleForComponent('github/issue-link', 'Integration | Component | github/issue link', {
   integration: true,
   beforeEach() {
@@ -46,7 +36,7 @@ test('it renders with text and no tooltip when large', function(assert) {
   set(this, 'githubRepo', githubRepo);
   set(this, 'size', 'large');
 
-  renderPage();
+  this.render(hbs`{{github/issue-link githubIssue=githubIssue githubRepo=githubRepo size=size}}`);
 
   assert.equal(page.repoName.text, 'code-corps/code-corps-ember', 'The full repo name renders.');
   assert.equal(page.issueNumber.text, '#123', 'The issue number renders.');
@@ -60,7 +50,7 @@ test('it renders with no text and a tooltip when small', function(assert) {
   set(this, 'githubRepo', githubRepo);
   set(this, 'size', 'small');
 
-  renderPage();
+  this.render(hbs`{{github/issue-link githubIssue=githubIssue githubRepo=githubRepo size=size}}`);
 
   assert.notOk(page.repoName.isVisible, 'The repo name does not render.');
   assert.notOk(page.issueNumber.isVisible, 'The issue number does not render.');
@@ -84,7 +74,7 @@ test('it renders with loading when large', function(assert) {
   set(this, 'githubRepo', { isLoaded: false });
   set(this, 'size', 'large');
 
-  renderPage();
+  this.render(hbs`{{github/issue-link githubIssue=githubIssue githubRepo=githubRepo size=size}}`);
 
   assert.ok(page.loadingLarge.isVisible, 'The large loading state renders.');
 });
@@ -96,7 +86,7 @@ test('it renders with loading when small', function(assert) {
   set(this, 'githubRepo', { isLoaded: false });
   set(this, 'size', 'small');
 
-  renderPage();
+  this.render(hbs`{{github/issue-link githubIssue=githubIssue githubRepo=githubRepo size=size}}`);
 
   assert.ok(page.loadingSmall.isVisible, 'The small loading state renders.');
 });
@@ -115,7 +105,7 @@ test('it tracks clicking the link', function(assert) {
   set(this, 'githubIssue', githubIssue);
   set(this, 'githubRepo', githubRepo);
 
-  renderPage();
+  this.render(hbs`{{github/issue-link githubIssue=githubIssue githubRepo=githubRepo size=size}}`);
 
   page.url.click();
 });

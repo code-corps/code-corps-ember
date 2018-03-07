@@ -8,12 +8,6 @@ import { reject, resolve } from 'rsvp';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-composer body=body onSend=onSend}}
-  `);
-}
-
 moduleForComponent('conversations/conversation-composer', 'Integration | Component | conversations/conversation composer', {
   integration: true,
   beforeEach() {
@@ -31,7 +25,9 @@ test('disables submit when body is blank', function(assert) {
   assert.expect(3);
   set(this, 'body', null);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-composer body=body onSend=onSend}}
+  `);
 
   assert.ok(page.submitButton.isDisabled, 'Submit is disabled if null');
   run(() => set(this, 'body', 'foo'));
@@ -49,7 +45,10 @@ test('sends out action and blanks out body when clicking submit', function(asser
     return resolve();
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-composer body=body onSend=onSend}}
+  `);
+
   assert.equal(page.submittableTextarea.value, 'foo', 'Body is rendered correctly.');
   page.submitButton.click();
   assert.equal(page.submittableTextarea.value, '', 'Body was blanked out.');
@@ -64,7 +63,10 @@ test('resets the body when promise rejects on clicking submit', async function(a
     return reject({ body });
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-composer body=body onSend=onSend}}
+  `);
+
   assert.equal(page.submittableTextarea.value, 'foo', 'Body is rendered correctly.');
   await page.submitButton.click();
   assert.equal(page.submittableTextarea.value, 'foo', 'Body was reset.');
@@ -79,7 +81,10 @@ test('sends out action and blanks out body when hitting enter key', function(ass
     return resolve();
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-composer body=body onSend=onSend}}
+  `);
+
   assert.equal(page.submittableTextarea.value, 'foo', 'Body is rendered correctly.');
   page.submittableTextarea.keySubmit();
   assert.equal(page.submittableTextarea.value, '', 'Body was blanked out.');

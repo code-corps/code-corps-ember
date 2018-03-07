@@ -16,25 +16,25 @@ moduleForComponent('progress-bar', 'Integration | Component | progress bar', {
 });
 
 test('it sets the style when percentage is set', function(assert) {
-  page.render(hbs`{{progress-bar percentage=100}}`);
+  this.render(hbs`{{progress-bar percentage=100}}`);
 
   assert.ok(page.displaysPercentage(100));
 });
 
 test('it sets the style when no percentage is set', function(assert) {
-  page.render(hbs`{{progress-bar}}`);
+  this.render(hbs`{{progress-bar}}`);
 
   assert.ok(page.displaysPercentage(0));
 });
 
 test('it renders without error by default', function(assert) {
-  page.render(hbs`{{progress-bar}}`);
+  this.render(hbs`{{progress-bar}}`);
 
   assert.notOk(page.hasError);
 });
 
 test('it renders with error when passed in', function(assert) {
-  page.render(hbs`{{progress-bar error=true}}`);
+  this.render(hbs`{{progress-bar error=true}}`);
 
   assert.ok(page.hasError);
 });

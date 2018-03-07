@@ -6,15 +6,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{svg/sprite-icon
-      icon=icon
-      style=style
-    }}
-  `);
-}
-
 moduleForComponent('svg/sprite-icon', 'Integration | Component | svg/sprite icon', {
   integration: true,
   beforeEach() {
@@ -31,7 +22,7 @@ test('it renders the icon and style', function(assert) {
   set(this, 'icon', 'github-48');
   set(this, 'style', 'solid-light-gray');
 
-  renderPage();
+  this.render(hbs`{{svg/sprite-icon icon=icon style=style}}`);
 
   assert.equal(page.svg.use.xlinkHref, '#github-48', 'The icon xlink href value is properly bound.');
   assert.ok(page.svg.isSolidLightGray, 'The svg has the style class.');
@@ -39,13 +30,13 @@ test('it renders the icon and style', function(assert) {
 
 test('it renders the default size', function(assert) {
   assert.expect(1);
-  renderPage();
+  this.render(hbs`{{svg/sprite-icon icon=icon style=style}}`);
   assert.ok(page.svg.hasClass('size-16'), 'The svg has a default size.');
 });
 
 test('it renders a different size', function(assert) {
   assert.expect(1);
   set(this, 'size', '50');
-  renderPage();
+  this.render(hbs`{{svg/sprite-icon icon=icon style=style}}`);
   assert.ok(page.svg.hasClass('size-50'), 'The svg renders the passed size.');
 });

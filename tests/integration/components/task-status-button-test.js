@@ -27,7 +27,7 @@ test('when task is open, it renders the button to close it', function(assert) {
   };
 
   this.set('task', mockTask);
-  page.render(hbs`{{task-status-button task=task}}`);
+  this.render(hbs`{{task-status-button task=task}}`);
 
   page.clickClose();
 
@@ -46,7 +46,7 @@ test('when task is closed, it renders the button to open it', function(assert) {
   };
 
   this.set('task', mockTask);
-  page.render(hbs`{{task-status-button task=task}}`);
+  this.render(hbs`{{task-status-button task=task}}`);
 
   page.clickOpen();
 

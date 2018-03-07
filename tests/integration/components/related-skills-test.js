@@ -15,10 +15,6 @@ let userSkillsService = {
   }
 };
 
-function renderPage() {
-  page.render(hbs`{{related-skills skills=skills}}`);
-}
-
 moduleForComponent('related-skills', 'Integration | Component | related skills', {
   integration: true,
   beforeEach() {
@@ -36,11 +32,12 @@ test('it shows no expander for few skills', function(assert) {
   let skills = [{ title: 'Ruby' }];
 
   this.set('skills', skills);
-  renderPage();
+
+  this.render(hbs`{{related-skills skills=skills}}`);
 
   assert.notOk(page.overflowHidden, 'Overflow is visible.');
   assert.ok(page.expander.hidden, 'Expander button is hidden.');
-  assert.equal(page.skillListItems.listItems().count, 1, 'Correct number of skills is rendered.');
+  assert.equal(page.skillListItems.listItems.length, 1, 'Correct number of skills is rendered.');
 });
 
 test('it does not show expander if overflowHidden is not set', function(assert) {
@@ -54,7 +51,8 @@ test('it does not show expander if overflowHidden is not set', function(assert) 
   }
 
   this.set('skills', skills);
-  renderPage();
+
+  this.render(hbs`{{related-skills skills=skills}}`);
 
   assert.notOk(page.overflow.hidden, 'Overflow is not hidden.');
 });
@@ -70,7 +68,7 @@ test('it shows expander and toggles for lots of skills when the component is mod
   }
 
   this.set('skills', skills);
-  page.render(hbs`{{related-skills overflowHidden=true skills=skills}}`);
+  this.render(hbs`{{related-skills overflowHidden=true skills=skills}}`);
 
   assert.ok(page.overflow.hidden, 'Overflow is hidden.');
   assert.ok(page.expander.visible, 'Expander button is visible.');

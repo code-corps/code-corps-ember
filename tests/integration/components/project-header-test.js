@@ -27,7 +27,7 @@ test('it renders title', function(assert) {
 
   this.set('project', mockProject);
 
-  page.render(hbs`{{project-header project=project}}`);
+  this.render(hbs`{{project-header project=project}}`);
 
   assert.equal(page.icon.src, mockProject.iconThumbUrl, 'Icon is rendered');
   assert.equal(page.title.text, mockProject.title, 'Title is rendered');
@@ -45,7 +45,7 @@ test('it triggers binding when clicking join project button', function(assert) {
     }
   });
 
-  page.render(hbs`{{project-header project=project}}`);
+  this.render(hbs`{{project-header project=project}}`);
 
   page.projectJoinModal.openButton.click();
   page.projectJoinModal.modal.joinProjectButton.click();

@@ -11,14 +11,6 @@ import unselectedItem from 'code-corps-ember/tests/pages/components/task-card/us
 
 let page = PageObject.create(unselectedItem);
 
-function renderPage() {
-  page.render(hbs`
-    {{task-card/user/unselected-item
-      task=task
-    }}
-  `);
-}
-
 moduleForComponent('task-card/user/unselected-item', 'Integration | Component | task card/user/unselected item', {
   integration: true,
   beforeEach() {
@@ -32,7 +24,7 @@ moduleForComponent('task-card/user/unselected-item', 'Integration | Component | 
 test('the tooltip is not rendered initially', function(assert) {
   let task = { userTask: { isLoading: true } };
   this.set('task', task);
-  renderPage();
+  this.render(hbs`{{task-card/user/unselected-item task=task}}`);
   assert.notOk(page.isTooltipTarget, 'There is not a tooltip.');
   assert.ok(page.loadingIcon.isVisible, 'The loading icon renders.');
 });
@@ -40,7 +32,7 @@ test('the tooltip is not rendered initially', function(assert) {
 test('the default state when user task is loaded', function(assert) {
   let task = { userTask: { isLoading: false } };
   this.set('task', task);
-  renderPage();
+  this.render(hbs`{{task-card/user/unselected-item task=task}}`);
   assert.notOk(page.loadingIcon.isVisible, 'The loading icon does not render.');
   assert.notOk(page.isTooltipTarget, 'There is no tooltip because it lazy renders.');
 });
@@ -48,7 +40,8 @@ test('the default state when user task is loaded', function(assert) {
 test('the tooltip renders lazily, triggered by mouseEnter', function(assert) {
   assert.expect(5);
 
-  renderPage();
+  this.render(hbs`{{task-card/user/unselected-item}}`);
+
   assertTooltipNotRendered(assert);
 
   page.mouseenter();

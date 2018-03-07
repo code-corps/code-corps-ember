@@ -14,17 +14,6 @@ const { PromiseObject } = DS;
 
 let page = PageObject.create(taskCardComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{task-card
-      clickedTask=clickedTask
-      keyboardActivated=keyboardActivated
-      task=task
-      taskUser=taskUser
-      users=users
-    }}`);
-}
-
 function setHandler(context, clickedTaskHandler = function() {}) {
   set(context, 'clickedTaskHandler', clickedTaskHandler);
 }
@@ -52,7 +41,8 @@ test('it renders all the required elements', function(assert) {
   };
 
   set(this, 'task', task);
-  renderPage();
+
+  this.render(hbs`{{task-card task=task}}`);
 
   assert.equal(page.number.text, '#1', 'The number renders');
   assert.equal(page.time.text, '2 days ago', 'The time renders');
@@ -65,7 +55,8 @@ test('it renders a pull request icon if associated to a pull request', function(
   let task = { githubPullRequest: { id: 'foo' } };
 
   set(this, 'task', task);
-  renderPage();
+
+  this.render(hbs`{{task-card task=task}}`);
 
   assert.ok(page.pullRequestIcon.isVisible, 'The pull request icon renders');
 });
@@ -76,7 +67,7 @@ test('it does not render a pull request icon if not associated to a pull request
   let task = { githubPullRequest: null };
 
   set(this, 'task', task);
-  renderPage();
+  this.render(hbs`{{task-card task=task}}`);
 
   assert.notOk(page.pullRequestIcon.isVisible, 'The pull request icon does not render');
 });
@@ -85,7 +76,7 @@ test('it can reposition if it has the ability', function(assert) {
   assert.expect(1);
   this.register('ability:task', Ability.extend({ canReposition: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card}}`);
 
   assert.ok(page.canReposition, 'Can reposition');
 });
@@ -94,26 +85,33 @@ test('it cannot reposition if it does not have the ability', function(assert) {
   assert.expect(1);
   this.register('ability:task', Ability.extend({ canReposition: false }));
 
-  renderPage();
+  this.render(hbs`{{task-card}}`);
 
   assert.notOk(page.canReposition, 'Cannot reposition');
 });
 
 test('it renders the GitHub issue link icon if it has an issue and is hovering', function(assert) {
   assert.expect(1);
+
   let isLoaded = true;
   let task = { githubIssue: { isLoaded }, githubRepo: { isLoaded } };
+
   set(this, 'task', task);
-  renderPage();
+
+  this.render(hbs`{{task-card task=task}}`);
+
   page.mouseenter();
   assert.ok(page.issueLink.isVisible, 'The GitHub issue link is visible');
 });
 
 test('it does not render the GitHub issue link icon if it does not have an issue and is hovering', function(assert) {
   assert.expect(1);
+
   let task = { githubIssue: null };
   set(this, 'task', task);
-  renderPage();
+
+  this.render(hbs`{{task-card task=task}}`);
+
   page.mouseenter();
   assert.notOk(page.issueLink.isVisible, 'The GitHub issue link is not visible');
 });
@@ -121,17 +119,16 @@ test('it does not render the GitHub issue link icon if it does not have an issue
 test('it sends action if clicked and not loading', function(assert) {
   assert.expect(1);
 
-  let task = {
-    isLoading: false,
-    number: 1
-  };
+  let task = { isLoading: false, number: 1 };
 
   set(this, 'clickedTask', function(clickedTask) {
     assert.deepEqual(clickedTask, task);
   });
+
   set(this, 'task', task);
 
-  renderPage();
+  this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
+
   page.click();
 });
 
@@ -146,9 +143,11 @@ test('it does not send action if clicked and loading', function(assert) {
   set(this, 'clickedTask', function() {
     assert.notOk();
   });
+
   set(this, 'task', task);
 
-  renderPage();
+  this.render(hbs`{{task-card clickedTask=clickedTask task=task}}`);
+
   page.click();
   assert.ok(true);
 });
@@ -176,11 +175,11 @@ test('assignment works if user has ability and card is hovered', function(assert
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task users=users}}`);
 
   page.mouseenter();
   page.taskAssignment.select.trigger.open();
-  page.taskAssignment.select.dropdown.options(0).select();
+  page.taskAssignment.select.dropdown.options.objectAt(0).select();
 });
 
 test('unassignment works if user has ability and card is hovered', function(assert) {
@@ -205,11 +204,11 @@ test('unassignment works if user has ability and card is hovered', function(asse
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task users=users taskUser=taskUser}}`);
 
   page.mouseenter();
   page.taskAssignment.select.trigger.open();
-  page.taskAssignment.select.dropdown.options(0).select();
+  page.taskAssignment.select.dropdown.options.objectAt(0).select();
 });
 
 test('assignment dropdown renders if user has ability and card is hovered', function(assert) {
@@ -230,12 +229,12 @@ test('assignment dropdown renders if user has ability and card is hovered', func
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task users=users}}`);
 
   page.mouseenter();
   page.taskAssignment.select.trigger.open();
-  assert.equal(page.taskAssignment.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
-  assert.equal(page.taskAssignment.select.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
+  assert.equal(page.taskAssignment.select.dropdown.options.objectAt(0).text, 'testuser1', 'First user is rendered.');
+  assert.equal(page.taskAssignment.select.dropdown.options.objectAt(1).text, 'testuser2', 'Second user is rendered.');
 });
 
 test('assignment dropdown renders when records are still being loaded and card  is hovered', function(assert) {
@@ -262,13 +261,13 @@ test('assignment dropdown renders when records are still being loaded and card  
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task users=users}}`);
 
   page.mouseenter();
   RSVP.all(users).then(() => {
     page.taskAssignment.select.trigger.open();
-    assert.equal(page.taskAssignment.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
-    assert.equal(page.taskAssignment.select.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
+    assert.equal(page.taskAssignment.select.dropdown.options.objectAt(0).text, 'testuser1', 'First user is rendered.');
+    assert.equal(page.taskAssignment.select.dropdown.options.objectAt(1).text, 'testuser2', 'Second user is rendered.');
     done();
   });
 });
@@ -295,7 +294,7 @@ test('assignment dropdown does not render if user has no ability and card is hov
 
   this.register('ability:task', Ability.extend({ canAssign: false }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task taskUser=taskUser users=users}}`);
 
   page.mouseenter();
   assert.notOk(page.taskAssignment.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
@@ -304,7 +303,7 @@ test('assignment dropdown does not render if user has no ability and card is hov
   });
 });
 
-test('the selected-item component is visable when a task has a user assigned ', function(assert) {
+test('the selected-item component is visible when a task has a user assigned ', function(assert) {
   assert.expect(1);
 
   let task = { id: 'task' };
@@ -314,7 +313,8 @@ test('the selected-item component is visable when a task has a user assigned ', 
 
   setProperties(this, { task, users, taskUser });
 
-  renderPage();
+  this.render(hbs`{{task-card task=task taskUser=taskUser users=users}}`);
+
   assert.ok(page.selectedItem.isVisible, 'the selected item component is rendered');
 });
 
@@ -323,7 +323,8 @@ test('the unselected-item component is visible when a task has no user assigned'
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card taskUser=null}}`);
+
   assert.ok(page.unselectedItem.isVisible, 'the unselected item component renders.');
 });
 
@@ -345,7 +346,7 @@ test('it archives task when hovering and pressing C key', function(assert) {
   set(this, 'task', task);
   this.register('ability:task', Ability.extend({ canArchive: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task}}`);
 
   page.mouseenter();
   page.triggerKeyDown('KeyC');
@@ -364,11 +365,10 @@ test('it does not archive task when not hovering and pressing C key', function(a
     }
   };
 
-  set(this, 'task', task);
   this.register('ability:task', Ability.extend({ canArchive: true }));
-  set(this, 'keyboardActivated', true); // manually activate the keyboard
 
-  renderPage();
+  setProperties(this, { task, keyboardActivated: true }); // manually activate the keyboard
+  this.render(hbs`{{task-card task=task keyboardActivated=keyboardActivated}}`);
 
   page.triggerKeyDown('KeyC');
   assert.ok(true);
@@ -397,11 +397,11 @@ test('it does not archive task when assigning a user and pressing C key', functi
     }
   };
 
-  setProperties(this, { task, users });
   this.register('ability:task', Ability.extend({ canArchive: true, canAssign: true }));
-  set(this, 'keyboardActivated', true); // manually activate the keyboard
 
-  renderPage();
+  setProperties(this, { task, users, keyboardActivated: true }); // manually activate the keyboard
+
+  this.render(hbs`{{task-card task=task keyboardActivated=keyboardActivated users=users}}`);
 
   // Hover, open the dropdown, press C key
   page.mouseenter();
@@ -431,7 +431,7 @@ test('it does not archive task when left hovering and pressing C key', function(
   set(this, 'task', task);
   this.register('ability:task', Ability.extend({ canArchive: true }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task}}`);
 
   page.mouseenter();
   page.mouseleave();
@@ -455,7 +455,7 @@ test('it does not archive task when the user does not have the ability', functio
   set(this, 'task', task);
   this.register('ability:task', Ability.extend({ canArchive: false }));
 
-  renderPage();
+  this.render(hbs`{{task-card task=task}}`);
 
   page.mouseenter();
   page.triggerKeyDown('KeyC');

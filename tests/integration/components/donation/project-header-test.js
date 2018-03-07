@@ -25,7 +25,7 @@ test('it displays the right title, icon, description', function(assert) {
   };
   this.set('project', project);
 
-  page.render(hbs`{{donation/project-header project=project}}`);
+  this.render(hbs`{{donation/project-header project=project}}`);
 
   assert.equal(page.icon.src, project.iconThumbUrl, 'Icon is rendered');
   assert.equal(page.title.text, project.title, 'Title is rendered');

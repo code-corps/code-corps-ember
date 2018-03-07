@@ -6,16 +6,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{category-checkboxes
-      options=options
-      selection=selection
-      updateCategories=updateCategories
-    }}
-  `);
-}
-
 moduleForComponent('category-checkboxes', 'Integration | Component | category checkboxes', {
   integration: true,
   beforeEach() {
@@ -39,12 +29,18 @@ test('it works for unselecting selected categories', function(assert) {
     assert.ok(true);
   });
 
-  renderPage();
+  this.render(hbs`
+    {{category-checkboxes
+      options=options
+      selection=selection
+      updateCategories=updateCategories
+    }}
+  `);
 
-  assert.equal(page.checkboxes(0).label.name, 'Test', 'Renders the name');
-  assert.ok(page.checkboxes(0).isChecked, 'Checkbox is checked');
-  page.checkboxes(0).label.click();
-  assert.notOk(page.checkboxes(0).isChecked, 'Checkbox is not checked');
+  assert.equal(page.checkboxes.objectAt(0).label.name, 'Test', 'Renders the name');
+  assert.ok(page.checkboxes.objectAt(0).isChecked, 'Checkbox is checked');
+  page.checkboxes.objectAt(0).label.click();
+  assert.notOk(page.checkboxes.objectAt(0).isChecked, 'Checkbox is not checked');
 });
 
 test('it works for selecting unselected categories', function(assert) {
@@ -60,10 +56,16 @@ test('it works for selecting unselected categories', function(assert) {
     assert.ok(true);
   });
 
-  renderPage();
+  this.render(hbs`
+    {{category-checkboxes
+      options=options
+      selection=selection
+      updateCategories=updateCategories
+    }}
+  `);
 
-  assert.equal(page.checkboxes(0).label.name, 'Test', 'Renders the name');
-  assert.notOk(page.checkboxes(0).isChecked, 'Checkbox is not checked');
-  page.checkboxes(0).label.click();
-  assert.ok(page.checkboxes(0).isChecked, 'Checkbox is checked');
+  assert.equal(page.checkboxes.objectAt(0).label.name, 'Test', 'Renders the name');
+  assert.notOk(page.checkboxes.objectAt(0).isChecked, 'Checkbox is not checked');
+  page.checkboxes.objectAt(0).label.click();
+  assert.ok(page.checkboxes.objectAt(0).isChecked, 'Checkbox is checked');
 });

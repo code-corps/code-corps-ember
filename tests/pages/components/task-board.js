@@ -3,7 +3,5 @@ import taskListCards from 'code-corps-ember/tests/pages/components/task-list-car
 
 export default {
   scope: '.task-board',
-  taskLists: collection({
-    item: taskListCards
-  })
+  taskLists: collection('', taskListCards)
 };

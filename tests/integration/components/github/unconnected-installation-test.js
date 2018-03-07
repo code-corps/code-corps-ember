@@ -7,16 +7,6 @@ import component from 'code-corps-ember/tests/pages/components/github/unconnecte
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/unconnected-installation
-      connect=(action connect)
-      githubAppInstallation=githubAppInstallation
-      organization=organization
-    }}
-  `);
-}
-
 function setHandlers(context, connect = () => {}) {
   set(context, 'connect', connect);
 }
@@ -44,7 +34,14 @@ test('renders correct elements for provided github app installation', function(a
   assert.expect(3);
 
   setProperties(this, { githubAppInstallation, organization });
-  renderPage();
+
+  this.render(hbs`
+    {{github/unconnected-installation
+      connect=(action connect)
+      githubAppInstallation=githubAppInstallation
+      organization=organization
+    }}
+  `);
 
   assert.ok(page.avatar.url.indexOf('foo-url') > -1, 'Avatar url is rendered.');
   assert.equal(page.login.text, 'foo-login', 'Account login is rendered.');
@@ -59,7 +56,13 @@ test('triggers/passes out all actions action', function(assert) {
     assert.ok('Connect action was called.');
   });
 
-  renderPage();
+  this.render(hbs`
+    {{github/unconnected-installation
+      connect=(action connect)
+      githubAppInstallation=githubAppInstallation
+      organization=organization
+    }}
+  `);
 
   run(() => page.connect.click());
 });

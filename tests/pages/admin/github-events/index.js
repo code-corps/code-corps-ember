@@ -22,30 +22,14 @@ export default create({
     fillIn: fillable()
   },
 
-  flashErrors: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message.alert-danger'
-  }),
+  flashErrors: collection('.flash-messages--full-width .flash-message.alert-danger'),
 
-  logItems: collection({
-    itemScope: '[data-test-log-row]',
-    item: {
-      action: {
-        scope: '[data-test-action]'
-      },
-      eventType: {
-        scope: '[data-test-event-type]'
-      },
-      failureReason: {
-        scope: '[data-test-failure-reason]'
-      },
-      status: {
-        scope: '[data-test-status]'
-      },
-      time: {
-        scope: '[data-test-time]'
-      }
-    }
+  logItems: collection('[data-test-log-row]', {
+    action: { scope: '[data-test-action]' },
+    eventType: { scope: '[data-test-event-type]' },
+    failureReason: { scope: '[data-test-failure-reason]' },
+    status: { scope: '[data-test-status]' },
+    time: { scope: '[data-test-time]' }
   }),
 
   next: {

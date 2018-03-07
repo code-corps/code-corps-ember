@@ -9,24 +9,16 @@ import {
 export default create({
   visit: visitable('admin/organization-invites/new'),
 
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  }),
+  flashMessages: collection('.flash-messages--full-width .flash-message'),
 
-  flashErrors: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message.alert-danger'
-  }),
+  flashErrors: collection('.flash-messages--full-width .flash-message.alert-danger'),
 
   inviteForm: {
     scope: '[data-test-invite-form]',
 
     clickSubmit: clickable('[data-test-submit]'),
 
-    errors: collection({
-      itemScope: '.input-group.has-error'
-    }),
+    errors: collection('.input-group.has-error'),
 
     inputEmail: fillable('[name=email]'),
     inputOrganizationName: fillable('[name=organizationName]')

@@ -33,7 +33,7 @@ test('it renders all its elements', function(assert) {
 
   this.set('organization', organization);
 
-  page.render(hbs`{{organization-profile organization=organization}}`);
+  this.render(hbs`{{organization-profile organization=organization}}`);
 
   assert.ok(page.organizationHeader.isVisible, 'The header component renders');
   assert.ok(page.organizationHeader.isExpanded, 'The header is expanded');
@@ -42,5 +42,5 @@ test('it renders all its elements', function(assert) {
 
   // Test components populate with right data
   assert.equal(page.organizationHeader.title.text, 'Test Organization', 'The header has data');
-  assert.equal(page.projectList.items().count, 3, 'The projects render');
+  assert.equal(page.projectList.items.length, 3, 'The projects render');
 });

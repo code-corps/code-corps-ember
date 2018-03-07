@@ -85,7 +85,7 @@ test('Creating a project can fail with validation errors', function(assert) {
     page.projectForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.projectForm.errors().count, 6));
+  andThen(() => assert.equal(page.projectForm.errors.length, 6));
 });
 
 test('Creating a project can fail with an unknown error', function(assert) {
@@ -118,7 +118,7 @@ test('Creating a project can fail with an unknown error', function(assert) {
     page.projectForm.clickSubmit();
   });
 
-  andThen(() => assert.equal(page.flashMessages().count, 1, 'A flash was displayed'));
+  andThen(() => assert.equal(page.flashMessages.length, 1, 'A flash was displayed'));
 });
 
 test('A user can copy details from their organization', function(assert) {
@@ -172,23 +172,23 @@ test('A user can create a project', function(assert) {
   });
 
   andThen(() => {
-    page.projectForm.categoryCheckboxes.checkboxes(0).label.click();
+    page.projectForm.categoryCheckboxes.checkboxes.objectAt(0).label.click();
   });
 
   andThen(() => {
-    assert.ok(page.projectForm.categoryCheckboxes.checkboxes(0).isChecked, 'The category was added.');
+    assert.ok(page.projectForm.categoryCheckboxes.checkboxes.objectAt(0).isChecked, 'The category was added.');
 
     page.projectForm.skillsTypeahead.searchFor('ru');
   });
 
   andThen(() => {
     focus('input');
-    assert.equal(page.projectForm.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    page.projectForm.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(page.projectForm.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    page.projectForm.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(page.projectForm.skillsList(0).text, 'Ruby', 'The skill was added to the list');
+    assert.equal(page.projectForm.skillsList.objectAt(0).text, 'Ruby', 'The skill was added to the list');
 
     page.projectForm
       .inputTitle('Bar')

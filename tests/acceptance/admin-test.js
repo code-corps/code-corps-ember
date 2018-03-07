@@ -25,7 +25,7 @@ test('Redirects when not an admin', function(assert) {
 
   andThen(() => {
     assert.equal(currentRouteName(), 'projects-list');
-    assert.equal(page.flashMessages().count, 1, 'A flash was displayed');
+    assert.equal(page.flashMessages.length, 1, 'A flash was displayed');
   });
 });
 

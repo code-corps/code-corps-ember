@@ -16,7 +16,7 @@ test('it renders all required elements', function(assert) {
 
   page.setContext(this);
   this.set('url', url);
-  page.render(hbs`{{stripe-connect-button url=url}}`);
+  this.render(hbs`{{stripe-connect-button url=url}}`);
 
   page.as((component) => {
     assert.equal(component.text, 'Connect with Stripe');

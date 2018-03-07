@@ -9,11 +9,6 @@ import conversationListItemWithProject from 'code-corps-ember/tests/pages/compon
 
 export default create({
   visit: visitable('/conversations'),
-
-  conversations: collection({
-    itemScope: '.conversation-list-item',
-    item: conversationListItemWithProject
-  }),
-
+  conversations: collection('.conversation-list-item', conversationListItemWithProject),
   conversationThread
 });

@@ -16,9 +16,7 @@ export default create({
   clickPreviewTask: clickable('.preview'),
   clickSubmit: clickable('[name=submit]'),
 
-  errors: collection({
-    scope: '.error'
-  }),
+  errors: collection('.error'),
 
   githubRepo,
 
@@ -34,13 +32,9 @@ export default create({
 
   skillsTypeahead,
 
-  taskSkillsList: collection({
-    scope: '.task-skills-list',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  taskSkillsList: collection('.task-skills-list button', {
+    text: text(),
+    click: clickable()
   }),
 
   visit: visitable(':organization/:project/tasks/new')

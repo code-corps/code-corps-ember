@@ -6,10 +6,6 @@ import pageComponent from 'code-corps-ember/tests/pages/components/navigation-me
 
 const page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`{{navigation-menu}}`);
-}
-
 moduleForComponent('navigation-menu', 'Integration | Component | navigation menu', {
   integration: true,
   beforeEach() {
@@ -23,7 +19,7 @@ moduleForComponent('navigation-menu', 'Integration | Component | navigation menu
 test('it renders elements for the default menu when logged out', function(assert) {
   assert.expect(9);
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
@@ -41,7 +37,7 @@ test('it renders elements for the default menu when logged in', function(assert)
 
   stubService(this, 'session', { isAuthenticated: true });
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.ok(page.projectsLink.isVisible, 'The link to projects route is rendered');
@@ -68,7 +64,7 @@ test('it renders elements for the onboarding menu correctly when on onboarding r
     progressPercentage: 25
   });
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered.');
@@ -96,7 +92,7 @@ test('it renders elements for the onboarding menu correctly when on project.than
     isViewingOnboarding: false
   });
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.ok(page.logo.isVisible, 'The logo is rendered.');
   assert.notOk(page.projectsLink.isVisible, 'The link to projects route is not rendered');
@@ -125,7 +121,7 @@ test('it renders the project switcher menu when the user has organizations', fun
   });
   stubService(this, 'session', { isAuthenticated: true });
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.ok(page.projectSwitcher.isVisible, 'The project switcher is rendered.');
 });
@@ -140,7 +136,7 @@ test('it does not render the project switcher menu when the user has no organiza
   });
   stubService(this, 'session', { isAuthenticated: true });
 
-  renderPage();
+  this.render(hbs`{{navigation-menu}}`);
 
   assert.notOk(page.projectSwitcher.isVisible, 'The project switcher is not rendered.');
 });

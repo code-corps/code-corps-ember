@@ -7,15 +7,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{github/install-link
-      organization=organization
-      project=project
-    }}
-  `);
-}
-
 moduleForComponent('github/install-link', 'Integration | Component | github/install link', {
   integration: true,
   beforeEach() {
@@ -48,7 +39,7 @@ test('it tracks clicking the link', function(assert) {
   set(this, 'organization', organization);
   set(this, 'project', project);
 
-  renderPage();
+  this.render(hbs`{{github/install-link organization=organization project=project}}`);
 
   page.click();
 });

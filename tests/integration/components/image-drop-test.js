@@ -24,7 +24,7 @@ let droppedImageString = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEA
 test('it renders default state without a photo', function(assert) {
   // Set any properties with set(this, 'myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });"
-  page.render(hbs`{{image-drop}}`);
+  this.render(hbs`{{image-drop}}`);
 
   assert.equal(this.$('p.help-text').text().trim(), 'Click to add your photo.');
   assert.notOk(page.dropZone.isActive);
@@ -34,7 +34,7 @@ test('it renders default state without a photo', function(assert) {
 });
 
 test('it reacts to dragging on the application', function(assert) {
-  page.render(hbs`
+  this.render(hbs`
     {{#drag-zone}}
       {{image-drop}}
     {{/drag-zone}}
@@ -48,7 +48,7 @@ test('it reacts to dragging on the application', function(assert) {
 });
 
 test('it reacts to dragging on itself', function(assert) {
-  page.render(hbs`{{image-drop}}`);
+  this.render(hbs`{{image-drop}}`);
 
   this.$('.image-drop').trigger('dragover');
   assert.ok(page.dropZone.isActive);
@@ -60,7 +60,7 @@ test('it reacts to dragging on itself', function(assert) {
 test('it renders the original image', function(assert) {
   set(this, 'originalImage', originalImageString);
 
-  page.render(hbs`{{image-drop originalImage=originalImage}}`);
+  this.render(hbs`{{image-drop originalImage=originalImage}}`);
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${originalImageString})`;
@@ -71,7 +71,7 @@ test('it renders the dropped image', function(assert) {
   set(this, 'originalImage', originalImageString);
   set(this, 'droppedImage', droppedImageString);
 
-  page.render(hbs`{{image-drop originalImage=originalImage droppedImage=droppedImage}}`);
+  this.render(hbs`{{image-drop originalImage=originalImage droppedImage=droppedImage}}`);
 
   let style = this.$('.image-drop').css('background-image');
   let expectedStyle = `url(${droppedImageString})`;
@@ -80,7 +80,7 @@ test('it renders the dropped image', function(assert) {
 
 test('it handles a dropped image file', function(assert) {
   set(this, 'originalImage', originalImageString);
-  page.render(hbs`{{image-drop originalImage=originalImage}}`);
+  this.render(hbs`{{image-drop originalImage=originalImage}}`);
   let fileName = 'file.png';
 
   this.$('.image-drop').trigger('dragover');
@@ -96,7 +96,7 @@ test('it handles a dropped image file', function(assert) {
 
 test('it does not show the hover text if not hovering', function(assert) {
   set(this, 'hoverText', 'Some hover text.');
-  page.render(hbs`{{image-drop hoverText=hoverText}}`);
+  this.render(hbs`{{image-drop hoverText=hoverText}}`);
 
   assert.equal(this.$('.hover').text().trim(), 'Some hover text.');
   assert.equal(this.$('.hover').css('display'), 'none');
@@ -108,7 +108,7 @@ test('it does not show the hover text if not hovering', function(assert) {
 //   set(this, 'hoverText', 'Some hover text.');
 //   set(this, 'originalImage', originalImageString);
 
-//   page.render(hbs`{{image-drop originalImage=originalImage hoverText=hoverText}}`);
+//   this.render(hbs`{{image-drop originalImage=originalImage hoverText=hoverText}}`);
 
 //   Ember.run(() => { this.$('.image-drop').trigger('mouseenter'); });
 
@@ -117,7 +117,7 @@ test('it does not show the hover text if not hovering', function(assert) {
 // });
 
 test('it is circular if circle passed in', function(assert) {
-  page.render(hbs`{{image-drop circle=true}}`);
+  this.render(hbs`{{image-drop circle=true}}`);
 
   assert.ok(page.dropZone.isCircle);
 });

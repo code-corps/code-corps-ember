@@ -10,12 +10,9 @@ export default {
 
   userCount: count('li'),
 
-  users: collection({
-    itemScope: 'li',
-    item: {
-      imageSource: property('src', 'img'),
-      imageIsVisible: isVisible('img'),
-      placeholderIsVisible: isVisible('div.icon')
-    }
+  users: collection('li', {
+    imageSource: property('src', 'img'),
+    imageIsVisible: isVisible('img'),
+    placeholderIsVisible: isVisible('div.icon')
   })
 };

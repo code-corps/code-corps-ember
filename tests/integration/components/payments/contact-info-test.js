@@ -18,7 +18,7 @@ moduleForComponent('payments/contact-info', 'Integration | Component | payments/
 
 test('it renders email', function(assert) {
   assert.expect(1);
-  page.render(hbs`{{payments/contact-info email='test@example.com'}}`);
+  this.render(hbs`{{payments/contact-info email='test@example.com'}}`);
   assert.equal(page.email, 'test@example.com', 'The email is rendered');
 });
 

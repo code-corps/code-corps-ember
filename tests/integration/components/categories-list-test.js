@@ -38,10 +38,10 @@ test('it renders the categories and sorts them by name', function(assert) {
   ];
 
   this.set('categories', categories);
-  page.render(hbs`{{categories-list categories=categories}}`);
+  this.render(hbs`{{categories-list categories=categories}}`);
 
-  assert.equal(page.items().count, 3);
-  assert.equal(page.items(0).name, 'Alphabets');
-  assert.equal(page.items(1).name, 'Society');
-  assert.equal(page.items(2).name, 'Zoology');
+  assert.equal(page.items.length, 3);
+  assert.equal(page.items.objectAt(0).name, 'Alphabets');
+  assert.equal(page.items.objectAt(1).name, 'Society');
+  assert.equal(page.items.objectAt(2).name, 'Zoology');
 });

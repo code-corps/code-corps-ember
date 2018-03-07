@@ -42,8 +42,8 @@ test('Login failure', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(loginPage.form.errors().count, 1, 'One error is shown');
-    assert.equal(loginPage.form.errors(0).text, ERROR_TEXT, 'Page contains login error');
+    assert.equal(loginPage.form.errors.length, 1, 'One error is shown');
+    assert.equal(loginPage.form.errors.objectAt(0).text, ERROR_TEXT, 'Page contains login error');
   });
 });
 

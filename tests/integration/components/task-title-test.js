@@ -46,7 +46,7 @@ test('it is not editable if not the right user', function(assert) {
   stubService(this, 'current-user', mockDifferentUser);
 
   assert.expect(1);
-  page.render(hbs`{{task-title}}`);
+  this.render(hbs`{{task-title}}`);
   assert.equal(this.$('.task-title .edit').length, 0);
 });
 
@@ -56,7 +56,7 @@ test('it switches between edit and view mode', function(assert) {
   stubService(this, 'current-user', mockCurrentUser);
 
   this.set('task', mockTask);
-  page.render(hbs`{{task-title task=task}}`);
+  this.render(hbs`{{task-title task=task}}`);
 
   assert.notOk(page.isEditing, 'Component is not in edit mode');
   assert.notOk(page.titleInput.isVisible, 'Input element is not rendered');
@@ -79,7 +79,7 @@ test('it saves', function(assert) {
   this.on('applyEdit', () => {
     return RSVP.resolve();
   });
-  page.render(hbs`{{task-title task=task saveTask=(action "applyEdit")}}`);
+  this.render(hbs`{{task-title task=task saveTask=(action "applyEdit")}}`);
 
   assert.equal(page.title.text, 'Original title #12', 'The original title is right');
 

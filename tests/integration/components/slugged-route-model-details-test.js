@@ -6,16 +6,6 @@ import component from 'code-corps-ember/tests/pages/components/slugged-route-mod
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{slugged-route-model-details
-      sluggedRoute=sluggedRoute
-      organization=sluggedRoute.organization
-      user=sluggedRoute.user
-    }}`
-  );
-}
-
 moduleForComponent('slugged-route-model-details', 'Integration | Component | slugged route model details', {
   integration: true,
   beforeEach() {
@@ -33,7 +23,13 @@ test('when the slugged route is an organization, it renders the organization com
   let sluggedRoute = { organization: {} };
 
   this.set('sluggedRoute', sluggedRoute);
-  renderPage();
+  this.render(hbs`
+    {{slugged-route-model-details
+      sluggedRoute=sluggedRoute
+      organization=sluggedRoute.organization
+      user=sluggedRoute.user
+    }}`
+  );
 
   assert.ok(page.organizationProfile.isVisible, 'organization component is rendered.');
 });
@@ -44,7 +40,13 @@ test('when the slugged route is a user, it renders the user component', function
   let sluggedRoute = { user: {} };
 
   this.set('sluggedRoute', sluggedRoute);
-  renderPage();
+  this.render(hbs`
+    {{slugged-route-model-details
+      sluggedRoute=sluggedRoute
+      organization=sluggedRoute.organization
+      user=sluggedRoute.user
+    }}`
+  );
 
   assert.ok(page.userDetails.isVisible, 'the user component is rendered.');
 });

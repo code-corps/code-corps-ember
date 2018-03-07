@@ -12,13 +12,13 @@ export default create({
     scope: '.company',
 
     header: text('h2'),
-    items: collection({ scope: 'li' })
+    items: collection('li')
   },
 
   contributors: {
     scope: '.contributors',
 
     header: text('h2'),
-    items: collection({ scope: 'li' })
+    items: collection('li')
   }
 });

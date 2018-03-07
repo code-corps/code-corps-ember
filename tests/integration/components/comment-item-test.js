@@ -9,10 +9,6 @@ import commentItemComponent from 'code-corps-ember/tests/pages/components/commen
 
 let page = PageObject.create(commentItemComponent);
 
-function renderPage() {
-  page.render(hbs`{{comment-item comment=comment}}`);
-}
-
 moduleForComponent('comment-item', 'Integration | Component | comment item', {
   integration: true,
   beforeEach() {
@@ -30,7 +26,7 @@ test('it renders all required comment elements properly', function(assert) {
 
   set(this, 'comment', comment);
 
-  renderPage();
+  this.render(hbs`{{comment-item comment=comment}}`);
 
   assert.equal(page.commentBody.text, '', 'The body is not initially rendered, since the comment has not loaded');
   assert.notOk(page.username.isVisible, 'The username of the comment author is not rendered, since the comment is not loaded yet');
@@ -66,7 +62,8 @@ test('it switches between editing and viewing mode', function(assert) {
   };
 
   set(this, 'comment', comment);
-  renderPage();
+
+  this.render(hbs`{{comment-item comment=comment}}`);
 
   page.clickEdit();
 
@@ -93,7 +90,7 @@ test('if the comment body is empty render null comment element', function(assert
 
   set(this, 'comment', comment);
 
-  renderPage();
+  this.render(hbs`{{comment-item comment=comment}}`);
 
   // this will trigger some promise resolving, so we wrap it in a loop
   run(this, () => {

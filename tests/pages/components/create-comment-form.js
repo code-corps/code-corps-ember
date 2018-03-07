@@ -25,9 +25,7 @@ export default {
     markdown: fillable('textarea[name=markdown]')
   },
 
-  errors: collection({
-    itemScope: '.error'
-  }),
+  errors: collection('.error'),
 
   rendersLogin: isVisible('a[href$=login]'),
   rendersMarkdown: isVisible('[name=markdown]'),

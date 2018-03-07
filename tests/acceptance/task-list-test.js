@@ -46,7 +46,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
   });
 
   andThen(() => {
-    taskCard = page.taskBoard.taskLists(0).taskCards(0);
+    taskCard = page.taskBoard.taskLists.objectAt(0).taskCards.objectAt(0);
     assert.ok(taskCard.taskAssignment.select.trigger.unassigned, 'Task is rendered unassigned.');
     taskCard.mouseenter();
     taskCard.triggerKeyDown('Space');
@@ -62,7 +62,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
   });
 
   andThen(() => {
-    taskCard.taskAssignment.select.dropdown.options(1).select();
+    taskCard.taskAssignment.select.dropdown.options.objectAt(1).select();
   });
 
   andThen(() => {
@@ -74,7 +74,7 @@ test('member can assign/reassign/unassign tasks to user', function(assert) {
   });
 
   andThen(() => {
-    taskCard.taskAssignment.select.dropdown.options(1).select();
+    taskCard.taskAssignment.select.dropdown.options.objectAt(1).select();
   });
 
   andThen(() => {
@@ -118,6 +118,6 @@ test('clicking a task card is tracked', function(assert) {
   this.application.inject('route', 'metrics', 'service:stubMetrics');
 
   andThen(() => {
-    page.taskBoard.taskLists(0).taskCards(0).title.click();
+    page.taskBoard.taskLists.objectAt(0).taskCards.objectAt(0).title.click();
   });
 });

@@ -43,7 +43,7 @@ moduleForComponent('thank-you-container', 'Integration | Component | thank-you c
     });
 
     page.setContext(this);
-    page.render(hbs`{{thank-you-container project=project}}`);
+    this.render(hbs`{{thank-you-container project=project}}`);
   }
 });
 
@@ -56,5 +56,5 @@ test('it renders the thank you text', function(assert) {
 test('it renders a subset of 12 volunteers', function(assert) {
   assert.expect(1);
 
-  assert.equal(page.volunteers().count, 12);
+  assert.equal(page.volunteers.length, 12);
 });

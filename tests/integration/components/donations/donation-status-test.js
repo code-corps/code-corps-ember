@@ -24,7 +24,7 @@ moduleForComponent('donations/donation-status', 'Integration | Component | donat
 test('it renders the become a donor link initially', function(assert) {
   assert.expect(1);
 
-  page.render(hbs`{{donations/donation-status}}`);
+  this.render(hbs`{{donations/donation-status}}`);
 
   assert.ok(page.rendersLink, 'The link is rendered.');
 });
@@ -33,7 +33,7 @@ test('it renders show-donation if a subscription record is present and assigned'
   assert.expect(2);
 
   this.set('subscription', { quantity: 1.50 });
-  page.render(hbs`{{donations/donation-status subscription=subscription}}`);
+  this.render(hbs`{{donations/donation-status subscription=subscription}}`);
 
   assert.ok(page.rendersShowDonation, 'show-donation subcomponent is rendered.');
   assert.equal(page.showDonation.infoText, 'You pledged $1.50 each month.', 'Info text is properly rendered. Binding is correct.');

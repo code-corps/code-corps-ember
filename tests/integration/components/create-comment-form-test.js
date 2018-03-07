@@ -11,21 +11,12 @@ let page = PageObject.create(createCommentForm);
 
 let mockSession = { isAuthenticated: true };
 
-function renderPage() {
-  page.render(hbs`{{create-comment-form comment=comment save=saveHandler}}`);
-}
-
-function setHandler(context, saveHandler = function() {}) {
-  set(context, 'saveHandler', saveHandler);
-}
-
 moduleForComponent('create-comment-form', 'Integration | Component | create comment form', {
   integration: true,
   setup() {
     mockRouting(this);
   },
   beforeEach() {
-    setHandler(this);
     page.setContext(this);
   },
   afterEach() {
@@ -37,8 +28,14 @@ test('it yields to content', function(assert) {
   assert.expect(1);
 
   stubService(this, 'session', mockSession);
+  set(this, 'onSave', () => {});
 
-  page.render(hbs`{{#create-comment-form comment=comment save=saveHandler}}Random content{{/create-comment-form}}`);
+  this.render(hbs`
+    {{#create-comment-form comment=comment save=onSave}}
+      Random content
+    {{/create-comment-form}}
+  `);
+
   assert.ok(page.contains('Random content'), 'The provided content is yielded to');
 });
 
@@ -48,8 +45,10 @@ test('it renders the proper elements', function(assert) {
   stubService(this, 'session', mockSession);
 
   set(this, 'comment', {});
+  set(this, 'onSave', () => {});
 
-  renderPage();
+  this.render(hbs`{{create-comment-form comment=comment save=onSave}}`);
+
   assert.ok(page.rendersMarkdown, 'The markdown input is rendered');
   assert.ok(page.rendersSaveButton, 'The save button is rendered');
 });
@@ -60,18 +59,21 @@ test('it calls action when user clicks submit', function(assert) {
   stubService(this, 'session', mockSession);
 
   set(this, 'comment', { markdown: 'Test markdown' });
-  setHandler(this, (markdown) => {
+  set(this, 'onSave', (markdown) => {
     assert.equal(markdown, 'Test markdown', 'Action was called with proper parameter');
   });
 
-  renderPage();
+  this.render(hbs`{{create-comment-form comment=comment save=onSave}}`);
+
   page.clickSave();
 });
 
 test('it renders a sign up button and sign in link when not authenticated', function(assert) {
   assert.expect(2);
 
-  renderPage();
+  set(this, 'onSave', () => {});
+
+  this.render(hbs`{{create-comment-form comment=comment save=onSave}}`);
 
   assert.ok(page.rendersSignup, 'Sign up link is rendered');
   assert.ok(page.rendersLogin, 'Login ink is rendered');

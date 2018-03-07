@@ -7,17 +7,6 @@ import githubRepoComponent from 'code-corps-ember/tests/pages/components/github-
 
 let page = PageObject.create(githubRepoComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{github-repo
-      connectRepo=connectRepoHandler
-      disconnectRepo=disconnectRepoHandler
-      githubRepo=githubRepo
-      project=project
-    }}
-  `);
-}
-
 moduleForComponent('github-repo', 'Integration | Component | github repo', {
   integration: true,
   beforeEach() {
@@ -32,7 +21,16 @@ test('it renders the github repo name', function(assert) {
   assert.expect(1);
   let githubRepo = { name: 'code-corps-ember', isLoaded: true };
   set(this, 'githubRepo', githubRepo);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
+
   assert.equal(page.name.text, 'code-corps-ember');
 });
 
@@ -41,7 +39,14 @@ test('it changes state based on loading, presence of record', function(assert) {
 
   set(this, 'githubRepo', {});
 
-  renderPage();
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   run(() => set(this, 'githubRepo', { isLoaded: false }));
   assert.ok(page.loading.isVisible, 'With github repo loading, state should be loading.');
@@ -57,7 +62,15 @@ test('it changes actions based on sync state and settings', function(assert) {
   let project = { id: 1, isLoaded: true };
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   assert.equal(page.actions.connect.text, 'Connect', 'Connect link renders.');
 
@@ -91,7 +104,15 @@ test('it allows disconnecting', function(assert) {
   set(this, 'disconnectRepoHandler', function(passedRepo) {
     assert.deepEqual(githubRepo, passedRepo);
   });
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   page.click();
   page.callout.repoDisconnectConfirmModal.openButton.click();
@@ -109,7 +130,15 @@ test('it allows connecting', function(assert) {
   set(this, 'connectRepoHandler', function(passedRepo) {
     assert.deepEqual(githubRepo, passedRepo);
   });
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   page.click();
   assert.equal(page.callout.title.text, `Connect to ${githubRepo.name}`, 'Renders the callout title.');
@@ -131,7 +160,14 @@ test('it works with repos connected to other projects properly', function(assert
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
 
-  renderPage();
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   assert.notOk(page.actions.close.isVisible, 'Close link does not render for repo connected to other project.');
   assert.notOk(page.actions.connect.isVisible, 'Connect link does not render for repo connected to other project.');
@@ -155,7 +191,16 @@ test('clicking disconnected repo expands the UI', function(assert) {
 
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
+
   run(() => page.click());
 
   assert.ok(page.callout.isVisible, 'Page did expand');
@@ -173,7 +218,15 @@ test('clicking fully synced repo connected to current project expands the UI', f
 
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   run(() => page.click());
 
@@ -191,7 +244,15 @@ test('clicking repo connected to different project does nothing', function(asser
 
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   run(() => page.click());
 
@@ -210,7 +271,15 @@ test('clicking repo while syncing does nothing', function(assert) {
 
   set(this, 'githubRepo', githubRepo);
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`
+    {{github-repo
+      connectRepo=connectRepoHandler
+      disconnectRepo=disconnectRepoHandler
+      githubRepo=githubRepo
+      project=project
+    }}
+  `);
 
   run(() => page.click());
 

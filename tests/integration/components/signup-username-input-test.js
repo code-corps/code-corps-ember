@@ -22,7 +22,7 @@ moduleForComponent('signup-username-input', 'Integration | Component | signup us
 });
 
 test('it shows nothing when empty', function(assert) {
-  page.render(hbs`{{signup-username-input}}`);
+  this.render(hbs`{{signup-username-input}}`);
 
   assert.notOk(page.suggestionsArea.visible);
   assert.notOk(page.suggestionsArea.visible);
@@ -41,15 +41,15 @@ test('it shows suggestions when invalid', async function(assert) {
     });
   });
   this.set('user', { username: null });
-  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
+  this.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
   page.fillIn('lots--of--hypens');
   await page.keydown();
 
   assert.notOk(page.suggestionsArea.ok);
   assert.ok(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 1);
-  assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a username with only letters, numbers, or underscores.');
+  assert.equal(page.suggestionsArea.suggestions.length, 1);
+  assert.equal(page.suggestionsArea.suggestions.objectAt(0).text, 'Please enter a username with only letters, numbers, or underscores.');
 });
 
 test('it shows suggestions when unavailable', async function(assert) {
@@ -65,15 +65,15 @@ test('it shows suggestions when unavailable', async function(assert) {
     });
   });
   this.set('user', { username: null });
-  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
+  this.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
   page.fillIn('taken');
   await page.keydown();
 
   assert.notOk(page.suggestionsArea.ok);
   assert.ok(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 1);
-  assert.equal(page.suggestionsArea.suggestions(0).text, 'This username is already registered. Want to login?');
+  assert.equal(page.suggestionsArea.suggestions.length, 1);
+  assert.equal(page.suggestionsArea.suggestions.objectAt(0).text, 'This username is already registered. Want to login?');
 });
 
 test('it shows ok when valid and available', async function(assert) {
@@ -89,14 +89,14 @@ test('it shows ok when valid and available', async function(assert) {
     });
   });
   this.set('user', { username: null });
-  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
+  this.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
   page.fillIn('available');
   await page.keydown();
 
   assert.ok(page.suggestionsArea.ok);
   assert.notOk(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 0);
+  assert.equal(page.suggestionsArea.suggestions.length, 0);
 });
 
 test('it resets to show nothing when cleared', async function(assert) {
@@ -112,7 +112,7 @@ test('it resets to show nothing when cleared', async function(assert) {
     });
   });
   this.set('user', { username: 'available' });
-  page.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
+  this.render(hbs`{{signup-username-input user=user usernameValidated=usernameValidated}}`);
 
   page.fillIn('');
   await page.keydown();

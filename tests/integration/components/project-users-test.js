@@ -29,10 +29,10 @@ test('it renders an item for each member in the list', function(assert) {
   }
 
   set(this, 'users', mockUsers);
-  page.render(hbs`{{project-users users=users}}`);
+  this.render(hbs`{{project-users users=users}}`);
 
   assert.equal(page.userCount, 18, 'The correct number of users are rendered');
-  assert.ok(page.users(0).imageSource.indexOf('image_1.png') > -1, 'The correct photo renders');
+  assert.ok(page.users.objectAt(0).imageSource.indexOf('image_1.png') > -1, 'The correct photo renders');
 });
 
 test('it renders loading items differently', function(assert) {
@@ -46,8 +46,8 @@ test('it renders loading items differently', function(assert) {
   ];
 
   set(this, 'users', mockUsers);
-  page.render(hbs`{{project-users users=users}}`);
+  this.render(hbs`{{project-users users=users}}`);
 
-  assert.notOk(page.users(0).imageIsVisible, 'The photo does not render');
-  assert.ok(page.users(0).placeholderIsVisible, 'The placeholder renders');
+  assert.notOk(page.users.objectAt(0).imageIsVisible, 'The photo does not render');
+  assert.ok(page.users.objectAt(0).placeholderIsVisible, 'The placeholder renders');
 });

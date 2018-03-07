@@ -6,10 +6,6 @@ import userDropdownComponent from 'code-corps-ember/tests/pages/component/user-d
 
 let page = PageObject.create(userDropdownComponent);
 
-function renderPage() {
-  page.render(hbs`{{user-dropdown user=user action='hide'}}`);
-}
-
 moduleForComponent('user-dropdown', 'Integration | Component | user dropdown', {
   integration: true,
   beforeEach() {
@@ -38,7 +34,8 @@ test('it renders', function(assert) {
   assert.expect(1);
 
   this.set('user', stubUser);
-  renderPage();
+
+  this.render(hbs`{{user-dropdown user=user}}`);
 
   assert.ok(page.isVisible, 'The component renders');
 });
@@ -51,7 +48,8 @@ test('it triggers the hide action when clicked', function(assert) {
     assert.ok(true, 'It triggers the hide action when clicked');
   });
 
-  renderPage();
+  this.render(hbs`{{user-dropdown user=user action='hide'}}`);
+
   page.click();
 
 });

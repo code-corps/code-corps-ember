@@ -6,14 +6,6 @@ import component from 'code-corps-ember/tests/pages/components/conversations/pro
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/project-details
-      project=project
-    }}
-  `);
-}
-
 moduleForComponent('conversations/project-details', 'Integration | Component | conversations/project details', {
   integration: true,
   beforeEach() {
@@ -37,12 +29,12 @@ test('it renders the project details', function(assert) {
 
   set(this, 'project', project);
 
-  renderPage();
+  this.render(hbs`{{conversations/project-details project=project}}`);
 
   assert.equal(page.icon.url, project.iconThumbUrl, 'The icon renders');
   assert.equal(page.title.text, project.title, 'The title renders');
   assert.equal(page.description.text, project.description, 'The description renders');
-  page.projectCategoriesList.projectCategoryItems(0).mouseenter();
-  assert.equal(page.projectCategoriesList.projectCategoryItems(0).tooltip.text, project.categories[0].name, 'The categories render');
-  assert.equal(page.relatedSkills.skillListItems.listItems(0).text, project.skills[0].title, 'The skills render');
+  page.projectCategoriesList.projectCategoryItems.objectAt(0).mouseenter();
+  assert.equal(page.projectCategoriesList.projectCategoryItems.objectAt(0).tooltip.text, project.categories[0].name, 'The categories render');
+  assert.equal(page.relatedSkills.skillListItems.listItems.objectAt(0).text, project.skills[0].title, 'The skills render');
 });

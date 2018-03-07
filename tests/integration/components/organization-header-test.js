@@ -27,7 +27,7 @@ test('it renders properly when not expanded', function(assert) {
 
   this.set('organization', organization);
 
-  page.render(hbs`{{organization-header organization=organization}}`);
+  this.render(hbs`{{organization-header organization=organization}}`);
 
   assert.notOk(page.isExpanded, 'Does not have expanded class');
   assert.equal(page.image.src, 'icon_thumb.png', 'Has a small image');
@@ -41,7 +41,7 @@ test('it renders properly when expanded', function(assert) {
 
   this.set('organization', organization);
 
-  page.render(hbs`{{organization-header organization=organization expanded=true}}`);
+  this.render(hbs`{{organization-header organization=organization expanded=true}}`);
 
   assert.ok(page.isExpanded, 'Has expanded class');
   assert.equal(page.image.src, 'icon_large.png', 'Has a large image');

@@ -22,12 +22,8 @@ export default create({
 
   userSettingsForm,
 
-  userSkillsList: collection({
-    scope: '.user-skills-list',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  userSkillsList: collection('.user-skills-list button', {
+    text: text(),
+    click: clickable()
   })
 });

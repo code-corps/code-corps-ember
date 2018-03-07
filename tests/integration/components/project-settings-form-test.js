@@ -31,7 +31,7 @@ test('it renders form elements properly', function(assert) {
 
   set(this, 'project', project);
 
-  page.render(hbs`{{project-settings-form project=project}}`);
+  this.render(hbs`{{project-settings-form project=project}}`);
 
   assert.equal(page.title.value, 'Test Project');
   assert.equal(page.description.value, 'A test project');
@@ -49,7 +49,7 @@ test('it calls save on project when save button is clicked', function(assert) {
 
   set(this, 'project', project);
 
-  page.render(hbs`{{project-settings-form project=project}}`);
+  this.render(hbs`{{project-settings-form project=project}}`);
 
   page.save.click();
 

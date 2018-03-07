@@ -15,10 +15,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`{{category-item category=category}}`);
-}
-
 moduleForComponent('category-item', 'Integration | Component | category item', {
   integration: true,
   beforeEach() {
@@ -101,7 +97,7 @@ test('it works for selecting unselected categories', async function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesService);
   set(this, 'category', unselectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   assert.ok(page.icon.classContains('technology'), 'renders the right icon');
   assert.notOk(page.icon.classContains('technology--selected'), 'is not selected');
@@ -119,7 +115,7 @@ test('it works for removing selected categories', function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   assert.ok(page.icon.classContains('society--selected'), 'is selected');
   assert.equal(page.button.text, 'Society', 'Button text is rendered correctly.');
@@ -135,7 +131,7 @@ test('it creates a flash message on an error when adding', function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', unselectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   page.button.click();
 
@@ -155,7 +151,7 @@ test('it creates a flash message on an error when removing', function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesServiceForErrors);
   this.set('category', selectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   page.button.click();
 
@@ -175,7 +171,7 @@ test('it sets and unsets loading state when adding', async function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', unselectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   let result = page.button.click();
 
@@ -192,7 +188,7 @@ test('it sets and unsets loading state when removing', async function(assert) {
   stubService(this, 'user-categories', mockUserCategoriesService);
   this.set('category', selectedCategory);
 
-  renderPage();
+  this.render(hbs`{{category-item category=category}}`);
 
   let result = page.button.click();
 

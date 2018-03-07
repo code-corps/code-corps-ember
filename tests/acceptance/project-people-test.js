@@ -61,17 +61,17 @@ test('Lists owner when owner is the only contributor.', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), urlParts.url);
 
-    assert.ok(page.admins().isEmpty, 'Admins list is empty');
-    assert.equal(page.admins().count, 0, 'Admins has no users listed');
+    assert.ok(page.adminSection.isEmpty, 'Admins list is empty');
+    assert.equal(page.adminSection.users.length, 0, 'Admins has no users listed');
 
-    assert.ok(page.others().isEmpty, 'Others list is empty');
-    assert.equal(page.others().count, 0, 'Others has no users listed');
+    assert.ok(page.contributorSection.isEmpty, 'Others list is empty');
+    assert.equal(page.contributorSection.users.length, 0, 'Others has no users listed');
 
-    assert.notOk(page.owners().isEmpty, 'Owners list is NOT empty');
-    assert.equal(page.owners().count, 1, 'Owners has 1 user listed');
+    assert.notOk(page.ownerSection.isEmpty, 'Owners list is NOT empty');
+    assert.equal(page.ownerSection.users.length, 1, 'Owners has 1 user listed');
 
-    assert.ok(page.pendingContributors().isEmpty, 'Pending contributors list is empty');
-    assert.equal(page.pendingContributors().count, 0, 'Pending contributors has no users listed');
+    assert.ok(page.pendingSection.isEmpty, 'Pending contributors list is empty');
+    assert.equal(page.pendingSection.users.length, 0, 'Pending contributors has no users listed');
   });
 });
 
@@ -99,41 +99,41 @@ test('lists multiple contributors if they exist', function(assert) {
 
     assert.equal(page.projectMenu.peopleLink.infoText, '2 pending');
 
-    assert.notOk(page.admins().isEmpty, 'Admins list is not empty');
-    assert.equal(page.admins().count, 1, 'Admins has 1 user listed');
+    assert.notOk(page.adminSection.isEmpty, 'Admins list is not empty');
+    assert.equal(page.adminSection.users.length, 1, 'Admins has 1 user listed');
 
-    assert.notOk(page.others().isEmpty, 'Others list is not empty');
-    assert.equal(page.others().count, 1, 'Others has 1 user listed');
+    assert.notOk(page.contributorSection.isEmpty, 'Others list is not empty');
+    assert.equal(page.contributorSection.users.length, 1, 'Others has 1 user listed');
 
-    assert.notOk(page.owners().isEmpty, 'Owners list is not empty');
-    assert.equal(page.owners().count, 1, 'Owners has 1 user listed');
+    assert.notOk(page.ownerSection.isEmpty, 'Owners list is not empty');
+    assert.equal(page.ownerSection.users.length, 1, 'Owners has 1 user listed');
 
-    assert.notOk(page.pendingContributors().isEmpty, 'Pending contributors list is not empty');
-    assert.equal(page.pendingContributors().count, 2, 'Pending contributors has 2 users listed');
-    page.pendingContributors(0).approveButton.click();
+    assert.notOk(page.pendingSection.isEmpty, 'Pending contributors list is not empty');
+    assert.equal(page.pendingSection.users.length, 2, 'Pending contributors has 2 users listed');
+    page.pendingSection.users.objectAt(0).approveButton.click();
   });
 
   andThen(function() {
     assert.equal(page.projectMenu.peopleLink.infoText, '1 pending');
-    assert.equal(page.pendingContributors().count, 1, 'Pending contributors has 1 user listed');
-    assert.equal(page.others().count, 2, 'Others has 2 users listed');
+    assert.equal(page.pendingSection.users.length, 1, 'Pending contributors has 1 user listed');
+    assert.equal(page.contributorSection.users.length, 2, 'Others has 2 users listed');
 
-    page.pendingContributors(0).denyButton.click();
+    page.pendingSection.users.objectAt(0).denyButton.click();
   });
 
   andThen(function() {
     assert.notOk(page.projectMenu.peopleLink.infoVisible);
-    assert.equal(page.pendingContributors().count, 0, 'Pending contributors has no users listed');
-    assert.equal(page.others().count, 2, 'Others has 2 users listed');
+    assert.equal(page.pendingSection.users.length, 0, 'Pending contributors has no users listed');
+    assert.equal(page.contributorSection.users.length, 2, 'Others has 2 users listed');
 
-    page.others(0).projectUserRoleModal.openButton.click();
-    page.others(0).projectUserRoleModal.modal.radioGroupAdmin.radioButton.click();
-    page.others(0).projectUserRoleModal.modal.save();
+    page.contributorSection.users.objectAt(0).projectUserRoleModal.openButton.click();
+    page.contributorSection.users.objectAt(0).projectUserRoleModal.modal.radioGroupAdmin.radioButton.click();
+    page.contributorSection.users.objectAt(0).projectUserRoleModal.modal.save();
   });
 
   andThen(function() {
-    assert.equal(page.admins().count, 2, 'Admins has 2 users listed');
-    assert.equal(page.others().count, 1, 'Others has 1 user listed');
+    assert.equal(page.adminSection.users.length, 2, 'Admins has 2 users listed');
+    assert.equal(page.contributorSection.users.length, 1, 'Others has 1 user listed');
     stub.restore();
   });
 });
@@ -152,18 +152,18 @@ test('A project admin can message a member', function(assert) {
   page.visit(urlParts.args);
 
   andThen(() => {
-    page.others(0).newConversationModal.openButton.click();
+    page.contributorSection.users.objectAt(0).newConversationModal.openButton.click();
   });
 
   andThen(() => {
-    assert.ok(page.others(0).newConversationModal.modal.isVisible, 'The modal is visible');
-    page.others(0).newConversationModal.modal.subject.fillIn('Test message');
-    page.others(0).newConversationModal.modal.body.fillIn('Lorem ipsum');
-    page.others(0).newConversationModal.modal.save();
+    assert.ok(page.contributorSection.users.objectAt(0).newConversationModal.modal.isVisible, 'The modal is visible');
+    page.contributorSection.users.objectAt(0).newConversationModal.modal.subject.fillIn('Test message');
+    page.contributorSection.users.objectAt(0).newConversationModal.modal.body.fillIn('Lorem ipsum');
+    page.contributorSection.users.objectAt(0).newConversationModal.modal.save();
   });
 
   andThen(() => {
-    assert.notOk(page.others(0).newConversationModal.modal.isVisible, 'The modal closed');
+    assert.notOk(page.contributorSection.users.objectAt(0).newConversationModal.modal.isVisible, 'The modal closed');
     let message = server.schema.messages.findBy({ authorId: user.id });
     assert.ok(message, 'Created the message');
   });

@@ -8,15 +8,6 @@ import moment from 'moment';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/conversation-part-closed
-      author=author
-      closedAt=closedAt
-    }}
-  `);
-}
-
 moduleForComponent('conversations/conversation-part-closed', 'Integration | Component | conversations/conversation part closed', {
   integration: true,
   beforeEach() {
@@ -41,7 +32,12 @@ test('if current user closes message, "You closed this" is rendered', function(a
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
   set(this, 'closedAt', twoMinutesAgo);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-closed
+      author=author
+      closedAt=closedAt
+    }}
+  `);
 
   let expectedText = `You closed this ${twoMinutesAgoFriendly}`;
   assert.equal(page.closedAt.text, expectedText, 'The closed at timestamp is rendered');
@@ -66,7 +62,12 @@ test('if someone other than the current user closes the message, "Author.usernam
   let twoMinutesAgoFriendly = twoMinutesAgo.from();
   set(this, 'closedAt', twoMinutesAgo);
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/conversation-part-closed
+      author=author
+      closedAt=closedAt
+    }}
+  `);
 
   let expectedText = `${author.username} closed this ${twoMinutesAgoFriendly}`;
   assert.equal(page.closedAt.text, expectedText, 'The closed at timestamp is rendered');

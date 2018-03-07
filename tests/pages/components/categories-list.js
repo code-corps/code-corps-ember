@@ -5,11 +5,5 @@ import {
 
 export default {
   scope: '.start__interests',
-
-  items: collection({
-    itemScope: '.category-item',
-    item: {
-      name: text('button')
-    }
-  })
+  items: collection('.category-item', { name: text('button') })
 };

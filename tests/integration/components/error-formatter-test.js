@@ -37,10 +37,10 @@ test('it formats adapter error properly', function(assert) {
   ]);
 
   this.set('error', adapterError);
-  page.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(page.errors().count, 2, 'Each error message is rendered');
-  assert.equal(page.errors(0).text, 'First: error', 'First message is rendered');
-  assert.equal(page.errors(1).text, 'Second: error', 'Second message is rendered');
+  this.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors.length, 2, 'Each error message is rendered');
+  assert.equal(page.errors.objectAt(0).text, 'First: error', 'First message is rendered');
+  assert.equal(page.errors.objectAt(1).text, 'Second: error', 'Second message is rendered');
 });
 
 test('it formats friendly errors properly', function(assert) {
@@ -49,24 +49,24 @@ test('it formats friendly errors properly', function(assert) {
   let friendlyError = new FriendlyError('A friendly error');
 
   this.set('error', friendlyError);
-  page.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(page.errors().count, 1, 'Error message is rendered');
-  assert.equal(page.errors(0).text, 'A friendly error', 'Message text is rendered');
+  this.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors.length, 1, 'Error message is rendered');
+  assert.equal(page.errors.objectAt(0).text, 'A friendly error', 'Message text is rendered');
 });
 
 test('it formats stripe card error properly', function(assert) {
   assert.expect(1);
 
   this.set('error', mockStripeError);
-  page.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(page.errors(0).text, mockStripeError.error.message, 'Message is rendered');
+  this.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors.objectAt(0).text, mockStripeError.error.message, 'Message is rendered');
 });
 
 test('it displays a default message if the error structure is not supported', function(assert) {
   assert.expect(2);
 
   this.set('error', {});
-  page.render(hbs`{{error-formatter error=error}}`);
-  assert.equal(page.errors().count, 1, 'Each error message is rendered');
-  assert.equal(page.errors(0).text, 'An unexpected error has occured', 'Default message is rendered');
+  this.render(hbs`{{error-formatter error=error}}`);
+  assert.equal(page.errors.length, 1, 'Each error message is rendered');
+  assert.equal(page.errors.objectAt(0).text, 'An unexpected error has occured', 'Default message is rendered');
 });

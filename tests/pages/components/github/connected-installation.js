@@ -13,10 +13,7 @@ export default {
     scope: '[data-test-disconnect]'
   },
 
-  githubRepos: collection({
-    itemScope: '.github-repo',
-    item: githubRepo
-  }),
+  githubRepos: collection('.github-repo', githubRepo),
 
   login: {
     scope: '[data-test-login]'

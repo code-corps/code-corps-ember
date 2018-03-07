@@ -7,12 +7,6 @@ import pageComponent from 'code-corps-ember/tests/pages/components/project-card'
 
 let page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{project-card onJoin=onJoin project=project skills=skills}}
-  `);
-}
-
 moduleForComponent('project-card', 'Integration | Component | project card', {
   integration: true,
   beforeEach() {
@@ -44,7 +38,8 @@ test('it renders', function(assert) {
   stubService(this, 'user-categories', { findUserCategory() {} });
 
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`{{project-card onJoin=onJoin project=project skills=skills}}`);
 
   assert.equal(this.$('.icon-container img').attr('src'), project.iconLargeUrl);
   assert.equal(this.$('.details-container h4').text().trim(), project.title);
@@ -62,7 +57,8 @@ test('it renders the right icon when the user is not loaded', function(assert) {
   stubService(this, 'user-categories', { findUserCategory() {} });
 
   set(this, 'project', project);
-  renderPage();
+
+  this.render(hbs`{{project-card onJoin=onJoin project=project skills=skills}}`);
 
   assert.equal(this.$('ul.project-card__project-users li:first img').length, 0);
 });

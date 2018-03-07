@@ -7,16 +7,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(selectGithubRepoComponent);
 
-function renderPage() {
-  page.render(hbs`
-    {{select/github-repo
-      githubRepos=githubRepos
-      selectedRepo=selectedRepo
-      onSelected=(action (mut selectedRepo))
-    }}
-  `);
-}
-
 moduleForComponent('select/github-repo', 'Integration | Component | select/github repo', {
   integration: true,
   beforeEach() {
@@ -37,11 +27,17 @@ test('it renders options', function(assert) {
 
   set(this, 'githubRepos', githubRepos);
 
-  renderPage();
+  this.render(hbs`
+    {{select/github-repo
+      githubRepos=githubRepos
+      selectedRepo=selectedRepo
+      onSelected=(action (mut selectedRepo))
+    }}
+  `);
 
-  assert.equal(page.select.options(0).text, 'Don\'t sync (default)', 'The default option of none renders.');
-  assert.equal(page.select.options(1).text, 'Repo 1');
-  assert.equal(page.select.options(2).text, 'Repo 2');
+  assert.equal(page.select.options.objectAt(0).text, 'Don\'t sync (default)', 'The default option of none renders.');
+  assert.equal(page.select.options.objectAt(1).text, 'Repo 1');
+  assert.equal(page.select.options.objectAt(2).text, 'Repo 2');
 });
 
 test('it triggers action on selection', function(assert) {
@@ -54,7 +50,13 @@ test('it triggers action on selection', function(assert) {
 
   set(this, 'githubRepos', [repo1, repo2]);
 
-  renderPage();
+  this.render(hbs`
+    {{select/github-repo
+      githubRepos=githubRepos
+      selectedRepo=selectedRepo
+      onSelected=(action (mut selectedRepo))
+    }}
+  `);
 
   run(() => page.select.fillIn('Repo 1'));
   run(() => {

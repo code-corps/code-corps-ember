@@ -21,23 +21,9 @@ export default {
     isVisible: isVisible()
   },
 
-  donationGoalLoadings: collection({
-    itemScope: '.donation-goal-loading'
-  }),
-
-  donationGoals: collection({
-    itemScope: '.donation-goal',
-    item: {
-      donationGoal
-    }
-  }),
-
-  donationGoalEdits: collection({
-    itemScope: '.donation-goal-edit',
-    item: {
-      donationGoalEdit
-    }
-  }),
+  donationGoalLoadings: collection('.donation-goal-loading'),
+  donationGoals: collection('.donation-goal', donationGoal),
+  donationGoalEdits: collection('.donation-goal-edit', donationGoalEdit),
 
   edit: {
     scope: '.edit',

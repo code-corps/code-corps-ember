@@ -15,7 +15,5 @@ export default {
 
   thankYouText: text('[data-test-thank-you-message]'),
 
-  volunteers: collection({
-    scope: '[data-test-volunteer-headshot]'
-  })
+  volunteers: collection('[data-test-volunteer-headshot]')
 };

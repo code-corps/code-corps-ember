@@ -1,5 +1,5 @@
 import RSVP from 'rsvp';
-import { set, setProperties } from '@ember/object';
+import { setProperties } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PageObject from 'ember-cli-page-object';
@@ -12,17 +12,6 @@ import { initialize as initializeKeyboard } from 'ember-keyboard';
 const { PromiseObject } = DS;
 
 let page = PageObject.create(taskAssignmentComponent);
-
-function renderPage() {
-  page.render(hbs`
-    {{task-assignment
-      canTriggerAssignment=canTriggerAssignment
-      deferredRendering=deferredRendering
-      task=task
-      taskUser=taskUser
-      users=users
-    }}`);
-}
 
 moduleForComponent('task-assignment', 'Integration | Component | task assignment', {
   integration: true,
@@ -60,10 +49,10 @@ test('assignment works if user has ability', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task users=users}}`);
 
   page.select.trigger.open();
-  page.select.dropdown.options(0).select();
+  page.select.dropdown.options.objectAt(0).select();
 });
 
 test('unassignment works if user has ability', function(assert) {
@@ -88,10 +77,10 @@ test('unassignment works if user has ability', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task taskUser=taskUser users=users}}`);
 
   page.select.trigger.open();
-  page.select.dropdown.options(0).select();
+  page.select.dropdown.options.objectAt(0).select();
 });
 
 test('assignment dropdown renders if user has ability', function(assert) {
@@ -112,11 +101,11 @@ test('assignment dropdown renders if user has ability', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task users=users}}`);
 
   page.select.trigger.open();
-  assert.equal(page.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
-  assert.equal(page.select.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
+  assert.equal(page.select.dropdown.options.objectAt(0).text, 'testuser1', 'First user is rendered.');
+  assert.equal(page.select.dropdown.options.objectAt(1).text, 'testuser2', 'Second user is rendered.');
 });
 
 test('assignment dropdown renders when records are still being loaded', function(assert) {
@@ -143,12 +132,12 @@ test('assignment dropdown renders when records are still being loaded', function
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task users=users}}`);
 
   RSVP.all(users).then(() => {
     page.select.trigger.open();
-    assert.equal(page.select.dropdown.options(0).text, 'testuser1', 'First user is rendered.');
-    assert.equal(page.select.dropdown.options(1).text, 'testuser2', 'Second user is rendered.');
+    assert.equal(page.select.dropdown.options.objectAt(0).text, 'testuser1', 'First user is rendered.');
+    assert.equal(page.select.dropdown.options.objectAt(1).text, 'testuser2', 'Second user is rendered.');
     done();
   });
 });
@@ -175,7 +164,7 @@ test('assignment dropdown does not render if user has no ability', function(asse
 
   this.register('ability:task', Ability.extend({ canAssign: false }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task taskUser=taskUser users=users}}`);
 
   assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
   page.assignedUser.as((user) => {
@@ -188,11 +177,11 @@ test('when rendering is deffered and user does not have ability and no assigned 
 
   let task = { id: 'task' };
 
-  set(this, 'task', task);
-  set(this, 'deferredRendering', true);
   this.register('ability:task', Ability.extend({ canAssign: false }));
 
-  renderPage();
+  setProperties(this, { task, deferredRendering: true });
+
+  this.render(hbs`{{task-assignment deferredRendering=deferredRendering task=task}}`);
 
   assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
   assert.notOk(page.assignedUser.isVisible, 'Assigned user does not render.');
@@ -204,11 +193,11 @@ test('when rendering is deffered and user has ability and no assigned user', fun
 
   let task = { id: 'task' };
 
-  set(this, 'task', task);
-  set(this, 'deferredRendering', true);
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  setProperties(this, { task, deferredRendering: true });
+
+  this.render(hbs`{{task-assignment deferredRendering=deferredRendering task=task}}`);
 
   assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
   assert.notOk(page.assignedUser.isVisible, 'Assigned user does not render.');
@@ -220,19 +209,17 @@ test('when rendering is deffered and user does not have ability and there is an 
 
   let task = { id: 'task' };
 
-  set(this, 'task', task);
-  set(this, 'deferredRendering', true);
   let user1 = {
     id: 'user1',
     username: 'testuser1',
     photoThumbUrl: 'test.png'
   };
 
-  setProperties(this, { task, taskUser: user1 });
+  setProperties(this, { task, taskUser: user1, deferredRendering: true });
 
   this.register('ability:task', Ability.extend({ canAssign: false }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment deferredRendering=deferredRendering task=task taskUser=taskUser}}`);
 
   assert.notOk(page.select.triggerRenders, 'Dropdown trigger for assignment does not render.');
   assert.ok(page.assignedUser.isVisible, 'Assigned user renders.');
@@ -266,12 +253,12 @@ test('assignment dropdown typeahead', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment task=task users=users}}`);
 
   page.select.trigger.open();
   page.select.dropdown.input.fillIn('testuser2');
 
-  assert.equal(page.select.dropdown.options(0).text, 'testuser2', 'Only the second user is rendered.');
+  assert.equal(page.select.dropdown.options.objectAt(0).text, 'testuser2', 'Only the second user is rendered.');
 });
 
 test('pressing Space assigns self to task when able', function(assert) {
@@ -298,7 +285,7 @@ test('pressing Space assigns self to task when able', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment canTriggerAssignment=canTriggerAssignment task=task users=users}}`);
 
   page.triggerKeyDown('Space');
 });
@@ -327,7 +314,12 @@ test('pressing Space unassigns self from task when able', function(assert) {
 
   this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment
+    canTriggerAssignment=canTriggerAssignment
+    task=task
+    taskUser=taskUser
+    users=users}}`
+  );
 
   page.triggerKeyDown('Space');
 });
@@ -335,12 +327,13 @@ test('pressing Space unassigns self from task when able', function(assert) {
 test('pressing A when the user has ability', function(assert) {
   assert.expect(2);
 
+  this.register('ability:task', Ability.extend({ canAssign: true }));
+
   let canTriggerAssignment = true;
   let task = { id: 'task' };
   setProperties(this, { canTriggerAssignment, task });
-  this.register('ability:task', Ability.extend({ canAssign: true }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment canTriggerAssignment=canTriggerAssignment task=task}}`);
 
   page.triggerKeyDown('KeyA');
   assert.ok(page.select.dropdown.isVisible, 'Dropdown renders.');
@@ -351,12 +344,13 @@ test('pressing A when the user has ability', function(assert) {
 test('pressing A when the user does not have ability', function(assert) {
   assert.expect(1);
 
+  this.register('ability:task', Ability.extend({ canAssign: false }));
+
   let canTriggerAssignment = true;
   let task = { id: 'task' };
   setProperties(this, { canTriggerAssignment, task });
-  this.register('ability:task', Ability.extend({ canAssign: false }));
 
-  renderPage();
+  this.render(hbs`{{task-assignment canTriggerAssignment=canTriggerAssignment task=task}}`);
 
   page.triggerKeyDown('KeyA');
   assert.notOk(page.select.dropdown.isVisible, 'Dropdown does not render.');

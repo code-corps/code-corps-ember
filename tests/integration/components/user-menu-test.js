@@ -34,7 +34,7 @@ test('it renders properly', function(assert) {
   assert.expect(7);
 
   set(this, 'user', stubUser);
-  page.render(hbs`{{user-menu user=user}}`);
+  this.render(hbs`{{user-menu user=user}}`);
 
   page.toggle();
 
@@ -55,7 +55,7 @@ test('clicking the menu toggles the dropdown', function(assert) {
   assert.expect(3);
 
   set(this, 'user', stubUser);
-  page.render(hbs`{{user-menu user=user}}`);
+  this.render(hbs`{{user-menu user=user}}`);
 
   assert.ok(page.dropdownIsHidden, 'The dropdown is initially hidden');
   page.toggle();

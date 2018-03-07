@@ -5,13 +5,7 @@ import PageObject from 'ember-cli-page-object';
 import pageComponent from 'code-corps-ember/tests/pages/components/user-byline';
 import moment from 'moment';
 
-let page = PageObject.create(pageComponent);
-
-function renderPage() {
-  page.render(hbs`
-    {{user-byline createdAt=createdAt createdFrom=createdFrom user=user}}
-  `);
-}
+const page = PageObject.create(pageComponent);
 
 moduleForComponent('user-byline', 'Integration | Component | user byline', {
   integration: true,
@@ -30,7 +24,7 @@ test('it renders when created from Code Corps', function(assert) {
   set(this, 'createdAt', moment().subtract(2, 'days'));
   set(this, 'createdFrom', 'code_corps');
 
-  renderPage();
+  this.render(hbs`{{user-byline createdAt=createdAt createdFrom=createdFrom user=user}}`);
 
   assert.equal(page.username.text, 'tester', 'The username of the comment author renders.');
   assert.equal(page.createdAt.text, '2 days ago', 'The time ago text renders.');
@@ -44,7 +38,7 @@ test('it renders when created from GitHub', function(assert) {
   set(this, 'createdAt', moment().subtract(2, 'days'));
   set(this, 'createdFrom', 'github');
 
-  renderPage();
+  this.render(hbs`{{user-byline createdAt=createdAt createdFrom=createdFrom user=user}}`);
 
   assert.equal(page.username.text, 'tester', 'The username of the comment author renders.');
   assert.equal(page.createdAt.text, '2 days ago', 'The time ago text renders.');

@@ -13,9 +13,7 @@ export default {
     isVisible: isVisible()
   },
 
-  errors: collection({
-    itemScope: 'p.error'
-  }),
+  errors: collection('p.error'),
 
   loginSuccessfully(email, password) {
     this.username(email).password(password).submit();

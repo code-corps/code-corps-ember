@@ -48,7 +48,7 @@ test('visiting /password/reset and entering diff passwords returns 422', functio
   andThen(() => {
     assert.equal(currentURL(), '/password/reset?token=abc123');
     assert.equal(getFlashMessageCount(this), 0, 'No flash message was shown.');
-    assert.equal(passwordPage.errorFormatter.errors().count, 1, 'Each error message is rendered');
+    assert.equal(passwordPage.errorFormatter.errors.length, 1, 'Each error message is rendered');
   });
 });
 

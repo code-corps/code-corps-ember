@@ -17,7 +17,7 @@ test('it displays the user-details component with user details', function(assert
     assert.equal(userProfile.userDetails.twitter.text, `@${user.twitter}`, "The user's twitter renders");
     assert.equal(userProfile.userDetails.twitter.link.href, `https://twitter.com/${user.twitter}`, "The user's twitter URL renders");
     assert.equal(userProfile.userDetails.website.text, user.website, "The user's website renders");
-    assert.equal(userProfile.projects().count, 3, "The user's organizations are rendered");
+    assert.equal(userProfile.projects.length, 3, "The user's organizations are rendered");
   });
 });
 
@@ -30,8 +30,8 @@ test('the user can navigate to a project from the projects list', function(asser
   let href = `/${project.organization.slug}/${project.slug}`;
 
   andThen(() => {
-    assert.equal(userProfile.projects(0).href, href, 'The link is rendered');
-    userProfile.projects(0).click();
+    assert.equal(userProfile.projects.objectAt(0).href, href, 'The link is rendered');
+    userProfile.projects.objectAt(0).click();
   });
 
   andThen(() => {

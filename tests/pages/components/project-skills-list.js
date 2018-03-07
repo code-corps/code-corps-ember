@@ -16,8 +16,5 @@ export default {
 
   fallbackIsVisible: isVisible('.project-skills-list__fallback'),
 
-  skills: collection({
-    itemScope: '.skill',
-    item: projectSkillItem
-  })
+  skills: collection('.skill', projectSkillItem)
 };

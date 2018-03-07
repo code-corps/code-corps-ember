@@ -16,18 +16,14 @@ export default {
       scope: '[data-test-body]',
       fillIn: fillable('textarea'),
       isErrored: hasClass('has-error'),
-      errors: collection({
-        itemScope: '.input-error'
-      })
+      errors: collection('.input-error')
     },
 
     subject: {
       scope: '[data-test-subject]',
       fillIn: fillable('input'),
       isErrored: hasClass('has-error'),
-      errors: collection({
-        itemScope: '.input-error'
-      })
+      errors: collection('.input-error')
     },
 
     close: clickable('.modal-close'),

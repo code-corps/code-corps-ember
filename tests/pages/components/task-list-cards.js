@@ -4,8 +4,5 @@ import {
 import taskCard from './task-card';
 
 export default {
-  taskCards: collection({
-    itemScope: '.task-card',
-    item: taskCard
-  })
+  taskCards: collection('.task-card', taskCard)
 };

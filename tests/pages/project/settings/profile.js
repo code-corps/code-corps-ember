@@ -15,13 +15,9 @@ export default create({
   categoryCheckboxes,
   projectSettingsForm,
 
-  projectSkillsList: collection({
-    scope: '.project-skills-list',
-    itemScope: 'button',
-    item: {
-      text: text(),
-      click: clickable()
-    }
+  projectSkillsList: collection('.project-skills-list button', {
+    text: text(),
+    click: clickable()
   }),
 
   skillsTypeahead,

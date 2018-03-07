@@ -7,14 +7,8 @@ import {
 export default {
   scope: '.category-checkboxes',
 
-  checkboxes: collection({
-    itemScope: 'li',
-    item: {
-      isChecked: property('checked', 'input'),
-      label: {
-        scope: 'label',
-        name: text()
-      }
-    }
+  checkboxes: collection('li', {
+    isChecked: property('checked', 'input'),
+    label: { scope: 'label', name: text() }
   })
 };

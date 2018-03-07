@@ -101,18 +101,18 @@ test("it allows editing of project's categories for owners", function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`, 'The project settings profile page loaded');
-    assert.equal(projectSettingsPage.categoryCheckboxes.checkboxes(0).label.name, 'Technology', 'The checkbox renders');
-    projectSettingsPage.categoryCheckboxes.checkboxes(0).label.click();
+    assert.equal(projectSettingsPage.categoryCheckboxes.checkboxes.objectAt(0).label.name, 'Technology', 'The checkbox renders');
+    projectSettingsPage.categoryCheckboxes.checkboxes.objectAt(0).label.click();
   });
 
   andThen(() => {
-    assert.ok(projectSettingsPage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was added.');
+    assert.ok(projectSettingsPage.categoryCheckboxes.checkboxes.objectAt(0).isChecked, 'The category was added.');
     assert.ok(server.schema.projectCategories.findBy(params), 'Project category was created.');
-    projectSettingsPage.categoryCheckboxes.checkboxes(0).label.click();
+    projectSettingsPage.categoryCheckboxes.checkboxes.objectAt(0).label.click();
   });
 
   andThen(() => {
-    assert.notOk(projectSettingsPage.categoryCheckboxes.checkboxes(0).isChecked, 'The category was removed.');
+    assert.notOk(projectSettingsPage.categoryCheckboxes.checkboxes.objectAt(0).isChecked, 'The category was removed.');
     assert.notOk(server.schema.projectCategories.findBy(params), 'Project category was deleted.');
   });
 });
@@ -136,16 +136,16 @@ test("it allows editing of project's skills for owners", function(assert) {
 
   andThen(() => {
     assert.equal(currentURL(), `${project.organization.slug}/${project.slug}/settings/profile`, 'The project settings profile page loaded');
-    assert.equal(projectSettingsPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
-    projectSettingsPage.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(projectSettingsPage.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby', 'The text in the typeahead matches the searched text');
+    projectSettingsPage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsPage.projectSkillsList(0).text, 'Ruby', 'The skill was added to the list');
-    projectSettingsPage.projectSkillsList(0).click();
+    assert.equal(projectSettingsPage.projectSkillsList.objectAt(0).text, 'Ruby', 'The skill was added to the list');
+    projectSettingsPage.projectSkillsList.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(projectSettingsPage.projectSkillsList().count, 0, 'The skill was removed from the list');
+    assert.equal(projectSettingsPage.projectSkillsList.length, 0, 'The skill was removed from the list');
   });
 });

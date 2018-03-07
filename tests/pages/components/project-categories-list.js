@@ -6,8 +6,5 @@ import projectCategoryItem from 'code-corps-ember/tests/pages/components/project
 export default {
   scope: '.categories',
 
-  projectCategoryItems: collection({
-    itemScope: '.project-category-item',
-    item: projectCategoryItem
-  })
+  projectCategoryItems: collection('.project-category-item', projectCategoryItem)
 };

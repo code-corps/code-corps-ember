@@ -24,7 +24,8 @@ test('it toggles code theme service when clicked', function(assert) {
       assert.ok(true, 'Code theme service was called');
     }
   });
-  page.render(hbs`{{code-theme-selector}}`);
+
+  this.render(hbs`{{code-theme-selector}}`);
 
   page.click();
 });
@@ -35,7 +36,8 @@ test('it has the class name from the service', function(assert) {
   stubService(this, 'code-theme', {
     className: 'light'
   });
-  page.render(hbs`{{code-theme-selector}}`);
+
+  this.render(hbs`{{code-theme-selector}}`);
 
   assert.ok(page.isLight);
 });

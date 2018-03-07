@@ -21,7 +21,7 @@ test('it renders proper information', function(assert) {
 
   this.set('card', { id: 1, brand: 'Visa', last4: 4242, expMonth: '01', expYear: '2022' });
 
-  page.render(hbs`{{donation/card-item card=card}}`);
+  this.render(hbs`{{donation/card-item card=card}}`);
 
   assert.equal(page.cardDescription, 'Visa ending in 4242 01/2022', 'Card description is correct');
 });

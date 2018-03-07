@@ -11,12 +11,7 @@ export default {
     href: attribute('href')
   },
 
-  pages: collection({
-    itemScope: '.page',
-    item: {
-      href: attribute('href')
-    }
-  }),
+  pages: collection('.page', { href: attribute('href') }),
 
   previousPage: {
     scope: '.previous-page',

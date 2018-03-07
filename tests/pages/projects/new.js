@@ -16,10 +16,7 @@ import skillsTypeahead from 'code-corps-ember/tests/pages/components/skills-type
 export default create({
   visit: visitable(':organization/projects/new'),
 
-  flashMessages: collection({
-    scope: '.flash-messages--full-width',
-    itemScope: '.flash-message'
-  }),
+  flashMessages: collection('.flash-messages--full-width .flash-message'),
 
   navigationMenu,
 
@@ -38,9 +35,7 @@ export default create({
 
     clickSubmit: clickable('[data-test-submit]'),
 
-    errors: collection({
-      itemScope: '.input-group.has-error'
-    }),
+    errors: collection('.input-group.has-error'),
 
     descriptionValue: value('[name=description]'),
 
@@ -49,13 +44,9 @@ export default create({
     inputDescription: fillable('[name=description]'),
     inputTitle: fillable('[name=title]'),
 
-    skillsList: collection({
-      scope: '.project-skills-list',
-      itemScope: 'button',
-      item: {
-        text: text(),
-        click: clickable()
-      }
+    skillsList: collection('.project-skills-list button', {
+      text: text(),
+      click: clickable()
     }),
 
     skillsTypeahead,

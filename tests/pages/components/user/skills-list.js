@@ -9,7 +9,5 @@ export default {
     scope: '[data-test-user-skills-list-empty-state]'
   },
 
-  skills: collection({
-    itemScope: '[data-test-user-skills-list-item]'
-  })
+  skills: collection('[data-test-user-skills-list-item]')
 };

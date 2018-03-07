@@ -10,16 +10,6 @@ import { getOwner } from '@ember/application';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{conversations/new-conversation-modal
-      initiatedBy=initiatedBy
-      project=project
-      user=user
-    }}
-  `);
-}
-
 moduleForComponent('conversations/new-conversation-modal', 'Integration | Component | conversations/new conversation modal', {
   integration: true,
   beforeEach() {
@@ -45,7 +35,13 @@ test('it initiates a conversation and opens the modal when open button is clicke
     set(this, 'currentUser.user', store.createRecord('user', { id: 'baz' }));
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   assert.notOk(page.modal.isVisible, 'Modal is initially hidden.');
   page.openButton.click();
@@ -75,7 +71,13 @@ test('it keeps the modal open and retains the records when close button is click
   let messages = store.peekAll('message');
   let conversations = store.peekAll('conversation');
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   page.openButton.click();
 
@@ -114,7 +116,13 @@ test('it does not prompt when close button is clicked and the form has no data',
   let messages = store.peekAll('message');
   let conversations = store.peekAll('conversation');
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   page.openButton.click();
 
@@ -140,7 +148,13 @@ test('it discards the conversation and closes the modal when close button is cli
     set(this, 'currentUser.user', store.createRecord('user', { id: 'baz' }));
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   let messages = store.peekAll('message');
   let conversations = store.peekAll('conversation');
@@ -179,7 +193,13 @@ test('it saves the conversation and closes the modal when send button is clicked
     set(this, 'currentUser.user', store.createRecord('user', { id: 'baz' }));
   });
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   let messages = store.peekAll('message');
   let conversations = store.peekAll('conversation');
@@ -216,7 +236,13 @@ test('it renders validation errors', function(assert) {
 
   let messages = store.peekAll('message');
 
-  renderPage();
+  this.render(hbs`
+    {{conversations/new-conversation-modal
+      initiatedBy=initiatedBy
+      project=project
+      user=user
+    }}
+  `);
 
   page.openButton.click();
 
@@ -227,10 +253,10 @@ test('it renders validation errors', function(assert) {
   });
 
   assert.ok(page.modal.subject.isErrored, 'Subject renders as errored');
-  assert.equal(page.modal.subject.errors().count, 1, 'Correct number of errors is rendered');
-  assert.equal(page.modal.subject.errors(0).text, 'Foo', 'Error is correctly rendered');
+  assert.equal(page.modal.subject.errors.length, 1, 'Correct number of errors is rendered');
+  assert.equal(page.modal.subject.errors.objectAt(0).text, 'Foo', 'Error is correctly rendered');
   assert.ok(page.modal.body.isErrored, 'Body renders as errored');
-  assert.equal(page.modal.body.errors().count, 2, 'Correct number of errors is rendered');
-  assert.equal(page.modal.body.errors(0).text, 'Bar', 'Error is correctly rendered');
-  assert.equal(page.modal.body.errors(1).text, 'Baz', 'Error is correctly rendered');
+  assert.equal(page.modal.body.errors.length, 2, 'Correct number of errors is rendered');
+  assert.equal(page.modal.body.errors.objectAt(0).text, 'Bar', 'Error is correctly rendered');
+  assert.equal(page.modal.body.errors.objectAt(1).text, 'Baz', 'Error is correctly rendered');
 });

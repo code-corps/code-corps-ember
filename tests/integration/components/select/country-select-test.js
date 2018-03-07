@@ -8,10 +8,6 @@ function setHandler(context, onChange = function() {}) {
   set(context, 'onChange', onChange);
 }
 
-function renderPage() {
-  page.render(hbs`{{select/country-select country=country onChange=onChange}}`);
-}
-
 let page = PageObject.create(selectCountry);
 
 moduleForComponent('select/country-select', 'Integration | Component | select/country select', {
@@ -34,7 +30,7 @@ test('it triggers action on selection change', function(assert) {
     assert.equal(value, 'US', 'Action was triggered with proper parameter');
   });
 
-  renderPage();
+  this.render(hbs`{{select/country-select country=country onChange=onChange}}`);
 
   page.country.fillIn('US');
 });

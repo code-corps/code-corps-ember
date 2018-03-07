@@ -34,8 +34,8 @@ test('project users are displayed correctly', function(assert) {
 
   projectsPage.visit();
   andThen(() => {
-    assert.equal(projectsPage.projects(0).projectUsers.users().count, 8, '8 users are rendered');
-    assert.equal(projectsPage.projects(0).projectUsers.userCount.text, '+2 more', 'The "+2 more" text is rendered');
+    assert.equal(projectsPage.projects.objectAt(0).projectUsers.users.length, 8, '8 users are rendered');
+    assert.equal(projectsPage.projects.objectAt(0).projectUsers.userCount.text, '+2 more', 'The "+2 more" text is rendered');
   });
 });
 
@@ -49,8 +49,8 @@ test('an authenticated user can quickly join a project', function(assert) {
   projectsPage.visit();
 
   andThen(() => {
-    projectsPage.projects(0).projectJoinModal.openButton.click();
-    projectsPage.projects(0).projectJoinModal.modal.joinProjectButton.click();
+    projectsPage.projects.objectAt(0).projectJoinModal.openButton.click();
+    projectsPage.projects.objectAt(0).projectJoinModal.modal.joinProjectButton.click();
   });
 
   andThen(() => {

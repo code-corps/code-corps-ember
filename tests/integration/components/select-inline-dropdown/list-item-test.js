@@ -19,16 +19,6 @@ moduleForComponent(
   }
 );
 
-function renderPage() {
-  page.render(hbs`
-    {{select-inline-dropdown/list-item
-      iconUrl=iconUrl
-      primaryText=primaryText
-      secondaryText=secondaryText
-      lastSearchedText=lastSearchedText
-    }}`);
-}
-
 test('it renders correctly', function(assert) {
   assert.expect(5);
 
@@ -39,7 +29,13 @@ test('it renders correctly', function(assert) {
 
   setProperties(this, { iconUrl, primaryText, secondaryText, lastSearchedText });
 
-  renderPage();
+  this.render(hbs`
+    {{select-inline-dropdown/list-item
+      iconUrl=iconUrl
+      primaryText=primaryText
+      secondaryText=secondaryText
+      lastSearchedText=lastSearchedText
+    }}`);
 
   assert.equal(page.icon.url, iconUrl, 'Icon is rendered.');
   assert.equal(page.primary.text, primaryText, 'Primary text is rendered.');

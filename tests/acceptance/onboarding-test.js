@@ -70,30 +70,30 @@ test('A user can onboard as expected', function(assert) {
   andThen(() => {
     assert.equal(currentURL(), '/start/expertise');
 
-    assert.equal(onboardingPage.roleColumns(0).header.title, 'Technology');
-    assert.ok(onboardingPage.roleColumns(0).hasClass('expertise__column--technology'));
-    assert.equal(onboardingPage.roleColumns(0).roles(0).button.text, 'Backend Development');
+    assert.equal(onboardingPage.roleColumns.objectAt(0).header.title, 'Technology');
+    assert.ok(onboardingPage.roleColumns.objectAt(0).hasClass('expertise__column--technology'));
+    assert.equal(onboardingPage.roleColumns.objectAt(0).roles.objectAt(0).button.text, 'Backend Development');
 
-    assert.equal(onboardingPage.roleColumns(1).header.title, 'Creative');
-    assert.ok(onboardingPage.roleColumns(1).hasClass('expertise__column--creative'));
-    assert.equal(onboardingPage.roleColumns(1).roles(0).button.text, 'Marketing');
+    assert.equal(onboardingPage.roleColumns.objectAt(1).header.title, 'Creative');
+    assert.ok(onboardingPage.roleColumns.objectAt(1).hasClass('expertise__column--creative'));
+    assert.equal(onboardingPage.roleColumns.objectAt(1).roles.objectAt(0).button.text, 'Marketing');
 
-    assert.equal(onboardingPage.roleColumns(2).header.title, 'Support');
-    assert.ok(onboardingPage.roleColumns(2).hasClass('expertise__column--support'));
-    assert.equal(onboardingPage.roleColumns(2).roles(0).button.text, 'Donations');
+    assert.equal(onboardingPage.roleColumns.objectAt(2).header.title, 'Support');
+    assert.ok(onboardingPage.roleColumns.objectAt(2).hasClass('expertise__column--support'));
+    assert.equal(onboardingPage.roleColumns.objectAt(2).roles.objectAt(0).button.text, 'Donations');
 
     assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
-    onboardingPage.roleColumns(0).roles(0).button.click();
+    onboardingPage.roleColumns.objectAt(0).roles.objectAt(0).button.click();
   });
 
   andThen(() => {
     assert.notOk(onboardingPage.startFooterButton.isDisabled, 'start button is enabled');
-    onboardingPage.roleColumns(0).roles(0).button.click();
+    onboardingPage.roleColumns.objectAt(0).roles.objectAt(0).button.click();
   });
 
   andThen(() => {
     assert.ok(onboardingPage.startFooterButton.isDisabled, 'start button is disabled');
-    onboardingPage.roleColumns(0).roles(0).button.click();
+    onboardingPage.roleColumns.objectAt(0).roles.objectAt(0).button.click();
   });
 
   andThen(() => {
@@ -106,29 +106,29 @@ test('A user can onboard as expected', function(assert) {
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby');
-    onboardingPage.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby');
+    onboardingPage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.userSkillsList(0).text, 'Ruby');
-    onboardingPage.userSkillsList(0).click();
+    assert.equal(onboardingPage.userSkillsList.objectAt(0).text, 'Ruby');
+    onboardingPage.userSkillsList.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.userSkillsList().count, 0, 'No skills have been added yet');
-    assert.equal(onboardingPage.popularSkillsList().count, 2, 'Popular skills are listed');
+    assert.equal(onboardingPage.userSkillsList.length, 0, 'No skills have been added yet');
+    assert.equal(onboardingPage.popularSkillsList.length, 2, 'Popular skills are listed');
     onboardingPage.skillsTypeahead.searchFor('r');
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems(0).text, 'Ruby');
-    onboardingPage.skillsTypeahead.dropdown.inputItems(0).click();
+    assert.equal(onboardingPage.skillsTypeahead.dropdown.inputItems.objectAt(0).text, 'Ruby');
+    onboardingPage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
-    assert.equal(onboardingPage.userSkillsList().count, 1, 'A user skill was added');
-    assert.equal(onboardingPage.popularSkillsList().count, 1, 'The popular skills were updated');
+    assert.equal(onboardingPage.userSkillsList.length, 1, 'A user skill was added');
+    assert.equal(onboardingPage.popularSkillsList.length, 1, 'The popular skills were updated');
     onboardingPage.startFooterButton.click();
   });
 

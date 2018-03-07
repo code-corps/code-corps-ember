@@ -5,10 +5,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(pageComponent);
 
-function renderPage() {
-  page.render(hbs`{{submittable-textarea modifiedSubmit=modifiedSubmitHandler}}`);
-}
-
 function setHandler(context, modifiedSubmitHandler = () => {}) {
   context.set('modifiedSubmitHandler', modifiedSubmitHandler);
 }
@@ -27,7 +23,7 @@ moduleForComponent('submittable-textarea', 'Integration | Component | submittabl
 // This test is necessary because a new line after yield in the file will
 // cause a new line in the textarea itself
 test('it has no extra content when created', function(assert) {
-  renderPage();
+  this.render(hbs`{{submittable-textarea modifiedSubmit=modifiedSubmitHandler}}`);
   assert.equal(page.value, '', 'Element is blank.');
 });
 
@@ -38,7 +34,7 @@ test('it sends the modifiedSubmit action on command/ctrl + enter', function(asse
     assert.equal(page.value, '', 'Action was called. Input content was unchanged.');
   });
 
-  renderPage();
+  this.render(hbs`{{submittable-textarea modifiedSubmit=modifiedSubmitHandler}}`);
 
   page.keySubmit();
 });

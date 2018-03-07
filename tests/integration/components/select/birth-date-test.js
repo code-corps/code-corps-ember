@@ -6,10 +6,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(selectBirthDateComponent);
 
-function renderPage() {
-  page.render(hbs`{{select/birth-date month=month day=day year=year}}`);
-}
-
 moduleForComponent('select/birth-date', 'Integration | Component | select/birth date', {
   integration: true,
   beforeEach() {
@@ -27,7 +23,7 @@ test('it sets the month strings correctly', function(assert) {
   set(this, 'month', 1);
   set(this, 'year', 2016);
 
-  renderPage();
+  this.render(hbs`{{select/birth-date month=month day=day year=year}}`);
 
   assert.equal(page.month.text, 'January February March April May June July August September October November December');
 });
@@ -39,7 +35,7 @@ test('it sets to the correct date', function(assert) {
   set(this, 'month', 1);
   set(this, 'year', 2016);
 
-  renderPage();
+  this.render(hbs`{{select/birth-date month=month day=day year=year}}`);
 
   page.month.fillIn('4');
   page.day.fillIn('13');

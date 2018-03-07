@@ -24,7 +24,7 @@ test('The page requires user to be admin', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(page.flashErrors.length, 1, 'Flash error was rendered');
     assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
   });
 });
@@ -42,26 +42,26 @@ test('Displays all the logged events', function(assert) {
   andThen(function() {
     assert.equal(currentURL(), '/admin/github/events');
     assert.equal(currentRouteName(), 'admin.github-events.index');
-    assert.equal(page.logItems().count, 20, 'There are 20 log rows by default.');
-    assert.equal(page.logItems(0).action.text, githubEvents[0].action);
-    assert.equal(page.logItems(0).eventType.text, githubEvents[0].eventType);
-    assert.equal(page.logItems(0).failureReason.text, githubEvents[0].failureReason);
-    assert.equal(page.logItems(0).status.text, githubEvents[0].status);
-    assert.ok(page.logItems(0).time.isVisible);
+    assert.equal(page.logItems.length, 20, 'There are 20 log rows by default.');
+    assert.equal(page.logItems.objectAt(0).action.text, githubEvents[0].action);
+    assert.equal(page.logItems.objectAt(0).eventType.text, githubEvents[0].eventType);
+    assert.equal(page.logItems.objectAt(0).failureReason.text, githubEvents[0].failureReason);
+    assert.equal(page.logItems.objectAt(0).status.text, githubEvents[0].status);
+    assert.ok(page.logItems.objectAt(0).time.isVisible);
     assert.ok(page.prev.isDisabled, 'Previous button is disabled.');
     assert.notOk(page.next.isDisabled, 'Next button is not disabled.');
     page.next.click();
   });
 
   andThen(function() {
-    assert.equal(page.logItems().count, 5, 'There are 5 log rows after navigating to the second page.');
+    assert.equal(page.logItems.length, 5, 'There are 5 log rows after navigating to the second page.');
     assert.notOk(page.prev.isDisabled, 'Previous button is not disabled.');
     assert.ok(page.next.isDisabled, 'Next button is disabled.');
     page.prev.click();
   });
 
   andThen(function() {
-    assert.equal(page.logItems().count, 20, 'There are 20 log rows after navigating back.');
+    assert.equal(page.logItems.length, 20, 'There are 20 log rows after navigating back.');
     assert.ok(page.prev.isDisabled, 'Previous button is disabled.');
     assert.notOk(page.next.isDisabled, 'Next button is not disabled.');
   });
@@ -79,38 +79,38 @@ test('Filters the logged events', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.logItems().count, 2, 'There are 2 log rows by default.');
+    assert.equal(page.logItems.length, 2, 'There are 2 log rows by default.');
     page.filterStatus.fillIn('errored');
     assert.notOk(page.filterAction.isVisible, 'Action filter is not visible.');
   });
 
   andThen(() => {
-    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
-    assert.equal(page.logItems(0).action.text, expectedEvent.action);
-    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
-    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    assert.equal(page.logItems.length, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems.objectAt(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems.objectAt(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems.objectAt(0).status.text, expectedEvent.status);
     assert.notOk(page.filterAction.isVisible, 'Action filter is not visible.');
     page.filterType.fillIn('issues');
   });
 
   andThen(() => {
-    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
-    assert.equal(page.logItems(0).action.text, expectedEvent.action);
-    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
-    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    assert.equal(page.logItems.length, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems.objectAt(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems.objectAt(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems.objectAt(0).status.text, expectedEvent.status);
     assert.ok(page.filterAction.isVisible, 'Action filter is visible.');
     page.filterStatus.fillIn('opened');
   });
 
   andThen(() => {
-    assert.equal(page.logItems().count, 1, 'There are 1 log rows after filtering.');
-    assert.equal(page.logItems(0).action.text, expectedEvent.action);
-    assert.equal(page.logItems(0).eventType.text, expectedEvent.eventType);
-    assert.equal(page.logItems(0).status.text, expectedEvent.status);
+    assert.equal(page.logItems.length, 1, 'There are 1 log rows after filtering.');
+    assert.equal(page.logItems.objectAt(0).action.text, expectedEvent.action);
+    assert.equal(page.logItems.objectAt(0).eventType.text, expectedEvent.eventType);
+    assert.equal(page.logItems.objectAt(0).status.text, expectedEvent.status);
     page.clear.click();
   });
 
   andThen(() => {
-    assert.equal(page.logItems().count, 2, 'All items are listed again after clearing filters.');
+    assert.equal(page.logItems.length, 2, 'All items are listed again after clearing filters.');
   });
 });

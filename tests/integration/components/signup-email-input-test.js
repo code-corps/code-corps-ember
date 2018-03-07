@@ -20,7 +20,7 @@ moduleForComponent('signup-email-input', 'Integration | Component | signup email
 });
 
 test('it shows nothing when empty', function(assert) {
-  page.render(hbs`{{signup-email-input}}`);
+  this.render(hbs`{{signup-email-input}}`);
 
   assert.notOk(page.suggestionsArea.visible);
   assert.notOk(page.suggestionsArea.visible);
@@ -39,15 +39,15 @@ test('it shows suggestions when invalid', async function(assert) {
     });
   });
   this.set('user', { email: null });
-  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
+  this.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
   page.fillIn('incomplete@');
   await page.keydown();
 
   assert.notOk(page.suggestionsArea.ok);
   assert.ok(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 1);
-  assert.equal(page.suggestionsArea.suggestions(0).text, 'Please enter a valid email.');
+  assert.equal(page.suggestionsArea.suggestions.length, 1);
+  assert.equal(page.suggestionsArea.suggestions.objectAt(0).text, 'Please enter a valid email.');
 });
 
 test('it shows suggestions when unavailable', async function(assert) {
@@ -63,15 +63,15 @@ test('it shows suggestions when unavailable', async function(assert) {
     });
   });
   this.set('user', { email: null });
-  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
+  this.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
   page.fillIn('taken@gmail.com');
   await page.keydown();
 
   assert.notOk(page.suggestionsArea.ok);
   assert.ok(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 1);
-  assert.equal(page.suggestionsArea.suggestions(0).text, 'This email is already registered. Want to login?');
+  assert.equal(page.suggestionsArea.suggestions.length, 1);
+  assert.equal(page.suggestionsArea.suggestions.objectAt(0).text, 'This email is already registered. Want to login?');
 });
 
 test('it shows ok when valid and available', async function(assert) {
@@ -87,14 +87,14 @@ test('it shows ok when valid and available', async function(assert) {
     });
   });
   this.set('user', { email: null });
-  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
+  this.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
   page.fillIn('available@gmail.com');
   await page.keydown();
 
   assert.ok(page.suggestionsArea.ok);
   assert.notOk(page.suggestionsArea.notOk);
-  assert.equal(page.suggestionsArea.suggestions().count, 0);
+  assert.equal(page.suggestionsArea.suggestions.length, 0);
 });
 
 test('it resets to invalid when deleted', async function(assert) {
@@ -110,7 +110,7 @@ test('it resets to invalid when deleted', async function(assert) {
     });
   });
   this.set('user', { email: 'available@gmail.com' });
-  page.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
+  this.render(hbs`{{signup-email-input user=user emailValidated=emailValidated}}`);
 
   page.fillIn('');
   await page.keydown();

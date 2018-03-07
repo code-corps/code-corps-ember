@@ -27,15 +27,6 @@ function mockProjectUser(role) {
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{user-list-item
-      projectUser=projectUser
-      user=user
-    }}
-  `);
-}
-
 moduleForComponent('user-list-item', 'Integration | Component | user list item', {
   integration: true,
   beforeEach() {
@@ -52,7 +43,7 @@ test('it renders the basic information for the user', function(assert) {
 
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item user=user}}`);
 
   assert.equal(page.icon.url, user.photoThumbUrl);
   assert.equal(page.name.name.text, user.name);
@@ -66,7 +57,7 @@ test('it renders the username in the name if name is empty', function(assert) {
   set(user, 'name', '');
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item user=user}}`);
 
   assert.equal(page.name.name.text, get(user, 'username'));
 });
@@ -77,7 +68,7 @@ test('it renders the correct buttons when pending', function(assert) {
   set(this, 'projectUser', mockProjectUser('pending')); // pending
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   assert.ok(page.approveButton.isVisible, 'Approve button renders');
   assert.ok(page.denyButton.isVisible, 'Deny button renders');
@@ -91,7 +82,7 @@ test('it renders the correct buttons when not pending', function(assert) {
   set(this, 'projectUser', mockProjectUser('contributor'));
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   assert.notOk(page.approveButton.isVisible, 'Approve button does not render');
   assert.notOk(page.denyButton.isVisible, 'Deny button does not render');
@@ -113,7 +104,7 @@ test('it sends the approve action when clicking approve', function(assert) {
   set(this, 'projectUser', projectUser);
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
@@ -147,7 +138,7 @@ test('it sends the deny action when clicking deny', function(assert) {
   set(this, 'projectUser', projectUser);
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   let stub = sinon.stub(window, 'confirm').callsFake(() => {
     assert.ok(true, 'Confirmation prompt was called.');
@@ -175,7 +166,7 @@ test('it changes the role when editing', function(assert) {
   set(this, 'projectUser', projectUser);
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{user-list-item projectUser=projectUser user=user}}`);
 
   page.projectUserRoleModal.openButton.click();
   page.projectUserRoleModal.modal.radioGroupAdmin.radioButton.click();

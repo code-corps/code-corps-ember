@@ -190,7 +190,7 @@ test('When task creation fails due to validation, validation errors are displaye
     projectTasksNewPage.clickSubmit();
   });
 
-  andThen(() => assert.equal(projectTasksNewPage.errors().count, 2));
+  andThen(() => assert.equal(projectTasksNewPage.errors.length, 2));
 });
 
 test('When task creation fails due to non-validation issues, the error is displayed', function(assert) {
@@ -227,8 +227,8 @@ test('When task creation fails due to non-validation issues, the error is displa
   });
 
   andThen(() => {
-    assert.equal(projectTasksNewPage.errors().count, 1);
-    assert.ok(projectTasksNewPage.errors().contains('An unknown error: Something happened', 'The error is messaged'));
+    assert.equal(projectTasksNewPage.errors.length, 1);
+    assert.ok(projectTasksNewPage.errors.objectAt(0).contains('An unknown error: Something happened', 'The error is messaged'));
   });
 });
 
@@ -254,12 +254,12 @@ test('Navigating away from task route destroys task with prompt', function(asser
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.links(1).click();
+    projectTasksNewPage.projectMenu.links.objectAt(1).click();
   });
 
   andThen(() => {
     assert.equal(
-      projectTasksIndexPage.taskBoard.taskLists(0).taskCards().count,
+      projectTasksIndexPage.taskBoard.taskLists.objectAt(0).taskCards.length,
       0,
       'The task was removed from the list.'
     );
@@ -290,7 +290,7 @@ test('Navigation is aborted if user answers negatively to prompt', function(asse
   });
 
   andThen(() => {
-    projectTasksNewPage.projectMenu.links(1).click();
+    projectTasksNewPage.projectMenu.links.objectAt(1).click();
   });
 
   andThen(() => {
@@ -336,12 +336,12 @@ test('Skills can be assigned to task during creation', function(assert) {
 
   andThen(() => {
     // add skill
-    projectTasksNewPage.skillsTypeahead.dropdown.inputItems(0).click();
+    projectTasksNewPage.skillsTypeahead.dropdown.inputItems.objectAt(0).click();
   });
 
   andThen(() => {
     // add skill from project skill list
-    projectTasksNewPage.projectSkillsList.skills(0).click();
+    projectTasksNewPage.projectSkillsList.skills.objectAt(0).click();
   });
 
   andThen(() => {

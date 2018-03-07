@@ -6,14 +6,6 @@ import PageObject from 'ember-cli-page-object';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`
-    {{task/sidebar/integrations-section
-      task=task
-    }}
-  `);
-}
-
 moduleForComponent('task/sidebar/integrations-section', 'Integration | Component | task/sidebar/integrations section', {
   integration: true,
   beforeEach() {
@@ -30,7 +22,7 @@ test('when connected to a GitHub Issue', function(assert) {
   let task = { githubIssue: { number: '123' } };
   set(this, 'task', task);
 
-  renderPage();
+  this.render(hbs`{{task/sidebar/integrations-section task=task}}`);
 
   assert.notOk(page.emptyMessage.isVisible, 'The empty message is not visible');
   assert.ok(page.issueLink.isVisible, 'The issue link is visible');
@@ -42,7 +34,7 @@ test('when not connected to a GitHub Issue', function(assert) {
   let task = { githubIssue: null };
   set(this, 'task', task);
 
-  renderPage();
+  this.render(hbs`{{task/sidebar/integrations-section task=task}}`);
 
   assert.ok(page.emptyMessage.isVisible, 'The empty message is visible');
   assert.notOk(page.issueLink.isVisible, 'The issue link is not visible');

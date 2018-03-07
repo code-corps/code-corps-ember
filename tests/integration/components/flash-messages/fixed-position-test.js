@@ -18,7 +18,7 @@ moduleForComponent('flash-messages/fixed-position', 'Integration | Component | f
 });
 
 test('it renders a fixed error message', function(assert) {
-  page.render(hbs`{{flash-messages/fixed-position}}`);
+  this.render(hbs`{{flash-messages/fixed-position}}`);
 
   run(() => {
     getOwner(this).lookup('service:flash-messages').add({

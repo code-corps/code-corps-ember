@@ -9,7 +9,7 @@ test('can visit links from footer on index', function(assert) {
   indexPage.visit();
 
   andThen(function() {
-    assert.equal(indexPage.siteFooter.columns().count, 4);
+    assert.equal(indexPage.siteFooter.columns.length, 4);
     indexPage.siteFooter.clickAboutLink();
   });
 
@@ -34,8 +34,8 @@ test('renders horizontal on smaller screens', function(assert) {
   });
 
   andThen(function() {
-    assert.equal(indexPage.siteFooter.columns().count, 0);
-    assert.equal(indexPage.siteFooter.rows().count, 6);
+    assert.equal(indexPage.siteFooter.columns.length, 0);
+    assert.equal(indexPage.siteFooter.rows.length, 6);
   });
 });
 
@@ -45,7 +45,7 @@ test('renders horizontal on most pages', function(assert) {
   setBreakpoint('full');
 
   andThen(function() {
-    assert.equal(indexPage.siteFooter.columns().count, 0);
-    assert.equal(indexPage.siteFooter.rows().count, 6);
+    assert.equal(indexPage.siteFooter.columns.length, 0);
+    assert.equal(indexPage.siteFooter.rows.length, 6);
   });
 });

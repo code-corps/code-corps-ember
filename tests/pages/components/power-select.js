@@ -23,17 +23,14 @@ export default {
     input: {
       scope: 'input'
     },
-    options: collection({
-      itemScope: '.ember-power-select-option',
-      item: {
-        select() {
-          // this.scope is a jQuery selector, so we can't use that because
-          // nativeMouseUp needs either a plain old js selector or a plain old
-          // DOM element, so we fetch the element first
-          let [domElement] = findElementWithAssert(this);
-          nativeMouseUp(domElement);
-          return this;
-        }
+    options: collection('.ember-power-select-option', {
+      select() {
+        // this.scope is a jQuery selector, so we can't use that because
+        // nativeMouseUp needs either a plain old js selector or a plain old
+        // DOM element, so we fetch the element first
+        let [domElement] = findElementWithAssert(this);
+        nativeMouseUp(domElement);
+        return this;
       }
     })
   },

@@ -21,15 +21,12 @@ moduleForComponent('github-connect-state', 'Integration | Component | github con
   }
 });
 
-function renderPage() {
-  page.render(hbs`{{github-connect-state githubId=githubId githubAvatarUrl=githubAvatarUrl}}`);
-}
-
 test('it renders github user info if user is connected', function(assert) {
   assert.expect(2);
 
   set(this, 'githubId', 'foo');
-  renderPage();
+
+  this.render(hbs`{{github-connect-state githubId=githubId githubAvatarUrl=githubAvatarUrl}}`);
 
   assert.ok(page.githubUserInfo.isVisible, 'Github user info is rendered.');
   assert.notOk(page.githubConnect.isVisible, 'Github connect component is not rendered.');
@@ -39,7 +36,8 @@ test('it renders github connect component if user is not connected', function(as
   assert.expect(2);
 
   set(this, 'githubId', null);
-  renderPage();
+
+  this.render(hbs`{{github-connect-state githubId=githubId githubAvatarUrl=githubAvatarUrl}}`);
 
   assert.notOk(page.githubUserInfo.isVisible, 'Github user info is not rendered.');
   assert.ok(page.githubConnect.isVisible, 'Github connect component is rendered.');
@@ -50,7 +48,8 @@ test('it renders github resized github avatar url if user is connected', functio
 
   set(this, 'githubId', 'foo');
   set(this, 'githubAvatarUrl', 'bar');
-  renderPage();
+
+  this.render(hbs`{{github-connect-state githubId=githubId githubAvatarUrl=githubAvatarUrl}}`);
 
   assert.equal(page.githubUserInfo.avatar.url, 'bar&size=100', 'Resized avatar url is rendered.');
 });

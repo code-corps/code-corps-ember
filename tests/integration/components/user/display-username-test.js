@@ -25,7 +25,7 @@ test('it renders only the username if present', function(assert) {
 
   this.set('user', user);
 
-  page.render(hbs`{{user/display-username user=user}}`);
+  this.render(hbs`{{user/display-username user=user}}`);
 
   assert.ok(page.username.isVisible);
   assert.notOk(page.githubUsername.isVisible);
@@ -42,7 +42,7 @@ test('it renders only the username regardless of whether both are present', func
 
   this.set('user', user);
 
-  page.render(hbs`{{user/display-username user=user}}`);
+  this.render(hbs`{{user/display-username user=user}}`);
 
   assert.ok(page.username.isVisible);
   assert.notOk(page.githubUsername.isVisible);
@@ -59,7 +59,7 @@ test('it renders only the github username if only it is present', function(asser
 
   this.set('user', user);
 
-  page.render(hbs`{{user/display-username user=user}}`);
+  this.render(hbs`{{user/display-username user=user}}`);
 
   assert.notOk(page.username.isVisible);
   assert.ok(page.githubUsername.isVisible);

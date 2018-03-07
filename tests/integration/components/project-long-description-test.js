@@ -44,7 +44,7 @@ test('it renders properly when decription is blank and the user cannot add to it
   assert.expect(3);
 
   set(this, 'project', blankProject);
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.ok(page.noDescription.cannotAdd, 'The correct element is shown');
   assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown');
@@ -57,7 +57,7 @@ test('it renders properly when description is blank and the user can add to it',
   set(this, 'project', blankProject);
   stubService(this, 'current-user', { user: owner });
 
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.ok(page.noDescription.canAdd, 'The correct element is shown');
   assert.ok(page.editorWithPreview.isVisible, 'The editor is shown');
@@ -69,7 +69,7 @@ test('it renders properly when description is present and user cannot edit', fun
 
   set(this, 'project', projectWithDescription);
 
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.notOk(page.longDescription.isEmpty, 'The section for empty description is not shown');
   assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
@@ -85,7 +85,7 @@ test('it renders properly when description is present and user can edit', functi
   set(this, 'project', projectWithDescription);
   stubService(this, 'current-user', { user: owner });
 
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.notOk(page.longDescription.isEmpty, 'The section for empty description is not shown');
   assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
@@ -108,7 +108,7 @@ test('it is possible to add a description', function(assert) {
   set(this, 'project', savableProject);
   stubService(this, 'current-user', { user: owner });
 
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   page.save.click();
 });
@@ -128,7 +128,7 @@ test('it is possible to edit a description', function(assert) {
   set(this, 'project', savableProject);
   stubService(this, 'current-user', { user: owner });
 
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.notOk(page.editorWithPreview.isVisible, 'The editor is not shown, since we are in read mode');
   page.edit.click();
@@ -140,7 +140,7 @@ test('it renders list items in the description with bullet points', function(ass
   assert.expect(2);
 
   set(this, 'project', projectWithListedDescription);
-  page.render(hbs`{{project-long-description project=project}}`);
+  this.render(hbs`{{project-long-description project=project}}`);
 
   assert.equal(page.longDescription.list.listItem.text, 'list item 1', 'the description text shows the list');
   assert.equal(this.$('li').css('listStyleType'), 'disc', 'list in description text is displayed with bullet points');

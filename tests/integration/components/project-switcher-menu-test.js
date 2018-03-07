@@ -7,10 +7,6 @@ import { Ability } from 'ember-can';
 
 let page = PageObject.create(component);
 
-function renderPage() {
-  page.render(hbs`{{project-switcher-menu user=user}}`);
-}
-
 let user = {
   organizations: [
     {
@@ -41,20 +37,20 @@ test('it renders the links', function(assert) {
 
   set(this, 'user', user);
 
-  renderPage();
+  this.render(hbs`{{project-switcher-menu user=user}}`);
 
-  assert.equal(page.menu.organizations().count, 1, 'One organization renders.');
-  assert.equal(page.menu.projects().count, 1, 'One project renders.');
-  assert.equal(page.menu.organizations(0).text, user.organizations[0].name, 'The organization name is correct.');
-  assert.equal(page.menu.projects(0).text, user.organizations[0].projects[0].title, 'The project title is correct.');
-  assert.equal(page.menu.projects(0).icon.url, user.organizations[0].projects[0].iconThumbUrl, 'The project icon URL is correct.');
+  assert.equal(page.menu.organizations.length, 1, 'One organization renders.');
+  assert.equal(page.menu.projects.length, 1, 'One project renders.');
+  assert.equal(page.menu.organizations.objectAt(0).text, user.organizations[0].name, 'The organization name is correct.');
+  assert.equal(page.menu.projects.objectAt(0).text, user.organizations[0].projects[0].title, 'The project title is correct.');
+  assert.equal(page.menu.projects.objectAt(0).icon.url, user.organizations[0].projects[0].iconThumbUrl, 'The project icon URL is correct.');
 });
 
 test('it renders the new project link if the user can manage', function(assert) {
   set(this, 'user', user);
   this.register('ability:organization', Ability.extend({ canManage: true }));
 
-  renderPage();
+  this.render(hbs`{{project-switcher-menu user=user}}`);
 
   assert.ok(page.menu.newProjectLink.isVisible, 'The new project link renders.');
 });
@@ -65,7 +61,7 @@ test('it does not render the new project link if the user cannot manage', functi
   set(this, 'user', user);
   this.register('ability:organization', Ability.extend({ canManage: false }));
 
-  renderPage();
+  this.render(hbs`{{project-switcher-menu user=user}}`);
 
   assert.notOk(page.menu.newProjectLink.isVisible, 'The new project link does not render.');
 });

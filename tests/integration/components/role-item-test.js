@@ -13,11 +13,6 @@ import PageObject from 'ember-cli-page-object';
 import component from 'code-corps-ember/tests/pages/components/role-item';
 
 const page = PageObject.create(component);
-const template = hbs`{{role-item role=role userRoles=userRoles}}`;
-
-function renderPage() {
-  page.render(template);
-}
 
 let mockUserRolesService = {
   findUserRole: () => null,
@@ -31,7 +26,7 @@ let mockUserRolesServiceForErrors = {
   removeRole: () => RSVP.reject()
 };
 
-let mobileDeveloper = {
+const mobileDeveloper = {
   id: 'foo',
   name: 'Mobile Developer',
   ability: 'Mobile Development',
@@ -57,7 +52,7 @@ test('it renders role content properly', function(assert) {
 
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   assert.equal(page.button.text, mobileDeveloper.ability, 'Role ability is rendered on button.');
 });
@@ -71,7 +66,7 @@ test('it renders role as selected if associated service returns a user role', fu
 
   set(this, 'userRoles', userRoles);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   assert.ok(page.isSelected, 'Component is rendered as selected.');
 });
@@ -85,7 +80,7 @@ test('it renders role as unselected if associated service returns no user role',
 
   set(this, 'userRoles', userRoles);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   assert.ok(page.isUnselected, 'Component is rendered as unselected.');
 });
@@ -104,7 +99,7 @@ test('it calls proper action on service when clicking a selected role', function
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   page.button.click();
 });
@@ -123,7 +118,7 @@ test('it calls proper action on service when clicking an unselected role', funct
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   page.button.click();
 });
@@ -134,7 +129,7 @@ test('it creates a flash message on an error when adding', function(assert) {
   set(this, 'userRoles', mockUserRolesServiceForErrors);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   page.button.click(),
 
@@ -153,7 +148,7 @@ test('it creates a flash message on an error when removing', function(assert) {
   set(this, 'userRoles', mockUserRolesServiceForErrors);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   page.button.click(),
 
@@ -187,7 +182,7 @@ test('it sets and unsets loading state when adding', async function(assert) {
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   await page.button.click();
 
@@ -214,7 +209,7 @@ test('it sets and unsets loading state on error when adding', async function(ass
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   await page.button.click();
 
@@ -241,7 +236,7 @@ test('it sets and unsets loading state when removing', async function(assert) {
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   await page.button.click();
 
@@ -268,7 +263,7 @@ test('it sets and unsets loading state on error when removing', async function(a
   set(this, 'userRoles', userRoles);
   set(this, 'role', mobileDeveloper);
 
-  renderPage();
+  this.render(hbs`{{role-item role=role userRoles=userRoles}}`);
 
   await page.button.click();
 

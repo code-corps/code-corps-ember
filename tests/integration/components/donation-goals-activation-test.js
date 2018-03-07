@@ -6,15 +6,6 @@ import donationGoalsActivation from 'code-corps-ember/tests/pages/component/dona
 
 let page = PageObject.create(donationGoalsActivation);
 
-function renderPage() {
-  page.render(hbs`
-    {{donation-goals-activation
-      activateDonations=activateDonationsHandler
-      canActivateDonations=canActivateDonations
-    }}
-  `);
-}
-
 function setHandlers(context, { activateDonationsHandler = function() {} } = {}) {
   set(context, 'activateDonationsHandler', activateDonationsHandler);
 }
@@ -40,7 +31,12 @@ test('it allows activating donations if canActivateDonations is true', function(
   setHandlers(this, { activateDonationsHandler });
   set(this, 'canActivateDonations', true);
 
-  renderPage();
+  this.render(hbs`
+    {{donation-goals-activation
+      activateDonations=activateDonationsHandler
+      canActivateDonations=canActivateDonations
+    }}
+  `);
 
   assert.ok(page.activateDonationsButton.isVisible, 'The "activate donations" button is rendered');
 
@@ -52,7 +48,12 @@ test('it prevents activating donations if canActivateDonations is false', functi
 
   set(this, 'canActivateDonations', false);
 
-  renderPage();
+  this.render(hbs`
+    {{donation-goals-activation
+      activateDonations=activateDonationsHandler
+      canActivateDonations=canActivateDonations
+    }}
+  `);
 
   assert.notOk(page.activateDonationsButton.isVisible, 'The "activate donations" button is not rendered');
 });

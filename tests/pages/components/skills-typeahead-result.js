@@ -7,7 +7,5 @@ export default {
   mouseenter: triggerable('mouseenter'),
   mousedown: triggerable('mousedown'),
 
-  highlightedStrings: collection({
-    itemScope: 'strong'
-  })
+  highlightedStrings: collection('strong')
 };

@@ -20,7 +20,7 @@ test('it renders closed status', function(assert) {
 
   let task = { overallStatus: 'closed' };
   this.set('task', task);
-  page.render(hbs`{{task-status task=task}}`);
+  this.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isClosed, 'Has the closed class');
   assert.ok(page.iconClosed.isVisible);
@@ -32,7 +32,7 @@ test('it renders open status', function(assert) {
 
   let task = { overallStatus: 'open' };
   this.set('task', task);
-  page.render(hbs`{{task-status task=task}}`);
+  this.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isOpen, 'Has the open class');
   assert.ok(page.iconOpen.isVisible);
@@ -44,7 +44,7 @@ test('it renders pull request open status', function(assert) {
 
   let task = { hasGithubPullRequest: true, overallStatus: 'open' };
   this.set('task', task);
-  page.render(hbs`{{task-status task=task}}`);
+  this.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isOpen, 'Has the open class');
   assert.ok(page.iconPullRequest.isVisible, 'Pull request icon renders');
@@ -56,7 +56,7 @@ test('it renders pull request closed status', function(assert) {
 
   let task = { hasGithubPullRequest: true, overallStatus: 'closed' };
   this.set('task', task);
-  page.render(hbs`{{task-status task=task}}`);
+  this.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isClosed, 'Has the closed class');
   assert.ok(page.iconPullRequest.isVisible, 'Pull request icon renders');
@@ -68,7 +68,7 @@ test('it renders pull request merged status', function(assert) {
 
   let task = { hasGithubPullRequest: true, overallStatus: 'merged' };
   this.set('task', task);
-  page.render(hbs`{{task-status task=task}}`);
+  this.render(hbs`{{task-status task=task}}`);
 
   assert.ok(page.isMerged, 'Has the merged class');
   assert.ok(page.iconPullRequestMerged.isVisible, 'Pull request merged icon renders');

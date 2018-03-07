@@ -25,7 +25,7 @@ test('The page requires user to be admin', function(assert) {
   page.visit();
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error was rendered');
+    assert.equal(page.flashErrors.length, 1, 'Flash error was rendered');
     assert.equal(currentRouteName(), 'projects-list', 'Got redirected');
   });
 });
@@ -51,21 +51,21 @@ test('An admin can view a list of projects', function(assert) {
     assert.equal(currentURL(), '/admin/projects');
     assert.equal(currentRouteName(), 'admin.projects.index');
 
-    assert.equal(page.items().count, 3, 'There are 3 rows.');
+    assert.equal(page.items.length, 3, 'There are 3 rows.');
 
     [unapprovedProject, projectPendingApproval, approvedProject].forEach((project, index) => {
-      assert.equal(page.items(index).title.text, project.title, 'Project title is rendered.');
-      assert.equal(page.items(index).icon.src, project.iconThumbUrl, 'Project icon is rendered.');
+      assert.equal(page.items.objectAt(index).title.text, project.title, 'Project title is rendered.');
+      assert.equal(page.items.objectAt(index).icon.src, project.iconThumbUrl, 'Project icon is rendered.');
     });
 
-    assert.equal(page.items(0).approvalStatus.text, 'Created', 'Correct status is rendered for newly created project.');
-    assert.notOk(page.items(0).actions.approve.isVisible, 'Approve button is not rendered for newly created project.');
+    assert.equal(page.items.objectAt(0).approvalStatus.text, 'Created', 'Correct status is rendered for newly created project.');
+    assert.notOk(page.items.objectAt(0).actions.approve.isVisible, 'Approve button is not rendered for newly created project.');
 
-    assert.equal(page.items(1).approvalStatus.text, 'Pending approval', 'Correct status is rendered for project pending approval.');
-    assert.ok(page.items(1).actions.approve.isVisible, 'Approve button is rendered for project pending approval.');
+    assert.equal(page.items.objectAt(1).approvalStatus.text, 'Pending approval', 'Correct status is rendered for project pending approval.');
+    assert.ok(page.items.objectAt(1).actions.approve.isVisible, 'Approve button is rendered for project pending approval.');
 
-    assert.equal(page.items(2).approvalStatus.text, 'Approved', 'Correct status is rendered for approved project.');
-    assert.notOk(page.items(2).actions.approve.isVisible, 'Approve button is not rendered for approved project');
+    assert.equal(page.items.objectAt(2).approvalStatus.text, 'Approved', 'Correct status is rendered for approved project.');
+    assert.notOk(page.items.objectAt(2).actions.approve.isVisible, 'Approve button is not rendered for approved project');
   });
 });
 
@@ -80,12 +80,12 @@ test('An admin can approve a project', function(assert) {
   page.visit();
 
   andThen(() => {
-    page.items(0).actions.approve.click();
+    page.items.objectAt(0).actions.approve.click();
   });
 
   andThen(() => {
     assert.ok(unapprovedProject.approved, 'Project is approved.');
-    assert.equal(page.items(0).approvalStatus.text, 'Approved', 'Project status is rendered correctly.');
+    assert.equal(page.items.objectAt(0).approvalStatus.text, 'Approved', 'Project status is rendered correctly.');
   });
 });
 
@@ -115,10 +115,10 @@ test('A flash error renders when project approval fails', function(assert) {
   });
 
   andThen(() => {
-    page.items(0).actions.approve.click();
+    page.items.objectAt(0).actions.approve.click();
   });
 
   andThen(() => {
-    assert.equal(page.flashErrors().count, 1, 'Flash error is rendered.');
+    assert.equal(page.flashErrors.length, 1, 'Flash error is rendered.');
   });
 });
