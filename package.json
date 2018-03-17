@@ -79,7 +79,7 @@
     "ember-metrics": "code-corps/ember-metrics#add-context-to-segment-adapter",
     "ember-modal-dialog": "2.4.1",
     "ember-moment": "^7.4.1",
-    "ember-multiselect-checkboxes": "^0.10.3",
+    "ember-multiselect-checkboxes": "^0.11.0",
     "ember-native-dom-helpers": "^0.6.1",
     "ember-normalize": "1.0.0",
     "ember-page-title": "3.2.0",
