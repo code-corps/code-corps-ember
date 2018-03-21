@@ -2757,9 +2757,9 @@ ember-cli-deploy-s3-index@1.0.1:
     mime-types "^2.1.9"
     rsvp "^3.0.18"
 
-ember-cli-deploy-s3@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-s3/-/ember-cli-deploy-s3-1.1.0.tgz#626126c21c7b2ef0347978c01c1338e6a16b02ab"
+ember-cli-deploy-s3@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-s3/-/ember-cli-deploy-s3-1.2.0.tgz#7e9e9621da4157fdcf09a2d56c42c61ef6b1f2e4"
   dependencies:
     aws-sdk "^2.6.12"
     chalk "^1.0.0"
