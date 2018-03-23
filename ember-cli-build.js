@@ -11,19 +11,26 @@ module.exports = function(defaults) {
     extensions: ['js', 'css', 'png', 'jpg', 'gif']
   };
 
+  var blacklist = [];
+
   switch (env) {
     case 'development':
       fingerprintOptions.prepend = 'http://localhost:4200/';
       break;
     case 'staging':
+      blacklist = ['styleguide', 'ember-freestyle'];
       fingerprintOptions.prepend = 'https://d3onq9263d8on4.cloudfront.net/';
       break;
     case 'production':
+      blacklist = ['styleguide', 'ember-freestyle'];
       fingerprintOptions.prepend = 'https://d3pgew4wbk2vb1.cloudfront.net/';
       break;
   }
 
   let app = new EmberApp(defaults, {
+    addons: {
+      blacklist
+    },
     'ember-cli-babel': {
       // async, await, etc.
       includePolyfill: true
@@ -32,6 +39,9 @@ module.exports = function(defaults) {
       bundleZxcvbn: true
     },
     fingerprint: fingerprintOptions,
+    freestyle: {
+      snippetSearchPaths: ['lib/styleguide/app']
+    },
     emberCLIDeploy: {
       // runOnPostBuild: (env === 'development') ? 'development-postbuild' : false,
       // shouldActivate: true

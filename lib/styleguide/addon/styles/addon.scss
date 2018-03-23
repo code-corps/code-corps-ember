@@ -1,0 +1,21 @@
+.FreestyleGuide {
+  code {
+    background: none;
+  }
+  
+  .FreestyleSubsection {
+    ul {
+      padding-left: 40px;
+      li {
+        list-style-type: disc;
+      }
+    }
+  }
+
+  .FreestyleUsage-usage, .FreestyleUsage-notes {
+    padding: 1rem 1rem 0;
+  }
+}
+
+@import 'donation';
+@import 'donations';
