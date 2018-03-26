@@ -100,8 +100,9 @@ Router.map(function() {
 
   // User settings
   this.route('settings', function() {
-    this.route('profile');
     this.route('integrations');
+    this.route('payments');
+    this.route('profile');
   });
 
   this.route('signup');

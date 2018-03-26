@@ -1,0 +1,11 @@
+{{#x-select value=month action=(action update 'month') as |xs|}}
+  {{#each monthOptions as |monthOption|}}
+    {{#xs.option value=monthOption.number}}{{monthOption.text}}{{/xs.option}}
+  {{/each}}
+{{/x-select}}
+
+{{#x-select value=year  action=(action update 'year') as |xs|}}
+  {{#each yearOptions as |yearOption|}}
+    {{#xs.option value=yearOption}}{{yearOption}}{{/xs.option}}
+  {{/each}}
+{{/x-select}}
