@@ -9,7 +9,7 @@ export default Route.extend({
   async model() {
     let categories = this.get('store').findAll('category');
     let userId = this.get('currentUser.user.id');
-    let user = await this.store.find('user', userId);
+    let user = await this.store.findRecord('user', userId);
     let userCategories = get(user, 'userCategories');
     return RSVP.hash({ categories, user, userCategories });
   },

@@ -1,5 +1,5 @@
-import { JSONAPISerializer } from 'ember-cli-mirage';
+import MirageApplicationSerializer from './application';
 
-export default JSONAPISerializer.extend({
+export default MirageApplicationSerializer.extend({
   include: ['comment-user-mentions']
 });

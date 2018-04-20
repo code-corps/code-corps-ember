@@ -7,7 +7,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model() {
     let userId = this.get('currentUser.user.id');
-    return this.store.find('user', userId);
+    return this.store.findRecord('user', userId);
   },
 
   setupController(controller, model) {
