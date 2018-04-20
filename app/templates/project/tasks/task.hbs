@@ -16,6 +16,19 @@
       </div>
     </div>
     <div class="task-sidebar">
+      <div class="task-sidebar-section">
+        <div class="task-sidebar-section__header">
+          <h3>Assignee</h3>
+        </div>
+        {{task-assignment
+          canTriggerAssignment=false
+          deferredRendering=false
+          task=task
+          taskUser=taskUser
+          users=users
+        }}
+      </div>
+
       {{task/sidebar/integrations-section task=task}}
 
       <div class="task-sidebar-section">
