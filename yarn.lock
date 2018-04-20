@@ -3427,9 +3427,9 @@ ember-keyboard@^3.0.0:
   dependencies:
     ember-cli-babel "^6.8.2"
 
-ember-link-action@^0.0.37:
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.37.tgz#22f2644ac19b7567f45e3da129f8c5ae808ea08c"
+ember-link-action@^0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/ember-link-action/-/ember-link-action-0.0.38.tgz#95398d6cabc4cf5012f4fef99323882a03bbc693"
   dependencies:
     ember-cli-babel "^6.8.2"
 
