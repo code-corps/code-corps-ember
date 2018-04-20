@@ -4,8 +4,11 @@ import RSVP from 'rsvp';
 import { set, get } from '@ember/object';
 import EmberCan from 'ember-can';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import Confirm from 'code-corps-ember/mixins/confirm';
 
-export default Route.extend(AuthenticatedRouteMixin, {
+export default Route.extend(AuthenticatedRouteMixin, Confirm, {
+  modelName: 'task',
+
   currentUser: service(),
 
   ability: EmberCan.computed.ability('organization', 'membership'),
@@ -40,32 +43,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
     set(controller, 'task', task);
     set(controller, 'selectedRepo', null);
     set(controller, 'unsavedTaskSkills', []);
-  },
-
-  actions: {
-    /**
-     * willTransition - Action.
-     *
-     * Triggers on transitioning away from this route.
-     * Prompts the user to confirm navigating away.
-     *
-     * If the user confirms, the currently initiated task is destroyed.
-     * If the user cancels out, the transition is aborted.
-     *
-     * @param  {Ember.Transition} transition The initiated transition.
-     */
-    willTransition(transition) {
-      let task = get(this, 'controller.task');
-
-      // prompt to confirm if the user did not save
-      if (get(task, ('isNew'))) {
-        let confirmed = window.confirm('You will lose any unsaved information if you leave this page. Are you sure?');
-        if (confirmed) {
-          task.destroyRecord();
-        } else {
-          transition.abort();
-        }
-      }
-    }
   }
 });
