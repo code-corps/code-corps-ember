@@ -96,7 +96,7 @@
     "ember-source": "~2.18.0",
     "ember-stripe-elements": "^0.3.0",
     "ember-stripe-service": "7.0.0",
-    "ember-test-selectors": "^0.3.4",
+    "ember-test-selectors": "^1.0.0",
     "ember-tether": "0.4.1",
     "ember-tooltips": "^2.9.0-beta",
     "ember-truth-helpers": "2.0.0",
