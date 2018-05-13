@@ -47,7 +47,7 @@
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-jwt-decode": "0.1.0",
     "ember-cli-meta-tags": "3.1.0",
-    "ember-cli-mirage": "^0.3.4",
+    "ember-cli-mirage": "^0.4.7",
     "ember-cli-moment-shim": "^3.4.0",
     "ember-cli-neat": "^0.0.6",
     "ember-cli-page-object": "1.14.1",
