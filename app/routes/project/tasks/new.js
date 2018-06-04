@@ -2,13 +2,13 @@ import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import RSVP from 'rsvp';
 import { set, get } from '@ember/object';
-import EmberCan from 'ember-can';
+import { ability } from 'ember-can/computed';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Route.extend(AuthenticatedRouteMixin, {
   currentUser: service(),
 
-  ability: EmberCan.computed.ability('organization', 'membership'),
+  ability: ability('organization', 'membership'),
 
   /**
    * model - Route lifecycle hook

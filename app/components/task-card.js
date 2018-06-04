@@ -3,7 +3,7 @@ import { alias, mapBy } from '@ember/object/computed';
 import { computed, get, getProperties, set } from '@ember/object';
 import { on } from '@ember/object/evented';
 import { inject as service } from '@ember/service';
-import EmberCan from 'ember-can';
+import { ability } from 'ember-can/computed';
 import { EKMixin as EmberKeyboardMixin, keyDown } from 'ember-keyboard';
 import { task as concurrentTask } from 'ember-concurrency';
 
@@ -30,7 +30,7 @@ export default Component.extend(EmberKeyboardMixin, {
   users: null,
 
   // auto-assigns 'task' property from component as ability 'model'
-  ability: EmberCan.computed.ability('task'),
+  ability: ability('task'),
   canArchive: alias('ability.canArchive'),
   canReposition: alias('ability.canReposition'),
   isLoading: alias('task.isLoading'),
