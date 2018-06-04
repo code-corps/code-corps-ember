@@ -2,9 +2,9 @@ import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import { CanMixin } from 'ember-can';
 
-export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
+export default Route.extend(AuthenticatedRouteMixin, {
+  can: service(),
   session: service(),
 
   model() {
@@ -30,7 +30,7 @@ export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
     // 1. Sideload project user records
     // 2. Have the server compute an ability table for the current user
     return get(project, 'projectUsers').then(() => {
-      if (this.cannot('administer project', project)) {
+      if (get(this, 'can').cannot('administer project', project)) {
         return this.transitionTo('project');
       }
     });

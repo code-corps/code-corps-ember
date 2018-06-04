@@ -1,13 +1,13 @@
 import Component from '@ember/component';
 import { alias } from '@ember/object/computed';
 import { get } from '@ember/object';
-import EmberCan from 'ember-can';
+import { ability } from 'ember-can/computed';
 
 export default Component.extend({
   classNames: ['archive-task'],
 
   // auto-assigns 'task' property from component as ability 'model'
-  ability: EmberCan.computed.ability('task'),
+  ability: ability('task'),
   canArchive: alias('ability.canArchive'),
 
   actions: {

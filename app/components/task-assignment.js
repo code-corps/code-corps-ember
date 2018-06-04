@@ -5,7 +5,7 @@ import { on } from '@ember/object/evented';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
-import EmberCan from 'ember-can';
+import { ability } from 'ember-can/computed';
 import createTaskUserOptions from 'code-corps-ember/utils/create-task-user-options';
 import { EKMixin as EmberKeyboardMixin, keyDown } from 'ember-keyboard';
 
@@ -26,7 +26,7 @@ export default Component.extend(EmberKeyboardMixin, {
   users: null,
 
   // auto-assigns 'task' property from component as ability 'model'
-  ability: EmberCan.computed.ability('task'),
+  ability: ability('task'),
   canAssign: alias('ability.canAssign'),
   currentUserId: alias('currentUser.user.id'),
   taskUserId: alias('taskUser.id'),

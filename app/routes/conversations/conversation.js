@@ -2,9 +2,8 @@ import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import { CanMixin } from 'ember-can';
 
-export default Route.extend(AuthenticatedRouteMixin, CanMixin, {
+export default Route.extend(AuthenticatedRouteMixin, {
   conversationChannel: service(),
   store: service(),
 

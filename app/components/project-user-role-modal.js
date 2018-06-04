@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed, get, set } from '@ember/object';
 import { alias, and } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import EmberCan from 'ember-can';
+import { ability } from 'ember-can/computed';
 
 export default Component.extend({
   classNames: ['project-user-role-modal-container'],
@@ -15,7 +15,7 @@ export default Component.extend({
   selectedRole: null,
   showModal: false,
 
-  ability: EmberCan.computed.ability('project'),
+  ability: ability('project'),
   canManage: alias('ability.canManage'),
   demotionDisabled: and('canManage', 'isSelf'),
   user: alias('currentUser.user'),
