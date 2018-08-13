@@ -16,7 +16,7 @@
     "test": "ember try:one default"
   },
   "devDependencies": {
-    "broccoli-asset-rev": "^2.4.5",
+    "broccoli-asset-rev": "^3.0.0",
     "coveralls": "^3.0.0",
     "ember-ajax": "^3.0.0",
     "ember-auto-focus": "^2.0.1",
