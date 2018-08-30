@@ -71,7 +71,7 @@
     "ember-font-awesome": "^3.0.5",
     "ember-i18n": "^5.0.2",
     "ember-keyboard": "^3.0.0",
-    "ember-link-action": "^0.0.37",
+    "ember-link-action": "^0.1.2",
     "ember-load": "^0.0.12",
     "ember-load-initializers": "^1.0.0",
     "ember-macro-helpers": "^0.17.0",
