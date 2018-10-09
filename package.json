@@ -93,7 +93,7 @@
     "ember-simple-auth": "^1.2.1",
     "ember-simple-auth-token": "^2.1.0",
     "ember-sinon": "1.0.1",
-    "ember-source": "~2.18.0",
+    "ember-source": "~3.5.0",
     "ember-stripe-elements": "^0.3.0",
     "ember-stripe-service": "7.0.0",
     "ember-test-selectors": "^0.3.4",
