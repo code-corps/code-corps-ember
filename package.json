@@ -63,7 +63,7 @@
     "ember-click-outside": "^0.1.10",
     "ember-composable-helpers": "2.1.0",
     "ember-concurrency": "^0.8.1",
-    "ember-data": "~2.18.0",
+    "ember-data": "~3.9.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-dragula": "1.9.3",
     "ember-exam": "1.0.0",
