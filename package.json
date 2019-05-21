@@ -87,7 +87,7 @@
     "ember-power-select": "^1.9.5",
     "ember-radio-button": "^1.0.7",
     "ember-resolver": "^4.0.0",
-    "ember-responsive": "^2.0.5",
+    "ember-responsive": "^3.0.1",
     "ember-route-action-helper": "^2.0.0",
     "ember-router-scroll": "^0.4.0",
     "ember-simple-auth": "^1.2.1",
