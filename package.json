@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "coveralls": "^3.0.0",
+    "coveralls": "^3.0.9",
     "ember-ajax": "^3.0.0",
     "ember-auto-focus": "^2.0.1",
     "ember-autoresize": "1.0.0",
