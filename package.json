@@ -41,7 +41,7 @@
     "ember-cli-deploy-slack": "1.0.0",
     "ember-cli-dotenv": "2.0.0",
     "ember-cli-eslint": "^4.2.1",
-    "ember-cli-flash": "1.6.3",
+    "ember-cli-flash": "1.8.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
