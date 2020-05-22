@@ -84,7 +84,7 @@
     "ember-normalize": "1.0.0",
     "ember-page-title": "3.2.0",
     "ember-phoenix": "^0.1.7",
-    "ember-power-select": "^1.9.5",
+    "ember-power-select": "^4.0.2",
     "ember-radio-button": "^1.0.7",
     "ember-resolver": "^4.0.0",
     "ember-responsive": "^2.0.5",
